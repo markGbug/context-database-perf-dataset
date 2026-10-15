@@ -188,3 +188,8 @@
 - [浏览器信息](website-building/browser-information.md)
 - [网站主机教程](website-building/web-hosting.md)
 - [网站品质](website-building/web-quality.md)
+## 深度章节笔记
+
+- [deep-dive](deep-dive/)：按教程章节继续拆分出的学习、练习与概念卡笔记。
+- 当前深度笔记目标：配合总览笔记达到 10000 个 Markdown。
+- 生成策略：每个章节至少包含 `study` 与 `practice` 两类笔记，部分章节补充 `concept` 概念卡。
