@@ -1,35 +1,60 @@
-# Docker：Docker 安装 Python 学习笔记
+# Docker：Docker 安装 Python
 
 - 来源：[Docker 安装 Python](https://www.runoob.com/docker/docker-install-python.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0817
 
-## 学习目标
+## 本章内容
 
-Docker 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Docker 安装 Python` 建立学习路径，先理解它在 Docker 体系中的位置，再做可运行或可复述的验证。
+### 方法一、docker pull python:3.5
 
-## 阅读抓手
+查找 Docker Hub 上的 Python 镜像:
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+可以通过 Sort by 查看其他版本的 python，默认是最新版本 python:latest。
 
-## 笔记模板
+此外，我们还可以用 docker search python 命令来查看可用版本：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+runoob@runoob:~/python$ docker search python
+NAME                           DESCRIPTION                        STARS     OFFICIAL   AUTOMATED
+python                         Python is an interpreted,...       982       [OK]
+kaggle/python                  Docker image for Python...         33                   [OK]
+azukiapp/python                Docker image to run Python ...     3                    [OK]
+vimagick/python                mini python                                  2          [OK]
+tsuru/python                   Image for the Python ...           2                    [OK]
+pandada8/alpine-python         An alpine based python image                 1          [OK]
+1science/python                Python Docker images based on ...  1                    [OK]
+lucidfrontier45/python-uwsgi   Python with uWSGI                  1                    [OK]
+orbweb/python                  Python image                       1                    [OK]
+pathwar/python                 Python template for Pathwar levels 1                    [OK]
+rounds/10m-python              Python, setuptools and pip.        0                    [OK]
+ruimashita/python              ubuntu 14.04 python                0                    [OK]
+tnanba/python                  Python on CentOS-7 image.          0                    [OK]
+```
 
-## 完成标准
+这里我们拉取官方的镜像,标签为3.5
 
-- 能用 3 到 5 句话解释 `Docker 安装 Python`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+runoob@runoob:~/python$ docker pull python:3.5
+```
+
+等待下载完成后，我们就可以在本地镜像列表里查到 REPOSITORY 为python, 标签为 3.5 的镜像。
+
+```text
+runoob@runoob:~/python$ docker images python:3.5
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+python              3.5              045767ddf24a        9 days ago          684.1 MB
+```
+
+
+### 方法二、通过 Dockerfile 构建
+
+
+## 复习重点
+
+- 能说明 `Docker 安装 Python` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

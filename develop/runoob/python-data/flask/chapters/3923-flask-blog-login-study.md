@@ -1,35 +1,90 @@
-# Flask：Flask-Login 学习笔记
+# Flask：Flask-Login — 用户注册、登录、登出
 
 - 来源：[Flask-Login](https://www.runoob.com/flask/flask-blog-login.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3923
 
-## 学习目标
+## 本章内容
 
-Flask 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Flask-Login` 建立学习路径，先理解它在 Flask 体系中的位置，再做可运行或可复述的验证。
+本章你将学会用 Flask-Login 实现 Session 用户认证，这是 Flask Web 开发最重要的安全保障。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## Flask-Login 是什么？
 
-## 笔记模板
+Web 应用的 HTTP 请求本质上是无状态的——服务器不会自动记住你是谁。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Flask-Login 通过 Session 机制实现用户状态的维护：登录后服务器在 Session 中存入用户 ID，后续请求自动识别当前用户。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Flask-Login`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 安装与初始化
+
+```text
+(venv) $ pip install flask-login
+```
+
+
+## 实例
+
+SECRET_KEY 是 Flask 安全体系的基石——Session 加密、CSRF Token、Flash 消息都依赖它。生产环境中必须从环境变量读取，不可硬编码。
+
+
+## 定义 User 模型
+
+Flask-Login 要求 User 模型实现 UserMixin 提供的几个方法。
+
+
+## 实例
+
+UserMixin 自动为 User 模型注入以下属性和方法：
+
+生成迁移并执行：
+
+```text
+(venv) $ flask db migrate -m "新增 User 模型"
+(venv) $ flask db upgrade
+```
+
+
+## 创建认证 Blueprint
+
+
+## 实例
+
+
+### 在设计 App 中需要的引用
+
+
+## 实例
+
+永远不要明文存储密码！generate_password_hash() 使用 PBKDF2 算法对密码做 salted hash。即使数据库泄露，攻击者也无法反向推导密码。校验密码时用 check_password_hash()。
+
+
+## 创建登录和注册模板
+
+
+## 实例
+
+
+### 更新导航栏显示登录状态
+
+
+## 实例
+
+current_user 是 Flask-Login 自动注入的代理对象，在所有模板和视图函数中都可以直接使用。登录状态下它是一个 User 对象，未登录时是 AnonymousUserMixin 实例。
+
+
+## 本章小结
+
+本章你接入了 Flask-Login Session 认证：UserMixin + user_loader 组合用户模型、login_user/logout_user 管理 Session、werkzeug 哈希密码、@login_required 保护视图、模板中 current_user 判断状态。
+
+现在博客有了完整的用户注册、登录、登出流程。
+
+
+## 复习重点
+
+- 能说明 `Flask-Login` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

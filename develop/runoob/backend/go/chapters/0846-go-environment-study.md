@@ -1,35 +1,90 @@
-# Go：Go 语言环境安装 学习笔记
+# Go：Go 语言环境安装
 
 - 来源：[Go 语言环境安装](https://www.runoob.com/go/go-environment.html)
 - 分类：后端开发
 - 技术：Go
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0846
 
-## 学习目标
+## 本章内容
 
-Go 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Go 语言环境安装` 建立学习路径，先理解它在 Go 体系中的位置，再做可运行或可复述的验证。
+Go 语言支持以下系统：
 
-## 阅读抓手
+- Linux
+- FreeBSD
+- Mac OS X（也称为 Darwin）
+- Windows
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+安装包下载地址为：https://go.dev/dl/。
 
-## 笔记模板
+如果打不开可以使用这个地址：https://golang.google.cn/dl/。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+各个系统对应的包名：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Go 语言环境安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## UNIX/Linux/Mac OS X, 和 FreeBSD 安装
+
+以下介绍了在UNIX/Linux/Mac OS X, 和 FreeBSD系统下使用源码安装方法：
+
+1、下载二进制包：go1.4.linux-amd64.tar.gz。
+
+2、将下载的二进制包解压至 /usr/local目录。
+
+```text
+tar -C /usr/local -xzf go1.4.linux-amd64.tar.gz
+```
+
+3、将 /usr/local/go/bin 目录添加至 PATH 环境变量：
+
+```text
+export PATH=$PATH:/usr/local/go/bin
+```
+
+以上只能暂时添加 PATH，关闭终端下次再登录就没有了。
+
+我们可以编辑 ~/.bash_profile 或者 /etc/profile，并将以下命令添加该文件的末尾，这样就永久生效了：
+
+```text
+export PATH=$PATH:/usr/local/go/bin
+```
+
+添加后需要执行：
+
+```text
+source ~/.bash_profile
+或
+source /etc/profile
+```
+
+注意：MAC 系统下你可以使用 .pkg 结尾的安装包直接双击来完成安装，安装目录在 /usr/local/go/ 下。
+
+
+## Windows 系统下安装
+
+Windows 下可以使用 .msi 后缀(在下载列表中可以找到该文件，如go1.4.2.windows-amd64.msi)的安装包来安装。
+
+默认情况下 .msi 文件会安装在 c:\Go 目录下。你可以将 c:\Go\bin 目录添加到 Path 环境变量中。添加后你需要重启命令窗口才能生效。
+
+
+### 安装测试
+
+创建工作目录 C:\>Go_WorkSpace。
+
+
+## test.go 文件代码：
+
+使用 go 命令执行以上代码输出结果如下：
+
+```text
+C:\Go_WorkSpace>go run test.go
+
+Hello, World!
+```
+
+
+## 复习重点
+
+- 能说明 `Go 语言环境安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

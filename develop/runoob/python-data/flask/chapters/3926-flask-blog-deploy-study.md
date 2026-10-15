@@ -1,35 +1,111 @@
-# Flask：打包上线 学习笔记
+# Flask：打包上线 — 部署到 Railway
 
 - 来源：[打包上线](https://www.runoob.com/flask/flask-blog-deploy.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3926
 
-## 学习目标
+## 本章内容
 
-Flask 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `打包上线` 建立学习路径，先理解它在 Flask 体系中的位置，再做可运行或可复述的验证。
+本章你将学会应用工厂模式、生产环境配置，并用 Railway 将 Flask 博客部署上线。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 应用工厂模式 create_app()
 
-## 笔记模板
+到目前为止，app.py 中直接创建了 app = Flask(__name__)，这在开发时够用，但有几个问题：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 测试时无法创建独立的 app 实例
+- 无法按环境（开发/测试/生产）切换不同配置
+- 扩展初始化与 app 实例紧耦合
 
-## 完成标准
+应用工厂模式 解决了这些问题：把 app 的创建封装到一个函数中。
 
-- 能用 3 到 5 句话解释 `打包上线`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+
+### 配置文件 config.py
+
+
+## 实例
+
+
+### 新的入口文件 wsgi.py
+
+
+## 实例
+
+现在启动方式变为：
+
+```text
+(venv) $ flask --app wsgi run --debug      # 开发模式
+(venv) $ gunicorn wsgi:app                  # 生产模式（Gunicorn）
+```
+
+注意 import 顺序：Blueprint 和 user_loader 必须在 create_app() 内部导入（而非文件顶部），否则会触发循环导入（Blueprint 引用了 models，models 引用了 db，而 db 此时尚未绑定到 app）。
+
+
+## 生成 requirements.txt 与 Procfile
+
+```text
+(venv) $ pip freeze > requirements.txt
+```
+
+确保文件中包含关键依赖：Flask、Flask-SQLAlchemy、Flask-Migrate、Flask-Login、Flask-WTF、Flask-Admin、gunicorn、python-dotenv。
+
+在项目根目录创建 Procfile：
+
+```text
+web: gunicorn wsgi:app
+```
+
+
+## 将项目推送到 GitHub
+
+```text
+$ git init
+$ echo "venv/" > .gitignore
+$ echo "__pycache__/" >> .gitignore
+$ echo "*.pyc" >> .gitignore
+$ echo "instance/" >> .gitignore
+$ echo ".env" >> .gitignore
+$ git add .
+$ git commit -m "初始化 Flask 博客项目"
+$ git branch -M main
+$ git remote add origin https://github.com/你的用户名/flask-blog.git
+$ git push -u origin main
+```
+
+务必把 .env 加入 .gitignore。.env 文件包含 SECRET_KEY 等敏感信息，一旦提交到 GitHub 就无法彻底删除（Git 历史会保留）。
+
+
+## Railway 部署
+
+- 访问 railway.app，用 GitHub 登录
+- New Project → Deploy from GitHub repo → 选择 flask-blog
+- Railway 自动检测 Procfile，识别 Gunicorn 启动命令
+- 在 Variables 中设置环境变量
+- 点击 Deploy
+
+
+### 环境变量配置
+
+快速生成 SECRET_KEY：
+
+```text
+$ python -c "import secrets; print(secrets.token_urlsafe(50))"
+```
+
+部署成功后，获得链接如 https://flask-blog.up.railway.app。
+
+
+## 下一步学习方向
+
+
+## 复习重点
+
+- 能说明 `打包上线` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

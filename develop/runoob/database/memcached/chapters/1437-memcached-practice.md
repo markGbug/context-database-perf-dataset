@@ -1,34 +1,70 @@
-# Memcached：Memcached 教程 练习笔记
+# Memcached：Memcached 教程
 
 - 来源：[Memcached 教程](https://www.runoob.com/memcached/memcached-tutorial.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1437
 
-## 练习目标
+## 本章内容
 
-把 `Memcached 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Memcached是一个自由开源的，高性能，分布式内存对象缓存系统。
 
-## 练习步骤
+Memcached是以LiveJournal旗下Danga Interactive公司的Brad Fitzpatric为首开发的一款软件。现在已成为mixi、hatena、Facebook、Vox、LiveJournal等众多服务中提高Web应用扩展性的重要因素。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Memcached是一种基于内存的key-value存储，用来存储小块的任意数据（字符串、对象）。这些数据可以是数据库调用、API调用或者是页面渲染的结果。
 
-## 验收清单
+Memcached简洁而强大。它的简洁设计便于快速开发，减轻开发难度，解决了大数据量缓存的很多问题。它的API兼容大部分流行的开发语言。
 
-- 我能独立说出 `Memcached 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+本质上，它是一个简洁的key-value存储系统。
 
-## 复盘问题
+一般的使用目的是，通过缓存数据库查询结果，减少数据库访问次数，以提高动态Web应用的速度、提高可扩展性。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Memcached 官网：https://memcached.org/。
+
+
+## 特征
+
+memcached作为高速运行的分布式缓存服务器，具有以下的特点。
+
+- 协议简单
+- 基于libevent的事件处理
+- 内置内存存储方式
+- memcached不互相通信的分布式
+
+
+## 支持的语言
+
+许多语言都实现了连接memcached的客户端，其中以Perl、PHP为主。仅仅memcached网站上列出的有：
+
+- Perl
+- PHP
+- Python
+- Ruby
+- C#
+- C/C++
+- Lua
+- 等等
+
+
+## Memcached 用户
+
+- LiveJournal
+- Wikipedia
+- Flickr
+- Bebo
+- Twitter
+- Typepad
+- Yellowbot
+- Youtube
+- WordPress.com
+- Craigslist
+- Mixi
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Memcached 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,108 @@
-# Google 地图：Google 地图事件 学习笔记
+# Google 地图：Google 地图事件
 
 - 来源：[Google 地图事件](https://www.runoob.com/googleapi/google-maps-events.html)
 - 分类：前端开发
 - 技术：Google 地图
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2566
 
-## 学习目标
+## 本章内容
 
-Google 地图 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Google 地图事件` 建立学习路径，先理解它在 Google 地图 体系中的位置，再做可运行或可复述的验证。
+点击标记缩放地图 - 绑定在google地图上的事件。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 点击标记缩放地图
 
-## 笔记模板
+我们仍然使用上一遍文章使用的英国伦敦的地图。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+点用户点击标记时实现缩放地图的功能(点击标记时绑定地图缩放事件)。
 
-## 完成标准
+代码如下：
 
-- 能用 3 到 5 句话解释 `Google 地图事件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+```text
+// Zoom to 9 when clicking on marker
+google.maps.event.addListener(marker,'click',function() {
+  map.setZoom(9);
+  map.setCenter(marker.getPosition());
+});
+```
+
+使用 addListener() 事件处理程序来注册事件的监听。该方法使用一个对象，一个事件来监听，当指定的事件发生时 函数将被调用。
+
+
+## 重置标记
+
+我们通过给地图添加事件处理程序来改变 'center' 属性，以下代码使用 center_changed 事件在3秒后标记移会中心点:
+
+
+## 实例
+
+```text
+google.maps.event.addListener(map,'center_changed',function() {
+  window.setTimeout(function() {
+    map.panTo(marker.getPosition());
+  },3000);
+});
+```
+
+
+## 点击标记时打开信息窗口。
+
+点击标记在信息窗口显示一些文本信息：
+
+
+## 实例
+
+```javascript
+var infowindow = new google.maps.InfoWindow({
+  content:"Hello World!"
+});
+
+google.maps.event.addListener(marker, 'click', function() {
+  infowindow.open(map,marker);
+});
+```
+
+
+## 设置标记及打开每个标记的信息窗口
+
+当用户点击地图时执行一个窗口
+
+用户点击地图某个位置时使用 placeMarker() 函数在指定位置上放置一个标记，并弹出信息窗口：
+
+
+## 实例
+
+```html
+google.maps.event.addListener(map, 'click', function(event) {
+  placeMarker(event.latLng);
+});
+
+function placeMarker(location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map,
+  });
+  var infowindow = new google.maps.InfoWindow({
+    content: 'Latitude: ' + location.lat() +
+    '<br>Longitude: ' + location.lng()
+  });
+  infowindow.open(map,marker);
+}
+```
+
+
+## Google 地图 - 事件参考手册
+
+Google Maps API 参考手册。
+
+
+## 复习重点
+
+- 能说明 `Google 地图事件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

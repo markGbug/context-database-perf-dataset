@@ -1,35 +1,215 @@
-# React：React 组件生命周期 学习笔记
+# React：React 组件生命周期
 
 - 来源：[React 组件生命周期](https://www.runoob.com/react/react-component-life-cycle.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3050
 
-## 学习目标
+## 本章内容
 
-React 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `React 组件生命周期` 建立学习路径，先理解它在 React 体系中的位置，再做可运行或可复述的验证。
+在本章节中我们将讨论 React 组件的生命周期。
 
-## 阅读抓手
+组件的生命周期可分成三个状态：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- Mounting(挂载)：已插入真实 DOM
+- Updating(更新)：正在被重新渲染
+- Unmounting(卸载)：已移出真实 DOM
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 挂载
 
-## 完成标准
+当组件实例被创建并插入 DOM 中时，其生命周期调用顺序如下：
 
-- 能用 3 到 5 句话解释 `React 组件生命周期`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- constructor(): 在 React 组件挂载之前，会调用它的构造函数。
+- getDerivedStateFromProps(): 在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。
+- render(): render() 方法是 class 组件中唯一必须实现的方法。
+- componentDidMount(): 在组件挂载后（插入 DOM 树中）立即调用。
+
+render() 方法是 class 组件中唯一必须实现的方法，其他方法可以根据自己的需要来实现。
+
+这些方法的详细说明，可以参考官方文档。
+
+
+## 更新
+
+每当组件的 state 或 props 发生变化时，组件就会更新。
+
+当组件的 props 或 state 发生变化时会触发更新。组件更新的生命周期调用顺序如下：
+
+- getDerivedStateFromProps(): 在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。根据 shouldComponentUpdate() 的返回值，判断 React 组件的输出是否受当前 state 或 props 更改的影响。
+- shouldComponentUpdate():当 props 或 state 发生变化时，shouldComponentUpdate() 会在渲染执行之前被调用。
+- render(): render() 方法是 class 组件中唯一必须实现的方法。
+- getSnapshotBeforeUpdate(): 在最近一次渲染输出（提交到 DOM 节点）之前调用。
+- componentDidUpdate(): 在更新后会被立即调用。
+
+render() 方法是 class 组件中唯一必须实现的方法，其他方法可以根据自己的需要来实现。
+
+这些方法的详细说明，可以参考官方文档。
+
+
+## 卸载
+
+当组件从 DOM 中移除时会调用如下方法：
+
+- componentWillUnmount(): 在组件卸载及销毁之前直接调用。
+
+这些方法的详细说明，可以参考官方文档。
+
+
+## 实例
+
+以下是一个当前时间的实例，每秒更新：
+
+
+## 实例
+
+```html
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, Runoob!</h1>
+        <h2>现在时间是：{this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.body);
+root.render(
+  <Clock />
+);
+```
+
+以下实例在 Hello 组件加载以后，通过 componentDidMount 方法设置一个定时器，每隔100毫秒重新设置组件的透明度，并重新渲染：
+
+
+## React 实例
+
+```html
+class Hello extends React.Component {
+
+  constructor(props) {
+      super(props);
+      this.state = {opacity: 1.0};
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(function () {
+      var opacity = this.state.opacity;
+      opacity -= .05;
+      if (opacity < 0.1) {
+        opacity = 1.0;
+      }
+      this.setState({
+        opacity: opacity
+      });
+    }.bind(this), 100);
+  }
+
+  render () {
+    return (
+      <div style={{opacity: this.state.opacity}}>
+        Hello {this.props.name}
+      </div>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Hello name="world"/>
+);
+```
+
+以下实例初始化 state ， setNewnumber 用于更新 state。所有生命周期在 Content 组件中。
+
+
+## React 实例
+
+```html
+class Button extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: 0 };
+    this.setNewNumber = this.setNewNumber.bind(this);
+  }
+
+  setNewNumber() {
+    this.setState({ data: this.state.data + 1 });
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.setNewNumber}>INCREMENT</button>
+        <Content myNumber={this.state.data} />
+      </div>
+    );
+  }
+}
+
+class Content extends React.Component {
+  componentDidMount() {
+    console.log("Component DID MOUNT!");
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    return true;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Component DID UPDATE!");
+  }
+
+  componentWillUnmount() {
+    console.log("Component WILL UNMOUNT!");
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>{this.props.myNumber}</h3>
+      </div>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <div>
+    <Button />
+  </div>
+);
+```
+
+
+## 复习重点
+
+- 能说明 `React 组件生命周期` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

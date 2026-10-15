@@ -1,34 +1,104 @@
-# PostgreSQL：PostgreSQL 创建数据库 练习笔记
+# PostgreSQL：PostgreSQL 创建数据库
 
 - 来源：[PostgreSQL 创建数据库](https://www.runoob.com/postgresql/postgresql-create-database.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1555
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL 创建数据库` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PostgreSQL 创建数据库可以用以下三种方式：
 
-## 练习步骤
+- 1、使用 CREATE DATABASE SQL 语句来创建。
+- 2、使用 createdb 命令来创建。
+- 3、使用 pgAdmin 工具。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### CREATE DATABASE 创建数据库
 
-- 我能独立说出 `PostgreSQL 创建数据库` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+CREATE DATABASE 命令需要在 PostgreSQL 命令窗口来执行，语法格式如下：
 
-## 复盘问题
+```text
+CREATE DATABASE dbname;
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+例如，我们创建一个 runoobdb 的数据库：
+
+```text
+postgres=# CREATE DATABASE runoobdb;
+```
+
+
+### createdb 命令创建数据库
+
+createdb 是一个 SQL 命令 CREATE DATABASE 的封装。
+
+createdb 命令语法格式如下：
+
+```text
+createdb [option...] [dbname [description]]
+```
+
+参数说明：
+
+dbname：要创建的数据库名。
+
+description：关于新创建的数据库相关的说明。
+
+options：参数可选项，可以是以下值：
+
+-D tablespace
+
+指定数据库默认表空间。
+
+-e
+
+将 createdb 生成的命令发送到服务端。
+
+-E encoding
+
+指定数据库的编码。
+
+-l locale
+
+指定数据库的语言环境。
+
+-T template
+
+指定创建此数据库的模板。
+
+--help
+
+显示 createdb 命令的帮助信息。
+
+-h host
+
+指定服务器的主机名。
+
+-p port
+
+指定服务器监听的端口，或者 socket 文件。
+
+-U username
+
+连接数据库的用户名。
+
+-w
+
+忽略输入密码。
+
+-W
+
+
+### pgAdmin 工具创建数据库
+
+pgAdmin 工具提供了完整操作数据库的功能：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL 创建数据库` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,165 @@
-# PHP：AJAX 实时搜索 练习笔记
+# PHP：PHP 实例 - AJAX 实时搜索
 
 - 来源：[AJAX 实时搜索](https://www.runoob.com/php/php-ajax-livesearch.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1102
 
-## 练习目标
+## 本章内容
 
-把 `AJAX 实时搜索` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+AJAX 可为用户提供更友好、交互性更强的搜索体验。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## AJAX Live Search
 
-## 验收清单
+在下面的实例中，我们将演示一个实时的搜索，在您键入数据的同时即可得到搜索结果。
 
-- 我能独立说出 `AJAX 实时搜索` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+实时的搜索与传统的搜索相比，具有很多优势：
 
-## 复盘问题
+- 当键入数据时，就会显示出匹配的结果
+- 当继续键入数据时，对结果进行过滤
+- 如果结果太少，删除字符就可以获得更宽的范围
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在下面的文本框中输入 "HTML"，搜索包含 HTML 的页面：
+
+上面实例中的结果在一个 XML 文件（links.xml）中进行查找。为了让这个例子小而简单，我们只提供 6 个结果。
+
+
+## 实例解释 - HTML 页面
+
+当用户在上面的输入框中键入字符时，会执行 "showResult()" 函数。该函数由 "onkeyup" 事件触发：
+
+```html
+<html>
+<head>
+<script>
+function showResult(str)
+{
+    if (str.length==0)
+    {
+        document.getElementById("livesearch").innerHTML="";
+        document.getElementById("livesearch").style.border="0px";
+        return;
+    }
+    if (window.XMLHttpRequest)
+    {// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// IE6, IE5 浏览器执行
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            document.getElementById("livesearch").innerHTML=xmlhttp.responseText;
+            document.getElementById("livesearch").style.border="1px solid #A5ACB2";
+        }
+    }
+    xmlhttp.open("GET","livesearch.php?q="+str,true);
+    xmlhttp.send();
+}
+</script>
+</head>
+<body>
+
+<form>
+<input type="text" size="30" onkeyup="showResult(this.value)">
+<div id="livesearch"></div>
+</form>
+
+</body>
+</html>
+```
+
+源代码解释：
+
+如果输入框是空的（str.length==0），该函数会清空 livesearch 占位符的内容，并退出该函数。
+
+如果输入框不是空的，那么 showResult() 会执行以下步骤：
+
+- 创建 XMLHttpRequest 对象
+- 创建在服务器响应就绪时执行的函数
+- 向服务器上的文件发送请求
+- 请注意添加到 URL 末端的参数（q）（包含输入框的内容）
+
+
+## PHP 文件
+
+上面这段通过 JavaScript 调用的服务器页面是名为 "livesearch.php" 的 PHP 文件。
+
+"livesearch.php" 中的源代码会搜索 XML 文件中匹配搜索字符串的标题，并返回结果：
+
+```java
+<?php
+$xmlDoc=new DOMDocument();
+$xmlDoc->load("links.xml");
+
+$x=$xmlDoc->getElementsByTagName('link');
+
+// 从 URL 中获取参数 q 的值
+$q=$_GET["q"];
+
+// 如果 q 参数存在则从 xml 文件中查找数据
+if (strlen($q)>0)
+{
+    $hint="";
+    for($i=0; $i<($x->length); $i++)
+    {
+        $y=$x->item($i)->getElementsByTagName('title');
+        $z=$x->item($i)->getElementsByTagName('url');
+        if ($y->item(0)->nodeType==1)
+        {
+            // 找到匹配搜索的链接
+            if (stristr($y->item(0)->childNodes->item(0)->nodeValue,$q))
+            {
+                if ($hint=="")
+                {
+                    $hint="<a href='" .
+                    $z->item(0)->childNodes->item(0)->nodeValue .
+                    "' target='_blank'>" .
+                    $y->item(0)->childNodes->item(0)->nodeValue . "</a>";
+                }
+                else
+                {
+                    $hint=$hint . "<br /><a href='" .
+                    $z->item(0)->childNodes->item(0)->nodeValue .
+                    "' target='_blank'>" .
+                    $y->item(0)->childNodes->item(0)->nodeValue . "</a>";
+                }
+            }
+        }
+    }
+}
+
+// 如果没找到则返回 "no suggestion"
+if ($hint=="")
+{
+    $response="no suggestion";
+}
+else
+{
+    $response=$hint;
+}
+
+// 输出结果
+echo $response;
+?>
+```
+
+如果 JavaScript 发送了任何文本（即 strlen($q) > 0），则会发生：
+
+- 加载 XML 文件到新的 XML DOM 对象
+- 遍历所有的 <title> 元素，以便找到匹配 JavaScript 所传文本
+- 在 "$response" 变量中设置正确的 URL 和标题。如果找到多于一个匹配，所有的匹配都会添加到变量。
+- 如果没有找到匹配，则把 $response 变量设置为 "no suggestion"。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AJAX 实时搜索` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,49 @@
-# jQuery EasyUI：jEasyUI 添加工具栏 学习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 添加工具栏
 
 - 来源：[jEasyUI 添加工具栏](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid4.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2863
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 添加工具栏` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+本实例演示如何添加工具栏（toolbar）到数据网格（datagrid）。
 
-## 阅读抓手
+```html
+    <table id="tt" class="easyui-datagrid" style="width:600px;height:250px"
+            url="data/datagrid_data.json"
+            title="DataGrid with Toolbar" iconCls="icon-save"
+            toolbar="#tb">
+        <thead>
+            <tr>
+                <th field="itemid" width="80">Item ID</th>
+                <th field="productid" width="80">Product ID</th>
+                <th field="listprice" width="80" align="right">List Price</th>
+                <th field="unitcost" width="80" align="right">Unit Cost</th>
+                <th field="attr1" width="150">Attribute</th>
+                <th field="status" width="60" align="center">Stauts</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="tb">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:alert('Add')">Add</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:alert('Cut')">Cut</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:alert('Save')">Save</a>
+    </div>
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+我们不需要写任何的 javascript 代码，只需通过 'toolbar' 属性附加工具栏（toolbar）到数据网格（datagrid）。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 下载 jQuery EasyUI 实例
 
-## 完成标准
+jeasyui-datagrid-datagrid4.zip
 
-- 能用 3 到 5 句话解释 `jEasyUI 添加工具栏`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 复习重点
+
+- 能说明 `jEasyUI 添加工具栏` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

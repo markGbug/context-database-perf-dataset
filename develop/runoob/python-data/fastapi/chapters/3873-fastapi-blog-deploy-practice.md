@@ -1,34 +1,99 @@
-# FastAPI：打包上线 练习笔记
+# FastAPI：打包上线 — 部署到 Railway
 
 - 来源：[打包上线](https://www.runoob.com/fastapi/fastapi-blog-deploy.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3873
 
-## 练习目标
+## 本章内容
 
-把 `打包上线` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章你将学会 FastAPI 的生产环境配置，并用 Railway 将博客部署上线。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 生产环境配置管理
 
-## 验收清单
+```text
+(venv) $ pip install pydantic-settings python-dotenv
+```
 
-- 我能独立说出 `打包上线` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+创建 .env 文件：
+
+```text
+SECRET_KEY=a1b2c3d4...your-real-secret-key
+DATABASE_URL=sqlite:///./blog.db
+DEBUG=False
+```
+
+
+## 生成依赖文件
+
+```text
+(venv) $ pip freeze > requirements.txt
+```
+
+确保包含核心依赖：fastapi、uvicorn、sqlalchemy、jinja2、alembic、passlib、python-jose、python-multipart、sqladmin、pydantic-settings。
+
+
+## 配置 Procfile 和启动命令
+
+FastAPI 使用 ASGI 服务器，与 Flask/Django 的 WSGI 不同：
+
+```text
+web: uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+如果需要多 worker（生产环境推荐）：
+
+```text
+web: gunicorn -k uvicorn.workers.UvicornWorker -w 4 main:app
+```
+
+WSGI vs ASGI：Django/Flask 用 Gunicorn（WSGI 服务器），FastAPI 用 Uvicorn（ASGI 服务器）。Gunicorn 本身是 WSGI，但可以通过 uvicorn.workers.UvicornWorker 跑 ASGI 应用。
+
+
+## 推送到 GitHub
+
+```text
+$ git init
+$ echo "venv/" > .gitignore
+$ echo "__pycache__/" >> .gitignore
+$ echo "*.pyc" >> .gitignore
+$ echo ".env" >> .gitignore
+$ git add .
+$ git commit -m "初始化 FastAPI 博客项目"
+$ git branch -M main
+$ git remote add origin https://github.com/你的用户名/fastapi-blog.git
+$ git push -u origin main
+```
+
+
+## Railway 部署
+
+- 访问 railway.app，用 GitHub 登录
+- New Project → Deploy from GitHub repo → 选择 fastapi-blog
+- Railway 自动检测 Procfile
+- 在 Variables 中设置环境变量
+- 点击 Deploy
+
+
+### 环境变量配置
+
+部署成功后获得链接，访问 /docs 能看到 Swagger 文档，访问 /admin 进入后台管理。
+
+
+## 框架对比
+
+
+## 下一步学习方向
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `打包上线` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,118 @@
-# SQL：SQL INNER JOIN 练习笔记
+# SQL：SQL INNER JOIN 关键字
 
 - 来源：[SQL INNER JOIN](https://www.runoob.com/sql/sql-join-inner.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1639
 
-## 练习目标
+## 本章内容
 
-把 `SQL INNER JOIN` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+INNER JOIN 是 SQL 中最常用的连接方式之一，用于从多个表中根据它们之间的关系提取匹配的记录。
 
-## 练习步骤
+INNER JOIN 关键字在表中存在至少一个匹配时返回行，返回的是两个表中满足连接条件的交集，即同时存在于两个表中的数据。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### SQL INNER JOIN 语法
 
-- 我能独立说出 `SQL INNER JOIN` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2
+ON table1.column_name=table2.column_name;
+```
 
-## 复盘问题
+或：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+SELECT column_name(s)
+FROM table1
+JOIN table2
+ON table1.column_name=table2.column_name;
+```
+
+参数说明：
+
+- columns：要显示的列名。
+- table1：表1的名称。
+- table2：表2的名称。
+- column_name：表中用于连接的列名。
+
+注释：INNER JOIN 与 JOIN 是相同的。
+
+假设有两个表：Students 和 Enrollments。
+
+Students 表：
+
+Enrollments 表：
+
+```text
+SELECT Students.Name, Enrollments.Course
+FROM Students
+INNER JOIN Enrollments
+ON Students.StudentID = Enrollments.StudentID;
+```
+
+得到结果如下：
+
+解释：INNER JOIN 返回的是 Students 和 Enrollments 表中 StudentID 匹配的数据。没有匹配上的记录（如 Charlie 和 EnrollmentID 为 103 的数据）将被排除。
+
+
+## 演示数据库
+
+在本教程中，我们将使用 RUNOOB 样本数据库。
+
+下面是选自 "Websites" 表的数据：
+
+```text
++----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
+| 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |
++----+---------------+---------------------------+-------+---------+
+```
+
+下面是 "access_log" 网站访问记录表的数据：
+
+```text
+mysql> SELECT * FROM access_log;
++-----+---------+-------+------------+
+| aid | site_id | count | date       |
++-----+---------+-------+------------+
+|   1 |       1 |    45 | 2016-05-10 |
+|   2 |       3 |   100 | 2016-05-13 |
+|   3 |       1 |   230 | 2016-05-14 |
+|   4 |       2 |    10 | 2016-05-14 |
+|   5 |       5 |   205 | 2016-05-14 |
+|   6 |       4 |    13 | 2016-05-15 |
+|   7 |       3 |   220 | 2016-05-15 |
+|   8 |       5 |   545 | 2016-05-16 |
+|   9 |       3 |   201 | 2016-05-17 |
++-----+---------+-------+------------+
+9 rows in set (0.00 sec)
+```
+
+
+## SQL INNER JOIN 实例
+
+下面的 SQL 语句将返回所有网站的访问记录：
+
+
+## 实例
+
+执行以上 SQL 输出结果如下：
+
+注释：INNER JOIN 关键字在表中存在至少一个匹配时返回行。如果 "Websites" 表中的行在 "access_log" 中没有匹配，则不会列出这些行。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL INNER JOIN` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

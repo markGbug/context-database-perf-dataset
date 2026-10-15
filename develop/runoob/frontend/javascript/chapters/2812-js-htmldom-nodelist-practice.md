@@ -1,34 +1,110 @@
-# JavaScript：NodeList 对象 练习笔记
+# JavaScript：JavaScript HTML DOM 节点列表
 
 - 来源：[NodeList 对象](https://www.runoob.com/js/js-htmldom-nodelist.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2812
 
-## 练习目标
+## 本章内容
 
-把 `NodeList 对象` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+NodeList 对象是一个从文档中获取的节点列表 (集合) 。
 
-## 练习步骤
+NodeList 对象类似 HTMLCollection 对象。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+一些旧版本浏览器中的方法（如：getElementsByClassName()）返回的是 NodeList 对象，而不是 HTMLCollection 对象。
 
-## 验收清单
+所有浏览器的 childNodes 属性返回的是 NodeList 对象。
 
-- 我能独立说出 `NodeList 对象` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+大部分浏览器的 querySelectorAll() 返回 NodeList 对象。
 
-## 复盘问题
+以下代码选取了文档中所有的 <p> 节点：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+```javascript
+var myNodeList = document.querySelectorAll("p");
+```
+
+NodeList 中的元素可以通过索引(以 0 为起始位置)来访问。
+
+访问第二个 <p> 元素可以是以下代码:
+
+
+## NodeList 对象 length 属性
+
+NodeList 对象 length 属性定义了节点列表中元素的数量。
+
+
+## 实例
+
+```javascript
+var myNodelist = document.querySelectorAll("p");
+document.getElementById("demo").innerHTML = myNodelist.length;
+```
+
+
+### 实例解析
+
+获取 <p> 元素的集合：
+
+```javascript
+var myNodelist = document.querySelectorAll("p");
+```
+
+显示节点列表的元素个数：
+
+```text
+document.getElementById("demo").innerHTML = myNodelist.length;
+```
+
+length 属性常用于遍历节点列表。
+
+
+## 实例
+
+修改节点列表中所有 <p> 元素的背景颜色:
+
+```java
+var myNodelist = document.querySelectorAll("p");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+    myNodelist[i].style.backgroundColor = "red";
+}
+```
+
+
+## HTMLCollection 与 NodeList 的区别
+
+HTMLCollection 是 HTML 元素的集合。
+
+NodeList 是一个文档节点的集合。
+
+NodeList 与 HTMLCollection 有很多类似的地方。
+
+NodeList 与 HTMLCollection 都与数组对象有点类似，可以使用索引 (0, 1, 2, 3, 4, ...) 来获取元素。
+
+NodeList 与 HTMLCollection 都有 length 属性。
+
+HTMLCollection 元素可以通过 name，id 或索引来获取。
+
+NodeList 只能通过索引来获取。
+
+只有 NodeList 对象有包含属性节点和文本节点。
+
+节点列表不是一个数组！
+
+节点列表看起来可能是一个数组，但其实不是。
+
+你可以像数组一样，使用索引来获取元素。
+
+节点列表无法使用数组的方法： valueOf(), pop(), push(), 或 join() 。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `NodeList 对象` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

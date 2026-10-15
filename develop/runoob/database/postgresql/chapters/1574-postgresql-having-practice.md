@@ -1,34 +1,128 @@
-# PostgreSQL：PostgreSQL HAVING 练习笔记
+# PostgreSQL：PostgreSQL HAVING 子句
 
 - 来源：[PostgreSQL HAVING](https://www.runoob.com/postgresql/postgresql-having.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1574
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL HAVING` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+HAVING 子句可以让我们筛选分组后的各组数据。
 
-## 练习步骤
+WHERE 子句在所选列上设置条件，而 HAVING 子句则在由 GROUP BY 子句创建的分组上设置条件。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 语法
 
-- 我能独立说出 `PostgreSQL HAVING` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+下面是 HAVING 子句在 SELECT 查询中的位置：
 
-## 复盘问题
+```text
+SELECT
+FROM
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+HAVING 子句必须放置于 GROUP BY 子句后面，ORDER BY 子句前面，下面是 HAVING 子句在 SELECT 语句中基础语法：
+
+```text
+SELECT column1, column2
+FROM table1, table2
+WHERE [ conditions ]
+GROUP BY column1, column2
+HAVING [ conditions ]
+ORDER BY column1, column2
+```
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+下面实例将找出根据 NAME 字段值进行分组，并且 name(名称) 字段的计数少于 2 数据：
+
+```text
+SELECT NAME FROM COMPANY GROUP BY name HAVING count(name) < 2;
+```
+
+得到以下结果：
+
+```text
+  name
+ -------
+  Teddy
+  Paul
+  Mark
+  David
+  Allen
+  Kim
+  James
+(7 rows)
+```
+
+我们往表里添加几条数据：
+
+```text
+INSERT INTO COMPANY VALUES (8, 'Paul', 24, 'Houston', 20000.00);
+INSERT INTO COMPANY VALUES (9, 'James', 44, 'Norway', 5000.00);
+INSERT INTO COMPANY VALUES (10, 'James', 45, 'Texas', 5000.00);
+```
+
+此时，COMPANY 表的记录如下：
+
+```text
+ id | name  | age | address      | salary
+ ----+-------+-----+--------------+--------
+   1 | Paul  |  32 | California   |  20000
+   2 | Allen |  25 | Texas        |  15000
+   3 | Teddy |  23 | Norway       |  20000
+   4 | Mark  |  25 | Rich-Mond    |  65000
+   5 | David |  27 | Texas        |  85000
+   6 | Kim   |  22 | South-Hall   |  45000
+   7 | James |  24 | Houston      |  10000
+   8 | Paul  |  24 | Houston      |  20000
+   9 | James |  44 | Norway       |   5000
+  10 | James |  45 | Texas        |   5000
+(10 rows)
+```
+
+下面实例将找出根据 name 字段值进行分组，并且名称的计数大于 1 数据：
+
+```text
+runoobdb-# SELECT NAME FROM COMPANY GROUP BY name HAVING count(name) > 1;
+```
+
+得到结果如下：
+
+```text
+ name
+-------
+ Paul
+ James
+(2 rows)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL HAVING` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

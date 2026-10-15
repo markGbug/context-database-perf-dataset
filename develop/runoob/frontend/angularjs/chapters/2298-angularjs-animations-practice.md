@@ -1,34 +1,104 @@
-# AngularJS：AngularJS 动画 练习笔记
+# AngularJS：AngularJS 动画
 
 - 来源：[AngularJS 动画](https://www.runoob.com/angularjs/angularjs-animations.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2298
 
-## 练习目标
+## 本章内容
 
-把 `AngularJS 动画` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+AngularJS 提供了动画效果，可以配合 CSS 使用。
 
-## 练习步骤
+AngularJS 使用动画需要引入 angular-animate.min.js 库。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular-animate.min.js"></script>
+```
 
-## 验收清单
+还需在应用中使用模型 ngAnimate：
 
-- 我能独立说出 `AngularJS 动画` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<body ng-app="ngAnimate">
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 什么是动画？
+
+动画是通过改变 HTML 元素产生的动态变化效果。
+
+
+### 实例
+
+勾选复选框隐藏 DIV:
+
+如果我们应用已经设置了应用名，可以把 ngAnimate 直接添加在模型中：
+
+
+### 实例
+
+
+## ngAnimate 做了什么?
+
+ngAnimate 模型可以添加或移除 class 。
+
+ngAnimate 模型并不能使 HTML 元素产生动画，但是 ngAnimate 会监测事件，类似隐藏显示 HTML 元素 ，如果事件发生 ngAnimate 就会使用预定义的 class 来设置 HTML 元素的动画。
+
+AngularJS 添加/移除 class 的指令:
+
+- ng-show
+- ng-hide
+- ng-class
+- ng-view
+- ng-include
+- ng-repeat
+- ng-if
+- ng-switch
+
+ng-show 和 ng-hide 指令用于添加或移除 ng-hide class 的值。
+
+其他指令会在进入 DOM 会添加 ng-enter 类，移除 DOM 会添加 ng-leave 属性。
+
+当 HTML 元素位置改变时，ng-repeat 指令同样可以添加 ng-move 类 。
+
+此外， 在动画完成后，HTML 元素的类集合将被移除。例如： ng-hide 指令会添加以下类：
+
+- ng-animate
+- ng-hide-animate
+- ng-hide-add (如果元素将被隐藏)
+- ng-hide-remove (如果元素将显示)
+- ng-hide-add-active (如果元素将隐藏)
+- ng-hide-remove-active (如果元素将显示)
+
+
+## 使用 CSS 动画
+
+我们可以使用 CSS transition(过渡) 或 CSS 动画让 HTML 元素产生动画效果，该部分内容你可以参阅我们的 CSS 过渡教程， CSS 动画教程。
+
+
+## CSS 过渡
+
+CSS 过渡可以让我们平滑的将一个 CSS 属性值修改为另外一个：
+
+
+### 实例
+
+在 DIV 元素设置了 .ng-hide 类时，过渡需要花费 0.5 秒，高度从 100px 变为 0:
+
+
+## CSS 动画
+
+CSS 动画允许你平滑的修改 CSS 属性值:
+
+
+### 实例
+
+在 DIV 元素设置了 .ng-hide 类时, myChange 动画将执行，它会平滑的将高度从 100px 变为 0:
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AngularJS 动画` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

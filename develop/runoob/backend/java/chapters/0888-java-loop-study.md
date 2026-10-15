@@ -1,35 +1,324 @@
-# Java：Java 循环结构 学习笔记
+# Java：Java 循环结构 - for, while 及 do...while
 
 - 来源：[Java 循环结构](https://www.runoob.com/java/java-loop.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0888
 
-## 学习目标
+## 本章内容
 
-Java 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Java 循环结构` 建立学习路径，先理解它在 Java 体系中的位置，再做可运行或可复述的验证。
+顺序结构的程序语句只能被执行一次。
 
-## 阅读抓手
+如果您想要同样的操作执行多次，就需要使用循环结构。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Java中有三种主要的循环结构：
 
-## 笔记模板
+- while 循环
+- do…while 循环
+- for 循环
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在 Java5 中引入了一种主要用于数组的增强型 for 循环。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Java 循环结构`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## while 循环
+
+while是最基本的循环，它的结构为：
+
+```java
+while( 布尔表达式 ) {
+  //循环内容
+}
+```
+
+只要布尔表达式为 true，循环就会一直执行下去。
+
+
+### 实例
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String[] args) {
+      int x = 10;
+      while( x < 20 ) {
+         System.out.print("value of x : " + x );
+         x++;
+         System.out.print("\n");
+      }
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+value of x : 10
+value of x : 11
+value of x : 12
+value of x : 13
+value of x : 14
+value of x : 15
+value of x : 16
+value of x : 17
+value of x : 18
+value of x : 19
+```
+
+
+## do…while 循环
+
+对于 while 语句而言，如果不满足条件，则不能进入循环。但有时候我们需要即使不满足条件，也至少执行一次。
+
+do…while 循环和 while 循环相似，不同的是，do…while 循环至少会执行一次。
+
+```java
+do {
+       //代码语句
+}while(布尔表达式);
+```
+
+注意：布尔表达式在循环体的后面，所以语句块在检测布尔表达式之前已经执行了。 如果布尔表达式的值为 true，则语句块一直执行，直到布尔表达式的值为 false。
+
+
+### 实例
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String[] args){
+      int x = 10;
+
+      do{
+         System.out.print("value of x : " + x );
+         x++;
+         System.out.print("\n");
+      }while( x < 20 );
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+value of x : 10
+value of x : 11
+value of x : 12
+value of x : 13
+value of x : 14
+value of x : 15
+value of x : 16
+value of x : 17
+value of x : 18
+value of x : 19
+```
+
+
+## for循环
+
+虽然所有循环结构都可以用 while 或者 do...while表示，但 Java 提供了另一种语句 —— for 循环，使一些循环结构变得更加简单。
+
+for循环执行的次数是在执行前就确定的。语法格式如下：
+
+```java
+for(初始化; 布尔表达式; 更新) {
+    //代码语句
+}
+```
+
+关于 for 循环有以下几点说明：
+
+- 最先执行初始化步骤。可以声明一种类型，但可初始化一个或多个循环控制变量，也可以是空语句。
+- 然后，检测布尔表达式的值。如果为 true，循环体被执行。如果为false，循环终止，开始执行循环体后面的语句。
+- 执行一次循环后，更新循环控制变量。
+- 再次检测布尔表达式。循环执行上面的过程。
+
+
+### 实例
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String[] args) {
+
+      for(int x = 10; x < 20; x = x+1) {
+         System.out.print("value of x : " + x );
+         System.out.print("\n");
+      }
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+value of x : 10
+value of x : 11
+value of x : 12
+value of x : 13
+value of x : 14
+value of x : 15
+value of x : 16
+value of x : 17
+value of x : 18
+value of x : 19
+```
+
+
+## Java 增强 for 循环
+
+Java5 引入了一种主要用于数组的增强型 for 循环。
+
+Java 增强 for 循环语法格式如下:
+
+```java
+for(声明语句 : 表达式)
+{
+   //代码句子
+}
+```
+
+声明语句：声明新的局部变量，该变量的类型必须和数组元素的类型匹配。其作用域限定在循环语句块，其值与此时数组元素的值相等。
+
+表达式：表达式是要访问的数组名，或者是返回值为数组的方法。
+
+
+### 实例
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String[] args){
+      int [] numbers = {10, 20, 30, 40, 50};
+
+      for(int x : numbers ){
+         System.out.print( x );
+         System.out.print(",");
+      }
+      System.out.print("\n");
+      String [] names ={"James", "Larry", "Tom", "Lacy"};
+      for( String name : names ) {
+         System.out.print( name );
+         System.out.print(",");
+      }
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+10,20,30,40,50,
+James,Larry,Tom,Lacy,
+```
+
+
+## break 关键字
+
+break 主要用在循环语句或者 switch 语句中，用来跳出整个语句块。
+
+break 跳出最里层的循环，并且继续执行该循环下面的语句。
+
+
+### 语法
+
+break 的用法很简单，就是循环结构中的一条语句：
+
+```java
+break;
+```
+
+
+### 实例
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String[] args) {
+      int [] numbers = {10, 20, 30, 40, 50};
+
+      for(int x : numbers ) {
+         // x 等于 30 时跳出循环
+         if( x == 30 ) {
+            break;
+         }
+         System.out.print( x );
+         System.out.print("\n");
+      }
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+10
+20
+```
+
+
+## continue 关键字
+
+continue 适用于任何循环控制结构中。作用是让程序立刻跳转到下一次循环的迭代。
+
+在 for 循环中，continue 语句使程序立即跳转到更新语句。
+
+在 while 或者 do…while 循环中，程序立即跳转到布尔表达式的判断语句。
+
+
+### 语法
+
+continue 就是循环体中一条简单的语句：
+
+```java
+continue;
+```
+
+
+### 实例
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String[] args) {
+      int [] numbers = {10, 20, 30, 40, 50};
+
+      for(int x : numbers ) {
+         if( x == 30 ) {
+        continue;
+         }
+         System.out.print( x );
+         System.out.print("\n");
+      }
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+10
+20
+40
+50
+```
+
+
+## 复习重点
+
+- 能说明 `Java 循环结构` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

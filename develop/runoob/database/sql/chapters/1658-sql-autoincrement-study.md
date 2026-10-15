@@ -1,35 +1,86 @@
-# SQL：SQL Auto Increment 学习笔记
+# SQL：SQL AUTO INCREMENT 字段
 
 - 来源：[SQL Auto Increment](https://www.runoob.com/sql/sql-autoincrement.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1658
 
-## 学习目标
+## 本章内容
 
-SQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQL Auto Increment` 建立学习路径，先理解它在 SQL 体系中的位置，再做可运行或可复述的验证。
+Auto-increment 会在新记录插入表中时生成一个唯一的数字。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## AUTO INCREMENT 字段
 
-## 笔记模板
+我们通常希望在每次插入新记录时，自动地创建主键字段的值。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+我们可以在表中创建一个 auto-increment 字段。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `SQL Auto Increment`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 用于 MySQL 的语法
+
+下面的 SQL 语句把 "Persons" 表中的 "ID" 列定义为 auto-increment 主键字段：
+
+MySQL 使用 AUTO_INCREMENT 关键字来执行 auto-increment 任务。
+
+默认地，AUTO_INCREMENT 的开始值是 1，每条新记录递增 1。
+
+要让 AUTO_INCREMENT 序列以其他的值起始，请使用下面的 SQL 语法：
+
+要在 "Persons" 表中插入新记录，我们不必为 "ID" 列规定值（会自动添加一个唯一的值）：
+
+上面的 SQL 语句会在 "Persons" 表中插入一条新记录。"ID" 列会被赋予一个唯一的值。"FirstName" 列会被设置为 "Lars"，"LastName" 列会被设置为 "Monsen"。
+
+
+## 用于 SQL Server 的语法
+
+下面的 SQL 语句把 "Persons" 表中的 "ID" 列定义为 auto-increment 主键字段：
+
+MS SQL Server 使用 IDENTITY 关键字来执行 auto-increment 任务。
+
+在上面的实例中，IDENTITY 的开始值是 1，每条新记录递增 1。
+
+提示：要规定 "ID" 列以 10 起始且递增 5，请把 identity 改为 IDENTITY(10,5)。
+
+要在 "Persons" 表中插入新记录，我们不必为 "ID" 列规定值（会自动添加一个唯一的值）：
+
+上面的 SQL 语句会在 "Persons" 表中插入一条新记录。"ID" 列会被赋予一个唯一的值。"FirstName" 列会被设置为 "Lars"，"LastName" 列会被设置为 "Monsen"。
+
+
+## 用于 Access 的语法
+
+下面的 SQL 语句把 "Persons" 表中的 "ID" 列定义为 auto-increment 主键字段：
+
+MS Access 使用 AUTOINCREMENT 关键字来执行 auto-increment 任务。
+
+默认地，AUTOINCREMENT 的开始值是 1，每条新记录递增 1。
+
+提示：要规定 "ID" 列以 10 起始且递增 5，请把 autoincrement 改为 AUTOINCREMENT(10,5)。
+
+要在 "Persons" 表中插入新记录，我们不必为 "ID" 列规定值（会自动添加一个唯一的值）：
+
+上面的 SQL 语句会在 "Persons" 表中插入一条新记录。"ID" 列会被赋予一个唯一的值。"FirstName" 列会被设置为 "Lars"，"LastName" 列会被设置为 "Monsen"。
+
+
+## 用于 Oracle 的语法
+
+在 Oracle 中，代码稍微复杂一点。
+
+您必须通过 sequence 对象（该对象生成数字序列）创建 auto-increment 字段。
+
+请使用下面的 CREATE SEQUENCE 语法：
+
+上面的代码创建一个名为 seq_person 的 sequence 对象，它以 1 起始且以 1 递增。该对象缓存 10 个值以提高性能。cache 选项规定了为了提高访问速度要存储多少个序列值。
+
+要在 "Persons" 表中插入新记录，我们必须使用 nextval 函数（该函数从 seq_person 序列中取回下一个值）：
+
+上面的 SQL 语句会在 "Persons" 表中插入一条新记录。"ID" 列会被赋值为来自 seq_person 序列的下一个数字。"FirstName"列 会被设置为 "Lars"，"LastName" 列会被设置为 "Monsen"。
+
+
+## 复习重点
+
+- 能说明 `SQL Auto Increment` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

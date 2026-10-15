@@ -1,34 +1,80 @@
-# Memcached：Memcached append 命令 练习笔记
+# Memcached：Memcached append 命令
 
 - 来源：[Memcached append 命令](https://www.runoob.com/memcached/memcached-append-data.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1444
 
-## 练习目标
+## 本章内容
 
-把 `Memcached append 命令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Memcached append 命令用于向已存在 key(键) 的 value(数据值) 后面追加数据 。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 语法：
 
-## 验收清单
+append 命令的基本语法格式如下：
 
-- 我能独立说出 `Memcached append 命令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+append key flags exptime bytes [noreply]
+value
+```
 
-## 复盘问题
+参数说明如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- key：键值 key-value 结构中的 key，用于查找缓存值。
+- flags：可以包括键值对的整型参数，客户机使用它存储关于键值对的额外信息 。
+- exptime：在缓存中保存键值对的时间长度（以秒为单位，0 表示永远）
+- bytes：在缓存中存储的字节数
+- noreply（可选）： 该参数告知服务器不需要返回数据
+- value：存储的值（始终位于第二行）（可直接理解为key-value结构中的value）
+
+
+### 实例
+
+实例如下：
+
+- 首先我们在 Memcached 中存储一个键 runoob，其值为 memcached。
+- 然后，我们使用 get 命令检索该值。
+- 然后，我们使用 append 命令在键为 runoob 的值后面追加 "redis"。
+- 最后，我们再使用 get 命令检索该值。
+
+```text
+set runoob 0 900 9
+memcached
+STORED
+get runoob
+VALUE runoob 0 9
+memcached
+END
+append runoob 0 900 5
+redis
+STORED
+get runoob
+VALUE runoob 0 14
+memcachedredis
+END
+```
+
+
+### 输出
+
+如果数据添加成功，则输出：
+
+```text
+STORED
+```
+
+输出信息说明：
+
+- STORED：保存成功后输出。
+- NOT_STORED：该键在 Memcached 上不存在。
+- CLIENT_ERROR：执行错误。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Memcached append 命令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

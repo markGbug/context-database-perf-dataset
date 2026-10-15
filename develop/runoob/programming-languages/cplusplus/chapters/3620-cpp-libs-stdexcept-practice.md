@@ -1,34 +1,157 @@
-# C++：C++ <stdexcept> 练习笔记
+# C++：C++ 异常处理库 <stdexcept>
 
 - 来源：[C++ <stdexcept>](https://www.runoob.com/cplusplus/cpp-libs-stdexcept.html)
 - 分类：编程语言
 - 技术：C++
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3620
 
-## 练习目标
+## 本章内容
 
-把 `C++ <stdexcept>` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+<stdexcept> 是 C++ 标准库中的一个头文件，它定义了一组标准异常类，用于处理程序运行时的错误情况。
 
-## 练习步骤
+异常是程序运行时发生的错误，它们可以被捕获并处理，以避免程序的非正常终止。<stdexcept> 头文件定义了一组从 std::exception 派生的异常类，这些类提供了一种标准的方式来报告和处理错误。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 语法
 
-- 我能独立说出 `C++ <stdexcept>` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+要使用 <stdexcept> 中的异常类，首先需要包含这个头文件：
 
-## 复盘问题
+```html
+#include <stdexcept>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+然后，你可以使用这些异常类来抛出和捕获异常。例如：
+
+```text
+throw std::runtime_error("An error occurred");
+```
+
+
+### 异常类
+
+<stdexcept> 头文件定义了以下异常类：
+
+- std::exception：所有标准异常类的基类。
+- std::bad_exception：当异常处理过程中发生错误时抛出。
+- std::bad_alloc：当内存分配失败时抛出。
+- std::bad_cast：当类型转换失败时抛出。
+- std::bad_typeid：当 typeid 操作失败时抛出。
+- std::logic_error：当逻辑错误发生时抛出，例如无效的输入参数。
+- std::domain_error：当函数调用的参数不在有效范围内时抛出。
+- std::invalid_argument：当函数调用的参数无效时抛出。
+- std::length_error：当容器操作因为长度限制而失败时抛出。
+- std::out_of_range：当访问容器的非法索引时抛出。
+- std::overflow_error：当算术运算导致溢出时抛出。
+- std::range_error：当函数返回值不在期望的范围内时抛出。
+- std::underflow_error：当算术运算导致下溢时抛出。
+
+
+## 实例
+
+下面是一个使用 <stdexcept> 的简单示例，演示了如何抛出和捕获异常：
+
+
+## 实例
+
+输出结果:
+
+```text
+Caught an exception: Negative value not allowed
+```
+
+在这个示例中，riskyFunction 函数检查传入的参数是否为负数，如果是，则抛出 std::invalid_argument 异常。在 main 函数中，我们使用 try-catch 块来捕获并处理这个异常。
+
+
+## 标准异常类
+
+
+### std::exception
+
+std::exception 是所有标准异常类的基类。它提供了一个虚函数 what()，用于返回描述异常的字符串。
+
+
+## 实例
+
+
+### std::logic_error
+
+std::logic_error 派生自 std::exception，表示程序逻辑错误。它是一个抽象基类，通常由派生类来具体化。
+
+
+## 实例
+
+
+### std::invalid_argument
+
+std::invalid_argument 派生自 std::logic_error，表示传递了无效的参数。
+
+
+## 实例
+
+
+### std::domain_error
+
+std::domain_error 派生自 std::logic_error，表示参数超出了有效范围。
+
+
+## 实例
+
+
+### std::length_error
+
+std::length_error 派生自 std::logic_error，表示长度错误，如在容器操作中超出了最大长度限制。
+
+
+## 实例
+
+
+### std::out_of_range
+
+std::out_of_range 派生自 std::logic_error，表示访问超出了有效范围。
+
+
+## 实例
+
+
+### std::runtime_error
+
+std::runtime_error 派生自 std::exception，表示程序运行时错误。它是一个抽象基类，通常由派生类来具体化。
+
+
+## 实例
+
+
+### std::range_error
+
+std::range_error 派生自 std::runtime_error，表示计算结果超出了表示范围。
+
+
+## 实例
+
+
+### std::overflow_error
+
+std::overflow_error 派生自 std::runtime_error，表示算术溢出错误。
+
+
+## 实例
+
+
+### std::underflow_error
+
+std::underflow_error 派生自 std::runtime_error，表示算术下溢错误。
+
+
+## 后续章节
+
+- 实例
+- 使用自定义异常类
+- 实例
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `C++ <stdexcept>` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

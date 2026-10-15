@@ -1,35 +1,186 @@
-# C++：C++ 异常处理 学习笔记
+# C++：C++ 异常处理
 
 - 来源：[C++ 异常处理](https://www.runoob.com/cplusplus/cpp-exceptions-handling.html)
 - 分类：编程语言
 - 技术：C++
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3570
 
-## 学习目标
+## 本章内容
 
-C++ 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `C++ 异常处理` 建立学习路径，先理解它在 C++ 体系中的位置，再做可运行或可复述的验证。
+异常是程序在执行期间产生的问题。C++ 异常是指在程序运行时发生的特殊情况，比如尝试除以零的操作。
 
-## 阅读抓手
+异常提供了一种转移程序控制权的方式。C++ 异常处理涉及到三个关键字：try、catch、throw。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- throw: 当问题出现时，程序会抛出一个异常。这是通过使用 throw 关键字来完成的。
+- catch: 在您想要处理问题的地方，通过异常处理程序捕获异常。catch 关键字用于捕获异常。
+- try: try 块中的代码标识将被激活的特定异常。它后面通常跟着一个或多个 catch 块。
 
-## 笔记模板
+如果有一个块抛出一个异常，捕获异常的方法会使用 try 和 catch 关键字。try 块中放置可能抛出异常的代码，try 块中的代码被称为保护代码。使用 try/catch 语句的语法如下所示：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+try
+{
+   // 保护代码
+}catch( ExceptionName e1 )
+{
+   // catch 块
+}catch( ExceptionName e2 )
+{
+   // catch 块
+}catch( ExceptionName eN )
+{
+   // catch 块
+}
+```
 
-## 完成标准
+如果 try 块在不同的情境下会抛出不同的异常，这个时候可以尝试罗列多个 catch 语句，用于捕获不同类型的异常。
 
-- 能用 3 到 5 句话解释 `C++ 异常处理`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 抛出异常
+
+您可以使用 throw 语句在代码块中的任何地方抛出异常。throw 语句的操作数可以是任意的表达式，表达式的结果的类型决定了抛出的异常的类型。
+
+以下是尝试除以零时抛出异常的实例：
+
+```java
+double division(int a, int b)
+{
+   if( b == 0 )
+   {
+      throw "Division by zero condition!";
+   }
+   return (a/b);
+}
+```
+
+
+## 捕获异常
+
+catch 块跟在 try 块后面，用于捕获异常。您可以指定想要捕捉的异常类型，这是由 catch 关键字后的括号内的异常声明决定的。
+
+```text
+try
+{
+   // 保护代码
+}catch( ExceptionName e )
+{
+  // 处理 ExceptionName 异常的代码
+}
+```
+
+上面的代码会捕获一个类型为 ExceptionName 的异常。如果您想让 catch 块能够处理 try 块抛出的任何类型的异常，则必须在异常声明的括号内使用省略号 ...，如下所示：
+
+```text
+try
+{
+   // 保护代码
+}catch(...)
+{
+  // 能处理任何异常的代码
+}
+```
+
+下面是一个实例，抛出一个除以零的异常，并在 catch 块中捕获该异常。
+
+
+## 实例
+
+```java
+#include <iostream>
+using namespace std;
+
+double division(int a, int b)
+{
+   if( b == 0 )
+   {
+      throw "Division by zero condition!";
+   }
+   return (a/b);
+}
+
+int main ()
+{
+   int x = 50;
+   int y = 0;
+   double z = 0;
+
+   try {
+     z = division(x, y);
+     cout << z << endl;
+   }catch (const char* msg) {
+     cerr << msg << endl;
+   }
+
+   return 0;
+}
+```
+
+由于我们抛出了一个类型为 const char* 的异常，因此，当捕获该异常时，我们必须在 catch 块中使用 const char*。当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+Division by zero condition!
+```
+
+
+## C++ 标准的异常
+
+C++ 提供了一系列标准的异常，定义在 <exception> 中，我们可以在程序中使用这些标准的异常。它们是以父子类层次结构组织起来的，如下所示：
+
+下表是对上面层次结构中出现的每个异常的说明：
+
+
+## 定义新的异常
+
+您可以通过继承和重载 exception 类来定义新的异常。下面的实例演示了如何使用 std::exception 类来实现自己的异常：
+
+
+## 实例
+
+```java
+#include <iostream>
+#include <exception>
+using namespace std;
+
+struct MyException : public exception
+{
+  const char * what () const throw ()
+  {
+    return "C++ Exception";
+  }
+};
+
+int main()
+{
+  try
+  {
+    throw MyException();
+  }
+  catch(MyException& e)
+  {
+    std::cout << "MyException caught" << std::endl;
+    std::cout << e.what() << std::endl;
+  }
+  catch(std::exception& e)
+  {
+    //其他的错误
+  }
+}
+```
+
+这将产生以下结果：
+
+```text
+MyException caught
+C++ Exception
+```
+
+在这里，what() 是异常类提供的一个公共方法，它已被所有子异常类重载。这将返回异常产生的原因。
+
+
+## 复习重点
+
+- 能说明 `C++ 异常处理` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

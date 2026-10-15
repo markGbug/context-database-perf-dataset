@@ -1,35 +1,148 @@
-# Markdown：Markdown 实战 学习笔记
+# Markdown：Markdown 实战
 
 - 来源：[Markdown 实战](https://www.runoob.com/markdown/markdown-practices.html)
 - 分类：DevOps / 工程化
 - 技术：Markdown
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1824
 
-## 学习目标
+## 本章内容
 
-Markdown 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Markdown 实战` 建立学习路径，先理解它在 Markdown 体系中的位置，再做可运行或可复述的验证。
+## 个人简历制作
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 简历结构设计
 
-## 笔记模板
+一份优秀的Markdown简历应该包含以下核心结构：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+# 姓名
+## 联系方式
+## 职业目标/个人简介
+## 工作经验
+## 教育背景
+## 技能清单
+## 项目经历
+## 其他信息
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Markdown 实战`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 完整简历示例
+
+```text
+# 张三 | 前端开发工程师
+
+## 📞 联系方式
+- **邮箱**: zhangsan@email.com
+- **电话**: 138-0000-0000
+- **GitHub**: [github.com/zhangsan](https://github.com/zhangsan)
+- **LinkedIn**: [linkedin.com/in/zhangsan](https://linkedin.com/in/zhangsan)
+- **地址**: 上海市浦东新区
+
+## 🎯 职业目标
+具有3年前端开发经验的工程师，专注于React生态系统和现代化Web应用开发。寻求在创新型公司中担任高级前端开发职位，希望参与大型项目的架构设计和团队协作。
+
+## 💼 工作经验
+
+### 高级前端开发工程师 | ABC科技有限公司
+**2022.03 - 至今**
+
+- 负责公司核心产品的前端开发，用户量达100万+
+- 使用React、TypeScript构建可维护的大型单页应用
+- 与产品和设计团队协作，将设计稿转化为高质量的用户界面
+- 建立前端组件库，提升团队开发效率30%
+- **技术栈**: React, TypeScript, Redux, Webpack, Jest
+
+### 前端开发工程师 | XYZ互联网公司
+**2021.06 - 2022.02**
+
+- 参与电商平台的前端开发和维护工作
+- 优化页面性能，首屏加载时间减少40%
+- 负责移动端H5页面开发，适配多种设备
+- **技术栈**: Vue.js, JavaScript, SCSS, Element UI
+```
+
+
+### 信息层次划分
+
+Markdown 简历的信息层次应该遵循以下原则：
+
+- 一级标题（#）: 姓名和职位
+- 二级标题（##）: 主要板块（联系方式、工作经验等）
+- 三级标题（###）: 具体职位或项目名称
+- 四级标题（####）: 子项目或详细分类
+- 粗体文本: 重要信息强调
+- 列表: 技能点或职责描述
+
+```text
+## 🛠️ 技能清单
+
+### 编程语言
+- **熟练**: JavaScript, TypeScript, HTML5, CSS3
+- **了解**: Python, Java, Go
+
+### 前端框架
+- **React生态**: React, Redux, React Router, Next.js
+- **Vue生态**: Vue.js, Vuex, Vue Router, Nuxt.js
+- **其他**: Angular基础
+
+### 开发工具
+#### 版本控制
+- Git, GitHub, GitLab
+
+#### 构建工具
+- Webpack, Vite, Rollup
+- Babel, PostCSS
+
+#### 测试工具
+- Jest, Cypress, Testing Library
+```
+
+
+### 格式美化技巧
+
+```text
+## 📱 联系方式
+## 💼 工作经验
+## 🎓 教育背景
+## 🛠️ 技能清单
+## 🚀 项目经历
+## 🏆 获奖经历
+```
+
+```text
+## 📊 技能评估
+
+| 技能类别 | 具体技能 | 熟练程度 |
+|---------|---------|---------|
+| 前端框架 | React | ⭐⭐⭐⭐⭐ |
+| 前端框架 | Vue.js | ⭐⭐⭐⭐ |
+| 编程语言 | TypeScript | ⭐⭐⭐⭐ |
+| 编程语言 | JavaScript | ⭐⭐⭐⭐⭐ |
+```
+
+```text
+## 🎯 职业亮点
+
+> **核心优势**: 3年大型项目开发经验，熟悉完整的前端开发流程
+>
+> **技术特长**: React + TypeScript技术栈，具备良好的代码规范意识
+>
+> **团队协作**: 具备跨部门沟通能力，参与过多个敏捷开发项目
+```
+
+```text
+## 🔗 在线作品
+
+[![个人网站](https://img.shields.io/badge/Website-zhangsan.dev-blue)](https://zhangsan.dev)
+[![GitHub](https://img.shields.io/badge/GitHub-zhangsan-black)](https://github.com/zhangsan)
+[![掘金](https://img.shields.io/badge/掘金-@张三-blue)](https://juejin.cn/user/zhangsan)
+```
+
+
+## 复习重点
+
+- 能说明 `Markdown 实战` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

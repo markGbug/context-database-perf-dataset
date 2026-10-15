@@ -1,35 +1,117 @@
-# XML：XML 树结构 学习笔记
+# XML：XML 树结构
 
 - 来源：[XML 树结构](https://www.runoob.com/xml/xml-tree.html)
 - 分类：XML / Web Service
 - 技术：XML
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4440
 
-## 学习目标
+## 本章内容
 
-XML 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XML 树结构` 建立学习路径，先理解它在 XML 体系中的位置，再做可运行或可复述的验证。
+XML 文档形成了一种树结构，它从"根部"开始，然后扩展到"枝叶"。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 一个 XML 文档实例
 
-## 笔记模板
+XML 文档使用简单的具有自我描述性的语法：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<note>
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+</note>
+```
 
-## 完成标准
+第一行是 XML 声明。它定义 XML 的版本（1.0）和所使用的编码（UTF-8 : 万国码, 可显示各种语言）。
 
-- 能用 3 到 5 句话解释 `XML 树结构`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+下一行描述文档的根元素（像在说："本文档是一个便签"）：
+
+```html
+<note>
+```
+
+接下来 4 行描述根的 4 个子元素（to, from, heading 以及 body）：
+
+```html
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+```
+
+最后一行定义根元素的结尾：
+
+```text
+</note>
+```
+
+您可以假设，从这个实例中，XML 文档包含了一张 Jani 写给 Tove 的便签。
+
+XML 具有出色的自我描述性，您同意吗？
+
+
+## XML 文档形成一种树结构
+
+XML 文档必须包含根元素。该元素是所有其他元素的父元素。
+
+XML 文档中的元素形成了一棵文档树。这棵树从根部开始，并扩展到树的最底端。
+
+所有的元素都可以有子元素：
+
+```html
+<root>
+<child>
+<subchild>.....</subchild>
+</child>
+</root>
+```
+
+父、子以及同胞等术语用于描述元素之间的关系。父元素拥有子元素。相同层级上的子元素成为同胞（兄弟或姐妹）。
+
+所有的元素都可以有文本内容和属性（类似 HTML 中）。
+
+
+## 实例：
+
+上图表示下面的 XML 中的一本书：
+
+
+## XML 文档实例
+
+```html
+<bookstore>
+    <book category="COOKING">
+        <title lang="en">Everyday Italian</title>
+        <author>Giada De Laurentiis</author>
+        <year>2005</year>
+        <price>30.00</price>
+    </book>
+    <book category="CHILDREN">
+        <title lang="en">Harry Potter</title>
+        <author>J K. Rowling</author>
+        <year>2005</year>
+        <price>29.99</price>
+    </book>
+    <book category="WEB">
+        <title lang="en">Learning XML</title>
+        <author>Erik T. Ray</author>
+        <year>2003</year>
+        <price>39.95</price>
+    </book>
+</bookstore>
+```
+
+实例中的根元素是 <bookstore>。文档中的所有 <book> 元素都被包含在 <bookstore> 中。
+
+<book> 元素有 4 个子元素：<title>、<author>、<year>、<price>。
+
+
+## 复习重点
+
+- 能说明 `XML 树结构` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

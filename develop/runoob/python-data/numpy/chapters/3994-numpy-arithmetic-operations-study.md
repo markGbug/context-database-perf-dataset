@@ -1,35 +1,207 @@
-# NumPy：NumPy 算术函数 学习笔记
+# NumPy：NumPy 算术函数
 
 - 来源：[NumPy 算术函数](https://www.runoob.com/numpy/numpy-arithmetic-operations.html)
 - 分类：Python / 数据科学
 - 技术：NumPy
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3994
 
-## 学习目标
+## 本章内容
 
-NumPy 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `NumPy 算术函数` 建立学习路径，先理解它在 NumPy 体系中的位置，再做可运行或可复述的验证。
+NumPy 算术函数包含简单的加减乘除: add()，subtract()，multiply() 和 divide()。
 
-## 阅读抓手
+需要注意的是数组必须具有相同的形状或符合数组广播规则。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```java
+import numpy as np
 
-## 完成标准
+a = np.arange(9, dtype = np.float_).reshape(3,3)
+print ('第一个数组：')
+print (a)
+print ('\n')
+print ('第二个数组：')
+b = np.array([10,10,10])
+print (b)
+print ('\n')
+print ('两个数组相加：')
+print (np.add(a,b))
+print ('\n')
+print ('两个数组相减：')
+print (np.subtract(a,b))
+print ('\n')
+print ('两个数组相乘：')
+print (np.multiply(a,b))
+print ('\n')
+print ('两个数组相除：')
+print (np.divide(a,b))
+```
 
-- 能用 3 到 5 句话解释 `NumPy 算术函数`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+输出结果为：
+
+```text
+第一个数组：
+[[0. 1. 2.]
+ [3. 4. 5.]
+ [6. 7. 8.]]
+
+
+第二个数组：
+[10 10 10]
+
+
+两个数组相加：
+[[10. 11. 12.]
+ [13. 14. 15.]
+ [16. 17. 18.]]
+
+
+两个数组相减：
+[[-10.  -9.  -8.]
+ [ -7.  -6.  -5.]
+ [ -4.  -3.  -2.]]
+
+
+两个数组相乘：
+[[ 0. 10. 20.]
+ [30. 40. 50.]
+ [60. 70. 80.]]
+
+
+两个数组相除：
+[[0.  0.1 0.2]
+ [0.3 0.4 0.5]
+ [0.6 0.7 0.8]]
+```
+
+此外 Numpy 也包含了其他重要的算术函数。
+
+
+### numpy.reciprocal()
+
+numpy.reciprocal() 函数返回参数逐元素的倒数。如 1/4 倒数为 4/1。
+
+
+## 实例
+
+```java
+import numpy as np
+
+a = np.array([0.25,  1.33,  1,  100])
+print ('我们的数组是：')
+print (a)
+print ('\n')
+print ('调用 reciprocal 函数：')
+print (np.reciprocal(a))
+```
+
+输出结果为：
+
+```text
+我们的数组是：
+[  0.25   1.33   1.   100.  ]
+
+
+调用 reciprocal 函数：
+[4.        0.7518797 1.        0.01     ]
+```
+
+
+### numpy.power()
+
+numpy.power() 函数将第一个输入数组中的元素作为底数，计算它与第二个输入数组中相应元素的幂。
+
+
+## 实例
+
+```java
+import numpy as np
+
+a = np.array([10,100,1000])
+print ('我们的数组是；')
+print (a)
+print ('\n')
+print ('调用 power 函数：')
+print (np.power(a,2))
+print ('\n')
+print ('第二个数组：')
+b = np.array([1,2,3])
+print (b)
+print ('\n')
+print ('再次调用 power 函数：')
+print (np.power(a,b))
+```
+
+输出结果为：
+
+```text
+我们的数组是；
+[  10  100 1000]
+
+
+调用 power 函数：
+[    100   10000 1000000]
+
+
+第二个数组：
+[1 2 3]
+
+
+再次调用 power 函数：
+[        10      10000 1000000000]
+```
+
+
+### numpy.mod()
+
+numpy.mod() 计算输入数组中相应元素的相除后的余数。 函数 numpy.remainder() 也产生相同的结果。
+
+
+## 实例
+
+```java
+import numpy as np
+
+a = np.array([10,20,30])
+b = np.array([3,5,7])
+print ('第一个数组：')
+print (a)
+print ('\n')
+print ('第二个数组：')
+print (b)
+print ('\n')
+print ('调用 mod() 函数：')
+print (np.mod(a,b))
+print ('\n')
+print ('调用 remainder() 函数：')
+print (np.remainder(a,b))
+```
+
+输出结果为：
+
+```text
+第一个数组：
+[10 20 30]
+
+
+第二个数组：
+[3 5 7]
+
+
+调用 mod() 函数：
+[1 0 2]
+
+
+调用 remainder() 函数：
+[1 0 2]
+```
+
+
+## 复习重点
+
+- 能说明 `NumPy 算术函数` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

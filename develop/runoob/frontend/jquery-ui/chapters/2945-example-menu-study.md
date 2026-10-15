@@ -1,35 +1,142 @@
-# jQuery UI：菜单（Menu） 学习笔记
+# jQuery UI：jQuery UI 实例 - 菜单（Menu）
 
 - 来源：[菜单（Menu）](https://www.runoob.com/jqueryui/example-menu.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2945
 
-## 学习目标
+## 本章内容
 
-jQuery UI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `菜单（Menu）` 建立学习路径，先理解它在 jQuery UI 体系中的位置，再做可运行或可复述的验证。
+带有鼠标和键盘交互的用于导航的可主题化菜单。
 
-## 阅读抓手
+如需了解更多有关 menu 部件的细节，请查看 API 文档 菜单部件（Menu Widget）。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 默认功能
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+一个带有默认配置、禁用条目和嵌套菜单的菜单。由一个列表转化成的，添加了主题，并支持鼠标和键盘交互。尝试使用光标键导航菜单。
 
-## 完成标准
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 菜单（Menu） - 默认功能</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#menu" ).menu();
+  });
+  </script>
+  <style>
+  .ui-menu { width: 150px; }
+  </style>
+</head>
+<body>
 
-- 能用 3 到 5 句话解释 `菜单（Menu）`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+<ul id="menu">
+  <li class="ui-state-disabled"><a href="#">Aberdeen</a></li>
+  <li><a href="#">Ada</a></li>
+  <li><a href="#">Adamsville</a></li>
+  <li><a href="#">Addyston</a></li>
+  <li>
+    <a href="#">Delphi</a>
+    <ul>
+      <li class="ui-state-disabled"><a href="#">Ada</a></li>
+      <li><a href="#">Saarland</a></li>
+      <li><a href="#">Salzburg</a></li>
+    </ul>
+  </li>
+  <li><a href="#">Saarland</a></li>
+  <li>
+    <a href="#">Salzburg</a>
+    <ul>
+      <li>
+        <a href="#">Delphi</a>
+        <ul>
+          <li><a href="#">Ada</a></li>
+          <li><a href="#">Saarland</a></li>
+          <li><a href="#">Salzburg</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Delphi</a>
+        <ul>
+          <li><a href="#">Ada</a></li>
+          <li><a href="#">Saarland</a></li>
+          <li><a href="#">Salzburg</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Perch</a></li>
+    </ul>
+  </li>
+  <li class="ui-state-disabled"><a href="#">Amesville</a></li>
+</ul>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 图标
+
+一个带有默认配置的菜单，显示如何使用带有图标的菜单。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 菜单（Menu） - 图标</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#menu" ).menu();
+  });
+  </script>
+  <style>
+  .ui-menu { width: 150px; }
+  </style>
+</head>
+<body>
+
+<ul id="menu">
+  <li><a href="#"><span class="ui-icon ui-icon-disk"></span>保存</a></li>
+  <li><a href="#"><span class="ui-icon ui-icon-zoomin"></span>放大</a></li>
+  <li><a href="#"><span class="ui-icon ui-icon-zoomout"></span>缩小</a></li>
+  <li class="ui-state-disabled"><a href="#"><span class="ui-icon ui-icon-print"></span>打印...</a></li>
+  <li>
+    <a href="#">播放</a>
+    <ul>
+      <li><a href="#"><span class="ui-icon ui-icon-seek-start"></span>上一个</a></li>
+      <li><a href="#"><span class="ui-icon ui-icon-stop"></span>停止</a></li>
+      <li><a href="#"><span class="ui-icon ui-icon-play"></span>播放</a></li>
+      <li><a href="#"><span class="ui-icon ui-icon-seek-end"></span>下一个</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 复习重点
+
+- 能说明 `菜单（Menu）` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

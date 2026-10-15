@@ -1,35 +1,117 @@
-# MongoDB：MongoDB 全文检索 学习笔记
+# MongoDB：MongoDB 全文检索
 
 - 来源：[MongoDB 全文检索](https://www.runoob.com/mongodb/mongodb-text-search.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1501
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 全文检索` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+全文检索对每一个词建立一个索引，指明该词在文章中出现的次数和位置，当用户查询时，检索程序就根据事先建立的索引进行查找，并将查找的结果反馈给用户的检索方式。
 
-## 阅读抓手
+这个过程类似于通过字典中的检索字表查字的过程。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+MongoDB 从 2.4 版本开始支持全文检索，目前支持15种语言的全文索引。
 
-## 笔记模板
+- danish
+- dutch
+- english
+- finnish
+- french
+- german
+- hungarian
+- italian
+- norwegian
+- portuguese
+- romanian
+- russian
+- spanish
+- swedish
+- turkish
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 启用全文检索
 
-- 能用 3 到 5 句话解释 `MongoDB 全文检索`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+MongoDB 在 2.6 版本以后是默认开启全文检索的，如果你使用之前的版本，你需要使用以下代码来启用全文检索:
+
+```text
+>db.adminCommand({setParameter:true,textSearchEnabled:true})
+```
+
+或者使用命令：
+
+```text
+mongod --setParameter textSearchEnabled=true
+```
+
+
+## 创建全文索引
+
+考虑以下 posts 集合的文档数据，包含了文章内容（post_text）及标签(tags)：
+
+```text
+{
+   "post_text": "enjoy the mongodb articles on Runoob",
+   "tags": [
+      "mongodb",
+      "runoob"
+   ]
+}
+```
+
+我们可以对 post_text 字段建立全文索引，这样我们可以搜索文章内的内容：
+
+```text
+>db.posts.ensureIndex({post_text:"text"})
+```
+
+
+## 使用全文索引
+
+现在我们已经对 post_text 建立了全文索引，我们可以搜索文章中的关键词 runoob：
+
+```text
+>db.posts.find({$text:{$search:"runoob"}})
+```
+
+以下命令返回了如下包含 runoob 关键词的文档数据：
+
+```text
+{
+   "_id" : ObjectId("53493d14d852429c10000002"),
+   "post_text" : "enjoy the mongodb articles on Runoob",
+   "tags" : [ "mongodb", "runoob" ]
+}
+```
+
+如果你使用的是旧版本的 MongoDB，你可以使用以下命令：
+
+```text
+>db.posts.runCommand("text",{search:"runoob"})
+```
+
+使用全文索引可以提高搜索效率。
+
+
+## 删除全文索引
+
+删除已存在的全文索引，可以使用 find 命令查找索引名：
+
+```text
+>db.posts.getIndexes()
+```
+
+通过以上命令获取索引名，本例的索引名为post_text_text，执行以下命令来删除索引：
+
+```text
+>db.posts.dropIndex("post_text_text")
+```
+
+
+## 复习重点
+
+- 能说明 `MongoDB 全文检索` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,206 @@
-# AngularJS：AngularJS 简介 练习笔记
+# AngularJS：AngularJS 简介
 
 - 来源：[AngularJS 简介](https://www.runoob.com/angularjs/angularjs-intro.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2278
 
-## 练习目标
+## 本章内容
 
-把 `AngularJS 简介` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+AngularJS 是一个 JavaScript 框架。它可通过 <script> 标签添加到 HTML 页面。
 
-## 练习步骤
+AngularJS 通过 指令 扩展了 HTML，且通过 表达式 绑定数据到 HTML。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## AngularJS 是一个 JavaScript 框架
 
-- 我能独立说出 `AngularJS 简介` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+AngularJS 是一个 JavaScript 框架。它是一个以 JavaScript 编写的库。
 
-## 复盘问题
+AngularJS 是以一个 JavaScript 文件形式发布的，可通过 script 标签添加到网页中：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+```
+
+各个 angular.js 版本下载： https://github.com/angular/angular.js/releases
+
+
+## AngularJS 扩展了 HTML
+
+AngularJS 通过 ng-directives 扩展了 HTML。
+
+ng-app 指令定义一个 AngularJS 应用程序。
+
+ng-model 指令把元素值（比如输入域的值）绑定到应用程序。
+
+ng-bind 指令把应用程序数据绑定到 HTML 视图。
+
+
+## AngularJS 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="">
+    <p>名字 : <input type="text" ng-model="name"></p>
+    <h1>Hello {{name}}</h1>
+    <p ng-bind="name"></p>
+</div>
+
+</body>
+</html>
+```
+
+实例讲解：
+
+当网页加载完毕，AngularJS 自动开启。
+
+ng-app 指令告诉 AngularJS，<div> 元素是 AngularJS 应用程序 的"所有者"。
+
+ng-model 指令把输入域的值绑定到应用程序变量 name。
+
+ng-bind 指令把应用程序变量 name 绑定到某个段落的 innerHTML。
+
+
+## 什么是 AngularJS？
+
+AngularJS 使得开发现代的单一页面应用程序（SPAs：Single Page Applications）变得更加容易。
+
+- AngularJS 把应用程序数据绑定到 HTML 元素。
+- AngularJS 可以克隆和重复 HTML 元素。
+- AngularJS 可以隐藏和显示 HTML 元素。
+- AngularJS 可以在 HTML 元素"背后"添加代码。
+- AngularJS 支持输入验证。
+
+
+## AngularJS 指令
+
+正如您所看到的，AngularJS 指令是以 ng 作为前缀的 HTML 属性。
+
+ng-init 指令初始化 AngularJS 应用程序变量。
+
+
+## AngularJS 实例
+
+```html
+<div ng-app="" ng-init="firstName='John'">
+
+<p>姓名为 <span ng-bind="firstName"></span></p>
+
+</div>
+```
+
+带有有效的 HTML5：
+
+
+## AngularJS 实例
+
+```html
+<div data-ng-app="" data-ng-init="firstName='John'">
+
+<p>姓名为 <span data-ng-bind="firstName"></span></p>
+
+</div>
+```
+
+
+## AngularJS 表达式
+
+AngularJS 表达式写在双大括号内：{{ expression }}。
+
+AngularJS 表达式把数据绑定到 HTML，这与 ng-bind 指令有异曲同工之妙。
+
+AngularJS 将在表达式书写的位置"输出"数据。
+
+AngularJS 表达式 很像 JavaScript 表达式：它们可以包含文字、运算符和变量。
+
+实例 {{ 5 + 5 }} 或 {{ firstName + " " + lastName }}
+
+
+## AngularJS 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="">
+     <p>我的第一个表达式： {{ 5 + 5 }}</p>
+</div>
+
+</body>
+</html>
+```
+
+
+## AngularJS 应用
+
+AngularJS 模块（Module） 定义了 AngularJS 应用。
+
+AngularJS 控制器（Controller） 用于控制 AngularJS 应用。
+
+ng-app指令指明了应用, ng-controller 指明了控制器。
+
+
+## AngularJS 实例
+
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+
+名: <input type="text" ng-model="firstName"><br>
+姓: <input type="text" ng-model="lastName"><br>
+<br>
+姓名: {{firstName + " " + lastName}}
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.firstName= "John";
+    $scope.lastName= "Doe";
+});
+</script>
+```
+
+AngularJS 模块定义应用:
+
+
+## AngularJS 模块
+
+```javascript
+var app = angular.module('myApp', []);
+```
+
+AngularJS 控制器控制应用:
+
+
+## AngularJS 控制器
+
+```text
+app.controller('myCtrl', function($scope) {
+    $scope.firstName= "John";
+    $scope.lastName= "Doe";
+});
+```
+
+在接下来的教程中你将学习到更多的应用和模块的知识。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AngularJS 简介` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

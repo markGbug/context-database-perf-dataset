@@ -1,34 +1,138 @@
-# CSS：CSS Text(文本) 练习笔记
+# CSS：CSS 文本格式
 
 - 来源：[CSS Text(文本)](https://www.runoob.com/css/css-text.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2396
 
-## 练习目标
+## 本章内容
 
-把 `CSS Text(文本)` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+This text is styled with some of the text formatting properties. The heading uses the text-align, text-transform, and color properties. The paragraph is indented, aligned, and the space between characters is specified. The underline is removed from the "尝试一下" link.
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 文本颜色
 
-## 验收清单
+颜色属性被用来设置文字的颜色。
 
-- 我能独立说出 `CSS Text(文本)` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+颜色是通过CSS最经常的指定：
 
-## 复盘问题
+- 十六进制值 - 如: ＃FF0000
+- 一个RGB值 - 如: RGB(255,0,0)
+- 颜色的名称 - 如: red
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+参阅 CSS 颜色值 查看完整的颜色值。
+
+一个网页的背景颜色是指在主体内的选择：
+
+
+## 实例
+
+```text
+body {color:red;}
+h1 {color:#00ff00;}
+h2 {color:rgb(255,0,0);}
+```
+
+对于W3C标准的CSS：如果你定义了颜色属性，你还必须定义背景色属性。
+
+
+## 文本的对齐方式
+
+文本排列属性是用来设置文本的水平对齐方式。
+
+文本可居中或对齐到左或右,两端对齐.
+
+当text-align设置为"justify"，每一行被展开为宽度相等，左，右外边距是对齐（如杂志和报纸）。
+
+
+## 实例
+
+```text
+h1 {text-align:center;}
+p.date {text-align:right;}
+p.main {text-align:justify;}
+```
+
+
+## 文本修饰
+
+text-decoration 属性用来设置或删除文本的装饰。
+
+从设计的角度看 text-decoration属性主要是用来删除链接的下划线：
+
+
+## 实例
+
+```text
+a {text-decoration:none;}
+```
+
+也可以这样装饰文字：
+
+
+## 实例
+
+```text
+h1 {text-decoration:overline;}
+h2 {text-decoration:line-through;}
+h3 {text-decoration:underline;}
+```
+
+我们不建议强调指出不是链接的文本，因为这常常混淆用户。
+
+
+## 文本转换
+
+文本转换属性是用来指定在一个文本中的大写和小写字母。
+
+可用于所有字句变成大写或小写字母，或每个单词的首字母大写。
+
+
+## 实例
+
+```text
+p.uppercase {text-transform:uppercase;}
+p.lowercase {text-transform:lowercase;}
+p.capitalize {text-transform:capitalize;}
+```
+
+
+## 文本缩进
+
+文本缩进属性是用来指定文本的第一行的缩进。
+
+
+## 实例
+
+```text
+p {text-indent:50px;}
+```
+
+
+## 更多实例
+
+指定字符之间的空间 这个例子演示了如何增加或减少字符之间的空间。
+
+指定行与行之间的空间 这个例子演示了如何指定在一个段落中行之间的空间
+
+设置元素的文本方向 这个例子演示了如何改变元素的文本方向。
+
+增加单词之间的空白空间 这个例子演示了如何增加一个段落中的单词之间的空白空间。
+
+在元素内禁用文字不换行 这个例子演示了如何禁用一个元素内的文字不换行。
+
+垂直对齐图像 这个例子演示了如何设置文本的垂直对齐图像。
+
+添加文本阴影 这个例子演示了如何设置文本阴影。
+
+
+## 所有CSS文本属性。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS Text(文本)` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,159 @@
-# MongoDB：Linux MongoDB 学习笔记
+# MongoDB：Linux平台安装MongoDB
 
 - 来源：[Linux MongoDB](https://www.runoob.com/mongodb/mongodb-linux-install.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1462
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Linux MongoDB` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+MongoDB 提供了 Linux 各个发行版本 64 位的安装包，你可以在官网下载安装包。
 
-## 阅读抓手
+安装前我们需要根据自己的系统版本安装对应的依赖包，三选一执行：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Red Hat/CentOS：
 
-## 笔记模板
+```text
+sudo yum install libcurl openssl
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Ubuntu 18.04 LTS ("Bionic")/Debian 10 "Buster"：
 
-## 完成标准
+```text
+sudo apt-get install libcurl4 openssl
+```
 
-- 能用 3 到 5 句话解释 `Linux MongoDB`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Ubuntu 16.04 LTS ("Xenial")/Debian 9 "Stretch"：
+
+```text
+sudo apt-get install libcurl3 openssl
+```
+
+MongoDB 源码下载地址：https://www.mongodb.com/try/download/community
+
+这里我们选择 tgz 下载，下载完安装包，并解压 tgz（以下演示的是 64 位 Linux上的安装） 。
+
+```text
+wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-4.2.8.tgz    # 下载
+tar -zxvf mongodb-linux-x86_64-ubuntu1604-4.2.8.tgz                                # 解压
+
+mv mongodb-linux-x86_64-ubuntu1604-4.2.8  /usr/local/mongodb4                      # 将解压包拷贝到指定目录
+```
+
+MongoDB 的可执行文件位于 bin 目录下，所以可以将其添加到 PATH 路径中，这样就可以在任意目录执行 MongoDB 命令，而不需要每次切换到安装目录：
+
+```html
+export PATH=<mongodb-install-directory>/bin:$PATH
+```
+
+<mongodb-install-directory> 为你 MongoDB 的安装路径。如本文的 /usr/local/mongodb4 。
+
+```text
+export PATH=/usr/local/mongodb4/bin:$PATH
+```
+
+注意：以上 export 命令只在当前终端会话中有效，关闭终端后会失效。如需永久生效，请将该命令追加到 ~/.bashrc 或 ~/.profile 文件中，然后执行 source ~/.bashrc 使其立即生效。
+
+
+## 创建数据库目录
+
+默认情况下 MongoDB 启动后会初始化以下两个目录：
+
+- 数据存储目录：/var/lib/mongodb
+- 日志文件目录：/var/log/mongodb
+
+我们在启动前可以先创建这两个目录并设置当前用户有读写权限：
+
+```text
+sudo mkdir -p /var/lib/mongodb
+sudo mkdir -p /var/log/mongodb
+sudo chown `whoami` /var/lib/mongodb     # 设置权限，whoami 会自动替换为当前登录的用户名
+sudo chown `whoami` /var/log/mongodb     # 设置权限
+```
+
+接下来启动 Mongodb 服务：
+
+```text
+mongod --dbpath /var/lib/mongodb --logpath /var/log/mongodb/mongod.log --fork
+```
+
+参数说明：
+
+- --dbpath：指定数据库文件的存储目录
+- --logpath：指定日志文件的路径（注意是文件路径，不是目录）
+- --fork：让 MongoDB 在后台运行（即以守护进程方式启动），不加此参数则会占用当前终端
+
+打开 /var/log/mongodb/mongod.log 文件看到以下信息，说明启动成功。
+
+```text
+tail -10f /var/log/mongodb/mongod.log
+2020-07-09T12:20:17.391+0800 I  NETWORK  [listener] Listening on /tmp/mongodb-27017.sock
+2020-07-09T12:20:17.392+0800 I  NETWORK  [listener] Listening on 127.0.0.1
+2020-07-09T12:20:17.392+0800 I  NETWORK  [listener] waiting for connections on port 27017
+```
+
+
+## MongoDB 后台管理 Shell
+
+MongoDB6.0 以后做出了重大改变，MongoDB 已经不再默认安装 shell 工具，你需要安装一个额外的 shell 工具：MongoDB Shell
+
+如果你需要进入 mongodb 后台管理，你需要先打开 mongodb 安装目录的下的 bin 目录，然后执行 mongo 命令文件。
+
+MongoDB Shell 是 MongoDB 自带的交互式 Javascript shell，用来对 MongoDB 进行操作和管理的交互式环境。
+
+当你进入 mongoDB 后台后，它默认会连接到 test 文档（数据库）：
+
+```text
+$ cd /usr/local/mongodb4/bin
+$ ./mongo
+MongoDB shell version v4.2.8
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("2cfdafc4-dd56-4cfc-933a-187b887119b3") }
+MongoDB server version: 4.2.8
+Welcome to the MongoDB shell.
+……
+```
+
+由于它是一个JavaScript shell，您可以运行一些简单的算术运算:
+
+```text
+> 2+2
+4
+> 3+6
+9
+```
+
+现在让我们插入一些简单的数据，并对插入的数据进行检索：
+
+```text
+> db.runoob.insert({x:10})
+WriteResult({ "nInserted" : 1 })
+> db.runoob.find()
+{ "_id" : ObjectId("5f069bdb4e02f8baf90f1184"), "x" : 10 }
+>
+```
+
+第一个命令将数字 10 插入到 runoob 集合的 x 字段中。
+
+```text
+mongod --dbpath /var/lib/mongodb --logpath /var/log/mongodb/mongod.log --shutdown
+```
+
+也可以在 mongo 的命令行中实现：
+
+```text
+> use admin
+switched to db admin
+> db.shutdownServer()
+```
+
+更多安装方法可以参考官网：https://docs.mongodb.com/manual/administration/install-on-linux/
+
+
+## 复习重点
+
+- 能说明 `Linux MongoDB` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

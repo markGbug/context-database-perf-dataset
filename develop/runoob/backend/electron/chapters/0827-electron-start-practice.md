@@ -1,34 +1,100 @@
-# Electron：Electron 入门实例 练习笔记
+# Electron：Electron 入门实例
 
 - 来源：[Electron 入门实例](https://www.runoob.com/electron/electron-start.html)
 - 分类：后端开发
 - 技术：Electron
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0827
 
-## 练习目标
+## 本章内容
 
-把 `Electron 入门实例` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在上一章节我们已经学会了如何安装 Electron。
 
-## 练习步骤
+本章节我们将一步步介绍如何创建一个简单的 Electron 实例。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 1、创建项目目录
 
-- 我能独立说出 `Electron 入门实例` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+打开终端，依次执行：
 
-## 复盘问题
+```text
+mkdir my-electron-app
+cd my-electron-app
+npm init -y
+npm install electron --save-dev
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+生成结构如下：
+
+```text
+my-electron-demo/
+├─ package.json
+├─ main.js
+└─ index.html
+```
+
+
+### 2、配置 package.json
+
+打开 package.json，修改成以下内容：
+
+```text
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "RUNOOB Electron 测试",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "latest"
+  }
+}
+```
+
+说明：
+
+
+### 3、编写主进程文件 main.js
+
+这是 Electron 的核心控制中心，负责创建应用窗口和加载页面。
+
+创建文件 main.js，输入以下完整代码（带详细注释）：
+
+
+## 实例
+
+说明：
+
+
+### 4、编写渲染页面 index.html
+
+创建 index.html 文件，输入以下内容：
+
+
+## 实例
+
+
+### 5、运行项目
+
+回到终端，执行：
+
+```text
+npm start
+```
+
+运行后，你会看到一个桌面窗口，显示：
+
+```text
+Hello, Electron!
+RUNOOB Electron 测试。这是你创建的第一个 Electron 桌面应用 🎉
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Electron 入门实例` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,79 @@
-# AJAX：XHR readyState 练习笔记
+# AJAX：AJAX - onreadystatechange 事件
 
 - 来源：[XHR readyState](https://www.runoob.com/ajax/ajax-xmlhttprequest-onreadystatechange.html)
 - 分类：前端开发
 - 技术：AJAX
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2262
 
-## 练习目标
+## 本章内容
 
-把 `XHR readyState` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## onreadystatechange 事件
 
-## 练习步骤
+当请求被发送到服务器时，我们需要执行一些基于响应的任务。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+每当 readyState 改变时，就会触发 onreadystatechange 事件。
 
-## 验收清单
+readyState 属性存有 XMLHttpRequest 的状态信息。
 
-- 我能独立说出 `XHR readyState` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+下面是 XMLHttpRequest 对象的三个重要的属性：
 
-## 复盘问题
+存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- 0: 请求未初始化
+- 1: 服务器连接已建立
+- 2: 请求已接收
+- 3: 请求处理中
+- 4: 请求已完成，且响应已就绪
+
+在 onreadystatechange 事件中，我们规定当服务器响应已做好被处理的准备时所执行的任务。
+
+当 readyState 等于 4 且状态为 200 时，表示响应已就绪：
+
+
+## 实例
+
+```text
+xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+        document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+}
+```
+
+注意： onreadystatechange 事件被触发 4 次（0 - 4）, 分别是： 0-1、1-2、2-3、3-4，对应着 readyState 的每个变化。
+
+
+## 使用回调函数
+
+回调函数是一种以参数形式传递给另一个函数的函数。
+
+如果您的网站上存在多个 AJAX 任务，那么您应该为创建 XMLHttpRequest 对象编写一个标准的函数，并为每个 AJAX 任务调用该函数。
+
+该函数调用应该包含 URL 以及发生 onreadystatechange 事件时执行的任务（每次调用可能不尽相同）：
+
+
+## 实例
+
+```javascript
+function myFunction()
+{
+    loadXMLDoc("/try/ajax/ajax_info.txt",function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+        }
+    });
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `XHR readyState` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

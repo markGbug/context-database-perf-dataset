@@ -1,35 +1,49 @@
-# jQuery EasyUI：jEasyUI 树形菜单拖放控制 学习笔记
+# jQuery EasyUI：jQuery EasyUI 树形菜单 - 树形菜单拖放控制
 
 - 来源：[jEasyUI 树形菜单拖放控制](https://www.runoob.com/jeasyui/jeasyui-tree-tree5.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2894
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 树形菜单拖放控制` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+当在一个应用中使用树（Tree）插件，拖拽（drag）和放置（drop）功能要求允许用户改变节点位置。启用拖拽（drag）和放置（drop）操作，所有您需要做的就是把树（Tree）插件的 'dnd' 属性设置为 true。
 
-## 阅读抓手
+```text
+    $('#tt').tree({
+        dnd: true,
+        url: 'tree_data.json'
+    });
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+当在一个树节点上发生放置操作，'onDrop' 事件将被触发，您应该做一些或更多的操作，例如保存节点状态到远程服务器端，等等。
 
-## 笔记模板
+```javascript
+    onDrop: function(targetNode, source, point){
+        var targetId = $(target).tree('getNode', targetNode).id;
+        $.ajax({
+            url: '...',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                id: source.id,
+                targetId: targetId,
+                point: point
+            }
+        });
+    }
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 下载 jQuery EasyUI 实例
 
-- 能用 3 到 5 句话解释 `jEasyUI 树形菜单拖放控制`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+jeasyui-tree-tree5.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 树形菜单拖放控制` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,44 @@
-# Playwright：Playwright 核心类 API 练习笔记
+# Playwright：Playwright 核心类 API
 
 - 来源：[Playwright 核心类 API](https://www.runoob.com/playwright/playwright-core-api.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0544
 
-## 练习目标
+## 本章内容
 
-把 `Playwright 核心类 API` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本附录列出 Playwright 核心类的常用 API，供快速查阅。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## Playwright 类
 
-## 验收清单
+Playwright 是 Playwright Library 的入口对象。
 
-- 我能独立说出 `Playwright 核心类 API` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## BrowserType 类
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+BrowserType 用于启动和连接到浏览器。
+
+
+## Browser 类
+
+Browser 代表一个浏览器实例。
+
+
+## BrowserContext 类
+
+BrowserContext 代表一个独立的浏览器上下文。
+
+
+## BrowserServer 类
+
+BrowserServer 代表通过 launchServer() 启动的浏览器进程。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Playwright 核心类 API` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

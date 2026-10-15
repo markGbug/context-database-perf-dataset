@@ -1,34 +1,344 @@
-# MySQL：MySQL 索引 练习笔记
+# MySQL：MySQL 索引
 
 - 来源：[MySQL 索引](https://www.runoob.com/mysql/mysql-index.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1531
 
-## 练习目标
+## 本章内容
 
-把 `MySQL 索引` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MySQL 索引是一种数据结构，用于加快数据库查询的速度和性能。
 
-## 练习步骤
+MySQL 索引的建立对于 MySQL 的高效运行是很重要的，索引可以大大提高 MySQL 的检索速度。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+MySQL 索引类似于书籍的索引，通过存储指向数据行的指针，可以快速定位和访问表中的特定数据。
 
-## 验收清单
+打个比方，如果合理的设计且使用索引的 MySQL 是一辆兰博基尼的话，那么没有设计和使用索引的 MySQL 就是一个人力三轮车。
 
-- 我能独立说出 `MySQL 索引` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+拿汉语字典的目录页（索引）打比方，我们可以按拼音、笔画、偏旁部首等排序的目录（索引）快速查找到需要的字。
 
-## 复盘问题
+索引分单列索引和组合索引：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- 单列索引，即一个索引只包含单个列，一个表可以有多个单列索引。
+- 组合索引，即一个索引包含多个列。
+
+创建索引时，你需要确保该索引是应用在 SQL 查询语句的条件(一般作为 WHERE 子句的条件)。
+
+实际上，索引也是一张表，该表保存了主键与索引字段，并指向实体表的记录。
+
+索引虽然能够提高查询性能，但也需要注意以下几点：
+
+- 索引需要占用额外的存储空间。
+- 对表进行插入、更新和删除操作时，索引需要维护，可能会影响性能。
+- 过多或不合理的索引可能会导致性能下降，因此需要谨慎选择和规划索引。
+
+
+## 普通索引
+
+索引能够显著提高查询的速度，尤其是在大型表中进行搜索时。通过使用索引，MySQL 可以直接定位到满足查询条件的数据行，而无需逐行扫描整个表。
+
+
+### 创建索引
+
+使用 CREATE INDEX 语句可以创建普通索引。
+
+普通索引是最常见的索引类型，用于加速对表中数据的查询。
+
+CREATE INDEX 的语法：
+
+```text
+CREATE INDEX index_name
+ON table_name (column1 [ASC|DESC], column2 [ASC|DESC], ...);
+```
+
+- CREATE INDEX: 用于创建普通索引的关键字。
+- index_name: 指定要创建的索引的名称。索引名称在表中必须是唯一的。
+- table_name: 指定要在哪个表上创建索引。
+- (column1, column2, ...): 指定要索引的表列名。你可以指定一个或多个列作为索引的组合。这些列的数据类型通常是数值、文本或日期。
+- ASC和DESC（可选）: 用于指定索引的排序顺序。默认情况下，索引以升序（ASC）排序。
+
+以下实例假设我们有一个名为 students 的表，包含 id、name 和 age 列，我们将在 name 列上创建一个普通索引。
+
+```text
+CREATE INDEX idx_name ON students (name);
+```
+
+上述语句将在 students 表的 name 列上创建一个名为 idx_name 的普通索引，这将有助于提高通过姓名进行搜索的查询性能。
+
+需要注意的是，如果表中的数据量较大，索引的创建可能会花费一些时间，但一旦创建完成，查询性能将会显著提高。
+
+
+### 修改表结构(添加索引)
+
+我们可以使用 ALTER TABLE 命令可以在已有的表中创建索引。
+
+ALTER TABLE 允许你修改表的结构，包括添加、修改或删除索引。
+
+ALTER TABLE 创建索引的语法：
+
+```text
+ALTER TABLE table_name
+ADD INDEX index_name (column1 [ASC|DESC], column2 [ASC|DESC], ...);
+```
+
+- ALTER TABLE: 用于修改表结构的关键字。
+- table_name: 指定要修改的表的名称。
+- ADD INDEX: 添加索引的子句。ADD INDEX用于创建普通索引。
+- index_name: 指定要创建的索引的名称。索引名称在表中必须是唯一的。
+- (column1, column2, ...): 指定要索引的表列名。你可以指定一个或多个列作为索引的组合。这些列的数据类型通常是数值、文本或日期。
+- ASC和DESC（可选）: 用于指定索引的排序顺序。默认情况下，索引以升序（ASC）排序。
+
+下面是一个实例，我们将在已存在的名为 employees 的表上创建一个普通索引:
+
+```text
+ALTER TABLE employees
+ADD INDEX idx_age (age);
+```
+
+上述语句将在 employees 表的 age 列上创建一个名为 idx_age 的普通索引。
+
+
+### 创建表的时候直接指定
+
+我们可以在创建表的时候，你可以在 CREATE TABLE 语句中直接指定索引，以创建表和索引的组合。
+
+```text
+CREATE TABLE table_name (
+  column1 data_type,
+  column2 data_type,
+  ...,
+  INDEX index_name (column1 [ASC|DESC], column2 [ASC|DESC], ...)
+);
+```
+
+- CREATE TABLE: 用于创建新表的关键字。
+- table_name: 指定要创建的表的名称。
+- (column1 data_type, column2 data_type, ...): 定义表的列名和数据类型。你可以指定一个或多个列作为索引的组合。这些列的数据类型通常是数值、文本或日期。
+- INDEX: 用于创建普通索引的关键字。
+- index_name: 指定要创建的索引的名称。索引名称在表中必须是唯一的。
+- (column1, column2, ...): 指定要索引的表列名。你可以指定一个或多个列作为索引的组合。这些列的数据类型通常是数值、文本或日期。
+- ASC和DESC（可选）: 用于指定索引的排序顺序。默认情况下，索引以升序（ASC）排序。
+
+下面是一个实例，我们要创建一个名为 students 的表，并在 age 列上创建一个普通索引。
+
+```text
+CREATE TABLE students (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  age INT,
+  INDEX idx_age (age)
+);
+```
+
+在上述实例中，我们在 students 表的 age 列上创建了一个名为 idx_age 的普通索引。
+
+
+### 删除索引的语法
+
+我们可以使用 DROP INDEX 语句来删除索引。
+
+DROP INDEX 的语法：
+
+```text
+DROP INDEX index_name ON table_name;
+```
+
+- DROP INDEX: 用于删除索引的关键字。
+- index_name: 指定要删除的索引的名称。
+- ON table_name: 指定要在哪个表上删除索引。
+
+使用 ALTER TABLE 语句删除索引的语法如下：
+
+```text
+ALTER TABLE table_name
+DROP INDEX index_name;
+```
+
+- ALTER TABLE: 用于修改表结构的关键字。
+- table_name: 指定要修改的表的名称。
+- DROP INDEX: 用于删除索引的子句。
+- index_name: 指定要删除的索引的名称。
+
+以下实例假设我们有一个名为 employees 的表，并在 age 列上有一个名为 idx_age 的索引，现在我们要删除这个索引：
+
+```text
+DROP INDEX idx_age ON employees;
+```
+
+或使用 ALTER TABLE 语句：
+
+```text
+ALTER TABLE employees
+DROP INDEX idx_age;
+```
+
+这两个命令都会从 employees 表中删除名为 idx_age 的索引。
+
+如果该索引不存在，执行命令时会产生错误。因此，在删除索引之前最好确认该索引是否存在，或者使用错误处理机制来处理可能的错误情况。
+
+
+## 唯一索引
+
+在 MySQL 中，你可以使用 CREATE UNIQUE INDEX 语句来创建唯一索引。
+
+唯一索引确保索引中的值是唯一的，不允许有重复值。
+
+
+### 创建索引
+
+```text
+CREATE UNIQUE INDEX index_name
+ON table_name (column1 [ASC|DESC], column2 [ASC|DESC], ...);
+```
+
+- CREATE UNIQUE INDEX: 用于创建唯一索引的关键字组合。
+- index_name: 指定要创建的唯一索引的名称。索引名称在表中必须是唯一的。
+- table_name: 指定要在哪个表上创建唯一索引。
+- (column1, column2, ...): 指定要索引的表列名。你可以指定一个或多个列作为索引的组合。这些列的数据类型通常是数值、文本或日期。
+- ASC和DESC（可选）: 用于指定索引的排序顺序。默认情况下，索引以升序（ASC）排序。
+
+以下是一个创建唯一索引的实例： 假设我们有一个名为 employees的 表，包含 id 和 email 列，现在我们想在email列上创建一个唯一索引，以确保每个员工的电子邮件地址都是唯一的。
+
+```text
+CREATE UNIQUE INDEX idx_email ON employees (email);
+```
+
+以上实例将在 employees 表的 email 列上创建一个名为 idx_email 的唯一索引。
+
+
+### 修改表结构添加索引
+
+我们可以使用 ALTER TABLE 命令来创建唯一索引。
+
+ALTER TABLE命令允许你修改已经存在的表结构，包括添加新的索引。
+
+```text
+ALTER table table_name
+ADD CONSTRAINT unique_constraint_name UNIQUE (column1, column2, ...);
+```
+
+- ALTER TABLE: 用于修改表结构的关键字。
+- table_name: 指定要修改的表的名称。
+- ADD CONSTRAINT: 这是用于添加约束（包括唯一索引）的关键字。
+- unique_constraint_name : 指定要创建的唯一索引的名称，约束名称在表中必须是唯一的。
+- UNIQUE (column1, column2, ...): 指定要索引的表列名。你可以指定一个或多个列作为索引的组合。这些列的数据类型通常是数值、文本或日期。
+
+以下是一个使用 ALTER TABLE 命令创建唯一索引的实例：假设我们有一个名为 employees 的表，包含 id 和 email 列，现在我们想在 email 列上创建一个唯一索引，以确保每个员工的电子邮件地址都是唯一的。
+
+```text
+ALTER TABLE employees
+ADD CONSTRAINT idx_email UNIQUE (email);
+```
+
+以上实例将在 employees 表的 email 列上创建一个名为 idx_email 的唯一索引。
+
+请注意，如果表中已经有重复的 email 值，那么添加唯一索引将会失败。在创建唯一索引之前，你可能需要确保表中的 email 列没有重复的值。
+
+
+### 创建表的时候直接指定
+
+我们也可以在创建表的同时，你可以在 CREATE TABLE 语句中使用 UNIQUE 关键字来创建唯一索引。
+
+这将在表创建时同时定义唯一索引约束。
+
+CREATE TABLE 语句中创建唯一索引的语法：
+
+```text
+CREATE TABLE table_name (
+  column1 data_type,
+  column2 data_type,
+  ...,
+  CONSTRAINT index_name UNIQUE (column1 [ASC|DESC], column2 [ASC|DESC], ...)
+);
+```
+
+- CREATE TABLE: 用于创建新表的关键字。
+- table_name: 指定要创建的表的名称。
+- (column1 data_type, column2 data_type, ...): 定义表的列名和数据类型。你可以指定一个或多个列作为索引的组合。这些列的数据类型通常是数值、文本或日期。
+- CONSTRAINT: 用于添加约束的关键字。
+- index_name: 指定要创建的唯一索引的名称。约束名称在表中必须是唯一的。
+- UNIQUE (column1, column2, ...): 指定要索引的表列名。
+- ASC和DESC（可选）: 用于指定索引的排序顺序。默认情况下，索引以升序（ASC）排序。
+
+以下是一个在创建表时创建唯一索引的实例：假设我们要创建一个名为 employees 的表，其中包含 id、name 和 email 列，我们希望 email 列的值是唯一的，因此我们要在创建表时定义唯一索引。
+
+```text
+CREATE TABLE employees (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  email VARCHAR(100) UNIQUE
+);
+```
+
+在这个例子中，email 列被定义为唯一索引，因为在它的后面加上了 UNIQUE 关键字。
+
+请注意，使用 UNIQUE 关键字后，索引名称将自动生成，你也可以根据需要指定索引名称。
+
+
+## 使用ALTER 命令添加和删除索引
+
+有四种方式来添加数据表的索引：
+
+- ALTER TABLE tbl_name ADD PRIMARY KEY (column_list): 该语句添加一个主键，主键列中的值必须唯一，主键的列的列表，可以是一个或多个列，不能包含 NULL 值。 。
+- ALTER TABLE tbl_name ADD UNIQUE index_name (column_list): 这条语句创建索引的值必须是唯一的（除了NULL外，NULL可能会出现多次）。
+- ALTER TABLE tbl_name ADD INDEX index_name (column_list): 添加普通索引，索引值可出现多次。
+- ALTER TABLE tbl_name ADD FULLTEXT index_name (column_list):该语句指定了索引为 FULLTEXT ，用于全文索引。
+
+以下实例为在表中添加索引。
+
+```text
+mysql> ALTER TABLE testalter_tbl ADD INDEX (c);
+```
+
+你还可以在 ALTER 命令中使用 DROP 子句来删除索引。尝试以下实例删除索引:
+
+```text
+mysql> ALTER TABLE testalter_tbl DROP INDEX c;
+```
+
+
+## 使用 ALTER 命令添加和删除主键
+
+主键作用于列上（可以一个列或多个列联合主键），添加主键时，你需要确保该主键默认不为空（NOT NULL）。实例如下：
+
+```text
+mysql> ALTER TABLE testalter_tbl MODIFY i INT NOT NULL;
+mysql> ALTER TABLE testalter_tbl ADD PRIMARY KEY (i);
+```
+
+你也可以使用 ALTER 命令删除主键：
+
+```text
+mysql> ALTER TABLE testalter_tbl DROP PRIMARY KEY;
+```
+
+删除主键时只需指定 PRIMARY KEY，但在删除索引时，你必须知道索引名。
+
+
+## 显示索引信息
+
+你可以使用 SHOW INDEX 命令来列出表中的相关的索引信息。
+
+可以通过添加 \G 来格式化输出信息。
+
+SHOW INDEX 语句：:
+
+```text
+mysql> SHOW INDEX FROM table_name\G
+........
+```
+
+- SHOW INDEX: 用于显示索引信息的关键字。
+- FROM table_name: 指定要查看索引信息的表的名称。
+- \G: 格式化输出信息。
+
+执行上述命令后，将会显示指定表中所有索引的详细信息，包括索引名称（Key_name）、索引列（Column_name）、是否是唯一索引（Non_unique）、排序方式（Collation）、索引的基数（Cardinality）等。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL 索引` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

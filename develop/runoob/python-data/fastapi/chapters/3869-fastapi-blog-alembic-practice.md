@@ -1,34 +1,108 @@
-# FastAPI：Alembic 数据库迁移 练习笔记
+# FastAPI：Alembic 数据库迁移
 
 - 来源：[Alembic 数据库迁移](https://www.runoob.com/fastapi/fastapi-blog-alembic.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3869
 
-## 练习目标
+## 本章内容
 
-把 `Alembic 数据库迁移` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章你将学会用 Alembic 管理数据库结构变更，理解与 Django Migration、Flask-Migrate 的异同。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 为什么需要迁移工具？
 
-## 验收清单
+Base.metadata.create_all() 同样有致命缺陷：只在表不存在时创建，修改已有表结构不会自动同步。
 
-- 我能独立说出 `Alembic 数据库迁移` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Alembic 是 SQLAlchemy 官方的迁移工具，Django 的 makemigrations/migrate 和 Flask 的 Flask-Migrate，底层都是借鉴了 Alembic 的设计。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 安装与初始化
+
+```text
+(venv) $ pip install alembic
+(venv) $ alembic init alembic
+Creating directory alembic/... done
+```
+
+生成的目录结构：
+
+```text
+alembic/
+├── versions/          # 迁移脚本存放目录
+├── env.py             # 迁移环境配置（需手动修改！）
+└── script.py.mako     # 迁移脚本模板
+alembic.ini            # Alembic 配置文件
+```
+
+
+## 配置 env.py 连接到你的模型
+
+这是关键步骤——Alembic 默认不知道你的 SQLAlchemy 模型在哪里。
+
+
+## 实例
+
+同时修改 alembic.ini 中的数据库连接：
+
+```text
+# 文件路径：alembic.ini
+sqlalchemy.url = sqlite:///./blog.db
+```
+
+
+## 迁移三步曲
+
+
+### 生成并执行迁移
+
+```text
+(venv) $ alembic revision --autogenerate -m "初始化 Post 和 Category 模型"
+INFO  [alembic.autogenerate] Detected added table 'categories'
+INFO  [alembic.autogenerate] Detected added table 'posts'
+Generating alembic/versions/xxxx_initial.py ... done
+
+(venv) $ alembic upgrade head
+INFO  [alembic.runtime.migration] Running upgrade -> xxxx, 初始化
+```
+
+
+## 实战：新增 read_count 字段
+
+
+## 实例
+
+```text
+(venv) $ alembic revision --autogenerate -m "Post 新增 read_count 字段"
+(venv) $ alembic upgrade head
+```
+
+
+### 回滚
+
+```text
+(venv) $ alembic downgrade -1        # 回退到上一个版本
+```
+
+alembic upgrade head 中的 head 表示最新版本。也可以指定具体版本号：alembic upgrade xxxx（版本 ID）。
+
+
+## 三框架迁移工具对照
+
+
+## 本章小结
+
+本章你掌握了 Alembic 的完整流程：alembic init 初始化、配置 env.py 连接模型、revision --autogenerate 生成迁移、upgrade head 执行、downgrade 回滚。
+
+Alembic 比 Django/Flask 的迁移工具配置步骤多，但更底层、更灵活。
+
+下一章预告：文章多了需要搜索和分页。下一章实现关键词联合搜索和基于 offset/limit 的分页功能。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Alembic 数据库迁移` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,217 @@
-# 设计模式：备忘录模式 练习笔记
+# 设计模式：备忘录模式
 
 - 来源：[备忘录模式](https://www.runoob.com/design-pattern/memento-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1323
 
-## 练习目标
+## 本章内容
 
-把 `备忘录模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+备忘录模式（Memento Pattern）保存一个对象的某个状态，以便在适当的时候恢复对象，备忘录模式属于行为型模式。
 
-## 练习步骤
+备忘录模式允许在不破坏封装性的前提下，捕获和恢复对象的内部状态。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 介绍
 
-- 我能独立说出 `备忘录模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 意图
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在不破坏封装性的前提下，捕获一个对象的内部状态，并允许在对象之外保存和恢复这些状态。
+
+
+### 主要解决的问题
+
+- 允许捕获并保存一个对象的内部状态，以便在将来可以恢复到该状态，实现撤销和回滚操作。
+
+
+### 使用场景
+
+- 当需要提供一种撤销机制，允许用户回退到之前的状态时。
+
+
+### 实现方式
+
+- 创建备忘录类：用于存储和封装对象的状态。
+- 创建发起人角色：负责创建备忘录，并根据需要恢复状态。
+- 创建备忘录管理类（可选）：负责管理所有备忘录对象。
+
+
+### 关键代码
+
+- 备忘录：存储发起人的状态信息。
+- 发起人：创建备忘录，并根据备忘录恢复状态。
+
+
+### 应用实例
+
+- 后悔药：提供一种撤销操作的功能。
+- 游戏存档：保存游戏进度，允许玩家加载之前的存档。
+- Windows中的Ctrl+Z：实现撤销操作。
+- IE浏览器的后退：允许用户回退到之前的页面。
+- 数据库事务管理：通过事务日志保存状态，实现回滚。
+
+
+### 优点
+
+- 提供状态恢复机制：允许用户方便地回到历史状态。
+- 封装状态信息：用户不需要关心状态的保存细节。
+
+
+### 缺点
+
+- 资源消耗：如果对象的状态复杂，保存状态可能会占用较多资源。
+
+
+### 使用建议
+
+- 在需要保存和恢复数据状态的场景中使用备忘录模式。
+- 考虑使用原型模式结合备忘录模式，以节约内存。
+
+
+### 注意事项
+
+- 为了降低耦合度，应通过备忘录管理类间接管理备忘录对象。
+- 备忘录模式应谨慎使用，避免过度消耗系统资源。
+
+
+### 结构
+
+备忘录模式包含以下几个主要角色：
+
+- 备忘录（Memento）：负责存储原发器对象的内部状态。备忘录可以保持原发器的状态的一部分或全部信息。
+- 原发器（Originator）：创建一个备忘录对象，并且可以使用备忘录对象恢复自身的内部状态。原发器通常会在需要保存状态的时候创建备忘录对象，并在需要恢复状态的时候使用备忘录对象。
+- 负责人（Caretaker）：负责保存备忘录对象，但是不对备忘录对象进行操作或检查。负责人只能将备忘录传递给其他对象。
+
+
+## 实现
+
+备忘录模式使用三个类 Memento、Originator 和 CareTaker。Memento 包含了要被恢复的对象的状态。Originator 创建并在 Memento 对象中存储状态。Caretaker 对象负责从 Memento 中恢复对象的状态。
+
+MementoPatternDemo，我们的演示类使用 CareTaker 和 Originator 对象来显示对象的状态恢复。
+
+
+### 步骤 1
+
+创建 Memento 类。
+
+
+## Memento.java
+
+```java
+public class Memento {
+   private String state;
+
+   public Memento(String state){
+      this.state = state;
+   }
+
+   public String getState(){
+      return state;
+   }
+}
+```
+
+
+### 步骤 2
+
+创建 Originator 类。
+
+
+## Originator.java
+
+```java
+public class Originator {
+   private String state;
+
+   public void setState(String state){
+      this.state = state;
+   }
+
+   public String getState(){
+      return state;
+   }
+
+   public Memento saveStateToMemento(){
+      return new Memento(state);
+   }
+
+   public void getStateFromMemento(Memento Memento){
+      state = Memento.getState();
+   }
+}
+```
+
+
+### 步骤 3
+
+创建 CareTaker 类。
+
+
+## CareTaker.java
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class CareTaker {
+   private List<Memento> mementoList = new ArrayList<Memento>();
+
+   public void add(Memento state){
+      mementoList.add(state);
+   }
+
+   public Memento get(int index){
+      return mementoList.get(index);
+   }
+}
+```
+
+
+### 步骤 4
+
+使用 CareTaker 和 Originator 对象。
+
+
+## MementoPatternDemo.java
+
+```java
+public class MementoPatternDemo {
+   public static void main(String[] args) {
+      Originator originator = new Originator();
+      CareTaker careTaker = new CareTaker();
+      originator.setState("State #1");
+      originator.setState("State #2");
+      careTaker.add(originator.saveStateToMemento());
+      originator.setState("State #3");
+      careTaker.add(originator.saveStateToMemento());
+      originator.setState("State #4");
+
+      System.out.println("Current State: " + originator.getState());
+      originator.getStateFromMemento(careTaker.get(0));
+      System.out.println("First saved State: " + originator.getState());
+      originator.getStateFromMemento(careTaker.get(1));
+      System.out.println("Second saved State: " + originator.getState());
+   }
+}
+```
+
+
+### 步骤 5
+
+验证输出。
+
+```text
+Current State: State #4
+First saved State: State #2
+Second saved State: State #3
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `备忘录模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

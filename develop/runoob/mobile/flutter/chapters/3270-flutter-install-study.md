@@ -1,35 +1,195 @@
-# Flutter：Flutter 安装 学习笔记
+# Flutter：Flutter 安装
 
 - 来源：[Flutter 安装](https://www.runoob.com/flutter/flutter-install.html)
 - 分类：移动开发
 - 技术：Flutter
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3270
 
-## 学习目标
+## 本章内容
 
-Flutter 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Flutter 安装` 建立学习路径，先理解它在 Flutter 体系中的位置，再做可运行或可复述的验证。
+在学习构建 Flutter 应用之前，需要先在本地机器上安装 Flutter SDK 及所有必需依赖项。本节将详细介绍在 Windows、macOS 和 Linux 系统上的安装步骤。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 系统要求
 
-## 笔记模板
+在安装 Flutter 之前，请确保你的开发环境满足以下基本要求：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## Windows 安装步骤
 
-- 能用 3 到 5 句话解释 `Flutter 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 第一步：安装 Git for Windows
+
+Git 是版本控制工具，Flutter 需要使用它来管理代码和下载 SDK。
+
+- 访问 Git for Windows 下载页面
+- 下载最新版本的 Git for Windows
+- 运行安装程序，按照默认设置完成安装
+
+
+### 第二步：安装 Visual Studio Code（推荐）
+
+Visual Studio Code（简称 VS Code）是我们推荐的 Flutter 开发编辑器，它提供了丰富的 Flutter 扩展支持。
+
+- 访问 VS Code 官网
+- 下载并安装 VS Code
+- 安装完成后，打开 VS Code
+
+
+### 第三步：安装 Flutter SDK
+
+有两种方式可以安装 Flutter SDK：
+
+VS Code 的 Flutter 扩展可以自动下载和配置 Flutter SDK。
+
+- 在 VS Code 中点击左侧扩展图标（或按 Ctrl+Shift+X）
+- 搜索"Flutter"并找到"Dart and Flutter extensions"扩展
+- 点击"Install"安装扩展
+- 安装完成后，按 Ctrl+Shift+P 打开命令面板
+- 输入"Flutter: New Project"并选择
+- 选择"Download SDK"，然后选择安装目录
+- 访问 Flutter 官网下载页面
+- 下载最新的 Flutter SDK（.zip 文件）
+- 将下载的文件解压到你喜欢的目录，如 C:\flutter
+- 将 Flutter 的 bin 目录添加到系统环境变量 PATH 中
+
+
+## 手动配置环境变量
+
+在 Windows 上配置环境变量的步骤：
+
+- 右键点击"此电脑"，选择"属性"
+- 点击"高级系统设置"
+- 点击"环境变量"
+- 在"系统变量"中找到 Path，点击"编辑"
+- 点击"新建"，添加 Flutter 的 bin 目录路径（如 C:\flutter\bin）
+- 点击确定保存
+
+
+## macOS 安装步骤
+
+
+### 第一步：安装 Git
+
+macOS 通常已经预装了 Git，你可以通过以下命令检查：
+
+```text
+$ git --version
+```
+
+如果没有安装，运行以下命令：
+
+```text
+$ xcode-select --install
+```
+
+弹出对话框后，点击"安装"按钮。
+
+
+### 第二步：安装 VS Code
+
+从 VS Code 官网 下载并安装 VS Code。
+
+
+### 第三步：安装 Flutter SDK
+
+与 Windows 类似，你可以选择从 VS Code 安装或手动安装。
+
+- 下载 Flutter SDK：
+
+```text
+$ git clone https://github.com/flutter/flutter.git -b stable
+```
+
+- 将 Flutter 添加到 PATH：
+
+```text
+$ echo 'export PATH="$PATH:/Users/你的用户名/flutter/bin"' >> ~/.zshrc
+$ source ~/.zshrc
+```
+
+
+## Linux 安装步骤
+
+
+### 第一步：安装必要工具
+
+在 Ubuntu/Debian 系统上，运行以下命令安装必要的工具：
+
+```text
+$ sudo apt-get update
+$ sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa
+```
+
+
+### 第二步：克隆 Flutter SDK
+
+```text
+$ git clone https://github.com/flutter/flutter.git -b stable
+```
+
+
+### 第三步：配置 PATH
+
+```text
+$ echo 'export PATH="$PATH:$HOME/flutter/bin"' >> ~/.bashrc
+$ source ~/.bashrc
+```
+
+
+## 验证安装
+
+无论你使用哪种操作系统安装 Flutter，都可以通过以下命令验证安装是否成功：
+
+```text
+$ flutter doctor
+```
+
+运行此命令后，Flutter 会检查你的开发环境并报告问题。如果安装成功，你将看到类似以下的输出：
+
+```text
+Doctor summary (v3.x.x):
+[✓] Flutter (Channel stable, 3.x.x)
+[✓] Android toolchain
+[✓] iOS toolchain
+[✓] Chrome (for web development)
+[✓] Windows toolchain
+[✓] macOS toolchain
+[✓] Linux toolchain
+[✓] Web server
+```
+
+初次运行 flutter doctor 时，它会下载 Dart SDK 并进行一些初始化操作，可能需要几分钟时间。
+
+
+## 常见问题解决
+
+
+### Flutter 命令找不到
+
+如果在终端中输入 flutter 命令显示找不到，请检查：
+
+- 环境变量 PATH 是否正确配置
+- 是否打开新的终端窗口（环境变量更改需要新窗口生效）
+
+
+### Android Studio 未安装警告
+
+运行 flutter doctor 时可能会显示 Android Studio 未安装的警告。如果你不开发 Android 应用，这个警告可以忽略。
+
+
+### Android SDK 问题
+
+如果需要开发 Android 应用但遇到 SDK 问题，可以：
+
+- 下载并安装 Android Studio
+- 在 Android Studio 中通过 SDK Manager 安装 Android SDK
+
+
+## 复习重点
+
+- 能说明 `Flutter 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

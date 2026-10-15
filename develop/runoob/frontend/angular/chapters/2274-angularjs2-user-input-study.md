@@ -1,35 +1,198 @@
-# Angular：Angular 2 用户输入 学习笔记
+# Angular：Angular 2 用户输入
 
 - 来源：[Angular 2 用户输入](https://www.runoob.com/angularjs2/angularjs2-user-input.html)
 - 分类：前端开发
 - 技术：Angular
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2274
 
-## 学习目标
+## 本章内容
 
-Angular 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Angular 2 用户输入` 建立学习路径，先理解它在 Angular 体系中的位置，再做可运行或可复述的验证。
+用户点击链接、按下按钮或者输入文字时，这些用户的交互行为都会触发 DOM 事件。
 
-## 阅读抓手
+本章中，我们将学习如何使用 Angular 事件绑定语法来绑定这些事件。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+以下Gif图演示了该实例的操作：
 
-## 笔记模板
+源代码可以在文章末尾下载。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 绑定到用户输入事件
 
-- 能用 3 到 5 句话解释 `Angular 2 用户输入`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+我们可以使用 Angular 事件绑定机制来响应任何 DOM 事件 。
+
+以下实例将绑定了点击事件：
+
+```html
+<button (click)="onClickMe()">点我!</button>
+```
+
+等号左边的 (click) 表示把该按钮的点击事件作为绑定目标 。 等号右边，引号中的文本是一个 模板语句
+
+完整代码如下：
+
+
+## app/click-me.component.ts 文件：
+
+```html
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'click-me',
+  template: `
+    <button (click)="onClickMe()">点我!</button>
+    {{clickMessage}}`
+})
+export class ClickMeComponent {
+  clickMessage = '';
+
+  onClickMe() {
+    this.clickMessage = '菜鸟教程!';
+  }
+}
+```
+
+
+## 通过 $event 对象取得用户输入
+
+我们可以绑定到所有类型的事件。
+
+让我们试试绑定到一个输入框的 keyup 事件，并且把用户输入的东西回显到屏幕上。
+
+
+## app/keyup.component.ts (v1) 文件：
+
+```html
+@Component({
+  selector: 'key-up1',
+  template: `
+    <input (keyup)="onKey($event)">
+    <p>{{values}}</p>
+  `
+})
+export class KeyUpComponent_v1 {
+  values = '';
+
+  /*
+  // 非强类型
+  onKey(event:any) {
+    this.values += event.target.value + ' | ';
+  }
+  */
+  // 强类型
+  onKey(event: KeyboardEvent) {
+    this.values += (<HTMLInputElement>event.target).value + ' | ';
+  }
+}
+```
+
+以上代码中我们监听了一个事件并捕获用户输入，Angular 把事件对象存入 $event 变量中。
+
+组件的 onKey() 方法是用来从事件对象中提取出用户输入的，再将输入的值累加到 values 的属性。
+
+
+## 从一个模板引用变量中获得用户输入
+
+你可以通过使用局部模板变量来显示用户数据，模板引用变量通过在标识符前加上井号 (#) 来实现。
+
+下面的实例演示如何使用局部模板变量：
+
+
+## app/loop-back.component.ts 文件：
+
+```html
+@Component({
+  selector: 'loop-back',
+  template: `
+    <input #box (keyup)="0">
+    <p>{{box.value}}</p>
+  `
+})
+export class LoopbackComponent { }
+```
+
+我们在 <input> 元素上定义了一个名叫 box 的模板引用变量。 box 变量引用的就是 <input> 元素本身，这意味着我们可以获得 input 元素的 value 值，并通过插值表达式把它显示在 <p> 标签中。
+
+我们可以使用模板引用变量来修改以上 keyup 的实例：
+
+
+## app/keyup.components.ts (v2) 文件：
+
+```html
+@Component({
+  selector: 'key-up2',
+  template: `
+    <input #box (keyup)="onKey(box.value)">
+    <p>{{values}}</p>
+  `
+})
+export class KeyUpComponent_v2 {
+  values = '';
+  onKey(value: string) {
+    this.values += value + ' | ';
+  }
+}
+```
+
+
+## 按键事件过滤 ( 通过 key.enter)
+
+我们可以只在用户按下回车 (enter) 键的时候才获取输入框的值。
+
+(keyup) 事件处理语句会听到每一次按键，我们可以过滤按键，比如每一个 $event.keyCode，只有在按下回车键才更新 values 属性。
+
+Angular 可以为我们过滤键盘事件，通过绑定到 Angular 的 keyup.enter 伪事件监听回车键的事件。
+
+
+## app/keyup.components.ts (v3)：
+
+```html
+@Component({
+  selector: 'key-up3',
+  template: `
+    <input #box (keyup.enter)="values=box.value">
+    <p>{{values}}</p>
+  `
+})
+export class KeyUpComponent_v3 {
+  values = '';
+}
+```
+
+
+## blur( 失去焦点 ) 事件
+
+接下来我们可以使用blur( 失去焦点 ) 事件，它可以再元素失去焦点后更新 values 属性。
+
+以下实例同时监听输入回车键与输入框失去焦点的事件。
+
+
+## app/keyup.components.ts (v4)：
+
+```html
+@Component({
+  selector: 'key-up4',
+  template: `
+    <input #box
+      (keyup.enter)="values=box.value"
+      (blur)="values=box.value">
+
+    <p>{{values}}</p>
+  `
+})
+export class KeyUpComponent_v4 {
+  values = '';
+}
+```
+
+本文所使用的源码可以通过以下方式下载，不包含 node_modules 和 typings 目录。
+
+源代码下载
+
+
+## 复习重点
+
+- 能说明 `Angular 2 用户输入` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

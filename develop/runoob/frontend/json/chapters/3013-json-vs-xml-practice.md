@@ -1,34 +1,92 @@
-# JSON：JSON vs XML 练习笔记
+# JSON：JSON vs XML
 
 - 来源：[JSON vs XML](https://www.runoob.com/json/json-vs-xml.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3013
 
-## 练习目标
+## 本章内容
 
-把 `JSON vs XML` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+JSON 和 XML 都用于接收 web 服务端的数据。
 
-## 练习步骤
+JSON 和 XML在写法上有所不同，如下所示：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## JSON 实例
 
-- 我能独立说出 `JSON vs XML` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## XML 实例
+
+```html
+<sites>
+  <site>
+    <name>菜鸟教程</name> <url>www.runoob.com</url>
+  </site>
+  <site>
+    <name>google</name> <url>www.google.com</url>
+  </site>
+  <site>
+    <name>微博</name> <url>www.weibo.com</url>
+  </site>
+</sites>
+```
+
+JSON 与 XML 的相同之处：
+
+- JSON 和 XML 数据都是 "自我描述" ，都易于理解。
+- JSON 和 XML 数据都是有层次的结构
+- JSON 和 XML 数据可以被大多数编程语言使用
+- JSON 不需要结束标签
+- JSON 更加简短
+- JSON 读写速度更快
+- JSON 可以使用数组
+
+最大的不同是：XML 需要使用 XML 解析器来解析，JSON 可以使用标准的 JavaScript 函数来解析。
+
+- JSON.parse(): 将一个 JSON 字符串转换为 JavaScript 对象。
+- JSON.stringify(): 将 JavaScript 值转换为 JSON 字符串。
+
+
+## 为什么 JSON 比 XML 更好？
+
+XML 比 JSON 更难解析。
+
+JSON 可以直接使用现有的 JavaScript 对象解析。
+
+针对 AJAX 应用，JSON 比 XML 数据加载更快，而且更简单：
+
+使用 XML
+
+- 获取 XML 文档
+- 使用 XML DOM 迭代循环文档
+- 接数据解析出来复制给变量
+
+使用 JSON
+
+- 获取 JSON 字符串
+- JSON.Parse 解析 JSON 字符串
+
+
+## 相关文章
+
+- JavaScript JSON: https://www.runoob.com/js/js-json.html
+- XML DOM 教程: https://www.runoob.com/dom/dom-tutorial.html
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JSON vs XML` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

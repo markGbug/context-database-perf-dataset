@@ -1,35 +1,117 @@
-# PostgreSQL：PostgreSQL ORDER BY 学习笔记
+# PostgreSQL：PostgreSQL ORDER BY 语句
 
 - 来源：[PostgreSQL ORDER BY](https://www.runoob.com/postgresql/postgresql-order-by.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1571
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PostgreSQL ORDER BY` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+在 PostgreSQL 中，ORDER BY 用于对一列或者多列数据进行升序（ASC）或者降序（DESC）排列。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 语法
 
-## 笔记模板
+ORDER BY 子句的基础语法如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+SELECT column-list
+FROM table_name
+[WHERE condition]
+[ORDER BY column1, column2, .. columnN] [ASC | DESC];
+```
 
-## 完成标准
+您可以在 ORDER BY 中使用一列或者多列，但是必须保证要排序的列必须存在。
 
-- 能用 3 到 5 句话解释 `PostgreSQL ORDER BY`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+ASC 表示升序，DESC 表示降序。
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+下面实例将对结果根据 AGE 字段值进行升序排列：
+
+```text
+runoobdb=# SELECT * FROM COMPANY ORDER BY AGE ASC;
+```
+
+得到以下结果：
+
+```text
+ id | name  | age |                      address                       | salary
+----+-------+-----+----------------------------------------------------+--------
+  6 | Kim   |  22 | South-Hall                                         |  45000
+  3 | Teddy |  23 | Norway                                             |  20000
+  7 | James |  24 | Houston                                            |  10000
+  4 | Mark  |  25 | Rich-Mond                                          |  65000
+  2 | Allen |  25 | Texas                                              |  15000
+  5 | David |  27 | Texas                                              |  85000
+  1 | Paul  |  32 | California                                         |  20000
+(7 rows)
+```
+
+下面实例将对结果根据 NAME 字段值和 SALARY 字段值进行升序排序：
+
+```text
+runoobdb=# SELECT * FROM COMPANY ORDER BY NAME, SALARY ASC;
+```
+
+得到以下结果：
+
+```text
+ id | name  | age |                      address                       | salary
+----+-------+-----+----------------------------------------------------+--------
+  2 | Allen |  25 | Texas                                              |  15000
+  5 | David |  27 | Texas                                              |  85000
+  7 | James |  24 | Houston                                            |  10000
+  6 | Kim   |  22 | South-Hall                                         |  45000
+  4 | Mark  |  25 | Rich-Mond                                          |  65000
+  1 | Paul  |  32 | California                                         |  20000
+  3 | Teddy |  23 | Norway                                             |  20000
+(7 rows)
+```
+
+下面实例将对结果根据NAME字段值进行降序排列：
+
+```text
+runoobdb=# SELECT * FROM COMPANY ORDER BY NAME DESC;
+```
+
+得到以下结果：
+
+```text
+ id | name  | age |                      address                       | salary
+----+-------+-----+----------------------------------------------------+--------
+  3 | Teddy |  23 | Norway                                             |  20000
+  1 | Paul  |  32 | California                                         |  20000
+  4 | Mark  |  25 | Rich-Mond                                          |  65000
+  6 | Kim   |  22 | South-Hall                                         |  45000
+  7 | James |  24 | Houston                                            |  10000
+  5 | David |  27 | Texas                                              |  85000
+  2 | Allen |  25 | Texas                                              |  15000
+(7 rows)
+```
+
+
+## 复习重点
+
+- 能说明 `PostgreSQL ORDER BY` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

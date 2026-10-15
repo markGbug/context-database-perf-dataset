@@ -1,35 +1,173 @@
-# Ionic：ionic 卡片 学习笔记
+# Ionic：ionic 卡片
 
 - 来源：[ionic 卡片](https://www.runoob.com/ionic/ionic-card.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3300
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic 卡片` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+近年来卡片(card)的应用越来越流行，卡片提供了一个更好组织信息展示的工具。
 
-## 阅读抓手
+针对移动端的应用，卡片会根据屏幕大小自适应大小。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+我们可以很灵活的控制卡片的显示效果，甚至实现动画效果。
 
-## 笔记模板
+卡片一般放在页面顶部，当然也可以实现左右切换的功能。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<div class="card">
+  <div class="item item-text-wrap">
+    基本卡片，包含了文本信息。
+  </div>
+</div>
+```
 
-## 完成标准
+尝试一下 »
 
-- 能用 3 到 5 句话解释 `ionic 卡片`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+卡片(card)默认样式带有box-shadow(阴影)，由于性能的原因，和他类似的元素像 list list-inset 并没有阴影。
+
+如果你有很多的卡片，每个卡片都有很多子元素，建议使用内嵌列表（inset list）。
+
+
+## 卡片的头部与底部
+
+我们可以通过添加 item-divider 类为卡片添加头部与底部：
+
+```html
+<div class="card">
+  <div class="item item-divider">
+    卡片头部！
+  </div>
+  <div class="item item-text-wrap">
+    基本卡片，包含了文本信息。
+  </div>
+  <div class="item item-divider">
+    卡片底部！
+  </div>
+</div>
+```
+
+尝试一下 »
+
+
+## 卡片列表
+
+使用 list card 类来设置卡片列表：
+
+```html
+<div class="list card">
+
+  <a href="#" class="item item-icon-left">
+    <i class="icon ion-home"></i>
+    Enter home address
+  </a>
+
+  <a href="#" class="item item-icon-left">
+    <i class="icon ion-ios-telephone"></i>
+    Enter phone number
+  </a>
+
+  <a href="#" class="item item-icon-left">
+    <i class="icon ion-wifi"></i>
+    Enter wireless password
+  </a>
+
+  <a href="#" class="item item-icon-left">
+    <i class="icon ion-card"></i>
+    Enter card information
+  </a>
+
+</div>
+```
+
+尝试一下 »
+
+
+## 带图片卡片
+
+卡片中使用图片，效果会更好，实例如下：
+
+```html
+<div class="list card">
+
+  <div class="item item-avatar">
+    <img src="avatar.jpg">
+    <h2>Pretty Hate Machine</h2>
+    <p>Nine Inch Nails</p>
+  </div>
+
+  <div class="item item-image">
+    <img src="cover.jpg">
+  </div>
+
+  <a class="item item-icon-left assertive" href="#">
+    <i class="icon ion-music-note"></i>
+    Start listening
+  </a>
+
+</div>
+```
+
+尝试一下 »
+
+运行效果如下：
+
+
+## 卡片展现
+
+以下实例中使用几种不同的选项的卡片展现方式。 开始使用了 list card 元素，并使用了 item-avatar , item-body 元素用于展示图片和文本信息，底部使用 item-divider 类。
+
+```html
+<div class="list card">
+
+  <div class="item item-avatar">
+    <img src="mcfly.jpg">
+    <h2>Marty McFly</h2>
+    <p>November 05, 1955</p>
+  </div>
+
+  <div class="item item-body">
+    <img class="full-image" src="delorean.jpg">
+    <p>
+      菜鸟教程 -- 学的不仅是技术，更是梦想！<br>
+      菜鸟教程 -- 学的不仅是技术，更是梦想！<br>
+      菜鸟教程 -- 学的不仅是技术，更是梦想！<br>
+      菜鸟教程 -- 学的不仅是技术，更是梦想！
+    </p>
+    <p>
+      <a href="#" class="subdued">1 喜欢</a>
+      <a href="#" class="subdued">5 评论</a>
+    </p>
+  </div>
+
+  <div class="item tabs tabs-secondary tabs-icon-left">
+    <a class="tab-item" href="#">
+      <i class="icon ion-thumbsup"></i>
+      喜欢
+    </a>
+    <a class="tab-item" href="#">
+      <i class="icon ion-chatbox"></i>
+      评论
+    </a>
+    <a class="tab-item" href="#">
+      <i class="icon ion-share"></i>
+      分享
+    </a>
+  </div>
+
+</div>
+```
+
+尝试一下 »
+
+运行效果如下：
+
+
+## 复习重点
+
+- 能说明 `ionic 卡片` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

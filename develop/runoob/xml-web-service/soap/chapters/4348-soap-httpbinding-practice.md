@@ -1,34 +1,98 @@
-# SOAP：SOAP HTTP Binding 练习笔记
+# SOAP：SOAP HTTP 协议
 
 - 来源：[SOAP HTTP Binding](https://www.runoob.com/soap/soap-httpbinding.html)
 - 分类：XML / Web Service
 - 技术：SOAP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4348
 
-## 练习目标
+## 本章内容
 
-把 `SOAP HTTP Binding` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## HTTP 协议
 
-## 练习步骤
+HTTP 在 TCP/IP 之上进行通信。HTTP 客户机使用 TCP 连接到 HTTP 服务器。在建立连接之后，客户机可向服务器发送 HTTP 请求消息：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```text
+POST /item HTTP/1.1
+Host: 189.123.255.239
+Content-Type: text/plain
+Content-Length: 200
+```
 
-## 验收清单
+随后服务器会处理此请求，然后向客户机发送一个 HTTP 响应。此响应包含了可指示请求状态的状态代码：
 
-- 我能独立说出 `SOAP HTTP Binding` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+200 OK
+Content-Type: text/plain
+Content-Length: 200
+```
 
-## 复盘问题
+在上面的例子中，服务器返回了一个 200 的状态代码。这是 HTTP 的标准成功代码。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+假如服务器无法对请求进行解码，它可能会返回类似这样的信息：
+
+```text
+400 Bad Request
+Content-Length: 0
+```
+
+
+## SOAP HTTP Binding
+
+SOAP 方法指的是遵守 SOAP 编码规则的 HTTP 请求/响应。
+
+
+### HTTP + XML = SOAP
+
+SOAP 请求可能是 HTTP POST 或 HTTP GET 请求。
+
+HTTP POST 请求规定至少两个 HTTP 头：Content-Type 和 Content-Length。
+
+
+## Content-Type
+
+SOAP 的请求和响应的 Content-Type 头可定义消息的 MIME 类型，以及用于请求或响应的 XML 主体的字符编码（可选）。
+
+
+### 语法
+
+```text
+Content-Type: MIMEType; charset=character-encoding
+```
+
+
+### 实例
+
+```text
+POST /item HTTP/1.1
+Content-Type: application/soap+xml; charset=utf-8
+```
+
+
+## Content-Length
+
+SOAP 的请求和响应的 Content-Length 头规定请求或响应主体的字节数。
+
+
+### 语法
+
+```text
+Content-Length: bytes
+```
+
+
+### 实例
+
+```text
+POST /item HTTP/1.1
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 250
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SOAP HTTP Binding` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

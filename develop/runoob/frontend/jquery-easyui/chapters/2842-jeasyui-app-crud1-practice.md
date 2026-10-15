@@ -1,34 +1,115 @@
-# jQuery EasyUI：jEasyUI 创建 CRUD 应用 练习笔记
+# jQuery EasyUI：jQuery EasyUI 应用 - 创建 CRUD 应用
 
 - 来源：[jEasyUI 创建 CRUD 应用](https://www.runoob.com/jeasyui/jeasyui-app-crud1.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2842
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 创建 CRUD 应用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+数据收集并妥善管理数据是网络应用共同的必要。CRUD 允许我们生成页面列表，并编辑数据库记录。本教程将向你演示如何使用 jQuery EasyUI 框架实现一个 CRUD DataGrid。
 
-## 练习步骤
+我们将使用下面的插件：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- datagrid：向用户展示列表数据。
+- dialog：创建或编辑一条单一的用户信息。
+- form：用于提交表单数据。
+- messager：显示一些操作信息。
 
-## 验收清单
+我们将使用 MySql 数据库来存储用户信息。创建数据库和 'users' 表。
 
-- 我能独立说出 `jEasyUI 创建 CRUD 应用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+创建没有 javascript 代码的 DataGrid。
 
-## 复盘问题
+```html
+<table id="dg" title="My Users" class="easyui-datagrid" style="width:550px;height:250px"
+        url="get_users.php"
+        toolbar="#toolbar"
+        rownumbers="true" fitColumns="true" singleSelect="true">
+    <thead>
+        <tr>
+            <th field="firstname" width="50">First Name</th>
+            <th field="lastname" width="50">Last Name</th>
+            <th field="phone" width="50">Phone</th>
+            <th field="email" width="50">Email</th>
+        </tr>
+    </thead>
+</table>
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit User</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
+</div>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+我们不需要写任何的 javascript 代码，就能向用户显示列表，如下图所示：
+
+DataGrid 使用 'url' 属性，并赋值为 'get_users.php'，用来从服务器检索数据。
+
+get_users.php 文件的代码
+
+```java
+$rs = mysql_query('select * from users');
+$result = array();
+while($row = mysql_fetch_object($rs)){
+    array_push($result, $row);
+}
+
+echo json_encode($result);
+```
+
+我们使用相同的对话框来创建或编辑用户。
+
+```html
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+        closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">User Information</div>
+    <form id="fm" method="post">
+        <div class="fitem">
+            <label>First Name:</label>
+            <input name="firstname" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>Last Name:</label>
+            <input name="lastname" class="easyui-validatebox" required="true">
+        </div>
+        <div class="fitem">
+            <label>Phone:</label>
+            <input name="phone">
+        </div>
+        <div class="fitem">
+            <label>Email:</label>
+            <input name="email" class="easyui-validatebox" validType="email">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+</div>
+```
+
+这个对话框已经创建，也没有任何的 javascript 代码:。
+
+当创建用户时，打开一个对话框并清空表单数据。
+
+```javascript
+function newUser(){
+    $('#dlg').dialog('open').dialog('setTitle','New User');
+    $('#fm').form('clear');
+    url = 'save_user.php';
+}
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-app-crud1.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 创建 CRUD 应用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

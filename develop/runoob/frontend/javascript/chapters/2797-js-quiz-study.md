@@ -1,35 +1,34 @@
-# JavaScript：JavaScript 测验 学习笔记
+# JavaScript：JavaScript 基础测验
 
 - 来源：[JavaScript 测验](https://www.runoob.com/js/js-quiz.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2797
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 测验` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+开始
 
-## 阅读抓手
+- JavaScript 测验 1
+- JavaScript 测验 2
+- JavaScript 测验 3
+- JavaScript 测验 4
+- JavaScript 测验 5
+- JavaScript 测验 6
+- JavaScript 测验 7
+- JavaScript 测验 8
+- JavaScript 测验 9
+- JavaScript 测验 10
+- JavaScript 测验 11
+- JavaScript 测验 12
+- JavaScript 测验 13
+- JavaScript 测验 14
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 复习重点
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
-
-## 完成标准
-
-- 能用 3 到 5 句话解释 `JavaScript 测验`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 能说明 `JavaScript 测验` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

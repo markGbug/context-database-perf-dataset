@@ -1,35 +1,58 @@
-# jQuery EasyUI：jEasyUI 基本的拖动和放置 学习笔记
+# jQuery EasyUI：jQuery EasyUI 拖放 - 基本的拖动和放置
 
 - 来源：[jEasyUI 基本的拖动和放置](https://www.runoob.com/jeasyui/jeasyui-dd-basic.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2846
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 基本的拖动和放置` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+本教程向您展示如何使 HTML 元素可拖动，在本例中，我们将创建三个 DIV 元素然后启用他们的拖动和放置。
 
-## 阅读抓手
+首先，我们创建三个 <div> 元素：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+    <div id="dd1" class="dd-demo"></div>
+    <div id="dd2" class="dd-demo"></div>
+    <div id="dd3" class="dd-demo"></div>
+```
 
-## 笔记模板
+对于第一个 <div> 元素，我们通过默认值让其可以拖动。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+    $('#dd1').draggable();
+```
 
-## 完成标准
+对于第二个 <div> 元素，我们通过创建一个克隆（clone）了原来元素的代理（proxy）让其可以拖动。
 
-- 能用 3 到 5 句话解释 `jEasyUI 基本的拖动和放置`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+    $('#dd2').draggable({
+        proxy:'clone'
+    });
+```
+
+对于第三个 <div> 元素，我们通过创建自定义代理（proxy）让其可以拖动。
+
+```html
+    $('#dd3').draggable({
+        proxy:function(source){
+            var p = $('<div class="proxy">proxy</div>');
+            p.appendTo('body');
+            return p;
+        }
+    });
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-dd-basic.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 基本的拖动和放置` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

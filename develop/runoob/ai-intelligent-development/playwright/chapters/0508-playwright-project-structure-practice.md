@@ -1,34 +1,128 @@
-# Playwright：Playwright 项目结构 练习笔记
+# Playwright：Playwright 项目结构
 
 - 来源：[Playwright 项目结构](https://www.runoob.com/playwright/playwright-project-structure.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0508
 
-## 练习目标
+## 本章内容
 
-把 `Playwright 项目结构` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+成功初始化 Playwright 项目后，你的项目目录中会生成一系列文件和文件夹，本章详细解读每个部分的用途。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 初始化的项目结构一览
 
-## 验收清单
+运行 npm init playwright@latest 后，项目目录中会生成以下结构：
 
-- 我能独立说出 `Playwright 项目结构` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+your-project/
+├── playwright.config.ts      # Playwright 配置文件
+├── package.json              # 项目依赖与脚本
+├── package-lock.json         # 依赖锁定文件
+├── tests/                    # 测试文件目录
+│   └── example.spec.ts       # 示例测试文件
+├── tests-examples/           # 更多示例测试（可选）
+│   └── demo-todo-app.spec.ts
+├── .github/                  # GitHub Actions 配置（可选）
+│   └── workflows/
+│       └── playwright.yml
+└── node_modules/             # npm 依赖包
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## playwright.config.ts —— 配置文件
+
+这是 Playwright 的核心配置文件，控制测试运行的所有方面。
+
+
+## 实例
+
+playwright.config.ts 是控制 Playwright 行为的核心入口，第 15 篇会对每个配置项做详细说明。
+
+
+## package.json —— 依赖与脚本
+
+初始化后，package.json 中会新增 Playwright 相关的内容：
+
+
+## 实例
+
+你也可以添加更多自定义脚本：
+
+
+## 实例
+
+
+## tests/ 目录 —— 测试文件
+
+tests/ 目录是默认的测试文件存放位置（由 testDir 配置指定）。
+
+初始化的示例测试文件内容如下：
+
+
+## 实例
+
+测试文件命名建议：使用 .spec.ts（TypeScript）或 .spec.js（JavaScript）后缀。
+
+
+## tests-examples/ 目录 —— 更多示例
+
+如果你在初始化时选择了包含示例测试，tests-examples/ 目录中会有一个更完整的测试示例：
+
+demo-todo-app.spec.ts 演示了真实 Todo 应用的完整测试场景，包括添加任务、完成状态切换、过滤功能等。
+
+这是一个很好的学习参考，你可以运行来看看效果：
+
+```text
+npx playwright test tests-examples/
+```
+
+
+## .github/workflows/ —— CI 配置
+
+如果你在初始化时选择了添加 GitHub Actions，.github/workflows/playwright.yml 文件会被自动生成。
+
+这个工作流会在每次推送代码或创建 PR 时自动运行 Playwright 测试。
+
+
+## 浏览器存放位置
+
+Playwright 安装的浏览器二进制文件不在项目目录中，而是存放在操作系统缓存目录：
+
+```text
+~/Library/Caches/ms-playwright/
+```
+
+```text
+%USERPROFILE%\AppData\Local\ms-playwright\
+```
+
+```text
+~/.cache/ms-playwright/
+```
+
+你也可以设置自定义存放路径：
+
+```text
+# 设置浏览器安装路径
+export PLAYWRIGHT_BROWSERS_PATH=/your/custom/path
+npx playwright install
+```
+
+
+## node_modules/ —— 依赖包
+
+Playwright 的核心依赖 @playwright/test 安装在 node_modules/ 中。
+
+依赖内部包含了 Playwright 的完整运行时，包括与浏览器通信的协议层。
+
+除了通过 npm 安装的 Node.js 包外，Playwright 还依赖浏览器二进制文件（存放在系统缓存中），两者缺一不可。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Playwright 项目结构` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

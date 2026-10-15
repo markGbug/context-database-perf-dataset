@@ -1,35 +1,132 @@
-# JavaScript：JavaScript async/await 学习笔记
+# JavaScript：JavaScript async/await
 
 - 来源：[JavaScript async/await](https://www.runoob.com/js/js-async-await.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2795
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript async/await` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+在讲解 async/await 之前，我们需要先理解 JavaScript 中的异步编程概念，可以参考：JavaScript 异步编程。
 
-## 阅读抓手
+JavaScript 是单线程语言，意味着它一次只能执行一个任务。为了避免长时间运行的任务阻塞主线程，JavaScript 使用异步编程模型。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 异步 vs 同步
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 同步（Synchronous）编程：代码按顺序执行，前一个操作完成后才会执行下一个
+- 异步编程（Asynchronous）：某些操作被放入"任务队列"，主线程继续执行后续代码，等主线程空闲时再处理队列中的任务
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `JavaScript async/await`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+
+## 回调函数的问题
+
+在 async/await 出现之前，JavaScript 主要使用回调函数处理异步操作，但这会导致"回调地狱"（Callback Hell）。
+
+
+## 实例
+
+这种嵌套结构使得代码难以阅读和维护。
+
+
+## Promise 的引入
+
+ES6 引入了 Promise 对象来解决回调地狱问题。
+
+
+## 实例
+
+虽然 Promise 改善了回调问题，但 then() 链式调用仍然不够直观。
+
+
+## async/await 语法
+
+ES2017 引入了 async/await，它建立在 Promise 之上，让异步代码看起来像同步代码一样。
+
+
+### async 函数
+
+在函数声明前添加 async 关键字，表示该函数是异步的：
+
+async 函数总是返回一个 Promise：
+
+- 如果返回值不是 Promise，会自动包装成 resolved Promise
+- 如果抛出异常，会返回 rejected Promise
+
+
+### await 表达式
+
+await 只能在 async 函数内部使用：
+
+await 会暂停 async 函数的执行，等待 Promise 完成：
+
+- 如果 Promise 被 resolve，返回 resolve 的值
+- 如果 Promise 被 reject，抛出错误（可以用 try/catch 捕获）
+
+
+## 实际应用示例
+
+
+### 基本用法
+
+
+## 实例
+
+
+### 错误处理
+
+
+## 实例
+
+
+### 并行执行
+
+如果需要并行执行多个异步操作，可以使用 Promise.all：
+
+
+## 实例
+
+
+## 常见问题与最佳实践
+
+
+### 1. 不要忘记 await
+
+
+## 实例
+
+
+### 2. 避免不必要的 async
+
+
+## 实例
+
+
+### 3. 顶层 await
+
+在模块顶层可以直接使用 await（ES2022 特性）：
+
+
+## 实例
+
+
+### 4. 性能考虑
+
+- 顺序执行 vs 并行执行：合理使用 Promise.all 提高性能
+- 错误处理：确保所有可能的错误都被捕获
+
+
+## 后续章节
+
+- async/await 与传统 Promise 对比
+- 总结
+
+## 复习重点
+
+- 能说明 `JavaScript async/await` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

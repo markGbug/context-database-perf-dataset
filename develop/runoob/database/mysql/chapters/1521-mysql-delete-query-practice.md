@@ -1,34 +1,143 @@
-# MySQL：MySQL DELETE 语句 练习笔记
+# MySQL：MySQL DELETE 语句
 
 - 来源：[MySQL DELETE 语句](https://www.runoob.com/mysql/mysql-delete-query.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1521
 
-## 练习目标
+## 本章内容
 
-把 `MySQL DELETE 语句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+你可以使用 DELETE FROM 命令来删除 MySQL 数据表中的记录。
 
-## 练习步骤
+你可以在 mysql> 命令提示符或 PHP 脚本中执行该命令。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 语法
 
-- 我能独立说出 `MySQL DELETE 语句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+以下是 DELETE 语句从 MySQL 数据表中删除数据的通用语法：
 
-## 复盘问题
+```text
+DELETE FROM table_name
+WHERE condition;
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+参数说明：
+
+- table_name 是你要删除数据的表的名称。
+- WHERE condition 是一个可选的子句，用于指定删除的行。如果省略 WHERE 子句，将删除表中的所有行。
+
+更多说明：
+
+- 如果没有指定 WHERE 子句，MySQL 表中的所有记录将被删除。
+- 你可以在 WHERE 子句中指定任何条件
+- 您可以在单个表中一次性删除记录。
+
+当你想删除数据表中指定的记录时 WHERE 子句是非常有用的。
+
+
+### 实例
+
+以下实例演示了如何使用 DELETE 语句。
+
+1. 删除符合条件的行：
+
+```text
+DELETE FROM students
+WHERE graduation_year = 2021;
+```
+
+以上 SQL 语句删除了 students 表中所有 graduation_year 为 2021 的学生的记录。
+
+2. 删除所有行：
+
+```text
+DELETE FROM orders;
+```
+
+以上 SQL 语句删除了 orders 表中的所有记录，但表结构保持不变。
+
+3. 使用子查询删除符合条件的行：
+
+```text
+DELETE FROM customers
+WHERE customer_id IN (
+    SELECT customer_id
+    FROM orders
+    WHERE order_date < '2023-01-01'
+);
+```
+
+以上 SQL 语句通过子查询删除了 orders 表中在 '2023-01-01' 之前下的订单对应的客户。
+
+注意： 在使用 DELETE 语句时，请确保你提供了足够的条件来确保只有你想要删除的行被删除。如果不提供 WHERE 子句，将删除表中的所有行，可能导致不可预测的结果。
+
+
+## 从命令行中删除数据
+
+这里我们将在 DELETE 命令中使用 WHERE 子句来删除 MySQL 数据表 runoob_tbl 所选的数据。
+
+
+### 实例
+
+以下实例将删除 runoob_tbl 表中 runoob_id 为3 的记录：
+
+
+## DELETE 语句：
+
+```text
+mysql> use RUNOOB;
+Database changed
+mysql> DELETE FROM runoob_tbl WHERE runoob_id=3;
+Query OK, 1 row affected (0.23 sec)
+```
+
+
+## 使用 PHP 脚本删除数据
+
+PHP 使用 mysqli_query() 函数来执行SQL语句， 你可以在 DELETE 命令中使用或不使用 WHERE 子句。
+
+该函数与 mysql> 命令符执行SQL命令的效果是一样的。
+
+
+### 实例
+
+以下PHP实例将删除 runoob_tbl 表中 runoob_id 为 3 的记录:
+
+
+## MySQL DELETE 子句测试：
+
+```text
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+    die('连接失败: ' . mysqli_error($conn));
+}
+// 设置编码，防止中文乱码
+mysqli_query($conn , "set names utf8");
+
+$sql = 'DELETE FROM runoob_tbl
+        WHERE runoob_id=3';
+
+mysqli_select_db( $conn, 'RUNOOB' );
+$retval = mysqli_query( $conn, $sql );
+if(! $retval )
+{
+    die('无法删除数据: ' . mysqli_error($conn));
+}
+echo '数据删除成功！';
+mysqli_close($conn);
+?>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL DELETE 语句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

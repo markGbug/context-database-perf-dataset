@@ -1,34 +1,248 @@
-# Vue.js：Vue.js 组件 练习笔记
+# Vue.js：Vue.js 组件
 
 - 来源：[Vue.js 组件](https://www.runoob.com/vue2/vue-component.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3259
 
-## 练习目标
+## 本章内容
 
-把 `Vue.js 组件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+组件（Component）是 Vue.js 最强大的功能之一。
 
-## 练习步骤
+组件可以扩展 HTML 元素，封装可重用的代码。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+组件系统让我们可以用独立可复用的小组件来构建大型应用，几乎任意类型的应用的界面都可以抽象为一个组件树：
 
-## 验收清单
+注册一个全局组件语法格式如下：
 
-- 我能独立说出 `Vue.js 组件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+Vue.component(tagName, options)
+```
 
-## 复盘问题
+tagName 为组件名，options 为配置选项。注册后，我们可以使用以下方式来调用组件：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<tagName></tagName>
+```
+
+
+### 全局组件
+
+所有实例都能用全局组件。
+
+
+## 全局组件实例
+
+注册一个简单的全局组件 runoob，并使用它：
+
+```html
+<div id="app">
+    <runoob></runoob>
+</div>
+
+<script>
+// 注册
+Vue.component('runoob', {
+  template: '<h1>自定义组件!</h1>'
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+
+### 局部组件
+
+我们也可以在实例选项中注册局部组件，这样组件只能在这个实例中使用：
+
+
+## 局部组件实例
+
+注册一个简单的局部组件 runoob，并使用它：
+
+```html
+<div id="app">
+    <runoob></runoob>
+</div>
+
+<script>
+var Child = {
+  template: '<h1>自定义组件!</h1>'
+}
+
+// 创建根实例
+new Vue({
+  el: '#app',
+  components: {
+    // <runoob> 将只在父模板可用
+    'runoob': Child
+  }
+})
+</script>
+```
+
+
+## Prop
+
+prop 是子组件用来接受父组件传递过来的数据的一个自定义属性。
+
+父组件的数据需要通过 props 把数据传给子组件，子组件需要显式地用 props 选项声明 "prop"：
+
+
+## Prop 实例
+
+```html
+<div id="app">
+    <child message="hello!"></child>
+</div>
+
+<script>
+// 注册
+Vue.component('child', {
+  // 声明 props
+  props: ['message'],
+  // 同样也可以在 vm 实例中像 "this.message" 这样使用
+  template: '<span>{{ message }}</span>'
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+
+### 动态 Prop
+
+类似于用 v-bind 绑定 HTML 特性到一个表达式，也可以用 v-bind 动态绑定 props 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件：
+
+
+## Prop 实例
+
+```html
+<div id="app">
+    <div>
+      <input v-model="parentMsg">
+      <br>
+      <child v-bind:message="parentMsg"></child>
+    </div>
+</div>
+
+<script>
+// 注册
+Vue.component('child', {
+  // 声明 props
+  props: ['message'],
+  // 同样也可以在 vm 实例中像 "this.message" 这样使用
+  template: '<span>{{ message }}</span>'
+})
+// 创建根实例
+new Vue({
+  el: '#app',
+  data: {
+    parentMsg: '父组件内容'
+  }
+})
+</script>
+```
+
+以下实例中使用 v-bind 指令将 todo 传到每一个重复的组件中：
+
+
+## Prop 实例
+
+```html
+<div id="app">
+    <ol>
+    <todo-item v-for="item in sites" v-bind:todo="item"></todo-item>
+      </ol>
+</div>
+
+<script>
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+})
+new Vue({
+  el: '#app',
+  data: {
+    sites: [
+      { text: 'Runoob' },
+      { text: 'Google' },
+      { text: 'Taobao' }
+    ]
+  }
+})
+</script>
+```
+
+注意: prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。
+
+
+### Prop 验证
+
+组件可以为 props 指定验证要求。
+
+为了定制 prop 的验证方式，你可以为 props 中的值提供一个带有验证需求的对象，而不是一个字符串数组。例如：
+
+```javascript
+Vue.component('my-component', {
+  props: {
+    // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+    propA: Number,
+    // 多个可能的类型
+    propB: [String, Number],
+    // 必填的字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 带有默认值的数字
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 带有默认值的对象
+    propE: {
+      type: Object,
+      // 对象或数组默认值必须从一个工厂函数获取
+      default: function () {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        // 这个值必须匹配下列字符串中的一个
+        return ['success', 'warning', 'danger'].indexOf(value) !== -1
+      }
+    }
+  }
+})
+```
+
+当 prop 验证失败的时候，(开发环境构建版本的) Vue 将会产生一个控制台的警告。
+
+type 可以是下面原生构造器：
+
+- String
+- Number
+- Boolean
+- Array
+- Object
+- Date
+- Function
+- Symbol
+
+type 也可以是一个自定义构造器，使用 instanceof 检测。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue.js 组件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

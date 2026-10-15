@@ -1,34 +1,175 @@
-# Python2.x：Python 环境搭建 练习笔记
+# Python2.x：Python 环境搭建
 
 - 来源：[Python 环境搭建](https://www.runoob.com/python/python-install.html)
 - 分类：Python / 数据科学
 - 技术：Python2.x
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4172
 
-## 练习目标
+## 本章内容
 
-把 `Python 环境搭建` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Python 是一种跨平台的编程语言，能够在多种操作系统上运行。
 
-## 练习步骤
+本章节我们将向大家介绍如何在本地搭建 Python 开发环境。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Python 可应用于多平台，包括 Windows、Linux 和 Mac OS X。
 
-## 验收清单
+你可以通过终端窗口输入 python 命令来查看本地是否已经安装 Python 以及 Python 的安装版本。
 
-- 我能独立说出 `Python 环境搭建` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- Windows：包括 Windows 7 及以上版本。
+- macOS：适用于所有主流 macOS 版本。
+- Linux：几乎所有主流 Linux 发行版，如 Ubuntu、Debian、Fedora、CentOS 等。
+- Unix：支持类 Unix 系统，如 FreeBSD、OpenBSD 等。
+- 嵌入式系统：如 Raspberry Pi 等设备。
+- 移动平台：通过特定框架（如 Kivy）支持 iOS 和 Android。
+- 云平台：支持 AWS、Google Cloud、Azure 等云服务环境。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## Python下载
+
+Python 最新源码，二进制文档，新闻资讯等可以在 Python 的官网查看到：
+
+Python 官网：https://www.python.org/
+
+你可以在以下链接中下载 Python 的文档，你可以下载 HTML、PDF 和 PostScript 等格式的文档。
+
+Python文档下载地址：https://www.python.org/doc/
+
+
+## Python安装
+
+Python已经被移植在许多平台上（经过改动使它能够工作在不同平台上）。
+
+您需要下载适用于您使用平台的二进制代码，然后安装Python。
+
+如果您平台的二进制代码是不可用的，你需要使用C编译器手动编译源代码。
+
+编译的源代码，功能上有更多的选择性， 为python安装提供了更多的灵活性。
+
+以下是各个平台安装包的下载地址：
+
+以下为不同平台上安装 Python 的方法：
+
+
+### Unix & Linux 平台安装 Python:
+
+以下为在 Unix & Linux 平台上安装 Python 的简单步骤：
+
+- 打开 WEB 浏览器访问https://www.python.org/downloads/source/
+- 选择适用 于Unix/Linux 的源码压缩包。
+- 下载及解压压缩包。
+- 如果你需要自定义一些选项修改Modules/Setup
+- 执行 ./configure 脚本
+- make
+- make install
+
+执行以上操作后，Python 会安装在 /usr/local/bin 目录中，Python 库安装在 /usr/local/lib/pythonXX，XX 为你使用的 Python 的版本号。
+
+
+### Window 平台安装 Python:
+
+以下为在 Window 平台上安装 Python 的简单步骤：
+
+- 打开 WEB 浏览器访问https://www.python.org/downloads/windows/
+- 在下载列表中选择Window平台安装包，包格式为：python-XYZ.msi 文件 ， XYZ 为你要安装的版本号。
+- 要使用安装程序 python-XYZ.msi, Windows 系统必须支持 Microsoft Installer 2.0 搭配使用。只要保存安装文件到本地计算机，然后运行它，看看你的机器支持 MSI。Windows XP 和更高版本已经有 MSI，很多老机器也可以安装 MSI。
+- 下载后，双击下载包，进入 Python 安装向导，安装非常简单，你只需要使用默认的设置一直点击"下一步"直到安装完成即可。
+
+
+### MAC 平台安装 Python:
+
+MAC 系统一般都自带有 Python2.x版本 的环境，你也可以在链接 https://www.python.org/downloads/mac-osx/ 上下载最新版安装。
+
+
+## 环境变量配置
+
+程序和可执行文件可以在许多目录，而这些路径很可能不在操作系统提供可执行文件的搜索路径中。
+
+path(路径)存储在环境变量中，这是由操作系统维护的一个命名的字符串。这些变量包含可用的命令行解释器和其他程序的信息。
+
+Unix或Windows中路径变量为PATH（UNIX区分大小写，Windows不区分大小写）。
+
+在Mac OS中，安装程序过程中改变了python的安装路径。如果你需要在其他目录引用Python，你必须在path中添加Python目录。
+
+
+### 在 Unix/Linux 设置环境变量
+
+- 在 csh shell: 输入 setenv PATH "$PATH:/usr/local/bin/python" , 按下 Enter。
+- 在 bash shell (Linux): 输入 export PATH="$PATH:/usr/local/bin/python" ，按下 Enter。
+- 在 sh 或者 ksh shell: 输入 PATH="$PATH:/usr/local/bin/python" , 按下 Enter。
+
+注意: /usr/local/bin/python 是 Python 的安装目录。
+
+
+### 在 Windows 设置环境变量
+
+在环境变量中添加Python目录：
+
+在命令提示框中(cmd) : 输入
+
+```text
+path=%path%;C:\Python
+```
+
+按下 Enter。
+
+注意: C:\Python 是Python的安装目录。
+
+也可以通过以下方式设置：
+
+- 右键点击"计算机"，然后点击"属性"
+- 然后点击"高级系统设置"
+- 选择"系统变量"窗口下面的"Path",双击即可！
+- 然后在"Path"行，添加python安装路径即可(我的D:\Python32)，所以在后面，添加该路径即可。 ps：记住，路径直接用分号"；"隔开！
+- 最后设置成功以后，在cmd命令行，输入命令"python"，就可以有相关显示。
+
+
+## Python 环境变量
+
+下面几个重要的环境变量，它应用于Python：
+
+
+## 运行Python
+
+有三种方式可以运行Python：
+
+
+### 1、交互式解释器：
+
+你可以通过命令行窗口进入 Python，并在交互式解释器中开始编写 Python 代码。
+
+你可以在 Unix、DOS 或任何其他提供了命令行或者 shell 的系统进行 Python 编码工作。
+
+以下为Python命令行参数：
+
+
+### 2、命令行脚本
+
+在你的应用程序中通过引入解释器可以在命令行中执行Python脚本，如下所示：
+
+注意：在执行脚本时，请检查脚本是否有可执行权限。
+
+
+### 3、集成开发环境（IDE：Integrated Development Environment）: PyCharm
+
+PyCharm 是由 JetBrains 打造的一款 Python IDE，支持 macOS、 Windows、 Linux 系统。
+
+PyCharm 功能 : 调试、语法高亮、Project管理、代码跳转、智能提示、自动完成、单元测试、版本控制……
+
+PyCharm 下载地址 : https://www.jetbrains.com/pycharm/download/
+
+PyCharm 安装地址：https://www.runoob.com/pycharm/pycharm-install.html
+
+安装 PyCharm 中文插件，打开菜单栏 File，选择 Settings，然后选 Plugins，点 Marketplace，搜索 chinese，然后点击 install 安装：
+
+在接下来的学习中请确保您的环境已搭建成功。
+
+在以后的章节中给出的例子已在 Python2.7.6 版本测试通过。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python 环境搭建` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

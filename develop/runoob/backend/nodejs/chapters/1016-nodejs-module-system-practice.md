@@ -1,34 +1,302 @@
-# Node.js：Node.js 模块系统 练习笔记
+# Node.js：Node.js模块系统
 
 - 来源：[Node.js 模块系统](https://www.runoob.com/nodejs/nodejs-module-system.html)
 - 分类：后端开发
 - 技术：Node.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1016
 
-## 练习目标
+## 本章内容
 
-把 `Node.js 模块系统` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Node.js 模块系统是其核心功能之一，它允许开发者将代码组织成小的、可重用的单元，这些单元被称为模块。
 
-## 练习步骤
+模块是一个封装了特定功能的独立文件，可以在其他文件中引入和使用。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Node.js 的模块系统是构建 Node.js 应用程序的重要基础，使开发者能够将代码拆分成可重用、可维护的小块。
 
-## 验收清单
+每个模块都是一个单独的 JavaScript 文件，包含一组相关的函数、对象或变量，通过这种方式，Node.js 提供了一种结构化的方法来管理大型应用程序，使代码更加清晰和易于维护。
 
-- 我能独立说出 `Node.js 模块系统` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Node.js 中的每个文件都可以作为一个模块，默认处于独立的作用域内。
 
-## 复盘问题
+模块系统遵循 CommonJS 规范，但也支持 ES 模块。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 模块类型
+
+Node.js 支持以下几种模块：
+
+- 内置模块：Node.js 自带的模块，如 fs、http、path 等。
+- 用户自定义模块：由开发者创建的模块。
+- 第三方模块：通过 npm 安装的模块，如 express、lodash 等。
+
+
+## 导入内置模块
+
+内置模块是由 Node.js 自带的模块，在安装 Node.js 时就已经包含在环境中，因此无需额外安装。常见的内置模块包括 fs、http、path、os、crypto 等。
+
+导入内置模块只需要使用 require() 函数并传入模块名称即可。例如，要导入文件系统模块 fs、path、http，可以这样做：
+
+```javascript
+// 导入文件系统模块
+const fs = require('fs');
+
+// 导入路径模块
+const path = require('path');
+
+// 导入 HTTP 模块
+const http = require('http');
+```
+
+这里，fs 是一个字符串，表示要加载的模块名称。Node.js 会自动识别这是一个内置模块，并加载相应的功能。
+
+
+## 实例
+
+
+## 导入第三方模块
+
+第三方模块是开发者或开源社区发布的模块，可以通过 npm（Node 包管理器）安装到项目中，常见的第三方模块有 express、lodash、axios 等。
+
+第三方模块安装后，这些模块会被放置在项目的 node_modules 目录下。要导入一个第三方模块，同样使用 require() 函数，但传入的是模块的名称。例如，要导入 express 框架，可以这样做：
+
+```javascript
+// 导入第三方模块 express
+const express = require('express');
+```
+
+在导入第三方模块之前，确保已经通过 npm 安装了该模块。例如，安装 express 可以通过以下命令完成：
+
+```text
+npm install express
+```
+
+安装第三方模块 lodash，并导入测试：
+
+
+## 实例
+
+
+## 自定义模块导出与导入（CommonJS 模块）
+
+1、导出模块：使用 module.exports 或 exports 将函数、对象或变量导出。
+
+2、导入模块：使用 require() 导入模块。
+
+
+### 导入模块
+
+在 Node.js 中，引入一个模块非常简单，如下我们创建一个 main.js 文件并引入 hello 模块，代码如下:
+
+
+## main.js 文件代码：
+
+以上实例中，代码 require('./hello') 引入了当前目录下的 hello.js 文件（./ 为当前目录，node.js 文件默认后缀为 .js）。
+
+Node.js 提供了 exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的 exports 对象。
+
+接下来我们就来创建 hello.js 文件，代码如下：
+
+
+## hello.js 文件代码：
+
+在以上示例中，hello.js 通过 exports 对象把 world 作为模块的访问接口，在 main.js 中通过 require('./hello') 加载这个模块，然后就可以直接访问 hello.js 中 exports 对象的成员函数了。
+
+有时候我们只是想把一个对象封装到模块中，格式如下：
+
+```text
+module.exports = function() {
+  // ...
+}
+```
+
+例如:
+
+
+## hello.js 文件代码：
+
+这样就可以直接获得这个对象了：
+
+
+## main.js 文件代码：
+
+模块接口的唯一变化是使用 module.exports = Hello 代替了 exports.world = function(){}。 在外部引用该模块时，其接口对象就是要输出的 Hello 对象本身，而不是原先的 exports。
+
+module.exports 与 exports 的区别：
+
+- module.exports 是导出对象的真正引用。
+- exports 是 module.exports 的快捷方式。不能直接赋值 exports = ...，否则会断开引用。
+
+
+## 自定义模块导出与导入（ES 模块）
+
+ES 模块使用 import 和 export，是现代 JavaScript 的模块规范。
+
+- ES 模块使用 import 和 export 关键字，需将文件扩展名设置为 .mjs，或者在 package.json 中声明 "type": "module"。
+- ES 模块支持静态导入（import ... from ...）和动态导入（import()）。
+
+
+## 实例
+
+
+## 加载模块的路径解析
+
+1、核心模块：如 http 和 fs，在 Node.js 安装时就包含，可以直接加载。
+
+```javascript
+const http = require('http');
+```
+
+2、本地文件模块：使用相对路径或绝对路径加载，需指定 ./ 或 /。
+
+```javascript
+const myModule = require('./myModule');
+```
+
+3、第三方模块：位于 node_modules 目录中，只需输入模块名称即可加载。
+
+```javascript
+const express = require('express');
+```
+
+
+## 模块缓存
+
+模块缓存机制：Node.js 会将已加载的模块缓存起来，以提高性能。再次 require() 同一模块时，直接返回缓存中的模块，而不是重新加载。
+
+刷新缓存：要重新加载模块，可以删除缓存：
+
+```text
+delete require.cache[require.resolve('./myModule')];
+```
+
+
+## 循环依赖
+
+当两个或多个模块相互导入时，称为循环依赖。Node.js 能处理简单的循环依赖，但可能导致部分模块导出的对象未完全初始化。
+
+
+## 实例
+
+输出说明 b.js 导入 a.js 时，由于 a.js 尚未完全执行，a.message 为 undefined。
+
+
+## 模块包装与作用域
+
+Node.js 会将每个模块包装在一个函数中，使得每个模块都有独立的作用域。 示例：
+
+```text
+// Node.js 内部将模块包装为类似这样的函数：
+(function(exports, require, module, __filename, __dirname) {
+  // 模块代码在这里
+});
+```
+
+这意味着在模块中定义的变量不会污染全局作用域。
+
+
+## 服务端的模块放在哪里
+
+也许你已经注意到，我们已经在代码中使用了模块了。像这样：
+
+```javascript
+var http = require("http");
+
+...
+
+http.createServer(...);
+```
+
+Node.js 中自带了一个叫做 http 的模块，在我们的代码中请求它并把返回值赋给一个本地变量。
+
+这把我们的本地变量变成了一个拥有所有 http 模块所提供的公共方法的对象。
+
+Node.js 的 require 方法中的文件查找策略如下：
+
+由于 Node.js 中存在 4 类模块（原生模块和3种文件模块），尽管 require 方法极其简单，但是内部的加载却是十分复杂的，其加载优先级也各自不同。如下图所示：
+
+
+### 从文件模块缓存中加载
+
+尽管原生模块与文件模块的优先级不同，但是都会优先从文件模块的缓存中加载已经存在的模块。
+
+
+### 从原生模块加载
+
+原生模块的优先级仅次于文件模块缓存的优先级。require 方法在解析文件名之后，优先检查模块是否在原生模块列表中。以http模块为例，尽管在目录下存在一个 http/http.js/http.node/http.json 文件，require("http") 都不会从这些文件中加载，而是从原生模块中加载。
+
+原生模块也有一个缓存区，同样也是优先从缓存区加载。如果缓存区没有被加载过，则调用原生模块的加载方式进行加载和执行。
+
+
+### 从文件加载
+
+当文件模块缓存中不存在，而且不是原生模块的时候，Node.js 会解析 require 方法传入的参数，并从文件系统中加载实际的文件，加载过程中的包装和编译细节在前一节中已经介绍过，这里我们将详细描述查找文件模块的过程，其中，也有一些细节值得知晓。
+
+require方法接受以下几种参数的传递：
+
+- http、fs、path等，原生模块。
+- ./mod或../mod，相对路径的文件模块。
+- /pathtomodule/mod，绝对路径的文件模块。
+- mod，非原生模块的文件模块。
+
+在路径 Y 下执行 require(X) 语句执行顺序：
+
+```java
+1. 如果 X 是内置模块
+   a. 返回内置模块
+   b. 停止执行
+2. 如果 X 以 '/' 开头
+   a. 设置 Y 为文件根路径
+3. 如果 X 以 './' 或 '/' or '../' 开头
+   a. LOAD_AS_FILE(Y + X)
+   b. LOAD_AS_DIRECTORY(Y + X)
+4. LOAD_NODE_MODULES(X, dirname(Y))
+5. 抛出异常 "not found"
+
+LOAD_AS_FILE(X)
+1. 如果 X 是一个文件, 将 X 作为 JavaScript 文本载入并停止执行。
+2. 如果 X.js 是一个文件, 将 X.js 作为 JavaScript 文本载入并停止执行。
+3. 如果 X.json 是一个文件, 解析 X.json 为 JavaScript 对象并停止执行。
+4. 如果 X.node 是一个文件, 将 X.node 作为二进制插件载入并停止执行。
+
+LOAD_INDEX(X)
+1. 如果 X/index.js 是一个文件,  将 X/index.js 作为 JavaScript 文本载入并停止执行。
+2. 如果 X/index.json 是一个文件, 解析 X/index.json 为 JavaScript 对象并停止执行。
+3. 如果 X/index.node 是一个文件,  将 X/index.node 作为二进制插件载入并停止执行。
+
+LOAD_AS_DIRECTORY(X)
+1. 如果 X/package.json 是一个文件,
+   a. 解析 X/package.json, 并查找 "main" 字段。
+   b. let M = X + (json main 字段)
+   c. LOAD_AS_FILE(M)
+   d. LOAD_INDEX(M)
+2. LOAD_INDEX(X)
+
+LOAD_NODE_MODULES(X, START)
+1. let DIRS=NODE_MODULES_PATHS(START)
+2. for each DIR in DIRS:
+   a. LOAD_AS_FILE(DIR/X)
+   b. LOAD_AS_DIRECTORY(DIR/X)
+
+NODE_MODULES_PATHS(START)
+1. let PARTS = path split(START)
+2. let I = count of PARTS - 1
+3. let DIRS = []
+4. while I >= 0,
+   a. if PARTS[I] = "node_modules" CONTINUE
+   b. DIR = path join(PARTS[0 .. I] + "node_modules")
+   c. DIRS = DIRS + DIR
+   d. let I = I - 1
+5. return DIRS
+```
+
+exports 和 module.exports 的使用
+
+如果要对外暴露属性或方法，就用 exports 就行，要暴露对象(类似class，包含了很多属性和方法)，就用 module.exports。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Node.js 模块系统` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,88 @@
-# Matplotlib：Matplotlib imshow() 练习笔记
+# Matplotlib：Matplotlib imshow() 方法
 
 - 来源：[Matplotlib imshow()](https://www.runoob.com/matplotlib/matplotlib-imshow.html)
 - 分类：Python / 数据科学
 - 技术：Matplotlib
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3971
 
-## 练习目标
+## 本章内容
 
-把 `Matplotlib imshow()` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+imshow() 函数是 Matplotlib 库中的一个函数，用于显示图像。
 
-## 练习步骤
+imshow() 函数常用于绘制二维的灰度图像或彩色图像。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+imshow() 函数可用于绘制矩阵、热力图、地图等。
 
-## 验收清单
+imshow() 方法语法格式如下：
 
-- 我能独立说出 `Matplotlib imshow()` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+imshow(X, cmap=None, norm=None, aspect=None, interpolation=None, alpha=None, vmin=None, vmax=None, origin=None, extent=None, shape=None, filternorm=1, filterrad=4.0, imlim=None, resample=None, url=None, *, data=None, **kwargs)
+```
 
-## 复盘问题
+参数说明：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- X：输入数据。可以是二维数组、三维数组、PIL图像对象、matplotlib路径对象等。
+- cmap：颜色映射。用于控制图像中不同数值所对应的颜色。可以选择内置的颜色映射，如gray、hot、jet等，也可以自定义颜色映射。
+- norm：用于控制数值的归一化方式。可以选择Normalize、LogNorm等归一化方法。
+- aspect：控制图像纵横比（aspect ratio）。可以设置为auto或一个数字。
+- interpolation：插值方法。用于控制图像的平滑程度和细节程度。可以选择nearest、bilinear、bicubic等插值方法。
+- alpha：图像透明度。取值范围为0~1。
+- origin：坐标轴原点的位置。可以设置为upper或lower。
+- extent：控制显示的数据范围。可以设置为[xmin, xmax, ymin, ymax]。
+- vmin、vmax：控制颜色映射的值域范围。
+- filternorm 和 filterrad：用于图像滤波的对象。可以设置为None、antigrain、freetype等。
+- imlim： 用于指定图像显示范围。
+- resample：用于指定图像重采样方式。
+
+
+### 显示灰度图像
+
+
+## 实例
+
+以上实例中我们生成了一个 10x10 的随机数组，并使用 imshow() 函数将其显示为一张灰度图像。
+
+我们设置了 cmap 参数为 gray，这意味着将使用灰度颜色映射显示图像。
+
+显示结果如下：
+
+
+### 显示彩色图像
+
+
+## 实例
+
+以上实例中我们生成了一个 10x10 的随机彩色图像，并使用 imshow() 函数将其显示出来。
+
+由于彩色图像是三维数组，因此不需要设置 cmap 参数。
+
+显示结果如下：
+
+
+### 显示热力图
+
+
+## 实例
+
+以上实例中我们生成了一个 10x10 的随机数组，并使用 imshow() 函数将其显示为热力图。
+
+我们设置了 cmap 参数为 hot，这意味着将使用热度颜色映射显示图像。
+
+此外，我们还添加了一个颜色条（colorbar），以便查看数据的值与颜色之间的关系。
+
+显示结果如下：
+
+
+### 显示地图
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Matplotlib imshow()` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

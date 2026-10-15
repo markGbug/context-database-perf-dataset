@@ -1,34 +1,100 @@
-# Ionic：ionic 模态窗口 练习笔记
+# Ionic：ionic 模态窗口
 
 - 来源：[ionic 模态窗口](https://www.runoob.com/ionic/ionic-ion-modal.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3321
 
-## 练习目标
+## 本章内容
 
-把 `ionic 模态窗口` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## $ionicModal
 
-## 练习步骤
+$ionicModal 可以遮住用户主界面的内容框。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+你可以在你的 index 文件或者是其他文件内嵌入以下代码(里面的代码可以根据你自己的业务场景相应的改变)。
 
-## 验收清单
+```html
+<script id="my-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">My Modal title</h1>
+    </ion-header-bar>
+    <ion-content>
+      Hello!
+    </ion-content>
+  </ion-modal-view>
+</script>
+```
 
-- 我能独立说出 `ionic 模态窗口` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+然后你就可以在你的 Controller 里面的注入 $ionicModal 。然后调用你刚刚写入的模板，进行初始化操作。就像下面的代码：
 
-## 复盘问题
+```text
+angular.module('testApp', ['ionic'])
+.controller('MyController', function($scope, $ionicModal) {
+  $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+});
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 方法
+
+```text
+fromTemplate(templateString, options)
+```
+
+模板的字符串作为模态窗口的内容。
+
+options 会传递到 ionicModal#initialize方法中。
+
+返回: 对象, 一个ionicModal控制器的实例。
+
+```text
+fromTemplateUrl(templateUrl, options)
+```
+
+载入模板的url。
+
+通过ionicModal#initialize方法传递对象。
+
+返回： promise对象。Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供统一接口。
+
+
+## ionicModal
+
+由$ionicModal服务实例化。
+
+提示：当你完成每个模块清除时，确保调用remove()方法，以避免内存泄漏。
+
+注意：一个模块从它的初始范围广播出 'modal.shown' 和 'modal.hidden' ，把自身作为一个参数来传递。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 模态窗口` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

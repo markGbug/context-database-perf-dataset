@@ -1,35 +1,143 @@
-# Zig：Zig 环境安装 学习笔记
+# Zig：Zig 环境安装
 
 - 来源：[Zig 环境安装](https://www.runoob.com/zig/zig-setup.html)
 - 分类：编程语言
 - 技术：Zig
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3780
 
-## 学习目标
+## 本章内容
 
-Zig 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Zig 环境安装` 建立学习路径，先理解它在 Zig 体系中的位置，再做可运行或可复述的验证。
+在配置 Zig 编程语言的开发环境时，需要安装 Zig 编译器并设置相关的开发工具。
 
-## 阅读抓手
+以下是在不同操作系统上配置 Zig 的步骤：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 使用包管理器来安装
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### Windows
 
-- 能用 3 到 5 句话解释 `Zig 环境安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Zig 在 Chocolatey 上可用：
+
+```text
+choco install zig
+```
+
+Windows (winget)
+
+```text
+winget install zig.zig
+```
+
+Windows (scoop)：
+
+```text
+scoop install zig
+```
+
+
+### MacOS
+
+Homebrew 安装：
+
+```text
+brew install zig
+```
+
+
+### Linux
+
+Ubuntu (snap)
+
+稳定版本安装：
+
+```text
+snap install zig --classic --beta
+```
+
+Fedora:
+
+```text
+dnf install zig
+```
+
+FreeBSD:
+
+```text
+pkg install lang/zig
+```
+
+配置完毕后，你就可以开始使用 Zig 编程语言进行开发了。
+
+
+## 源码安装
+
+我们也可以下载源码来编译安装。
+
+Zig 源码包下载地址：https://ziglang.org/zh/download/。
+
+下载后，使用 tar 命令来解压：
+
+```text
+tar -xvf zig-macos-aarch64-0.13.0.tar.xz
+```
+
+然后进入源码包，进行后续的编译安装：
+
+```text
+cd zig-macos-aarch64-0.13.0
+```
+
+也可以从 Zig 的 GitHub 仓库克隆源码：
+
+```text
+git clone https://github.com/ziglang/zig.git
+```
+
+
+### 依赖项
+
+- cmake >= 3.5
+- gcc >= 7.0.0 或者 clang >= 6.0.0
+- LLVM、Clang、LLD 开发库 == 18.x，使用相同版本的 gcc 或 clang 编译 可以使用系统包管理器安装，或者从源代码构建。
+
+
+### 指令
+
+- 在 Zig 源码目录下，创建一个 build 目录： mkdir build cd build
+- 运行 cmake： cmake ..
+- 构建和安装 Zig： make install
+
+请注意 CMAKE_PREFIX_PATH 这个方便的 cmake 变量。CMake 会优先在这个位置查找 LLVM 和其他依赖项。
+
+这些步骤将生成 stage3/bin/zig，这是由 Zig 自身构建的 Zig 编译器。
+
+
+### macOS + Homebrew
+
+对于 macOS 使用 Homebrew：
+
+- 在 Zig 源码目录下，创建一个 build 目录： mkdir build cd build
+- 运行 cmake，并启用静态 LLVM： cmake .. -DZIG_STATIC_LLVM=ON -DCMAKE_PREFIX_PATH="$(brew --prefix llvm@18);$(brew --prefix zstd)"
+- 构建和安装 Zig： make install
+
+
+### FreeBSD
+
+对于 FreeBSD：
+
+- 使用 pkg 安装必要的依赖项： sudo pkg install -qyr FreeBSD devel/llvm18 devel/cmake archivers/zstd textproc/libxml2 archivers/lzma
+- 在 Zig 源码目录下，创建一个 build 目录： mkdir build cd build
+- 运行 cmake，并启用静态 LLVM： cmake .. -DZIG_STATIC_LLVM=ON -DCMAKE_PREFIX_PATH="/usr/local/llvm18;/usr/local"
+- 构建和安装 Zig： make install
+
+这些步骤会在你的系统上安装 Zig 编译器。
+
+
+## 复习重点
+
+- 能说明 `Zig 环境安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

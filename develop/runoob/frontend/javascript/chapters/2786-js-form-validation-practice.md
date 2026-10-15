@@ -1,34 +1,129 @@
-# JavaScript：JavaScript 表单验证 练习笔记
+# JavaScript：JavaScript 表单验证
 
 - 来源：[JavaScript 表单验证](https://www.runoob.com/js/js-form-validation.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2786
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript 表单验证` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+表单验证是确保用户输入的数据符合预期格式和规则的过程。
 
-## 练习步骤
+在 Web 开发中，表单验证通常用于检查用户输入的有效性，例如电子邮件地址、密码、电话号码等。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+通过表单验证，可以防止无效数据提交到服务器，从而提高数据的准确性和安全性。
 
-## 验收清单
 
-- 我能独立说出 `JavaScript 表单验证` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## JavaScript 表单验证
 
-## 复盘问题
+JavaScript 可用来在数据被送往服务器前对 HTML 表单中的这些输入数据进行验证。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+表单数据经常需要使用 JavaScript 来验证其正确性：
+
+- 验证表单数据是否为空？
+- 验证输入是否是一个正确的email地址？
+- 验证日期是否输入正确？
+- 验证表单输入内容是否为数字型？
+
+
+### 为什么需要表单验证？
+
+- 数据准确性：确保用户输入的数据符合预期格式，避免无效数据。
+- 安全性：防止恶意用户提交有害数据，如 SQL 注入、跨站脚本攻击（XSS）等。
+- 用户体验：及时反馈用户输入错误，帮助用户快速纠正问题。
+
+
+## JavaScript 表单验证的基本方法
+
+JavaScript 提供了多种方法来实现表单验证。以下是几种常见的方式：
+
+
+### 1. 使用 HTML5 内置验证
+
+HTML5 提供了一些内置的表单验证功能，例如 required、pattern、min、max 等属性。这些属性可以简单地实现基本的表单验证。
+
+
+## 实例
+
+在上面的例子中，required 属性确保用户必须输入电子邮件地址，而 type="email" 会自动验证输入是否为有效的电子邮件格式。
+
+
+### 2. 使用 JavaScript 自定义验证
+
+下面的函数用来检查用户是否已填写表单中的必填（或必选）项目。假如必填或必选项为空，那么警告框会弹出，并且函数的返回值为 false，否则函数的返回值则为 true（意味着数据没有问题）：
+
+```javascript
+function validateForm()
+{
+  var x=document.forms["myForm"]["fname"].value;
+  if (x==null || x=="")
+  {
+    alert("姓必须填写");
+    return false;
+  }
+}
+```
+
+以上函数在 form 表单提交时被调用:
+
+
+## 实例
+
+```html
+<form name="myForm" action="demo-form.php" onsubmit="return validateForm()" method="post">
+姓: <input type="text" name="fname">
+<input type="submit" value="提交">
+</form>
+```
+
+
+## E-mail 验证
+
+下面的函数检查输入的数据是否符合电子邮件地址的基本语法。
+
+意思就是说，输入的数据必须包含 @ 符号和点号(.)。同时，@ 不可以是邮件地址的首字符，并且 @ 之后需有至少一个点号：
+
+```html
+function validateForm(){
+  var x=document.forms["myForm"]["email"].value;
+  var atpos=x.indexOf("@");
+  var dotpos=x.lastIndexOf(".");
+  if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+    alert("不是一个有效的 e-mail 地址");
+    return false;
+  }
+}
+```
+
+下面是连同 HTML 表单的完整代码：
+
+
+## 实例
+
+```html
+<form name="myForm" action="demo-form.php" onsubmit="return validateForm();" method="post">
+    Email: <input type="text" name="email">
+    <input type="submit" value="提交">
+</form>
+```
+
+
+### 使用正则表达式进行验证
+
+正则表达式（Regular Expression）是一种强大的工具，可以用于匹配复杂的字符串模式。
+
+以下是一个使用正则表达式验证电子邮件地址的例子：
+
+
+## 实例
+
+在这个例子中，我们定义了一个正则表达式来验证电子邮件地址的格式。如果输入的电子邮件地址符合格式要求，函数会返回 true，否则返回 false。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript 表单验证` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

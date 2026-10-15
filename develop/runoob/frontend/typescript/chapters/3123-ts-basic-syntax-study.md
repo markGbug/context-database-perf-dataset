@@ -1,35 +1,231 @@
-# TypeScript：TypeScript 基础语法 学习笔记
+# TypeScript：TypeScript 基础语法
 
 - 来源：[TypeScript 基础语法](https://www.runoob.com/typescript/ts-basic-syntax.html)
 - 分类：前端开发
 - 技术：TypeScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3123
 
-## 学习目标
+## 本章内容
 
-TypeScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `TypeScript 基础语法` 建立学习路径，先理解它在 TypeScript 体系中的位置，再做可运行或可复述的验证。
+TypeScript 程序由以下几个部分组成：
 
-## 阅读抓手
+- 模块
+- 函数
+- 变量
+- 语句和表达式
+- 注释
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 第一个 TypeScript 程序
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+我们可以使用以下 TypeScript 程序来输出 "Hello World" ：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `TypeScript 基础语法`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## Runoob.ts 文件代码：
+
+```javascript
+const hello : string = "Hello World!"
+console.log(hello)
+```
+
+以上代码首先通过 tsc 命令编译：
+
+```text
+tsc Runoob.ts
+```
+
+得到如下 js 代码：
+
+
+## Runoob.js 文件代码：
+
+```javascript
+var hello = "Hello World!";
+console.log(hello);
+```
+
+最后我们使用 node 命令来执行该 js 代码。
+
+```text
+$ node Runoob.js
+Hello World
+```
+
+整个流程如下图所示：
+
+我们可以同时编译多个 ts 文件：
+
+```text
+tsc file1.ts file2.ts file3.ts
+```
+
+tsc 常用编译参数如下表所示：
+
+--help
+
+显示帮助信息
+
+--module
+
+载入扩展模块
+
+--target
+
+设置 ECMA 版本
+
+--declaration
+
+额外生成一个 .d.ts 扩展名的文件。
+
+```text
+tsc ts-hw.ts --declaration
+```
+
+以上命令会生成 ts-hw.d.ts、ts-hw.js 两个文件。
+
+--removeComments
+
+删除文件的注释
+
+--out
+
+编译多个文件并合并到一个输出的文件
+
+--sourcemap
+
+生成一个 sourcemap (.map) 文件。
+
+sourcemap 是一个存储源代码与编译代码对应位置映射的信息文件。
+
+--module noImplicitAny
+
+在表达式和声明上有隐含的 any 类型时报错
+
+--watch
+
+在监视模式下运行编译器。会监视输出文件，在它们改变时重新编译。
+
+
+## TypeScript 保留关键字
+
+TypeScript 保留关键字如下表所示：
+
+
+### 空白和换行
+
+TypeScript 会忽略程序中出现的空格、制表符和换行符。
+
+空格、制表符通常用来缩进代码，使代码易于阅读和理解。
+
+
+### TypeScript 区分大小写
+
+TypeScript 区分大写和小写字符。
+
+
+### 分号是可选的
+
+每行指令都是一段语句，你可以使用分号或不使用， 分号在 TypeScript 中是可选的，建议使用。
+
+以下代码都是合法的：
+
+```javascript
+console.log("Runoob")
+console.log("Google");
+```
+
+如果语句写在同一行则一定需要使用分号来分隔，否则会报错，如：
+
+```javascript
+console.log("Runoob");console.log("Google");
+```
+
+
+### TypeScript 注释
+
+注释是一个良好的习惯，虽然很多程序员讨厌注释，但还是建议你在每段代码写上文字说明。
+
+注释可以提高程序的可读性。
+
+注释可以包含有关程序一些信息，如代码的作者，有关函数的说明等。
+
+编译器会忽略注释。
+
+
+### TypeScript 支持两种类型的注释
+
+- 单行注释 ( // ) − 在 // 后面的文字都是注释内容。
+- 多行注释 (/* */) − 这种注释可以跨越多行。
+
+注释实例：
+
+```text
+// 这是一个单行注释
+
+/*
+ 这是一个多行注释
+ 这是一个多行注释
+ 这是一个多行注释
+*/
+```
+
+
+## TypeScript 与面向对象
+
+面向对象是一种对现实世界理解和抽象的方法。
+
+TypeScript 是一种面向对象的编程语言。
+
+面向对象主要有两个概念：对象和类。
+
+- 对象：对象是类的一个实例（对象不是找个女朋友），有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。
+- 类：类是一个模板，它描述一类对象的行为和状态。
+- 方法：方法是类的操作的实现步骤。
+
+下图中 girl、boy 为类，而具体的每个人为该类的对象：
+
+TypeScript 面向对象编程实例：
+
+```javascript
+class Site {
+   name():void {
+      console.log("Runoob")
+   }
+}
+var obj = new Site();
+obj.name();
+```
+
+以上实例定义了一个类 Site，该类有一个方法 name()，该方法在终端上输出字符串 Runoob。
+
+new 关键字创建类的对象，该对象调用方法 name()。
+
+编译后生成的 JavaScript 代码如下：
+
+```javascript
+var Site = /** @class */ (function () {
+    function Site() {
+    }
+    Site.prototype.name = function () {
+        console.log("Runoob");
+    };
+    return Site;
+}());
+var obj = new Site();
+obj.name();
+```
+
+执行以上 JavaScript 代码，输出结果如下:
+
+```text
+Runoob
+```
+
+
+## 复习重点
+
+- 能说明 `TypeScript 基础语法` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

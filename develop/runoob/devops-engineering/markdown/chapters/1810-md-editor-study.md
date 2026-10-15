@@ -1,35 +1,109 @@
-# Markdown：Markdown 编辑器 学习笔记
+# Markdown：Markdown 编辑器
 
 - 来源：[Markdown 编辑器](https://www.runoob.com/markdown/md-editor.html)
 - 分类：DevOps / 工程化
 - 技术：Markdown
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1810
 
-## 学习目标
+## 本章内容
 
-Markdown 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Markdown 编辑器` 建立学习路径，先理解它在 Markdown 体系中的位置，再做可运行或可复述的验证。
+工欲善其事，必先利其器，选择一个合适的编辑器对学习 Markdown 至关重要：
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 1、专业代码编辑器
 
-## 笔记模板
+Visual Studio Code：微软开发的免费编辑器，通过安装 Markdown 相关扩展，可以获得强大的编辑和预览功能。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+VScode 安装教程：https://www.runoob.com/vscode/vscode-tutorial.html
 
-## 完成标准
+VScode 支持 Markdown 的扩展包括：
 
-- 能用 3 到 5 句话解释 `Markdown 编辑器`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- Markdown All in One：提供快捷键、目录生成、数学公式支持
+- Markdown Preview Enhanced：增强的预览功能，支持图表和演示模式
+- markdownlint：语法检查和格式规范
+
+另外国内阿里与字节也有基于 VS Code 开发的 IDE：
+
+- 字节 Trae：https://www.trae.cn/
+- 阿里 Qoder：https://qoder.com/
+
+Obsidian ：本地 Markdown 笔记系统，用文件夹和纯文本驱动知识结构，使用教程参考： https://www.runoob.com/markdown/obsidian-tutorial.html。
+
+
+### 2、专门的 Markdown 编辑器
+
+- Mark Text：开源的实时预览 Markdown 编辑器，界面简洁，功能完整。下载地址：https://github.com/marktext/marktext/
+- Zettlr：学术写作导向的 Markdown 编辑器，支持引用管理和论文写作功能。下载地址：https://github.com/Zettlr/Zettlr
+- Joplin：免费开源的支持 markdown 免费的笔记应用 -- https://joplinapp.org/
+
+
+### 3、在线编辑器
+
+- Markdown 在线编辑器：https://www.jyshare.com/front-end/712/。
+- Dillinger：https://dillinger.io/，功能齐全的在线 Markdown 编辑器，支持云同步和多种导出格式。
+- StackEdit：https://stackedit.io/，基于浏览器的编辑器，与 Google Drive、Dropbox 等云服务集成。
+- 简书、语雀编辑器：国内平台提供的在线 Markdown 编辑环境。
+
+
+## VS Code Markdown
+
+本教程将使用 VSCode 编辑器来讲解 Markdown 的语法，VSCode 支持 MacOS 、Windows、Linux 平台，且包含多种主题。
+
+VSCode 默认集成了 Markdown 文档编辑插件，原生就支持高亮 Markdown 的语法。
+
+VSCode（全称：Visual Studio Code）是一款由微软开发且跨平台的免费源代码编辑器。
+
+- VScode 安装教程：https://www.runoob.com/vscode/vscode-install.html
+- VScode 官网地址：https://code.visualstudio.com/
+
+VSCode 实时预览还需要执行 Markdown: Open Preview to the Side 命令来实现。
+
+在命令窗口输入 Markdown: Open Preview to the Side 命令：
+
+最终效果：
+
+如果你需要将 markdown 转为 PDF、图片、HTML 等格式也可以安装对应的插件来实现。
+
+你也可以使用我们的在线编辑器来测试：https://www.jyshare.com/front-end/712。
+
+MarkDown 思维导图工具：https://www.jyshare.com/front-end/9692/。
+
+
+### 测试实例
+
+接下来的测试中，我们先在 VSCode 下安装 Markdown Preview Enhanced 插件来实现更强大的功能。
+
+点击右侧栏扩展按钮，查找Markdown Preview Enhanced 插件，点击安装：
+
+安装完成后重启 VSCode。
+
+在 RUNOOB.md 输入以下代码：
+
+```text
+# RUNOOB Markdown Test
+## Hello World!
+```
+
+将该代码格式粘贴到文件 RUNOOB.md 上，效果如下：
+
+在预览框中右击鼠标还提供了各种导出功能：
+
+
+## MarkText
+
+我们也可以使用 MarkText-- 一款简单而优雅的开源 Markdown 编辑器。
+
+MarkText 下载地址 https://github.com/marktext/marktext/releases，可以根据不同系统选择不同的安装包：
+
+下载安装后，我们可以在菜单的 View 选项切换源码模式，也可以显示菜单栏：
+
+通过菜单的 File 选项，可以导出不同格式的文件：
+
+
+## 复习重点
+
+- 能说明 `Markdown 编辑器` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,220 @@
-# 设计模式：业务代表模式 学习笔记
+# 设计模式：业务代表模式
 
 - 来源：[业务代表模式](https://www.runoob.com/design-pattern/business-delegate-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1331
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `业务代表模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+业务代表模式（Business Delegate Pattern）用于对表示层和业务层解耦。它基本上是用来减少通信或对表示层代码中的业务层代码的远程查询功能。在业务层中我们有以下实体。
 
-## 阅读抓手
+- 客户端（Client） - 表示层代码可以是 JSP、servlet 或 UI java 代码。
+- 业务代表（Business Delegate） - 一个为客户端实体提供的入口类，它提供了对业务服务方法的访问。
+- 查询服务（LookUp Service） - 查找服务对象负责获取相关的业务实现，并提供业务对象对业务代表对象的访问。
+- 业务服务（Business Service） - 业务服务接口。实现了该业务服务的实体类，提供了实际的业务实现逻辑。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 概要
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 意图
 
-- 能用 3 到 5 句话解释 `业务代表模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+抽象和封装应用程序的访问逻辑，从而为表示层提供对业务逻辑层的访问。
+
+
+### 主要解决的问题
+
+- 解决表示层与业务逻辑层之间的耦合问题，允许表示层通过业务代表间接访问业务逻辑层。
+
+
+### 使用场景
+
+- 当需要在多层应用程序中清晰地分离表示层和业务逻辑层时。
+
+
+### 实现方式
+
+- 业务代表接口：定义访问业务逻辑的方法。
+- 业务代表实现：实现业务代表接口，封装调用业务逻辑层的逻辑。
+- 业务服务：业务逻辑层的接口或类，包含业务操作。
+
+
+### 关键代码
+
+- 业务代表接口：声明访问业务逻辑的方法。
+- 业务代表实现：实现接口，包含调用业务服务的代码。
+- 业务服务：业务逻辑的具体实现。
+
+
+### 应用实例
+
+- Web应用程序：Web层作为表示层，通过业务代表访问后端服务层。
+
+
+### 优点
+
+- 表示层与业务逻辑层解耦：业务代表作为中间层，降低耦合度。
+- 集中访问逻辑：简化表示层的代码，将访问逻辑集中在业务代表中。
+- 易于维护和扩展：添加新的业务逻辑访问时，只需修改业务代表。
+
+
+### 缺点
+
+- 可能增加复杂性：对于简单应用程序，可能增加不必要的抽象层次。
+
+
+### 使用建议
+
+- 当开发多层应用程序，需要在表示层和业务逻辑层之间提供清晰分离时，考虑使用业务代表模式。
+
+
+### 注意事项
+
+- 业务代表应该尽量简洁，避免包含复杂的逻辑。
+
+
+### 包含的几个主要角色
+
+- 业务代表接口（Business Delegate Interface）： 声明访问业务逻辑的方法。
+- 业务代表实现（Business Delegate Implementation）： 实现业务代表接口，封装对业务服务的调用。
+- 业务服务（Business Service）： 业务逻辑层的接口或类，包含实际的业务操作。
+- 表示层（Presentation Layer）： 应用程序的前端，通过业务代表访问业务逻辑。
+- 业务逻辑层（Business Logic Layer）： 包含应用程序的核心业务逻辑。
+
+业务代表模式通过提供一个抽象层来访问业务逻辑，有助于保持应用程序的灵活性和可维护性。
+
+
+## 实现
+
+我们将创建 Client、BusinessDelegate、BusinessService、LookUpService、JMSService 和 EJBService 来表示业务代表模式中的各种实体。
+
+BusinessDelegatePatternDemo 类使用 BusinessDelegate 和 Client 来演示业务代表模式的用法。
+
+
+## 步骤 1
+
+创建 BusinessService 接口。
+
+
+## BusinessService.java
+
+```text
+public interface BusinessService {
+   public void doProcessing();
+}
+```
+
+
+## 步骤 2
+
+创建实体服务类。
+
+
+## EJBService.java
+
+```java
+public class EJBService implements BusinessService {
+
+   @Override
+   public void doProcessing() {
+      System.out.println("Processing task by invoking EJB Service");
+   }
+}
+```
+
+
+## JMSService.java
+
+```java
+public class JMSService implements BusinessService {
+
+   @Override
+   public void doProcessing() {
+      System.out.println("Processing task by invoking JMS Service");
+   }
+}
+```
+
+
+## 步骤 3
+
+创建业务查询服务。
+
+
+## BusinessLookUp.java
+
+```java
+public class BusinessLookUp {
+   public BusinessService getBusinessService(String serviceType){
+      if(serviceType.equalsIgnoreCase("EJB")){
+         return new EJBService();
+      }else {
+         return new JMSService();
+      }
+   }
+}
+```
+
+
+## 步骤 4
+
+创建业务代表。
+
+
+## BusinessDelegate.java
+
+```java
+public class BusinessDelegate {
+   private BusinessLookUp lookupService = new BusinessLookUp();
+   private BusinessService businessService;
+   private String serviceType;
+
+   public void setServiceType(String serviceType){
+      this.serviceType = serviceType;
+   }
+
+   public void doTask(){
+      businessService = lookupService.getBusinessService(serviceType);
+      businessService.doProcessing();
+   }
+}
+```
+
+
+## 步骤 5
+
+创建客户端。
+
+
+## Client.java
+
+```java
+public class Client {
+
+   BusinessDelegate businessService;
+
+   public Client(BusinessDelegate businessService){
+      this.businessService  = businessService;
+   }
+
+   public void doTask(){
+      businessService.doTask();
+   }
+}
+```
+
+
+## 后续章节
+
+- 步骤 6
+- BusinessDelegatePatternDemo.java
+- 步骤 7
+
+## 复习重点
+
+- 能说明 `业务代表模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

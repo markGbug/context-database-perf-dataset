@@ -1,34 +1,91 @@
-# Docker：Docker 安装 Redis 练习笔记
+# Docker：Docker 安装 Redis
 
 - 来源：[Docker 安装 Redis](https://www.runoob.com/docker/docker-install-redis.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0818
 
-## 练习目标
+## 本章内容
 
-把 `Docker 安装 Redis` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Redis 是一个开源的使用 ANSI C 语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value 的 NoSQL 数据库，并提供多种语言的 API。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 1、查看可用的 Redis 版本
 
-## 验收清单
+访问 Redis 镜像库地址： https://hub.docker.com/_/redis?tab=tags。
 
-- 我能独立说出 `Docker 安装 Redis` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+可以通过 Sort by 查看其他版本的 Redis，默认是最新版本 redis:latest。
 
-## 复盘问题
+你也可以在下拉列表中找到其他你想要的版本：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+此外，我们还可以用 docker search redis 命令来查看可用版本：
+
+```text
+$ docker search  redis
+NAME                      DESCRIPTION                   STARS  OFFICIAL  AUTOMATED
+redis                     Redis is an open source ...   2321   [OK]
+sameersbn/redis                                         32                   [OK]
+torusware/speedus-redis   Always updated official ...   29             [OK]
+bitnami/redis             Bitnami Redis Docker Image    22                   [OK]
+anapsix/redis             11MB Redis server image ...   6                    [OK]
+webhippie/redis           Docker images for redis       4                    [OK]
+clue/redis-benchmark      A minimal docker image t...   3                    [OK]
+williamyeh/redis          Redis image for Docker        3                    [OK]
+unblibraries/redis        Leverages phusion/baseim...   2                    [OK]
+greytip/redis             redis 3.0.3                   1                    [OK]
+servivum/redis            Redis Docker Image            1                    [OK]
+...
+```
+
+
+### 2、取最新版的 Redis 镜像
+
+这里我们拉取官方的最新版本的镜像：
+
+```text
+$ docker pull redis:latest
+```
+
+
+### 3、查看本地镜像
+
+使用以下命令来查看是否已安装了 redis：
+
+```text
+$ docker images
+```
+
+在上图中可以看到我们已经安装了最新版本（latest）的 redis 镜像。
+
+
+### 4、运行容器
+
+安装完成后，我们可以使用以下命令来运行 redis 容器：
+
+```text
+$ docker run -itd --name redis-test -p 6379:6379 redis
+```
+
+参数说明：
+
+- -p 6379:6379：映射容器服务的 6379 端口到宿主机的 6379 端口。外部可以直接通过宿主机ip:6379 访问到 Redis 的服务。
+
+
+### 5、安装成功
+
+最后我们可以通过 docker ps 命令查看容器的运行信息：
+
+接着我们通过 redis-cli 连接测试使用 redis 服务。
+
+```text
+$ docker exec -it redis-test /bin/bash
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker 安装 Redis` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,4 +1,4 @@
-# Playwright：Playwright CI/CD 集成 概念卡
+# Playwright：Playwright CI/CD 集成
 
 - 来源：[Playwright CI/CD 集成](https://www.runoob.com/playwright/playwright-ci-cd.html)
 - 分类：AI / 智能开发
@@ -6,24 +6,110 @@
 - 笔记类型：概念卡
 - 章节序号：0541
 
-## 一句话定义
+## 本章内容
 
-`Playwright CI/CD 集成` 是 Playwright 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+本章介绍如何将 Playwright 测试集成到 CI/CD 流水线中，包括 GitHub Actions 和其他常见 CI 平台。
 
-## 三层理解
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
+## GitHub Actions 集成
 
-## 关联知识
+当你在 npm init playwright@latest 时选择添加 GitHub Actions，Playwright 会自动生成工作流配置。
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
 
-## 记忆锚点
+### 自动生成的工作流
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+
+## 实例
+
+
+## 查看 CI 测试结果
+
+
+### 查看测试日志
+
+在 GitHub 仓库的 Actions 页面中，点击每次运行可以查看详细的测试日志。
+
+每个 Worker 的输出都会独立显示，方便定位特定失败的测试。
+
+
+### 查看 HTML 报告
+
+如果配置了 reporter: 'html'，可以从 Artifacts 下载 playwright-report/ 来本地查看完整的 HTML 报告。
+
+
+### 发布报告到 Web
+
+
+## 实例
+
+
+## 其他 CI 平台
+
+
+### Jenkins
+
+```text
+pipeline {
+  agent any
+  stages {
+    stage('Install') {
+      steps {
+        sh 'npm ci'
+        sh 'npx playwright install --with-deps'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'npx playwright test'
+      }
+    }
+  }
+  post {
+    always {
+      archiveArtifacts artifacts: 'playwright-report/**'
+      junit 'test-results/junit.xml'
+    }
+  }
+}
+```
+
+
+### GitLab CI
+
+
+## 实例
+
+
+## Docker 运行 Playwright
+
+微软提供了预装所有系统依赖的官方 Docker 镜像，开箱即用。
+
+
+### 使用官方镜像
+
+```text
+# 拉取镜像
+docker pull mcr.microsoft.com/playwright:v1.52.0-jammy
+
+# 在容器中运行测试
+docker run --rm -v $(pwd):/work -w /work \
+  mcr.microsoft.com/playwright:v1.52.0-jammy \
+  npx playwright test
+```
+
+
+### Dockerfile 示例
+
+
+## 实例
+
+
+## CI 环境最佳实践
+
+
+## 记忆卡片
+
+- 一句话定义：`Playwright CI/CD 集成` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

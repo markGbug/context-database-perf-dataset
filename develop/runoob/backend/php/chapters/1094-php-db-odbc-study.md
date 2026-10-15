@@ -1,35 +1,134 @@
-# PHP：PHP ODBC 学习笔记
+# PHP：PHP 数据库 ODBC
 
 - 来源：[PHP ODBC](https://www.runoob.com/php/php-db-odbc.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1094
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP ODBC` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+ODBC 是一种应用程序编程接口（Application Programming Interface，API），使我们有能力连接到某个数据源（比如一个 MS Access 数据库）。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 创建 ODBC 连接
 
-## 笔记模板
+通过一个 ODBC 连接，您可以连接到您的网络中的任何计算机上的任何数据库，只要 ODBC 连接是可用的。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+这是创建到达 MS Access 数据库的 ODBC 连接的方法：
 
-## 完成标准
+- 在控制面板中打开管理工具图标。
+- 双击其中的数据源(ODBC)图标。
+- 选择系统 DSN 选项卡。
+- 点击系统 DSN 选项卡中的添加。
+- 选择Microsoft Access Driver。点击完成。
+- 在下一个界面，点击选择来定位数据库。
+- 为数据库起一个数据源名(DSN)。
+- 点击确定。
 
-- 能用 3 到 5 句话解释 `PHP ODBC`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+请注意，必须在您的网站所在的计算机上完成这个配置。如果您的计算机上正在运行 Internet 信息服务(IIS)，上面的指令将会生效，但是如果您的网站位于远程服务器，您必须拥有对该服务器的物理访问权限，或者请您的主机提供商为您建立 DSN。
+
+
+## 连接到 ODBC
+
+odbc_connect() 函数用于连接到 ODBC 数据源。该函数有四个参数：数据源名、用户名、密码以及可选的指针类型。
+
+odbc_exec() 函数用于执行 SQL 语句。
+
+
+### 实例
+
+下面的实例创建了到达名为 northwind 的 DSN 的连接，没有用户名和密码。然后创建并执行一条 SQL 语句：
+
+```text
+$conn=odbc_connect('northwind','','');
+$sql="SELECT * FROM customers";
+$rs=odbc_exec($conn,$sql);
+```
+
+
+## 取回记录
+
+odbc_fetch_row() 函数用于从结果集中返回记录。如果能够返回行，则函数返回 true，否则返回 false。
+
+该函数有两个参数：ODBC 结果标识符和可选的行号：
+
+```text
+odbc_fetch_row($rs)
+```
+
+
+## 从记录中取回字段
+
+odbc_result() 函数用于从记录中读取字段。该函数有两个参数：ODBC 结果标识符和字段编号或名称。
+
+下面的代码行从记录中返回第一个字段的值：
+
+```text
+$compname=odbc_result($rs,1);
+```
+
+下面的代码行返回名为 "CompanyName" 的字段的值：
+
+```text
+$compname=odbc_result($rs,"CompanyName");
+```
+
+
+## 关闭 ODBC 连接
+
+odbc_close() 函数用于关闭 ODBC 连接。
+
+```text
+odbc_close($conn);
+```
+
+
+## ODBC 实例
+
+下面的实例展示了如何首先创建一个数据库连接，接着创建一个结果集，然后在 HTML 表格中显示数据。
+
+```java
+<html>
+<body>
+
+<?php
+$conn=odbc_connect('northwind','','');
+if (!$conn)
+{
+    exit("连接失败: " . $conn);
+}
+
+$sql="SELECT * FROM customers";
+$rs=odbc_exec($conn,$sql);
+
+if (!$rs)
+{
+    exit("SQL 语句错误");
+}
+echo "<table><tr>";
+echo "<th>Companyname</th>";
+echo "<th>Contactname</th></tr>";
+
+while (odbc_fetch_row($rs))
+{
+    $compname=odbc_result($rs,"CompanyName");
+    $conname=odbc_result($rs,"ContactName");
+    echo "<tr><td>$compname</td>";
+    echo "<td>$conname</td></tr>";
+}
+odbc_close($conn);
+echo "</table>";
+?>
+
+</body>
+</html>
+```
+
+
+## 复习重点
+
+- 能说明 `PHP ODBC` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

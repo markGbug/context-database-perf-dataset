@@ -1,34 +1,135 @@
-# Python：Python3 operator 练习笔记
+# Python：Python3 operator 模块
 
 - 来源：[Python3 operator](https://www.runoob.com/python3/python-operator.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4141
 
-## 练习目标
+## 本章内容
 
-把 `Python3 operator` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Python2.x 版本中，使用 cmp() 函数来比较两个列表、数字或字符串等的大小关系。
 
-## 练习步骤
+Python 3.X 的版本中已经没有 cmp() 函数，如果你需要实现比较功能，需要引入 operator 模块，适合任何对象，包含的方法有：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## operator 模块包含的方法
 
-- 我能独立说出 `Python3 operator` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+operator.lt(a, b) 与 a < b 相同， operator.le(a, b) 与 a <= b 相同，operator.eq(a, b) 与 a == b 相同，operator.ne(a, b) 与 a != b 相同，operator.gt(a, b) 与 a > b 相同，operator.ge(a, b) 与 a >= b 相同。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 实例
+
+以上代码输出结果为：
+
+```text
+x: 10 , y: 20
+operator.lt(x,y):  True
+operator.gt(y,x):  True
+operator.eq(x,x):  True
+operator.ne(y,y):  False
+operator.le(x,y):  True
+operator.ge(y,x):  True
+
+x: Google , y: Runoob
+operator.lt(x,y):  True
+operator.gt(y,x):  True
+operator.eq(x,x):  True
+operator.ne(y,y):  False
+operator.le(x,y):  True
+operator.ge(y,x):  True
+```
+
+比较两个列表：
+
+
+## 实例
+
+以上代码输出结果为：
+
+```text
+operator.eq(a,b):  False
+operator.eq(c,b):  True
+```
+
+
+### 运算符函数
+
+operator 模块提供了一套与 Python 的内置运算符对应的高效率函数。例如，operator.add(x, y) 与表达式 x+y 相同。
+
+函数包含的种类有：对象的比较运算、逻辑运算、数学运算以及序列运算。
+
+对象比较函数适用于所有的对象，函数名根据它们对应的比较运算符命名。
+
+许多函数名与特殊方法名相同，只是没有双下划线。为了向后兼容性，也保留了许多包含双下划线的函数，为了表述清楚，建议使用没有双下划线的函数。
+
+
+## 实例
+
+以上代码输出结果为：
+
+```text
+add() 运算结果 :7
+sub() 运算结果 :1
+mul() 运算结果 :12
+```
+
+运算
+
+语法
+
+函数
+
+加法
+
+a + b
+
+add(a, b)
+
+字符串拼接
+
+seq1 + seq2
+
+concat(seq1, seq2)
+
+包含测试
+
+obj in seq
+
+contains(seq, obj)
+
+除法
+
+a / b
+
+truediv(a, b)
+
+除法
+
+a // b
+
+floordiv(a, b)
+
+按位与
+
+a & b
+
+and_(a, b)
+
+按位异或
+
+a ^ b
+
+xor(a, b)
+
+按位取反
+
+~ a
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python3 operator` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

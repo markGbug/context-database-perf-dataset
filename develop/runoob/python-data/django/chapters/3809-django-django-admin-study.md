@@ -1,35 +1,191 @@
-# Django：Django django-admin 学习笔记
+# Django：Django django-admin 命令详解
 
 - 来源：[Django django-admin](https://www.runoob.com/django/django-django-admin.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3809
 
-## 学习目标
+## 本章内容
 
-Django 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Django django-admin` 建立学习路径，先理解它在 Django 体系中的位置，再做可运行或可复述的验证。
+django-admin 是 Django 框架提供的一个命令行工具，它是管理 Django 项目的核心工具。
 
-## 阅读抓手
+无论是创建新项目、运行开发服务器，还是执行数据库迁移，django-admin 都是不可或缺的工具。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+要查看 django-admin 提供的所有命令，可以运行：
 
-## 笔记模板
+```text
+django-admin help
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+输出内容类似如下：
 
-## 完成标准
+```html
+Type 'django-admin help <subcommand>' for help on a specific subcommand.
 
-- 能用 3 到 5 句话解释 `Django django-admin`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Available subcommands:
+
+[django]
+    check
+    compilemessages
+    createcachetable
+    dbshell
+    diffsettings
+    dumpdata
+    flush
+    inspectdb
+    loaddata
+    makemessages
+    makemigrations
+    migrate
+    optimizemigration
+    runserver
+    sendtestemail
+    shell
+    showmigrations
+    sqlflush
+    sqlmigrate
+    sqlsequencereset
+    squashmigrations
+    startapp
+    startproject
+    test
+    testserver
+```
+
+
+## 常用 django-admin 命令详解
+
+
+### 1. 创建新项目
+
+```text
+django-admin startproject 项目名称
+```
+
+这个命令会在当前目录下创建一个新的 Django 项目，包含基本的项目结构：
+
+- manage.py：项目管理脚本
+- 项目名称/：项目主目录 __init__.py settings.py：项目设置文件 urls.py：URL 路由配置 wsgi.py：WSGI 应用入口
+
+
+### 2. 创建新应用
+
+虽然通常使用 manage.py 来创建应用，但也可以通过 django-admin：
+
+```text
+django-admin startapp 应用名称
+```
+
+这会创建一个新的 Django 应用，包含：
+
+- migrations/：数据库迁移文件目录
+- __init__.py
+- admin.py：管理后台配置
+- apps.py：应用配置
+- models.py：数据模型定义
+- tests.py：测试代码
+- views.py：视图函数
+
+
+### 3. 检查项目配置
+
+```text
+django-admin check
+```
+
+这个命令会检查你的 Django 项目是否有配置错误，包括：
+
+- 模型定义是否正确
+- URL 配置是否有效
+- 模板设置是否正确
+- 静态文件配置等
+
+
+### 4. 数据库迁移
+
+Django 使用迁移系统来管理数据库模式变更：
+
+```text
+django-admin makemigrations  # 创建迁移文件
+django-admin migrate        # 应用迁移到数据库
+```
+
+
+### 5. 创建超级用户
+
+```text
+django-admin createsuperuser
+```
+
+这个命令会引导你创建一个可以访问 Django 管理后台的超级用户。
+
+
+## django-admin 常用命令
+
+
+### django-admin startproject（创建项目）
+
+基本语法:
+
+```text
+django-admin startproject <项目名称> [目标目录]
+```
+
+参数说明:
+
+
+## 实例
+
+
+### django-admin startapp（创建应用）
+
+基本语法:
+
+```text
+django-admin startapp <应用名称> [目标目录]
+```
+
+参数说明:
+
+
+## 实例
+
+
+### django-admin runserver（启动开发服务器）
+
+基本语法:
+
+```text
+python manage.py runserver [IP:端口]
+```
+
+参数说明:
+
+
+## 实例
+
+
+### django-admin migrate（数据库迁移）
+
+基本语法:
+
+```text
+python manage.py migrate [应用名] [迁移版本]
+```
+
+参数说明:
+
+
+## 实例
+
+
+### 其他常用命令
+
+
+## 复习重点
+
+- 能说明 `Django django-admin` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

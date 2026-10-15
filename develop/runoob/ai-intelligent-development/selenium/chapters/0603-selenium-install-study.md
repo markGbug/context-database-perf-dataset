@@ -1,35 +1,193 @@
-# Selenium：Selenium 安装 学习笔记
+# Selenium：Selenium 安装
 
 - 来源：[Selenium 安装](https://www.runoob.com/selenium/selenium-install.html)
 - 分类：AI / 智能开发
 - 技术：Selenium
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0603
 
-## 学习目标
+## 本章内容
 
-Selenium 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Selenium 安装` 建立学习路径，先理解它在 Selenium 体系中的位置，再做可运行或可复述的验证。
+在开始使用 Selenium 之前，我们需要先安装它。以下是安装 Selenium 的详细步骤。
 
-## 阅读抓手
+Selenium 支持多种编程语言，但本系列教程将以 Python 为例进行讲解。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+如果你还没有安装 Python，可以按照以下步骤进行安装：
 
-## 笔记模板
+- 访问 Python 官方网站。
+- 下载适合你操作系统的 Python 安装包。
+- 运行安装包，并确保在安装过程中勾选"Add Python to PATH"选项。
+- 安装完成后，打开命令行（Windows 上是命令提示符或 PowerShell，macOS 和 Linux 上是终端），输入 python --version 或 python3 --version，检查 Python 是否安装成功。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Python 的内容也可以参考：Python 教程
 
-## 完成标准
+安装好 Python 后，我们可以使用 pip 来安装 Selenium。pip 是 Python 的包管理工具，用于安装和管理 Python 库。
 
-- 能用 3 到 5 句话解释 `Selenium 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+打开命令行，输入以下命令来安装 Selenium：
+
+```text
+pip install selenium
+```
+
+如果你使用的是 Python3，可能需要使用 pip3：
+
+```text
+pip3 install selenium
+```
+
+安装完成后，可以通过以下命令检查 Selenium 是否安装成功：
+
+```text
+pip show selenium
+```
+
+如果显示了 Selenium 的版本信息，说明安装成功。
+
+
+### 下载浏览器驱动
+
+Selenium 需要通过浏览器驱动来控制浏览器。
+
+不同的浏览器需要不同的驱动，以下是常见浏览器的驱动下载地址：
+
+- Chrome: ChromeDriver，ChromeDriver 的说明参见：ChromeDriver 介绍。
+- Firefox: GeckoDriver
+- Edge: EdgeDriver
+
+下载适合你浏览器版本的驱动，并将其路径添加到系统的环境变量中，或者将驱动文件放在 Python 脚本所在的目录下。
+
+
+## 使用 Selenium
+
+安装好 Selenium 和浏览器驱动后，我们就可以开始编写自动化脚本了。
+
+以下是一个简单的示例，展示如何使用 Selenium 打开一个网页并获取页面标题。
+
+
+### 1、导入 Selenium
+
+首先，我们需要在 Python 脚本中导入 Selenium 的 webdriver 模块：
+
+```text
+from selenium import webdriver
+```
+
+
+### 2、启动浏览器
+
+接下来，我们需要启动一个浏览器实例，本系列会以 Chrome 为例。
+
+```text
+driver = webdriver.Chrome(executable_path='path/to/chromedriver')
+```
+
+选择浏览器并初始化 WebDriver：
+
+
+## 实例
+
+从 Selenium 4 开始，在浏览器驱动的管理方式上发生了变化：Selenium 4 尝试自动检测系统中安装的浏览器版本，并下载相应的驱动程序，这意味着用户不再需要手动下载和设置驱动程序路径，除非他们需要特定版本的驱动程序。
+
+
+## 实例
+
+当国内的网络环境，自动检测下载驱动需要不一样的网络环境，所以建议手动下载驱动，然后指定驱动路径。
+
+在 Selenium 4 中，不再直接在 webdriver.Chrome 中设置驱动程序路径，而是通过引入 Service 对象来设置。这样可以避免弃用警告，并确保驱动程序的正确加载。例如：
+
+
+## 实例
+
+如果你将 chromedriver 放在了系统路径中，或者将其放在了 Python 脚本所在的目录下，可以省略 executable_path 参数：
+
+```text
+driver = webdriver.Chrome()
+```
+
+
+### 3、打开网页
+
+使用 get 方法打开一个网页：
+
+```text
+driver.get('https://www.baidu.com')
+```
+
+
+### 4、获取页面标题
+
+我们可以使用 title 属性来获取当前页面的标题：
+
+```text
+print(driver.title)
+```
+
+
+### 5、关闭浏览器
+
+完成操作后，记得关闭浏览器：
+
+```text
+driver.quit()
+```
+
+
+### 6、完整示例
+
+将以上步骤组合起来，完整的代码如下：
+
+
+## 实例
+
+以上代码执行成功后，会打开浏览器，并打开网页，如下所示：
+
+打开完成后，会输出网页标题：
+
+```text
+百度一下，你就知道
+```
+
+
+### 使用 window.stop() 强制停止页面加载
+
+有时候一个网页加载太慢，会导致异常出现，为了能够顺利抓取数据，可以让页面加载几秒后再通过执行 JavaScript 代码 window.stop()，强制停止页面加载。
+
+
+## 实例
+
+
+## 常见操作
+
+除了打开网页和获取标题，Selenium 还支持许多其他操作。以下是一些常见的操作示例：
+
+
+### 1、查找元素
+
+可以使用 find_element 方法来查找页面上的元素。例如，查找一个输入框并输入文本：
+
+
+## 实例
+
+
+### 2、点击按钮
+
+可以使用 click 方法来点击按钮：
+
+
+## 实例
+
+
+### 3、等待页面加载
+
+有时页面元素不会立即加载完成，我们可以使用 WebDriverWait 来等待元素出现：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Selenium 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

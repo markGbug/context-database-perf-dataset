@@ -1,35 +1,96 @@
-# Redis：Redis 管道技术 学习笔记
+# Redis：Redis 管道技术
 
 - 来源：[Redis 管道技术](https://www.runoob.com/redis/redis-pipelining.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1617
 
-## 学习目标
+## 本章内容
 
-Redis 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Redis 管道技术` 建立学习路径，先理解它在 Redis 体系中的位置，再做可运行或可复述的验证。
+Redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务。这意味着通常情况下一个请求会遵循以下步骤：
 
-## 阅读抓手
+- 客户端向服务端发送一个查询请求，并监听Socket返回，通常是以阻塞模式，等待服务端响应。
+- 服务端处理命令，并将结果返回给客户端。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## Redis 管道技术
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Redis 管道技术可以在服务端未响应时，客户端可以继续向服务端发送请求，并最终一次性读取所有服务端的响应。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Redis 管道技术`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 实例
+
+查看 redis 管道，只需要启动 redis 实例并输入以下命令：
+
+```text
+$(echo -en "PING\r\n SET runoobkey redis\r\nGET runoobkey\r\nINCR visitor\r\nINCR visitor\r\nINCR visitor\r\n"; sleep 10) | nc localhost 6379
+
++PONG
++OK
+redis
+:1
+:2
+:3
+```
+
+以上实例中我们通过使用 PING 命令查看redis服务是否可用， 之后我们设置了 runoobkey 的值为 redis，然后我们获取 runoobkey 的值并使得 visitor 自增 3 次。
+
+在返回的结果中我们可以看到这些命令一次性向 redis 服务提交，并最终一次性读取所有服务端的响应
+
+
+## 管道技术的优势
+
+管道技术最显著的优势是提高了 redis 服务的性能。
+
+
+### 一些测试数据
+
+在下面的测试中，我们将使用Redis的Ruby客户端，支持管道技术特性，测试管道技术对速度的提升效果。
+
+```text
+require 'rubygems'
+require 'redis'
+def bench(descr)
+start = Time.now
+yield
+puts "#{descr} #{Time.now-start} seconds"
+end
+def without_pipelining
+r = Redis.new
+10000.times {
+    r.ping
+}
+end
+def with_pipelining
+r = Redis.new
+r.pipelined {
+    10000.times {
+        r.ping
+    }
+}
+end
+bench("without pipelining") {
+    without_pipelining
+}
+bench("with pipelining") {
+    with_pipelining
+}
+```
+
+从处于局域网中的Mac OS X系统上执行上面这个简单脚本的数据表明，开启了管道操作后，往返延时已经被改善得相当低了。
+
+```text
+without pipelining 1.185238 seconds
+with pipelining 0.250783 seconds
+```
+
+如你所见，开启管道后，我们的速度效率提升了5倍。
+
+
+## 复习重点
+
+- 能说明 `Redis 管道技术` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

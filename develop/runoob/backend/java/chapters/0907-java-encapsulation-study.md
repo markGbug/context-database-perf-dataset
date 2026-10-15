@@ -1,35 +1,150 @@
-# Java：Java 封装 学习笔记
+# Java：Java 封装
 
 - 来源：[Java 封装](https://www.runoob.com/java/java-encapsulation.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0907
 
-## 学习目标
+## 本章内容
 
-Java 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Java 封装` 建立学习路径，先理解它在 Java 体系中的位置，再做可运行或可复述的验证。
+在面向对象程式设计方法中，封装（英语：Encapsulation）是指一种将抽象性函式接口的实现细节部分包装、隐藏起来的方法。
 
-## 阅读抓手
+封装可以被认为是一个保护屏障，防止该类的代码和数据被外部类定义的代码随机访问。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+要访问该类的代码和数据，必须通过严格的接口控制。
 
-## 笔记模板
+封装最主要的功能在于我们能修改自己的实现代码，而不用修改那些调用我们代码的程序片段。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+适当的封装可以让程式码更容易理解与维护，也加强了程式码的安全性。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Java 封装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 封装的优点
+
+- 1. 良好的封装能够减少耦合。
+- 2. 类内部的结构可以自由修改。
+- 3. 可以对成员变量进行更精确的控制。
+- 4. 隐藏信息，实现细节。
+
+
+## 实现Java封装的步骤
+
+1. 修改属性的可见性来限制对属性的访问（一般限制为private），例如：
+
+```java
+public class Person {
+    private String name;
+    private int age;
+}
+```
+
+这段代码中，将 name 和 age 属性设置为私有的，只能本类才能访问，其他类都访问不了，如此就对信息进行了隐藏。
+
+2. 对每个值属性提供对外的公共方法访问，也就是创建一对赋取值方法，用于对私有属性的访问，例如：
+
+```java
+public class Person{
+    private String name;
+    private int age;
+​
+    public int getAge(){
+      return age;
+    }
+​
+    public String getName(){
+      return name;
+    }
+​
+    public void setAge(int age){
+      this.age = age;
+    }
+​
+    public void setName(String name){
+      this.name = name;
+    }
+}
+```
+
+采用 this 关键字是为了解决实例变量（private String name）和局部变量（setName(String name)中的name变量）之间发生的同名的冲突。
+
+
+## 实例
+
+让我们来看一个java封装类的例子：
+
+
+## EncapTest.java 文件代码：
+
+```java
+/* 文件名: EncapTest.java */
+public class EncapTest{
+
+   private String name;
+   private String idNum;
+   private int age;
+
+   public int getAge(){
+      return age;
+   }
+
+   public String getName(){
+      return name;
+   }
+
+   public String getIdNum(){
+      return idNum;
+   }
+
+   public void setAge( int newAge){
+      age = newAge;
+   }
+
+   public void setName(String newName){
+      name = newName;
+   }
+
+   public void setIdNum( String newId){
+      idNum = newId;
+   }
+}
+```
+
+以上实例中public方法是外部类访问该类成员变量的入口。
+
+通常情况下，这些方法被称为getter和setter方法。
+
+因此，任何要访问类中私有成员变量的类都要通过这些getter和setter方法。
+
+通过如下的例子说明EncapTest类的变量怎样被访问：
+
+
+## RunEncap.java 文件代码：
+
+```java
+/* F文件名 : RunEncap.java */
+public class RunEncap{
+   public static void main(String args[]){
+      EncapTest encap = new EncapTest();
+      encap.setName("James");
+      encap.setAge(20);
+      encap.setIdNum("12343ms");
+
+      System.out.print("Name : " + encap.getName()+
+                             " Age : "+ encap.getAge());
+    }
+}
+```
+
+以上代码编译运行结果如下:
+
+```text
+Name : James Age : 20
+```
+
+
+## 复习重点
+
+- 能说明 `Java 封装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

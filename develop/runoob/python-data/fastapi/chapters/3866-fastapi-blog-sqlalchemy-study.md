@@ -1,35 +1,82 @@
-# FastAPI：SQLAlchemy 模型 学习笔记
+# FastAPI：SQLAlchemy 模型 — 设计数据库表
 
 - 来源：[SQLAlchemy 模型](https://www.runoob.com/fastapi/fastapi-blog-sqlalchemy.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3866
 
-## 学习目标
+## 本章内容
 
-FastAPI 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `SQLAlchemy 模型` 建立学习路径，先理解它在 FastAPI 体系中的位置，再做可运行或可复述的验证。
+本章你将学会用原生 SQLAlchemy ORM 定义数据模型，并通过 FastAPI 依赖注入管理数据库会话。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## FastAPI 为什么不用自带 ORM？
 
-## 笔记模板
+Django 有内置 ORM，Flask 推荐 Flask-SQLAlchemy。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+FastAPI 没有内置 ORM——它希望你选择最适合的工具，SQLAlchemy + Pydantic 是社区公认的最佳组合。
 
-## 完成标准
+```text
+(venv) $ pip install sqlalchemy
+```
 
-- 能用 3 到 5 句话解释 `SQLAlchemy 模型`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 配置数据库连接
+
+
+## 实例
+
+check_same_thread=False 是 SQLite 在 FastAPI 中的必要配置。默认情况下 SQLite 不允许跨线程使用同一连接，但在 Web 应用中每个请求可能在不同线程中处理。
+
+
+### 依赖注入：get_db
+
+
+## 实例
+
+Depends(get_db) 是 FastAPI 的依赖注入系统，路由函数通过依赖注入自动获得数据库会话。
+
+
+## 定义模型：Post 和 Category
+
+
+## 实例
+
+FastAPI 中使用的是 原生 SQLAlchemy（不是 Flask-SQLAlchemy 的 db.Model）。注意：Column 导入、Base 继承、relationship 写法的差异。后面会有对照表。
+
+
+## 初始化数据库表
+
+
+## 实例
+
+之后会改用 Alembic 迁移（第六章），create_all 仅在快速原型阶段使用。
+
+
+## 插入测试数据
+
+在 Python 脚本中插入测试数据：
+
+
+## 实例
+
+运行 python seed.py，数据库中插入 3 篇文章。
+
+
+## 四框架 ORM 写法对照
+
+
+## 本章小结
+
+本章你掌握了 FastAPI 中的 SQLAlchemy 集成：create_engine + SessionLocal 配置数据库连接、DeclarativeBase 定义模型基类、get_db 依赖注入管理会话、Column/relationship 定义字段和关系。
+
+与 Flask-SQLAlchemy 相比，原生 SQLAlchemy 写法稍多但完全开源可控。
+
+
+## 复习重点
+
+- 能说明 `SQLAlchemy 模型` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

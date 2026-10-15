@@ -1,35 +1,103 @@
-# Memcached：Memcached incr/decr 命令 学习笔记
+# Memcached：Memcached incr 与 decr 命令
 
 - 来源：[Memcached incr/decr 命令](https://www.runoob.com/memcached/memcached-incr-decr.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1450
 
-## 学习目标
+## 本章内容
 
-Memcached 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Memcached incr/decr 命令` 建立学习路径，先理解它在 Memcached 体系中的位置，再做可运行或可复述的验证。
+Memcached incr 与 decr 命令用于对已存在的 key(键) 的数字值进行自增或自减操作。
 
-## 阅读抓手
+incr 与 decr 命令操作的数据必须是十进制的32位无符号整数。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+如果 key 不存在返回 NOT_FOUND，如果键的值不为数字，则返回 CLIENT_ERROR，其他错误返回 ERROR。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## incr 命令
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Memcached incr/decr 命令`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 语法：
+
+incr 命令的基本语法格式如下：
+
+```text
+incr key increment_value
+```
+
+参数说明如下：
+
+- key：键值 key-value 结构中的 key，用于查找缓存值。
+- increment_value： 增加的数值。
+
+
+### 实例
+
+在以下实例中，我们使用 visitors 作为 key，初始值为 10，之后进行加 5 操作。
+
+```text
+set visitors 0 900 2
+10
+STORED
+get visitors
+VALUE visitors 0 2
+10
+END
+incr visitors 5
+15
+get visitors
+VALUE visitors 0 2
+15
+END
+```
+
+
+### 输出
+
+输出信息说明：
+
+- NOT_FOUND：key 不存在。
+- CLIENT_ERROR：自增值不是对象。
+- ERROR其他错误，如语法错误等。
+
+
+## decr 命令
+
+decr 命令的基本语法格式如下：
+
+```text
+decr key decrement_value
+```
+
+参数说明如下：
+
+- key：键值 key-value 结构中的 key，用于查找缓存值。
+- decrement_value： 减少的数值。
+
+
+### 实例
+
+```text
+set visitors 0 900 2
+10
+STORED
+get visitors
+VALUE visitors 0 2
+10
+END
+decr visitors 5
+5
+get visitors
+VALUE visitors 0 1
+5
+END
+```
+
+
+## 复习重点
+
+- 能说明 `Memcached incr/decr 命令` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

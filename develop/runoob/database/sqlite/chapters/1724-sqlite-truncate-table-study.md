@@ -1,35 +1,68 @@
-# SQLite：SQLite Truncate Table 学习笔记
+# SQLite：SQLite Truncate Table
 
 - 来源：[SQLite Truncate Table](https://www.runoob.com/sqlite/sqlite-truncate-table.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1724
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite Truncate Table` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+在 SQLite 中，并没有 TRUNCATE TABLE 命令，但可以使用 SQLite 的 DELETE 命令从已有的表中删除全部的数据。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 语法
 
-## 笔记模板
+DELETE 命令的基本语法如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+sqlite> DELETE FROM table_name;
+```
 
-## 完成标准
+但这种方法无法将递增数归零。
 
-- 能用 3 到 5 句话解释 `SQLite Truncate Table`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+如果要将递增数归零，可以使用以下方法：
+
+```text
+sqlite> DELETE FROM sqlite_sequence WHERE name = 'table_name';
+```
+
+当 SQLite 数据库中包含自增列时，会自动建立一个名为 sqlite_sequence 的表。这个表包含两个列：name 和 seq。name 记录自增列所在的表，seq 记录当前序号（下一条记录的编号就是当前序号加 1）。如果想把某个自增列的序号归零，只需要修改 sqlite_sequence 表就可以了。
+
+```text
+UPDATE sqlite_sequence SET seq = 0 WHERE name = 'table_name';
+```
+
+
+## 实例
+
+假设 COMPANY 表有如下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+下面为删除上表记录的实例：
+
+```text
+SQLite> DELETE FROM sqlite_sequence WHERE name = 'COMPANY';
+SQLite> VACUUM;
+```
+
+现在，COMPANY 表中的记录完全被删除，使用 SELECT 语句将没有任何输出。
+
+
+## 复习重点
+
+- 能说明 `SQLite Truncate Table` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

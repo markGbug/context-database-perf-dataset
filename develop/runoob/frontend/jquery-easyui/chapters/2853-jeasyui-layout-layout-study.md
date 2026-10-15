@@ -1,35 +1,58 @@
-# jQuery EasyUI：jEasyUI 创建边框布局 学习笔记
+# jQuery EasyUI：jQuery EasyUI 布局 - 为网页创建边框布局
 
 - 来源：[jEasyUI 创建边框布局](https://www.runoob.com/jeasyui/jeasyui-layout-layout.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2853
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 创建边框布局` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+边框布局（border layout）提供五个区域：east、west、north、south、center。以下是一些通常用法：
 
-## 阅读抓手
+- north 区域可以用来显示网站的标语。
+- south 区域可以用来显示版权以及一些说明。
+- west 区域可以用来显示导航菜单。
+- east 区域可以用来显示一些推广的项目。
+- center 区域可以用来显示主要的内容。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+为了应用布局（layout），您应该确定一个布局（layout）容器，然后定义一些区域。布局（layout）必须至少需要一个 center 区域，以下是一个布局（layout）实例：
 
-## 笔记模板
+```html
+    <div class="easyui-layout" style="width:400px;height:200px;">
+        <div region="west" split="true" title="Navigator" style="width:150px;">
+            <p style="padding:5px;margin:0;">Select language:</p>
+            <ul>
+                <li><a href="javascript:void(0)" onclick="showcontent('java')">Java</a></li>
+                <li><a href="javascript:void(0)" onclick="showcontent('cshape')">C#</a></li>
+                <li><a href="javascript:void(0)" onclick="showcontent('vb')">VB</a></li>
+                <li><a href="javascript:void(0)" onclick="showcontent('erlang')">Erlang</a></li>
+            </ul>
+        </div>
+        <div id="content" region="center" title="Language" style="padding:5px;">
+        </div>
+    </div>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+我们在一个 <div> 容器中创建了一个边框布局（border layout），布局（layout）把容器切割为两个部分，左边是导航菜单，右边是主要内容。
 
-## 完成标准
+最后我们写一个 onclick 事件处理函数来检索数据，'showcontent' 函数非常简单：
 
-- 能用 3 到 5 句话解释 `jEasyUI 创建边框布局`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```javascript
+    function showcontent(language){
+        $('#content').html('Introduction to ' + language + ' language');
+    }
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-layout-layout.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 创建边框布局` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,102 @@
-# SVG：SVG 在 HTML 中 学习笔记
+# SVG：SVG 在 HTML 页面
 
 - 来源：[SVG 在 HTML 中](https://www.runoob.com/svg/svg-inhtml.html)
 - 分类：前端开发
 - 技术：SVG
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3077
 
-## 学习目标
+## 本章内容
 
-SVG 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `SVG 在 HTML 中` 建立学习路径，先理解它在 SVG 体系中的位置，再做可运行或可复述的验证。
+SVG 文件可通过以下标签嵌入 HTML 文档：<img>、<object> 或者 <iframe>。
 
-## 阅读抓手
+SVG 的代码可以直接嵌入到 HTML 页面中，或您可以直接链接到 SVG 文件。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 使用 < img> 标签
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+通过 <img> 标签可以将 SVG 图像作为图片嵌入到 HTML 页面中，可以使用 src 属性指定 SVG 文件的路径，也可以设置 width 和 height 属性来指定图片的宽度和高度。
 
-## 完成标准
+语法:
 
-- 能用 3 到 5 句话解释 `SVG 在 HTML 中`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<img src="example.svg" alt="SVG Image" width="200" height="200">
+```
+
+
+## 使用 <object> 标签
+
+<object> 标签用于将外部资源嵌入到HTML页面中，可以使用 data 属性指定 SVG 文件的路径，type 属性指定资源的 MIME 类型。
+
+支持 SVG 的浏览器会直接显示 SVG 图像，不支持的浏览器会显示替代内容。
+
+语法:
+
+```html
+<object data="example.svg" type="image/svg+xml" width="200" height="200">
+  Your browser does not support SVG
+</object>
+```
+
+
+## 使用 <iframe> 标签
+
+<iframe> 标签用于在 HTML 页面中嵌入另一个HTML文档。可以使用 src 属性指定 SVG 文件的路径，并设置 width 和 height 属性来指定 iframe 的宽度和高度。
+
+语法:
+
+```html
+<iframe src="example.svg" width="200" height="200"></iframe>
+```
+
+
+## 直接在 HTML 嵌入 SVG 代码
+
+在 HTML 页面中直接嵌入 SVG 代码，SVG 代码可以放置在 <body> 标签中或其他合适的位置。
+
+这种方式使得 SVG 图像与 HTML 内容混合在一起，可以直接在 HTML 页面中编辑和调整 SVG 图像。
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red" />
+</svg>
+```
+
+
+## 链接到 SVG 文件
+
+您还可以用 <a> 标签链接到一个 SVG 文件：
+
+```html
+<a href="circle1.svg">查看 SVG 文件</a>
+```
+
+结果:查看 SVG 文件
+
+
+## 使用 CSS 背景图
+
+通过 CSS 的 background-image 属性，可以将 SVG 图像作为背景图嵌入到 HTML 元素中。这种方法适用于需要在 CSS 中控制背景图样式的情况。
+
+
+## 实例
+
+```text
+.svg-bg {
+  width: 200px;
+  height: 200px;
+  background-image: url('circle1.svg');
+  background-size: cover;
+}
+```
+
+
+## 复习重点
+
+- 能说明 `SVG 在 HTML 中` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

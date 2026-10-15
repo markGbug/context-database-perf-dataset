@@ -1,34 +1,111 @@
-# Servlet：Servlet 生命周期 练习笔记
+# Servlet：Servlet 生命周期
 
 - 来源：[Servlet 生命周期](https://www.runoob.com/servlet/servlet-life-cycle.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1173
 
-## 练习目标
+## 本章内容
 
-把 `Servlet 生命周期` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Servlet 生命周期可被定义为从创建直到毁灭的整个过程。以下是 Servlet 遵循的过程：
 
-## 练习步骤
+- Servlet 初始化后调用 init () 方法。
+- Servlet 调用 service() 方法来处理客户端的请求。
+- Servlet 销毁前调用 destroy() 方法。
+- 最后，Servlet 是由 JVM 的垃圾回收器进行垃圾回收的。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+现在让我们详细讨论生命周期的方法。
 
-## 验收清单
 
-- 我能独立说出 `Servlet 生命周期` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## init() 方法
 
-## 复盘问题
+init 方法被设计成只调用一次。它在第一次创建 Servlet 时被调用，在后续每次用户请求时不再调用。因此，它是用于一次性初始化，就像 Applet 的 init 方法一样。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Servlet 创建于用户第一次调用对应于该 Servlet 的 URL 时，但是您也可以指定 Servlet 在服务器第一次启动时被加载。
+
+当用户调用一个 Servlet 时，就会创建一个 Servlet 实例，每一个用户请求都会产生一个新的线程，适当的时候移交给 doGet 或 doPost 方法。init() 方法简单地创建或加载一些数据，这些数据将被用于 Servlet 的整个生命周期。
+
+init 方法的定义如下：
+
+```text
+public void init() throws ServletException {
+  // 初始化代码...
+}
+```
+
+
+## service() 方法
+
+service() 方法是执行实际任务的主要方法。Servlet 容器（即 Web 服务器）调用 service() 方法来处理来自客户端（浏览器）的请求，并把格式化的响应写回给客户端。
+
+每次服务器接收到一个 Servlet 请求时，服务器会产生一个新的线程并调用服务。service() 方法检查 HTTP 请求类型（GET、POST、PUT、DELETE 等），并在适当的时候调用 doGet、doPost、doPut，doDelete 等方法。
+
+下面是该方法的特征：
+
+```text
+public void service(ServletRequest request,
+                    ServletResponse response)
+      throws ServletException, IOException{
+}
+```
+
+service() 方法由容器调用，service 方法在适当的时候调用 doGet、doPost、doPut、doDelete 等方法。所以，您不用对 service() 方法做任何动作，您只需要根据来自客户端的请求类型来重写 doGet() 或 doPost() 即可。
+
+doGet() 和 doPost() 方法是每次服务请求中最常用的方法。下面是这两种方法的特征。
+
+
+## doGet() 方法
+
+GET 请求来自于一个 URL 的正常请求，或者来自于一个未指定 METHOD 的 HTML 表单，它由 doGet() 方法处理。
+
+```javascript
+public void doGet(HttpServletRequest request,
+                  HttpServletResponse response)
+    throws ServletException, IOException {
+    // Servlet 代码
+}
+```
+
+
+## doPost() 方法
+
+POST 请求来自于一个特别指定了 METHOD 为 POST 的 HTML 表单，它由 doPost() 方法处理。
+
+```javascript
+public void doPost(HttpServletRequest request,
+                   HttpServletResponse response)
+    throws ServletException, IOException {
+    // Servlet 代码
+}
+```
+
+
+## destroy() 方法
+
+destroy() 方法只会被调用一次，在 Servlet 生命周期结束时被调用。destroy() 方法可以让您的 Servlet 关闭数据库连接、停止后台线程、把 Cookie 列表或点击计数器写入到磁盘，并执行其他类似的清理活动。
+
+在调用 destroy() 方法之后，servlet 对象被标记为垃圾回收。destroy 方法定义如下所示：
+
+```text
+  public void destroy() {
+    // 终止化代码...
+  }
+```
+
+
+## 架构图
+
+下图显示了一个典型的 Servlet 生命周期方案。
+
+- 第一个到达服务器的 HTTP 请求被委派到 Servlet 容器。
+- Servlet 容器在调用 service() 方法之前加载 Servlet。
+- 然后 Servlet 容器处理由多个线程产生的多个请求，每个线程执行一个单一的 Servlet 实例的 service() 方法。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Servlet 生命周期` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

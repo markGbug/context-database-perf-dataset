@@ -1,34 +1,123 @@
-# Servlet：Servlet 环境设置 练习笔记
+# Servlet：Servlet 环境设置
 
 - 来源：[Servlet 环境设置](https://www.runoob.com/servlet/servlet-environment-setup.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1172
 
-## 练习目标
+## 本章内容
 
-把 `Servlet 环境设置` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+开发环境是您可以开发、测试、运行 Servlet 的地方。
 
-## 练习步骤
+就像任何其他的 Java 程序，您需要通过使用 Java 编译器 javac 编译 Servlet，在编译 Servlet 应用程序后，将它部署在配置的环境中以便测试和运行。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+如果你使用的是 Eclipse 环境，可以直接参阅：Eclipse JSP/Servlet 环境搭建。
 
-## 验收清单
+这个开发环境设置包括以下步骤：
 
-- 我能独立说出 `Servlet 环境设置` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 设置 Java 开发工具包（Java Development Kit）
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+这一步涉及到下载 Java 软件开发工具包（SDK，即 Software Development Kit），并适当地设置 PATH 环境变量。
+
+您可以从 Oracle 的 Java 网站下载 SDK：Java SE Downloads。
+
+一旦您下载了 SDK，请按照给定的指令来安装和配置设置。最后，设置 PATH 和 JAVA_HOME 环境变量指向包含 java 和 javac 的目录，通常分别为 java_install_dir/bin 和 java_install_dir。
+
+如果您运行的是 Windows，并把 SDK 安装在 C:\jdk1.5.0_20 中，则需要在您的 C:\autoexec.bat 文件中放入下列的行：
+
+```text
+set PATH=C:\jdk1.5.0_20\bin;%PATH%
+set JAVA_HOME=C:\jdk1.5.0_20
+```
+
+或者，在 Windows NT/2000/XP 中，您也可以用鼠标右键单击"我的电脑"，选择"属性"，再选择"高级"，"环境变量"。然后，更新 PATH 的值，按下"确定"按钮。
+
+在 Unix（Solaris、Linux 等）上，如果 SDK 安装在 /usr/local/jdk1.5.0_20 中，并且您使用的是 C shell，则需要在您的 .cshrc 文件中放入下列的行：
+
+```text
+setenv PATH /usr/local/jdk1.5.0_20/bin:$PATH
+setenv JAVA_HOME /usr/local/jdk1.5.0_20
+```
+
+另外，如果您使用集成开发环境（IDE，即 Integrated Development Environment），比如 Borland JBuilder、Eclipse、IntelliJ IDEA 或 Sun ONE Studio，编译并运行一个简单的程序，以确认该 IDE 知道您安装的 Java 路径。
+
+更详细内容可参阅：Java 开发环境配置
+
+
+## 设置 Web 应用服务器：Tomcat
+
+在市场上有许多 Web 应用服务器支持 Servlet。有些 Web 应用服务器是免费下载的，Tomcat 就是其中的一个。
+
+Apache Tomcat 是一款 Java Servlet 和 JavaServer Pages 技术的开源软件实现，可以作为测试 Servlet 的独立服务器，而且可以集成到 Apache Web 应用服务器。下面是在电脑上安装 Tomcat 的步骤：
+
+- 从 http://tomcat.apache.org/ 上下载最新版本的 Tomcat。
+- 一旦您下载了 Tomcat，解压缩到一个方便的位置。例如，如果您使用的是 Windows，则解压缩到 C:\apache-tomcat-5.5.29 中，如果您使用的是 Linux/Unix，则解压缩到 /usr/local/apache-tomcat-5.5.29 中，并创建 CATALINA_HOME 环境变量指向这些位置。
+
+在 Windows 上，可以通过执行下面的命令来启动 Tomcat：
+
+```text
+ %CATALINA_HOME%\bin\startup.bat
+
+ 或者
+
+ C:\apache-tomcat-5.5.29\bin\startup.bat
+```
+
+在 Unix（Solaris、Linux 等） 上，可以通过执行下面的命令来启动 Tomcat：
+
+```text
+$CATALINA_HOME/bin/startup.sh
+
+ 或者
+
+/usr/local/apache-tomcat-5.5.29/bin/startup.sh
+```
+
+Tomcat 启动后，可以通过在浏览器地址栏输入 http://localhost:8080/ 访问 Tomcat 中的默认应用程序。如果一切顺利，那么会显示以下结果：
+
+有关配置和运行 Tomcat 的进一步信息可以查阅应用程序安装的文档，或者可以访问 Tomcat 网站：http://tomcat.apache.org。
+
+在 Windows 上，可以通过执行下面的命令来停止 Tomcat：
+
+```text
+C:\apache-tomcat-5.5.29\bin\shutdown
+```
+
+在 Unix（Solaris、Linux 等） 上，可以通过执行下面的命令来停止 Tomcat：
+
+```text
+/usr/local/apache-tomcat-5.5.29/bin/shutdown.sh
+```
+
+
+## 设置 CLASSPATH
+
+由于 Servlet 不是 Java 平台标准版的组成部分，所以您必须为编译器指定 Servlet 类的路径。
+
+如果您运行的是 Windows，则需要在您的 C:\autoexec.bat 文件中放入下列的行：
+
+```text
+set CATALINA=C:\apache-tomcat-5.5.29
+set CLASSPATH=%CATALINA%\common\lib\servlet-api.jar;%CLASSPATH%
+```
+
+或者，在 Windows NT/2000/XP 中，您也可以用鼠标右键单击"我的电脑"，选择"属性"，再选择"高级"，"环境变量"。然后，更新 CLASSPATH 的值，按下"确定"按钮。
+
+在 Unix（Solaris、Linux 等）上，如果您使用的是 C shell，则需要在您的 .cshrc 文件中放入下列的行：
+
+```text
+setenv CATALINA=/usr/local/apache-tomcat-5.5.29
+setenv CLASSPATH $CATALINA/common/lib/servlet-api.jar:$CLASSPATH
+```
+
+注意：假设您的开发目录是 C:\ServletDevel（在 Windows 上）或 /user/ServletDevel（在 UNIX 上），那么您还需要在 CLASSPATH 中添加这些目录，添加方式与上面的添加方式类似。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Servlet 环境设置` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,4 +1,4 @@
-# Docker：Debian Docker 安装 概念卡
+# Docker：Debian Docker 安装
 
 - 来源：[Debian Docker 安装](https://www.runoob.com/docker/debian-docker-install.html)
 - 分类：后端开发
@@ -6,24 +6,147 @@
 - 笔记类型：概念卡
 - 章节序号：0796
 
-## 一句话定义
+## 本章内容
 
-`Debian Docker 安装` 是 Docker 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+Docker 支持以下的 64 位 Debian 版本：
 
-## 三层理解
+- Debian Bookworm 12 （稳定版）
+- Debian Bullseye 11 （旧稳定版）
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
+支持的架构包括 x86_64（amd64）、armhf、arm64 和 ppc64le。
 
-## 关联知识
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
+### 卸载旧版本
 
-## 记忆锚点
+如果你之前安装过 Docker Engine 之前，你需要卸载旧版本，避免冲突：
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+```text
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
+
+
+## 使用官方安装脚本自动安装
+
+安装命令如下：
+
+```text
+ curl -fsSL https://get.docker.com -o get-docker.sh
+ sudo sh get-docker.sh
+```
+
+
+## 手动安装
+
+
+### 1. 更新软件包
+
+首先，更新现有的软件包和包缓存：
+
+```text
+sudo apt update
+sudo apt upgrade
+```
+
+
+### 2. 安装依赖包
+
+安装一些需要的依赖包，这些包允许 apt 使用 HTTPS 协议来访问 Docker 仓库：
+
+```text
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+```
+
+
+### 3. 添加 Docker 官方 GPG 密钥
+
+使用下面的命令来添加 Docker 官方的 GPG 密钥：
+
+```text
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+```
+
+
+### 4. 添加 Docker 仓库
+
+添加 Docker 官方的 APT 软件源：
+
+```text
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# 更新
+sudo apt-get update
+```
+
+
+### 5. 更新 APT 软件包缓存
+
+添加仓库后，更新 APT 包索引：
+
+```text
+sudo apt update
+```
+
+确保你现在从 Docker 官方仓库安装 Docker 而不是 Debian 默认仓库：
+
+```text
+apt-cache policy docker-ce
+```
+
+你应该看到它指向 https://download.docker.com/，确保这就是官方的 Docker 仓库。
+
+
+### 6. 安装 Docker
+
+现在，你可以安装 Docker：
+
+```text
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+
+### 7. 启动并验证 Docker
+
+启动 Docker 并设置为开机自启：
+
+```text
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+你可以使用以下命令来验证 Docker 是否安装成功：
+
+```text
+sudo docker --version
+```
+
+运行以下测试命令确保 Docker 正常工作：
+
+```text
+sudo docker run hello-world
+```
+
+
+### 卸载 docker
+
+删除安装包：
+
+```text
+sudo apt-get purge docker-ce
+```
+
+删除镜像、容器、配置文件等内容：
+
+```text
+sudo rm -rf /var/lib/docker
+```
+
+
+## 记忆卡片
+
+- 一句话定义：`Debian Docker 安装` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

@@ -1,34 +1,67 @@
-# C++：C++ <unordered_set> 练习笔记
+# C++：C++ 容器类 <unordered_set>
 
 - 来源：[C++ <unordered_set>](https://www.runoob.com/cplusplus/cpp-libs-unordered_set.html)
 - 分类：编程语言
 - 技术：C++
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3597
 
-## 练习目标
+## 本章内容
 
-把 `C++ <unordered_set>` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在C++中，<unordered_set> 是标准模板库（STL）的一部分，提供了一种基于哈希表的容器，用于存储唯一的元素集合。
 
-## 练习步骤
+与 set 不同，unordered_set 不保证元素的排序，但通常提供更快的查找、插入和删除操作。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+unordered_set 是一个模板类，其定义如下：
 
-## 验收清单
+```html
+#include <unordered_set>
 
-- 我能独立说出 `C++ <unordered_set>` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+std::unordered_set<Key, Hash = std::hash<Key>, Pred = std::equal_to<Key>, Alloc = std::allocator<Key>>
+```
 
-## 复盘问题
+- Key 是存储在 unordered_set 中的元素类型。
+- Hash 是一个函数或函数对象，用于生成元素的哈希值，默认为 std::hash<Key>。
+- Pred 是一个二元谓词，用于比较两个元素是否相等，默认为 std::equal_to<Key>。
+- Alloc 是分配器类型，用于管理内存分配，默认为 std::allocator<Key>。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 语法
+
+以下是一些基本的 unordered_set 操作：
+
+- 构造函数：创建一个空的 unordered_set。 std::unordered_set<int> uset;
+- 插入元素：使用 insert() 方法。 uset.insert(10);
+- 查找元素：使用 find() 方法。 auto it = uset.find(10); if (it != uset.end()) { // 元素存在 }
+- 删除元素：使用 erase() 方法。 uset.erase(10);
+- 大小和空检查：使用 size() 和 empty() 方法。 size_t size = uset.size(); bool isEmpty = uset.empty();
+- 清空容器：使用 clear() 方法。 uset.clear();
+
+
+## 实例
+
+下面是一个使用 unordered_set 的简单示例，包括输出结果。
+
+
+## 实例
+
+输出结果:
+
+```text
+Elements in uset: 10 20 30
+Element 20 found in uset.
+After erasing 20, elements in uset: 10 30
+Size of uset: 2
+Is uset empty? No
+After clearing, is uset empty? Yes
+```
+
+unordered_set 是一个非常有用的容器，特别适合于需要快速查找、插入和删除操作的场景，同时不需要元素的有序性。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `C++ <unordered_set>` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

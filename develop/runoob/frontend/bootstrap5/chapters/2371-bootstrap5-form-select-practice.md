@@ -1,34 +1,88 @@
-# Bootstrap5：Bootstrap5 下拉菜单 练习笔记
+# Bootstrap5：Bootstrap5 下拉菜单
 
 - 来源：[Bootstrap5 下拉菜单](https://www.runoob.com/bootstrap5/bootstrap5-form-select.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2371
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap5 下拉菜单` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+下拉菜单可以是单选下拉菜单，也可以是多选的下拉菜单。
 
-## 练习步骤
+单选下拉菜单：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+多选下拉菜单：
 
-## 验收清单
+在 Bootstrap5 中下拉菜单 <select> 元素可以使用 .form-select 类来渲染 :
 
-- 我能独立说出 `Bootstrap5 下拉菜单` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<select class="form-select">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+</select>
+```
+
+下拉菜单通过 .form-select-lg 或 .form-select-sm 类来修改大小：
+
+
+## 实例
+
+```html
+<select class="form-select form-select-lg">
+<select class="form-select">
+<select class="form-select form-select-sm">
+```
+
+效果如下图：
+
+disabled 属性可以禁止下拉菜单被选择：
+
+
+## 实例
+
+```html
+<select class="form-select" disabled>
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+</select>
+```
+
+
+## 数据列表
+
+Bootstrap 也可以通过 datalist 标签为 <input> 元素设置下拉菜单：
+
+以下实例从列表中选择一个网站：
+
+
+## 实例
+
+```html
+<label for="browser" class="form-label">选择你喜欢的网站：</label>
+<input class="form-control" list="sites" name="site" id="site">
+<datalist id="sites">
+  <option value="Google">
+  <option value="Runoob">
+  <option value="Taobao">
+  <option value="Wiki">
+  <option value="Zhihu">
+</datalist>
+```
+
+效果如下图：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap5 下拉菜单` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

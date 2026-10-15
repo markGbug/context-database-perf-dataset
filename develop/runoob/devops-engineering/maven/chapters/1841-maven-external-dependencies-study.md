@@ -1,35 +1,73 @@
-# Maven：Maven 引入外部依赖 学习笔记
+# Maven：Maven 引入外部依赖
 
 - 来源：[Maven 引入外部依赖](https://www.runoob.com/maven/maven-external-dependencies.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1841
 
-## 学习目标
+## 本章内容
 
-Maven 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Maven 引入外部依赖` 建立学习路径，先理解它在 Maven 体系中的位置，再做可运行或可复述的验证。
+如果我们需要引入第三方库文件到项目，该怎么操作呢？
 
-## 阅读抓手
+pom.xml 的 dependencies 列表列出了我们的项目需要构建的所有外部依赖项。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+要添加依赖项，我们一般是先在 src 文件夹下添加 lib 文件夹，然后将你工程需要的 jar 文件复制到 lib 文件夹下。我们使用的是 ldapjdk.jar ，它是为 LDAP 操作的一个帮助库：
 
-## 笔记模板
+然后添加以下依赖到 pom.xml 文件中：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<dependencies>
+    <!-- 在这里添加你的依赖 -->
+    <dependency>
+        <groupId>ldapjdk</groupId>  <!-- 库名称，也可以自定义 -->
+        <artifactId>ldapjdk</artifactId>    <!--库名称，也可以自定义-->
+        <version>1.0</version> <!--版本号-->
+        <scope>system</scope> <!--作用域-->
+        <systemPath>${basedir}\src\lib\ldapjdk.jar</systemPath> <!--项目根目录下的lib文件夹下-->
+    </dependency>
+</dependencies>
+```
 
-## 完成标准
+pom.xml 文件完整代码如下：
 
-- 能用 3 到 5 句话解释 `Maven 引入外部依赖`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>com.companyname.bank</groupId>
+   <artifactId>consumerBanking</artifactId>
+   <packaging>jar</packaging>
+   <version>1.0-SNAPSHOT</version>
+   <name>consumerBanking</name>
+   <url>http://maven.apache.org</url>
+
+   <dependencies>
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>3.8.1</version>
+         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>ldapjdk</groupId>
+         <artifactId>ldapjdk</artifactId>
+         <scope>system</scope>
+         <version>1.0</version>
+         <systemPath>${basedir}\src\lib\ldapjdk.jar</systemPath>
+      </dependency>
+   </dependencies>
+
+</project>
+```
+
+
+## 复习重点
+
+- 能说明 `Maven 引入外部依赖` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

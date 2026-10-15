@@ -1,35 +1,151 @@
-# Claude Code：Claude Code 项目初始化 学习笔记
+# Claude Code：Claude Code 项目初始化
 
 - 来源：[Claude Code 项目初始化](https://www.runoob.com/claude-code/claude-code-init.html)
 - 分类：AI / 智能开发
 - 技术：Claude Code
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0143
 
-## 学习目标
+## 本章内容
 
-Claude Code 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Claude Code 项目初始化` 建立学习路径，先理解它在 Claude Code 体系中的位置，再做可运行或可复述的验证。
+Claude Code 项目初始化可以在 Claude Code 的交互界面中输入：
 
-## 阅读抓手
+```text
+/init
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+我们可以在一个已有的项目目录初始化，也可以新建一个。
 
-## 笔记模板
+我们可以先创建一个目录：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+mkdir claude-runoob-test
+```
 
-## 完成标准
+进入该目录：
 
-- 能用 3 到 5 句话解释 `Claude Code 项目初始化`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+cd claude-runoob-test
+```
+
+创建一个测试文件 test.py，代码如下：
+
+```text
+print("Hello, Runoob!")
+```
+
+进入 Claude Code 的交互界面：
+
+```text
+claude
+```
+
+使用 /init 命令来初始化项目：
+
+```text
+/init
+```
+
+如果使用 VS Code，也可以在 VS Code 的 Claude Code 界面输入 /init:
+
+Claude 会自动扫描你的代码库——读取 package.json、现有文档、配置文件以及代码结构，然后生成一份专属于你项目的 CLAUDE.md 文件。
+
+Claude 整个过程无需手动操作，Claude 会自行分析并输出初始配置。
+
+
+### CLAUDE.md 文件
+
+CLAUDE.md 是一个放在项目根目录的 Markdown 文件，Claude Code 在每次会话开始时都会自动读取。
+
+CLAUDE.md 会成为 Claude 系统提示的一部分，使每次对话都能预先加载项目上下文，不再需要重复解释基本信息。
+
+一份好的 CLAUDE.md 应该覆盖三个维度：
+
+- WHAT（是什么）：技术栈、项目结构，为 Claude 提供代码库的全局地图
+- WHY（为什么）：项目的目的，各模块的功能与定位
+- HOW（怎么做）：开发方式，例如使用 bun 而非 node，以及 Claude 如何验证改动是否正确 Humanlayer
+
+以下是一份典型的 CLAUDE.md 结构示例：
+
+```text
+# 项目名称
+
+## 项目概述
+简述这个项目的目的和功能。
+
+## 技术栈
+- Frontend: React + TypeScript
+- Backend: Node.js + Express
+- Database: PostgreSQL
+
+## 目录结构
+- `src/components/` - React 组件
+- `src/api/`        - API 层
+- `tests/`          - 测试文件
+
+## 常用命令
+- 启动开发服务器：`pnpm dev`
+- 运行测试：`pnpm test`
+- 代码检查：`pnpm lint`
+
+## 开发规范
+- 使用 TypeScript strict 模式
+- 优先使用 interface 而非 type
+- 禁止使用 any，使用 unknown 替代
+```
+
+### 文件位置与层级
+
+项目的核心文件结构如下：
+```
+your-project/
+├── CLAUDE.md                  # 项目主记忆文件（团队共享）
+├── .claude/
+│   ├── settings.json          # Hooks、权限、环境配置
+│   ├── settings.local.json    # 个人配置（建议加入 .gitignore）
+│   └── commands/              # 自定义斜杠命令
+│       └── my-command.md
+└── .mcp.json                  # MCP 服务配置
+```
+```
+
+
+## 初始化后的最佳实践
+
+迭代优化，而非一次写死。
+
+/init 命令适合快速入门，但真正的价值来自于随时间不断迭代，可以补充 Claude 无法自动推断的内容，例如分支命名规范、部署流程、Code Review 要求；同时删去不适用的通用建议。
+
+- 提交到版本控制：将 CLAUDE.md 提交到 Git，这样整个团队都能从中受益，新成员可以通过让 Claude 解释代码库来快速上手。
+- 保持精简：内容要简洁且普遍适用。采用"渐进式披露"原则——不要把所有你想让 Claude 知道的内容都塞进去，而是告诉它如何查找重要信息，让它按需获取，避免撑爆上下文窗口。
+- 不要让 CLAUDE.md 替代 linter：在文件中写代码风格规范是最常见的误区之一。永远不要用 LLM 来做 linter 的工作——linter 更快、更便宜，而且是确定性的。代码风格约束只会让上下文窗口膨胀，降低 Claude 的指令遵从质量。
+
+
+## 使用 # 快捷键持续更新
+
+在对话中，随时用 # 前缀给 Claude 发送记忆指令：
+
+```text
+# 我们始终使用 pnpm，不用 npm
+# 所有组件必须包含单元测试
+```
+
+这些补充会逐渐积累，形成一份真正反映团队实际工作方式的 CLAUDE.md。
+
+
+## 验证初始化效果
+
+初始化完成后，可以通过以下对话确认 Claude 是否正确理解了项目：
+
+- 这个项目是做什么的？
+- 解释一下目录结构。
+- 项目用了哪些技术？
+- 运行测试的命令是什么？
+
+
+## 复习重点
+
+- 能说明 `Claude Code 项目初始化` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

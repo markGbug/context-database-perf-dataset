@@ -1,4 +1,4 @@
-# Skills（技能）：第一个 Skill 概念卡
+# Skills（技能）：第一个 Skill
 
 - 来源：[第一个 Skill](https://www.runoob.com/skills/skills-first.html)
 - 分类：AI / 智能开发
@@ -6,24 +6,167 @@
 - 笔记类型：概念卡
 - 章节序号：0620
 
-## 一句话定义
+## 本章内容
 
-`第一个 Skill` 是 Skills（技能） 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+让我们暂时忘掉复杂的创建过程，先从 使用一个现成的 Skill 开始，感受它带来的便利。
 
-## 三层理解
+本文的演示基于 Claude Code，如果你还没安装，可以参考我们的 Claude Code 教程。
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
 
-## 关联知识
+### 创建 Skill 目录
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
+Skills 存放在 ~/.claude/skills/（个人全局）或项目目录下的 .claude/skills/（项目专用）。
 
-## 记忆锚点
+本章节再项目目录下测试，先创建个目录 claude-test:
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+```text
+mkdir claude-test
+```
+
+进入该目录，创建 skills 的目录与文件：
+
+```text
+mkdir -p .claude/skills/python-naming-standard
+```
+
+
+### 编写配置文件 SKILL.md
+
+在目录下创建 SKILL.md，这是 Skill 的大脑 ，告诉 Claude 什么时候用它。
+
+```text
+---
+name: Python 内部命名规范技能
+description: 当用户要求重构、审查或编写 Python 代码时，请参考此规范。
+---
+
+## 指令
+1. 所有的内部辅助函数必须以 `_internal_` 前缀命名。
+2. 如果发现不符合此规则的代码，请自动提出修改建议。
+3. 在执行 `claude commit` 前，必须检查此规范。
+
+## 参考示例
+- 正确：`def _internal_calculate_risk():`
+- 错误：`def _calculate_risk():`
+```
+
+字段要求：
+
+- name：必须仅使用小写字母、数字和连字符（最多 64 个字符）
+- description：Skill 的简要描述及其使用时机（最多 1024 个字符）
+
+创建完后文件结构如下：
+
+你的项目现在看起来应该是这样的：
+
+```text
+my-project/
+├─ src/
+│  └─ test.py              # 项目源码
+├─ .claude/
+│  ├─ skills/
+│  │  └─ hello-world/
+│  │     ├─ skill.md       # Skill 定义（YAML + Instructions，机器可执行）
+│  │     └─ README.md      # Skill 说明（人类阅读，可选）
+│  └─ config.yml           # Claude 项目级配置（可选）
+├─ .gitignore
+└─ README.md               # 项目整体说明
+```
+
+接下来我们再终端执行以下命令启动 Claude Code：
+
+```text
+claude
+```
+
+输入任务：
+
+```text
+帮我写一个计算用户折扣的函数
+```
+
+Claude 就会会扫描已安装的 Skills，发现你的请求涉及 "Python 代码编写"，匹配了 python-naming-standard。
+
+它会根据 SKILL.md 中的要求，生成如下代码：
+
+```text
+def _internal_get_discount(user_score):
+    # 计算逻辑...
+    return discount
+```
+
+
+### 添加资源文件（可选）
+
+另外我们可以在 .claude/skills/ 下添加以下目录：
+
+在同一文件夹添加：
+
+- examples/：存放示例文件。
+- references/：存放参考文档。
+- scripts/：存放可执行脚本（例如 Python 处理 PDF）。
+
+然后在 SKILL.md 中引用：
+
+```text
+查看示例 commit：./examples/good-commit.txt
+运行脚本：使用工具执行 ./scripts/process.py
+```
+
+
+## 官方市场
+
+除了自己编写，你还可以利用 2025 年末发布的 Agent Skills 开放标准：
+
+- 官方市场：访问 https://github.com/anthropics/skills 仓库下载预设的技能（如：React 优化器、SQL 调优工具）。
+- Skill Creator：你可以对 Claude 说："帮我把我刚才教你的关于 Docker 的配置逻辑总结成一个 Skill"，它会自动在相应目录为你生成文件。
+
+我们可以将本仓库注册为 Claude Code 的插件市场，只需在 Claude Code 中执行以下命令：
+
+```text
+/plugin marketplace add anthropics/skills
+```
+
+然后就可以使用 /plugin 查看：
+
+安装指定技能集的步骤：
+
+- 浏览并安装插件（Browse and install plugins）
+- 选择 anthropic-agent-skills 插件源
+- 选择 document-skills（文档技能） 或 example-skills（示例技能）
+- 点击立即安装（Install now）
+
+我们也可直接通过命令安装上述两类插件：
+
+```text
+/plugin install document-skills@anthropic-agent-skills
+/plugin install example-skills@anthropic-agent-skills
+```
+
+注意：使用插件安装的 skills 目录在 ～/claude/plugins/marketplaces/ 下。
+
+插件安装完成后，需要重启一下 Claude Code。
+
+使用的时候只需在指令中提及技能名称即可调用，例如安装 document-skills 插件后，可向 Claude Code 下达指令：
+
+```text
+使用 PDF 技能提取 path/to/some-file.pdf 文件中的表单字段
+```
+
+或者创建一个 PPT：
+
+```text
+创建一个 Agent Skill 的演示文稿
+```
+
+可以看到，调用了 /document-skills:pptx：
+
+开始生成：
+
+
+## 记忆卡片
+
+- 一句话定义：`第一个 Skill` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

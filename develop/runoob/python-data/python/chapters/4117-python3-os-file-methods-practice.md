@@ -1,34 +1,163 @@
-# Python：Python3 OS 练习笔记
+# Python：Python3 OS 文件/目录方法
 
 - 来源：[Python3 OS](https://www.runoob.com/python3/python3-os-file-methods.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4117
 
-## 练习目标
+## 本章内容
 
-把 `Python3 OS` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+os 模块是 Python 标准库中的一个重要模块，它提供了与操作系统交互的功能。
 
-## 练习步骤
+通过 os 模块，你可以执行文件操作、目录操作、环境变量管理、进程管理等任务。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+os 模块是跨平台的，这意味着你可以在不同的操作系统（如 Windows、Linux、macOS）上使用相同的代码。
 
-## 验收清单
+在使用 os 模块之前，你需要先导入它。导入 os 模块的代码如下：
 
-- 我能独立说出 `Python3 OS` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+import os
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## os 模块的常用功能
+
+
+### 1. 获取当前工作目录
+
+os.getcwd() 函数用于获取当前工作目录的路径。当前工作目录是 Python 脚本执行时所在的目录。
+
+
+## 实例
+
+
+### 2. 改变当前工作目录
+
+os.chdir(path) 函数用于改变当前工作目录。path 是你想要切换到的目录路径。
+
+
+## 实例
+
+
+### 3. 列出目录内容
+
+os.listdir(path) 函数用于列出指定目录中的所有文件和子目录。如果不提供 path 参数，则默认列出当前工作目录的内容。
+
+
+## 实例
+
+
+### 4. 创建目录
+
+os.mkdir(path) 函数用于创建一个新的目录。如果目录已经存在，会抛出 FileExistsError 异常。
+
+
+## 实例
+
+
+### 5. 删除目录
+
+os.rmdir(path) 函数用于删除一个空目录。如果目录不为空，会抛出 OSError 异常。
+
+
+## 实例
+
+
+### 6. 删除文件
+
+os.remove(path) 函数用于删除一个文件。如果文件不存在，会抛出 FileNotFoundError 异常。
+
+
+## 实例
+
+
+### 7. 重命名文件或目录
+
+os.rename(src, dst) 函数用于重命名文件或目录。src 是原始路径，dst 是新的路径。
+
+
+## 实例
+
+
+### 8. 获取环境变量
+
+os.getenv(key) 函数用于获取指定环境变量的值。如果环境变量不存在，返回 None。
+
+
+## 实例
+
+
+### 9. 执行系统命令
+
+os.system(command) 函数用于在操作系统的 shell 中执行命令。命令执行后，返回命令的退出状态。
+
+
+## 实例
+
+
+## os 常用方法
+
+os 模块提供了非常丰富的方法用来处理文件和目录。常用的方法如下表所示：
+
+os.access(path, mode)
+
+os.chdir(path)
+
+os.chflags(path, flags)
+
+os.chmod(path, mode)
+
+os.chown(path, uid, gid)
+
+os.chroot(path)
+
+os.close(fd)
+
+os.closerange(fd_low, fd_high)
+
+os.dup(fd)
+
+os.dup2(fd, fd2)
+
+os.fchdir(fd)
+
+os.fchmod(fd, mode)
+
+os.fchown(fd, uid, gid)
+
+os.fdatasync(fd)
+
+os.fdopen(fd[, mode[, bufsize]])
+
+os.fpathconf(fd, name)
+
+os.fstat(fd)
+
+os.fstatvfs(fd)
+
+os.fsync(fd)
+
+os.ftruncate(fd, length)
+
+os.getcwd()
+
+os.getcwdb()
+
+os.isatty(fd)
+
+os.lchflags(path, flags)
+
+os.lchmod(path, mode)
+
+os.lchown(path, uid, gid)
+
+os.link(src, dst)
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python3 OS` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,140 @@
-# Node.js：Node.js NVM 学习笔记
+# Node.js：NVM 管理多版本 Node.js
 
 - 来源：[Node.js NVM](https://www.runoob.com/nodejs/nodejs-nvm.html)
 - 分类：后端开发
 - 技术：Node.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1002
 
-## 学习目标
+## 本章内容
 
-Node.js 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Node.js NVM` 建立学习路径，先理解它在 Node.js 体系中的位置，再做可运行或可复述的验证。
+nvm（Node Version Manager）是一个非常有用的工具，可以让您在同一台机器上安装和管理多个 Node.js 版本。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 为什么需要 nvm？
 
-## 笔记模板
+- 不同项目可能需要不同版本的 Node.js
+- 测试应用在不同 Node.js 版本下的兼容性
+- 方便升级和降级 Node.js 版本
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 安装 nvm
 
-- 能用 3 到 5 句话解释 `Node.js NVM`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+在 macOS/Linux 上安装 nvm：
+
+```text
+# 使用 curl 安装
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+# 或使用 wget 安装
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+# 重新加载 shell 配置
+source ~/.bashrc
+# 或
+source ~/.zshrc
+```
+
+在 Windows 上安装 nvm-windows：
+
+- 下载 nvm-windows：https://github.com/coreybutler/nvm-windows/releases
+- 下载 nvm-setup.zip
+- 解压并运行安装程序
+
+nvm 常用命令：
+
+```text
+# 查看 nvm 版本
+nvm --version
+
+# 列出所有可安装的 Node.js 版本
+nvm list-remote
+# Windows 上使用
+nvm list available
+
+# 安装最新的 LTS 版本
+nvm install --lts
+
+# 安装特定版本
+nvm install 18.17.0
+nvm install 16.20.1
+
+# 列出已安装的版本
+nvm list
+# 或
+nvm ls
+
+# 切换到特定版本
+nvm use 18.17.0
+
+# 设置默认版本
+nvm alias default 18.17.0
+
+# 查看当前使用的版本
+nvm current
+
+# 卸载特定版本
+nvm uninstall 16.20.1
+```
+
+实际使用示例：
+
+```text
+# 场景：为不同项目使用不同 Node.js 版本
+
+# 项目 A 使用 Node.js 18
+cd project-a
+nvm use 18.17.0
+node --version  # v18.17.0
+
+# 项目 B 使用 Node.js 16
+cd ../project-b
+nvm use 16.20.1
+node --version  # v16.20.1
+
+# 为项目指定 Node.js 版本
+echo "18.17.0" > .nvmrc
+nvm use  # 自动使用 .nvmrc 中指定的版本
+```
+
+
+### 验证安装是否成功
+
+创建第一个 Node.js 程序：
+
+创建一个名为 hello.js 的文件：
+
+
+## 实例
+
+预期输出：
+
+```text
+Hello, Node.js!
+Node.js 版本: v18.17.0
+当前工作目录: /Users/username/projects
+操作系统: darwin
+```
+
+检查全局安装路径：
+
+```text
+# 查看 npm 全局包安装路径
+npm config get prefix
+
+# 查看 npm 配置
+npm config list
+
+# 查看 Node.js 安装路径
+which node
+# Windows 上使用
+where node
+```
+
+
+## 复习重点
+
+- 能说明 `Node.js NVM` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

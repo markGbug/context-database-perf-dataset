@@ -1,35 +1,54 @@
-# Ionic：ionic toggle 学习笔记
+# Ionic：ionic Toggle(切换开关)
 
 - 来源：[ionic toggle](https://www.runoob.com/ionic/ionic-toggle.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3302
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic toggle` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+切换开关类似与 HTML 的 checkbox 标签，但它更易于在移动设备上使用。
 
-## 阅读抓手
+切换开关可以使用 toggle-assertive 来指定颜色。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+<label class="toggle">
+   <input type="checkbox">
+   <div class="track">
+     <div class="handle"></div>
+   </div>
+</label>
+```
 
-## 笔记模板
+该实例有是多个切换开关列表。注意，每个选项的 item 类后需要添加 item-toggle 类。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<ul class="list">
 
-## 完成标准
+  <li class="item item-toggle">
+     HTML5
+     <label class="toggle toggle-assertive">
+       <input type="checkbox">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+  </li>
 
-- 能用 3 到 5 句话解释 `ionic toggle`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+  ...
+
+</ul>
+```
+
+尝试一下 »
+
+运行效果如下：
+
+
+## 复习重点
+
+- 能说明 `ionic toggle` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

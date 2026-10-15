@@ -1,34 +1,157 @@
-# PostgreSQL：PostgreSQL ALTER TABLE 命令 练习笔记
+# PostgreSQL：PostgreSQL ALTER TABLE 命令
 
 - 来源：[PostgreSQL ALTER TABLE 命令](https://www.runoob.com/postgresql/postgresql-alter-table.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1583
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL ALTER TABLE 命令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 PostgreSQL 中，ALTER TABLE 命令用于添加，修改，删除一张已经存在表的列。
 
-## 练习步骤
+另外你也可以用 ALTER TABLE 命令添加和删除约束。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 语法
 
-- 我能独立说出 `PostgreSQL ALTER TABLE 命令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+用 ALTER TABLE 在一张已存在的表上添加列的语法如下：
 
-## 复盘问题
+```text
+ALTER TABLE table_name ADD column_name datatype;
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在一张已存在的表上 DROP COLUMN（删除列），语法如下：
+
+```text
+ALTER TABLE table_name DROP COLUMN column_name;
+```
+
+修改表中某列的 DATA TYPE（数据类型），语法如下：
+
+```text
+ALTER TABLE table_name ALTER COLUMN column_name TYPE datatype;
+```
+
+给表中某列添加 NOT NULL 约束，语法如下：
+
+```text
+ALTER TABLE table_name ALTER column_name datatype NOT NULL;
+```
+
+给表中某列 ADD UNIQUE CONSTRAINT（ 添加 UNIQUE 约束），语法如下：
+
+```java
+ALTER TABLE table_name
+ADD CONSTRAINT MyUniqueConstraint UNIQUE(column1, column2...);
+```
+
+给表中 ADD CHECK CONSTRAINT（添加 CHECK 约束），语法如下：
+
+```java
+ALTER TABLE table_name
+ADD CONSTRAINT MyUniqueConstraint CHECK (CONDITION);
+```
+
+给表 ADD PRIMARY KEY（添加主键），语法如下：
+
+```text
+ALTER TABLE table_name
+ADD CONSTRAINT MyPrimaryKey PRIMARY KEY (column1, column2...);
+```
+
+DROP CONSTRAINT （删除约束），语法如下：
+
+```text
+ALTER TABLE table_name
+DROP CONSTRAINT MyUniqueConstraint;
+```
+
+如果是 MYSQL ，代码是这样：
+
+```text
+ALTER TABLE table_name
+DROP INDEX MyUniqueConstraint;
+```
+
+DROP PRIMARY KEY （删除主键），语法如下：
+
+```text
+ALTER TABLE table_name
+DROP CONSTRAINT MyPrimaryKey;
+```
+
+如果是 MYSQL ，代码是这样：
+
+```text
+ALTER TABLE table_name
+DROP PRIMARY KEY;
+```
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+下面实例在这张表中添加新的列：
+
+```text
+runoobdb=# ALTER TABLE COMPANY ADD GENDER char(1);
+```
+
+现在表长这样：
+
+```text
+ id | name  | age | address     | salary | gender
+----+-------+-----+-------------+--------+--------
+  1 | Paul  |  32 | California  |  20000 |
+  2 | Allen |  25 | Texas       |  15000 |
+  3 | Teddy |  23 | Norway      |  20000 |
+  4 | Mark  |  25 | Rich-Mond   |  65000 |
+  5 | David |  27 | Texas       |  85000 |
+  6 | Kim   |  22 | South-Hall  |  45000 |
+  7 | James |  24 | Houston     |  10000 |
+(7 rows)
+```
+
+下面实例删除 GENDER 列：
+
+```text
+runoobdb=# ALTER TABLE COMPANY DROP GENDER;
+```
+
+得到结果如下：
+
+```text
+id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL ALTER TABLE 命令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,116 @@
-# SQL：SQL UNIQUE 练习笔记
+# SQL：SQL UNIQUE 约束
 
 - 来源：[SQL UNIQUE](https://www.runoob.com/sql/sql-unique.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1650
 
-## 练习目标
+## 本章内容
 
-把 `SQL UNIQUE` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+UNIQUE 约束在 SQL 中用于确保一列或多列中的所有值都是唯一的，这意味着在约束应用的列中不能有重复的值。
 
-## 练习步骤
+UNIQUE 类似于主键 (PRIMARY KEY) 约束，但 UNIQUE 约束允许列中的值为 NULL，而主键不允许。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+PRIMARY KEY 约束自带唯一性（UNIQUE）约束功能。
 
-## 验收清单
+每个表可以有多个 UNIQUE 约束，但只能定义一个 PRIMARY KEY 约束。
 
-- 我能独立说出 `SQL UNIQUE` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 使用场景
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- 确保唯一性：例如，确保电子邮件地址、用户名等字段在整个表中是唯一的。
+- 在多列上应用：可以在多列上创建 UNIQUE 约束，以确保组合值的唯一性。
+
+
+## CREATE TABLE 时的 SQL UNIQUE 约束
+
+在创建表时，可以在特定列或多个列上定义 UNIQUE 约束，以确保这些列中的值在表内唯一。
+
+MySQL：
+
+```text
+CREATE TABLE Persons (
+    P_Id INT NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255),
+    UNIQUE (P_Id)
+);
+```
+
+SQL Server / Oracle / MS Access：
+
+```text
+CREATE TABLE Persons (
+    P_Id INT NOT NULL UNIQUE,
+    LastName VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255)
+);
+```
+
+如需为 UNIQUE 约束指定名称，并在多个列上应用，可以使用以下语法：
+
+MySQL / SQL Server / Oracle / MS Access：
+
+```text
+CREATE TABLE Persons (
+    P_Id INT NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255),
+    CONSTRAINT uc_PersonID UNIQUE (P_Id, LastName)
+);
+```
+
+
+## 在 ALTER TABLE 时添加 UNIQUE 约束
+
+如果表已存在，可以使用 ALTER TABLE 语句在指定列上添加 UNIQUE 约束。
+
+MySQL / SQL Server / Oracle / MS Access：
+
+```text
+ALTER TABLE Persons
+ADD UNIQUE (P_Id);
+```
+
+如需命名 UNIQUE 约束，并定义多个列的 UNIQUE 约束，请使用下面的 SQL 语法：
+
+MySQL / SQL Server / Oracle / MS Access：
+
+```text
+ALTER TABLE Persons
+ADD CONSTRAINT uc_PersonID UNIQUE (P_Id, LastName);
+```
+
+
+## 删除 UNIQUE 约束
+
+如果需要移除一个 UNIQUE 约束，可以使用以下 SQL 语句：
+
+MySQL：
+
+```text
+ALTER TABLE Persons
+DROP INDEX uc_PersonID;
+```
+
+SQL Server / Oracle / MS Access：
+
+```text
+ALTER TABLE Persons
+DROP CONSTRAINT uc_PersonID;
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL UNIQUE` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

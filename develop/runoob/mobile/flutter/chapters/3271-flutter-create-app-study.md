@@ -1,35 +1,112 @@
-# Flutter：第一个 Flutter 应用 学习笔记
+# Flutter：第一个 Flutter 应用
 
 - 来源：[第一个 Flutter 应用](https://www.runoob.com/flutter/flutter-create-app.html)
 - 分类：移动开发
 - 技术：Flutter
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3271
 
-## 学习目标
+## 本章内容
 
-Flutter 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `第一个 Flutter 应用` 建立学习路径，先理解它在 Flutter 体系中的位置，再做可运行或可复述的验证。
+本节将介绍如何使用 Flutter CLI 创建新的 Flutter 项目，运行应用，并理解最基础的代码结构。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 使用 Flutter CLI 创建项目
 
-## 笔记模板
+Flutter CLI 是 Flutter 的命令行工具，用于创建、管理和构建 Flutter 项目。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 创建新项目
 
-- 能用 3 到 5 句话解释 `第一个 Flutter 应用`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+在终端中运行以下命令创建一个新的 Flutter 项目：
+
+```text
+$ flutter create my_first_app
+```
+
+其中 my_first_app 是你的项目名称。Flutter 会根据这个名称创建对应的文件夹和文件。
+
+项目名称必须使用小写字母和下划线，不能包含空格或特殊字符。
+
+
+### 命令参数
+
+flutter create 命令支持多种参数：
+
+```text
+$ flutter create hello_world
+Creating project "hello_world"...
+  .gitignore                    2026-04-01 10:30:22
+  .metadata                     2026-04-01 10:30:22
+  analysis_options.yaml         2026-04-01 10:01:15
+  pubspec.yaml                  2026-04-01 10:30:22
+  README.md                     2026-04-01 10:30:22
+  lib/
+    main.dart                    2026-04-01 10:30:22
+  test/
+    widget_test.dart             2026-04-01 10:22:34
+  android/
+  ios/
+  web/
+  ...
+Running "flutter pub get"...                     13.2s
+Running "flutter analyze"...                     3.2s
+```
+
+
+## 运行 Flutter 应用
+
+
+### 启动开发服务器
+
+项目创建完成后，进入项目目录并运行应用：
+
+```text
+$ cd hello_world
+$ flutter run
+```
+
+首次运行可能会花费一些时间，因为 Flutter 需要编译 Dart 代码并启动应用。
+
+
+### 指定运行设备
+
+如果你的电脑连接了多个设备（或模拟器），可以使用 -d 参数指定运行设备：
+
+
+### 查看可用设备
+
+运行以下命令查看所有可用的运行设备：
+
+```text
+$ flutter devices
+```
+
+输出示例：
+
+```text
+2 connected devices:
+Chrome (web)      • chrome           • web-javascript • Chrome  • web
+Windows (windows) • windows          • windows        • x64    • Windows 10.0.0
+```
+
+
+## 热重载功能
+
+Flutter 最强大的功能之一是热重载（Hot Reload）。当你正在运行应用时：
+
+- 修改代码并保存
+- 在终端中按 r 键
+- 应用会重新加载，你能看到最新的更改
+
+热重载非常快，通常只需要一两秒钟。这极大地提高了开发效率，让你可以实时预览界面效果。
+
+热重载不会丢失应用状态，这意味着你可以在不重启应用的情况下快速迭代 UI 设计。
+
+
+## 复习重点
+
+- 能说明 `第一个 Flutter 应用` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

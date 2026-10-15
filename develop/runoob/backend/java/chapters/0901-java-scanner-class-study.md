@@ -1,35 +1,217 @@
-# Java：Java Scanner 类 学习笔记
+# Java：Java Scanner 类
 
 - 来源：[Java Scanner 类](https://www.runoob.com/java/java-scanner-class.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0901
 
-## 学习目标
+## 本章内容
 
-Java 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Java Scanner 类` 建立学习路径，先理解它在 Java 体系中的位置，再做可运行或可复述的验证。
+java.util.Scanner 是 Java5 的新特征，我们可以通过 Scanner 类来获取用户的输入。
 
-## 阅读抓手
+下面是创建 Scanner 对象的基本语法：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+Scanner s = new Scanner(System.in);
+```
 
-## 笔记模板
+接下来我们演示一个最简单的数据输入，并通过 Scanner 类的 next() 与 nextLine() 方法获取输入的字符串，在读取前我们一般需要 使用 hasNext 与 hasNextLine 判断是否还有输入的数据：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 使用 next 方法：
 
-- 能用 3 到 5 句话解释 `Java Scanner 类`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## ScannerDemo.java 文件代码：
+
+```java
+import java.util.Scanner;
+
+public class ScannerDemo {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        // 从键盘接收数据
+
+        // next方式接收字符串
+        System.out.println("next方式接收：");
+        // 判断是否还有输入
+        if (scan.hasNext()) {
+            String str1 = scan.next();
+            System.out.println("输入的数据为：" + str1);
+        }
+        scan.close();
+    }
+}
+```
+
+执行以上程序输出结果为：
+
+```text
+$ javac ScannerDemo.java
+$ java ScannerDemo
+next方式接收：
+runoob com
+输入的数据为：runoob
+```
+
+可以看到 com 字符串并未输出，接下来我们看 nextLine。
+
+
+### 使用 nextLine 方法：
+
+
+## ScannerDemo.java 文件代码：
+
+```java
+import java.util.Scanner;
+
+public class ScannerDemo {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        // 从键盘接收数据
+
+        // nextLine方式接收字符串
+        System.out.println("nextLine方式接收：");
+        // 判断是否还有输入
+        if (scan.hasNextLine()) {
+            String str2 = scan.nextLine();
+            System.out.println("输入的数据为：" + str2);
+        }
+        scan.close();
+    }
+}
+```
+
+执行以上程序输出结果为：
+
+```text
+$ javac ScannerDemo.java
+$ java ScannerDemo
+nextLine方式接收：
+runoob com
+输入的数据为：runoob com
+```
+
+可以看到 com 字符串输出。
+
+
+### next() 与 nextLine() 区别
+
+next():
+
+- 1、一定要读取到有效字符后才可以结束输入。
+- 2、对输入有效字符之前遇到的空白，next() 方法会自动将其去掉。
+- 3、只有输入有效字符后才将其后面输入的空白作为分隔符或者结束符。
+- next() 不能得到带有空格的字符串。
+
+nextLine()：
+
+- 1、以Enter为结束符,也就是说 nextLine()方法返回的是输入回车之前的所有字符。
+- 2、可以获得空白。
+
+如果要输入 int 或 float 类型的数据，在 Scanner 类中也有支持，但是在输入之前最好先使用 hasNextXxx() 方法进行验证，再使用 nextXxx() 来读取：
+
+
+## ScannerDemo.java 文件代码：
+
+```java
+import java.util.Scanner;
+
+public class ScannerDemo {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        // 从键盘接收数据
+        int i = 0;
+        float f = 0.0f;
+        System.out.print("输入整数：");
+        if (scan.hasNextInt()) {
+            // 判断输入的是否是整数
+            i = scan.nextInt();
+            // 接收整数
+            System.out.println("整数数据：" + i);
+        } else {
+            // 输入错误的信息
+            System.out.println("输入的不是整数！");
+        }
+        System.out.print("输入小数：");
+        if (scan.hasNextFloat()) {
+            // 判断输入的是否是小数
+            f = scan.nextFloat();
+            // 接收小数
+            System.out.println("小数数据：" + f);
+        } else {
+            // 输入错误的信息
+            System.out.println("输入的不是小数！");
+        }
+        scan.close();
+    }
+}
+```
+
+执行以上程序输出结果为：
+
+```text
+$ javac ScannerDemo.java
+$ java ScannerDemo
+输入整数：12
+整数数据：12
+输入小数：1.2
+小数数据：1.2
+```
+
+以下实例我们可以输入多个数字，并求其总和与平均数，每输入一个数字用回车确认，通过输入非数字来结束输入并输出执行结果：
+
+
+## ScannerDemo.java 文件代码：
+
+```java
+import java.util.Scanner;
+
+class RunoobTest {
+    public static void main(String[] args) {
+        System.out.println("请输入数字：");
+        Scanner scan = new Scanner(System.in);
+
+        double sum = 0;
+        int m = 0;
+
+        while (scan.hasNextDouble()) {
+            double x = scan.nextDouble();
+            m = m + 1;
+            sum = sum + x;
+        }
+
+        System.out.println(m + "个数的和为" + sum);
+        System.out.println(m + "个数的平均值是" + (sum / m));
+        scan.close();
+    }
+}
+```
+
+执行以上程序输出结果为（输入非数字来结束输入）：
+
+```text
+$ javac ScannerDemo.java
+$ java ScannerDemo
+请输入数字：
+12
+23
+15
+21.4
+end
+4个数的和为71.4
+4个数的平均值是17.85
+```
+
+
+## 常用方法
+
+更多内容可以参考 API 文档：https://www.runoob.com/manual/jdk11api/java.base/java/util/Scanner.html。
+
+
+## 复习重点
+
+- 能说明 `Java Scanner 类` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,159 @@
-# Ionic：ionic 选项卡栏操作 练习笔记
+# Ionic：ionic 选项卡栏操作
 
 - 来源：[ionic 选项卡栏操作](https://www.runoob.com/ionic/ionic-ion-tabs.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3330
 
-## 练习目标
+## 本章内容
 
-把 `ionic 选项卡栏操作` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## ion-tabs
 
-## 练习步骤
+ion-tabs 是有一组页面选项卡组成的选项卡栏。可以通过点击选项来切换页面。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+对于 iOS，它会出现在屏幕的底部，Android会出现在屏幕的顶部(导航栏下面)。
 
-## 验收清单
 
-- 我能独立说出 `ionic 选项卡栏操作` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 用法
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 实例
+
+```html
+<ion-tabs class="tabs-positive tabs-icon-only">
+
+  <ion-tab title="首页" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
+    <!-- 标签 1 内容 -->
+  </ion-tab>
+
+  <ion-tab title="关于" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline">
+    <!-- 标签 2 内容 -->
+  </ion-tab>
+
+  <ion-tab title="设置" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
+    <!-- 标签 3 内容 -->
+  </ion-tab>
+</ion-tabs>
+```
+
+效果如下所示：
+
+
+### API
+
+该句柄用$ionicTabsDelegate来标识这些选项卡。
+
+
+## ion-tab
+
+隶属于ionTabs
+
+包含一个选项卡内容。该内容仅存在于被选中的给定选项卡中。
+
+每个ionTab都有自己的浏览历史。
+
+
+### 用法
+
+```html
+<ion-tab
+  title="Tab!"
+  icon="my-icon"
+  href="#/tab/tab-link"
+  on-select="onTabSelected()"
+  on-deselect="onTabDeselected()">
+</ion-tab>
+```
+
+
+### API
+
+选项卡的标题。
+
+当触碰的时候，该选项卡将会跳转的的链接。
+
+选项卡的图标。如果给定值，它将成为ion-on和ion-off的默认值。
+
+被选中标签的图标。
+
+没被选中标签的图标。
+
+选项卡上的徽章（通常是一个数字）。
+
+选项卡上微章的样式（例，tabs-positive ）。
+
+选项卡被选中时触发。
+
+选项卡取消选中时触发。
+
+通常，点击时选项卡会被选中。如果设置了 ng-Click，它将不会被选中。 你可以用$ionicTabsDelegate.select()来指定切换标签。
+
+
+## $ionicTabsDelegate
+
+授权控制ionTabs指令。
+
+该方法直接调用$ionicTabsDelegate服务，控制所有ionTabs指令。用$getByHandle方法控制具体的ionTabs实例。
+
+
+### 用法
+
+```html
+<body ng-controller="MyCtrl">
+  <ion-tabs>
+
+    <ion-tab title="Tab 1">
+      你好，标签1！
+      <button ng-click="selectTabWithIndex(1)">选择标签2</button>
+    </ion-tab>
+    <ion-tab title="Tab 2">你好标签2！</ion-tab>
+
+  </ion-tabs>
+</body>
+```
+
+```javascript
+function MyCtrl($scope, $ionicTabsDelegate) {
+  $scope.selectTabWithIndex = function(index) {
+    $ionicTabsDelegate.select(index);
+  }
+}
+```
+
+
+### 方法
+
+```text
+select(index, [shouldChangeHistory])
+```
+
+选择标签来匹配给定的索引。
+
+选择标签的索引。
+
+此选项是否应该加载这个标签的浏览历史（如果存在），并使用，或仅加载默认页面。默认为false。提示：如果一个ion-nav-view在选项卡里，你可能需要设置它为true。
+
+```text
+selectedIndex()
+```
+
+返回值: 数值, 被选中标签的索引，如 -1。
+
+```text
+$getByHandle(handle)
+```
+
+例如:
+
+```text
+$ionicTabsDelegate.$getByHandle('my-handle').select(0);
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 选项卡栏操作` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

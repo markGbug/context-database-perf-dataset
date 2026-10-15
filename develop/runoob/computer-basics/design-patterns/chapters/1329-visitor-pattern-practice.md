@@ -1,34 +1,237 @@
-# 设计模式：访问者模式 练习笔记
+# 设计模式：访问者模式
 
 - 来源：[访问者模式](https://www.runoob.com/design-pattern/visitor-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1329
 
-## 练习目标
+## 本章内容
 
-把 `访问者模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在访问者模式（Visitor Pattern）中，我们使用了一个访问者类，它改变了元素类的执行算法。通过这种方式，元素的执行算法可以随着访问者改变而改变。这种类型的设计模式属于行为型模式。根据模式，元素对象已接受访问者对象，这样访问者对象就可以处理元素对象上的操作。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 介绍
 
-## 验收清单
 
-- 我能独立说出 `访问者模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 意图
 
-## 复盘问题
+旨在将数据结构与在该数据结构上执行的操作分离，从而使得添加新的操作变得更容易，而无需修改数据结构本身。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 主要解决的问题
+
+- 解决在稳定数据结构和易变操作之间的耦合问题，使得操作可以独立于数据结构变化。
+
+
+### 使用场景
+
+- 当需要对一个对象结构中的对象执行多种不同的且不相关的操作时，尤其是这些操作需要避免"污染"对象类本身。
+
+
+### 实现方式
+
+- 定义访问者接口：声明一系列访问方法，一个访问方法对应数据结构中的一个元素类。
+- 创建具体访问者：实现访问者接口，为每个访问方法提供具体实现。
+- 定义元素接口：声明一个接受访问者的方法。
+- 创建具体元素：实现元素接口，每个具体元素类对应数据结构中的一个具体对象。
+
+
+### 关键代码
+
+- 访问者接口：包含访问不同元素的方法。
+- 具体访问者：实现了访问者接口，包含对每个元素类的访问逻辑。
+- 元素接口：包含一个接受访问者的方法。
+- 具体元素：实现了元素接口，提供给访问者访问的入口。
+
+
+### 应用实例
+
+- 做客场景：访问者（如您）访问朋友家，朋友作为元素提供信息，访问者根据信息做出判断。
+
+
+### 优点
+
+- 单一职责原则：访问者模式符合单一职责原则，每个类只负责一项职责。
+- 扩展性：容易为数据结构添加新的操作。
+- 灵活性：访问者可以独立于数据结构变化。
+
+
+### 缺点
+
+- 违反迪米特原则：元素需要向访问者公开其内部信息。
+- 元素类难以变更：元素类需要维持与访问者的兼容。
+- 依赖具体类：访问者模式依赖于具体类而不是接口，违反了依赖倒置原则。
+
+
+### 使用建议
+
+- 当对象结构稳定，但需要在其上定义多种新操作时，考虑使用访问者模式。
+- 当需要避免操作"污染"对象类时，使用访问者模式封装操作。
+
+
+### 注意事项
+
+- 访问者模式可以用于功能统一，如报表生成、用户界面显示、拦截器和过滤器等。
+
+
+### 包含的几个主要角色
+
+- 访问者（Visitor）： 定义了访问元素的接口。
+- 具体访问者（Concrete Visitor）： 实现访问者接口，提供对每个具体元素类的访问和相应操作。
+- 元素（Element）： 定义了一个接受访问者的方法。
+- 具体元素（Concrete Element）： 实现元素接口，提供一个accept方法，允许访问者访问并操作。
+- 对象结构（Object Structure）（可选）： 定义了如何组装具体元素，如一个组合类。
+- 客户端（Client）（可选）： 使用访问者模式对对象结构进行操作。
+
+
+## 实现
+
+我们将创建一个定义接受操作的 ComputerPart 接口。Keyboard、Mouse、Monitor 和 Computer 是实现了 ComputerPart 接口的实体类。我们将定义另一个接口 ComputerPartVisitor，它定义了访问者类的操作。Computer 使用实体访问者来执行相应的动作。
+
+VisitorPatternDemo，我们的演示类使用 Computer、ComputerPartVisitor 类来演示访问者模式的用法。
+
+
+### 步骤 1
+
+定义一个表示元素的接口。
+
+
+## ComputerPart.java
+
+```text
+public interface ComputerPart {
+   public void accept(ComputerPartVisitor computerPartVisitor);
+}
+```
+
+
+### 步骤 2
+
+创建扩展了上述类的实体类。
+
+
+## Keyboard.java
+
+```java
+public class Keyboard  implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+```
+
+
+## Monitor.java
+
+```java
+public class Monitor  implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+```
+
+
+## Mouse.java
+
+```java
+public class Mouse  implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+```
+
+
+## Computer.java
+
+```java
+public class Computer implements ComputerPart {
+
+   ComputerPart[] parts;
+
+   public Computer(){
+      parts = new ComputerPart[] {new Mouse(), new Keyboard(), new Monitor()};
+   }
+
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      for (int i = 0; i < parts.length; i++) {
+         parts[i].accept(computerPartVisitor);
+      }
+      computerPartVisitor.visit(this);
+   }
+}
+```
+
+
+### 步骤 3
+
+定义一个表示访问者的接口。
+
+
+## ComputerPartVisitor.java
+
+```text
+public interface ComputerPartVisitor {
+   public void visit(Computer computer);
+   public void visit(Mouse mouse);
+   public void visit(Keyboard keyboard);
+   public void visit(Monitor monitor);
+}
+```
+
+
+### 步骤 4
+
+创建实现了上述类的实体访问者。
+
+
+## ComputerPartDisplayVisitor.java
+
+```java
+public class ComputerPartDisplayVisitor implements ComputerPartVisitor {
+
+   @Override
+   public void visit(Computer computer) {
+      System.out.println("Displaying Computer.");
+   }
+
+   @Override
+   public void visit(Mouse mouse) {
+      System.out.println("Displaying Mouse.");
+   }
+
+   @Override
+   public void visit(Keyboard keyboard) {
+      System.out.println("Displaying Keyboard.");
+   }
+
+   @Override
+   public void visit(Monitor monitor) {
+      System.out.println("Displaying Monitor.");
+   }
+}
+```
+
+
+## 后续章节
+
+- 步骤 5
+- VisitorPatternDemo.java
+- 步骤 6
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `访问者模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

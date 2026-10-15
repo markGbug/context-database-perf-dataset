@@ -1,35 +1,163 @@
-# Python：Python3 OS 学习笔记
+# Python：Python3 OS 文件/目录方法
 
 - 来源：[Python3 OS](https://www.runoob.com/python3/python3-os-file-methods.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4117
 
-## 学习目标
+## 本章内容
 
-Python 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python3 OS` 建立学习路径，先理解它在 Python 体系中的位置，再做可运行或可复述的验证。
+os 模块是 Python 标准库中的一个重要模块，它提供了与操作系统交互的功能。
 
-## 阅读抓手
+通过 os 模块，你可以执行文件操作、目录操作、环境变量管理、进程管理等任务。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+os 模块是跨平台的，这意味着你可以在不同的操作系统（如 Windows、Linux、macOS）上使用相同的代码。
 
-## 笔记模板
+在使用 os 模块之前，你需要先导入它。导入 os 模块的代码如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+import os
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Python3 OS`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## os 模块的常用功能
+
+
+### 1. 获取当前工作目录
+
+os.getcwd() 函数用于获取当前工作目录的路径。当前工作目录是 Python 脚本执行时所在的目录。
+
+
+## 实例
+
+
+### 2. 改变当前工作目录
+
+os.chdir(path) 函数用于改变当前工作目录。path 是你想要切换到的目录路径。
+
+
+## 实例
+
+
+### 3. 列出目录内容
+
+os.listdir(path) 函数用于列出指定目录中的所有文件和子目录。如果不提供 path 参数，则默认列出当前工作目录的内容。
+
+
+## 实例
+
+
+### 4. 创建目录
+
+os.mkdir(path) 函数用于创建一个新的目录。如果目录已经存在，会抛出 FileExistsError 异常。
+
+
+## 实例
+
+
+### 5. 删除目录
+
+os.rmdir(path) 函数用于删除一个空目录。如果目录不为空，会抛出 OSError 异常。
+
+
+## 实例
+
+
+### 6. 删除文件
+
+os.remove(path) 函数用于删除一个文件。如果文件不存在，会抛出 FileNotFoundError 异常。
+
+
+## 实例
+
+
+### 7. 重命名文件或目录
+
+os.rename(src, dst) 函数用于重命名文件或目录。src 是原始路径，dst 是新的路径。
+
+
+## 实例
+
+
+### 8. 获取环境变量
+
+os.getenv(key) 函数用于获取指定环境变量的值。如果环境变量不存在，返回 None。
+
+
+## 实例
+
+
+### 9. 执行系统命令
+
+os.system(command) 函数用于在操作系统的 shell 中执行命令。命令执行后，返回命令的退出状态。
+
+
+## 实例
+
+
+## os 常用方法
+
+os 模块提供了非常丰富的方法用来处理文件和目录。常用的方法如下表所示：
+
+os.access(path, mode)
+
+os.chdir(path)
+
+os.chflags(path, flags)
+
+os.chmod(path, mode)
+
+os.chown(path, uid, gid)
+
+os.chroot(path)
+
+os.close(fd)
+
+os.closerange(fd_low, fd_high)
+
+os.dup(fd)
+
+os.dup2(fd, fd2)
+
+os.fchdir(fd)
+
+os.fchmod(fd, mode)
+
+os.fchown(fd, uid, gid)
+
+os.fdatasync(fd)
+
+os.fdopen(fd[, mode[, bufsize]])
+
+os.fpathconf(fd, name)
+
+os.fstat(fd)
+
+os.fstatvfs(fd)
+
+os.fsync(fd)
+
+os.ftruncate(fd, length)
+
+os.getcwd()
+
+os.getcwdb()
+
+os.isatty(fd)
+
+os.lchflags(path, flags)
+
+os.lchmod(path, mode)
+
+os.lchown(path, uid, gid)
+
+os.link(src, dst)
+
+
+## 复习重点
+
+- 能说明 `Python3 OS` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

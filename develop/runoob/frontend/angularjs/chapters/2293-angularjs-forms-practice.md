@@ -1,34 +1,193 @@
-# AngularJS：AngularJS 表单 练习笔记
+# AngularJS：AngularJS 表单
 
 - 来源：[AngularJS 表单](https://www.runoob.com/angularjs/angularjs-forms.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2293
 
-## 练习目标
+## 本章内容
 
-把 `AngularJS 表单` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+AngularJS 表单是输入控件的集合。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## HTML 控件
 
-## 验收清单
+以下 HTML input 元素被称为 HTML 控件:
 
-- 我能独立说出 `AngularJS 表单` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- input 元素
+- select 元素
+- button 元素
+- textarea 元素
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 数据绑定
+
+Input 控件使用 ng-model 指令来实现数据绑定。
+
+```html
+<input type="text" ng-model="firstname">
+```
+
+通过以上代码应用有了一个名为 firstname 的属性。
+
+它通过 ng-model 指令来绑定到你的应用。
+
+firstname 属性可以在 controller 中使用：
+
+
+## 实例
+
+```javascript
+var app = angular.module('myApp', []);
+app.controller('formCtrl', function($scope) {
+    $scope.firstname = "John";
+});
+```
+
+也可以在应用的其他地方使用:
+
+
+## 实例
+
+```html
+<form>
+First Name: <input type="text" ng-model="firstname">
+</form>
+
+<h1>You entered: {{firstname}}</h1>
+```
+
+
+## Checkbox（复选框）
+
+checkbox 的值为 true 或 false，可以使用 ng-model 指令绑定，它的值可以用于应用中：
+
+
+## 实例
+
+复选框选中后显示 h1 标签内容：
+
+```html
+<form>
+    Check to show a header:
+    <input type="checkbox" ng-model="myVar">
+</form>
+
+<h1 ng-show="myVar">My Header</h1>
+```
+
+
+## 单选框
+
+我们可以使用 ng-model 来绑定单选按钮到你的应用中。
+
+单选框使用同一个 ng-model ，可以有不同的值，但只有被选中的单选按钮的值会被使用。
+
+
+## 实例
+
+根据选中的单选按钮，显示信息：
+
+```html
+<form>
+    选择一个选项:
+    <input type="radio" ng-model="myVar" value="dogs">Dogs
+    <input type="radio" ng-model="myVar" value="tuts">Tutorials
+    <input type="radio" ng-model="myVar" value="cars">Cars
+</form>
+```
+
+myVar 的值可以是 dogs, tuts, 或 cars。
+
+
+## 下拉菜单
+
+使用 ng-model 指令可以将下拉菜单绑定到你的应用中。
+
+ng-model 属性的值为你在下拉菜单选中的选项：
+
+
+## 实例
+
+根据选中的下拉菜单选项，显示信息：
+
+```html
+<form>
+选择一个选项:
+<select ng-model="myVar">
+    <option value="">
+    <option value="dogs">Dogs
+    <option value="tuts">Tutorials
+    <option value="cars">Cars
+</select>
+</form>
+```
+
+myVar 的值可以是 dogs, tuts, 或 cars。
+
+
+## HTML 表单
+
+HTML 表单通常与 HTML 控件同时存在。
+
+
+## AngularJS 表单实例
+
+form = {{user}}
+
+master = {{master}}
+
+
+## 应用程序代码
+
+```html
+<div ng-app="myApp" ng-controller="formCtrl">
+  <form novalidate>
+    First Name:<br>
+    <input type="text" ng-model="user.firstName"><br>
+    Last Name:<br>
+    <input type="text" ng-model="user.lastName">
+    <br><br>
+    <button ng-click="reset()">RESET</button>
+  </form>
+  <p>form = {{user}}</p>
+  <p>master = {{master}}</p>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('formCtrl', function($scope) {
+    $scope.master = {firstName: "John", lastName: "Doe"};
+    $scope.reset = function() {
+        $scope.user = angular.copy($scope.master);
+    };
+    $scope.reset();
+});
+</script>
+```
+
+
+## 实例解析
+
+ng-app 指令定义了 AngularJS 应用。
+
+ng-controller 指令定义了应用控制器。
+
+ng-model 指令绑定了两个 input 元素到模型的 user 对象。
+
+formCtrl 函数设置了 master 对象的初始值，并定义了 reset() 方法。
+
+reset() 方法设置了 user 对象等于 master 对象。
+
+ng-click 指令调用了 reset() 方法，且在点击按钮时调用。
+
+novalidate 属性在应用中不是必须的，但是你需要在 AngularJS 表单中使用，用于重写标准的 HTML5 验证。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AngularJS 表单` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

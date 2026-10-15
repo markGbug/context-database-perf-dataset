@@ -1,34 +1,146 @@
-# SVG：SVG Stroke 属性 练习笔记
+# SVG：SVG Stroke 属性
 
 - 来源：[SVG Stroke 属性](https://www.runoob.com/svg/svg-stroke.html)
 - 分类：前端开发
 - 技术：SVG
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3086
 
-## 练习目标
+## 本章内容
 
-把 `SVG Stroke 属性` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SVG 中的 stroke 属性用于定义图形元素的描边（边框）颜色，它可以应用于任何具有轮廓的图形元素，如 <rect>、<circle>、<path> 等。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 基本语法
 
-## 验收清单
+```html
+<element stroke="color" />
+```
 
-- 我能独立说出 `SVG Stroke 属性` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+属性解析：
 
-## 复盘问题
+- stroke 属性定义了图形元素的描边颜色，可以使用颜色名称、十六进制颜色值、RGB值、RGBA值等来表示颜色。
+- 如果不想显示描边，可以将 stroke 属性设置为 "none"。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+SVG 提供了一个范围广泛 stroke 属性。
+
+- stroke
+- stroke-width
+- stroke-linecap
+- stroke-dasharray
+
+所有 stroke 属性，可应用于任何种类的线条，文字和元素就像一个圆的轮廓。
+
+下面代码绘制了一个红色填充的矩形，并且指定了蓝色的描边。
+
+```html
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 绘制一个红色矩形，带有蓝色描边 -->
+  <rect x="50" y="50" width="100" height="80" fill="red" stroke="blue" />
+</svg>
+```
+
+
+### SVG stroke 属性
+
+Stroke 属性定义一条线，文本或元素轮廓颜色：
+
+下面是 SVG 代码：
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g fill="none">
+    <path stroke="red" d="M5 20 l215 0" />
+    <path stroke="blue" d="M5 40 l215 0" />
+    <path stroke="black" d="M5 60 l215 0" />
+  </g>
+</svg>
+```
+
+点击查看：查看 SVG 文件。
+
+
+### SVG stroke-width 属性
+
+stroke-width 属性定义了一条线，文本或元素轮廓厚度：
+
+下面是SVG代码：
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g fill="none" stroke="black">
+    <path stroke-width="2" d="M5 20 l215 0" />
+    <path stroke-width="4" d="M5 40 l215 0" />
+    <path stroke-width="6" d="M5 60 l215 0" />
+  </g>
+</svg>
+```
+
+点击查看：查看 SVG 文件。
+
+
+### SVG stroke-linecap 属性
+
+strokelinecap 属性定义不同类型的开放路径的终结：
+
+下面是 SVG 代码：
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g fill="none" stroke="black" stroke-width="6">
+    <path stroke-linecap="butt" d="M5 20 l215 0" />
+    <path stroke-linecap="round" d="M5 40 l215 0" />
+    <path stroke-linecap="square" d="M5 60 l215 0" />
+  </g>
+</svg>
+```
+
+点击查看：查看 SVG 文件。
+
+
+## SVG stroke-dasharray 属性
+
+strokedasharray 属性用于创建虚线：
+
+下面是 SVG 代码：
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g fill="none" stroke="black" stroke-width="4">
+    <path stroke-dasharray="5,5" d="M5 20 l215 0" />
+    <path stroke-dasharray="10,10" d="M5 40 l215 0" />
+    <path stroke-dasharray="20,10,5,5,5,10" d="M5 60 l215 0" />
+  </g>
+</svg>
+```
+
+点击查看：查看 SVG 文件。
+
+
+### 注意事项
+
+- 如果要同时设置描边颜色和宽度，可以使用 stroke-width 属性来定义描边的宽度。
+- 可以通过 stroke-opacity 属性来定义描边的透明度。
+- 描边的颜色和宽度可以通过 CSS 样式表进行设置，也可以直接在元素上使用 style 属性进行定义。
+
+通过设置 stroke 属性，你可以为SVG图形元素添加描边，使图形更具视觉效果和辨识度。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SVG Stroke 属性` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

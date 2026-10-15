@@ -1,35 +1,75 @@
-# Docker：MacOS Docker 安装 学习笔记
+# Docker：MacOS Docker 安装
 
 - 来源：[MacOS Docker 安装](https://www.runoob.com/docker/macos-docker-install.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0799
 
-## 学习目标
+## 本章内容
 
-Docker 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `MacOS Docker 安装` 建立学习路径，先理解它在 Docker 体系中的位置，再做可运行或可复述的验证。
+## 使用 Homebrew 安装
 
-## 阅读抓手
+macOS 我们可以使用 Homebrew 来安装 Docker。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Homebrew 的 Cask 已经支持 Docker for Mac，因此可以很方便的使用 Homebrew Cask 来进行安装：
 
-## 笔记模板
+```text
+$ brew install --cask --appdir=/Applications docker
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+==> Creating Caskroom at /usr/local/Caskroom
+==> We'll set permissions properly so we won't need sudo in the future
+Password:          # 输入 macOS 密码
+==> Satisfying dependencies
+==> Downloading https://download.docker.com/mac/stable/21090/Docker.dmg
+######################################################################## 100.0%
+==> Verifying checksum for Cask docker
+==> Installing Cask docker
+==> Moving App 'Docker.app' to '/Applications/Docker.app'.
+🍺  docker was successfully installed!
+```
 
-## 完成标准
+在载入 Docker app 后，点击 Next，可能会询问你的 macOS 登陆密码，你输入即可。之后会弹出一个 Docker 运行的提示窗口，状态栏上也有有个小鲸鱼的图标（）。
 
-- 能用 3 到 5 句话解释 `MacOS Docker 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 手动下载安装
+
+如果需要手动下载，请点击以下链接下载 Install Docker Desktop on Mac 。
+
+如同 macOS 其它软件一样，安装也非常简单，双击下载的 .dmg 文件，然后将鲸鱼图标拖拽到 Application 文件夹即可。
+
+点击顶部状态栏中的鲸鱼图标会弹出操作菜单。
+
+第一次点击图标，可能会看到这个安装成功的界面，点击 "Got it!" 可以关闭这个窗口。
+
+启动终端后，通过命令可以检查安装后的 Docker 版本。
+
+```text
+$ docker --version
+Docker version 17.09.1-ce, build 19e2cf6
+```
+
+
+## 镜像加速
+
+鉴于国内网络问题，后续拉取 Docker 镜像十分缓慢，我们可以需要配置加速器来解决，我使用的是网易的镜像地址：http://hub-mirror.c.163.com。
+
+在任务栏点击 Docker for mac 应用图标 -> Perferences... -> Daemon -> Registry mirrors。在列表中填写加速器地址即可。修改完成之后，点击 Apply & Restart 按钮，Docker 就会重启并应用配置的镜像地址了。
+
+之后我们可以通过 docker info 来查看是否配置成功。
+
+```text
+$ docker info
+...
+Registry Mirrors:
+ http://hub-mirror.c.163.com
+Live Restore Enabled: false
+```
+
+
+## 复习重点
+
+- 能说明 `MacOS Docker 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

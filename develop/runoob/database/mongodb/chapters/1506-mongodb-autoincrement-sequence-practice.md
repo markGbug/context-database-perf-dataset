@@ -1,34 +1,109 @@
-# MongoDB：MongoDB 自动增长 练习笔记
+# MongoDB：MongoDB 自动增长
 
 - 来源：[MongoDB 自动增长](https://www.runoob.com/mongodb/mongodb-autoincrement-sequence.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1506
 
-## 练习目标
+## 本章内容
 
-把 `MongoDB 自动增长` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MongoDB 没有像 SQL 一样有自动增长的功能， MongoDB 的 _id 是系统自动生成的12字节唯一标识。
 
-## 练习步骤
+但在某些情况下，我们可能需要实现 ObjectId 自动增长功能。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+由于 MongoDB 没有实现这个功能，我们可以通过编程的方式来实现，以下我们将在 counters 集合中实现_id字段自动增长。
 
-## 验收清单
 
-- 我能独立说出 `MongoDB 自动增长` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 使用 counters 集合
 
-## 复盘问题
+考虑以下 products 文档。我们希望 _id 字段实现 从 1,2,3,4 到 n 的自动增长功能。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+{
+  "_id":1,
+  "product_name": "Apple iPhone",
+  "category": "mobiles"
+}
+```
+
+为此，创建 counters 集合，序列字段值可以实现自动长：
+
+```text
+>db.createCollection("counters")
+```
+
+现在我们向 counters 集合中插入以下文档，使用 productid 作为 key:
+
+```text
+{
+  "_id":"productid",
+  "sequence_value": 0
+}
+```
+
+sequence_value 字段是序列通过自动增长后的一个值。
+
+使用以下命令插入 counters 集合的序列文档中：
+
+```text
+>db.counters.insert({_id:"productid",sequence_value:0})
+```
+
+
+## 创建 Javascript 函数
+
+现在，我们创建函数 getNextSequenceValue 来作为序列名的输入， 指定的序列会自动增长 1 并返回最新序列值。在本文的实例中序列名为 productid 。
+
+```javascript
+>function getNextSequenceValue(sequenceName){
+   var sequenceDocument = db.counters.findAndModify(
+      {
+         query:{_id: sequenceName },
+         update: {$inc:{sequence_value:1}},
+         "new":true
+      });
+   return sequenceDocument.sequence_value;
+}
+```
+
+
+## 使用 Javascript 函数
+
+接下来我们将使用 getNextSequenceValue 函数创建一个新的文档， 并设置文档 _id 自动为返回的序列值：
+
+```text
+>db.products.insert({
+   "_id":getNextSequenceValue("productid"),
+   "product_name":"Apple iPhone",
+   "category":"mobiles"})
+
+>db.products.insert({
+   "_id":getNextSequenceValue("productid"),
+   "product_name":"Samsung S3",
+   "category":"mobiles"})
+```
+
+就如你所看到的，我们使用 getNextSequenceValue 函数来设置 _id 字段。
+
+为了验证函数是否有效，我们可以使用以下命令读取文档：
+
+```text
+>db.products.find()
+```
+
+以上命令将返回以下结果，我们发现 _id 字段是自增长的：
+
+```text
+{ "_id" : 1, "product_name" : "Apple iPhone", "category" : "mobiles"}
+
+{ "_id" : 2, "product_name" : "Samsung S3", "category" : "mobiles" }
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MongoDB 自动增长` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

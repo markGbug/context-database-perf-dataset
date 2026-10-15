@@ -1,34 +1,182 @@
-# Vue.js：Vue.js 响应接口 练习笔记
+# Vue.js：Vue.js 响应接口
 
 - 来源：[Vue.js 响应接口](https://www.runoob.com/vue2/vuejs-reactive.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3267
 
-## 练习目标
+## 本章内容
 
-把 `Vue.js 响应接口` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Vue 可以添加数据动态响应接口。
 
-## 练习步骤
+例如以下实例，我们通过使用 $watch 属性来实现数据的监听，$watch 必须添加在 Vue 实例之外才能实现正确的响应。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+实例中通过点击按钮计数器会加 1。setTimeout 设置 10 秒后计算器的值加上 20 。
 
-## 验收清单
 
-- 我能独立说出 `Vue.js 响应接口` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
+```html
+<div id = "app">
+    <p style = "font-size:25px;">计数器: {{ counter }}</p>
+    <button @click = "counter++" style = "font-size:25px;">点我</button>
+</div>
+<script type = "text/javascript">
+var vm = new Vue({
+    el: '#app',
+    data: {
+        counter: 1
+    }
+});
+vm.$watch('counter', function(nval, oval) {
+    alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+setTimeout(
+    function(){
+        vm.counter += 20;
+    },10000
+);
+</script>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Vue 不允许在已经创建的实例上动态添加新的根级响应式属性。
+
+Vue 不能检测到对象属性的添加或删除，最好的方式就是在初始化实例前声明根级响应式属性，哪怕只是一个空值。
+
+如果我们需要在运行过程中实现属性的添加或删除，则可以使用全局 Vue，Vue.set 和 Vue.delete 方法。
+
+
+### Vue.set
+
+Vue.set 方法用于设置对象的属性，它可以解决 Vue 无法检测添加属性的限制，语法格式如下：
+
+```text
+Vue.set( target, key, value )
+```
+
+参数说明：
+
+- target: 可以是对象或数组
+- key : 可以是字符串或数字
+- value: 可以是任何类型
+
+
+## 实例
+
+```html
+<div id = "app">
+   <p style = "font-size:25px;">计数器: {{ products.id }}</p>
+   <button @click = "products.id++" style = "font-size:25px;">点我</button>
+</div>
+<script type = "text/javascript">
+var myproduct = {"id":1, name:"book", "price":"20.00"};
+var vm = new Vue({
+   el: '#app',
+   data: {
+      products: myproduct
+   }
+});
+vm.products.qty = "1";
+console.log(vm);
+vm.$watch('products.id', function(nval, oval) {
+   alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+</script>
+```
+
+在以上实例中，使用以下代码在开始时创建了一个变量 myproduct：
+
+```javascript
+var myproduct = {"id":1, name:"book", "price":"20.00"};
+```
+
+该变量在赋值给了 Vue 实例的 data 对象：
+
+如果我们想给 myproduct 数组添加一个或多个属性，我们可以在 Vue 实例创建后使用以下代码：
+
+```text
+vm.products.qty = "1";
+```
+
+查看控制台输出：
+
+如上图看到的，在产品中添加了数量属性 qty，但是 get/set 方法只可用于 id，name 和 price 属性，却不能在 qty 属性中使用。
+
+我们不能通过添加 Vue 对象来实现响应。 Vue 主要在开始时创建所有属性。 如果我们要实现这个功能，可以通过 Vue.set 来实现：
+
+
+## 实例
+
+```html
+<div id = "app">
+<p style = "font-size:25px;">计数器: {{ products.id }}</p>
+<button @click = "products.id++" style = "font-size:25px;">点我</button>
+</div>
+<script type = "text/javascript">
+var myproduct = {"id":1, name:"book", "price":"20.00"};
+var vm = new Vue({
+   el: '#app',
+   data: {
+      products: myproduct
+   }
+});
+Vue.set(myproduct, 'qty', 1);
+console.log(vm);
+vm.$watch('products.id', function(nval, oval) {
+   alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+</script>
+```
+
+从控制台输出的结果可以看出 get/set 方法可用于qty 属性。
+
+
+### Vue.delete
+
+Vue.delete 用于删除动态添加的属性 语法格式：
+
+```text
+Vue.delete( target, key )
+```
+
+参数说明：
+
+- target: 可以是对象或数组
+- key : 可以是字符串或数字
+
+
+## 实例
+
+```html
+<div id = "app">
+   <p style = "font-size:25px;">计数器: {{ products.id }}</p>
+   <button @click = "products.id++" style = "font-size:25px;">点我</button>
+</div>
+<script type = "text/javascript">
+var myproduct = {"id":1, name:"book", "price":"20.00"};
+var vm = new Vue({
+   el: '#app',
+   data: {
+      products: myproduct
+   }
+});
+Vue.delete(myproduct, 'price');
+console.log(vm);
+vm.$watch('products.id', function(nval, oval) {
+   alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+</script>
+```
+
+以上实例中我们使用 Vue.delete 来删除 price 属性。以下是控制台输出结果：
+
+从上图输出结果中，我们可以看到 price 属性已删除，只剩下了 id 和 name 属性，price 属性的 get/set 方法也已删除。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue.js 响应接口` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

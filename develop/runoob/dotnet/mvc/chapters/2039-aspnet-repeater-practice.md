@@ -1,34 +1,55 @@
-# MVC：WebForms Repeater 练习笔记
+# MVC：ASP.NET Web Forms - Repeater 控件
 
 - 来源：[WebForms Repeater](https://www.runoob.com/aspnet/aspnet-repeater.html)
 - 分类：.NET
 - 技术：MVC
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2039
 
-## 练习目标
+## 本章内容
 
-把 `WebForms Repeater` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Repeater 控件用于显示被绑定在该控件上的项目的重复列表。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 绑定 DataSet 到 Repeater 控件
 
-## 验收清单
+Repeater 控件用于显示被绑定在该控件上的项目的重复列表。Repeater 控件可被绑定到数据库表、XML 文件或者其他项目列表。在这里，我们将演示如何绑定 XML 文件到 Repeater 控件。
 
-- 我能独立说出 `WebForms Repeater` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在我们的实例中，我们将使用下面的 XML 文件（"cdcatalog.xml"）：
 
-## 复盘问题
+查看这个 XML 文件：cdcatalog.xml
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+首先，导入 "System.Data" 命名空间。我们需要该命名空间与 DataSet 对象一起工作。 把下面这条指令包含在 .aspx 页面的顶部：
+
+接着，为 XML 文件创建一个 DataSet，并在页面第一次加载时把这个 XML 文件载入 DataSet：
+
+然后我们在 .aspx 页面中创建一个 Repeater 控件。<HeaderTemplate> 元素中的内容被首先呈现，并且在输出中仅出现一次，而 <ItemTemplate> 元素中的内容会对应 DataSet 中的每条 "record" 重复出现，最后，<FooterTemplate> 元素中的内容在输出中仅出现一次：
+
+然后我们添加创建 DataSet 的脚本，并且绑定 mycdcatalog DataSet 到 Repeater 控件。然后 使用 HTML 标签来填充 Repeater 控件，并通过 <%#Container.DataItem("fieldname")%> 绑定数据项目到 <ItemTemplate> 区域内的单元格中：
+
+
+## 实例
+
+
+## 使用 <AlternatingItemTemplate>
+
+您可以在 <ItemTemplate> 元素后添加 <AlternatingItemTemplate> 元素，用来描述输出中交替行的外观。在下面的实例中，表格每隔一行就会显示为浅灰色的背景：
+
+
+## 实例
+
+
+## 使用 <SeparatorTemplate>
+
+<SeparatorTemplate> 元素用于描述每个记录之间的分隔符。在下面的实例中，每个表格行之间插入了一条水平线：
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `WebForms Repeater` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

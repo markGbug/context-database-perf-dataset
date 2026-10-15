@@ -1,34 +1,220 @@
-# CSS3：CSS 网格容器 练习笔记
+# CSS3：CSS 网格容器
 
 - 来源：[CSS 网格容器](https://www.runoob.com/css3/css-grid-container.html)
 - 分类：前端开发
 - 技术：CSS3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2491
 
-## 练习目标
+## 本章内容
 
-把 `CSS 网格容器` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+尝试一下 »
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 网格容器
 
-## 验收清单
+要使 HTML 元素变成一个网格容器，可以将 display 属性设置为 grid 或 inline-grid。
 
-- 我能独立说出 `CSS 网格容器` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+网格容器内放置着由列和行内组成的网格元素。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### grid-template-columns 属性
+
+grid-template-columns 属性定义了网格布局中的列的数量，它也可以设置每个列的宽度。
+
+属性值是一个以空格分隔的列表，其中每个值定义相对应列的宽度。
+
+如果您希望网格布局包含 4 列，则需要设置 4 列的宽度，如果所有列的宽度都是一样的，可以设置为 auto。
+
+以下实例设置了 4 列的网格布局：
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+```
+
+注意：如果您在 4 列网格中有 4 个以上的网格元素，网格布局会生成新的一行放置该元素。
+
+grid-template-columns 属性也可用于指定列的宽度。
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  grid-template-columns: 80px 200px auto 40px;
+}
+```
+
+
+### grid-template-rows 属性
+
+grid-template-rows 属性设置每一行的高度。
+
+属性值是一个以空格分隔的列表，其中每个值定义相对应行的高度：
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  grid-template-rows: 80px 200px;
+}
+```
+
+
+### justify-content 属性
+
+justify-content 属性用于对齐容器内的网格，设置如何分配顺着弹性容器主轴(或者网格行轴) 的元素之间及其周围的空间。
+
+注意：网格的总宽度必须小于容器的宽度才能使 justify-content 属性生效。
+
+justify-content 详细内容参考：CSS justify-content 属性
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  justify-content: space-evenly;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  justify-content: space-around;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  justify-content: space-between;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  justify-content: center;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  justify-content: start;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  justify-content: end;
+}
+```
+
+
+### align-content 属性
+
+align-content 属性用于设置垂直方向上的网格元素在容器中的对齐方式。
+
+注意：网格元素的总高度必须小于容器的高度才能使 align-content 属性生效。
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  height: 400px;
+  align-content: center;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  height: 400px;
+  align-content: space-evenly;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  height: 400px;
+  align-content: space-around;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  height: 400px;
+  align-content: space-between;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  height: 400px;
+  align-content: start;
+}
+```
+
+
+## 实例
+
+```text
+.grid-container {
+  display: grid;
+  height: 400px;
+  align-content: end;
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS 网格容器` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

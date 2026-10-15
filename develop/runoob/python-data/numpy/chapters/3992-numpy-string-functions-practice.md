@@ -1,34 +1,308 @@
-# NumPy：NumPy 字符串函数 练习笔记
+# NumPy：NumPy 字符串函数
 
 - 来源：[NumPy 字符串函数](https://www.runoob.com/numpy/numpy-string-functions.html)
 - 分类：Python / 数据科学
 - 技术：NumPy
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3992
 
-## 练习目标
+## 本章内容
 
-把 `NumPy 字符串函数` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+以下函数用于对 dtype 为 numpy.string_ 或 numpy.unicode_ 的数组执行向量化字符串操作。 它们基于 Python 内置库中的标准字符串函数。
 
-## 练习步骤
+这些函数在字符数组类（numpy.char）中定义。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### numpy.char.add()
 
-- 我能独立说出 `NumPy 字符串函数` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+numpy.char.add() 函数依次对两个数组的元素进行字符串连接。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 实例
+
+```java
+import numpy as np
+
+print ('连接两个字符串：')
+print (np.char.add(['hello'],[' xyz']))
+print ('\n')
+
+print ('连接示例：')
+print (np.char.add(['hello', 'hi'],[' abc', ' xyz']))
+```
+
+输出结果为：
+
+```text
+连接两个字符串：
+['hello xyz']
+
+连接示例：
+['hello abc' 'hi xyz']
+```
+
+
+### numpy.char.multiply()
+
+numpy.char.multiply() 函数执行多重连接。
+
+
+## 实例
+
+```java
+import numpy as np
+
+print (np.char.multiply('Runoob ',3))
+```
+
+输出结果为：
+
+```text
+Runoob Runoob Runoob
+```
+
+
+### numpy.char.center()
+
+numpy.char.center() 函数用于将字符串居中，并使用指定字符在左侧和右侧进行填充。
+
+
+## 实例
+
+```java
+import numpy as np
+
+# np.char.center(str , width,fillchar) ：
+# str: 字符串，width: 长度，fillchar: 填充字符
+print (np.char.center('Runoob', 20,fillchar = '*'))
+```
+
+输出结果为：
+
+```text
+*******Runoob*******
+```
+
+
+### numpy.char.capitalize()
+
+numpy.char.capitalize() 函数将字符串的第一个字母转换为大写：
+
+
+## 实例
+
+```java
+import numpy as np
+
+print (np.char.capitalize('runoob'))
+```
+
+输出结果为：
+
+```text
+Runoob
+```
+
+
+### numpy.char.title()
+
+numpy.char.title() 函数将字符串的每个单词的第一个字母转换为大写：
+
+
+## 实例
+
+```java
+import numpy as np
+
+print (np.char.title('i like runoob'))
+```
+
+输出结果为：
+
+```text
+I Like Runoob
+```
+
+
+### numpy.char.lower()
+
+numpy.char.lower() 函数对数组的每个元素转换为小写。它对每个元素调用 str.lower。
+
+
+## 实例
+
+```java
+import numpy as np
+
+#操作数组
+print (np.char.lower(['RUNOOB','GOOGLE']))
+
+# 操作字符串
+print (np.char.lower('RUNOOB'))
+```
+
+输出结果为：
+
+```text
+['runoob' 'google']
+runoob
+```
+
+
+### numpy.char.upper()
+
+numpy.char.upper() 函数对数组的每个元素转换为大写。它对每个元素调用 str.upper。
+
+
+## 实例
+
+```java
+import numpy as np
+
+#操作数组
+print (np.char.upper(['runoob','google']))
+
+# 操作字符串
+print (np.char.upper('runoob'))
+```
+
+输出结果为：
+
+```text
+['RUNOOB' 'GOOGLE']
+RUNOOB
+```
+
+
+### numpy.char.split()
+
+numpy.char.split() 通过指定分隔符对字符串进行分割，并返回数组。默认情况下，分隔符为空格。
+
+
+## 实例
+
+```java
+import numpy as np
+
+# 分隔符默认为空格
+print (np.char.split ('i like runoob?'))
+# 分隔符为 .
+print (np.char.split ('www.runoob.com', sep = '.'))
+```
+
+输出结果为：
+
+```text
+['i', 'like', 'runoob?']
+['www', 'runoob', 'com']
+```
+
+
+### numpy.char.splitlines()
+
+numpy.char.splitlines() 函数以换行符作为分隔符来分割字符串，并返回数组。
+
+
+## 实例
+
+```java
+import numpy as np
+
+# 换行符 \n
+print (np.char.splitlines('i\nlike runoob?'))
+print (np.char.splitlines('i\rlike runoob?'))
+```
+
+输出结果为：
+
+```text
+['i', 'like runoob?']
+['i', 'like runoob?']
+```
+
+\n，\r，\r\n 都可用作换行符。
+
+
+### numpy.char.strip()
+
+numpy.char.strip() 函数用于移除开头或结尾处的特定字符。
+
+
+## 实例
+
+```java
+import numpy as np
+
+# 移除字符串头尾的 a 字符
+print (np.char.strip('ashok arunooba','a'))
+
+# 移除数组元素头尾的 a 字符
+print (np.char.strip(['arunooba','admin','java'],'a'))
+```
+
+输出结果为：
+
+```text
+shok arunoob
+['runoob' 'dmin' 'jav']
+```
+
+
+### numpy.char.join()
+
+numpy.char.join() 函数通过指定分隔符来连接数组中的元素或字符串
+
+
+## 实例
+
+```java
+import numpy as np
+
+# 操作字符串
+print (np.char.join(':','runoob'))
+
+# 指定多个分隔符操作数组元素
+print (np.char.join([':','-'],['runoob','google']))
+```
+
+输出结果为：
+
+```text
+r:u:n:o:o:b
+['r:u:n:o:o:b' 'g-o-o-g-l-e']
+```
+
+
+### numpy.char.replace()
+
+numpy.char.replace() 函数使用新字符串替换字符串中的所有子字符串。
+
+
+## 实例
+
+```java
+import numpy as np
+
+print (np.char.replace ('i like runoob', 'oo', 'cc'))
+```
+
+输出结果为：
+
+```text
+i like runccb
+```
+
+
+## 后续章节
+
+- numpy.char.encode()
+- 实例
+- numpy.char.decode()
+- 实例
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `NumPy 字符串函数` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

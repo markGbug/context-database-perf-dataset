@@ -1,34 +1,248 @@
-# Django：Django 路由 练习笔记
+# Django：Django 路由
 
 - 来源：[Django 路由](https://www.runoob.com/django/django-routers.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3815
 
-## 练习目标
+## 本章内容
 
-把 `Django 路由` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+路由简单的来说就是根据用户请求的 URL 链接来判断对应的处理程序，并返回处理结果，也就是 URL 与 Django 的视图建立映射关系。
 
-## 练习步骤
+Django 路由在 urls.py 配置，urls.py 中的每一条配置对应相应的处理方法。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Django 不同版本 urls.py 配置有点不一样：
 
-## 验收清单
 
-- 我能独立说出 `Django 路由` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### Django1.1.x 版本
 
-## 复盘问题
+url() 方法：普通路径和正则路径均可使用，需要自己手动添加正则首位限制符号。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+
+### Django 2.2.x 之后的版本
+
+- path：用于普通路径，不需要自己手动添加正则首位限制符号，底层已经添加。
+- re_path：用于正则路径，需要自己手动添加正则首位限制符号。
+
+
+## 实例
+
+总结：Django1.1.x 版本中的 url 和 Django 2.2.x 版本中的 re_path 用法相同。
+
+
+## 正则路径中的分组
+
+
+### 正则路径中的无名分组
+
+无名分组按位置传参，一一对应。
+
+views 中除了 request，其他形参的数量要与 urls 中的分组数量一致。
+
+
+## urls.py
+
+
+## views.py
+
+
+### 正则路径中的有名分组
+
+语法：
+
+```text
+(?P<组名>正则表达式)
+```
+
+有名分组按关键字传参，与位置顺序无关。
+
+views 中除了 request，其他形参的数量要与 urls 中的分组数量一致， 并且 views 中的形参名称要与 urls 中的组名对应。
+
+
+## urls.py
+
+
+## views.py
+
+
+### 正则路径中的有名分组
+
+
+### 路由分发(include)
+
+存在问题：Django 项目里多个app目录共用一个 urls 容易造成混淆，后期维护也不方便。
+
+解决：使用路由分发（include），让每个app目录都单独拥有自己的 urls。
+
+步骤：
+
+- 1、在每个 app 目录里都创建一个 urls.py 文件。
+- 2、在项目名称目录下的 urls 文件里，统一将路径分发给各个 app 目录。
+
+
+## 实例
+
+在各自 app 目录下，写自己的 urls.py 文件，进行路径跳转。
+
+app01 目录:
+
+```html
+from django.urls import path,re_path
+from app01 import views # 从自己的 app 目录引入 views
+urlpatterns = [
+    re_path(r'^login/(?P<m>[0-9]{2})/$', views.index, ),
+]
+```
+
+app02 目录:
+
+```text
+from django.urls import path,re_path
+from app02 import views # 从自己的 app 目录引入views
+urlpatterns = [
+    re_path("^xxx/(?P[0-9]{4})/$", views.xxx),
+]
+```
+
+在各自 app 目录下的 views.py 文件中写各自的视图函数。
+
+
+## 反向解析
+
+随着功能的增加，路由层的 url 发生变化，就需要去更改对应的视图层和模板层的 url，非常麻烦，不便维护。
+
+这时我们可以利用反向解析，当路由层 url 发生改变，在视图层和模板层动态反向解析出更改后的 url，免去修改的操作。
+
+反向解析一般用在模板中的超链接及视图中的重定向。
+
+
+### 普通路径
+
+在 urls.py 中给路由起别名，name="路由别名"。
+
+```text
+path("login1/", views.login, name="login")
+```
+
+在 views.py 中，从 django.urls 中引入 reverse，利用 reverse("路由别名") 反向解析:
+
+```text
+return redirect(reverse("login"))
+```
+
+在模板 templates 中的 HTML 文件中，利用 {% url "路由别名" %} 反向解析。
+
+```html
+<form action="{% url 'login' %}" method="post">
+```
+
+
+### 正则路径（无名分组）
+
+在 urls.py 中给路由起别名，name="路由别名"。
+
+```text
+re_path(r"^login/([0-9]{2})/$", views.login, name="login")
+```
+
+在 views.py 中，从 django.urls 中引入 reverse，利用 reverse("路由别名"，args=(符合正则匹配的参数,)) 反向解析。
+
+```text
+return redirect(reverse("login",args=(10,)))
+```
+
+在模板 templates 中的 HTML 文件中利用 {% url "路由别名" 符合正则匹配的参数 %} 反向解析。
+
+```html
+<form action="{% url 'login' 10 %}" method="post">
+```
+
+
+### 正则路径（有名分组）
+
+在 urls.py 中给路由起别名，name="路由别名"。
+
+```html
+re_path(r"^login/(?P<year>[0-9]{4})/$", views.login, name="login")
+```
+
+在 views.py 中，从 django.urls 中引入 reverse，利用 reverse("路由别名"，kwargs={"分组名":符合正则匹配的参数}) 反向解析。
+
+```text
+return redirect(reverse("login",kwargs={"year":3333}))
+```
+
+在模板 templates 中的 HTML 文件中，利用 {% url "路由别名" 分组名=符合正则匹配的参数 %} 反向解析。
+
+```html
+<form action="{% url 'login' year=3333 %}" method="post">
+```
+
+
+## 命名空间
+
+命名空间（英语：Namespace）是表示标识符的可见范围。
+
+一个标识符可在多个命名空间中定义，它在不同命名空间中的含义是互不相干的。
+
+一个新的命名空间中可定义任何标识符，它们不会与任何重复的标识符发生冲突，因为重复的定义都处于其它命名空间中。
+
+存在问题：路由别名 name 没有作用域，Django 在反向解析 URL 时，会在项目全局顺序搜索，当查找到第一个路由别名 name 指定 URL 时，立即返回。当在不同的 app 目录下的urls 中定义相同的路由别名 name 时，可能会导致 URL 反向解析错误。
+
+解决：使用命名空间。
+
+
+### 普通路径
+
+```text
+include(("app名称：urls"，"app名称"))
+```
+
+实例：
+
+```text
+path("app01/", include(("app01.urls","app01")))
+path("app02/", include(("app02.urls","app02")))
+```
+
+在 app01/urls.py 中起相同的路由别名。
+
+```text
+path("login/", views.login, name="login")
+```
+
+在 views.py 中使用名称空间，语法格式如下：
+
+```text
+reverse("app名称：路由别名")
+```
+
+实例：
+
+```text
+return redirect(reverse("app01:login")
+```
+
+在 templates 模板的 HTML 文件中使用名称空间，语法格式如下：
+
+```text
+{% url "app名称：路由别名" %}
+```
+
+实例：
+
+```html
+<form action="{% url 'app01:login' %}" method="post">
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Django 路由` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

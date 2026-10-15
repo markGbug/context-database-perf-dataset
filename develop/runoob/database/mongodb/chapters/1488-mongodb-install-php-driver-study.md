@@ -1,35 +1,121 @@
-# MongoDB：MongoDB PHP 扩展 学习笔记
+# MongoDB：MongoDB PHP 扩展
 
 - 来源：[MongoDB PHP 扩展](https://www.runoob.com/mongodb/mongodb-install-php-driver.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1488
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB PHP 扩展` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+本教程将向大家介绍如何在Linux、window、Mac平台上安装MongoDB扩展。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## Linux 上安装 MongoDB PHP 扩展
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### 在终端上安装
 
-## 完成标准
+你可以在 Linux 中执行以下命令来安装 MongoDB 的 PHP 扩展驱动
 
-- 能用 3 到 5 句话解释 `MongoDB PHP 扩展`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+$ sudo pecl install mongodb
+```
+
+使用php的pecl安装命令必须保证网络连接可用以及root权限。
+
+
+### 安装手册
+
+如果你想通过源码来编译扩展驱动。你必须手动编译源码包，这样做的好是最新修正的 bug 包含在源码包中。
+
+你可以在 PHP 官网上下载 MongoDB PHP 驱动包,下载地址：http://pecl.php.net/package/mongodb。
+
+完整安装命令如下：
+
+```text
+$ wget http://pecl.php.net/get/mongodb-1.5.2.tgz
+$ cd /mongodb-1.5.2
+$ phpize
+$ ./configure
+$ make && make install
+```
+
+如果你的 php 是自己编译的，则安装方法如下(假设是编译在 /usr/local/php目录中)：
+
+```text
+$ wget http://pecl.php.net/get/mongodb-1.5.2.tgz
+$ cd /mongodb-1.5.2
+$ /usr/local/php/bin/phpize
+$ ./configure --with-php-config=/usr/local/php/bin/php-config
+$ make && make install
+```
+
+安装成功后，会有类似以下安装目录信息输出：
+
+```text
+...
+Installing shared extensions:     /usr/lib/php/extensions/debug-non-zts-20151012/
+```
+
+执行以上命令后，你需要修改php.ini文件，在 php.ini 文件中添加mongo配置，配置如下：
+
+```text
+extension_dir=/usr/lib/php/extensions/debug-non-zts-20151012/
+extension=mongodb.so
+```
+
+注意：你需要指明 extension_dir 配置项的路径。
+
+可以通过以下命令查看目录地址：
+
+```text
+$ php -i | grep extension_dir
+  extension_dir => /usr/lib/php/extensions/debug-non-zts-20151012 =>
+                   /usr/lib/php/extensions/debug-non-zts-20151012
+```
+
+
+## Window 上安装 MongoDB PHP扩展
+
+PECL 上已经提供了用于 Window 平台的预编译 php mongodb 驱动二进制包(下载地址： https://pecl.php.net/package/mongodb)，你可以下载与你 php 对应的版本，但是你需要注意以下几点问题：
+
+- VC6 是运行于 Apache 服务器
+- Thread safe（线程安全）是以模块形式运行在 Apache 上，如果你以 CGI 的模式运行 PHP，请选择非线程安全模式（non-thread safe）。
+- VC9 是运行于 IIS 服务器上。
+- 下载完你需要的二进制包后，解压压缩包，将 php_mongodb.dll 文件添加到你的PHP扩展目录中（ext）。ext 目录通常在 PHP 安装目录下的 ext 目录。
+
+打开 php 配置文件 php.ini 添加以下配置：
+
+```text
+extension=php_mongodb.dll
+```
+
+重启服务器。
+
+通过浏览器访问phpinfo，如果安装成功，就会看到类型以下的信息：
+
+
+## MAC 中安装 MongoDB PHP扩展驱动
+
+你可以使用 autoconf 安装 MongoDB PHP 扩展驱动。
+
+你可以使用 Xcode 安装 MongoDB PHP 扩展驱动。
+
+如果你使用 XAMPP，你可以使用以下命令安装 MongoDB PHP 扩展驱动：
+
+```text
+sudo /Applications/XAMPP/xamppfiles/bin/pecl install mongo
+```
+
+如果以上命令在XMPP或者MAMP中不起作用，你需要在 Github上下载兼容的预编译包。
+
+然后添加 extension=mongodb.so 配置到你的 php.ini 文件中。
+
+
+## 复习重点
+
+- 能说明 `MongoDB PHP 扩展` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

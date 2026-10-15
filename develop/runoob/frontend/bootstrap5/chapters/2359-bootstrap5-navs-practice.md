@@ -1,34 +1,249 @@
-# Bootstrap5：Bootstrap5 导航 练习笔记
+# Bootstrap5：Bootstrap5 导航
 
 - 来源：[Bootstrap5 导航](https://www.runoob.com/bootstrap5/bootstrap5-navs.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2359
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap5 导航` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+如果你想创建一个简单的水平导航栏，可以在 <ul> 元素上添加 .nav类，在每个 <li> 选项上添加 .nav-item 类，在每个链接上添加 .nav-link 类:
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 实例
 
-## 验收清单
+```html
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+```
 
-- 我能独立说出 `Bootstrap5 导航` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 导航对齐方式
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+.justify-content-center 类设置导航居中显示， .justify-content-end 类设置导航右对齐。
+
+
+## 实例
+
+```html
+<!-- 导航居中 -->
+<ul class="nav justify-content-center">
+
+<!-- 导航右对齐 -->
+<ul class="nav justify-content-end">
+</div>
+```
+
+
+## 垂直导航
+
+.flex-column 类用于创建垂直导航：
+
+
+## 实例
+
+```html
+<ul class="nav flex-column">
+```
+
+
+## 选项卡
+
+使用 .nav-tabs 类可以将导航转化为选项卡。然后对于选中的选项使用 .active 类来标记。
+
+
+## 实例
+
+```html
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+```
+
+
+## 胶囊导航
+
+.nav-pills 类可以将导航项设置成胶囊形状。
+
+
+## 实例
+
+```html
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+```
+
+
+## 导航等宽
+
+.nav-justified 类可以设置导航项齐行等宽显示。
+
+
+## 实例
+
+```html
+<ul class="nav nav-pills nav-justified">..</ul>
+<ul class="nav nav-tabs nav-justified">..</ul>
+```
+
+
+## 胶囊下拉菜单
+
+
+## 实例
+
+```html
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Dropdown</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Link 1</a>
+      <a class="dropdown-item" href="#">Link 2</a>
+      <a class="dropdown-item" href="#">Link 3</a>
+    </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+```
+
+
+## 选项卡下拉菜单
+
+
+## 实例
+
+```html
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Dropdown</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Link 1</a>
+      <a class="dropdown-item" href="#">Link 2</a>
+      <a class="dropdown-item" href="#">Link 3</a>
+    </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+```
+
+
+## 动态选项卡
+
+如果你要设置选项卡是动态可切换的，可以在每个链接上添加 data-bs-toggle="tab" 属性。 然后在每个选项对应的内容的上添加 .tab-pane 类，对应选项卡的内容的 <div> 标签使用 .tab-content 类 。
+
+如果你希望有淡入效果可以在 .tab-pane 后添加 .fade类:
+
+
+## 实例
+
+```html
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" data-bs-toggle="tab" href="#home">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#menu1">Menu 1</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#menu2">Menu 2</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active container" id="home">...</div>
+  <div class="tab-pane container" id="menu1">...</div>
+  <div class="tab-pane container" id="menu2">...</div>
+</div>
+```
+
+
+## 胶囊状动态选项卡
+
+胶囊状动态选项卡只需要将以上实例的代码中 data-bs-toggle 属性设置为 data-bs-toggle="pill":
+
+
+## 实例
+
+```html
+<!-- Nav pills -->
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" data-bs-toggle="pill" href="#home">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="pill" href="#menu1">Menu 1</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="pill" href="#menu2">Menu 2</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active container" id="home">...</div>
+  <div class="tab-pane container" id="menu1">...</div>
+  <div class="tab-pane container" id="menu2">...</div>
+</div>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap5 导航` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,534 @@
-# Ionic：ionic 创建 APP 练习笔记
+# Ionic：ionic 创建 APP
 
 - 来源：[ionic 创建 APP](https://www.runoob.com/ionic/ionic-creat-app.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3296
 
-## 练习目标
+## 本章内容
 
-把 `ionic 创建 APP` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+前面的章节中我们已经学会了 ionic 框架如何导入到项目中。
 
-## 练习步骤
+接下来我们将为大家介绍如何创建一个 ionic APP 应用。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+ionic 创建 APP 使用 HTML、CSS 和 Javascript 来构建，所以我们可以创建一个 www 目录，并在目录下创建 index.html 文件，代码如下：
 
-## 验收清单
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Todo</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
-- 我能独立说出 `ionic 创建 APP` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
 
-## 复盘问题
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+    <!-- 在使用 Cordova/PhoneGap 创建的 APP 中包含的文件，由 Cordova/PhoneGap 提供，(开发过程中显示 404) -->
+    <script src="cordova.js"></script>
+  </head>
+  <body>
+  </body>
+</html>
+```
+
+以上代码中，我们引入了 Ionic CSS 文件、 Ionic JS 文件及 Ionic AngularJS 扩展ionic.bundle.js（ionic.bundle.js）。
+
+ionic.bundle.js 文件已经包含了 Ionic核心JS、AngularJS、Ionic的AngularJS扩展，如果你需要引入其他 Angular 模块，可以从 lib/js/angular 目录中调用。
+
+cordova.js 是在使用 Cordova/PhoneGap 创建应用时生成的，不需要手动引入，你可以在 Cordova/PhoneGap 项目中找到该文件，所以在开发过程中显示 404 是正常的。
+
+
+## 创建 APP
+
+接下来我们来实现一个包含标题、侧边栏、列表等的应用,设计图如下：
+
+
+### 创建侧边栏
+
+侧边栏创建使用 ion-side-menus 控制器。
+
+编辑我们先前创建的 index.html 文件，修改 <body> 内的内容，如下所示：
+
+```html
+<body>
+  <ion-side-menus>
+    <ion-side-menu-content>
+    </ion-side-menu-content>
+    <ion-side-menu side="left">
+    </ion-side-menu>
+  </ion-side-menus>
+</body>
+```
+
+控制器解析：
+
+- ion-side-menus： 是一个带有边栏菜单的容器，可以通过点击按钮或者滑动屏幕来展开菜单。
+- ion-side-menu-content：展示主要内容的容器，可以通过滑动屏幕来展开menu。
+- ion-side-menu：存放侧边栏的容器。
+
+
+### 初始化 APP
+
+接下来我们创建一个新的 AngularJS 模块，并初始化，代码位于 www/js/app.js 中：
+
+```text
+angular.module('todo', ['ionic'])
+```
+
+```html
+<body ng-app="todo">
+```
+
+在 index.html 文件的 <script src="cordova.js"></script> 上面引入 app.js 文件：
+
+```html
+<script src="js/app.js"></script>
+```
+
+修改 index.html 文件 body 标签的内容，代码如下所示：
+
+```html
+<body ng-app="todo">
+  <ion-side-menus>
+
+    <!-- 中心内容 -->
+    <ion-side-menu-content>
+      <ion-header-bar class="bar-dark">
+        <h1 class="title">Todo</h1>
+      </ion-header-bar>
+      <ion-content>
+      </ion-content>
+    </ion-side-menu-content>
+
+    <!-- 左侧菜单 -->
+    <ion-side-menu side="left">
+      <ion-header-bar class="bar-dark">
+        <h1 class="title">Projects</h1>
+      </ion-header-bar>
+    </ion-side-menu>
+
+  </ion-side-menus>
+</body>
+```
+
+尝试一下 »
+
+以上步骤我们已经完成了 ionic 基本 APP 的应用。
+
+
+## 创建列表
+
+首先创建一个控制器 TodoCtrl：
+
+```html
+<body ng-app="todo" ng-controller="TodoCtrl">
+```
+
+在app.js文件中，使用控制器定义列表数据：
+
+```text
+angular.module('todo', ['ionic'])
+
+.controller('TodoCtrl', function($scope) {
+  $scope.tasks = [
+    { title: '菜鸟教程' },
+    { title: 'www.runoob.com' },
+    { title: '菜鸟教程' },
+    { title: 'www.runoob.com' }
+  ];
+});
+```
+
+在index.html页面中数据列表我们使用 Angular ng-repeat 来迭代数据：
+
+```html
+<!-- 中心内容 -->
+<ion-side-menu-content>
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">Todo</h1>
+  </ion-header-bar>
+  <ion-content>
+    <!-- 列表 -->
+    <ion-list>
+      <ion-item ng-repeat="task in tasks">
+        {{task.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-side-menu-content>
+```
+
+修改后 index.html body 标签内代码如下：
+
+```html
+ <body ng-app="todo" ng-controller="TodoCtrl">
+    <ion-side-menus>
+
+    <!-- 中心内容 -->
+    <ion-side-menu-content>
+      <ion-header-bar class="bar-dark">
+        <h1 class="title">Todo</h1>
+      </ion-header-bar>
+      <ion-content>
+        <!-- 列表 -->
+        <ion-list>
+          <ion-item ng-repeat="task in tasks">
+            {{task.title}}
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-side-menu-content>
+
+    <!-- 左侧菜单 -->
+    <ion-side-menu side="left">
+      <ion-header-bar class="bar-dark">
+        <h1 class="title">Projects</h1>
+      </ion-header-bar>
+    </ion-side-menu>
+
+    </ion-side-menus>
+    <script src="http://www.runoob.com/static/ionic/js/app.js"></script>
+    <script src="cordova.js"></script>
+</body>
+```
+
+尝试一下 »
+
+
+## 创建添加页面
+
+修改 index.html 在 </ion-side-menus> 后添加如下代码:
+
+```html
+<script id="new-task.html" type="text/ng-template">
+
+  <div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+      <h1 class="title">New Task</h1>
+      <button class="button button-clear button-positive" ng-click="closeNewTask()">Cancel</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+
+      <form ng-submit="createTask(task)">
+        <div class="list">
+          <label class="item item-input">
+            <input type="text" placeholder="What do you need to do?" ng-model="task.title">
+          </label>
+        </div>
+        <div class="padding">
+          <button type="submit" class="button button-block button-positive">Create Task</button>
+        </div>
+      </form>
+
+    </ion-content>
+
+  </div>
+
+</script>
+```
+
+以上代码中我们通过 <script id="new-task.html" type="text/ng-template"> 定义了新的模板页面。
+
+表单提交时触发 createTask(task) 函数。
+
+ng-model="task.title" 会将表单的输入数据赋值给 task 对象的 title 属性。
+
+修改 <ion-side-menu-content> 内的内容，代码如下：
+
+```html
+<!-- 中心内容 -->
+<ion-side-menu-content>
+<ion-header-bar class="bar-dark">
+  <h1 class="title">Todo</h1>
+  <!-- 新增按钮-->
+  <button class="button button-icon" ng-click="newTask()">
+    <i class="icon ion-compose"></i>
+  </button>
+</ion-header-bar>
+<ion-content>
+  <!-- 列表 -->
+  <ion-list>
+    <ion-item ng-repeat="task in tasks">
+      {{task.title}}
+    </ion-item>
+  </ion-list>
+</ion-content>
+</ion-side-menu-content>
+```
+
+app.js 文件中，控制器代码如下：
+
+```text
+angular.module('todo', ['ionic'])
+
+.controller('TodoCtrl', function($scope, $ionicModal) {
+  $scope.tasks = [
+    { title: '菜鸟教程' },
+    { title: 'www.runoob.com' },
+    { title: '菜鸟教程' },
+    { title: 'www.runoob.com' }
+  ];
+
+  // 创建并载入模型
+  $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
+    $scope.taskModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  // 表单提交时调用
+  $scope.createTask = function(task) {
+    $scope.tasks.push({
+      title: task.title
+    });
+    $scope.taskModal.hide();
+    task.title = "";
+  };
+
+  // 打开新增的模型
+  $scope.newTask = function() {
+    $scope.taskModal.show();
+  };
+
+  // 关闭新增的模型
+  $scope.closeNewTask = function() {
+    $scope.taskModal.hide();
+  };
+});
+```
+
+
+## 创建侧边栏
+
+通过以上步骤我们已经实现了新增功能，现在我们为 app 添加侧边栏功能。
+
+```html
+<!-- 中心内容 -->
+<ion-side-menu-content>
+  <ion-header-bar class="bar-dark">
+    <button class="button button-icon" ng-click="toggleProjects()">
+      <i class="icon ion-navicon"></i>
+    </button>
+    <h1 class="title">{{activeProject.title}}</h1>
+    <!-- 新增按钮 -->
+    <button class="button button-icon" ng-click="newTask()">
+      <i class="icon ion-compose"></i>
+    </button>
+  </ion-header-bar>
+  <ion-content scroll="false">
+    <ion-list>
+      <ion-item ng-repeat="task in activeProject.tasks">
+        {{task.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-side-menu-content>
+```
+
+添加侧边栏：
+
+```html
+<!-- 左边栏 -->
+<ion-side-menu side="left">
+<ion-header-bar class="bar-dark">
+  <h1 class="title">Projects</h1>
+  <button class="button button-icon ion-plus" ng-click="newProject()">
+  </button>
+</ion-header-bar>
+<ion-content scroll="false">
+  <ion-list>
+    <ion-item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
+      {{project.title}}
+    </ion-item>
+  </ion-list>
+</ion-content>
+</ion-side-menu>
+```
+
+<ion-item> 中的 ng-class 指令设置菜单激活样式。
+
+这里我们创建一个新的js 文件 app2.js(为了不与前面的混淆)，代码如下：
+
+```java
+angular.module('todo', ['ionic'])
+/**
+ * The Projects factory handles saving and loading projects
+ * from local storage, and also lets us save and load the
+ * last active project index.
+ */
+.factory('Projects', function() {
+  return {
+    all: function() {
+      var projectString = window.localStorage['projects'];
+      if(projectString) {
+        return angular.fromJson(projectString);
+      }
+      return [];
+    },
+    save: function(projects) {
+      window.localStorage['projects'] = angular.toJson(projects);
+    },
+    newProject: function(projectTitle) {
+      // Add a new project
+      return {
+        title: projectTitle,
+        tasks: []
+      };
+    },
+    getLastActiveIndex: function() {
+      return parseInt(window.localStorage['lastActiveProject']) || 0;
+    },
+    setLastActiveIndex: function(index) {
+      window.localStorage['lastActiveProject'] = index;
+    }
+  }
+})
+
+.controller('TodoCtrl', function($scope, $timeout, $ionicModal, Projects, $ionicSideMenuDelegate) {
+
+  // A utility function for creating a new project
+  // with the given projectTitle
+  var createProject = function(projectTitle) {
+    var newProject = Projects.newProject(projectTitle);
+    $scope.projects.push(newProject);
+    Projects.save($scope.projects);
+    $scope.selectProject(newProject, $scope.projects.length-1);
+  }
+
+
+  // Load or initialize projects
+  $scope.projects = Projects.all();
+
+  // Grab the last active, or the first project
+  $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
+
+  // Called to create a new project
+  $scope.newProject = function() {
+    var projectTitle = prompt('Project name');
+    if(projectTitle) {
+      createProject(projectTitle);
+    }
+  };
+
+  // Called to select the given project
+  $scope.selectProject = function(project, index) {
+    $scope.activeProject = project;
+    Projects.setLastActiveIndex(index);
+    $ionicSideMenuDelegate.toggleLeft(false);
+  };
+
+  // Create our modal
+  $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
+    $scope.taskModal = modal;
+  }, {
+    scope: $scope
+  });
+
+  $scope.createTask = function(task) {
+    if(!$scope.activeProject || !task) {
+      return;
+    }
+    $scope.activeProject.tasks.push({
+      title: task.title
+    });
+    $scope.taskModal.hide();
+
+    // Inefficient, but save all the projects
+    Projects.save($scope.projects);
+
+    task.title = "";
+  };
+
+  $scope.newTask = function() {
+    $scope.taskModal.show();
+  };
+
+  $scope.closeNewTask = function() {
+    $scope.taskModal.hide();
+  }
+
+  $scope.toggleProjects = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+
+
+  // Try to create the first project, make sure to defer
+  // this by using $timeout so everything is initialized
+  // properly
+  $timeout(function() {
+    if($scope.projects.length == 0) {
+      while(true) {
+        var projectTitle = prompt('Your first project title:');
+        if(projectTitle) {
+          createProject(projectTitle);
+          break;
+        }
+      }
+    }
+  });
+
+});
+```
+
+body 中 ion-side-menus 代码如下：：
+
+```html
+<ion-side-menus>
+
+<!-- 中心内容 -->
+<ion-side-menu-content>
+  <ion-header-bar class="bar-dark">
+    <button class="button button-icon" ng-click="toggleProjects()">
+      <i class="icon ion-navicon"></i>
+    </button>
+    <h1 class="title">{{activeProject.title}}</h1>
+    <!-- 新增按钮 -->
+    <button class="button button-icon" ng-click="newTask()">
+      <i class="icon ion-compose"></i>
+    </button>
+  </ion-header-bar>
+  <ion-content scroll="false">
+    <ion-list>
+      <ion-item ng-repeat="task in activeProject.tasks">
+        {{task.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-side-menu-content>
+
+<!-- 左边栏 -->
+<ion-side-menu side="left">
+<ion-header-bar class="bar-dark">
+  <h1 class="title">Projects</h1>
+  <button class="button button-icon ion-plus" ng-click="newProject()">
+  </button>
+</ion-header-bar>
+<ion-content scroll="false">
+  <ion-list>
+    <ion-item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
+      {{project.title}}
+    </ion-item>
+  </ion-list>
+</ion-content>
+</ion-side-menu>
+
+</ion-side-menus>
+```
+
+尝试一下 »
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 创建 APP` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

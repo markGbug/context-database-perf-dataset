@@ -1,34 +1,85 @@
-# NumPy：NumPy 安装 练习笔记
+# NumPy：NumPy 安装
 
 - 来源：[NumPy 安装](https://www.runoob.com/numpy/numpy-install.html)
 - 分类：Python / 数据科学
 - 技术：NumPy
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3979
 
-## 练习目标
+## 本章内容
 
-把 `NumPy 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Python 官网上的发行版是不包含 NumPy 模块的。
 
-## 练习步骤
+我们可以使用以下几种方法来安装。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 使用 pip 安装
 
-- 我能独立说出 `NumPy 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+安装 NumPy 最简单的方法就是使用 pip 工具：
 
-## 复盘问题
+```text
+pip3 install numpy
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+这里使用的是 Python3，如果你用的是 Python2 可以用 pip install numpy 安装在。
+
+默认情况使用国外线路，国外太慢，我们使用清华的镜像就可以:
+
+```text
+pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+
+## 使用 conda 安装
+
+如果使用的是 Anaconda 环境，可以使用 conda 来安装 NumPy：
+
+```text
+conda install numpy
+```
+
+通过 conda 安装的 NumPy 通常会带有一些优化的数学库（如 Intel MKL），可以提高性能。
+
+更多 conda 命令的相关内容可以参考：Anaconda 教程。
+
+
+## 从源代码安装
+
+如果需要从源代码安装 NumPy，可以在 NumPy 官方 GitHub 仓库下载源码：https://github.com/numpy/numpy，进入解压后的目录并执行以下命令：
+
+```text
+python setup.py install
+```
+
+
+## 安装验证
+
+无论使用哪种方式安装完成后，可以通过以下代码令验证 NumPy 是否安装成功：
+
+
+## 实例
+
+如果安装成功，会输出正确的版本号信息：
+
+```text
+1.26.4
+```
+
+
+## 使用已有的发行版本
+
+对于许多用户，尤其是在 Windows 上，最简单的方法是下载以下的 Python 发行版，它们包含了所有的关键包（包括 NumPy，SciPy，matplotlib，IPython，SymPy 以及 Python 核心自带的其它包）：
+
+- Anaconda: 免费 Python 发行版，用于进行大规模数据处理、预测分析，和科学计算，致力于简化包的管理和部署。支持 Linux, Windows 和 Mac 系统。
+- Enthought Canopy: 提供了免费和商业发行版。持 Linux, Windows 和 Mac 系统。
+- Python(x,y): 个适用于科学计算和数据分析的 Python 发行版，专门为 提供了 Spyder IDE 等工具，适合进行科学计算的开发工作。
+- WinPython: 另一个免费的 Python 发行版，包含科学计算包与 Spyder IDE。支持 Windows。
+- Pyzo: 基于 Anaconda 的免费发行版本及 IEP 的交互开发环境，超轻量级。 支持 Linux, Windows 和 Mac 系统。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `NumPy 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

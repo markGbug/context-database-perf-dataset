@@ -1,34 +1,272 @@
-# jQuery UI：定位（Position） 练习笔记
+# jQuery UI：jQuery UI 实例 - 定位（Position）
 
 - 来源：[定位（Position）](https://www.runoob.com/jqueryui/example-position.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2960
 
-## 练习目标
+## 本章内容
 
-把 `定位（Position）` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+相对窗口、文档、锚、光标/鼠标等元素定位一个元素。
 
-## 练习步骤
+如需了解更多有关 .position() 方法的细节，请查看 API 文档 .position()。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 默认功能
 
-- 我能独立说出 `定位（Position）` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+使用表单控件配置位置，或者拖拽被定位的元素来修改它的偏移量。向四周拖拽父元素来查看碰撞检测。
 
-## 复盘问题
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 定位（Position） - 默认功能</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+  #parent {
+    width: 60%;
+    height: 40px;
+    margin: 10px auto;
+    padding: 5px;
+    border: 1px solid #777;
+    background-color: #fbca93;
+    text-align: center;
+  }
+  .positionable {
+    position: absolute;
+    display: block;
+    right: 0;
+    bottom: 0;
+    background-color: #bcd5e6;
+    text-align: center;
+  }
+  #positionable1 {
+    width: 75px;
+    height: 75px;
+  }
+  #positionable2 {
+    width: 120px;
+    height: 40px;
+  }
+  select, input {
+    margin-left: 15px;
+  }
+  </style>
+  <script>
+  $(function() {
+    function position() {
+      $( ".positionable" ).position({
+        of: $( "#parent" ),
+        my: $( "#my_horizontal" ).val() + " " + $( "#my_vertical" ).val(),
+        at: $( "#at_horizontal" ).val() + " " + $( "#at_vertical" ).val(),
+        collision: $( "#collision_horizontal" ).val() + " " + $( "#collision_vertical" ).val()
+      });
+    }
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+    $( ".positionable" ).css( "opacity", 0.5 );
+
+    $( "select, input" ).bind( "click keyup change", position );
+
+    $( "#parent" ).draggable({
+      drag: position
+    });
+
+    position();
+  });
+  </script>
+</head>
+<body>
+
+<div id="parent">
+  <p>
+  这是父元素的位置。
+  </p>
+</div>
+
+<div class="positionable" id="positionable1">
+  <p>
+  to position
+  </p>
+</div>
+
+<div class="positionable" id="positionable2">
+  <p>
+  to position 2
+  </p>
+</div>
+
+<div style="padding: 20px; margin-top: 75px;">
+  定位...
+  <div style="padding-bottom: 20px;">
+    <b>my:</b>
+    <select id="my_horizontal">
+      <option value="left">left</option>
+      <option value="center">center</option>
+      <option value="right">right</option>
+    </select>
+    <select id="my_vertical">
+      <option value="top">top</option>
+      <option value="center">center</option>
+      <option value="bottom">bottom</option>
+    </select>
+  </div>
+  <div style="padding-bottom: 20px;">
+    <b>at:</b>
+    <select id="at_horizontal">
+      <option value="left">left</option>
+      <option value="center">center</option>
+      <option value="right">right</option>
+    </select>
+    <select id="at_vertical">
+      <option value="top">top</option>
+      <option value="center">center</option>
+      <option value="bottom">bottom</option>
+    </select>
+  </div>
+  <div style="padding-bottom: 20px;">
+    <b>collision:</b>
+    <select id="collision_horizontal">
+      <option value="flip">flip</option>
+      <option value="fit">fit</option>
+      <option value="flipfit">flipfit</option>
+      <option value="none">none</option>
+    </select>
+    <select id="collision_vertical">
+      <option value="flip">flip</option>
+      <option value="fit">fit</option>
+      <option value="flipfit">flipfit</option>
+      <option value="none">none</option>
+    </select>
+  </div>
+</div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 图像循环
+
+一个照片浏览器的原型，使用 Position 分别把图片定为在左边、中间、右边，然后循环显示。使用顶部的链接来循环图像，或者在图像的左侧或右侧点击来循环图像。请注意，当调整窗口大小时，会重新定位图像。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 定位（Position） - 图像循环</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+  body {
+    margin: 0;
+  }
+  #container {
+    overflow: hidden;
+    position: relative;
+    height: 400px;
+  }
+
+  img {
+    position: absolute;
+  }
+  </style>
+  <script>
+  $(function() {
+    // 重构部件，去除这些插件方法
+    $.fn.left = function( using ) {
+      return this.position({
+        my: "right middle",
+        at: "left+25 middle",
+        of: "#container",
+        collision: "none",
+        using: using
+      });
+    };
+    $.fn.right = function( using ) {
+      return this.position({
+        my: "left middle",
+        at: "right-25 middle",
+        of: "#container",
+        collision: "none",
+        using: using
+      });
+    };
+    $.fn.center = function( using ) {
+      return this.position({
+        my: "center middle",
+        at: "center middle",
+        of: "#container",
+        using: using
+      });
+    };
+
+    $( "img:eq(0)" ).left();
+    $( "img:eq(1)" ).center();
+    $( "img:eq(2)" ).right();
+
+    function animate( to ) {
+      $( this ).stop( true, false ).animate( to );
+    }
+    function next( event ) {
+      event.preventDefault();
+      $( "img:eq(2)" ).center( animate );
+      $( "img:eq(1)" ).left( animate );
+      $( "img:eq(0)" ).right().appendTo( "#container" );
+    }
+    function previous( event ) {
+      event.preventDefault();
+      $( "img:eq(0)" ).center( animate );
+      $( "img:eq(1)" ).right( animate );
+      $( "img:eq(2)" ).left().prependTo( "#container" );
+    }
+    $( "#previous" ).click( previous );
+    $( "#next" ).click( next );
+
+    $( "img" ).click(function( event ) {
+      $( "img" ).index( this ) === 0 ? previous( event ) : next( event );
+    });
+
+    $( window ).resize(function() {
+      $( "img:eq(0)" ).left( animate );
+      $( "img:eq(1)" ).center( animate );
+      $( "img:eq(2)" ).right( animate );
+    });
+  });
+  </script>
+</head>
+<body>
+
+<div id="container">
+  <img src="/wp-content/uploads/2014/03/earth.jpg" width="458" height="308" alt="earth">
+  <img src="/wp-content/uploads/2014/03/flight.jpg" width="512" height="307" alt="flight">
+  <img src="/wp-content/uploads/2014/03/rocket.jpg" width="300" height="353" alt="rocket">
+
+  <a id="previous" href="#">上一个</a>
+  <a id="next" href="#">下一个</a>
+</div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `定位（Position）` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

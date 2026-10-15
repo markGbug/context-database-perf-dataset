@@ -1,34 +1,228 @@
-# jQuery UI：特效（Effect） 练习笔记
+# jQuery UI：jQuery UI 实例 - 特效（Effect）
 
 - 来源：[特效（Effect）](https://www.runoob.com/jqueryui/example-effect.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2951
 
-## 练习目标
+## 本章内容
 
-把 `特效（Effect）` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+对一个元素应用动画特效。
 
-## 练习步骤
+如需了解更多有关 .effect() 方法的细节，请查看 API 文档 .effect()。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## .effect() 演示
 
-- 我能独立说出 `特效（Effect）` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+点击按钮预览特效。
 
-## 复盘问题
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 特效 - .effect() 演示</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+    .toggler { width: 500px; height: 200px; position: relative; }
+    #button { padding: .5em 1em; text-decoration: none; }
+    #effect { width: 240px; height: 135px; padding: 0.4em; position: relative; }
+    #effect h3 { margin: 0; padding: 0.4em; text-align: center; }
+    .ui-effects-transfer { border: 2px dotted gray; }
+  </style>
+  <script>
+  $(function() {
+    // 运行当前选中的特效
+    function runEffect() {
+      // 从中获取特效类型
+      var selectedEffect = $( "#effectTypes" ).val();
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+      // 大多数的特效类型默认不需要传递选项
+      var options = {};
+      // 一些特效带有必需的参数
+      if ( selectedEffect === "scale" ) {
+        options = { percent: 0 };
+      } else if ( selectedEffect === "transfer" ) {
+        options = { to: "#button", className: "ui-effects-transfer" };
+      } else if ( selectedEffect === "size" ) {
+        options = { to: { width: 200, height: 60 } };
+      }
+
+      // 运行特效
+      $( "#effect" ).effect( selectedEffect, options, 500, callback );
+    };
+
+    // 回调函数
+    function callback() {
+      setTimeout(function() {
+        $( "#effect" ).removeAttr( "style" ).hide().fadeIn();
+      }, 1000 );
+    };
+
+    // 根据选择菜单值设置特效
+    $( "#button" ).click(function() {
+      runEffect();
+      return false;
+    });
+  });
+  </script>
+</head>
+<body>
+
+<div class="toggler">
+  <div id="effect" class="ui-widget-content ui-corner-all">
+    <h3 class="ui-widget-header ui-corner-all">特效（Effect）</h3>
+    <p>
+      Etiam libero neque, luctus a, eleifend nec, semper at, lorem. Sed pede. Nulla lorem metus, adipiscing ut, luctus sed, hendrerit vitae, mi.
+    </p>
+  </div>
+</div>
+
+<select name="effects" id="effectTypes">
+  <option value="blind">百叶窗特效（Blind Effect）</option>
+  <option value="bounce">反弹特效（Bounce Effect）</option>
+  <option value="clip">剪辑特效（Clip Effect）</option>
+  <option value="drop">降落特效（Drop Effect）</option>
+  <option value="explode">爆炸特效（Explode Effect）</option>
+  <option value="fade">淡入淡出特效（Fade Effect）</option>
+  <option value="fold">折叠特效（Fold Effect）</option>
+  <option value="highlight">突出特效（Highlight Effect）</option>
+  <option value="puff">膨胀特效（Puff Effect）</option>
+  <option value="pulsate">跳动特效（Pulsate Effect）</option>
+  <option value="scale">缩放特效（Scale Effect）</option>
+  <option value="shake">震动特效（Shake Effect）</option>
+  <option value="size">尺寸特效（Size Effect）</option>
+  <option value="slide">滑动特效（Slide Effect）</option>
+  <option value="transfer">转移特效（Transfer Effect）</option>
+</select>
+
+<a href="#" id="button" class="ui-state-default ui-corner-all">运行特效</a>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## Easing 演示
+
+本实例使用 HTML Canvas 元素，绘制了 jQuery UI 提供的所有 easings。 点击每个图可查看该 easing 的行为。。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 特效 - Easing 演示</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+  .graph {
+    float: left;
+    margin-left: 10px;
+  }
+  </style>
+  <script>
+  $(function() {
+    if ( !$( "<canvas>" )[0].getContext ) {
+      $( "<div>" ).text(
+        "您的浏览器不支持 canvas，本演示需要在支持 canvas 的浏览器下进行。"
+      ).appendTo( "#graphs" );
+      return;
+    }
+
+    var i = 0,
+      width = 100,
+      height = 100;
+
+    $.each( $.easing, function( name, impl ) {
+      var graph = $( "<div>" ).addClass( "graph" ).appendTo( "#graphs" ),
+        text = $( "<div>" ).text( ++i + ". " + name ).appendTo( graph ),
+        wrap = $( "<div>" ).appendTo( graph ).css( 'overflow', 'hidden' ),
+        canvas = $( "<canvas>" ).appendTo( wrap )[ 0 ];
+
+      canvas.width = width;
+      canvas.height = height;
+      var drawHeight = height * 0.8,
+        cradius = 10;
+        ctx = canvas.getContext( "2d" );
+      ctx.fillStyle = "black";
+
+      // 绘制背景
+      ctx.beginPath();
+      ctx.moveTo( cradius, 0 );
+      ctx.quadraticCurveTo( 0, 0, 0, cradius );
+      ctx.lineTo( 0, height - cradius );
+      ctx.quadraticCurveTo( 0, height, cradius, height );
+      ctx.lineTo( width - cradius, height );
+      ctx.quadraticCurveTo( width, height, width, height - cradius );
+      ctx.lineTo( width, 0 );
+      ctx.lineTo( cradius, 0 );
+      ctx.fill();
+
+      // 绘制底线
+      ctx.strokeStyle = "#555";
+      ctx.beginPath();
+      ctx.moveTo( width * 0.1, drawHeight + .5 );
+      ctx.lineTo( width * 0.9, drawHeight + .5 );
+      ctx.stroke();
+
+      // 绘制顶线
+      ctx.strokeStyle = "#555";
+      ctx.beginPath();
+      ctx.moveTo( width * 0.1, drawHeight * .3 - .5 );
+      ctx.lineTo( width * 0.9, drawHeight * .3 - .5 );
+      ctx.stroke();
+
+      // 绘制 easing
+      ctx.strokeStyle = "white";
+      ctx.beginPath();
+      ctx.lineWidth = 2;
+      ctx.moveTo( width * 0.1, drawHeight );
+      $.each( new Array( width ), function( position ) {
+        var state = position / width,
+          val = impl( state, position, 0, 1, width );
+        ctx.lineTo( position * 0.8 + width * 0.1,
+          drawHeight - drawHeight * val * 0.7 );
+      });
+      ctx.stroke();
+
+      // 点击时动态改变
+      graph.click(function() {
+        wrap
+          .animate( { height: "hide" }, 2000, name )
+          .delay( 800 )
+          .animate( { height: "show" }, 2000, name );
+      });
+
+      graph.width( width ).height( height + text.height() + 10 );
+    });
+  });
+  </script>
+</head>
+<body>
+
+<div id="graphs"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `特效（Effect）` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

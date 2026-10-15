@@ -1,34 +1,93 @@
-# VS Code：VSCode 数据库客户端 练习笔记
+# VS Code：VSCode 数据库客户端扩展
 
 - 来源：[VSCode 数据库客户端](https://www.runoob.com/vscode/vscode-db-extensions.html)
 - 分类：DevOps / 工程化
 - 技术：VS Code
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1918
 
-## 练习目标
+## 本章内容
 
-把 `VSCode 数据库客户端` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们主要介绍下平时开发常用的一些数据库客户端扩展：
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 1、SQLTools
 
-## 验收清单
+SQLTools 是一款开源的数据库管理扩展，支持多种常用数据库，包括MySQL、PostgreSQL、Microsoft SQL Server、SQLite 等。
 
-- 我能独立说出 `VSCode 数据库客户端` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+SQLTools 以轻量和高效著称，提供数据库连接、查询执行和结果展示等功能。
 
-## 复盘问题
+扩展搜索关键词：SQLTools
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools
+
+安装后需根据数据库类型安装对应的驱动扩展，搜索 @tag:sqltools-driver 将列出所有适用于 SQLTools 的驱动程序。
+
+
+## 2、MSSQL
+
+MSSQL 由 Microsoft 官方开发，专为 SQL Server 和 Azure SQL 数据库设计的扩展。
+
+MSSQL 提供了强大的 T-SQL 脚本支持和数据库管理功能，适合 SQL Server 开发者。
+
+扩展搜索关键词：MSSQL
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql
+
+
+## 3、Database Client
+
+Database Client 是一款支持多种数据库的扩展，包括 MySQL、PostgreSQL、SQLite、Redis、ClickHouse 等。
+
+Database Client 提供基本的数据库管理和备份功能，适合需要通用解决方案的开发者。
+
+扩展搜索关键词：Database Client
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2
+
+打开左侧数据库面板，点击添加按钮，在连接页面配置相应的数据库信息：
+
+
+## 4、DBCode
+
+DBCode 是一款功能强大的数据库管理扩展，支持 PostgreSQL、MySQL、MariaDB、SQL Server、SQLite、MongoDB 等多种数据库。
+
+DBCode 不仅提供基本的数据库操作，还集成了 AI 查询和数据可视化功能。
+
+扩展搜索关键词：DBCode
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=DBCode.dbcode
+
+
+## 5、DevDb
+
+DevDb 是一款轻量级数据库管理扩展，支持 SQLite、MySQL、PostgreSQL 和 SQL Server。
+
+DevDb 适合轻量级项目或需要在开发过程中快速查看和编辑数据库的开发者。
+
+扩展搜索关键词：DevDb
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=damms005.devdb
+
+界面预览：
+
+
+## 6、MongoDB for VS Code
+
+MongoDB for VS Code 是由 MongoDB 官方提供的扩展，专为 MongoDB 数据库设计，支持本地和云端（MongoDB Atlas）实例的管理。
+
+MongoDB for VS Code 提供直观的数据浏览、查询原型设计和脚本执行功能，适合 NoSQL 开发者。
+
+扩展搜索关键词：MongoDB for VS Code
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode
+
+界面预览：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `VSCode 数据库客户端` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

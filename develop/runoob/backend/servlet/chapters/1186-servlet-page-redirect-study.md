@@ -1,35 +1,93 @@
-# Servlet：Servlet 网页重定向 学习笔记
+# Servlet：Servlet 网页重定向
 
 - 来源：[Servlet 网页重定向](https://www.runoob.com/servlet/servlet-page-redirect.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1186
 
-## 学习目标
+## 本章内容
 
-Servlet 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Servlet 网页重定向` 建立学习路径，先理解它在 Servlet 体系中的位置，再做可运行或可复述的验证。
+当文档移动到新的位置，我们需要向客户端发送这个新位置时，我们需要用到网页重定向。当然，也可能是为了负载均衡，或者只是为了简单的随机，这些情况都有可能用到网页重定向。
 
-## 阅读抓手
+重定向请求到另一个网页的最简单的方式是使用 response 对象的 sendRedirect() 方法。下面是该方法的定义：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+public void HttpServletResponse.sendRedirect(String location)
+throws IOException
+```
 
-## 笔记模板
+该方法把响应连同状态码和新的网页位置发送回浏览器。您也可以通过把 setStatus() 和 setHeader() 方法一起使用来达到同样的效果：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+....
+String site = "http://www.runoob.com" ;
+response.setStatus(response.SC_MOVED_TEMPORARILY);
+response.setHeader("Location", site);
+....
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Servlet 网页重定向`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+本实例显示了 Servlet 如何进行页面重定向到另一个位置：
+
+```java
+package com.runoob.test;
+
+import java.io.IOException;
+
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class PageRedirect
+ */
+@WebServlet("/PageRedirect")
+public class PageRedirect extends HttpServlet{
+
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+            throws ServletException, IOException
+  {
+      // 设置响应内容类型
+      response.setContentType("text/html;charset=UTF-8");
+
+      // 要重定向的新位置
+      String site = new String("http://www.runoob.com");
+
+      response.setStatus(response.SC_MOVED_TEMPORARILY);
+      response.setHeader("Location", site);
+    }
+}
+```
+
+现在让我们来编译上面的 Servlet，并在 web.xml 文件中创建以下条目：
+
+```html
+....
+ <servlet>
+     <servlet-name>PageRedirect</servlet-name>
+     <servlet-class>PageRedirect</servlet-class>
+ </servlet>
+
+ <servlet-mapping>
+     <servlet-name>PageRedirect</servlet-name>
+     <url-pattern>/TomcatTest/PageRedirect</url-pattern>
+ </servlet-mapping>
+....
+```
+
+现在通过访问 URL http://localhost:8080/PageRedirect 来调用这个 Servlet。这将把您转到给定的 URL http://www.runoob.com。
+
+
+## 复习重点
+
+- 能说明 `Servlet 网页重定向` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

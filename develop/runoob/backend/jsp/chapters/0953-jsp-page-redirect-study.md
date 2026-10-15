@@ -1,35 +1,67 @@
-# JSP：JSP 页面重定向 学习笔记
+# JSP：JSP 页面重定向
 
 - 来源：[JSP 页面重定向](https://www.runoob.com/jsp/jsp-page-redirect.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0953
 
-## 学习目标
+## 本章内容
 
-JSP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `JSP 页面重定向` 建立学习路径，先理解它在 JSP 体系中的位置，再做可运行或可复述的验证。
+当需要将文档移动到一个新的位置时，就需要使用JSP重定向了。
 
-## 阅读抓手
+最简单的重定向方式就是使用response对象的sendRedirect()方法。这个方法的签名如下：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+public void response.sendRedirect(String location)
+throws IOException
+```
 
-## 笔记模板
+这个方法将状态码和新的页面位置作为响应发回给浏览器。您也可以使用setStatus()和setHeader()方法来得到同样的效果：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+....
+String site = "http://www.runoob.com" ;
+response.setStatus(response.SC_MOVED_TEMPORARILY);
+response.setHeader("Location", site);
+....
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `JSP 页面重定向`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例演示
+
+这个例子表明了JSP如何进行页面重定向：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*" %>
+<html>
+<html>
+<head>
+<title>页面重定向</title>
+</head>
+<body>
+
+<h1>页面重定向</h1>
+
+<%
+   // 重定向到新地址
+   String site = new String("http://www.runoob.com");
+   response.setStatus(response.SC_MOVED_TEMPORARILY);
+   response.setHeader("Location", site);
+%>
+
+</body>
+</html>
+```
+
+将以上代码保存在PageRedirecting.jsp文件中，然后访问http://localhost:8080/PageRedirect.jsp，它将会把您带至http://www.runoob.com/。
+
+
+## 复习重点
+
+- 能说明 `JSP 页面重定向` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

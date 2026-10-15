@@ -1,35 +1,42 @@
-# XSL-FO：XSLFO 表格 学习笔记
+# XSL-FO：XSL-FO 表格
 
 - 来源：[XSLFO 表格](https://www.runoob.com/xslfo/xslfo-tables.html)
 - 分类：XML / Web Service
 - 技术：XSL-FO
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4503
 
-## 学习目标
+## 本章内容
 
-XSL-FO 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XSLFO 表格` 建立学习路径，先理解它在 XSL-FO 体系中的位置，再做可运行或可复述的验证。
+XSL-FO 使用 <fo:table-and-caption> 元素来定义表格。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## XSL-FO 表格（Tables）
 
-## 笔记模板
+XSL-FO 表格模型与 HTML 表格模型不是完全不同的。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+有九种 XSL-FO 对象可用来创建表格：
 
-## 完成标准
+- fo:table-and-caption
+- fo:table
+- fo:table-caption
+- fo:table-column
+- fo:table-header
+- fo:table-footer
+- fo:table-body
+- fo:table-row
+- fo:table-cell
 
-- 能用 3 到 5 句话解释 `XSLFO 表格`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+XSL-FO 使用 <fo:table-and-caption> 元素来定义表格。它包含一个 <fo:table> 以及一个可选的 <fo:caption> 元素。
+
+<fo:table> 元素包含可选的 <fo:table-column> 元素，一个可选的 <fo:table-header> 元素，一个 <fo:table-body> 元素，一个可选的 <fo:table-footer> 元素。这些元素中的每一个都可能拥有一个或多个 <fo:table-row> 元素，而 <fo:table-row> 同时会带有一个或多个 <fo:table-cell> 元素：
+
+以上代码的输出如下所示：
+
+
+## 复习重点
+
+- 能说明 `XSLFO 表格` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

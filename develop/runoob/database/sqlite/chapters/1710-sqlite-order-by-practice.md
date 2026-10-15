@@ -1,34 +1,135 @@
-# SQLite：SQLite Order By 练习笔记
+# SQLite：SQLite Order By
 
 - 来源：[SQLite Order By](https://www.runoob.com/sqlite/sqlite-order-by.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1710
 
-## 练习目标
+## 本章内容
 
-把 `SQLite Order By` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQLite 的 ORDER BY 子句是用来基于一个或多个列按升序或降序顺序排列数据。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 语法
 
-## 验收清单
+ORDER BY 子句的基本语法如下：
 
-- 我能独立说出 `SQLite Order By` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+SELECT column-list
+FROM table_name
+[WHERE condition]
+[ORDER BY column1, column2, .. columnN] [ASC | DESC];
+```
 
-## 复盘问题
+- ASC 默认值，从小到大，升序排列
+- DESC 从大到小，降序排列
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+您可以在 ORDER BY 子句中使用多个列，确保您使用的排序列在列清单中：
+
+```text
+SELECT
+   select_list
+FROM
+   table
+ORDER BY
+    column_1 ASC,
+    column_2 DESC;
+```
+
+column_1 与 column_2 如果后面不指定排序规则，默认为 ASC 升序，以上语句按 column_1 升序，column_2 降序读取，等价如下语句：
+
+```text
+SELECT
+   select_list
+FROM
+   table
+ORDER BY
+    column_1,
+    column_2 DESC;
+```
+
+
+## 实例
+
+假设 COMPANY 表有以下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+下面是一个实例，它会将结果按 SALARY 升序排序：
+
+```text
+sqlite> SELECT * FROM COMPANY ORDER BY SALARY ASC;
+```
+
+这将产生以下结果：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+7           James       24          Houston     10000.0
+2           Allen       25          Texas       15000.0
+1           Paul        32          California  20000.0
+3           Teddy       23          Norway      20000.0
+6           Kim         22          South-Hall  45000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+```
+
+下面是一个实例，它会将结果按 NAME 和 SALARY 升序排序：
+
+```text
+sqlite> SELECT * FROM COMPANY ORDER BY NAME, SALARY ASC;
+```
+
+这将产生以下结果：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+5           David       27          Texas       85000.0
+7           James       24          Houston     10000.0
+6           Kim         22          South-Hall  45000.0
+4           Mark        25          Rich-Mond   65000.0
+1           Paul        32          California  20000.0
+3           Teddy       23          Norway      20000.0
+```
+
+下面是一个实例，它会将结果按 NAME 降序排序：
+
+```text
+sqlite> SELECT * FROM COMPANY ORDER BY NAME DESC;
+```
+
+这将产生以下结果：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+3           Teddy       23          Norway      20000.0
+1           Paul        32          California  20000.0
+4           Mark        25          Rich-Mond   65000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+5           David       27          Texas       85000.0
+2           Allen       25          Texas       15000.0
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite Order By` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

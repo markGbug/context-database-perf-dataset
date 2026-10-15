@@ -1,35 +1,200 @@
-# PowerShell：Cmdlet 文件系统操作 学习笔记
+# PowerShell：Cmdlet 文件系统操作
 
 - 来源：[Cmdlet 文件系统操作](https://www.runoob.com/powershell/cmdlet-file-system-operations.html)
 - 分类：.NET
 - 技术：PowerShell
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2056
 
-## 学习目标
+## 本章内容
 
-PowerShell 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Cmdlet 文件系统操作` 建立学习路径，先理解它在 PowerShell 体系中的位置，再做可运行或可复述的验证。
+文件系统操作是 PowerShell 中最常见、最实用的任务之一。
 
-## 阅读抓手
+从创建、复制、移动、删除文件，到获取文件属性、批量处理目录结构，PowerShell 提供了大量简洁而强大的 Cmdlet 来完成这些操作。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 一、查看目录内容：Get-ChildItem
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+Get-ChildItem
+```
 
-## 完成标准
+这是 PowerShell 中查看目录内容（相当于 ls 或 dir）的命令。默认列出当前目录下的所有文件和子目录。
 
-- 能用 3 到 5 句话解释 `Cmdlet 文件系统操作`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+你也可以使用路径参数：
+
+```text
+Get-ChildItem -Path C:\Test
+```
+
+查看所有子目录（递归）：
+
+```text
+Get-ChildItem -Path C:\Test -Recurse
+```
+
+按文件类型筛选：
+
+```text
+Get-ChildItem -Path C:\Test -Filter *.txt
+```
+
+
+## 二、创建文件和目录：New-Item
+
+创建新目录：
+
+```text
+New-Item -Path "C:\Demo" -ItemType Directory
+```
+
+创建新文件：
+
+```text
+New-Item -Path "C:\Demo\example.txt" -ItemType File
+```
+
+提示：如路径中父目录不存在，将报错。需先手动或脚本创建上级目录。
+
+
+## 三、复制与移动：Copy-Item 和 Move-Item
+
+复制文件：
+
+```text
+Copy-Item -Path "C:\Demo\example.txt" -Destination "D:\Backup"
+```
+
+复制整个文件夹（包含内容）：
+
+```text
+Copy-Item -Path "C:\Demo" -Destination "D:\Backup" -Recurse
+```
+
+移动文件：
+
+```text
+Move-Item -Path "C:\Demo\example.txt" -Destination "C:\Demo2"
+```
+
+
+## 四、删除文件和目录：Remove-Item
+
+删除文件：
+
+```text
+Remove-Item -Path "C:\Demo\example.txt"
+```
+
+删除文件夹及其内容：
+
+```text
+Remove-Item -Path "C:\Demo" -Recurse -Force
+```
+
+说明：
+
+- -Recurse：删除目录下的所有内容
+- -Force：强制删除隐藏或只读文件
+
+
+## 五、读取和写入文件：Get-Content / Set-Content / Add-Content
+
+读取文件内容：
+
+```text
+Get-Content -Path "C:\Demo\example.txt"
+```
+
+写入内容（覆盖）：
+
+```text
+Set-Content -Path "C:\Demo\example.txt" -Value "Hello PowerShell"
+```
+
+追加内容：
+
+```text
+Add-Content -Path "C:\Demo\example.txt" -Value "Another line"
+```
+
+
+## 六、文件重命名与存在性判断
+
+重命名文件：
+
+```text
+Rename-Item -Path "C:\Demo\example.txt" -NewName "renamed.txt"
+```
+
+判断文件是否存在：
+
+```text
+Test-Path -Path "C:\Demo\renamed.txt"
+```
+
+如果存在返回 True，否则返回 False。
+
+
+## 七、获取文件属性：Get-Item
+
+```text
+$item = Get-Item -Path "C:\Demo\renamed.txt"
+$item.Length         # 文件大小（字节）
+$item.CreationTime   # 创建时间
+$item.Extension      # 扩展名
+```
+
+注意：返回的是 System.IO.FileInfo 类型对象，可进一步使用对象属性。
+
+
+## 八、组合操作示例：批量处理文件
+
+
+### 批量列出目录下所有 .log 文件大小总和：
+
+```text
+Get-ChildItem -Path "C:\Logs" -Filter *.log | Measure-Object -Property Length -Sum
+```
+
+输出结果示例：
+
+```text
+Count    : 15
+Sum      : 1289345
+Property : Length
+```
+
+将所有 .txt 文件内容追加到一个新文件中：
+
+```text
+Get-ChildItem -Path "C:\TextFiles" -Filter *.txt | ForEach-Object {
+    Get-Content $_.FullName | Add-Content -Path "C:\AllText.txt"
+}
+```
+
+
+## 九、注意事项与常见坑
+
+
+## 十、小结与建议
+
+PowerShell 在文件系统操作方面表现非常强大，具备以下优势：
+
+- 命令直观、统一，学习成本低
+- 支持对象操作，可与其他命令组合
+- 可用于批量任务和自动化脚本
+
+建议学习方式：
+
+- 在临时目录中反复练习各类命令
+- 熟练掌握五个核心命令：New-Item、Remove-Item、Copy-Item、Get-Content、Set-Content
+- 尝试将命令封装为脚本，批量处理多个文件
+
+
+## 复习重点
+
+- 能说明 `Cmdlet 文件系统操作` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

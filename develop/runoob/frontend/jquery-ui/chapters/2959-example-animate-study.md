@@ -1,35 +1,86 @@
-# jQuery UI：颜色动画 学习笔记
+# jQuery UI：jQuery UI 实例 - 颜色动画（Color Animation）
 
 - 来源：[颜色动画](https://www.runoob.com/jqueryui/example-animate.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2959
 
-## 学习目标
+## 本章内容
 
-jQuery UI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `颜色动画` 建立学习路径，先理解它在 jQuery UI 体系中的位置，再做可运行或可复述的验证。
+使用 .animate() 实现颜色动画效果。
 
-## 阅读抓手
+如需了解更多有关颜色动画（Color Animation）的细节，请查看 API 文档 颜色动画（Color Animation）。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+jQuery UI 捆绑了 jQuery Color 插件，jQuery Color 插件提供了颜色动画及其他许多与颜色相关的实用功能。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 动画（Animation）演示
 
-## 完成标准
+点击按钮预览特效。
 
-- 能用 3 到 5 句话解释 `颜色动画`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 特效 - 动画（Animation）演示</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+    .toggler { width: 500px; height: 200px; position: relative; }
+    #button { padding: .5em 1em; text-decoration: none; }
+    #effect { width: 240px; height: 135px; padding: 0.4em; position: relative; background: #fff; }
+    #effect h3 { margin: 0; padding: 0.4em; text-align: center; }
+  </style>
+  <script>
+  $(function() {
+    var state = true;
+    $( "#button" ).click(function() {
+      if ( state ) {
+        $( "#effect" ).animate({
+          backgroundColor: "#aa0000",
+          color: "#fff",
+          width: 500
+        }, 1000 );
+      } else {
+        $( "#effect" ).animate({
+          backgroundColor: "#fff",
+          color: "#000",
+          width: 240
+        }, 1000 );
+      }
+      state = !state;
+    });
+  });
+  </script>
+</head>
+<body>
+
+<div class="toggler">
+  <div id="effect" class="ui-widget-content ui-corner-all">
+    <h3 class="ui-widget-header ui-corner-all">动画（Animation）</h3>
+    <p>
+      Etiam libero neque, luctus a, eleifend nec, semper at, lorem. Sed pede. Nulla lorem metus, adipiscing ut, luctus sed, hendrerit vitae, mi.
+    </p>
+  </div>
+</div>
+
+<a href="#" id="button" class="ui-state-default ui-corner-all">切换特效</a>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 复习重点
+
+- 能说明 `颜色动画` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,168 @@
-# MongoDB：MongoDB PHP7 学习笔记
+# MongoDB：PHP7 MongDB 安装与使用
 
 - 来源：[MongoDB PHP7](https://www.runoob.com/mongodb/php7-mongdb-tutorial.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1490
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB PHP7` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+本文教程只适合在 PHP7 的环境，如果你是 PHP5 环境，你可以参阅 PHP MongDB 安装与使用。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## PHP7 Mongdb 扩展安装
 
-## 笔记模板
+我们使用 pecl 命令来安装：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+$ /usr/local/php7/bin/pecl install mongodb
+```
 
-## 完成标准
+执行成功后，会输出以下结果：
 
-- 能用 3 到 5 句话解释 `MongoDB PHP7`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+……
+Build process completed successfully
+Installing '/usr/local/php7/lib/php/extensions/no-debug-non-zts-20151012/mongodb.so'
+install ok: channel://pecl.php.net/mongodb-1.1.7
+configuration option "php_ini" is not set to php.ini location
+You should add "extension=mongodb.so" to php.ini
+```
+
+接下来我们打开 php.ini 文件，添加 extension=mongodb.so 配置。
+
+可以直接执行以下命令来添加。
+
+```text
+$ echo "extension=mongodb.so" >> `/usr/local/php7/bin/php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+```
+
+注意：以上执行的命令中 php7 的安装目录为 /usr/local/php7/，如果你安装在其他目录，需要相应修改 pecl 与 php 命令的路径。
+
+
+## Mongodb 使用
+
+PHP7 连接 MongoDB 语法如下：
+
+```text
+$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+```
+
+
+### 插入数据
+
+将 name 为"菜鸟教程" 的数据插入到 test 数据库的 runoob 集合中。
+
+```text
+<?php
+$bulk = new MongoDB\Driver\BulkWrite;
+$document = ['_id' => new MongoDB\BSON\ObjectID, 'name' => '菜鸟教程'];
+
+$_id= $bulk->insert($document);
+
+var_dump($_id);
+
+$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+$result = $manager->executeBulkWrite('test.runoob', $bulk, $writeConcern);
+?>
+```
+
+
+### 读取数据
+
+这里我们将三个网址数据插入到 test 数据库的 sites 集合，并读取迭代出来：
+
+```text
+<?php
+$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+
+// 插入数据
+$bulk = new MongoDB\Driver\BulkWrite;
+$bulk->insert(['x' => 1, 'name'=>'菜鸟教程', 'url' => 'http://www.runoob.com']);
+$bulk->insert(['x' => 2, 'name'=>'Google', 'url' => 'http://www.google.com']);
+$bulk->insert(['x' => 3, 'name'=>'taobao', 'url' => 'http://www.taobao.com']);
+$manager->executeBulkWrite('test.sites', $bulk);
+
+$filter = ['x' => ['$gt' => 1]];
+$options = [
+    'projection' => ['_id' => 0],
+    'sort' => ['x' => -1],
+];
+
+// 查询数据
+$query = new MongoDB\Driver\Query($filter, $options);
+$cursor = $manager->executeQuery('test.sites', $query);
+
+foreach ($cursor as $document) {
+    print_r($document);
+}
+?>
+```
+
+输出结果为：
+
+```text
+stdClass Object
+(
+    [x] => 3
+    [name] => taobao
+    [url] => http://www.taobao.com
+)
+stdClass Object
+(
+    [x] => 2
+    [name] => Google
+    [url] => http://www.google.com
+)
+```
+
+
+### 更新数据
+
+接下来我们将更新 test 数据库 sites 集合中 x 为 2 的数据：
+
+```text
+<?php
+$bulk = new MongoDB\Driver\BulkWrite;
+$bulk->update(
+    ['x' => 2],
+    ['$set' => ['name' => '菜鸟工具', 'url' => 'tool.runoob.com']],
+    ['multi' => false, 'upsert' => false]
+);
+
+$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+$result = $manager->executeBulkWrite('test.sites', $bulk, $writeConcern);
+?>
+```
+
+接下来我们使用 "db.sites.find()" 命令查看数据的变化，x 为 2 的数据已经变成了菜鸟工具：
+
+
+### 删除数据
+
+以下实例删除了 x 为 1 和 x 为 2的数据，注意 limit 参数的区别：
+
+```text
+<?php
+$bulk = new MongoDB\Driver\BulkWrite;
+$bulk->delete(['x' => 1], ['limit' => 1]);   // limit 为 1 时，删除第一条匹配数据
+$bulk->delete(['x' => 2], ['limit' => 0]);   // limit 为 0 时，删除所有匹配数据
+
+$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
+$result = $manager->executeBulkWrite('test.sites', $bulk, $writeConcern);
+?>
+```
+
+更多使用方法请参考：http://php.net/manual/en/book.mongodb.php。
+
+
+## 复习重点
+
+- 能说明 `MongoDB PHP7` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

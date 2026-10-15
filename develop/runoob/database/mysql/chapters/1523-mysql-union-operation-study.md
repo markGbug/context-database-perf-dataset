@@ -1,35 +1,165 @@
-# MySQL：MySQL UNION 学习笔记
+# MySQL：MySQL UNION 操作符
 
 - 来源：[MySQL UNION](https://www.runoob.com/mysql/mysql-union-operation.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1523
 
-## 学习目标
+## 本章内容
 
-MySQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MySQL UNION` 建立学习路径，先理解它在 MySQL 体系中的位置，再做可运行或可复述的验证。
+本教程为大家介绍 MySQL UNION 操作符的语法和实例。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 描述
 
-## 笔记模板
+MySQL UNION 操作符用于连接两个以上的 SELECT 语句的结果组合到一个结果集合，并去除重复的行。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+UNION 操作符必须由两个或多个 SELECT 语句组成，每个 SELECT 语句的列数和对应位置的数据类型必须相同。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `MySQL UNION`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 语法
+
+MySQL UNION 操作符语法格式：
+
+```text
+SELECT column1, column2, ...
+FROM table1
+WHERE condition1
+UNION
+SELECT column1, column2, ...
+FROM table2
+WHERE condition2
+[ORDER BY column1, column2, ...];
+```
+
+参数说明：
+
+- column1, column2, ... 是你要选择的列的名称，如果使用 * 表示选择所有列。
+- table1, table2, ... 是你要从中查询数据的表的名称。
+- condition1, condition2, ... 是每个 SELECT 语句的过滤条件，是可选的。
+- ORDER BY 子句是一个可选的子句，用于指定合并后的结果集的排序顺序。
+
+
+### 实例
+
+1. 基本的 UNION 操作：
+
+```text
+SELECT city FROM customers
+UNION
+SELECT city FROM suppliers
+ORDER BY city;
+```
+
+以上 SQL 语句将选择客户表和供应商表中所有城市的唯一值，并按城市名称升序排序。
+
+2. 使用过滤条件的 UNION：
+
+```text
+SELECT product_name FROM products WHERE category = 'Electronics'
+UNION
+SELECT product_name FROM products WHERE category = 'Clothing'
+ORDER BY product_name;
+```
+
+以上 SQL 语句将选择电子产品和服装类别的产品名称，并按产品名称升序排序。
+
+3. UNION 操作中的列数和数据类型必须相同：
+
+```text
+SELECT first_name, last_name FROM employees
+UNION
+SELECT department_name, NULL FROM departments
+ORDER BY first_name;
+```
+
+返回的结果包括了 employees 表中的 first_name 和 last_name，以及 departments 表中的 department_name 和 NULL， 所有的结果都按照 first_name 列排序。
+
+4. 使用 UNION ALL 不去除重复行：
+
+```text
+SELECT city FROM customers
+UNION ALL
+SELECT city FROM suppliers
+ORDER BY city;
+```
+
+以上 SQL 语句使用 UNION ALL 将客户表和供应商表中的所有城市合并在一起，不去除重复行。
+
+UNION 操作符在合并结果集时会去除重复行，而 UNION ALL 不会去除重复行，因此 UNION ALL 的性能可能更好，但如果你确实希望去除重复行，可以使用 UNION。
+
+
+## 演示数据库
+
+在本教程中，我们将使用 RUNOOB 样本数据库。
+
+下面是选自 "Websites" 表的数据：
+
+```text
+mysql> SELECT * FROM Websites;
++----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
+| 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |
++----+---------------+---------------------------+-------+---------+
+```
+
+下面是 "apps" APP 的数据：
+
+```text
+mysql> SELECT * FROM apps;
++----+------------+-------------------------+---------+
+| id | app_name   | url                     | country |
++----+------------+-------------------------+---------+
+|  1 | QQ APP     | http://im.qq.com/       | CN      |
+|  2 | 微博 APP | http://weibo.com/       | CN      |
+|  3 | 淘宝 APP | https://www.taobao.com/ | CN      |
++----+------------+-------------------------+---------+
+3 rows in set (0.00 sec)
+```
+
+
+## SQL UNION 实例
+
+下面的 SQL 语句从 "Websites" 和 "apps" 表中选取所有不同的country（只有不同的值）：
+
+
+## 实例
+
+执行以上 SQL 输出结果如下：
+
+注释：UNION 不能用于列出两个表中所有的country。如果一些网站和APP来自同一个国家，每个国家只会列出一次。UNION 只会选取不同的值。请使用 UNION ALL 来选取重复的值！
+
+
+## SQL UNION ALL 实例
+
+下面的 SQL 语句使用 UNION ALL 从 "Websites" 和 "apps" 表中选取所有的country（也有重复的值）：
+
+
+## 实例
+
+执行以上 SQL 输出结果如下：
+
+
+## 带有 WHERE 的 SQL UNION ALL
+
+下面的 SQL 语句使用 UNION ALL 从 "Websites" 和 "apps" 表中选取所有的中国(CN)的数据（也有重复的值）：
+
+
+## 实例
+
+执行以上 SQL 输出结果如下：
+
+
+## 复习重点
+
+- 能说明 `MySQL UNION` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

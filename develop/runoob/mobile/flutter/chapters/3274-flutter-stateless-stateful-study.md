@@ -1,35 +1,104 @@
-# Flutter：Flutter StatelessWidget 学习笔记
+# Flutter：Flutter StatelessWidget vs StatefulWidget 深入理解
 
 - 来源：[Flutter StatelessWidget](https://www.runoob.com/flutter/flutter-stateless-stateful.html)
 - 分类：移动开发
 - 技术：Flutter
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3274
 
-## 学习目标
+## 本章内容
 
-Flutter 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Flutter StatelessWidget` 建立学习路径，先理解它在 Flutter 体系中的位置，再做可运行或可复述的验证。
+理解 StatelessWidget 和 StatefulWidget 的区别是 Flutter 开发的基础。
 
-## 阅读抓手
+本节将深入分析这两种 Widget 的使用场景和内部工作机制。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 核心区别
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Flutter 中有两种主要类型的 Widget，它们的根本区别在于是否能持有可变状态。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Flutter StatelessWidget`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## StatelessWidget 详解
+
+StatelessWidget 适合用于不随时间变化的内容。一旦创建，其所有属性都是 final 的，不可修改。
+
+
+### 使用场景
+
+- 显示静态文本、图片、图标
+- 展示数据列表（数据源来自父 Widget）
+- 不包含用户交互的布局容器
+- 表单中的只读展示部分
+
+
+## 实例：StatelessWidget 完整示例
+
+
+## StatefulWidget 详解
+
+StatefulWidget 适合用于需要响应用户交互或数据变化的场景。它由两部分组成：Widget 本身（不可变）和 State 对象（可变）。
+
+
+### 使用场景
+
+- 计数器、计时器等动态数据
+- 表单输入
+- 动画控制
+- 网络请求状态展示
+- 用户交互响应
+
+
+### State 对象生命周期
+
+
+## 实例：StatefulWidget 完整示例
+
+
+## setState 的正确使用
+
+在 StatefulWidget 中，必须通过 setState 来通知 Flutter 状态已更改。
+
+
+### 正确用法
+
+
+## 实例：正确的 setState 用法
+
+
+### 错误用法
+
+
+## 实例：错误的 setState 用法
+
+setState 会在下一次帧绘制时触发 build 方法的重新调用。
+
+频繁调用 setState 或在 build 方法中调用 setState 都可能导致性能问题。
+
+
+## 如何选择
+
+在开发时，应该根据实际需求选择合适的 Widget 类型：
+
+
+### 选择 StatelessWidget 当
+
+- Widget 的外观不依赖于任何可变状态
+- 所有需要的数据都通过构造函数从父 Widget 传入
+- Widget 不需要响应用户交互
+- 追求最佳性能
+
+
+### 选择 StatefulWidget 当
+
+- Widget 需要维护内部状态
+- 需要响应用户输入（点击、滑动等）
+- 需要响应数据变化（如网络请求返回）
+- 需要控制动画
+
+
+## 复习重点
+
+- 能说明 `Flutter StatelessWidget` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

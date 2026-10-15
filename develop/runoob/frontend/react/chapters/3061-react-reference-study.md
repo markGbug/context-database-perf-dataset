@@ -1,35 +1,134 @@
-# React：React 参考手册 学习笔记
+# React：React 参考手册
 
 - 来源：[React 参考手册](https://www.runoob.com/react/react-reference.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3061
 
-## 学习目标
+## 本章内容
 
-React 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `React 参考手册` 建立学习路径，先理解它在 React 体系中的位置，再做可运行或可复述的验证。
+React 手册包含了各种核心 API、Hooks、组件生命周期方法等。
 
-## 阅读抓手
+以下是一份完整的 React 参考手册，内容覆盖从基础到高级的所有核心概念（基于 React 18+ 现代实践，优先函数组件 + Hooks），每个表格包含概念/语法、描述、示例代码 和 注意事项。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 1、JSX 基础
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 2、 组件基础
 
-- 能用 3 到 5 句话解释 `React 参考手册`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 3、状态与 Hooks（核心）
+
+
+### 4、生命周期（类组件 vs Hooks）
+
+
+### 5、上下文与全局状态
+
+
+### 6、高级特性（React 18+）
+
+
+### 7、性能优化
+
+
+### 8、常见生态工具
+
+
+### 9、调试与最佳实践
+
+以下是一些常见的函数和方法，以及它们的简要说明：
+
+
+## React 核心 API
+
+createElement(type, [props], [...children]) - 创建一个 React 元素或组件。
+
+
+## 实例
+
+cloneElement(element, [props], [...children]) - 克隆并返回一个 React 元素，可以传递新的 props 和子元素。
+
+
+## 实例
+
+createFactory(type) - 创建一个工厂函数，用于创建指定类型的 React 元素。
+
+
+## 实例
+
+isValidElement(element) - 判断一个对象是否是有效的 React 元素。
+
+
+## 实例
+
+Children.map(children, function[(thisArg)]) - 遍历和映射 React 子元素。
+
+
+## 实例
+
+
+## React 组件生命周期方法
+
+constructor(props) - 构造函数，在组件创建时调用，用于初始化 state 和绑定方法。
+
+
+## 实例
+
+componentDidMount() - 组件挂载后调用，通常用于数据获取、订阅等副作用操作。
+
+
+## 实例
+
+componentDidUpdate(prevProps, prevState) - 组件更新后调用，通常用于响应 props 或 state 的变化。
+
+
+## 实例
+
+componentWillUnmount() - 组件将被卸载前调用，用于清理定时器、取消订阅等资源释放。
+
+
+## 实例
+
+static getDerivedStateFromProps(props, state) - 用于替代 componentWillReceiveProps，在 props 变化时更新 state。
+
+
+## 实例
+
+
+## React Hooks
+
+useState(initialState) - 声明一个状态变量及其更新函数。
+
+
+## 实例
+
+useEffect(callback, [dependencies]) - 声明一个副作用操作，类似于 componentDidMount 和 componentDidUpdate 的组合。
+
+
+## 实例
+
+useContext(context) - 获取并订阅一个 React context。
+
+
+## 后续章节
+
+- 实例
+- 实例
+- 实例
+- 实例
+- 实例
+- 其他常见函数
+- 实例
+- 实例
+- 实例
+- 实例
+
+## 复习重点
+
+- 能说明 `React 参考手册` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

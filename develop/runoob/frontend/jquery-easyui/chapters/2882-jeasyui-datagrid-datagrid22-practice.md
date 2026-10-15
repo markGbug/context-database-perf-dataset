@@ -1,34 +1,112 @@
-# jQuery EasyUI：jEasyUI 创建子网格 练习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 创建子网格
 
 - 来源：[jEasyUI 创建子网格](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid22.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2882
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 创建子网格` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+使用数据网格（datagrid）的详细视图，用户可以展开一行来显示附加的详细信息。 任何内容都可以加载作为行详细，子网格也可以动态加载。 本教程将向您展示如何在主网格上创建一个子网格。
 
-## 练习步骤
+```html
+<table id="dg" style="width:700px;height:250px"
+        url="datagrid22_getdata.php"
+        title="DataGrid - SubGrid"
+        singleSelect="true" fitColumns="true">
+    <thead>
+        <tr>
+            <th field="itemid" width="80">Item ID</th>
+            <th field="productid" width="100">Product ID</th>
+            <th field="listprice" align="right" width="80">List Price</th>
+            <th field="unitcost" align="right" width="80">Unit Cost</th>
+            <th field="attr1" width="220">Attribute</th>
+            <th field="status" width="60" align="center">Status</th>
+        </tr>
+    </thead>
+</table>
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+为了使用详细视图，请记得在页面头部引用视图脚本文件。
 
-## 验收清单
+```html
+<script type="text/javascript" src="http://www.w3cschool.cc/try/jeasyui/datagrid-detailview.js"></script>
+```
 
-- 我能独立说出 `jEasyUI 创建子网格` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+$('#dg').datagrid({
+    view: detailview,
+    detailFormatter:function(index,row){
+        return '<div style="padding:2px"><table class="ddv"></table></div>';
+    },
+    onExpandRow: function(index,row){
+        var ddv = $(this).datagrid('getRowDetail',index).find('table.ddv');
+        ddv.datagrid({
+            url:'datagrid22_getdetail.php?itemid='+row.itemid,
+            fitColumns:true,
+            singleSelect:true,
+            rownumbers:true,
+            loadMsg:'',
+            height:'auto',
+            columns:[[
+                {field:'orderid',title:'Order ID',width:100},
+                {field:'quantity',title:'Quantity',width:100},
+                {field:'unitprice',title:'Unit Price',width:100}
+            ]],
+            onResize:function(){
+                $('#dg').datagrid('fixDetailRowHeight',index);
+            },
+            onLoadSuccess:function(){
+                setTimeout(function(){
+                    $('#dg').datagrid('fixDetailRowHeight',index);
+                },0);
+            }
+        });
+        $('#dg').datagrid('fixDetailRowHeight',index);
+    }
+});
+```
 
-## 复盘问题
+当用户点击展开按钮（'+'）时，'onExpandRow' 事件将被触发。 我们创建一个新的带有三列的子网格。 当子网格数据加载成功时或者改变尺寸大小时，请记得对主网格调用 'fixDetailRowHeight' 方法。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```java
+$result = array();
+
+include 'conn.php';
+
+$rs = mysql_query("select * from item where itemid in (select itemid from lineitem)");
+
+$items = array();
+while($row = mysql_fetch_object($rs)){
+    array_push($items, $row);
+}
+
+echo json_encode($items);
+```
+
+```java
+include 'conn.php';
+
+$itemid = mysql_real_escape_string($_REQUEST['itemid']);
+
+$rs = mysql_query("select * from lineitem where itemid='$itemid'");
+$items = array();
+while($row = mysql_fetch_object($rs)){
+    array_push($items, $row);
+}
+echo json_encode($items);
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid22.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 创建子网格` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

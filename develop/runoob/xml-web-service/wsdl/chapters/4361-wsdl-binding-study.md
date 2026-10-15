@@ -1,35 +1,66 @@
-# WSDL：WSDL 绑定 学习笔记
+# WSDL：WSDL 绑定
 
 - 来源：[WSDL 绑定](https://www.runoob.com/wsdl/wsdl-binding.html)
 - 分类：XML / Web Service
 - 技术：WSDL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4361
 
-## 学习目标
+## 本章内容
 
-WSDL 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `WSDL 绑定` 建立学习路径，先理解它在 WSDL 体系中的位置，再做可运行或可复述的验证。
+WSDL 绑定可为 web service 定义消息格式和协议细节。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 绑定到 SOAP
 
-## 笔记模板
+一个 请求 - 响应 操作的例子：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `WSDL 绑定`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<message name="getTermRequest">
+  <part name="term" type="xs:string"/>
+</message>
+
+<message name="getTermResponse">
+  <part name="value" type="xs:string"/>
+</message>
+
+<portType name="glossaryTerms">
+  <operation name="getTerm">
+    <input message="getTermRequest"/>
+    <output message="getTermResponse"/>
+  </operation>
+</portType>
+
+<binding type="glossaryTerms" name="b1">
+   <soap:binding style="document"
+   transport="http://schemas.xmlsoap.org/soap/http" />
+   <operation>
+     <soap:operation soapAction="http://example.com/getTerm"/>
+     <input><soap:body use="literal"/></input>
+     <output><soap:body use="literal"/></output>
+  </operation>
+</binding>
+```
+
+binding 元素有两个属性 - name 属性和 type 属性。
+
+name 属性定义 binding 的名称，而 type 属性指向用于 binding 的端口，在这个例子中是 "glossaryTerms" 端口。
+
+soap:binding 元素有两个属性 - style 属性和 transport 属性。
+
+style 属性可取值 "rpc" 或 "document"。在这个例子中我们使用 document。transport 属性定义了要使用的 SOAP 协议。在这个例子中我们使用 HTTP。
+
+operation 元素定义了每个端口提供的操作符。
+
+对于每个操作，相应的 SOAP 行为都需要被定义。同时您必须如何对输入和输出进行编码。在这个例子中我们使用了 "literal"。
+
+
+## 复习重点
+
+- 能说明 `WSDL 绑定` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

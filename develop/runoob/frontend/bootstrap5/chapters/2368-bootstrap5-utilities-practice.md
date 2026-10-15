@@ -1,34 +1,172 @@
-# Bootstrap5：Bootstrap5 小工具 练习笔记
+# Bootstrap5：Bootstrap5 小工具
 
 - 来源：[Bootstrap5 小工具](https://www.runoob.com/bootstrap5/bootstrap5-utilities.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2368
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap5 小工具` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Bootstrap 5 提供了很多有用的类来帮组我们快速实现效果，不需要重复写一些 CSS 代码。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 背景颜色
 
-## 验收清单
+设置不同元素的背景颜色时，需要通过 .text-* 类来设置匹配的文本颜色：
 
-- 我能独立说出 `Bootstrap5 小工具` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<div class="p-3 mb-2 bg-primary text-white">.bg-primary</div>
+<div class="p-3 mb-2 bg-secondary text-white">.bg-secondary</div>
+<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
+<div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
+<div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
+<div class="p-3 mb-2 bg-info text-dark">.bg-info</div>
+<div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
+<div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
+<div class="p-3 mb-2 bg-body text-dark">.bg-body</div>
+<div class="p-3 mb-2 bg-white text-dark">.bg-white</div>
+<div class="p-3 mb-2 bg-transparent text-dark">.bg-transparent</div>
+```
+
+.bg-gradient 类可以设置背景颜色渐变的效果：
+
+
+## 实例
+
+```html
+<div class="p-3 mb-2 bg-primary bg-gradient text-white">.bg-primary</div>
+<div class="p-3 mb-2 bg-secondary bg-gradient text-white">.bg-secondary</div>
+<div class="p-3 mb-2 bg-success bg-gradient text-white">.bg-success</div>
+<div class="p-3 mb-2 bg-danger bg-gradient text-white">.bg-danger</div>
+<div class="p-3 mb-2 bg-warning bg-gradient text-dark">.bg-warning</div>
+<div class="p-3 mb-2 bg-info bg-gradient text-dark">.bg-info</div>
+<div class="p-3 mb-2 bg-light bg-gradient text-dark">.bg-light</div>
+<div class="p-3 mb-2 bg-dark bg-gradient text-white">.bg-dark</div>
+<div class="p-3 mb-2 bg-body bg-gradient text-dark">.bg-body</div>
+<div class="p-3 mb-2 bg-white bg-gradient text-dark">.bg-white</div>
+<div class="p-3 mb-2 bg-transparent bg-gradient text-dark">.bg-transparent</div>
+```
+
+
+## 边框
+
+我们可以使用 border 相关类根据需要显示边框：
+
+
+## 实例
+
+```html
+<span class="border"></span>
+<span class="border border-0"></span>
+<span class="border border-top-0"></span>
+<span class="border border-end-0"></span>
+<span class="border border-bottom-0"></span>
+<span class="border border-start-0"></span>
+<br>
+
+<span class="border-top"></span>
+<span class="border-end"></span>
+<span class="border-bottom"></span>
+<span class="border-start"></span>
+```
+
+.border-1 到 .border-5 类用于设置边框线条的宽度：
+
+
+## 实例
+
+```html
+<span class="border border-1"></span>
+<span class="border border-2"></span>
+<span class="border border-3"></span>
+<span class="border border-4"></span>
+<span class="border border-5"></span>
+```
+
+以下设置了边框的不同颜色：
+
+
+## 实例
+
+```html
+<span class="border border-primary"></span>
+<span class="border border-secondary"></span>
+<span class="border border-success"></span>
+<span class="border border-danger"></span>
+<span class="border border-warning"></span>
+<span class="border border-info"></span>
+<span class="border border-light"></span>
+<span class="border border-dark"></span>
+<span class="border border-white"></span>
+```
+
+rounded 相关类用于设置圆角：
+
+
+## 实例
+
+```html
+<img src="..." class="rounded" alt="...">
+<img src="..." class="rounded-top" alt="...">
+<img src="..." class="rounded-end" alt="...">
+<img src="..." class="rounded-bottom" alt="...">
+<img src="..." class="rounded-start" alt="...">
+<img src="..." class="rounded-circle" alt="...">
+<img src="..." class="rounded-pill" alt="...">
+```
+
+rounded-0 到 rounded-3 类用于设置圆角的大小：
+
+
+## 实例
+
+```html
+<img src="..." class="rounded-0" alt="...">
+<img src="..." class="rounded-1" alt="...">
+<img src="..." class="rounded-2" alt="...">
+<img src="..." class="rounded-3" alt="...">
+```
+
+
+## 浮动与清除浮动
+
+元素向右浮动使用 .float-end 类，向左浮动使用 .float-start 类， .clearfix 类用于清除浮动:
+
+
+## 实例
+
+```html
+<div class="clearfix">
+  <span class="float-start">Float left</span>
+  <span class="float-end">Float right</span>
+</div>
+```
+
+也可以根据屏幕尺寸来设置浮动效果(.float-*-left|right - * 表示 sm (>=576px), md (>=768px), lg (>=992px), xl (>=1200px) or xxl (>=1400px)):
+
+
+## 实例
+
+```html
+<div class="float-sm-end">小屏幕向右浮动</div><br>
+<div class="float-md-end">中等屏幕向右浮动</div><br>
+<div class="float-lg-end">大屏幕向右浮动</div><br>
+<div class="float-xl-end">超大屏幕向右浮动</div><br>
+<div class="float-xxl-end">特大屏幕向右浮动</div><br>
+<div class="float-none">没有浮动</div>
+```
+
+
+## 居中对齐
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap5 小工具` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

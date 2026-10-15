@@ -1,34 +1,68 @@
-# jQuery UI：jQuery UI 设计主题 练习笔记
+# jQuery UI：jQuery UI 设计主题
 
 - 来源：[jQuery UI 设计主题](https://www.runoob.com/jqueryui/jqueryui-theme-design.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2917
 
-## 练习目标
+## 本章内容
 
-把 `jQuery UI 设计主题` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+### 文件结构
 
-## 练习步骤
+主题是以特定的方式来增加他们的易用性。通常，文件目录结构如下所示：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- themename/ – 您的主题必须完全包含在一个单独的以主题名称命名的文件夹内。
+- themename/themename.css – 这是基本的 CSS 文件。无论使用了哪个插件，该文件都必须在每个使用主题的页面中引用。该文件应该是轻量级的，只包括要点。
+- themename/themename.pluginname.css – 您支持的每个插件都需要一个 CSS 文件。插件的名称应直接包含在文件名中。例如，如果您为 tabs（标签页）插件进行主题化，则有：themename.tabs.js。
+- themename/img.png – 您的主题可以包含图像。它们可以根据您的喜好进行命名，这里没有特定的命名惯例。
 
-## 验收清单
+如需了解主题文件结构是如何完成的实例，请访问 jQuery UI 基本主题。
 
-- 我能独立说出 `jQuery UI 设计主题` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 定义样式
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+为主题编写样式是非常简单的，这是因为主题的灵活性。
+
+所有的主题都应该有一个基本的 CSS class。这个主要的 class 允许用户启用禁用主题。您的根 class 的格式应该是 .ui-themename。且它在 HTML 文件中的用法如下所示：
+
+```html
+<html>
+<head>
+    <title>My Site</title>
+    <link rel="stylesheet" href="themename/themename.css" />
+    <link rel="stylesheet" href="othertheme/othertheme.css" />
+    <link rel="stylesheet" href="othertheme/othertheme.dialog.css" />
+</head>
+<body class="ui-themename">
+    <div class="ui-othertheme">
+        <div class="ui-dialog">This is a modal dialog.</div>
+    </div>
+</body>
+</html>
+```
+
+在上面的实例中，发生了一些重要的事情：
+
+- 我们同时向文档中加载两个主题。
+- 整个页面机器所有内容，是根据 themename 的样式进行主题化的。
+- 然而，带有 ui-othertheme class 的 <div>及其中的每个元素（包括模态对话框）都是根据 othertheme 的样式进行主题化的。
+
+如果我们打开 themename.css 文件进行查看，我们可以看到如下代码：
+
+```text
+body.ui-themename { background:#111; color:snow; }
+.ui-themename a, a.ui-themename { color:#68D; outline:none; }
+.ui-themename a:visited, a.ui-themename:visited { color:#D66; }
+.ui-themename a:hover, a.ui-themename:hover { color:#FFF; }
+```
+
+请注意，themename.css 文件只包括全局通用的样式信息，特定插件的样式信息不在这里进行定义。这里的样式对所有主题都是适用的。不用担心一个主题会占据多个文件 - 这些会在创建和下载的过程被简化。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery UI 设计主题` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

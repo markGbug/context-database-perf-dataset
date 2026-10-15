@@ -1,34 +1,274 @@
-# OpenCode：OpenCode 规则 练习笔记
+# OpenCode：OpenCode 规则（AGENTS.md）
 
 - 来源：[OpenCode 规则](https://www.runoob.com/opencode/opencode-agents-md.html)
 - 分类：AI / 智能开发
 - 技术：OpenCode
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0431
 
-## 练习目标
+## 本章内容
 
-把 `OpenCode 规则` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 OpenCode 中，规则（Rules）是控制 AI 行为的核心机制。
 
-## 练习步骤
+我们可以通过 AGENTS.md 文件，为 OpenCode 提供自定义指令，让它按照你的项目规范进行开发。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+工具决定 AI 能做什么，AGENTS.md 决定 AI 应该怎么做。
 
-## 验收清单
+AGENTS.md = 给 AI 制定团队开发规范。
 
-- 我能独立说出 `OpenCode 规则` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 一、什么是 AGENTS.md
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+AGENTS.md 是一个规则文件，用于：
+
+- 定义项目结构
+- 约束代码风格
+- 规范开发流程
+- 指导 AI 如何执行任务
+
+这些内容会被加入到 LLM 的上下文中。
+
+效果：
+
+- AI 更懂你的项目
+- 生成的代码更符合规范
+- 减少反复修改
+
+
+## 二、快速初始化
+
+在 OpenCode 中运行：
+
+```text
+/init
+```
+
+该命令会：
+
+- 扫描你的项目结构
+- 分析代码组织方式
+- 自动生成 AGENTS.md
+
+建议：
+
+- 将 AGENTS.md 提交到 Git
+- 作为团队统一规范
+
+
+## 三、示例结构
+
+```text
+# 项目说明
+
+这是一个基于 TypeScript 的 monorepo 项目。
+
+## 项目结构
+
+- packages/ 核心模块
+- infra/ 基础设施
+- web/ 前端应用
+
+## 代码规范
+
+- 使用 TypeScript 严格模式
+- 公共代码放在 packages/core
+- 所有函数必须添加注释
+
+## 开发约定
+
+- 使用 workspace 方式引用模块
+- API 必须统一错误处理
+```
+
+本质：把团队规范"写给 AI 看"
+
+
+## 四、规则的作用范围
+
+
+### 1、项目级规则
+
+路径：
+
+```text
+./AGENTS.md
+```
+
+作用：
+
+- 仅当前项目生效
+- 团队共享
+
+
+### 2、全局规则
+
+路径：
+
+```text
+~/.config/opencode/AGENTS.md
+```
+
+作用：
+
+- 对所有项目生效
+- 个人使用
+
+建议用途：
+
+- 个人编码习惯
+- 输出风格控制
+
+
+## 五、Claude Code 兼容性
+
+OpenCode 兼容 Claude Code 的规则体系：
+
+- 项目规则：CLAUDE.md
+- 全局规则：~/.claude/CLAUDE.md
+- 技能目录：~/.claude/skills/
+
+如果不想使用，可以关闭：
+
+```text
+export OPENCODE_DISABLE_CLAUDE_CODE=1
+```
+
+
+## 六、规则加载优先级（重要）
+
+OpenCode 启动时按以下顺序加载：
+
+- 当前目录向上查找 AGENTS.md
+- 如果没有 → 查找 CLAUDE.md
+- 全局规则 ~/.config/opencode/AGENTS.md
+- Claude 全局规则 ~/.claude/CLAUDE.md
+
+关键点：
+
+- AGENTS.md 优先级最高
+- 同级只会使用第一个匹配文件
+
+
+## 七、扩展规则（instructions）
+
+可以在 opencode.json 中加载额外规则文件：
+
+```text
+{
+  "instructions": [
+    "CONTRIBUTING.md",
+    "docs/guidelines.md",
+    ".cursor/rules/*.md"
+  ]
+}
+```
+
+优点：
+
+- 复用已有文档
+- 避免重复维护
+
+
+### 支持远程规则
+
+```text
+{
+  "instructions": [
+    "https://raw.githubusercontent.com/xxx/rules/main/style.md"
+  ]
+}
+```
+
+说明：
+
+- 支持 URL 加载
+- 超时：5 秒
+
+
+## 八、模块化规则（高级）
+
+
+### 推荐方式（使用 instructions）
+
+```text
+{
+  "instructions": [
+    "docs/dev.md",
+    "test/rules.md",
+    "packages/*/AGENTS.md"
+  ]
+}
+```
+
+适合：
+
+- monorepo
+- 大型项目
+
+
+### 方式二：在 AGENTS.md 中手动引用
+
+```text
+# 规则加载说明
+
+当遇到 @xxx 文件时，请使用 read 工具加载。
+
+- 不要一次性加载全部文件
+- 按需加载
+- 加载后必须遵守
+```
+
+示例：
+
+```text
+TypeScript 规范：@docs/typescript.md
+React 规范：@docs/react.md
+API 规范：@docs/api.md
+```
+
+实现"按需加载规则"
+
+
+## 九、最佳实践（重点）
+
+
+### 1、规则要具体
+
+❌ 不要写：
+
+```text
+代码要规范
+```
+
+✅ 应该写：
+
+```text
+所有函数必须添加 JSDoc 注释
+```
+
+
+### 2、规则要可执行
+
+AI 只能执行明确规则，而不是抽象描述。
+
+
+### 3、不要写太长
+
+建议：
+
+- 核心规则写在 AGENTS.md
+- 详细规则拆到 instructions 文件
+
+
+### 4、团队统一维护
+
+- 纳入 Git 管理
+- 作为开发规范的一部分
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `OpenCode 规则` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

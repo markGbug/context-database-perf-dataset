@@ -1,34 +1,113 @@
-# PostgreSQL：PostgreSQL AUTO INCREMENT 练习笔记
+# PostgreSQL：PostgreSQL AUTO INCREMENT（自动增长）
 
 - 来源：[PostgreSQL AUTO INCREMENT](https://www.runoob.com/postgresql/postgresql-autoincrement.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1589
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL AUTO INCREMENT` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+AUTO INCREMENT（自动增长） 会在新记录插入表中时生成一个唯一的数字。
 
-## 练习步骤
+PostgreSQL 使用序列来标识字段的自增长，数据类型有 smallserial、serial 和 bigserial 。这些属性类似于 MySQL 数据库支持的 AUTO_INCREMENT 属性。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+使用 MySQL 设置自动增长的语句如下:
 
-## 验收清单
+```text
+CREATE TABLE IF NOT EXISTS `runoob_tbl`(
+   `runoob_id` INT UNSIGNED AUTO_INCREMENT,
+   `runoob_title` VARCHAR(100) NOT NULL,
+   `runoob_author` VARCHAR(40) NOT NULL,
+   `submission_date` DATE,
+   PRIMARY KEY ( `runoob_id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
 
-- 我能独立说出 `PostgreSQL AUTO INCREMENT` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+MySQL 是用 AUTO_INCREMENT 这个属性来标识字段的自增。
 
-## 复盘问题
+PostgreSQL 使用序列来标识字段的自增长：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+CREATE TABLE runoob
+(
+    id serial NOT NULL,
+    alttext text,
+    imgurl text
+)
+```
+
+SMALLSERIAL、SERIAL 和 BIGSERIAL 范围：
+
+
+### 语法
+
+SERIAL 数据类型基础语法如下：
+
+```text
+CREATE TABLE tablename (
+   colname SERIAL
+);
+```
+
+
+### 实例
+
+假定我们要创建一张 COMPANY 表，并创建下面几个字段：
+
+```text
+runoobdb=# CREATE TABLE COMPANY(
+   ID  SERIAL PRIMARY KEY,
+   NAME           TEXT      NOT NULL,
+   AGE            INT       NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+现在往表中插入几条记录：
+
+```text
+INSERT INTO COMPANY (NAME,AGE,ADDRESS,SALARY)
+VALUES ( 'Paul', 32, 'California', 20000.00 );
+
+INSERT INTO COMPANY (NAME,AGE,ADDRESS,SALARY)
+VALUES ('Allen', 25, 'Texas', 15000.00 );
+
+INSERT INTO COMPANY (NAME,AGE,ADDRESS,SALARY)
+VALUES ('Teddy', 23, 'Norway', 20000.00 );
+
+INSERT INTO COMPANY (NAME,AGE,ADDRESS,SALARY)
+VALUES ( 'Mark', 25, 'Rich-Mond ', 65000.00 );
+
+INSERT INTO COMPANY (NAME,AGE,ADDRESS,SALARY)
+VALUES ( 'David', 27, 'Texas', 85000.00 );
+
+INSERT INTO COMPANY (NAME,AGE,ADDRESS,SALARY)
+VALUES ( 'Kim', 22, 'South-Hall', 45000.00 );
+
+INSERT INTO COMPANY (NAME,AGE,ADDRESS,SALARY)
+VALUES ( 'James', 24, 'Houston', 10000.00 );
+```
+
+查看 COMPANY 表的记录如下：
+
+```text
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  2 | Allen |  25 | Texas      |  15000
+  3 | Teddy |  23 | Norway     |  20000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL AUTO INCREMENT` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

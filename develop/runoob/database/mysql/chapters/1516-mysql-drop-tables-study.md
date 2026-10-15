@@ -1,35 +1,127 @@
-# MySQL：MySQL 删除数据表 学习笔记
+# MySQL：MySQL 删除数据表
 
 - 来源：[MySQL 删除数据表](https://www.runoob.com/mysql/mysql-drop-tables.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1516
 
-## 学习目标
+## 本章内容
 
-MySQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MySQL 删除数据表` 建立学习路径，先理解它在 MySQL 体系中的位置，再做可运行或可复述的验证。
+MySQL中删除数据表是非常容易操作的，但是你在进行删除表操作时要非常小心，因为执行删除命令后所有数据都会消失。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 语法
 
-## 笔记模板
+以下为删除 MySQL 数据表的通用语法：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+DROP TABLE table_name;     -- 直接删除表，不检查是否存在
+```
 
-## 完成标准
+或
 
-- 能用 3 到 5 句话解释 `MySQL 删除数据表`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+DROP TABLE [IF EXISTS] table_name;  -- 会检查是否存在，如果存在则删除
+```
+
+参数说明：
+
+- table_name 是要删除的表的名称。
+- IF EXISTS 是一个可选的子句，表示如果表存在才执行删除操作，避免因为表不存在而引发错误。
+
+```text
+-- 删除表，如果存在的话
+DROP TABLE IF EXISTS mytable;
+
+-- 直接删除表，不检查是否存在
+DROP TABLE mytable;
+```
+
+请替换 mytable 为你要删除的表的名称。
+
+如果你只是想删除表中的所有数据，但保留表的结构，可以使用 TRUNCATE TABLE 语句：
+
+```text
+TRUNCATE TABLE table_name;
+```
+
+这会清空表中的所有数据，但不会删除表本身。
+
+注意事项：
+
+- 备份数据：在删除表之前，确保已经备份了数据，如果你需要的话。
+- 外键约束：如果该表与其他表有外键约束，可能需要先删除外键约束，或者确保依赖关系被处理好。
+
+
+### 实例
+
+以下实例删除了数据表 runoob_tbl:
+
+
+## 实例
+
+
+## 使用 PHP 脚本删除数据表
+
+PHP 使用 mysqli_query 函数来删除 MySQL 数据表。
+
+该函数有两个参数，在执行成功时返回 TRUE，否则返回 FALSE。
+
+
+### 语法
+
+```text
+mysqli_query(connection,query,resultmode);
+```
+
+可选。一个常量。可以是下列值中的任意一个：
+
+- MYSQLI_USE_RESULT（如果需要检索大量数据，请使用这个）
+- MYSQLI_STORE_RESULT（默认）
+
+
+### 实例
+
+以下实例使用了 PHP 脚本删除数据表 runoob_tbl:
+
+
+## 删除数据库
+
+```html
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('连接失败: ' . mysqli_error($conn));
+}
+echo '连接成功<br />';
+$sql = "DROP TABLE runoob_tbl";
+mysqli_select_db( $conn, 'RUNOOB' );
+$retval = mysqli_query( $conn, $sql );
+if(! $retval )
+{
+  die('数据表删除失败: ' . mysqli_error($conn));
+}
+echo "数据表删除成功\n";
+mysqli_close($conn);
+?>
+```
+
+执行成功后，我们使用以下命令，就看不到 runoob_tbl 表了：
+
+```text
+mysql> show tables;
+Empty set (0.01 sec)
+```
+
+
+## 复习重点
+
+- 能说明 `MySQL 删除数据表` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

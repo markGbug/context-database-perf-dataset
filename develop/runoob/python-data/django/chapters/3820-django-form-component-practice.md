@@ -1,34 +1,161 @@
-# Django：Django Form 组件 练习笔记
+# Django：Django Form 组件
 
 - 来源：[Django Form 组件](https://www.runoob.com/django/django-form-component.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3820
 
-## 练习目标
+## 本章内容
 
-把 `Django Form 组件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Django Form 组件用于对页面进行初始化，生成 HTML 标签，此外还可以对用户提交的数据进行校验（显示错误信息）。
 
-## 练习步骤
+报错信息显示顺序：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 先显示字段属性中的错误信息，然后再显示局部钩子的错误信息。
+- 若显示了字段属性的错误信息，就不会显示局部钩子的错误信息。
+- 若有全局钩子，则全局钩子是等所有的数据都校验完，才开始进行校验，并且全局钩子的错误信息一定会显示。
 
-## 验收清单
+使用 Form 组件，需要先导入 forms：
 
-- 我能独立说出 `Django Form 组件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+from django import forms
+```
 
-## 复盘问题
+接下来我们在 app01 目录下创建一个 My_forms.py:
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## app01/My_forms.py
+
+字段属性：
+
+- label：输入框前面的文本信息。
+- error_message：自定义显示的错误信息，属性值是字典， 其中 required 为设置不能为空时显示的错误信息的 key。
+
+
+## app01/views.py
+
+app01/urls.py 文件添加以下规则：
+
+```text
+path('add_emp/', views.add_emp)
+```
+
+HTML 模版：
+
+
+## app01/add_emp.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h3>添加员工</h3>
+
+{#1、自己手动写HTML页面#}
+<form action="" method="post">
+    <p>姓名：<input type="text" name="name"></p>
+    <p>年龄：<input type="text" name="age"></p>
+    <p>工资：<input type="text" name="salary"></p>
+    <input type="submit">
+</form>
+
+{#2、通过form对象的as_p方法实现#}
+{#<form action="" method="post" novalidate>#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit">#}
+{#</form>#}
+
+{#3、手动获取form对象的字段#}
+{#<form action="" method="post" novalidate>#}
+{#    {% csrf_token %}#}
+{#    <div>#}
+{#        <label for="id_{{ form.name.name }}">姓名</label>#}
+{#        {{ form.name }} <span>{{ form.name.errors.0 }}</span>#}
+{#    </div>#}
+{#    <div>#}
+{#        <label for="id_{{ form.age.name }}">年龄</label>#}
+{#        {{ form.age }} <span>{{ form.age.errors.0 }}</span>#}
+{#    </div>#}
+{#    <div>#}
+{#        <label for="id_salary">工资</label>#}
+{#        {{ form.salary }} <span>{{ form.salary.errors.0 }}</span>#}
+{#    </div>#}
+{#    <input type="submit">#}
+{#</form>#}
+
+
+{#4、用for循环展示所有字段#}
+{#<form action="" method="post" novalidate>#}
+{#    {% csrf_token %}#}
+{#    {% for field in form %}#}
+{#        <div>#}
+{#            <label for="id_{{ field.name }}">{{ field.label }}</label>#}
+{#            {{ field }} <span>{{ field.errors.0 }}</span>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#    <input type="submit">#}
+{#</form>#}
+
+</body>
+</html>
+```
+
+运行结果如下图所示：
+
+
+### 局部钩子和全局钩子
+
+定义 Form 类:
+
+
+## app01/My_forms.py
+
+views.py 文件代码：
+
+
+## app01/views.py
+
+模板文件代码如下：
+
+
+## app01/add_emp.html
+
+```html
+<form action="" method="post" novalidate>
+    {% csrf_token %}
+    <div>
+        <label for="id_{{ form.name.name }}">姓名</label>
+        {{ form.name }} <span>{{ form.name.errors.0 }}</span>
+    </div>
+    <div>
+        <label for="id_{{ form.age.name }}">年龄</label>
+        {{ form.age }} <span>{{ form.age.errors.0 }}</span>
+    </div>
+    <div>
+        <label for="id_salary">工资</label>
+        {{ form.salary }} <span>{{ form.salary.errors.0 }}{{ clear_errors.0 }}</span>
+    </div>
+    <div>
+        <label for="id_r_salary">请再输入工资</label>
+        {{ form.r_salary }} <span>{{ form.r_salary.errors.0 }}{{ clear_errors.0 }}</span>
+    </div>
+    <input type="submit">
+</form>
+```
+
+运行结果如下图所示：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Django Form 组件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

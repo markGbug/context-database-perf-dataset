@@ -1,34 +1,96 @@
-# Redis：Redis 管道技术 练习笔记
+# Redis：Redis 管道技术
 
 - 来源：[Redis 管道技术](https://www.runoob.com/redis/redis-pipelining.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1617
 
-## 练习目标
+## 本章内容
 
-把 `Redis 管道技术` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务。这意味着通常情况下一个请求会遵循以下步骤：
 
-## 练习步骤
+- 客户端向服务端发送一个查询请求，并监听Socket返回，通常是以阻塞模式，等待服务端响应。
+- 服务端处理命令，并将结果返回给客户端。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## Redis 管道技术
 
-- 我能独立说出 `Redis 管道技术` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Redis 管道技术可以在服务端未响应时，客户端可以继续向服务端发送请求，并最终一次性读取所有服务端的响应。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 实例
+
+查看 redis 管道，只需要启动 redis 实例并输入以下命令：
+
+```text
+$(echo -en "PING\r\n SET runoobkey redis\r\nGET runoobkey\r\nINCR visitor\r\nINCR visitor\r\nINCR visitor\r\n"; sleep 10) | nc localhost 6379
+
++PONG
++OK
+redis
+:1
+:2
+:3
+```
+
+以上实例中我们通过使用 PING 命令查看redis服务是否可用， 之后我们设置了 runoobkey 的值为 redis，然后我们获取 runoobkey 的值并使得 visitor 自增 3 次。
+
+在返回的结果中我们可以看到这些命令一次性向 redis 服务提交，并最终一次性读取所有服务端的响应
+
+
+## 管道技术的优势
+
+管道技术最显著的优势是提高了 redis 服务的性能。
+
+
+### 一些测试数据
+
+在下面的测试中，我们将使用Redis的Ruby客户端，支持管道技术特性，测试管道技术对速度的提升效果。
+
+```text
+require 'rubygems'
+require 'redis'
+def bench(descr)
+start = Time.now
+yield
+puts "#{descr} #{Time.now-start} seconds"
+end
+def without_pipelining
+r = Redis.new
+10000.times {
+    r.ping
+}
+end
+def with_pipelining
+r = Redis.new
+r.pipelined {
+    10000.times {
+        r.ping
+    }
+}
+end
+bench("without pipelining") {
+    without_pipelining
+}
+bench("with pipelining") {
+    with_pipelining
+}
+```
+
+从处于局域网中的Mac OS X系统上执行上面这个简单脚本的数据表明，开启了管道操作后，往返延时已经被改善得相当低了。
+
+```text
+without pipelining 1.185238 seconds
+with pipelining 0.250783 seconds
+```
+
+如你所见，开启管道后，我们的速度效率提升了5倍。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Redis 管道技术` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

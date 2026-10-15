@@ -1,35 +1,102 @@
-# Django：模型与数据库 学习笔记
+# Django：模型与数据库
 
 - 来源：[模型与数据库](https://www.runoob.com/django/django-blog-models.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3827
 
-## 学习目标
+## 本章内容
 
-Django 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `模型与数据库` 建立学习路径，先理解它在 Django 体系中的位置，再做可运行或可复述的验证。
+本章你将学会用 Django ORM 定义数据模型，创建数据库表，并插入测试数据。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 为什么需要模型？
 
-## 笔记模板
+上一章我们硬编码了页面文字。真正的博客需要存储多篇文章，且内容随时会变。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+模型（Model） 是 Django 的数据库层：用 Python 类定义数据结构，Django 自动生成对应的数据库表。
 
-## 完成标准
+你不需要写一行 SQL——这就是 ORM（对象关系映射） 的核心价值。
 
-- 能用 3 到 5 句话解释 `模型与数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 定义 Post 模型
+
+打开 blog/models.py，定义文章模型。
+
+
+## 实例
+
+
+### 常用字段类型速查
+
+__str__ 方法决定了对象如何以字符串形式显示。在 Admin 后台的下拉选择框和 Shell 输出中，都会调用它来展示对象名称。不写这个方法，你会看到 Post object (1) 这样的无意义文字。
+
+
+## 迁移：将模型同步到数据库
+
+模型类写好后，需要用 迁移（Migration） 建立数据库表。
+
+```text
+(venv) $ python manage.py makemigrations   # 生成迁移文件（检测模型变化）
+Migrations for 'blog':
+  blog/migrations/0001_initial.py
+    - Create model Category
+    - Create model Post
+
+(venv) $ python manage.py migrate           # 执行迁移（创建数据库表）
+Operations to perform:
+  Apply all migrations: admin, auth, blog, contenttypes, sessions
+Running migrations:
+  Applying blog.0001_initial... OK
+```
+
+两个命令的分工：
+
+- makemigrations：扫描 models.py，生成迁移脚本（Python 文件）
+- migrate：执行迁移脚本，在数据库中创建真实的表
+
+每次修改 models.py 后，都要运行 makemigrations + migrate 这两个命令。缺一不可：只 makemigrations 没 migrate，表不会创建；直接 migrate 不 makemigrations，Django 不知道你改了模型。
+
+
+## 用 Django Shell 插入测试数据
+
+在开始写页面之前，先用 Django Shell 往数据库里录入几条数据，验证模型是否正常工作。
+
+```text
+(venv) $ python manage.py shell
+```
+
+这会打开一个交互式 Python Shell，可以在里面操作数据库。
+
+
+## 实例
+
+
+## Django ORM 基础查询
+
+ORM 让你用 Python 方法链操作数据库，无需写 SQL。
+
+QuerySet 是 惰性求值 的：定义了查询不会立即执行，只有在真正需要数据时（如遍历、打印、转为 list）才发 SQL。所以你可以链式调用多个 filter 而不产生多次查询。
+
+
+## 动手：为后续章节准备数据
+
+在 Shell 中多录入几篇文章和分类，覆盖 Django、Python、CSS 三个分类，每个分类至少 2 篇文章。
+
+可以编写一个管理命令或脚本批量插入，但现阶段用 Shell 逐条插入足够了。
+
+
+## 本章小结
+
+本章你掌握了 Django ORM 的核心流程：在 models.py 中定义 Python 类（模型）、makemigrations 生成迁移文件、migrate 同步到数据库、用 Shell 和 ORM 查询插入数据。
+
+至此，文章和分类的结构已在数据库中建立。
+
+
+## 复习重点
+
+- 能说明 `模型与数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

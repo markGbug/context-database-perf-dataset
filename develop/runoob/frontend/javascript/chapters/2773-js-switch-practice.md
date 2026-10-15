@@ -1,34 +1,97 @@
-# JavaScript：JavaScript switch 语句 练习笔记
+# JavaScript：JavaScript switch 语句
 
 - 来源：[JavaScript switch 语句](https://www.runoob.com/js/js-switch.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2773
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript switch 语句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+switch 语句用于基于不同的条件来执行不同的动作。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## JavaScript switch 语句
 
-## 验收清单
+请使用 switch 语句来选择要执行的多个代码块之一。
 
-- 我能独立说出 `JavaScript switch 语句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 语法
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```java
+switch(n)
+{
+    case 1:
+        执行代码块 1
+        break;
+    case 2:
+        执行代码块 2
+        break;
+    default:
+        与 case 1 和 case 2 不同时执行的代码
+}
+```
+
+工作原理：首先设置表达式 n（通常是一个变量）。随后表达式的值会与结构中的每个 case 的值做比较。如果存在匹配，则与该 case 关联的代码块会被执行。请使用 break 来阻止代码自动地向下一个 case 运行。
+
+
+## 实例
+
+显示今天的星期名称。请注意 Sunday=0, Monday=1, Tuesday=2, 等等：
+
+```java
+var d=new Date().getDay();
+switch (d)
+{
+  case 0:x="今天是星期日";
+  break;
+  case 1:x="今天是星期一";
+  break;
+  case 2:x="今天是星期二";
+  break;
+  case 3:x="今天是星期三";
+  break;
+  case 4:x="今天是星期四";
+  break;
+  case 5:x="今天是星期五";
+  break;
+  case 6:x="今天是星期六";
+  break;
+}
+```
+
+x 的运行结果：
+
+
+## default 关键词
+
+请使用 default 关键词来规定匹配不存在时做的事情：
+
+
+## 实例
+
+如果今天不是星期六或星期日，则会输出默认的消息：
+
+```java
+var d=new Date().getDay();
+switch (d)
+{
+    case 6:x="今天是星期六";
+    break;
+    case 0:x="今天是星期日";
+    break;
+    default:
+    x="期待周末";
+}
+document.getElementById("demo").innerHTML=x;
+```
+
+x 的运行结果：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript switch 语句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

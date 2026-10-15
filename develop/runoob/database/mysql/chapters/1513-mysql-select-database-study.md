@@ -1,35 +1,105 @@
-# MySQL：MySQL 选择数据库 学习笔记
+# MySQL：MySQL 选择数据库
 
 - 来源：[MySQL 选择数据库](https://www.runoob.com/mysql/mysql-select-database.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1513
 
-## 学习目标
+## 本章内容
 
-MySQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MySQL 选择数据库` 建立学习路径，先理解它在 MySQL 体系中的位置，再做可运行或可复述的验证。
+在你连接到 MySQL 数据库后，可能有多个可以操作的数据库，所以你需要选择你要操作的数据库。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 从命令提示窗口中选择 MySQL 数据库
 
-## 笔记模板
+在 mysql> 提示窗口中可以很简单的选择特定的数据库。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在 MySQL 中，要选择要使用的数据库，可以使用 USE 语句，以下是基本的语法：
 
-## 完成标准
+```text
+USE database_name;
+```
 
-- 能用 3 到 5 句话解释 `MySQL 选择数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+参数说明：
+
+- database_name 是你要选择的数据库的名称。
+
+选择来数据库后，你的后续 SQL 查询和操作在指定的数据库 database_name 上执行。
+
+
+### 实例
+
+以下实例选取了数据库 RUNOOB:
+
+```text
+[root@host]# mysql -u root -p
+Enter password:******
+mysql> use RUNOOB;
+Database changed
+mysql>
+```
+
+执行以上命令后，你就已经成功选择了 RUNOOB 数据库，在后续的操作中都会在 RUNOOB 数据库中执行。
+
+在命令行中，你可以通过以下方式选择数据库：
+
+```text
+mysql -u your_username -p -D your_database
+```
+
+- -D 参数用于指定要选择的数据库。
+
+例如：
+
+```text
+mysql -u root -p -D RUNOOB
+```
+
+在输入密码后，你将进入 MySQL 提示符，并且任何后续的查询和操作都将在 RUNOOB 数据库上执行。
+
+请确保选择的数据库存在，否则你将收到错误消息。你可以使用 SHOW DATABASES; 查询可用的数据库，确保你要选择的数据库在列表中。
+
+
+## 使用 PHP 脚本选择 MySQL 数据库
+
+PHP 提供了函数 mysqli_select_db 来选取一个数据库。函数在执行成功后返回 TRUE ，否则返回 FALSE 。
+
+
+### 语法
+
+```text
+mysqli_select_db(connection,dbname);
+```
+
+
+### 实例
+
+以下实例展示了如何使用 mysqli_select_db 函数来选取一个数据库：
+
+
+## 选择数据库
+
+```text
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+    die('连接失败: ' . mysqli_error($conn));
+}
+echo '连接成功';
+mysqli_select_db($conn, 'RUNOOB' );
+mysqli_close($conn);
+?>
+```
+
+
+## 复习重点
+
+- 能说明 `MySQL 选择数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

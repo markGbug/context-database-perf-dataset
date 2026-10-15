@@ -1,35 +1,98 @@
-# JavaScript：JavaScript 注释 学习笔记
+# JavaScript：JavaScript 注释
 
 - 来源：[JavaScript 注释](https://www.runoob.com/js/js-comments.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2761
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 注释` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+JavaScript 注释可用于提高代码的可读性。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## JavaScript 注释
 
-## 笔记模板
+JavaScript 不会执行注释。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+我们可以添加注释来对 JavaScript 进行解释，或者提高代码的可读性。
 
-## 完成标准
+单行注释以 // 开头。
 
-- 能用 3 到 5 句话解释 `JavaScript 注释`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+本例用单行注释来解释代码：
+
+
+## 实例
+
+```text
+// 输出标题：
+document.getElementById("myH1").innerHTML="欢迎来到我的主页";
+// 输出段落：
+document.getElementById("myP").innerHTML="这是我的第一个段落。";
+```
+
+
+## JavaScript 多行注释
+
+多行注释以 /* 开始，以 */ 结尾。
+
+下面的例子使用多行注释来解释代码：
+
+
+## 实例
+
+```text
+/*
+下面的这些代码会输出
+一个标题和一个段落
+并将代表主页的开始
+*/
+document.getElementById("myH1").innerHTML="欢迎来到我的主页";
+document.getElementById("myP").innerHTML="这是我的第一个段落。";
+```
+
+
+## 使用注释来阻止执行
+
+在下面的例子中，注释用于阻止其中一条代码行的执行（可用于调试）：
+
+
+## 实例
+
+```text
+// document.getElementById("myH1").innerHTML="欢迎来到我的主页";
+document.getElementById("myP").innerHTML="这是我的第一个段落。";
+```
+
+在下面的例子中，注释用于阻止代码块的执行（可用于调试）：
+
+
+## 实例
+
+```text
+/*
+document.getElementById("myH1").innerHTML="欢迎来到我的主页";
+document.getElementById("myP").innerHTML="这是我的第一个段落。";
+*/
+```
+
+
+## 在行末使用注释
+
+在下面的例子中，我们把注释放到代码行的结尾处：
+
+
+## 实例
+
+```javascript
+var x=5;    // 声明 x 并把 5 赋值给它
+var y=x+2;  // 声明 y 并把 x+2 赋值给它
+```
+
+
+## 复习重点
+
+- 能说明 `JavaScript 注释` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

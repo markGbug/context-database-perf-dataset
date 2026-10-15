@@ -1,34 +1,120 @@
-# Flask：Flask 第一个应用 练习笔记
+# Flask：Flask 第一个应用
 
 - 来源：[Flask 第一个应用](https://www.runoob.com/flask/flask-step1.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3877
 
-## 练习目标
+## 本章内容
 
-把 `Flask 第一个应用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+上一章节我们已经成功安装了 Flask，接下来我们可以创建一个简单的 Flask 应用。
 
-## 练习步骤
+首先，创建一个名为 app.py 的文件，并添加以下内容：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 实例（ app.py ）
 
-- 我能独立说出 `Flask 第一个应用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在命令行中运行 Flask 应用：
 
-## 复盘问题
+```text
+python app.py
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+你会看到 Flask 开发服务器启动，并显示类似于以下内容：
+
+```text
+...
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 977-918-914
+...
+```
+
+打开浏览器，访问 http://127.0.0.1:5000/，应该会看到 "Hello, World!" 的消息，表示 Flask 已成功安装并运行。
+
+千万不要把文件名取为 flask.py，这会和 Flask 库本身冲突，导致导入错误。
+
+
+### 代码解析：
+
+- from flask import Flask： 这行代码从 flask 模块中导入了 Flask 类。Flask 类是 Flask 框架的核心，用于创建 Flask 应用程序实例。
+- app = Flask(__name__)： 这行代码创建了一个 Flask 应用实例。__name__ 是一个特殊的 Python 变量，它在模块被直接运行时是 '__main__'，在被其他模块导入时是模块的名字。传递 __name__ 给 Flask 构造函数允许 Flask 应用找到和加载配置文件。
+- @app.route('/')： 这是一个装饰器，用于告诉 Flask 哪个 URL 应该触发下面的函数。在这个例子中，它指定了根 URL（即网站的主页）。
+- def hello_world():： 这是定义了一个名为 hello_world 的函数，它将被调用当用户访问根URL时。
+- return 'Hello, World!'： 这行代码是 hello_world 函数的返回值。当用户访问根 URL 时，这个字符串将被发送回用户的浏览器。
+- if __name__ == '__main__':：这行代码是一个条件判断，用于检查这个模块是否被直接运行，而不是被其他模块导入。如果是直接运行，下面的代码块将被执行。
+- app.run(debug=True)：这行代码调用 Flask 应用实例的 run 方法，启动 Flask 内置的开发服务器。debug=True 参数会启动调试模式，这意味着应用会在代码改变时自动重新加载，并且在发生错误时提供一个调试器。
+
+如果你安装了 python-dotenv，可以在项目目录创建 .flaskenv 文件，简化命令：
+
+```text
+# 文件路径：.flaskenv
+FLASK_APP=app
+FLASK_DEBUG=True
+```
+
+配置后，直接运行 flask run 即可，无需每次指定 --app 参数：
+
+```text
+(.venv) $ flask run
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+```
+
+如果你把文件命名为 app.py 或 wsgi.py，Flask 能自动发现它，连 --app 都可以省略。但显式指定是一种好习惯。
+
+
+## Debug 模式
+
+开发时建议开启 Debug 模式，它提供两个重要功能：
+
+- 自动重载：修改代码保存后，服务器自动重启，无需手动操作
+- 交互式调试器：当代码出错时，浏览器中会显示详细的错误信息和调用栈
+
+开启方式：
+
+```text
+(.venv) $ flask --app app run --debug
+ * Debug mode: on
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 123-456-789
+```
+
+安全警告：Debug 模式下的交互式调试器允许在浏览器中执行任意 Python 代码。虽然它受 PIN 码保护，但 绝对不要在生产环境开启 Debug 模式。
+
+
+## 运行方式对比
+
+除了 flask run 命令，你也会看到另一种运行方式：
+
+
+## 实例
+
+然后用 python app.py 运行。
+
+Flask 官方推荐使用 flask run 命令。如果你在代码中写了 app.run() 同时又用了 flask run，Flask 会智能地忽略 app.run() 调用并给出黄字提示。
+
+
+## 为响应添加更多内容
+
+视图函数不仅可以返回简单的字符串，还可以返回 HTML 内容：
+
+
+## 实例
+
+访问 http://127.0.0.1:5000/，输出结果如下：
+
+当然，在 Python 代码中直接写 HTML 很快就会变得难以维护，后续章节会介绍如何使用模板来分离 HTML 和 Python 代码。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Flask 第一个应用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

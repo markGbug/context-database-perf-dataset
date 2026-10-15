@@ -1,34 +1,200 @@
-# CSS3：CSS3 文本效果 练习笔记
+# CSS3：CSS3 文本效果
 
 - 来源：[CSS3 文本效果](https://www.runoob.com/css3/css3-text-effects.html)
 - 分类：前端开发
 - 技术：CSS3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2475
 
-## 练习目标
+## 本章内容
 
-把 `CSS3 文本效果` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## CSS3 文本效果
 
-## 练习步骤
+CSS3中包含几个新的文本特征。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+在本章中您将了解以下文本属性：
 
-## 验收清单
+- text-shadow
+- box-shadow
+- text-overflow
+- word-wrap
+- word-break
 
-- 我能独立说出 `CSS3 文本效果` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 浏览器支持
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## CSS3 的文本阴影
+
+CSS3 中，text-shadow属性适用于文本阴影。
+
+您指定了水平阴影，垂直阴影，模糊的距离，以及阴影的颜色：
+
+
+## 实例
+
+给标题添加阴影:
+
+```text
+h1
+{
+    text-shadow: 5px 5px 5px #FF0000;
+}
+```
+
+
+## CSS3 box-shadow属性
+
+CSS3 中 CSS3 box-shadow 属性适用于盒子阴影
+
+
+## 实例
+
+```text
+div {
+    box-shadow: 10px 10px 5px #888888;
+}
+```
+
+
+## 接下来给阴影添加颜色
+
+
+## 实例
+
+```text
+div {
+    box-shadow: 10px 10px grey;
+}
+```
+
+
+## 接下来给阴影添加一个模糊效果
+
+
+## 实例
+
+```text
+div {
+    box-shadow: 10px 10px 5px grey;
+}
+```
+
+
+## 你也可以在 ::before 和 ::after 两个伪元素中添加阴影效果
+
+
+## 实例
+
+```text
+#boxshadow {
+    position: relative;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    padding: 10px;
+    background: white;
+}
+#boxshadow img {
+     width: 100%;
+     border: 1px solid #8a4419;
+     border-style: inset;
+}
+#boxshadow::after {
+    content: '';
+    position: absolute;
+    z-index: -1; /* hide shadow behind image */
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+    width: 70%;
+    left: 15%; /* one half of the remaining 30% */
+    height: 100px;
+    bottom: 0;
+}
+```
+
+
+## 阴影的一个使用特例是卡片效果
+
+
+## 实例
+
+```text
+div.card {
+    width: 250px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+```
+
+
+## CSS3 Text Overflow属性
+
+CSS3文本溢出属性指定应向用户如何显示溢出内容
+
+
+## 实例
+
+```text
+p.test1 {
+    white-space: nowrap;
+    width: 200px;
+    border: 1px solid #000000;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+p.test2 {
+    white-space: nowrap;
+    width: 200px;
+    border: 1px solid #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+```
+
+
+## CSS3的换行
+
+如果某个单词太长，不适合在一个区域内，它扩展到外面：
+
+CSS3中，自动换行属性允许您强制文本换行 - 即使这意味着分裂它中间的一个字：
+
+CSS代码如下：
+
+
+## 实例
+
+允许长文本换行:
+
+```text
+p {word-wrap:break-word;}
+```
+
+
+## CSS3 单词拆分换行
+
+CSS3 单词拆分换行属性指定换行规则：
+
+CSS代码如下：
+
+
+## 实例
+
+```text
+p.test1 {
+    word-break: keep-all;
+}
+
+p.test2 {
+    word-break: break-all;
+}
+```
+
+
+## 新文本属性
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS3 文本效果` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

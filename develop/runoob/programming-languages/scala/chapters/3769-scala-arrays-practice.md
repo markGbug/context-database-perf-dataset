@@ -1,34 +1,205 @@
-# Scala：Scala 数组 练习笔记
+# Scala：Scala 数组
 
 - 来源：[Scala 数组](https://www.runoob.com/scala/scala-arrays.html)
 - 分类：编程语言
 - 技术：Scala
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3769
 
-## 练习目标
+## 本章内容
 
-把 `Scala 数组` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Scala 语言中提供的数组是用来存储固定大小的同类型元素，数组对于每一门编程语言来说都是重要的数据结构之一。
 
-## 练习步骤
+声明数组变量并不是声明 number0、number1、...、number99 一个个单独的变量，而是声明一个就像 numbers 这样的变量，然后使用 numbers[0]、numbers[1]、...、numbers[99] 来表示一个个单独的变量。数组中某个指定的元素是通过索引来访问的。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+数组的第一个元素索引为0，最后一个元素的索引为元素总数减1。
 
-## 验收清单
 
-- 我能独立说出 `Scala 数组` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 声明数组
 
-## 复盘问题
+以下是 Scala 数组声明的语法格式：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```javascript
+var z:Array[String] = new Array[String](3)
+
+或
+
+var z = new Array[String](3)
+```
+
+以上语法中，z 声明一个字符串类型的数组，数组长度为 3 ，可存储 3 个元素。我们可以为每个元素设置值，并通过索引来访问每个元素，如下所示：
+
+```text
+z(0) = "Runoob"; z(1) = "Baidu"; z(4/2) = "Google"
+```
+
+最后一个元素的索引使用了表达式 4/2 作为索引，类似于 z(2) = "Google"。
+
+我们也可以使用以下方式来定义一个数组：
+
+```javascript
+var z = Array("Runoob", "Baidu", "Google")
+```
+
+下图展示了一个长度为 10 的数组 myList，索引值为 0 到 9：
+
+
+## 处理数组
+
+数组的元素类型和数组的大小都是确定的，所以当处理数组元素时候，我们通常使用基本的 for 循环。
+
+以下实例演示了数组的创建，初始化等处理过程：
+
+
+## 实例
+
+执行以上代码，输出结果为：
+
+```text
+$ scalac Test.scala
+$ scala Test
+1.9
+2.9
+3.4
+3.5
+总和为 11.7
+最大值为 3.5
+```
+
+
+## 多维数组
+
+多维数组一个数组中的值可以是另一个数组，另一个数组的值也可以是一个数组。矩阵与表格是我们常见的二维数组。
+
+以上是一个定义了二维数组的实例：
+
+```text
+val myMatrix = Array.ofDim[Int](3, 3)
+```
+
+实例中数组中包含三个数组元素，每个数组元素又含有三个值。
+
+接下来我们来看一个二维数组处理的完整实例：
+
+
+## 实例
+
+执行以上代码，输出结果为：
+
+```text
+$ scalac Test.scala
+$ scala Test
+0 1 2
+0 1 2
+0 1 2
+```
+
+
+## 合并数组
+
+以下实例中，我们使用 concat() 方法来合并两个数组，concat() 方法中接受多个数组参数：
+
+
+## 实例
+
+执行以上代码，输出结果为：
+
+```text
+$ scalac Test.scala
+$ scala Test
+1.9
+2.9
+3.4
+3.5
+8.9
+7.9
+0.4
+1.5
+```
+
+
+## 创建区间数组
+
+以下实例中，我们使用了 range() 方法来生成一个区间范围内的数组。range() 方法最后一个参数为步长，默认为 1：
+
+
+## 实例
+
+执行以上代码，输出结果为：
+
+```text
+$ scalac Test.scala
+$ scala Test
+10 12 14 16 18
+10 11 12 13 14 15 16 17 18 19
+```
+
+
+## Scala 数组方法
+
+下表中为 Scala 语言中处理数组的重要方法，使用它前我们需要使用 import Array._ 引入包。
+
+def apply( x: T, xs: T* ): Array[T]
+
+创建指定对象 T 的数组, T 的值可以是 Unit, Double, Float, Long, Int, Char, Short, Byte, Boolean。
+
+def concat[T]( xss: Array[T]* ): Array[T]
+
+合并数组
+
+def copy( src: AnyRef, srcPos: Int, dest: AnyRef, destPos: Int, length: Int ): Unit
+
+复制一个数组到另一个数组上。相等于 Java's System.arraycopy(src, srcPos, dest, destPos, length)。
+
+def empty[T]: Array[T]
+
+返回长度为 0 的数组
+
+def iterate[T]( start: T, len: Int )( f: (T) => T ): Array[T]
+
+返回指定长度数组，每个数组元素为指定函数的返回值。
+
+以上实例数组初始值为 0，长度为 3，计算函数为a=>a+1：
+
+```text
+scala> Array.iterate(0,3)(a=>a+1)
+res1: Array[Int] = Array(0, 1, 2)
+```
+
+def fill[T]( n: Int )(elem: => T): Array[T]
+
+返回数组，长度为第一个参数指定，同时每个元素使用第二个参数进行填充。
+
+def fill[T]( n1: Int, n2: Int )( elem: => T ): Array[Array[T]]
+
+返回二数组，长度为第一个参数指定，同时每个元素使用第二个参数进行填充。
+
+def ofDim[T]( n1: Int ): Array[T]
+
+创建指定长度的数组
+
+def ofDim[T]( n1: Int, n2: Int ): Array[Array[T]]
+
+创建二维数组
+
+def ofDim[T]( n1: Int, n2: Int, n3: Int ): Array[Array[Array[T]]]
+
+创建三维数组
+
+def range( start: Int, end: Int, step: Int ): Array[Int]
+
+创建指定区间内的数组，step 为每个元素间的步长
+
+def range( start: Int, end: Int ): Array[Int]
+
+创建指定区间内的数组
+
+def tabulate[T]( n: Int )(f: (Int)=> T): Array[T]
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Scala 数组` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

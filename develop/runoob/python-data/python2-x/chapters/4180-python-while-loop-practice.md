@@ -1,34 +1,158 @@
-# Python2.x：Python While 循环语句 练习笔记
+# Python2.x：Python While 循环语句
 
 - 来源：[Python While 循环语句](https://www.runoob.com/python/python-while-loop.html)
 - 分类：Python / 数据科学
 - 技术：Python2.x
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4180
 
-## 练习目标
+## 本章内容
 
-把 `Python While 循环语句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Python 编程中 while 语句用于循环执行程序，即在某条件下，循环执行某段程序，以处理需要重复处理的相同任务。其基本形式为：
 
-## 练习步骤
+```java
+while 判断条件(condition)：
+    执行语句(statements)……
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+执行语句可以是单个语句或语句块。判断条件可以是任何表达式，任何非零、或非空（null）的值均为true。
 
-## 验收清单
+当判断条件假 false 时，循环结束。
 
-- 我能独立说出 `Python While 循环语句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+执行流程图如下：
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### Gif 演示 Python while 语句执行过程
+
+复杂一点:
+
+
+## 实例
+
+```java
+#!/usr/bin/python
+
+count = 0
+while (count < 9):
+   print 'The count is:', count
+   count = count + 1
+
+print "Good bye!"
+```
+
+以上代码执行输出结果:
+
+```text
+The count is: 0
+The count is: 1
+The count is: 2
+The count is: 3
+The count is: 4
+The count is: 5
+The count is: 6
+The count is: 7
+The count is: 8
+Good bye!
+```
+
+while 语句时还有另外两个重要的命令 continue，break 来跳过循环，continue 用于跳过该次循环，break 则是用于退出循环，此外"判断条件"还可以是个常值，表示循环必定成立，具体用法如下：
+
+```java
+# continue 和 break 用法
+
+i = 1
+while i < 10:
+    i += 1
+    if i%2 > 0:     # 非双数时跳过输出
+        continue
+    print i         # 输出双数2、4、6、8、10
+
+i = 1
+while 1:            # 循环条件为1必定成立
+    print i         # 输出1~10
+    i += 1
+    if i > 10:     # 当i大于10时跳出循环
+        break
+```
+
+
+## 无限循环
+
+如果条件判断语句永远为 true，循环将会无限的执行下去，如下实例：
+
+
+## 实例
+
+```java
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+var = 1
+while var == 1 :  # 该条件永远为true，循环将无限执行下去
+   num = raw_input("Enter a number  :")
+   print "You entered: ", num
+
+print "Good bye!"
+```
+
+以上实例输出结果： Enter a number :20 You entered: 20 Enter a number :29 You entered: 29 Enter a number :3 You entered: 3 Enter a number between :Traceback (most recent call last): File "test.py", line 5, in <module> num = raw_input("Enter a number :") KeyboardInterrupt
+
+注意：以上的无限循环你可以使用 CTRL+C 来中断循环。
+
+
+## 循环使用 else 语句
+
+在 python 中，while … else 在循环条件为 false 时执行 else 语句块：
+
+
+## 实例
+
+```java
+#!/usr/bin/python
+
+count = 0
+while count < 5:
+   print count, " is  less than 5"
+   count = count + 1
+else:
+   print count, " is not less than 5"
+```
+
+以上实例输出结果为：
+
+```text
+0 is less than 5
+1 is less than 5
+2 is less than 5
+3 is less than 5
+4 is less than 5
+5 is not less than 5
+```
+
+
+## 简单语句组
+
+类似 if 语句的语法，如果你的 while 循环体中只有一条语句，你可以将该语句与while写在同一行中， 如下所示：
+
+
+## 实例
+
+```java
+#!/usr/bin/python
+
+flag = 1
+
+while (flag): print 'Given flag is really true!'
+
+print "Good bye!"
+```
+
+注意：以上的无限循环你可以使用 CTRL+C 来中断循环。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python While 循环语句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

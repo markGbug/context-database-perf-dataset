@@ -1,34 +1,71 @@
-# AJAX：AJAX XML 练习笔记
+# AJAX：AJAX XML 实例
 
 - 来源：[AJAX XML](https://www.runoob.com/ajax/ajax-xmlfile.html)
 - 分类：前端开发
 - 技术：AJAX
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2265
 
-## 练习目标
+## 本章内容
 
-把 `AJAX XML` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+AJAX 可用来与 XML 文件进行交互式通信。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## AJAX XML 实例
 
-## 验收清单
+下面的例子将演示网页如何使用 AJAX 来读取来自 XML 文件的信息：
 
-- 我能独立说出 `AJAX XML` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例解析 - loadXMLDoc() 函数
+
+当用户点击上面的"获取我收藏的 CD"这个按钮，就会执行 loadXMLDoc() 函数。
+
+loadXMLDoc() 函数创建 XMLHttpRequest 对象，添加当服务器响应就绪时执行的函数，并将请求发送到服务器。
+
+当服务器响应就绪时，会构建一个 HTML 表格，从 XML 文件中提取节点（元素），最后使用 XML 数据的 填充 id="demo" 的表格元素：
+
+
+## 异步加载 XML 文档
+
+```java
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    myFunction(this);
+    }
+  };
+  xhttp.open("GET", "cd_catalog.xml", true);
+  xhttp.send();
+}
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table="<tr><th>Artist</th><th>Title</th></tr>";
+  var x = xmlDoc.getElementsByTagName("CD");
+  for (i = 0; i <x.length; i++) {
+    table += "<tr><td>" +
+    x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
+    "</td></tr>";
+  }
+  document.getElementById("demo").innerHTML = table;
+}
+```
+
+
+## AJAX 服务器页面
+
+上面这个例子中使用的服务器页面实际上是一个名为 "cd_catalog.xml" XML 文件。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AJAX XML` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,124 @@
-# React：React Refs 练习笔记
+# React：React Refs
 
 - 来源：[React Refs](https://www.runoob.com/react/react-refs.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3053
 
-## 练习目标
+## 本章内容
 
-把 `React Refs` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+React 支持一种非常特殊的属性 Ref ，你可以用来绑定到 render() 输出的任何组件上。
 
-## 练习步骤
+这个特殊的属性允许你引用 render() 返回的相应的支撑实例（ backing instance ），这样就可以确保在任何时间总是拿到正确的实例。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+在 React 中，Refs（引用）提供了一种访问 DOM 元素或组件实例的方法。使用 Refs 可以直接操作 DOM 元素或获取子组件实例，适用于处理焦点、文本选择、媒体播放、触发强制动画或集成第三方 DOM 库等场景。
 
-## 验收清单
 
-- 我能独立说出 `React Refs` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 使用方法
 
-## 复盘问题
+使用 React.createRef 或 useRef 来创建和访问 refs。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+React.createRef 通常用于类组件，而 useRef 是一个 Hook，通常用于函数组件。
+
+此外，在事件处理函数中绑定 this 也可以通过类属性语法来避免每次渲染时都创建一个新的函数。
+
+- 创建 Ref：在类组件的构造函数中使用 React.createRef 创建 ref 对象，并将其赋值给组件实例的一个属性。
+- 绑定 Ref：在 render 方法中，将 ref 对象绑定到需要引用的 DOM 元素上。
+- 访问 Ref：在组件的其它方法中，通过 this.myInputRef.current 访问绑定的 DOM 元素，可以操作该元素的属性和方法。
+
+
+### 完整实例
+
+你可以通过使用 this 来获取当前 React 组件，或使用 ref 来获取组件的引用，实例如下：
+
+
+## React 实例
+
+```html
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.myInputRef = React.createRef();
+  }
+
+  handleClick = () => {
+    // 使用原生的 DOM API 获取焦点
+    this.myInputRef.current.focus();
+  }
+
+  render() {
+    return (
+      <div>
+        <input type="text" ref={this.myInputRef} />
+        <input
+          type="button"
+          value="点我输入框获取焦点"
+          onClick={this.handleClick}
+        />
+      </div>
+    );
+  }
+}
+```
+
+实例中，我们获取了输入框的支撑实例的引用，子点击按钮后输入框获取焦点。
+
+我们也可以使用 getDOMNode()方法获取 DOM 元素
+
+
+### 创建 Refs
+
+React 提供了 React.createRef 方法来创建 refs。
+
+
+## 实例
+
+
+### 回调 Refs
+
+另一种创建 refs 的方式是使用回调函数。这种方式在 React 16.3 之前很常见，现在更推荐使用 React.createRef。
+
+
+## 实例
+
+
+### 使用 Refs 访问 DOM 元素
+
+通过 Refs 可以直接访问并操作 DOM 元素。
+
+
+## 实例
+
+
+### 使用 Refs 访问子组件实例
+
+Refs 还可以用于访问子组件的实例方法或属性。
+
+
+## 实例
+
+
+### 使用 useRef Hook（函数组件）
+
+在函数组件中，可以使用 useRef Hook 创建 refs。
+
+
+## 实例
+
+
+### 小结
+
+- 创建 Refs：在类组件中使用 React.createRef，在函数组件中使用 useRef Hook。
+- 访问 DOM 元素：通过 refs 直接访问并操作 DOM 元素。
+- 访问子组件实例：通过 refs 访问子组件的实例方法或属性。
+- 自定义暴露的实例值：使用 useImperativeHandle 和 forwardRef 自定义子组件暴露给父组件的实例值。
+- 并发模式中的 Refs：Refs 在并发模式中依然正常工作，可以与 useTransition 等并发模式相关的 Hook 结合使用。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `React Refs` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

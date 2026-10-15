@@ -1,34 +1,91 @@
-# WSDL：WSDL 语法 练习笔记
+# WSDL：完整的 WSDL 语法
 
 - 来源：[WSDL 语法](https://www.runoob.com/wsdl/wsdl-syntax.html)
 - 分类：XML / Web Service
 - 技术：WSDL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4363
 
-## 练习目标
+## 本章内容
 
-把 `WSDL 语法` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+描述于 W3C 工作草案的完整 WSDL 1.2 语法已列在下面：
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 实例
 
-## 验收清单
+```html
+<wsdl:definitions name="nmtoken"? targetNamespace="uri">
 
-- 我能独立说出 `WSDL 语法` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+    <import namespace="uri" location="uri"/> *
 
-## 复盘问题
+    <wsdl:documentation .... /> ?
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+    <wsdl:types> ?
+        <wsdl:documentation .... /> ?
+        <xsd:schema .... /> *
+    </wsdl:types>
+
+    <wsdl:message name="ncname"> *
+        <wsdl:documentation .... /> ?
+        <part name="ncname" element="qname"? type="qname"?/> *
+    </wsdl:message>
+
+    <wsdl:portType name="ncname"> *
+        <wsdl:documentation .... /> ?
+        <wsdl:operation name="ncname"> *
+            <wsdl:documentation .... /> ?
+            <wsdl:input message="qname"> ?
+                <wsdl:documentation .... /> ?
+            </wsdl:input>
+            <wsdl:output message="qname"> ?
+                <wsdl:documentation .... /> ?
+            </wsdl:output>
+            <wsdl:fault name="ncname" message="qname"> *
+                <wsdl:documentation .... /> ?
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:serviceType name="ncname"> *
+        <wsdl:portType name="qname"/> +
+    </wsdl:serviceType>
+
+    <wsdl:binding name="ncname" type="qname"> *
+        <wsdl:documentation .... /> ?
+        <-- binding details --> *
+        <wsdl:operation name="ncname"> *
+            <wsdl:documentation .... /> ?
+            <-- binding details --> *
+            <wsdl:input> ?
+                <wsdl:documentation .... /> ?
+                <-- binding details -->
+            </wsdl:input>
+            <wsdl:output> ?
+                <wsdl:documentation .... /> ?
+                <-- binding details --> *
+            </wsdl:output>
+            <wsdl:fault name="ncname"> *
+                <wsdl:documentation .... /> ?
+                <-- binding details --> *
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="ncname" serviceType="qname"> *
+        <wsdl:documentation .... /> ?
+        <wsdl:port name="ncname" binding="qname"> *
+            <wsdl:documentation .... /> ?
+            <-- address details -->
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `WSDL 语法` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

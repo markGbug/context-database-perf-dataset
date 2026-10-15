@@ -1,34 +1,78 @@
-# Node.js：Node.js 路由 练习笔记
+# Node.js：Node.js 路由
 
 - 来源：[Node.js 路由](https://www.runoob.com/nodejs/nodejs-router.html)
 - 分类：后端开发
 - 技术：Node.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1019
 
-## 练习目标
+## 本章内容
 
-把 `Node.js 路由` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 Node.js 中，路由是处理 HTTP 请求的关键部分，它决定了如何根据不同的 URL 和 HTTP 方法（如 GET、POST、PUT、DELETE 等）来分发请求。
 
-## 练习步骤
+路由通常用于构建 Web 应用程序，特别是 RESTful API。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Node.js 本身并没有内置的路由机制，但可以通过中间件库（如 Express）来实现。
 
-## 验收清单
+路由通常涉及以下几个方面：
 
-- 我能独立说出 `Node.js 路由` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- URL 匹配：根据请求的 URL 来匹配路由规则。
+- HTTP 方法匹配：根据请求的 HTTP 方法（GET、POST、PUT、DELETE 等）来匹配路由规则。
+- 请求处理：一旦匹配到合适的路由规则，就调用相应的处理函数来处理请求。
 
-## 复盘问题
+Node.js 中，我们可以通过 http 模块创建一个简单的路由，如下实例：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+浏览器访问 http://localhost:3000 显示如下：
+
+浏览器访问 http://localhost:3000/about 显示如下：
+
+如果访问其他 URL 地址，则会直接显示 404 Not Found。
+
+更多 HTTP 请求可以参考：HTTP 教程。
+
+
+## 请求参数
+
+一个完整 URL 的 http://localhost:8888/start?foo=bar&hello=world 包含主机、路径和查询字符串。
+
+为了解析这些数据，我们可以使用 URL 对象和 querystring 模块。
+
+```javascript
+const myUrl = new URL("http://localhost:8888/start?foo=bar&hello=world");
+
+// 提取路径名
+console.log(myUrl.pathname); // 输出: /start
+
+// 提取查询参数
+console.log(myUrl.searchParams.get("foo"));   // 输出: bar
+console.log(myUrl.searchParams.get("hello")); // 输出: world
+```
+
+```text
+myUrl.pathname
+          |
+          |
+        -----
+http://localhost:8888/start?foo=bar&hello=world
+                                ---       -----
+                                 |          |
+                                 |          |
+           myUrl.searchParams.get("foo")    |
+                                            |
+                                     myUrl.searchParams.get("hello")
+```
+
+当然我们也可以用 querystring 模块来解析 POST 请求体中的参数，相关内容后面的 Node.js GET/POST请求 会介绍。
+
+我们需要的所有请求数据都会包含在 request 对象中，该对象作为 onRequest() 回调函数的第一个参数传递。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Node.js 路由` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

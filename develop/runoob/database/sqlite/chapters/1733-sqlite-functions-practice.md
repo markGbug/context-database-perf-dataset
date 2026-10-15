@@ -1,34 +1,238 @@
-# SQLite：SQLite 常用函数 练习笔记
+# SQLite：SQLite 常用函数
 
 - 来源：[SQLite 常用函数](https://www.runoob.com/sqlite/sqlite-functions.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1733
 
-## 练习目标
+## 本章内容
 
-把 `SQLite 常用函数` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQLite 有许多内置函数用于处理字符串或数字数据。下面列出了一些有用的 SQLite 内置函数，且所有函数都是大小写不敏感，这意味着您可以使用这些函数的小写形式或大写形式或混合形式。欲了解更多详情，请查看 SQLite 的官方文档：
 
-## 练习步骤
+在我们开始讲解这些函数实例之前，先假设 COMPANY 表有以下记录：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
 
-## 验收清单
 
-- 我能独立说出 `SQLite 常用函数` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## SQLite COUNT 函数
 
-## 复盘问题
+SQLite COUNT 聚集函数是用来计算一个数据库表中的行数。下面是实例：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+sqlite> SELECT count(*) FROM COMPANY;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+count(*)
+----------
+7
+```
+
+
+## SQLite MAX 函数
+
+SQLite MAX 聚合函数允许我们选择某列的最大值。下面是实例：
+
+```text
+sqlite> SELECT max(salary) FROM COMPANY;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+max(salary)
+-----------
+85000.0
+```
+
+
+## SQLite MIN 函数
+
+SQLite MIN 聚合函数允许我们选择某列的最小值。下面是实例：
+
+```text
+sqlite> SELECT min(salary) FROM COMPANY;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+min(salary)
+-----------
+10000.0
+```
+
+
+## SQLite AVG 函数
+
+SQLite AVG 聚合函数计算某列的平均值。下面是实例：
+
+```text
+sqlite> SELECT avg(salary) FROM COMPANY;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+avg(salary)
+----------------
+37142.8571428572
+```
+
+
+## SQLite SUM 函数
+
+SQLite SUM 聚合函数允许为一个数值列计算总和。下面是实例：
+
+```text
+sqlite> SELECT sum(salary) FROM COMPANY;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+sum(salary)
+-----------
+260000.0
+```
+
+
+## SQLite RANDOM 函数
+
+SQLite RANDOM 函数返回一个介于 -9223372036854775808 和 +9223372036854775807 之间的伪随机整数。下面是实例：
+
+```text
+sqlite> SELECT random() AS Random;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+Random
+-------------------
+5876796417670984050
+```
+
+
+## SQLite ABS 函数
+
+SQLite ABS 函数返回数值参数的绝对值。下面是实例：
+
+```text
+sqlite> SELECT abs(5), abs(-15), abs(NULL), abs(0), abs("ABC");
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+abs(5)      abs(-15)    abs(NULL)   abs(0)      abs("ABC")
+----------  ----------  ----------  ----------  ----------
+5           15                      0           0.0
+```
+
+
+## SQLite UPPER 函数
+
+SQLite UPPER 函数把字符串转换为大写字母。下面是实例：
+
+```text
+sqlite> SELECT upper(name) FROM COMPANY;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+upper(name)
+-----------
+PAUL
+ALLEN
+TEDDY
+MARK
+DAVID
+KIM
+JAMES
+```
+
+
+## SQLite LOWER 函数
+
+SQLite LOWER 函数把字符串转换为小写字母。下面是实例：
+
+```text
+sqlite> SELECT lower(name) FROM COMPANY;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+lower(name)
+-----------
+paul
+allen
+teddy
+mark
+david
+kim
+james
+```
+
+
+## SQLite LENGTH 函数
+
+SQLite LENGTH 函数返回字符串的长度。下面是实例：
+
+```text
+sqlite> SELECT name, length(name) FROM COMPANY;
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+NAME        length(name)
+----------  ------------
+Paul        4
+Allen       5
+Teddy       5
+Mark        4
+David       5
+Kim         3
+James       5
+```
+
+
+## SQLite sqlite_version 函数
+
+SQLite sqlite_version 函数返回 SQLite 库的版本。下面是实例：
+
+```text
+sqlite> SELECT sqlite_version() AS 'SQLite Version';
+```
+
+上面的 SQLite SQL 语句将产生以下结果：
+
+```text
+SQLite Version
+--------------
+3.6.20
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite 常用函数` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,86 @@
-# Memcached：PHP 连接 Memcached 服务 学习笔记
+# Memcached：PHP 连接 Memcached 服务
 
 - 来源：[PHP 连接 Memcached 服务](https://www.runoob.com/Memcached/php-connect-memcached.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1457
 
-## 学习目标
+## 本章内容
 
-Memcached 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PHP 连接 Memcached 服务` 建立学习路径，先理解它在 Memcached 体系中的位置，再做可运行或可复述的验证。
+在前面章节中我们已经介绍了如何安装 Memcached 服务，接下来我们为大家介绍 PHP 如何使用 Memcached 服务。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### PHP Memcache 扩展安装
 
-## 笔记模板
+PHP Memcache 扩展包下载地址：http://pecl.php.net/package/memcache，你可以下载最新稳定包(stable)。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+wget http://pecl.php.net/get/memcache-2.2.7.tgz
+tar -zxvf memcache-2.2.7.tgz
+cd memcache-2.2.7
+/usr/local/php/bin/phpize
+./configure --with-php-config=/usr/local/php/bin/php-config
+make && make install
+```
 
-## 完成标准
+注意：/usr/local/php/ 为php的安装路径，需要根据你安装的实际目录调整。
 
-- 能用 3 到 5 句话解释 `PHP 连接 Memcached 服务`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+安装成功后会显示你的memcache.so扩展的位置，比如我的：
+
+```text
+Installing shared extensions:     /usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/
+```
+
+最后我们需要把这个扩展添加到php中，打开你的php.ini文件在最后添加以下内容：
+
+```text
+[Memcache]
+extension_dir = "/usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/"
+extension = memcache.so
+```
+
+添加完后 重新启动php,我使用的是nginx+php-fpm进程所以命令如下：
+
+```text
+kill -USR2 `cat /usr/local/php/var/run/php-fpm.pid`
+```
+
+如果是apache的使用以下命令:
+
+```text
+/usr/local/apache2/bin/apachectl restart
+```
+
+检查安装结果
+
+```text
+/usr/local/php/bin/php -m | grep memcache
+```
+
+安装成功会输出：memcache。
+
+或者通过浏览器访问 phpinfo() 函数来查看，如下图：
+
+
+## PHP 连接 Memcached
+
+```text
+<?php
+$memcache = new Memcache;             //创建一个memcache对象
+$memcache->connect('localhost', 11211) or die ("Could not connect"); //连接Memcached服务器
+$memcache->set('key', 'test');        //设置一个变量到内存中，名称是key 值是test
+$get_value = $memcache->get('key');   //从内存中取出key的值
+echo $get_value;
+?>
+```
+
+更多 PHP 操作 Memcached 请参阅： http://php.net/manual/zh/book.memcache.php
+
+
+## 复习重点
+
+- 能说明 `PHP 连接 Memcached 服务` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

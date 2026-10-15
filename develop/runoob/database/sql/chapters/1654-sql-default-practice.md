@@ -1,34 +1,110 @@
-# SQL：SQL DEFAULT 练习笔记
+# SQL：SQL DEFAULT 约束
 
 - 来源：[SQL DEFAULT](https://www.runoob.com/sql/sql-default.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1654
 
-## 练习目标
+## 本章内容
 
-把 `SQL DEFAULT` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+DEFAULT 约束用于向列中插入默认值。
 
-## 练习步骤
+如果没有规定其他的值，那么会将默认值添加到所有的新记录。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 语法
 
-- 我能独立说出 `SQL DEFAULT` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+1、在创建表时定义 DEFAULT 约束：
 
-## 复盘问题
+```text
+CREATE TABLE 表名 (
+    列名 数据类型 DEFAULT 默认值
+);
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+2、在现有表中添加 DEFAULT 约束：
+
+```text
+ALTER TABLE 表名
+ALTER COLUMN 列名 SET DEFAULT 默认值;
+```
+
+
+### 实例
+
+1、创建表时定义 DEFAULT 约束
+
+
+## 实例
+
+2、在现有表中添加 DEFAULT 约束
+
+```text
+ALTER TABLE Employees
+ALTER COLUMN Salary SET DEFAULT 0.00;
+```
+
+3、插入数据时使用默认值
+
+```text
+INSERT INTO Employees (EmployeeID, FirstName, LastName)
+VALUES (1, 'John', 'Doe');
+```
+
+如果未提供 HireDate 和 Salary 的值，数据库会自动使用默认值。
+
+
+### 删除 DEFAULT 约束
+
+不同数据库的删除方式有所不同：
+
+1、SQL Server
+
+```text
+ALTER TABLE 表名
+DROP CONSTRAINT 约束名;
+```
+
+2、MySQL
+
+```text
+ALTER TABLE 表名
+ALTER COLUMN 列名 DROP DEFAULT;
+```
+
+3、Oracle
+
+```text
+ALTER TABLE 表名
+MODIFY 列名 DEFAULT NULL;
+```
+
+4、MS Access
+
+```text
+ALTER TABLE 表名
+ALTER COLUMN 列名 DROP DEFAULT;
+```
+
+
+### 注意事项
+
+- DEFAULT 约束的值必须与列的数据类型兼容。
+- 如果列定义为 NOT NULL 且未提供默认值，插入数据时必须显式提供值，否则会报错。
+- 默认值可以是常量值、表达式或函数（如 GETDATE()）。
+
+
+### 适用场景
+
+- 为日期列设置当前日期为默认值。
+- 为数值列设置初始值（如 0）。
+- 为状态列设置默认状态（如 'Active'）。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL DEFAULT` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

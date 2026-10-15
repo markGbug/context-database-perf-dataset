@@ -1,35 +1,88 @@
-# Web Pages：MVC 简介 学习笔记
+# Web Pages：ASP.NET MVC 教程
 
 - 来源：[MVC 简介](https://www.runoob.com/aspnet/mvc-intro.html)
 - 分类：.NET
 - 技术：Web Pages
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2222
 
-## 学习目标
+## 本章内容
 
-Web Pages 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `MVC 简介` 建立学习路径，先理解它在 Web Pages 体系中的位置，再做可运行或可复述的验证。
+ASP.NET 是一个使用 HTML、CSS、JavaScript 和服务器脚本创建网页和网站的开发框架。
 
-## 阅读抓手
+ASP.NET 支持三种不同的开发模式： Web Pages（Web 页面）、MVC（Model View Controller 模型-视图-控制器）、Web Forms（Web 窗体）。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+本教程介绍 MVC。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## MVC 编程模式
 
-## 完成标准
+MVC 是三种 ASP.NET 编程模式中的一种。
 
-- 能用 3 到 5 句话解释 `MVC 简介`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式：
+
+- Model（模型）表示应用程序核心（比如数据库记录列表）。
+- View（视图）显示数据（数据库记录）。
+- Controller（控制器）处理输入（写入数据库记录）。
+
+MVC 模式同时提供了对 HTML、CSS 和 JavaScript 的完全控制。
+
+MVC 模式定义 Web 应用程序 带有三个逻辑层：
+
+业务层（模型逻辑）
+
+显示层（视图逻辑）
+
+输入控制（控制器逻辑）
+
+Model（模型）是应用程序中用于处理应用程序数据逻辑的部分。 通常模型对象负责在数据库中存取数据。
+
+View（视图）是应用程序中处理数据显示的部分。 通常视图是依据模型数据创建的。
+
+Controller（控制器）是应用程序中处理用户交互的部分。 通常控制器负责从视图读取数据，控制用户输入，并向模型发送数据。
+
+MVC 分层有助于管理复杂的应用程序，因为您可以在一个时间内专门关注一个方面。例如，您可以在不依赖业务逻辑的情况下专注于视图设计。同时也让应用程序的测试更加容易。
+
+MVC 分层同时也简化了分组开发。不同的开发人员可同时开发视图、控制器逻辑和业务逻辑。
+
+
+## Web Forms 对比 MVC
+
+MVC 编程模式是对传统 ASP.NET（Web Forms）的一种轻量级的替代方案。它是轻量级的、可测试性高的框架，同时整合了所有已有的 ASP.NET 特性，比如母版页、安全性和认证。
+
+
+## Visual Studio Express 2012/2010
+
+Visual Studio Express 是 Microsoft Visual Studio 的免费版本。
+
+Visual Studio Express 是为 MVC（和 Web Forms）量身定制的开发工具。
+
+Visual Studio Express 包含：
+
+- MVC 和 Web Forms
+- 拖拽 Web 控件和 Web 组件
+- Web 服务器语言（Razor 使用 VB 或者 C#）
+- Web 服务器（IIS Express）
+- 数据库服务器（SQL Server Compact）
+- 完整的 Web 开发框架（ASP.NET）
+
+如果您已经安装了 Visual Studio Express，您将从本教程中学到更多。
+
+如果您想安装 Visual Studio Express，请点击下列链接中的一个：
+
+Visual Web Developer 2012（Windows 7 或者 Windows 8）
+
+Visual Web Developer 2010（Windows Vista 或者 XP）
+
+
+## ASP.NET MVC 参考手册
+
+在本教程的最后，我们提供了完整的 ASP.NET MVC 参考手册供您查阅。
+
+
+## 复习重点
+
+- 能说明 `MVC 简介` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

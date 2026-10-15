@@ -1,4 +1,4 @@
-# Ollama：Ollama 相关命令 概念卡
+# Ollama：Ollama 相关命令
 
 - 来源：[Ollama 相关命令](https://www.runoob.com/ollama/ollama-commands.html)
 - 分类：AI / 智能开发
@@ -6,24 +6,48 @@
 - 笔记类型：概念卡
 - 章节序号：0392
 
-## 一句话定义
+## 本章内容
 
-`Ollama 相关命令` 是 Ollama 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+Ollama 提供了多种命令行工具（CLI）供用户与本地运行的模型进行交互。
 
-## 三层理解
+基本格式：
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
+```html
+ollama <command> [args]
+```
 
-## 关联知识
+我们可以用 ollama --help 查看包含有哪些命令：
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
+```text
+Large language model runner
 
-## 记忆锚点
+Usage:
+  ollama [flags]
+  ollama [command]
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+Available Commands:
+  serve       Start ollama
+  create      Create a model from a Modelfile
+  show        Show information for a model
+  run         Run a model
+  stop        Stop a running model
+  pull        Pull a model from a registry
+  push        Push a model to a registry
+  list        List models
+  ps          List running models
+  cp          Copy a model
+  rm          Remove a model
+  help        Help about any command
+
+Flags:
+  -h, --help      help for ollama
+  -v, --version   Show version information
+```
+
+
+## 记忆卡片
+
+- 一句话定义：`Ollama 相关命令` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

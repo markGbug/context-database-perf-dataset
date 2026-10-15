@@ -1,35 +1,82 @@
-# HTML DOM：HTML DOM 访问 学习笔记
+# HTML DOM：HTML DOM 访问
 
 - 来源：[HTML DOM 访问](https://www.runoob.com/htmldom/htmldom-access.html)
 - 分类：前端开发
 - 技术：HTML DOM
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2592
 
-## 学习目标
+## 本章内容
 
-HTML DOM 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `HTML DOM 访问` 建立学习路径，先理解它在 HTML DOM 体系中的位置，再做可运行或可复述的验证。
+访问 HTML DOM - 查找 HTML 元素。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 访问 HTML 元素（节点）
 
-## 笔记模板
+访问 HTML 元素等同于访问节点
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+您能够以不同的方式来访问 HTML 元素：
 
-## 完成标准
+- 通过使用 getElementById() 方法
+- 通过使用 getElementsByTagName() 方法
+- 通过使用 getElementsByClassName() 方法
 
-- 能用 3 到 5 句话解释 `HTML DOM 访问`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## getElementById() 方法
+
+getElementById() 方法返回带有指定 ID 的元素引用：
+
+
+### 语法
+
+下面的例子获取 id="intro" 的元素：
+
+
+## 实例
+
+```text
+document.getElementById("intro");
+```
+
+
+## getElementsByTagName() 方法
+
+getElementsByTagName() 返回带有指定标签名的所有元素。
+
+
+### 语法
+
+下面的例子返回包含文档中所有 <p> 元素的列表：
+
+
+## 实例 1
+
+```text
+document.getElementsByTagName("p");
+```
+
+下面的例子返回包含文档中所有 <p> 元素的列表，并且这些 <p> 元素应该是 id="main" 的元素的后代（子、孙等等）：
+
+
+## 实例 2
+
+```text
+document.getElementById("main").getElementsByTagName("p");
+```
+
+
+## The getElementsByClassName() Method
+
+如果您希望查找带有相同类名的所有 HTML 元素，请使用这个方法：
+
+上面的例子返回包含 class="intro" 的所有元素的一个列表：
+
+注意：getElementsByClassName() 在 Internet Explorer 5,6,7,8 中无效。
+
+
+## 复习重点
+
+- 能说明 `HTML DOM 访问` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

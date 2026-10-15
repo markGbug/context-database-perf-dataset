@@ -1,34 +1,54 @@
-# Memcached：Memcached stats slabs 命令 练习笔记
+# Memcached：Memcached stats slabs 命令
 
 - 来源：[Memcached stats slabs 命令](https://www.runoob.com/memcached/memcached-stats-slabs.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1453
 
-## 练习目标
+## 本章内容
 
-把 `Memcached stats slabs 命令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Memcached stats slabs 命令用于显示各个slab的信息，包括chunk的大小、数目、使用情况等。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 语法：
 
-## 验收清单
+stats slabs 命令的基本语法格式如下：
 
-- 我能独立说出 `Memcached stats slabs 命令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+stats slabs
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 实例
+
+```text
+stats slabs
+STAT 1:chunk_size 96
+STAT 1:chunks_per_page 10922
+STAT 1:total_pages 1
+STAT 1:total_chunks 10922
+STAT 1:used_chunks 1
+STAT 1:free_chunks 10921
+STAT 1:free_chunks_end 0
+STAT 1:mem_requested 71
+STAT 1:get_hits 0
+STAT 1:cmd_set 1
+STAT 1:delete_hits 0
+STAT 1:incr_hits 0
+STAT 1:decr_hits 0
+STAT 1:cas_hits 0
+STAT 1:cas_badval 0
+STAT 1:touch_hits 0
+STAT active_slabs 1
+STAT total_malloced 1048512
+END
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Memcached stats slabs 命令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

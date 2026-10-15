@@ -1,34 +1,212 @@
-# Django：Django 项目结构解析 练习笔记
+# Django：Django 项目结构解析
 
 - 来源：[Django 项目结构解析](https://www.runoob.com/django/django-project-intro.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3810
 
-## 练习目标
+## 本章内容
 
-把 `Django 项目结构解析` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+通过理解 Django 的项目结构，我们可以更高效地组织代码，遵循 Django 的最佳实践，构建可维护的 Web 应用程序。
 
-## 练习步骤
+```text
+myproject/
+│
+├── manage.py
+└── myproject/
+    ├── __init__.py
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+使用 django-admin 来创建 HelloWorld 项目：
 
-## 验收清单
+```text
+django-admin startproject HelloWorld
+```
 
-- 我能独立说出 `Django 项目结构解析` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+创建完成后我们可以查看下项目的目录结构：
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 核心文件解析
+
+
+### manage.py
+
+manage.py 是 Django 项目的命令行工具入口，它提供了许多有用的命令：
+
+
+## 实例
+
+常用命令示例：
+
+- python manage.py runserver - 启动开发服务器
+- python manage.py migrate - 应用数据库迁移
+- python manage.py createsuperuser - 创建管理员账户
+
+
+### settings.py
+
+settings.py 是 Django 项目的配置文件，包含所有重要的设置：
+
+
+## 实例
+
+
+### urls.py（URL 调度中心）
+
+
+## 实例
+
+- include()：实现路由模块化，将不同应用的路由分离到各自的 urls.py。
+- namespace：用于反向解析 URL 时避免命名冲突。
+
+
+### wsgi.py & asgi.py
+
+
+### 扩展目录（非自动生成，但常用）
+
+```text
+HelloWorld/
+├── apps/               # 推荐：存放所有自定义应用
+│   └── blog/          # 示例应用
+├── static/             # 静态文件（CSS/JS/图片）
+├── media/              # 用户上传文件
+├── templates/          # 全局模板目录
+└── requirements.txt    # 项目依赖列表
+```
+
+将应用集中管理，避免散落在项目根目录。
+
+需在 settings.py 中配置 Python 路径：
+
+```text
+import sys
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+```
+
+- static/：存放 CSS、JavaScript、图片等，通过 STATIC_URL 访问。
+- media/：用户上传的文件（如头像），通过 MEDIA_URL 访问。需配置服务器在开发时提供访问： # urls.py（仅开发环境） from django.conf import settings from django.conf.urls.static import static urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+## Django 应用结构
+
+在 Django 中，一个项目可以包含多个应用。使用 python manage.py startapp myapp 创建一个新应用后，会生成以下结构：
+
+```text
+myapp/
+│
+├── migrations/
+│   └── __init__.py
+├── __init__.py
+├── admin.py
+├── apps.py
+├── models.py
+├── tests.py
+└── views.py
+```
+
+
+### 主要应用文件
+
+定义数据模型，与数据库表对应：
+
+
+## 实例
+
+处理业务逻辑，返回响应：
+
+
+## 实例
+
+配置 Django 管理后台：
+
+
+## 实例
+
+
+## 完整项目结构示例
+
+一个典型的 Django 项目完整结构如下：
+
+```text
+myproject/
+│
+├── manage.py
+├── requirements.txt
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── media/
+├── templates/
+│   └── base.html
+└── myproject/
+    ├── __init__.py
+    ├── settings.py
+    ├── urls.py
+    ├── wsgi.py
+    └── asgi.py
+└── myapp1/
+    ├── migrations/
+    ├── templates/
+    │   └── myapp1/
+    ├── __init__.py
+    ├── admin.py
+    ├── apps.py
+    ├── models.py
+    ├── tests.py
+    ├── urls.py
+    └── views.py
+└── myapp2/
+    └── ... (类似结构)
+```
+
+
+## 重要目录说明
+
+
+### migrations 目录
+
+存储数据库迁移文件，Django 使用这些文件来跟踪模型变更并同步到数据库。
+
+
+### static 目录
+
+存放静态文件（CSS, JavaScript, 图片等），在部署时会收集到指定位置。
+
+
+### templates 目录
+
+存放 HTML 模板文件，Django 使用模板语言动态生成页面。
+
+
+### media 目录
+
+存储用户上传的文件，需要在 settings.py 中配置：
+
+
+## 实例
+
+
+## 实践建议
+
+- 项目与应用分离：保持每个应用的独立性，便于复用
+- 环境配置：使用不同的 settings 文件区分开发和生产环境
+- 静态文件管理：开发时使用 STATICFILES_DIRS，生产时使用 collectstatic
+- URL 设计：在应用级别定义 URL，然后在项目级别包含
+- 模板组织：为每个应用创建子目录存放模板
+
+
+### 生产环境 vs 开发环境差异
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Django 项目结构解析` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

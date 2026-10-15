@@ -1,34 +1,161 @@
-# Vue.js：Vue.js 自定义指令 练习笔记
+# Vue.js：Vue.js 自定义指令
 
 - 来源：[Vue.js 自定义指令](https://www.runoob.com/vue2/vue-custom-directive.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3261
 
-## 练习目标
+## 本章内容
 
-把 `Vue.js 自定义指令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+除了默认设置的核心指令( v-model 和 v-show ), Vue 也允许注册自定义指令。
 
-## 练习步骤
+下面我们注册一个全局指令 v-focus, 该指令的功能是在页面加载时，元素获得焦点：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 实例
 
-- 我能独立说出 `Vue.js 自定义指令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<div id="app">
+    <p>页面载入时，input 元素自动获取焦点：</p>
+    <input v-focus>
+</div>
 
-## 复盘问题
+<script>
+// 注册一个全局自定义指令 v-focus
+Vue.directive('focus', {
+  // 当绑定元素插入到 DOM 中。
+  inserted: function (el) {
+    // 聚焦元素
+    el.focus()
+  }
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+</script>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+我们也可以在实例使用 directives 选项来注册局部指令，这样指令只能在这个实例中使用：
+
+
+## 实例
+
+```html
+<div id="app">
+  <p>页面载入时，input 元素自动获取焦点：</p>
+  <input v-focus>
+</div>
+
+<script>
+// 创建根实例
+new Vue({
+  el: '#app',
+  directives: {
+    // 注册一个局部的自定义指令 v-focus
+    focus: {
+      // 指令的定义
+      inserted: function (el) {
+        // 聚焦元素
+        el.focus()
+      }
+    }
+  }
+})
+</script>
+```
+
+
+## 钩子
+
+
+### 钩子函数
+
+指令定义函数提供了几个钩子函数（可选）：
+
+- bind: 只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个在绑定时执行一次的初始化动作。
+- inserted: 被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于 document 中）。
+- update: 被绑定元素所在的模板更新时调用，而不论绑定值是否变化。通过比较更新前后的绑定值，可以忽略不必要的模板更新（详细的钩子函数参数见下）。
+- componentUpdated: 被绑定元素所在模板完成一次更新周期时调用。
+- unbind: 只调用一次， 指令与元素解绑时调用。
+
+
+### 钩子函数参数
+
+钩子函数的参数有：
+
+- el: 指令所绑定的元素，可以用来直接操作 DOM 。
+- binding: 一个对象，包含以下属性： name: 指令名，不包括 v- 前缀。 value: 指令的绑定值， 例如： v-my-directive="1 + 1", value 的值是 2。 oldValue: 指令绑定的前一个值，仅在 update 和 componentUpdated 钩子中可用。无论值是否改变都可用。 expression: 绑定值的表达式或变量名。 例如 v-my-directive="1 + 1" ， expression 的值是 "1 + 1"。 arg: 传给指令的参数。例如 v-my-directive:foo， arg 的值是 "foo"。 modifiers: 一个包含修饰符的对象。 例如： v-my-directive.foo.bar, 修饰符对象 modifiers 的值是 { foo: true, bar: true }。
+- vnode: Vue 编译生成的虚拟节点。
+- oldVnode: 上一个虚拟节点，仅在 update 和 componentUpdated 钩子中可用。
+
+以下实例演示了这些参数的使用：
+
+
+## 实例
+
+```html
+<div id="app"  v-runoob:hello.a.b="message">
+</div>
+
+<script>
+Vue.directive('runoob', {
+  bind: function (el, binding, vnode) {
+    var s = JSON.stringify
+    el.innerHTML =
+      'name: '       + s(binding.name) + '<br>' +
+      'value: '      + s(binding.value) + '<br>' +
+      'expression: ' + s(binding.expression) + '<br>' +
+      'argument: '   + s(binding.arg) + '<br>' +
+      'modifiers: '  + s(binding.modifiers) + '<br>' +
+      'vnode keys: ' + Object.keys(vnode).join(', ')
+  }
+})
+new Vue({
+  el: '#app',
+  data: {
+    message: '菜鸟教程!'
+  }
+})
+</script>
+```
+
+有时候我们不需要其他钩子函数，我们可以简写函数，如下格式：
+
+```javascript
+Vue.directive('runoob', function (el, binding) {
+  // 设置指令的背景颜色
+  el.style.backgroundColor = binding.value.color
+})
+```
+
+指令函数可接受所有合法的 JavaScript 表达式，以下实例传入了 JavaScript 对象：
+
+
+## 实例
+
+```html
+<div id="app">
+    <div v-runoob="{ color: 'green', text: '菜鸟教程!' }"></div>
+</div>
+
+<script>
+Vue.directive('runoob', function (el, binding) {
+    // 简写方式设置文本及背景颜色
+    el.innerHTML = binding.value.text
+    el.style.backgroundColor = binding.value.color
+})
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue.js 自定义指令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

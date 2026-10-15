@@ -1,35 +1,149 @@
-# PHP：PHP 安全 E-mail 学习笔记
+# PHP：PHP Secure E-mails
 
 - 来源：[PHP 安全 E-mail](https://www.runoob.com/php/php-secure-mail.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1075
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP 安全 E-mail` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+在上一节中的 PHP e-mail 脚本中，存在着一个漏洞。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## PHP E-mail 注入
 
-## 笔记模板
+首先，请看上一章中的 PHP 代码：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
 
-## 完成标准
+<?php
+if (isset($_REQUEST['email'])) { // 如果接收到邮箱参数则发送邮件
+    // 发送邮件
+    $email = $_REQUEST['email'] ;
+    $subject = $_REQUEST['subject'] ;
+    $message = $_REQUEST['message'] ;
+    mail("someone@example.com", $subject,
+    $message, "From:" . $email);
+    echo "邮件发送成功";
+} else { // 如果没有邮箱参数则显示表单
+    echo "<form method='post' action='mailform.php'>
+    Email: <input name='email' type='text'><br>
+    Subject: <input name='subject' type='text'><br>
+    Message:<br>
+    <textarea name='message' rows='15' cols='40'>
+    </textarea><br>
+    <input type='submit'>
+    </form>";
+}
+?>
 
-- 能用 3 到 5 句话解释 `PHP 安全 E-mail`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+</body>
+</html>
+```
+
+以上代码存在的问题是，未经授权的用户可通过输入表单在邮件头部插入数据。
+
+假如用户在表单中的输入框内加入如下文本到电子邮件中，会出现什么情况呢？
+
+```text
+someone@example.com%0ACc:person2@example.com
+%0ABcc:person3@example.com,person3@example.com,
+anotherperson4@example.com,person5@example.com
+%0ABTo:person6@example.com
+```
+
+与往常一样，mail() 函数把上面的文本放入邮件头部，那么现在头部有了额外的 Cc:、Bcc: 和 To: 字段。当用户点击提交按钮时，这封 e-mail 会被发送到上面所有的地址！
+
+
+## PHP 防止 E-mail 注入
+
+防止 e-mail 注入的最好方法是对输入进行验证。
+
+下面的代码与上一章中的类似，不过这里我们已经增加了检测表单中 email 字段的输入验证程序：
+
+```html
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+<?php
+function spamcheck($field)
+{
+    // filter_var() 过滤 e-mail
+    // 使用 FILTER_SANITIZE_EMAIL
+    $field=filter_var($field, FILTER_SANITIZE_EMAIL);
+
+    //filter_var() 过滤 e-mail
+    // 使用 FILTER_VALIDATE_EMAIL
+    if(filter_var($field, FILTER_VALIDATE_EMAIL))
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+if (isset($_REQUEST['email']))
+{
+    // 如果接收到邮箱参数则发送邮件
+
+    // 判断邮箱是否合法
+    $mailcheck = spamcheck($_REQUEST['email']);
+    if ($mailcheck==FALSE)
+    {
+        echo "非法输入";
+    }
+    else
+    {
+        // 发送邮件
+        $email = $_REQUEST['email'] ;
+        $subject = $_REQUEST['subject'] ;
+        $message = $_REQUEST['message'] ;
+        mail("someone@example.com", "Subject: $subject",
+        $message, "From: $email" );
+        echo "Thank you for using our mail form";
+    }
+}
+else
+{
+    // 如果没有邮箱参数则显示表单
+    echo "<form method='post' action='mailform.php'>
+    Email: <input name='email' type='text'><br>
+    Subject: <input name='subject' type='text'><br>
+    Message:<br>
+    <textarea name='message' rows='15' cols='40'>
+    </textarea><br>
+    <input type='submit'>
+    </form>";
+}
+?>
+
+</body>
+</html>
+```
+
+在上面的代码中，我们使用了 PHP 过滤器来对输入进行验证：
+
+- FILTER_SANITIZE_EMAIL 过滤器从字符串中删除电子邮件的非法字符
+- FILTER_VALIDATE_EMAIL 过滤器验证电子邮件地址的值
+
+您可以在我们的 PHP Filter 中阅读更多关于过滤器的知识。
+
+
+## 复习重点
+
+- 能说明 `PHP 安全 E-mail` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

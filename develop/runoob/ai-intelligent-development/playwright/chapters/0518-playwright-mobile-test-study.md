@@ -1,35 +1,153 @@
-# Playwright：Playwright 移动端测试 学习笔记
+# Playwright：Playwright 移动端测试
 
 - 来源：[Playwright 移动端测试](https://www.runoob.com/playwright/playwright-mobile-test.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0518
 
-## 学习目标
+## 本章内容
 
-Playwright 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Playwright 移动端测试` 建立学习路径，先理解它在 Playwright 体系中的位置，再做可运行或可复述的验证。
+Playwright 移动端测试，主要包括模拟移动设备、地理位置、权限控制等功能。
 
-## 阅读抓手
+Playwright 除了能模拟桌面浏览器，还支持 移动端设备测试，包括：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 模拟不同手机型号（屏幕大小、分辨率、UA 等）
+- 模拟触摸事件（点击、滑动、长按）
+- 模拟地理位置（GPS）
+- 模拟权限（摄像头、定位、通知）
 
-## 笔记模板
+这让我们能在 PC 上测试出接近真实手机的效果。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 模拟设备
 
-- 能用 3 到 5 句话解释 `Playwright 移动端测试`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Playwright 提供了一些常见的设备配置（基于 Chrome DevTools 设备描述），可以通过 devices 调用。
+
+
+## 实例
+
+
+### 可模拟内容：
+
+- 屏幕分辨率（width、height、deviceScaleFactor）
+- User-Agent（模拟移动 UA）
+- 触摸事件支持
+- 横竖屏切换
+
+
+## 模拟触摸操作
+
+Playwright 在移动设备模式下会启用 触摸事件。
+
+
+### 常用操作：
+
+1、轻点
+
+```text
+await page.tap('button#submit');
+```
+
+2、滑动/拖动
+
+```text
+await page.touchscreen.tap(200, 300); // 点击指定坐标
+await page.touchscreen.swipe(200, 300, 200, 800); // 自定义封装，模拟滑动
+```
+
+3、长按
+
+```text
+await page.touchscreen.down(200, 300);
+await page.waitForTimeout(1000); // 按住 1 秒
+await page.touchscreen.up();
+```
+
+
+## 模拟地理位置
+
+可以模拟手机的 GPS 定位。
+
+
+## 实例
+
+
+## 模拟权限
+
+Playwright 支持授予或拒绝常见权限，例如：
+
+- geolocation（地理位置）
+- camera（摄像头）
+- microphone（麦克风）
+- notifications（通知）
+
+```javascript
+const context = await browser.newContext({
+  permissions: ['geolocation', 'notifications']
+});
+```
+
+
+## 模拟横竖屏切换
+
+通过修改 viewport 配置实现。
+
+```text
+await context.newPage({
+  viewport: { width: 812, height: 375 }, // 横屏
+  isMobile: true
+});
+```
+
+
+## 完整实例：移动端测试
+
+
+## 实例
+
+
+## 常用 API
+
+
+## 常见设备
+
+Playwright 内置常见设备清单，包含 iPhone 系列、Pixel 系列、iPad 等。
+
+
+### Playwright 常见设备清单
+
+Playwright 内置了几十种常用设备配置（基于 Chrome DevTools 数据）。使用时通过：
+
+```javascript
+const { devices } = require('playwright');
+const iphone = devices['iPhone 12'];
+```
+
+即可获得该设备的配置参数。
+
+
+### iPhone 系列
+
+
+### Google Pixel 系列
+
+
+### iPad 系列
+
+
+### 其他 Android 机型
+
+
+### 使用方法
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Playwright 移动端测试` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

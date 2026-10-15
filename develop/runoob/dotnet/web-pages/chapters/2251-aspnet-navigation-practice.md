@@ -1,34 +1,87 @@
-# Web Pages：WebForms 导航 练习笔记
+# Web Pages：ASP.NET Web Forms - 导航
 
 - 来源：[WebForms 导航](https://www.runoob.com/aspnet/aspnet-navigation.html)
 - 分类：.NET
 - 技术：Web Pages
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2251
 
-## 练习目标
+## 本章内容
 
-把 `WebForms 导航` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+ASP.NET 带有内建的导航控件。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 网站导航
 
-## 验收清单
+维护大型网站的菜单是困难而且费时的。
 
-- 我能独立说出 `WebForms 导航` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在 ASP.NET 中，菜单可存储在文件中，这样易于维护。文件通常名为 web.sitemap，并且被存放在网站的根目录下。
 
-## 复盘问题
+此外，ASP.NET 有三个新的导航控件：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- Dynamic menus
+- TreeViews
+- Site Map Path
+
+
+## Sitemap 文件
+
+在本教程中，使用下面的 sitemap 文件：
+
+创建 sitemap 文件的规则：
+
+- XML 文件必须包含 围绕内容的 <siteMap> 标签
+- <siteMap> 标签只能有一个 <siteMapNode> 子节点（ "home" 页面）
+- 每个 <siteMapNode> 可以有多个子节点（网页）
+- 每个 <siteMapNode> 带有定义页面标题和 URL 的属性
+
+注释：sitemap 文件必须位于站点根目录下，URL 属性必须相对于该根目录。
+
+
+## 动态菜单
+
+<asp:Menu> 控件可显示标准的站点导航菜单。
+
+代码实例：
+
+上面实例中的 <asp:Menu> 控件是一个供服务器创建导航菜单的占位符。
+
+控件的数据源由 DataSourceId 属性定义。 id="nav1" 把数据源连接到 <asp:SiteMapDataSource> 控件。
+
+<asp:SiteMapDataSource> 控件自动连接默认的 sitemap 文件（web.sitemap）。
+
+
+## TreeView
+
+<asp:TreeView> 控件可显示多级导航菜单。
+
+这种菜单看上去像一棵带有枝叶的树，可通过 + 或 - 符号来打开或关闭。
+
+代码实例：
+
+上面实例中的 <asp:TreeView> 控件是一个供服务器创建导航菜单的占位符。
+
+控件的数据源由 DataSourceId 属性定义。 id="nav1" 把数据源连接到 <asp:SiteMapDataSource> 控件。
+
+<asp:SiteMapDataSource> 控件自动连接默认的 sitemap 文件（web.sitemap）。
+
+
+## SiteMapPath
+
+SiteMapPath 控件可显示指向当前页面的指针（导航路径）。该路径显示为指向上级页面的可点击链接。
+
+与 TreeView 和 Menu 控件不同，SiteMapPath 控件不使用 SiteMapDataSource。SiteMapPath 控件默认使用 web.sitemap 文件。
+
+提示：如果 SiteMapPath 没有正确显示，很可能是由于 web.sitemap 文件中存在 URL 错误（打印错误）。
+
+代码实例：
+
+上面实例中的 <asp:SiteMapPath> 控件是一个供服务器创建导航菜单的占位符。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `WebForms 导航` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,240 @@
-# 设计模式：适配器模式 学习笔记
+# 设计模式：适配器模式
 
 - 来源：[适配器模式](https://www.runoob.com/design-pattern/adapter-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1310
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `适配器模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+适配器模式（Adapter Pattern）充当两个不兼容接口之间的桥梁，属于结构型设计模式。它通过一个中间件（适配器）将一个类的接口转换成客户期望的另一个接口，使原本不能一起工作的类能够协同工作。
 
-## 阅读抓手
+这种模式涉及到一个单一的类，该类负责加入独立的或不兼容的接口功能。举个真实的例子，读卡器是作为内存卡和笔记本之间的适配器。您将内存卡插入读卡器，再将读卡器插入笔记本，这样就可以通过笔记本来读取内存卡。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+假设有一个音频播放器，它只能播放 MP3 文件。现在，我们需要播放 VLC 和 MP4 文件，可以通过创建一个适配器来实现：
 
-## 笔记模板
+- 目标接口：定义一个可以播放多种格式文件的音频播放器接口。
+- 适配者类：现有的音频播放器，只能播放 MP3 文件。
+- 适配器类：创建一个新的类，实现目标接口，并在内部使用适配者类来播放 MP3 文件，同时添加对 VLC 和 MP4 文件的支持。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 概述
 
-## 完成标准
+适配器模式是一种软件设计模式，旨在解决不同接口之间的兼容性问题。
 
-- 能用 3 到 5 句话解释 `适配器模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+目的：将一个类的接口转换为另一个接口，使得原本不兼容的类可以协同工作。
+
+主要解决的问题：在软件系统中，需要将现有的对象放入新环境，而新环境要求的接口与现有对象不匹配。
+
+### 使用场景
+
+- 需要使用现有类，但其接口不符合系统需求。
+- 希望创建一个可复用的类，与多个不相关的类（包括未来可能引入的类）一起工作，这些类可能没有统一的接口。
+- 通过接口转换，将一个类集成到另一个类系中。
+
+### 实现方式
+
+- 继承或依赖：推荐使用依赖关系，而不是继承，以保持灵活性。
+
+### 关键代码
+
+适配器通过继承或依赖现有对象，并实现所需的目标接口。
+
+### 应用实例
+
+- 电压适配器：将 110V 电压转换为 220V，以适配不同国家的电器标准。
+- 接口转换：例如，将 Java JDK 1.1 的 Enumeration 接口转换为 1.2 的 Iterator 接口。
+- 跨平台运行：在Linux上运行Windows程序。
+- 数据库连接：Java 中的 JDBC 通过适配器模式与不同类型的数据库进行交互。
+
+### 优点
+
+- 促进了类之间的协同工作，即使它们没有直接的关联。
+- 提高了类的复用性。
+- 增加了类的透明度。
+- 提供了良好的灵活性。
+
+### 缺点
+
+- 过度使用适配器可能导致系统结构混乱，难以理解和维护。
+- 在Java中，由于只能继承一个类，因此只能适配一个类，且目标类必须是抽象的。
+
+### 使用建议
+
+- 适配器模式应谨慎使用，特别是在详细设计阶段，它更多地用于解决现有系统的问题。
+- 在考虑修改一个正常运行的系统接口时，适配器模式是一个合适的选择。
+
+通过这种方式，适配器模式可以清晰地表达其核心概念和应用，同时避免了不必要的复杂性。
+
+### 结构
+
+适配器模式包含以下几个主要角色：
+
+- 目标接口（Target）：定义客户需要的接口。
+- 适配者类（Adaptee）：定义一个已经存在的接口，这个接口需要适配。
+- 适配器类（Adapter）：实现目标接口，并通过组合或继承的方式调用适配者类中的方法，从而实现目标接口。
+
+## 实现
+
+我们有一个 MediaPlayer 接口和一个实现了 MediaPlayer 接口的实体类 AudioPlayer。默认情况下，AudioPlayer 可以播放 mp3 格式的音频文件。
+
+我们还有另一个接口 AdvancedMediaPlayer 和实现了 AdvancedMediaPlayer 接口的实体类。该类可以播放 vlc 和 mp4 格式的文件。
+
+我们想要让 AudioPlayer 播放其他格式的音频文件。为了实现这个功能，我们需要创建一个实现了 MediaPlayer 接口的适配器类 MediaAdapter，并使用 AdvancedMediaPlayer 对象来播放所需的格式。
+
+AudioPlayer 使用适配器类 MediaAdapter 传递所需的音频类型，不需要知道能播放所需格式音频的实际类。AdapterPatternDemo 类使用 AudioPlayer 类来播放各种格式。
+
+### 步骤 1
+
+为媒体播放器和更高级的媒体播放器创建接口。
+
+## MediaPlayer.java
+
+```text
+public interface MediaPlayer {
+   public void play(String audioType, String fileName);
+}
+```
+
+## AdvancedMediaPlayer.java
+
+```text
+public interface AdvancedMediaPlayer {
+   public void playVlc(String fileName);
+   public void playMp4(String fileName);
+}
+```
+
+### 步骤 2
+
+创建实现了 AdvancedMediaPlayer 接口的实体类。
+
+## VlcPlayer.java
+
+```java
+public class VlcPlayer implements AdvancedMediaPlayer{
+   @Override
+   public void playVlc(String fileName) {
+      System.out.println("Playing vlc file. Name: "+ fileName);
+   }
+
+   @Override
+   public void playMp4(String fileName) {
+      //什么也不做
+   }
+}
+```
+
+## Mp4Player.java
+
+```java
+public class Mp4Player implements AdvancedMediaPlayer{
+
+   @Override
+   public void playVlc(String fileName) {
+      //什么也不做
+   }
+
+   @Override
+   public void playMp4(String fileName) {
+      System.out.println("Playing mp4 file. Name: "+ fileName);
+   }
+}
+```
+
+### 步骤 3
+
+创建实现了 MediaPlayer 接口的适配器类。
+
+## MediaAdapter.java
+
+```java
+public class MediaAdapter implements MediaPlayer {
+
+   AdvancedMediaPlayer advancedMusicPlayer;
+
+   public MediaAdapter(String audioType){
+      if(audioType.equalsIgnoreCase("vlc") ){
+         advancedMusicPlayer = new VlcPlayer();
+      } else if (audioType.equalsIgnoreCase("mp4")){
+         advancedMusicPlayer = new Mp4Player();
+      }
+   }
+
+   @Override
+   public void play(String audioType, String fileName) {
+      if(audioType.equalsIgnoreCase("vlc")){
+         advancedMusicPlayer.playVlc(fileName);
+      }else if(audioType.equalsIgnoreCase("mp4")){
+         advancedMusicPlayer.playMp4(fileName);
+      }
+   }
+}
+```
+
+### 步骤 4
+
+创建实现了 MediaPlayer 接口的实体类。
+
+## AudioPlayer.java
+
+```java
+public class AudioPlayer implements MediaPlayer {
+   MediaAdapter mediaAdapter;
+
+   @Override
+   public void play(String audioType, String fileName) {
+
+      //播放 mp3 音乐文件的内置支持
+      if(audioType.equalsIgnoreCase("mp3")){
+         System.out.println("Playing mp3 file. Name: "+ fileName);
+      }
+      //mediaAdapter 提供了播放其他文件格式的支持
+      else if(audioType.equalsIgnoreCase("vlc")
+         || audioType.equalsIgnoreCase("mp4")){
+         mediaAdapter = new MediaAdapter(audioType);
+         mediaAdapter.play(audioType, fileName);
+      }
+      else{
+         System.out.println("Invalid media. "+
+            audioType + " format not supported");
+      }
+   }
+}
+```
+
+### 步骤 5
+
+使用 AudioPlayer 来播放不同类型的音频格式。
+
+## AdapterPatternDemo.java
+
+```java
+public class AdapterPatternDemo {
+   public static void main(String[] args) {
+      AudioPlayer audioPlayer = new AudioPlayer();
+
+      audioPlayer.play("mp3", "beyond the horizon.mp3");
+      audioPlayer.play("mp4", "alone.mp4");
+      audioPlayer.play("vlc", "far far away.vlc");
+      audioPlayer.play("avi", "mind me.avi");
+   }
+}
+```
+
+### 步骤 6
+
+执行程序，输出结果：
+
+```text
+Playing mp3 file. Name: beyond the horizon.mp3
+Playing mp4 file. Name: alone.mp4
+Playing vlc file. Name: far far away.vlc
+Invalid media. avi format not supported
+```
+
+## 复习重点
+
+- 能解释 `适配器模式` 的用途和关键步骤。
+- 能根据示例推导输出或执行结果。
+- 能指出一个容易踩坑的地方。

@@ -1,34 +1,88 @@
-# Web Service：Web Service 实例 练习笔记
+# Web Service：Web Service 实例
 
 - 来源：[Web Service 实例](https://www.runoob.com/webservices/ws-example.html)
 - 分类：XML / Web Service
 - 技术：Web Service
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4355
 
-## 练习目标
+## 本章内容
 
-把 `Web Service 实例` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+任何应用程序都可拥有 Web Service 组件。
 
-## 练习步骤
+Web Service 的创建与编程语言的种类无关。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+本章节我们将为大家介绍使用 PHP 的 SOAP 扩展来创建 Web Service。
 
-## 验收清单
+SOAP有两种操作方式，NO-WSDL 与 WSDL。
 
-- 我能独立说出 `Web Service 实例` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- NO-WSDL模式：使用参数来传递要使用的信息。
+- WSDL模式： 使用WSDL文件名作为参数，并从WSDL中提取服务所需的信息。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 一个实例：PHP Web Service
+
+在开始实例前，我们需要确定PHP是否安装了 SOAP 扩展。查看 phpinfo，出现以下信息表明已经安装了 SOAP 扩展：
+
+在这个例子中，我们会使用 PHP SOAP 来创建一个简单的 Web Service。
+
+服务端 Server.php 文件代码如下：
+
+```javascript
+<?php
+// SiteInfo 类用于处理请求
+Class SiteInfo
+{
+    /**
+     *    返回网站名称
+     *    @return string
+     *
+     */
+    public function getName(){
+        return "菜鸟教程";
+    }
+
+    public function getUrl(){
+        return "www.runoob.com";
+    }
+}
+
+// 创建 SoapServer 对象
+$s = new SoapServer(null,array("location"=>"http://localhost/soap/Server.php","uri"=>"Server.php"));
+
+// 导出 SiteInfo 类中的全部函数
+$s->setClass("SiteInfo");
+// 处理一个SOAP请求，调用必要的功能，并发送回一个响应。
+$s->handle();
+?>
+```
+
+客户端 Client.php 文件代码如下：
+
+```html
+<?php
+try{
+  // non-wsdl方式调用web service
+  // 创建 SoapClient 对象
+  $soap = new SoapClient(null,array('location'=>"http://localhost/soap/Server.php",'uri'=>'Server.php'));
+  // 调用函数
+  $result1 = $soap->getName();
+  $result2 = $soap->__soapCall("getUrl",array());
+  echo $result1."<br/>";
+  echo $result2;
+} catch(SoapFault $e){
+  echo $e->getMessage();
+}catch(Exception $e){
+  echo $e->getMessage();
+}
+```
+
+这时我们访问 http://localhost/soap/Client.php，输出结果如下所示：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Web Service 实例` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

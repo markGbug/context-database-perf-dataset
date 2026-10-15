@@ -1,34 +1,247 @@
-# PowerShell：PowerShell 入门指南 练习笔记
+# PowerShell：PowerShell 入门
 
 - 来源：[PowerShell 入门指南](https://www.runoob.com/powershell/powershell-start.html)
 - 分类：.NET
 - 技术：PowerShell
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2052
 
-## 练习目标
+## 本章内容
 
-把 `PowerShell 入门指南` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PowerShell 是微软为 Windows 系统打造的一种命令行壳程序 + 脚本环境，主要用于系统管理与自动化任务。
 
-## 练习步骤
+在 Windows 11 中，直接在开始菜单搜索 PowerShell 即可。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+常见的快捷方式包括（如为 64 位系统）：
 
-## 验收清单
+⚠️ 注意：Windows 11 本身不支持 32 位系统，但仍包含 x86 的 PowerShell 版本以兼容旧程序。
 
-- 我能独立说出 `PowerShell 入门指南` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 启动 PowerShell 的方法
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 普通启动方式
+
+单击 Windows PowerShell 快捷方式启动 PowerShell 控制台。
+
+PowerShell 控制台的标题栏会显示 "Windows PowerShell"。
+
+注意：某些命令在以普通用户身份运行 PowerShell 时可以正常运行，但 PowerShell 本身不参与用户访问控制（UAC），无法提示用户提升权限。
+
+
+### 用户访问控制（UAC）说明
+
+UAC 作用：Windows 安全功能，防止恶意代码以提升权限运行。
+
+普通用户权限限制：当以普通用户身份运行时，尝试执行需要管理员权限的命令会报错。
+
+例如停止 Windows 服务：
+
+```text
+Stop-Service -Name W32Time
+```
+
+报错信息示例：
+
+```text
+Stop-Service : Service 'Windows Time (W32Time)' cannot be stopped due to
+the following error: Cannot open W32Time service on computer '.'.
+At line:1 char:1
++ Stop-Service -Name W32Time
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : CloseError: (System.ServiceProcess.ServiceCon
+   troller:ServiceController) [Stop-Service], ServiceCommandException
+    + FullyQualifiedErrorId : CouldNotStopService,Microsoft.PowerShell.Comm
+   ands.StopServiceCommand
+```
+
+配置了第二个域用户帐户，符合最小权限原则，不是域管理员且无域内提升权限。
+
+操作步骤：
+
+- 右键点击 Windows PowerShell 快捷方式
+- 选择"以管理员身份运行"
+
+系统提示：由于当前以普通用户登录，Windows 会提示输入本地管理员用户凭据。
+
+确认提升：提升后的 PowerShell 窗口标题栏显示"管理员：Windows PowerShell"。
+
+效果：在提升的 PowerShell 中运行需要管理员权限的命令，不再遇到 UAC 错误。
+
+权限提升原则：只有在绝对必要时才应以管理员身份提升 PowerShell。
+
+远程计算机：面向远程计算机时，无需提升 PowerShell 权限。提升权限只影响本地命令。
+
+固定快捷方式：可将 PowerShell 或 Windows 终端快捷方式固定到任务栏，方便启动：
+
+安全启动提升的 PowerShell：如果需要提升权限启动 PowerShell，可按住 Shift 键，同时右键点击任务栏上固定的 PowerShell 图标，选择"以管理员身份运行"
+
+
+## 确定 PowerShell 版本及执行策略指南
+
+
+### 一、查看 PowerShell 版本
+
+PowerShell 提供自动变量 $PSVersionTable，包含当前 PowerShell 会话的版本和相关信息。
+
+```text
+$PSVersionTable
+```
+
+输出结果类似如下：
+
+```text
+Name                           Value
+----                           -----
+PSVersion                      5.1.22621.2428
+PSEdition                      Desktop
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
+BuildVersion                   10.0.22621.2428
+CLRVersion                     4.0.30319.42000
+WSManStackVersion              3.0
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+```
+
+
+### 版本说明
+
+- Windows PowerShell 5.1 预装于当前支持的 Windows 版本中，是推荐使用的版本。
+- PowerShell 7（跨平台版）并非 Windows PowerShell 5.1 的替代品，而是与之并行安装的不同产品。
+- PowerShell 6（也称 PowerShell Core）已不再受支持。
+
+
+### 二、理解执行策略（Execution Policy）
+
+执行策略是 PowerShell 的安全功能，用于控制脚本运行条件，防止无意执行恶意脚本。
+
+注意：执行策略不是安全边界，熟练用户可绕过。
+
+
+### 执行策略的作用范围
+
+- 可以针对本地计算机（LocalMachine）、当前用户（CurrentUser）或当前会话（Process）设置。
+- 也可通过组策略管理用户和计算机的执行策略。
+
+
+### 常见 Windows 默认执行策略
+
+Restricted 表示默认不允许执行任何脚本。
+
+
+### 三、查询当前执行策略
+
+查询当前策略：
+
+```text
+Get-ExecutionPolicy
+```
+
+输出结果类似如下：
+
+```text
+Restricted
+```
+
+列出所有范围的执行策略设置：
+
+```text
+Get-ExecutionPolicy -List
+```
+
+输出类似如下：
+
+```text
+Scope ExecutionPolicy
+        ----- ---------------
+MachinePolicy       Undefined
+   UserPolicy       Undefined
+      Process       Undefined
+  CurrentUser       Undefined
+ LocalMachine       Undefined
+```
+
+
+### 四、执行策略对脚本运行的影响示例
+
+假设有脚本文件 Get-TimeService.ps1，直接在交互式命令行运行该命令正常：
+
+```text
+Get-Service -Name W32Time
+```
+
+但是，从脚本中运行相同的命令时，PowerShell 将返回错误。
+
+```text
+.\Get-TimeService.ps1
+```
+
+错误信息：
+
+```text
+.\Get-TimeService.ps1 : File C:\tmp\Get-TimeService.ps1 cannot be loaded
+because running scripts is disabled on this system. For more information,
+see about_Execution_Policies at
+https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:1
++ .\Get-TimeService.ps1
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+```
+
+
+### 五、修改执行策略
+
+允许运行本地脚本和受信任发布者签名的远程脚本。
+
+```text
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+```
+
+- 必须以管理员身份运行 PowerShell 才能更改本地计算机（LocalMachine）的执行策略。
+- 更改时会有确认提示：
+
+```text
+Do you want to change the execution policy? [Y] Yes  [A] Yes to All  ...
+```
+
+```text
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+
+### 六、常见错误提示及解决
+
+未提升管理员权限修改 LocalMachine 策略时错误：
+
+```text
+Access to the registry key 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell' is denied.
+```
+
+解决方案：以管理员身份运行 PowerShell 后重试，或只修改当前用户策略。
+
+
+### 七、修改后验证
+
+执行策略修改为 RemoteSigned 后，运行脚本：
+
+```text
+.\Get-TimeService.ps1
+```
+
+输出结果：
+
+```text
+Status   Name    DisplayName
+------   ----    -----------
+Running  W32Time Windows Time
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PowerShell 入门指南` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

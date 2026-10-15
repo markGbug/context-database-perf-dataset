@@ -1,35 +1,50 @@
-# PyCharm：PyCharm 安装 学习笔记
+# PyCharm：PyCharm 安装
 
 - 来源：[PyCharm 安装](https://www.runoob.com/pycharm/pycharm-install.html)
 - 分类：DevOps / 工程化
 - 技术：PyCharm
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1866
 
-## 学习目标
+## 本章内容
 
-PyCharm 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `PyCharm 安装` 建立学习路径，先理解它在 PyCharm 体系中的位置，再做可运行或可复述的验证。
+首先，需要从 JetBrains 的官方网站下载 PyCharm。
 
-## 阅读抓手
+PyCharm 有两个版本：Community 版（免费）和 Professional 版（付费）。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+对于初学者来说，社区免费版本 Community 已经足够使用。
 
-## 笔记模板
+不过现在社区版本 PyCharm Community 统一到 PyCharm 了。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+访问 JetBrains 官网的 PyCharm 下载页面：PyCharm 官方下载页面
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `PyCharm 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 安装 PyCharm
+
+- 双击下载的安装文件（.exe）。
+- 在安装向导中，选择安装路径，建议使用默认路径。
+- 勾选"创建桌面快捷方式"以便快速启动 PyCharm。
+- 点击 "Install" 开始安装。
+- 安装完成后，点击 "Finish" 退出安装向导。
+
+
+### macOS 系统
+
+- 打开下载的 .dmg 文件。
+- 将 PyCharm 图标拖拽到 "Applications" 文件夹中。
+- 在 "Applications" 文件夹中找到 PyCharm，双击启动。
+
+
+### Linux 系统
+
+- 解压下载的 .tar.gz 文件。 tar -xzf pycharm-*.tar.gz
+- 进入解压后的目录，找到 bin 文件夹。 cd pycharm-*/bin
+- 运行 pycharm.sh 启动 PyCharm。 ./pycharm.sh
+
+
+## 复习重点
+
+- 能说明 `PyCharm 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

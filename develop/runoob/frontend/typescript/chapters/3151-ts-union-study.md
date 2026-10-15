@@ -1,35 +1,173 @@
-# TypeScript：TypeScript 联合类型 学习笔记
+# TypeScript：TypeScript 联合类型
 
 - 来源：[TypeScript 联合类型](https://www.runoob.com/typescript/ts-union.html)
 - 分类：前端开发
 - 技术：TypeScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3151
 
-## 学习目标
+## 本章内容
 
-TypeScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `TypeScript 联合类型` 建立学习路径，先理解它在 TypeScript 体系中的位置，再做可运行或可复述的验证。
+联合类型（Union Types）可以通过管道(|)将变量设置多种类型，赋值时可以根据设置的类型来赋值。
 
-## 阅读抓手
+注意：只能赋值指定的类型，如果赋值其它类型就会报错。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+创建联合类型的语法格式如下：
 
-## 笔记模板
+```text
+Type1|Type2|Type3
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### 实例
 
-## 完成标准
+声明一个联合类型：
 
-- 能用 3 到 5 句话解释 `TypeScript 联合类型`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## TypeScript
+
+```javascript
+var val:string|number
+val = 12
+console.log("数字为 "+ val)
+val = "Runoob"
+console.log("字符串为 " + val)
+```
+
+编译以上代码，得到以下 JavaScript 代码：
+
+## JavaScript
+
+```javascript
+var val;
+val = 12;
+console.log("数字为 " + val);
+val = "Runoob";
+console.log("字符串为 " + val);
+```
+
+输出结果为：
+
+```text
+数字为 12
+字符串为 Runoob
+```
+
+如果赋值其它类型就会报错：
+
+```text
+var val:string|number
+val = true
+```
+
+也可以将联合类型作为函数参数使用：
+
+## TypeScript
+
+```java
+function disp(name:string|string[]) {
+        if(typeof name == "string") {
+                console.log(name)
+        } else {
+                var i;
+                for(i = 0;i<name.length;i++) {
+                console.log(name[i])
+                }
+        }
+}
+disp("Runoob")
+console.log("输出数组....")
+disp(["Runoob","Google","Taobao","Facebook"])
+```
+
+编译以上代码，得到以下 JavaScript 代码：
+
+## JavaScript
+
+```javascript
+function disp(name) {
+        if (typeof name == "string") {
+                console.log(name);
+        }
+        else {
+                var i;
+                for (i = 0; i < name.length; i++) {
+                console.log(name[i]);
+                }
+        }
+}
+disp("Runoob");
+console.log("输出数组....");
+disp(["Runoob", "Google", "Taobao", "Facebook"]);
+```
+
+输出结果为：
+
+```text
+Runoob
+输出数组....
+Runoob
+Google
+Taobao
+Facebook
+```
+
+## 联合类型数组
+
+我们也可以将数组声明为联合类型：
+
+## TypeScript
+
+```java
+var arr:number[]|string[];
+var i:number;
+arr = [1,2,4]
+console.log("**数字数组**")
+
+for(i = 0;i<arr.length;i++) {
+   console.log(arr[i])
+}
+
+arr = ["Runoob","Google","Taobao"]
+console.log("**字符串数组**")
+
+for(i = 0;i<arr.length;i++) {
+   console.log(arr[i])
+}
+```
+
+编译以上代码，得到以下 JavaScript 代码：
+
+## JavaScript
+
+```javascript
+var arr;
+var i;
+arr = [1, 2, 4];
+console.log("**数字数组**");
+for (i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+}
+arr = ["Runoob", "Google", "Taobao"];
+console.log("**字符串数组**");
+for (i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+}
+```
+
+输出结果为：
+
+```text
+**数字数组**
+1
+2
+4
+**字符串数组**
+Runoob
+Google
+Taobao
+```
+
+## 复习重点
+
+- 能解释 `TypeScript 联合类型` 的用途和关键步骤。
+- 能根据示例推导输出或执行结果。
+- 能指出一个容易踩坑的地方。

@@ -1,34 +1,103 @@
-# SQL：SQL ORDER BY 练习笔记
+# SQL：SQL ORDER BY 关键字
 
 - 来源：[SQL ORDER BY](https://www.runoob.com/sql/sql-orderby.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1628
 
-## 练习目标
+## 本章内容
 
-把 `SQL ORDER BY` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+ORDER BY 关键字用于对结果集进行排序。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## SQL ORDER BY 关键字
 
-## 验收清单
+ORDER BY 关键字用于对结果集按照一个列或者多个列进行排序。
 
-- 我能独立说出 `SQL ORDER BY` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+ORDER BY 关键字默认按照升序对记录进行排序。如果需要按照降序对记录进行排序，您可以使用 DESC 关键字。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### SQL ORDER BY 语法
+
+```text
+SELECT column1, column2, ...
+FROM table_name
+ORDER BY column1, column2, ... ASC|DESC;
+```
+
+- column1, column2, ...：要排序的字段名称，可以为多个字段。
+- ASC：表示按升序排序。
+- DESC：表示按降序排序。
+
+
+## 演示数据库
+
+在本教程中，我们将使用 RUNOOB 样本数据库。
+
+下面是选自 "Websites" 表的数据：
+
+```text
++----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
++----+--------------+---------------------------+-------+---------+
+```
+
+
+## ORDER BY 实例
+
+下面的 SQL 语句从 "Websites" 表中选取所有网站，并按照 "alexa" 列排序：
+
+
+## 实例
+
+```text
+SELECT * FROM Websites
+ORDER BY alexa;
+```
+
+执行输出结果：
+
+
+## ORDER BY DESC 实例
+
+下面的 SQL 语句从 "Websites" 表中选取所有网站，并按照 "alexa" 列降序排序：
+
+
+## 实例
+
+```text
+SELECT * FROM Websites
+ORDER BY alexa DESC;
+```
+
+执行输出结果：
+
+
+## ORDER BY 多列
+
+下面的 SQL 语句从 "Websites" 表中选取所有网站，并按照 "country" 和 "alexa" 列排序：
+
+
+## 实例
+
+```text
+SELECT * FROM Websites
+ORDER BY country,alexa;
+```
+
+执行输出结果：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL ORDER BY` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

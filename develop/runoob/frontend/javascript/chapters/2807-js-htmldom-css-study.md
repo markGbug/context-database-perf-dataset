@@ -1,35 +1,75 @@
-# JavaScript：DOM CSS 学习笔记
+# JavaScript：JavaScript HTML DOM - 改变CSS
 
 - 来源：[DOM CSS](https://www.runoob.com/js/js-htmldom-css.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2807
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `DOM CSS` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+HTML DOM 允许 JavaScript 改变 HTML 元素的样式。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 改变 HTML 样式
 
-## 笔记模板
+如需改变 HTML 元素的样式，请使用这个语法：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+下面的例子会改变 <p> 元素的样式：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `DOM CSS`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<p id="p1">Hello World!</p>
+<p id="p2">Hello World!</p>
+<script>
+document.getElementById("p2").style.color="blue";
+document.getElementById("p2").style.fontFamily="Arial";
+document.getElementById("p2").style.fontSize="larger";
+</script>
+<p>以上段落通过脚本修改。</p>
+
+</body>
+</html>
+```
+
+
+## 使用事件
+
+HTML DOM 允许我们通过触发事件来执行代码。
+
+比如以下事件：
+
+- 元素被点击。
+- 页面加载完成。
+- 输入框被修改。
+- ……
+
+在接下来的章节，你会学到更多关于事件的知识。
+
+本例改变了 id="id1" 的 HTML 元素的样式，当用户点击按钮时：
+
+
+## 实例
+
+
+## 更多实例
+
+Visibility 如何使元素不可见。您希望元素显示或消失吗？
+
+
+## 复习重点
+
+- 能说明 `DOM CSS` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,119 @@
-# Bootstrap4：Bootstrap4 多媒体对象 练习笔记
+# Bootstrap4：Bootstrap4 多媒体对象
 
 - 来源：[Bootstrap4 多媒体对象](https://www.runoob.com/bootstrap4/bootstrap4-media-objects.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2337
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap4 多媒体对象` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Bootstrap 提供了很好的方式来处理多媒体对象（图片或视频）和内容的布局。应用场景有博客评论、微博等:
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 基础多媒体对象
 
-## 验收清单
+要创建一个多媒体对象，可以在容器元素上添加 .media 类，然后将多媒体内容放到子容器上，子容器需要添加 .media-body 类，然后添加外边距，内边距等效果:
 
-- 我能独立说出 `Bootstrap4 多媒体对象` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<div class="media border p-3">
+  <img src="mobile-icon.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+  <div class="media-body">
+    <h4>菜鸟教程</h4>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+```
+
+
+## 多媒体对象嵌套
+
+多媒体对象可以多个嵌套（一个多媒体对象中包含另外一个多媒体对象）
+
+要嵌套多媒体对象，可以把新的 .media 容器放到 .media-body 容器中:
+
+
+## 实例
+
+```html
+<div class="media border p-3">
+  <img src="mobile-icon.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+  <div class="media-body">
+    <h4>菜鸟教程</h4>
+    <p>学的不仅是技术，更是梦想！！！</p>
+    <div class="media p-3">
+      <img src="mobile-icon.png" alt="Jane Doe" class="mr-3 mt-3 rounded-circle" style="width:45px;">
+      <div class="media-body">
+        <h4>菜鸟教程</h4>
+        <p>学的不仅是技术，更是梦想！！！</p>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+
+## 多媒体对象图片显示在右边
+
+如果你想将头像图片显示在右侧，可以在 .media-body 容器后添加图片:
+
+
+## 实例
+
+```html
+<div class="media border p-3">
+  <div class="media-body">
+    <h4>菜鸟教程</h4>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+  <img src="mobile-icon.png" alt="John Doe" class="ml-3 mt-3 rounded-circle" style="width:60px;">
+</div>
+```
+
+
+## 定位多媒体图片位置
+
+我们可以使用 align-self-* 相关类来设置多媒体对象的图片显示位置：
+
+
+## 实例
+
+```html
+<!-- 头部 -->
+<div class="media">
+  <img src="https://static.jyshare.com/images/mobile-icon.png" class="align-self-start mr-3" style="width:60px">
+  <div class="media-body">
+    <h4>头部 -- 菜鸟教程</h4>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+
+<!-- 居中 -->
+<div class="media">
+  <img src="https://static.jyshare.com/images/mobile-icon.png" class="align-self-center mr-3" style="width:60px">
+  <div class="media-body">
+    <h4>居中 -- 菜鸟教程</h4>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+
+<!-- 底部 -->
+<div class="media">
+  <img src="https://static.jyshare.com/images/mobile-icon.png" class="align-self-end mr-3" style="width:60px">
+  <div class="media-body">
+    <h4>底部 -- 菜鸟教程</h4>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap4 多媒体对象` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

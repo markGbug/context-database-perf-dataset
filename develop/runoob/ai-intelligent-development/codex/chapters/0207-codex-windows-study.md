@@ -1,35 +1,141 @@
-# Codex：Codex Windows 学习笔记
+# Codex：Codex Windows 原生支持
 
 - 来源：[Codex Windows](https://www.runoob.com/codex/codex-windows.html)
 - 分类：AI / 智能开发
 - 技术：Codex
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0207
 
-## 学习目标
+## 本章内容
 
-Codex 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Codex Windows` 建立学习路径，先理解它在 Codex 体系中的位置，再做可运行或可复述的验证。
+Codex 在 Windows 上提供原生支持，无需 WSL 即可运行。本节介绍 Windows 平台特有的功能和配置。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## Windows 支持概述
 
-## 笔记模板
+Codex 支持以下 Windows 环境：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 安装
 
-- 能用 3 到 5 句话解释 `Codex Windows`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 使用 winget 安装
+
+
+## winget 安装
+
+
+### 使用 Chocolatey
+
+
+## Chocolatey 安装
+
+
+### 手动安装
+
+从 GitHub 下载 Windows 版本：
+
+```text
+https://github.com/openai/codex/releases
+```
+
+下载 .exe 安装程序并运行。
+
+
+## 原生沙箱
+
+Codex 可以在 Windows PowerShell 中原生运行：
+
+- 无需 WSL 或虚拟机
+- 保持 Windows 工作流程
+- 与 Windows 工具无缝集成
+
+
+### 沙箱模式配置
+
+
+## 配置沙箱
+
+
+### 沙箱模式说明
+
+
+### PowerShell 集成
+
+Codex 可以直接在 PowerShell 中使用：
+
+
+## PowerShell 中使用
+
+
+### CMD 支持
+
+Codex 也支持传统的 CMD 环境：
+
+
+## CMD 中使用
+
+
+## Windows 特有配置
+
+
+### 路径处理
+
+Windows 路径与 Unix 不同，Codex 会自动处理：
+
+- 反斜杠转换为正斜杠
+- 盘符处理
+- UNC 路径支持
+
+
+### 环境变量
+
+
+## Windows 环境变量
+
+
+### 代理配置
+
+
+## 代理设置
+
+
+## 故障排除
+
+
+### 常见问题
+
+- 检查是否安装了必要的 Visual C++ 运行库
+- 尝试以管理员权限运行
+- 检查杀毒软件是否阻止
+
+确保 PowerShell 可执行文件在 PATH 中。
+
+Codex 支持 Unicode，但某些旧版终端可能有问题。
+
+
+### 日志位置
+
+Windows 日志位置：
+
+```text
+%USERPROFILE%\.codex\log\codex-tui.log
+```
+
+
+## 后续章节
+
+- 与 WSL2 比较
+- 最佳实践
+- 常见问题
+- Q: Windows 原生版本和 WSL 版本哪个好？
+- Q: 可以和 WSL 共存吗？
+- Q: 需要管理员权限吗？
+- Q: 支持 PowerShell ISE 吗？
+
+## 复习重点
+
+- 能说明 `Codex Windows` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,68 @@
-# HTTP：MIME 类型 练习笔记
+# HTTP：MIME 类型
 
 - 来源：[MIME 类型](https://www.runoob.com/http/mime-types.html)
 - 分类：计算机基础
 - 技术：HTTP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1346
 
-## 练习目标
+## 本章内容
 
-把 `MIME 类型` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的标准，用来表示文档、文件或字节流的性质和格式。
 
-## 练习步骤
+MIME 消息能包含文本、图像、音频、视频以及其他应用程序专用的数据。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+浏览器通常使用 MIME 类型（而不是文件扩展名）来确定如何处理URL，因此 We b服务器在响应头中添加正确的 MIME 类型非常重要。如果配置不正确，浏览器可能会无法解析文件内容，网站将无法正常工作，并且下载的文件也会被错误处理。
 
-## 验收清单
 
-- 我能独立说出 `MIME 类型` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法
 
-## 复盘问题
+MIME 类型通用结构：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+type/subtype
+```
+
+MIME 的组成结构非常简单，由类型与子类型两个字符串中间用 / 分隔而组成，不允许有空格。type 表示可以被分多个子类的独立类别，subtype 表示细分后的每个类型。
+
+MIME类型对大小写不敏感，但是传统写法都是小写。
+
+两种主要的 MIME 类型在默认类型中扮演了重要的角色：
+
+- text/plain 表示文本文件的默认值。
+- application/octet-stream 表示所有其他情况的默认值。
+
+
+### 常见的 MIME 类型
+
+- 超文本标记语言文本 .html、.html：text/html
+- 普通文本 .txt： text/plain
+- RTF 文本 .rtf： application/rtf
+- GIF 图形 .gif： image/gif
+- JPEG 图形 .jpeg、.jpg： image/jpeg
+- au 声音文件 .au： audio/basic
+- MIDI 音乐文件 mid、.midi： audio/midi、audio/x-midi
+- RealAudio 音乐文件 .ra、.ram： audio/x-pn-realaudio
+- MPEG 文件 .mpg、.mpeg： video/mpeg
+- AVI 文件 .avi： video/x-msvideo
+- GZIP 文件 .gz： application/x-gzip
+- TAR 文件 .tar： application/x-tar
+
+application/octet-stream, application/pkcs12, application/vnd.mspowerpoint, application/xhtml+xml, application/xml, application/pdf
+
+
+## MIME 对照表
+
+
+### 按照内容类型排列的 MIME 类型列表
+
+
+### 按照文件扩展名排列的 MIME 类型列表
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MIME 类型` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

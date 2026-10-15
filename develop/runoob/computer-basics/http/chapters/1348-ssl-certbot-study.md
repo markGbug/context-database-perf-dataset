@@ -1,35 +1,200 @@
-# HTTP：SSL 免费证书 学习笔记
+# HTTP：SSL 免费证书申请 - Certbot
 
 - 来源：[SSL 免费证书](https://www.runoob.com/http/ssl-certbot.html)
 - 分类：计算机基础
 - 技术：HTTP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1348
 
-## 学习目标
+## 本章内容
 
-HTTP 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `SSL 免费证书` 建立学习路径，先理解它在 HTTP 体系中的位置，再做可运行或可复述的验证。
+我们知道使用 SSL（安全套接层）证书对于网站和在线服务来说非常重要，SSL 证书通过加密用户和服务器之间的通信，保护数据不被窃听或篡改。
 
-## 阅读抓手
+本章节我们将介绍使用 Certbot 工具申请免费的 SSL 证书。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 什么是 Certbot？
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Certbot 是一个开源的自动化工具，用于获取和续订由 Let's Encrypt 提供的免费 SSL/TLS 证书。
 
-## 完成标准
+Let's Encrypt 是一个由互联网安全研究小组（ISRG）运营的证书颁发机构（CA），它提供了一个自动化的流程来生成和更新证书，使得网站管理员可以轻松地为他们的站点启用 HTTPS 加密。
 
-- 能用 3 到 5 句话解释 `SSL 免费证书`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Certbot 的主要特点包括：
+
+- 自动化：它可以自动验证域名所有权，并申请证书。
+- 免费：它使用的是 Let's Encrypt 提供的免费证书。
+- 兼容性：支持多种 web 服务器，如 Apache、Nginx 等。
+- 易用性：提供了命令行界面，使得安装和使用变得简单。
+- 续订：自动处理证书的续订，确保网站的 HTTPS 连接始终保持有效。
+
+Let's Encrypt 颁发的证书有效期为 90 天，Certbot 会自动配置证书的续期任务，确保证书不会过期。
+
+
+## Certbot 安装
+
+
+### 1. 在 Ubuntu/Debian 系统上安装 Certbot
+
+使用 APT 安装：
+
+```text
+sudo apt update
+sudo apt install certbot
+```
+
+安装完成后，Certbot 就可以用了。
+
+安装 Snap 版本：
+
+Snap 是 Certbot 官方推荐的安装方式，尤其是针对长期支持的 Ubuntu 版本。
+
+```text
+sudo snap install core
+sudo snap refresh core
+sudo snap install --classic certbot
+
+sudo ln -s /snap/bin/certbot /usr/bin/certbot  # 这一步是为了确保 certbot 命令能全局使用
+```
+
+
+### 2. 在 CentOS/RHEL 系统上安装 Certbot
+
+安装 EPEL 仓库（适用于 CentOS 7 及以下）：
+
+```text
+sudo yum install epel-release
+```
+
+```text
+sudo yum install certbot
+```
+
+
+### 3. 在 macOS 上安装 Certbot
+
+macOS 上可以使用 Homebrew 安装 Certbot：
+
+```text
+brew install certbot
+```
+
+更多内容我们可以在 Certbot 网站 https://certbot.eff.org/ 查看各个系统平台的安装方法：
+
+安装完成后，使用以下命令查看 certbot 安装的版本：
+
+```text
+certbot --version
+```
+
+
+## 证书申请与续签
+
+安装好certbot 后就可以使用以下命令来申请证书了，注意 *.runoob.com 为你自己的域名，需要修改：
+
+```text
+certbot certonly  -d *.runoob.com --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory
+```
+
+执行以上命令后，填写信息：
+
+```text
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Enter email address (used for urgent renewal and security notices)
+ (Enter 'c' to cancel): xxx@qq.com. # 这里输入你的邮箱
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please read the Terms of Service at
+https://letsencrypt.org/documents/LE-SA-v1.4-April-3-2024.pdf. You must agree in
+order to register with the ACME server. Do you agree?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: Y    # 输入 Y
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would you be willing, once your first certificate is successfully issued, to
+share your email address with the Electronic Frontier Foundation, a founding
+partner of the Let's Encrypt project and the non-profit organization that
+develops Certbot? We'd like to send you email about our work encrypting the web,
+EFF news, campaigns, and ways to support digital freedom.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: Y       # 输入 Y
+
+Account registered.
+Requesting a certificate for *.runoob.com
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please deploy a DNS TXT record under the name:
+
+xxxxxxx.runoob.com. # 这里需要设置域名解析，需要到域名后台填写信息，参考下图
+
+with the following value:
+
+aIwqY00CZtziVwr-xxxxxxxxxxxxxx  # 这里是域名解析的内容，参考下图
+
+Before continuing, verify the TXT record has been deployed. Depending on the DNS
+provider, this may take some time, from a few seconds to multiple minutes. You can
+check if it has finished deploying with aid of online tools, such as the Google
+Admin Toolbox: https://toolbox.googleapps.com/apps/dig/#TXT/_acme-challenge.runoob.com.
+Look for one or more bolded line(s) below the line ';ANSWER'. It should show the
+value(s) you've just added.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Press Enter to Continue  # 参考下图设置完域名解析后，按回车就可以生成了，记住一定要先解析设置完成后再回车，然后生成的证书信息如下：
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/runoob.com/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/runoob.com/privkey.pem
+This certificate expires on 2024-12-21.
+These files will be updated when the certificate renews.
+
+NEXT STEPS:
+- This certificate will not be renewed automatically. Autorenewal of --manual certificates requires the use of an authentication hook script (--manual-auth-hook) but one was not provided. To renew this certificate, repeat this same certbot command before the certificate's expiry date.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
+设置域名解析用于验证证书：
+
+Let's Encrypt 颁发的证书有效期为 90 天，可以使用以下命令进行续签证书:
+
+```text
+certbot certonly --force-renewal --manual -d '*.runoob.com' \
+--preferred-challenges dns \
+--server https://acme-v02.api.letsencrypt.org/directory
+```
+
+执行以上续签命令后，就会让我们更新下 DNS 解析记录：
+
+```text
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Requesting a certificate for *.jysahre.com
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please deploy a DNS TXT record under the name:
+
+_acme-challenge.jysahre.com.
+
+with the following value:
+
+ckxo1wGXbP1CtNQ3ZRfvHxxxxxx          # 这里会显示你要更改的 DNS 解析记录值，设置好就可以完成更新了
+
+Before continuing, verify the TXT record has been deployed. Depending on the DNS
+provider, this may take some time, from a few seconds to multiple minutes. You can
+check if it has finished deploying with aid of online tools, such as the Google
+Admin Toolbox: https://toolbox.googleapps.com/apps/dig/#TXT/_acme-challenge.jysahre.com.
+Look for one or more bolded line(s) below the line ';ANSWER'. It should show the
+value(s) you've just added.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
+
+## 复习重点
+
+- 能说明 `SSL 免费证书` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

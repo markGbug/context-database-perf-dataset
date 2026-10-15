@@ -1,34 +1,211 @@
-# PostgreSQL：PostgreSQL 约束 练习笔记
+# PostgreSQL：PostgreSQL 约束
 
 - 来源：[PostgreSQL 约束](https://www.runoob.com/postgresql/postgresql-constraints.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1576
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL 约束` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PostgreSQL 约束用于规定表中的数据规则。
 
-## 练习步骤
+如果存在违反约束的数据行为，行为会被约束终止。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+约束可以在创建表时规定（通过 CREATE TABLE 语句），或者在表创建之后规定（通过 ALTER TABLE 语句）。
 
-## 验收清单
+约束确保了数据库中数据的准确性和可靠性。
 
-- 我能独立说出 `PostgreSQL 约束` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+约束可以是列级或表级。列级约束仅适用于列，表级约束被应用到整个表。
 
-## 复盘问题
+以下是在 PostgreSQL 中常用的约束。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- NOT NULL：指示某列不能存储 NULL 值。
+- UNIQUE：确保某列的值都是唯一的。
+- PRIMARY Key：NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。。
+- FOREIGN Key： 保证一个表中的数据匹配另一个表中的值的参照完整性。
+- CHECK： 保证列中的值符合指定的条件。
+- EXCLUSION ：排他约束，保证如果将任何两行的指定列或表达式使用指定操作符进行比较，至少其中一个操作符比较将会返回 false 或空值。
+
+
+### NOT NULL 约束
+
+默认情况下，列可以保存为 NULL 值。如果您不想某列有 NULL 值，那么需要在该列上定义此约束，指定在该列上不允许 NULL 值。
+
+NULL 与没有数据是不一样的，它代表着未知的数据。
+
+实例
+
+下面实例创建了一张新表叫 COMPANY1，添加了 5 个字段，其中三个 ID，NAME，AGE 设置不接受空置：
+
+```text
+CREATE TABLE COMPANY1(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+
+### UNIQUE 约束
+
+UNIQUE 约束可以设置列是唯一的，避免同一列出现重复值。
+
+实例
+
+下面实例创建了一张新表叫 COMPANY3，添加了 5 个字段，其中 AGE 设置为 UNIQUE，因此你不能添加两条有相同年龄的记录：
+
+```text
+CREATE TABLE COMPANY3(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL UNIQUE,
+   ADDRESS        CHAR(50),
+   SALARY         REAL    DEFAULT 50000.00
+);
+```
+
+
+### PRIMARY KEY
+
+在设计数据库时，PRIMARY KEY 非常重要。
+
+PRIMARY KEY 称为主键，是数据表中每一条记录的唯一标识。
+
+设置 UNIQUE 的列可能有多个，但是一张表只有一列可以设置 PRIMARY KEY。
+
+我们可以使用主键来引用表中的行，也可以通过把主键设置为其他表的外键，来创建表之间的关系。
+
+主键是非空约束和唯一约束的组合。
+
+一个表只能有一个主键，它可以由一个或多个字段组成，当多个字段作为主键，它们被称为复合键。
+
+如果一个表在任何字段上定义了一个主键，那么在这些字段上不能有两个记录具有相同的值。
+
+实例
+
+下面我们创建 COMAPNY4 表，其中 ID 作为主键：
+
+```text
+CREATE TABLE COMPANY4(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+
+### FOREIGN KEY 约束
+
+FOREIGN KEY 即外键约束，指定列(或一组列)中的值必须匹配另一个表的某一行中出现的值。
+
+通常一个表中的 FOREIGN KEY 指向另一个表中的 UNIQUE KEY(唯一约束的键)，即维护了两个相关表之间的引用完整性。
+
+实例
+
+下面实例创建了一张 COMPANY6 表，并添加了5个字段：
+
+```text
+CREATE TABLE COMPANY6(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+下面实例创建一张 DEPARTMENT1 表，并添加 3 个字段，EMP_ID 就是外键，参照 COMPANY6 的 ID：
+
+```text
+CREATE TABLE DEPARTMENT1(
+   ID INT PRIMARY KEY      NOT NULL,
+   DEPT           CHAR(50) NOT NULL,
+   EMP_ID         INT      references COMPANY6(ID)
+);
+```
+
+
+### CHECK 约束
+
+CHECK 约束保证列中的所有值满足某一条件，即对输入一条记录要进行检查。如果条件值为 false，则记录违反了约束，且不能输入到表。
+
+实例
+
+例如，下面实例建一个新的表 COMPANY5，增加了五列。在这里，我们为 SALARY 列添加 CHECK，所以工资不能为零：
+
+```text
+CREATE TABLE COMPANY5(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL    CHECK(SALARY > 0)
+);
+```
+
+
+### EXCLUSION 约束
+
+EXCLUSION 约束确保如果使用指定的运算符在指定列或表达式上比较任意两行，至少其中一个运算符比较将返回 false 或 null。
+
+实例
+
+下面实例创建了一张 COMPANY7 表，添加 5 个字段，并且使用了 EXCLUDE 约束。
+
+```text
+CREATE TABLE COMPANY7(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT,
+   AGE            INT  ,
+   ADDRESS        CHAR(50),
+   SALARY         REAL,
+   EXCLUDE USING gist
+   (NAME WITH =,  -- 如果满足 NAME 相同，AGE 不相同则不允许插入，否则允许插入
+   AGE WITH <>)   -- 其比较的结果是如果整个表达式返回 true，则不允许插入，否则允许
+);
+```
+
+这里，USING gist 是用于构建和执行的索引一种类型。
+
+您需要为每个数据库执行一次 CREATE EXTENSION btree_gist 命令，这将安装 btree_gist 扩展，它定义了对纯标量数据类型的 EXCLUDE 约束。
+
+由于我们已经强制执行了年龄必须相同，让我们通过向表插入记录来查看这一点：
+
+```text
+INSERT INTO COMPANY7 VALUES(1, 'Paul', 32, 'California', 20000.00 );
+INSERT INTO COMPANY7 VALUES(2, 'Paul', 32, 'Texas', 20000.00 );
+-- 此条数据的 NAME 与第一条相同，且 AGE 与第一条也相同，故满足插入条件
+INSERT INTO COMPANY7 VALUES(3, 'Allen', 42, 'California', 20000.00 );
+-- 此数据与上面数据的 NAME 相同，但 AGE 不相同，故不允许插入
+```
+
+前面两条顺利添加的 COMPANY7 表中，但是第三条则会报错：
+
+```java
+ERROR:  conflicting key value violates exclusion constraint "company7_name_age_excl"
+DETAIL:  Key (name, age)=(Paul, 42) conflicts with existing key (name, age)=(Paul, 32).
+```
+
+
+### 删除约束
+
+删除约束必须知道约束名称，已经知道名称来删除约束很简单，如果不知道名称，则需要找到系统生成的名称，使用 \d 表名 可以找到这些信息。
+
+通用语法如下：
+
+```text
+ALTER TABLE table_name DROP CONSTRAINT some_name;
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL 约束` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

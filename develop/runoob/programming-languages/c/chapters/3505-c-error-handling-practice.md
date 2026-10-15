@@ -1,34 +1,143 @@
-# C：C 错误处理 练习笔记
+# C：C 错误处理
 
 - 来源：[C 错误处理](https://www.runoob.com/cprogramming/c-error-handling.html)
 - 分类：编程语言
 - 技术：C
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3505
 
-## 练习目标
+## 本章内容
 
-把 `C 错误处理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+C 语言不提供对错误处理的直接支持，但是作为一种系统编程语言，它以返回值的形式允许您访问底层数据。在发生错误时，大多数的 C 或 UNIX 函数调用返回 1 或 NULL，同时会设置一个错误代码 errno，该错误代码是全局变量，表示在函数调用期间发生了错误。您可以在 errno.h 头文件中找到各种各样的错误代码。
 
-## 练习步骤
+所以，C 程序员可以通过检查返回值，然后根据返回值决定采取哪种适当的动作。开发人员应该在程序初始化时，把 errno 设置为 0，这是一种良好的编程习惯。0 值表示程序中没有错误。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## errno、perror() 和 strerror()
 
-- 我能独立说出 `C 错误处理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+C 语言提供了 perror() 和 strerror() 函数来显示与 errno 相关的文本消息。
 
-## 复盘问题
+- perror() 函数显示您传给它的字符串，后跟一个冒号、一个空格和当前 errno 值的文本表示形式。
+- strerror() 函数，返回一个指针，指针指向当前 errno 值的文本表示形式。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+让我们来模拟一种错误情况，尝试打开一个不存在的文件。您可以使用多种方式来输出错误消息，在这里我们使用函数来演示用法。另外有一点需要注意，您应该使用 stderr 文件流来输出所有的错误。
+
+
+## 实例
+
+```java
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+
+extern int errno ;
+
+int main ()
+{
+   FILE * pf;
+   int errnum;
+   pf = fopen ("unexist.txt", "rb");
+   if (pf == NULL)
+   {
+      errnum = errno;
+      fprintf(stderr, "错误号: %d\n", errno);
+      perror("通过 perror 输出错误");
+      fprintf(stderr, "打开文件错误: %s\n", strerror( errnum ));
+   }
+   else
+   {
+      fclose (pf);
+   }
+   return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+错误号: 2
+通过 perror 输出错误: No such file or directory
+打开文件错误: No such file or directory
+```
+
+
+## 被零除的错误
+
+在进行除法运算时，如果不检查除数是否为零，则会导致一个运行时错误。
+
+为了避免这种情况发生，下面的代码在进行除法运算前会先检查除数是否为零：
+
+
+## 实例
+
+```java
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+   int dividend = 20;
+   int divisor = 0;
+   int quotient;
+
+   if( divisor == 0){
+      fprintf(stderr, "除数为 0 退出运行...\n");
+      exit(-1);
+   }
+   quotient = dividend / divisor;
+   fprintf(stderr, "quotient 变量的值为 : %d\n", quotient );
+
+   exit(0);
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+除数为 0 退出运行...
+```
+
+
+## 程序退出状态
+
+通常情况下，程序成功执行完一个操作正常退出的时候会带有值 EXIT_SUCCESS。在这里，EXIT_SUCCESS 是宏，它被定义为 0。
+
+如果程序中存在一种错误情况，当您退出程序时，会带有状态值 EXIT_FAILURE，被定义为 -1。所以，上面的程序可以写成：
+
+
+## 实例
+
+```java
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+   int dividend = 20;
+   int divisor = 5;
+   int quotient;
+
+   if( divisor == 0){
+      fprintf(stderr, "除数为 0 退出运行...\n");
+      exit(EXIT_FAILURE);
+   }
+   quotient = dividend / divisor;
+   fprintf(stderr, "quotient 变量的值为: %d\n", quotient );
+
+   exit(EXIT_SUCCESS);
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+quotient 变量的值为 : 4
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `C 错误处理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

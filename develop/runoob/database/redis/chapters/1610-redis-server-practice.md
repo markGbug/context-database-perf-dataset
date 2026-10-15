@@ -1,34 +1,120 @@
-# Redis：Redis 服务器 练习笔记
+# Redis：Redis 服务器
 
 - 来源：[Redis 服务器](https://www.runoob.com/redis/redis-server.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1610
 
-## 练习目标
+## 本章内容
 
-把 `Redis 服务器` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Redis 服务器命令主要是用于管理 redis 服务。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 实例
 
-## 验收清单
+以下实例演示了如何获取 redis 服务器的统计信息：
 
-- 我能独立说出 `Redis 服务器` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+redis 127.0.0.1:6379> INFO
 
-## 复盘问题
+# Server
+redis_version:2.8.13
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:c2238b38b1edb0e2
+redis_mode:standalone
+os:Linux 3.5.0-48-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+gcc_version:4.7.2
+process_id:3856
+run_id:0e61abd297771de3fe812a3c21027732ac9f41fe
+tcp_port:6379
+uptime_in_seconds:11554
+uptime_in_days:0
+hz:10
+lru_clock:16651447
+config_file:
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+# Clients
+connected_clients:1
+client-longest_output_list:0
+client-biggest_input_buf:0
+blocked_clients:0
+
+# Memory
+used_memory:589016
+used_memory_human:575.21K
+used_memory_rss:2461696
+used_memory_peak:667312
+used_memory_peak_human:651.67K
+used_memory_lua:33792
+mem_fragmentation_ratio:4.18
+mem_allocator:jemalloc-3.6.0
+
+# Persistence
+loading:0
+rdb_changes_since_last_save:3
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1409158561
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:0
+rdb_current_bgsave_time_sec:-1
+aof_enabled:0
+aof_rewrite_in_progress:0
+aof_rewrite_scheduled:0
+aof_last_rewrite_time_sec:-1
+aof_current_rewrite_time_sec:-1
+aof_last_bgrewrite_status:ok
+aof_last_write_status:ok
+
+# Stats
+total_connections_received:24
+total_commands_processed:294
+instantaneous_ops_per_sec:0
+rejected_connections:0
+sync_full:0
+sync_partial_ok:0
+sync_partial_err:0
+expired_keys:0
+evicted_keys:0
+keyspace_hits:41
+keyspace_misses:82
+pubsub_channels:0
+pubsub_patterns:0
+latest_fork_usec:264
+
+# Replication
+role:master
+connected_slaves:0
+master_repl_offset:0
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# CPU
+used_cpu_sys:10.49
+used_cpu_user:4.96
+used_cpu_sys_children:0.00
+used_cpu_user_children:0.01
+
+# Keyspace
+db0:keys=94,expires=1,avg_ttl=41638810
+db1:keys=1,expires=0,avg_ttl=0
+db3:keys=1,expires=0,avg_ttl=0
+```
+
+
+## Redis 服务器命令
+
+下表列出了 redis 服务器的相关命令:
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Redis 服务器` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

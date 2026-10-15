@@ -1,35 +1,118 @@
-# XML：XML 元素 学习笔记
+# XML：XML 元素
 
 - 来源：[XML 元素](https://www.runoob.com/xml/xml-elements.html)
 - 分类：XML / Web Service
 - 技术：XML
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4442
 
-## 学习目标
+## 本章内容
 
-XML 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XML 元素` 建立学习路径，先理解它在 XML 体系中的位置，再做可运行或可复述的验证。
+XML 文档包含 XML 元素。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 什么是 XML 元素？
 
-## 笔记模板
+XML 元素指的是从（且包括）开始标签直到（且包括）结束标签的部分。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+一个元素可以包含：
 
-## 完成标准
+- 其他元素
+- 文本
+- 属性
+- 或混合以上所有...
 
-- 能用 3 到 5 句话解释 `XML 元素`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<bookstore>
+    <book category="CHILDREN">
+        <title>Harry Potter</title>
+        <author>J K. Rowling</author>
+        <year>2005</year>
+        <price>29.99</price>
+    </book>
+    <book category="WEB">
+        <title>Learning XML</title>
+        <author>Erik T. Ray</author>
+        <year>2003</year>
+        <price>39.95</price>
+    </book>
+</bookstore>
+```
+
+在上面的实例中，<bookstore> 和 <book> 都有 元素内容，因为他们包含其他元素。<book> 元素也有属性（category="CHILDREN"）。<title>、<author>、<year> 和 <price> 有文本内容，因为他们包含文本。
+
+
+## XML 命名规则
+
+XML 元素必须遵循以下命名规则：
+
+- 名称可以包含字母、数字以及其他的字符
+- 名称不能以数字或者标点符号开始
+- 名称不能以字母 xml（或者 XML、Xml 等等）开始
+- 名称不能包含空格
+
+可使用任何名称，没有保留的字词。
+
+
+## 最佳命名习惯
+
+使名称具有描述性。使用下划线的名称也很不错：<first_name>、<last_name>。
+
+名称应简短和简单，比如：<book_title>，而不是：<the_title_of_the_book>。
+
+避免 "-" 字符。如果您按照这样的方式进行命名："first-name"，一些软件会认为您想要从 first 里边减去 name。
+
+避免 "." 字符。如果您按照这样的方式进行命名："first.name"，一些软件会认为 "name" 是对象 "first" 的属性。
+
+避免 ":" 字符。冒号会被转换为命名空间来使用（稍后介绍）。
+
+XML 文档经常有一个对应的数据库，其中的字段会对应 XML 文档中的元素。有一个实用的经验，即使用数据库的命名规则来命名 XML 文档中的元素。
+
+在 XML 中，éòá 等非英语字母是完全合法的，不过需要留意，您的软件供应商不支持这些字符时可能出现的问题。
+
+
+## XML 元素是可扩展的
+
+XML 元素是可扩展，以携带更多的信息。
+
+请看下面的 XML 实例：
+
+```html
+<note>
+    <to>Tove</to>
+    <from>Jani</from>
+    <body>Don't forget me this weekend!</body>
+</note>
+```
+
+让我们设想一下，我们创建了一个应用程序，可将 <to>、<from> 以及 <body> 元素从 XML 文档中提取出来，并产生以下的输出：
+
+To: Tove From: Jani
+
+Don't forget me this weekend!
+
+想象一下，XML 文档的作者添加的一些额外信息：
+
+```html
+<note>
+    <date>2008-01-10</date>
+    <to>Tove</to>
+    <from>Jani</from>
+    <heading>Reminder</heading>
+    <body>Don't forget me this weekend!</body>
+</note>
+```
+
+那么这个应用程序会中断或崩溃吗？
+
+不会。这个应用程序仍然可以找到 XML 文档中的 <to>、<from> 以及 <body> 元素，并产生同样的输出。
+
+XML 的优势之一，就是可以在不中断应用程序的情况下进行扩展。
+
+
+## 复习重点
+
+- 能说明 `XML 元素` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

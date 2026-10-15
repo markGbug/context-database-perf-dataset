@@ -1,35 +1,83 @@
-# SQLite：SQLite 创建表 学习笔记
+# SQLite：SQLite 创建表
 
 - 来源：[SQLite 创建表](https://www.runoob.com/sqlite/sqlite-create-table.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1697
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite 创建表` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+SQLite 的 CREATE TABLE 语句用于在任何给定的数据库创建一个新表。创建基本表，涉及到命名表、定义列及每一列的数据类型。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 语法
 
-## 笔记模板
+CREATE TABLE 语句的基本语法如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+CREATE TABLE database_name.table_name(
+   column1 datatype  PRIMARY KEY(one or more columns),
+   column2 datatype,
+   column3 datatype,
+   .....
+   columnN datatype,
+);
+```
 
-## 完成标准
+CREATE TABLE 是告诉数据库系统创建一个新表的关键字。CREATE TABLE 语句后跟着表的唯一的名称或标识。您也可以选择指定带有 table_name 的 database_name。
 
-- 能用 3 到 5 句话解释 `SQLite 创建表`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+下面是一个实例，它创建了一个 COMPANY 表，ID 作为主键，NOT NULL 的约束表示在表中创建纪录时这些字段不能为 NULL：
+
+```text
+sqlite> CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+让我们再创建一个表，我们将在随后章节的练习中使用：
+
+```text
+sqlite> CREATE TABLE DEPARTMENT(
+   ID INT PRIMARY KEY      NOT NULL,
+   DEPT           CHAR(50) NOT NULL,
+   EMP_ID         INT      NOT NULL
+);
+```
+
+您可以使用 SQLIte 命令中的 .tables 命令来验证表是否已成功创建，该命令用于列出附加数据库中的所有表。
+
+```text
+sqlite>.tables
+COMPANY     DEPARTMENT
+```
+
+在这里，可以看到我们刚创建的两张表 COMPANY、 DEPARTMENT。
+
+您可以使用 SQLite .schema 命令得到表的完整信息，如下所示：
+
+```text
+sqlite>.schema COMPANY
+CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite 创建表` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,118 @@
-# Docker：CentOS Docker 安装 练习笔记
+# Docker：CentOS Docker 安装
 
 - 来源：[CentOS Docker 安装](https://www.runoob.com/docker/centos-docker-install.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0797
 
-## 练习目标
+## 本章内容
 
-把 `CentOS Docker 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Docker 支持以下的 64 位 CentOS 版本：
 
-## 练习步骤
+- CentOS 9 (stream)
+- 更高版本...
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+必须启用 centos-extras 仓库，该仓库默认启用，如果您禁用了它，需要重新启用。
 
-## 验收清单
 
-- 我能独立说出 `CentOS Docker 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 使用官方安装脚本自动安装
 
-## 复盘问题
+安装命令如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+$ curl -fsSL https://get.docker.com -o install-docker.sh
+$ sudo sh install-docker.sh
+```
+
+
+## 手动安装
+
+
+### 卸载旧版本
+
+较旧的 Docker 版本称为 docker 或 docker-engine，如果已安装这些程序，请卸载它们以及相关的依赖项。
+
+运行以下命令卸载旧版本：
+
+
+### 安装
+
+
+### 使用 Docker 仓库进行安装
+
+在新主机上首次安装 Docker 之前，需要设置 Docker 仓库。之后，您可以从仓库安装和更新 Docker。
+
+设置仓库
+
+安装 dnf-plugins-core 包（提供管理 DNF 仓库的命令），并设置仓库。
+
+使用以下命令来设置稳定的仓库。
+
+
+## 使用官方源地址（比较慢）
+
+可以执行以下命令换成清华大学的镜像源：
+
+
+## 清华大学镜像源
+
+参考地址：https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/
+
+
+### 安装
+
+运行以下命令安装Docker：：
+
+```text
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+如果提示接受 GPG 密钥，验证指纹是否与 060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35 匹配，如果匹配则接受。
+
+安装成功后，启动 Docker 引擎：
+
+```text
+sudo systemctl start docker
+```
+
+如果希望 Docker 在系统启动时也启动可以使用以下命令：
+
+```text
+sudo systemctl enable --now docker
+```
+
+以上命令会配置 Docker 的 systemd 服务，在系统启动时自动启动 Docker。
+
+Docker 安装完默认未启动。并且已经创建好 docker 用户组，但该用户组下没有用户。
+
+运行以下命令来验证安装是否成功：
+
+```text
+sudo docker run hello-world
+```
+
+此命令会下载一个测试镜像，并在容器中运行，当容器运行时，会打印确认消息并退出。
+
+
+### 卸载 docker
+
+删除安装包：
+
+```text
+yum remove docker-ce
+```
+
+删除镜像、容器、配置文件等内容：
+
+```text
+rm -rf /var/lib/docker
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CentOS Docker 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,163 @@
-# SQL：SQL SELECT TOP 学习笔记
+# SQL：SQL SELECT TOP, LIMIT, ROWNUM 子句
 
 - 来源：[SQL SELECT TOP](https://www.runoob.com/sql/sql-top.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1632
 
-## 学习目标
+## 本章内容
 
-SQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQL SELECT TOP` 建立学习路径，先理解它在 SQL 体系中的位置，再做可运行或可复述的验证。
+## SQL SELECT TOP 子句
 
-## 阅读抓手
+SELECT TOP 语句用于在 SQL 中限制返回的结果集中的行数， 它通常用于只需要查询前几行数据的情况，尤其在数据集非常大时，可以显著提高查询性能。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+SELECT TOP 子句对于拥有数千条记录的大型表来说，是非常有用的。
 
-## 笔记模板
+说明：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- SELECT TOP 在 SQL Server 和 MS Access 中使用，而在 MySQL 和 PostgreSQL 中使用 LIMIT 关键字。
+- Oracle 在 12c 版本之前没有直接等效的关键字，可以通过 ROWNUM 实现类似功能，但在 12c 及以上版本中引入了 FETCH FIRST。
+- 当使用 TOP 或 LIMIT 时，最好结合 ORDER BY 子句，以确保返回的行是特定顺序的前几行。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `SQL SELECT TOP`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### SQL Server / MS Access 语法
+
+```text
+SELECT TOP number|percent column1, column2, ...
+FROM table_name;
+```
+
+number|percent：指定返回的行数或百分比。
+
+- number：具体的行数。
+- percent：数据集的百分比。
+
+
+### MySQL 语法
+
+```text
+SELECT column1, column2, ...
+FROM table_name
+LIMIT number;
+```
+
+
+### Oracle 语法
+
+```text
+SELECT column1, column2, ...
+FROM table_name
+FETCH FIRST number ROWS ONLY;
+```
+
+
+### PostgreSQL 语法
+
+```text
+SELECT column1, column2, ...
+FROM table_name
+LIMIT number;
+```
+
+
+### 实例
+
+假设我们有一个名为 Employees 的表，其中包含以下数据：
+
+SQL Server 和 MS Access 返回前 3 行数据：
+
+```text
+SELECT TOP 3 EmployeeName, Salary
+FROM Employees;
+```
+
+返回前 10% 的数据：
+
+```text
+SELECT TOP 10 PERCENT EmployeeName, Salary
+FROM Employees;
+```
+
+MySQL 返回前 3 行数据：
+
+```text
+SELECT EmployeeName, Salary
+FROM Employees
+LIMIT 3;
+```
+
+PostgreSQL 返回前 3 行数据：
+
+```text
+SELECT EmployeeName, Salary
+FROM Employees
+LIMIT 3;
+```
+
+Oracle 返回前 3 行数据：
+
+```text
+SELECT EmployeeName, Salary
+FROM Employees
+FETCH FIRST 3 ROWS ONLY;
+```
+
+
+## 演示数据库
+
+在本教程中，我们将使用 RUNOOB 样本数据库。
+
+下面是选自 "Websites" 表的数据：
+
+```text
+mysql> SELECT * FROM Websites;
++----+---------------+---------------------------+-------+---------+
+| id | name          | url                       | alexa | country |
++----+---------------+---------------------------+-------+---------+
+|  1 | Google        | https://www.google.cm/    |     1 | USA     |
+|  2 | 淘宝          | https://www.taobao.com/   |    13 | CN      |
+|  3 | 菜鸟教程       | http://www.runoob.com/    |  5000 | USA     |
+|  4 | 微博           | http://weibo.com/         |    20 | CN      |
+|  5 | Facebook      | https://www.facebook.com/ |     3 | USA     |
+|  7 | stackoverflow | http://stackoverflow.com/ |     0 | IND     |
++----+---------------+---------------------------+-------+---------+
+```
+
+
+## MySQL SELECT LIMIT 实例
+
+下面的 SQL 语句从 "Websites" 表中选取头两条记录：
+
+
+## 实例
+
+```text
+SELECT * FROM Websites LIMIT 2;
+```
+
+执行以上 SQL，数据如下所示：
+
+
+## SQL SELECT TOP PERCENT 实例
+
+在 Microsoft SQL Server 中还可以使用百分比作为参数。
+
+下面的 SQL 语句从 websites 表中选取前面百分之 50 的记录：
+
+
+## 实例
+
+以下操作在 Microsoft SQL Server 数据库中可执行。
+
+```text
+SELECT TOP 50 PERCENT * FROM Websites;
+```
+
+
+## 复习重点
+
+- 能说明 `SQL SELECT TOP` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

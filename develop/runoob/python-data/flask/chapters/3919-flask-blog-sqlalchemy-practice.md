@@ -1,34 +1,81 @@
-# Flask：Flask-SQLAlchemy 练习笔记
+# Flask：Flask-SQLAlchemy — 设计数据库模型
 
 - 来源：[Flask-SQLAlchemy](https://www.runoob.com/flask/flask-blog-sqlalchemy.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3919
 
-## 练习目标
+## 本章内容
 
-把 `Flask-SQLAlchemy` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章你将学会用 Flask-SQLAlchemy 定义数据模型，创建 SQLite 数据库表，并插入测试数据。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 为什么要用 ORM？
 
-## 验收清单
+直接写 SQL 语句操作数据库繁琐且容易出错。
 
-- 我能独立说出 `Flask-SQLAlchemy` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+ORM（对象关系映射） 让你用 Python 类来定义表结构，用 Python 方法操作数据。
 
-## 复盘问题
+Flask-SQLAlchemy 是 SQLAlchemy 的 Flask 集成版，封装了常见操作，配置更简单。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 安装与配置
+
+```text
+(venv) $ pip install flask-sqlalchemy
+```
+
+
+## 实例
+
+sqlite:///blog.db 中的三个斜杠表示相对路径。SQLite 数据库就是一个文件，无需安装任何数据库软件，非常适合开发和测试。
+
+
+## 定义模型：Post 和 Category
+
+
+## 实例
+
+
+### 常用字段类型
+
+
+## 创建数据库表
+
+与 Django 的 migrate 不同，Flask 需要手动初始化数据库表。
+
+```text
+(venv) $ flask shell                        # 进入 Flask 交互式 Shell
+```
+
+
+## 实例
+
+执行后，项目根目录下会生成 blog.db 文件。
+
+db.create_all() 只在表不存在时才创建。如果修改了模型结构（如新增字段），它不会自动更新表。生产环境中应该用 Flask-Migrate（第五章）管理结构变更。
+
+
+## 用 flask shell 插入测试数据
+
+
+## 实例
+
+
+### Flask-SQLAlchemy 基础查询
+
+
+## 本章小结
+
+本章你掌握了 Flask-SQLAlchemy 的完整流程：安装并配置 SQLALCHEMY_DATABASE_URI、db.Model 定义模型（字段类型/外键/relationship）、db.create_all() 初始化建表、flask shell 中插入与查询数据。
+
+至此，文章和分类的数据结构已在 SQLite 数据库中建立。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Flask-SQLAlchemy` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

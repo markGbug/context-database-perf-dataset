@@ -1,35 +1,97 @@
-# jQuery：jQuery 密码验证 学习笔记
+# jQuery：jQuery Password Validation（密码验证）
 
 - 来源：[jQuery 密码验证](https://www.runoob.com/jquery/jquery-plugin-password-validation.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3006
 
-## 学习目标
+## 本章内容
 
-jQuery 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery 密码验证` 建立学习路径，先理解它在 jQuery 体系中的位置，再做可运行或可复述的验证。
+jQuery Password Validation（密码验证）插件扩展了 jQuery Validate 插件，提供了两种组件： 一种评价密码的相关因素的功能：比如大小写字母的混合情况、字符（数字、特殊字符）的混合情况、长度、与用户名的相似度（可选的）。 一种使用评价功能显示密码强度的验证插件自定义方法。显示的文本可以被本地化。
 
-## 阅读抓手
+您可以简单地自定义强度显示的外观、本地化消息显示，并集成到已有的表单中。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+该插件目前版本是 1.0.0。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 使用方式
 
-## 完成标准
+如需使用 Password Validation（密码验证）插件，请添加一个 class "password" 到 input，同时添加显示强度的基本标记在表单的需要显示的地方：
 
-- 能用 3 到 5 句话解释 `jQuery 密码验证`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<form id="register">
+    <label for="password">Password:</label>
+    <input class="password" name="password" id="password" />
+    <div class="password-meter">
+        <div class="password-meter-message"> </div>
+        <div class="password-meter-bg">
+            <div class="password-meter-bar"></div>
+        </div>
+    </div>
+</form>
+```
+
+对表单应用 Validate 插件：
+
+```text
+$(document).ready(function() {
+  $("#register").validate();
+});
+```
+
+您可以重载 $.validator.passwordRating 实现不同的评价方法。或者重载 $.validator.passwordRating.messages 来提供其他消息，比如本地化。
+
+
+## 实例演示
+
+```html
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Makes "field" required to be the same as #other</title>
+<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+
+</head>
+<body>
+<form id="myform">
+<label for="password">Password</label>
+<input id="password" name="password" />
+<br/>
+<label for="password_again">Again</label>
+<input class="left" id="password_again" name="password_again" />
+<br>
+<input type="submit" value="Validate!">
+</form>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+<script src="https://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+<script>
+// just for the demos, avoids form submit
+jQuery.validator.setDefaults({
+  debug: true,
+  success: "valid"
+});
+$( "#myform" ).validate({
+  rules: {
+    password: "required",
+    password_again: {
+      equalTo: "#password"
+    }
+  }
+});
+</script>
+</body>
+</html>
+```
+
+查看演示
+
+
+## 复习重点
+
+- 能说明 `jQuery 密码验证` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

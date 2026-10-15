@@ -1,34 +1,96 @@
-# OpenCode：OpenCode 配置文件 练习笔记
+# OpenCode：OpenCode 配置文件
 
 - 来源：[OpenCode 配置文件](https://www.runoob.com/opencode/opencode-setup-file.html)
 - 分类：AI / 智能开发
 - 技术：OpenCode
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0422
 
-## 练习目标
+## 本章内容
 
-把 `OpenCode 配置文件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+OpenCode 使用 JSON 格式来配置。
 
-## 练习步骤
+我们可以先看在全局配置文件 ~/.config/opencode/opencode.json：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```text
+touch ~/.config/opencode/opencode.json
+```
 
-## 验收清单
+包含模型提供商及配置信息：
 
-- 我能独立说出 `OpenCode 配置文件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+{
+  // JSON Schema（用于编辑器校验和自动补全）
+  "$schema": "https://opencode.ai/config.json",
 
-## 复盘问题
+  "provider": {
+    // 自定义 Provider 名称（使用时：deepseek/xxx）
+    "deepseek": {
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+      // 使用 OpenAI 兼容适配器（适用于 DeepSeek 这类兼容接口）
+      "npm": "@ai-sdk/openai-compatible",
+
+      "options": {
+        // API 基础地址（必须是 OpenAI 兼容格式）
+        "baseURL": "https://api.deepseek.com/v1",
+
+        // API Key
+        "apiKey": "sk-xxxx",
+
+        // 是否强制设置缓存 key（提升缓存命中率，降低成本）
+        "setCacheKey": true
+      },
+
+      "models": {
+        // 本地模型别名（CLI/TUI 中使用：deepseek/Deepseek-v4）
+        "Deepseek-v4": {
+          // 实际调用的模型名称（API 层）
+          "name": "deepseek-v4-pro"
+        }
+      }
+    }
+  }
+}
+```
+
+
+### 一个最小可用配置示例
+
+```text
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-5",
+  "autoupdate": true,
+  "theme": "default"
+}
+```
+
+常用全局配置项：
+
+Provider 示例:
+
+```text
+{
+  "provider": {
+    "anthropic": {
+      "options": {
+        "timeout": 600000,
+        "setCacheKey": true
+      }
+    }
+  }
+}
+```
+
+
+## 理解配置的"合并机制"
+
+OpenCode 的配置不是覆盖，而是分层合并。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `OpenCode 配置文件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

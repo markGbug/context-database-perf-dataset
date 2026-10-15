@@ -1,35 +1,75 @@
-# Ionic：ionic range 学习笔记
+# Ionic：ionic Range
 
 - 来源：[ionic range](https://www.runoob.com/ionic/ionic-range.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3305
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic range` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+ionic Range 是一个滑块控件，ionic 为 Range 提供了很多种默认的样式。而且你可以在许多种元素里使用它比如列表或者 Card 。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 实例
 
-## 笔记模板
+```html
+<div class="range">
+  <i class="icon ion-volume-low"></i>
+  <input type="range" name="volume">
+  <i class="icon ion-volume-high"></i>
+</div>
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+<div class="list" style="margin-top: 13px">
+  <div class="item item-divider">
+    Ranges In A List
+  </div>
+  <div class="item range range-positive">
+    <i class="icon ion-ios-sunny-outline"></i>
+    <input type="range" name="volume" min="0" max="100" value="12">
+    <i class="icon ion-ios-sunny"></i>
+  </div>
+  <div class="item range range-calm">
+    <i class="icon ion-ios-lightbulb-outline"></i>
+    <input type="range" name="volume" min="0" max="100" value="25">
+    <i class="icon ion-ios-lightbulb"></i>
+  </div>
+  <div class="item range range-balanced">
+    <i class="icon ion-ios-bolt-outline"></i>
+    <input type="range" name="volume" min="0" max="100" value="38">
+    <i class="icon ion-ios-bolt"></i>
+  </div>
+  <div class="item range range-energized">
+    <i class="icon ion-ios-moon-outline"></i>
+    <input type="range" name="volume" min="0" max="100" value="50">
+    <i class="icon ion-ios-moon"></i>
+  </div>
+  <div class="item range range-assertive">
+    <i class="icon ion-ios-partlysunny-outline"></i>
+    <input type="range" name="volume" min="0" max="100" value="63">
+    <i class="icon ion-ios-partlysunny"></i>
+  </div>
+  <div class="item range range-royal">
+    <i class="icon ion-ios-rainy-outline"></i>
+    <input type="range" name="volume" min="0" max="100" value="75">
+    <i class="icon ion-ios-rainy"></i>
+  </div>
+  <div class="item range range-dark">
+    <i class="icon ion-ios-lightbulb-outline"></i>
+    <input type="range" name="volume" min="0" max="100" value="88">
+    <i class="icon ion-ios-lightbulb"></i>
+  </div>
+</div>
+```
 
-## 完成标准
+尝试一下 »
 
-- 能用 3 到 5 句话解释 `ionic range`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+运行效果如下：
+
+
+## 复习重点
+
+- 能说明 `ionic range` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

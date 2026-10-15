@@ -1,34 +1,81 @@
-# VS Code：VSCode Linux 安装 练习笔记
+# VS Code：VSCode Linux 安装
 
 - 来源：[VSCode Linux 安装](https://www.runoob.com/vscode/vscode-linux-install.html)
 - 分类：DevOps / 工程化
 - 技术：VS Code
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1899
 
-## 练习目标
+## 本章内容
 
-把 `VSCode Linux 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+VSCode 是微软开发的跨平台免费源代码编辑器，支持 Windows、macOS 和 Linux。
 
-## 练习步骤
+在安装 VS Code 之前，请确保您的设备满足以下最低要求：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+VS Code 官方网站下载页面：https://code.visualstudio.com/Download。
 
-## 验收清单
+默认情况下访问 VS Code 官网 https://code.visualstudio.com/，页面会根据你的系统自动匹配安装包，比如我是 macOS，就会出现 Download for macOS 按钮：
 
-- 我能独立说出 `VSCode Linux 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 在 Linux 上安装
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+访问 VS Code 官网 https://code.visualstudio.com/，会显示各大 Linux 发行平台的安装包 。
+
+
+### 使用包管理器安装（推荐）
+
+对于基于 Debian 的系统（如 Ubuntu）：
+
+```text
+sudo apt update
+sudo apt install software-properties-common apt-transport-https
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt update
+sudo apt install code
+```
+
+对于基于 Red Hat 的系统（如 Fedora）：
+
+```text
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+sudo dnf check-update
+sudo dnf install code
+```
+
+从 VS Code 官网 下载适配的 .deb 或 .rpm 文件。
+
+对于 .deb 文件：
+
+```text
+sudo dpkg -i code*.deb
+sudo apt-get install -f
+```
+
+对于 .rpm 文件：
+
+sudo rpm -i code*.rpm
+
+在终端输入 code 启动 VS Code，或者通过系统菜单打开。
+
+
+## VSCode 的 code 命令
+
+启用 VSCode 的 code 命令非常简单，先打开命令面板：
+
+- macOS 系统快捷键：⇧⌘P
+- Windows/Linux 快捷键: Ctrl + Shift + P
+
+搜索安装 >shell command:
+
+然后选择 Shell Command: Install 'code' command in PATH 即可为系统 PATH 路径添加了 code 命令的引用。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `VSCode Linux 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,83 @@
-# CSS：CSS 编辑器 练习笔记
+# CSS：CSS 编辑器
 
 - 来源：[CSS 编辑器](https://www.runoob.com/css/css-editor.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2391
 
-## 练习目标
+## 本章内容
 
-把 `CSS 编辑器` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+可以使用专业的 CSS 编辑器来编辑 CSS，为大家推荐几款常用的编辑器：
 
-## 练习步骤
+你可以从以上软件的官网中下载对应的软件，按步骤安装即可。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+也可以使用我们的在线编辑器：https://www.jyshare.com/front-end/61/
 
-## 验收清单
+接下来我们将为大家演示如何使用 VS Code 工具来创建 CSS 文件。
 
-- 我能独立说出 `CSS 编辑器` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## VS Code
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Visual Studio Code（简称 VS Code）是一个由微软开发，同时支持 Windows 、 Linux 和 macOS 等操作系统且开放源代码的代码编辑器，编辑器中内置了扩展程序管理的功能。
+
+VS Code 安装教程参考：https://www.runoob.com/vscode/vscode-tutorial.html
+
+安装必备插件 (Extensions): 点击 VS Code 左侧边栏的方块图标（Extensions），搜索并安装以下两个插件，它们对新手至关重要：
+
+- Live Server: 允许你在浏览器中实时预览网页，保存代码后浏览器会自动刷新。
+- HTML CSS Support: 增强 CSS 的智能提示。
+
+
+### 第一步: 建立项目结构
+
+在你的电脑上创建一个名为 my-first-css 的文件夹
+
+在 VS Code 中打开： 点击 VS Code 左上角的 File -> Open Folder...，选择刚才的文件夹。
+
+- 在左侧资源管理器空白处右键，新建文件 index.html (这是网页骨架)。
+- 再次右键，新建文件 style.css (这是网页的皮肤)。
+
+
+### 第二步：编写 HTML 骨架
+
+CSS 必须依附于 HTML 存在，以下是 index.html 文件代码。
+
+在 <body> 标签内输入以下代码，并一定要加上 <link> 标签来关联 CSS 文件：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的 CSS 练习</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="card">
+        <h1>Hello, CSS!</h1>
+        <p>这是我用 VS Code 写的第一个样式卡片。</p>
+        <button>点击我</button>
+    </div>
+
+</body>
+</html>
+```
+
+
+### 第三步：编写 CSS 样式
+
+在 style.css 文件中输入以下代码:
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS 编辑器` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,237 @@
-# Java：Java Override/Overload 练习笔记
+# Java：Java 重写(Override)与重载(Overload)
 
 - 来源：[Java Override/Overload](https://www.runoob.com/java/java-override-overload.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0904
 
-## 练习目标
+## 本章内容
 
-把 `Java Override/Overload` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 重写(Override)
 
-## 练习步骤
+重写（Override）是指子类定义了一个与其父类中具有相同名称、参数列表和返回类型的方法，并且子类方法的实现覆盖了父类方法的实现。 即外壳不变，核心重写！
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+重写的好处在于子类可以根据需要，定义特定于自己的行为。也就是说子类能够根据需要实现父类的方法。这样，在使用子类对象调用该方法时，将执行子类中的方法而不是父类中的方法。
 
-## 验收清单
+重写方法不能抛出新的检查异常或者比被重写方法申明更加宽泛的异常。例如： 父类的一个方法申明了一个检查异常 IOException，但是在重写这个方法的时候不能抛出 Exception 异常，因为 Exception 是 IOException 的父类，抛出 IOException 异常或者 IOException 的子类异常。
 
-- 我能独立说出 `Java Override/Overload` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在面向对象原则里，重写意味着可以重写任何现有方法。实例如下：
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## TestDog.java 文件代码：
+
+```java
+class Animal{
+   public void move(){
+      System.out.println("动物可以移动");
+   }
+}
+
+class Dog extends Animal{
+   public void move(){
+      System.out.println("狗可以跑和走");
+   }
+}
+
+public class TestDog{
+   public static void main(String args[]){
+      Animal a = new Animal(); // Animal 对象
+      Animal b = new Dog(); // Dog 对象
+
+      a.move();// 执行 Animal 类的方法
+
+      b.move();//执行 Dog 类的方法
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+动物可以移动
+狗可以跑和走
+```
+
+在上面的例子中可以看到，尽管 b 属于 Animal 类型，但是它运行的是 Dog 类的 move方法。
+
+这是由于在编译阶段，只是检查参数的引用类型。
+
+然而在运行时，Java 虚拟机(JVM)指定对象的类型并且运行该对象的方法。
+
+因此在上面的例子中，之所以能编译成功，是因为 Animal 类中存在 move 方法，然而运行时，运行的是特定对象的方法。
+
+思考以下例子：
+
+
+## TestDog.java 文件代码：
+
+```java
+class Animal{
+   public void move(){
+      System.out.println("动物可以移动");
+   }
+}
+
+class Dog extends Animal{
+   public void move(){
+      System.out.println("狗可以跑和走");
+   }
+   public void bark(){
+      System.out.println("狗可以吠叫");
+   }
+}
+
+public class TestDog{
+   public static void main(String args[]){
+      Animal a = new Animal(); // Animal 对象
+      Animal b = new Dog(); // Dog 对象
+
+      a.move();// 执行 Animal 类的方法
+      b.move();//执行 Dog 类的方法
+      b.bark();
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+TestDog.java:30: cannot find symbol
+symbol  : method bark()
+location: class Animal
+                b.bark();
+                 ^
+```
+
+该程序将抛出一个编译错误，因为b的引用类型Animal没有bark方法。
+
+
+## 方法的重写规则
+
+- 参数列表与被重写方法的参数列表必须完全相同。
+- 返回类型与被重写方法的返回类型可以不相同，但是必须是父类返回值的派生类（java5 及更早版本返回类型要一样，java7 及更高版本可以不同）。
+- 访问权限不能比父类中被重写的方法的访问权限更低。例如：如果父类的一个方法被声明为 public，那么在子类中重写该方法就不能声明为 protected。
+- 父类的成员方法只能被它的子类重写。
+- 声明为 final 的方法不能被重写。
+- 声明为 static 的方法不能被重写，但是能够被再次声明。
+- 子类和父类在同一个包中，那么子类可以重写父类所有方法，除了声明为 private 和 final 的方法。
+- 子类和父类不在同一个包中，那么子类只能够重写父类的声明为 public 和 protected 的非 final 方法。
+- 重写的方法能够抛出任何非强制异常，无论被重写的方法是否抛出异常。但是，重写的方法不能抛出新的强制性异常，或者比被重写方法声明的更广泛的强制性异常，反之则可以。
+- 构造方法不能被重写。
+- 如果不能继承一个类，则不能重写该类的方法。
+
+
+## Super 关键字的使用
+
+当需要在子类中调用父类的被重写方法时，要使用 super 关键字。
+
+
+## TestDog.java 文件代码：
+
+```java
+class Animal{
+   public void move(){
+      System.out.println("动物可以移动");
+   }
+}
+
+class Dog extends Animal{
+   public void move(){
+      super.move(); // 应用super类的方法
+      System.out.println("狗可以跑和走");
+   }
+}
+
+public class TestDog{
+   public static void main(String args[]){
+
+      Animal b = new Dog(); // Dog 对象
+      b.move(); //执行 Dog类的方法
+
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+动物可以移动
+狗可以跑和走
+```
+
+
+## 重载(Overload)
+
+重载(overloading) 是在一个类里面，方法名字相同，而参数不同。返回类型可以相同也可以不同。
+
+每个重载的方法（或者构造函数）都必须有一个独一无二的参数类型列表。
+
+最常用的地方就是构造器的重载。
+
+重载规则:
+
+- 被重载的方法必须改变参数列表(参数个数或类型不一样)；
+- 被重载的方法可以改变返回类型；
+- 被重载的方法可以改变访问修饰符；
+- 被重载的方法可以声明新的或更广的检查异常；
+- 方法能够在同一个类中或者在一个子类中被重载。
+- 无法以返回值类型作为重载函数的区分标准。
+
+
+### 实例
+
+
+## Overloading.java 文件代码：
+
+```java
+public class Overloading {
+    public int test(){
+        System.out.println("test1");
+        return 1;
+    }
+
+    public void test(int a){
+        System.out.println("test2");
+    }
+
+    //以下两个参数类型顺序不同
+    public String test(int a,String s){
+        System.out.println("test3");
+        return "returntest3";
+    }
+
+    public String test(String s,int a){
+        System.out.println("test4");
+        return "returntest4";
+    }
+
+    public static void main(String[] args){
+        Overloading o = new Overloading();
+        System.out.println(o.test());
+        o.test(1);
+        System.out.println(o.test(1,"test3"));
+        System.out.println(o.test("test4",1));
+    }
+}
+```
+
+
+## 重写与重载之间的区别
+
+
+## 总结
+
+方法的重写(Overriding)和重载(Overloading)是java多态性的不同表现，重写是父类与子类之间多态性的一种表现，重载可以理解成多态的具体表现形式。
+
+- (1)方法重载是一个类中定义了多个方法名相同,而他们的参数的数量不同或数量相同而类型和次序不同,则称为方法的重载(Overloading)。
+- (2)方法重写是在子类存在方法与父类的方法的名字相同,而且参数的个数与类型一样,返回值也一样的方法,就称为重写(Overriding)。
+- (3)方法重载是一个类的多态性表现,而方法重写是子类与父类的一种多态性表现。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java Override/Overload` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

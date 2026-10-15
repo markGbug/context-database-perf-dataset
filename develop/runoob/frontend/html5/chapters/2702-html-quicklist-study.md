@@ -1,35 +1,198 @@
-# HTML5：HTML 速查列表 学习笔记
+# HTML5：HTML 速查列表
 
 - 来源：[HTML 速查列表](https://www.runoob.com/html/html-quicklist.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2702
 
-## 学习目标
+## 本章内容
 
-HTML5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `HTML 速查列表` 建立学习路径，先理解它在 HTML5 体系中的位置，再做可运行或可复述的验证。
+HTML 速查列表. 你可以打印它，以备日常使用。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## HTML 基本文档
 
-## 笔记模板
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>文档标题</title>
+</head>
+<body>
+可见文本...
+</body>
+</html>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 基本标签（Basic Tags）
 
-- 能用 3 到 5 句话解释 `HTML 速查列表`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<h1>最大的标题</h1>
+<h2> . . . </h2>
+<h3> . . . </h3>
+<h4> . . . </h4>
+<h5> . . . </h5>
+<h6>最小的标题</h6>
+
+<p>这是一个段落。</p>
+<br> （换行）
+<hr> （水平线）
+<!-- 这是注释 -->
+```
+
+
+## 文本格式化（Formatting）
+
+```html
+<b>粗体文本</b>
+<code>计算机代码</code>
+<em>强调文本</em>
+<i>斜体文本</i>
+<kbd>键盘输入</kbd>
+<pre>预格式化文本</pre>
+<small>更小的文本</small>
+<strong>重要的文本</strong>
+
+<abbr> （缩写）
+<address> （联系信息）
+<bdo> （文字方向）
+<blockquote> （从另一个源引用的部分）
+<cite> （工作的名称）
+<del> （删除的文本）
+<ins> （插入的文本）
+<sub> （下标文本）
+<sup> （上标文本）
+```
+
+
+## 链接（Links）
+
+```html
+普通的链接：<a href="http://www.example.com/">链接文本</a>
+图像链接： <a href="http://www.example.com/"><img src="URL" alt="替换文本"></a>
+邮件链接： <a href="mailto:webmaster@example.com">发送e-mail</a>
+书签：
+<a id="tips">提示部分</a>
+<a href="#tips">跳到提示部分</a>
+```
+
+
+## 图片（Images）
+
+```html
+<img src="URL" alt="替换文本" height="42" width="42">
+```
+
+
+## 样式/区块（Styles/Sections）
+
+```html
+<style type="text/css">
+```
+
+```text
+h1 {color:red;}
+p {color:blue;}
+```
+
+```html
+</style>
+<div>文档中的块级元素</div>
+<span>文档中的内联元素</span>
+```
+
+
+## 无序列表
+
+```html
+<ul>
+    <li>项目</li>
+    <li>项目</li>
+</ul>
+```
+
+
+## 有序列表
+
+```html
+<ol>
+    <li>第一项</li>
+    <li>第二项</li>
+</ol>
+```
+
+
+## 定义列表
+
+```html
+<dl>
+  <dt>项目 1</dt>
+    <dd>描述项目 1</dd>
+  <dt>项目 2</dt>
+    <dd>描述项目 2</dd>
+</dl>
+```
+
+
+## 表格（Tables）
+
+```html
+<table border="1">
+  <tr>
+    <th>表格标题</th>
+    <th>表格标题</th>
+  </tr>
+  <tr>
+    <td>表格数据</td>
+    <td>表格数据</td>
+  </tr>
+</table>
+```
+
+
+## 框架（Iframe）
+
+```html
+<iframe src="demo_iframe.htm"></iframe>
+```
+
+
+## 表单（Forms）
+
+```html
+<form action="demo_form.php" method="post/get">
+<input type="text" name="email" size="40" maxlength="50">
+<input type="password">
+<input type="checkbox" checked="checked">
+<input type="radio" checked="checked">
+<input type="submit" value="Send">
+<input type="reset">
+<input type="hidden">
+<select>
+<option>苹果</option>
+<option selected="selected">香蕉</option>
+<option>樱桃</option>
+</select>
+<textarea name="comment" rows="60" cols="20"></textarea>
+
+</form>
+```
+
+
+## 实体（Entities）
+
+```text
+< 等同于 <
+> 等同于 >
+© 等同于 ©
+```
+
+
+## 复习重点
+
+- 能说明 `HTML 速查列表` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

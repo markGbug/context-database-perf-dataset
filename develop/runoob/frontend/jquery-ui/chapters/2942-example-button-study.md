@@ -1,35 +1,389 @@
-# jQuery UI：按钮（Button） 学习笔记
+# jQuery UI：jQuery UI 实例 - 按钮（Button）
 
 - 来源：[按钮（Button）](https://www.runoob.com/jqueryui/example-button.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2942
 
-## 学习目标
+## 本章内容
 
-jQuery UI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `按钮（Button）` 建立学习路径，先理解它在 jQuery UI 体系中的位置，再做可运行或可复述的验证。
+用带有适当的悬停（hover）和激活（active）的样式的可主题化按钮来加强标准表单元素（比如按钮、输入框、锚）的功能。
 
-## 阅读抓手
+如需了解更多有关 button 部件的细节，请查看 API 文档 按钮部件（Button Widget）。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 默认功能
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+可用于按钮的标记实例：一个 button 元素，一个类型为 submit 的 input 元素和一个锚。
 
-## 完成标准
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 按钮（Button） - 默认功能</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "input[type=submit], a, button" )
+      .button()
+      .click(function( event ) {
+        event.preventDefault();
+      });
+  });
+  </script>
+</head>
+<body>
 
-- 能用 3 到 5 句话解释 `按钮（Button）`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+<button>一个 button 元素</button>
+
+<input type="submit" value="一个提交按钮">
+
+<a href="#">一个锚</a>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 复选框
+
+通过 button 部件把复选框显示为切换按钮样式。与复选框相关的 label 元素作为按钮文本。
+
+本实例通过在一个公共的容器上调用 .buttonset()，演示了三个显示为按钮样式的复选框。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 按钮（Button） - 复选框</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#check" ).button();
+    $( "#format" ).buttonset();
+  });
+  </script>
+  <style>
+  #format { margin-top: 2em; }
+  </style>
+</head>
+<body>
+
+<input type="checkbox" id="check"><label for="check">切换</label>
+
+<div id="format">
+  <input type="checkbox" id="check1"><label for="check1">B</label>
+  <input type="checkbox" id="check2"><label for="check2">I</label>
+  <input type="checkbox" id="check3"><label for="check3">U</label>
+</div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 图标
+
+一些带有文本和图标的各种组合的按钮
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 按钮（Button） - 图标</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "button:first" ).button({
+      icons: {
+        primary: "ui-icon-locked"
+      },
+      text: false
+    }).next().button({
+      icons: {
+        primary: "ui-icon-locked"
+      }
+    }).next().button({
+      icons: {
+        primary: "ui-icon-gear",
+        secondary: "ui-icon-triangle-1-s"
+      }
+    }).next().button({
+      icons: {
+        primary: "ui-icon-gear",
+        secondary: "ui-icon-triangle-1-s"
+      },
+      text: false
+    });
+  });
+  </script>
+</head>
+<body>
+
+<button>只带有图标的按钮</button>
+<button>图标在左侧的按钮</button>
+<button>带有两个图标的按钮</button>
+<button>带有两个图标且不带文本的按钮</button>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 单选
+
+三个单选按钮转变为一套按钮。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 按钮（Button） - 单选</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#radio" ).buttonset();
+  });
+  </script>
+</head>
+<body>
+
+<form>
+  <div id="radio">
+    <input type="radio" id="radio1" name="radio"><label for="radio1">选择 1</label>
+    <input type="radio" id="radio2" name="radio" checked="checked"><label for="radio2">选择 2</label>
+    <input type="radio" id="radio3" name="radio"><label for="radio3">选择 3</label>
+  </div>
+</form>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 分割按钮
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 按钮（Button） - 分割按钮</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+    .ui-menu { position: absolute; width: 100px; }
+  </style>
+  <script>
+  $(function() {
+    $( "#rerun" )
+      .button()
+      .click(function() {
+        alert( "Running the last action" );
+      })
+      .next()
+        .button({
+          text: false,
+          icons: {
+            primary: "ui-icon-triangle-1-s"
+          }
+        })
+        .click(function() {
+          var menu = $( this ).parent().next().show().position({
+            my: "left top",
+            at: "left bottom",
+            of: this
+          });
+          $( document ).one( "click", function() {
+            menu.hide();
+          });
+          return false;
+        })
+        .parent()
+          .buttonset()
+          .next()
+            .hide()
+            .menu();
+  });
+  </script>
+</head>
+<body>
+
+<div>
+  <div>
+    <button id="rerun">运行最后的动作</button>
+    <button id="select">选择一个动作</button>
+  </div>
+  <ul>
+    <li><a href="#">打开...</a></li>
+    <li><a href="#">保存</a></li>
+    <li><a href="#">删除</a></li>
+  </ul>
+</div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 工具栏
+
+一个多媒体播放器的工具栏。请看基础的标记：一些 button 元素，Shuffle 按钮是一个类型为 checkbox 的 input，Repeat 选项是三个类型为 radio 的 input。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 按钮（Button） - 工具栏</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+  #toolbar {
+    padding: 4px;
+    display: inline-block;
+  }
+  /* support: IE7 */
+  *+html #toolbar {
+    display: inline;
+  }
+  </style>
+  <script>
+  $(function() {
+    $( "#beginning" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-seek-start"
+      }
+    });
+    $( "#rewind" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-seek-prev"
+      }
+    });
+    $( "#play" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-play"
+      }
+    })
+    .click(function() {
+      var options;
+      if ( $( this ).text() === "play" ) {
+        options = {
+          label: "pause",
+          icons: {
+            primary: "ui-icon-pause"
+          }
+        };
+      } else {
+        options = {
+          label: "play",
+          icons: {
+            primary: "ui-icon-play"
+          }
+        };
+      }
+      $( this ).button( "option", options );
+    });
+    $( "#stop" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-stop"
+      }
+    })
+    .click(function() {
+      $( "#play" ).button( "option", {
+        label: "play",
+        icons: {
+          primary: "ui-icon-play"
+        }
+      });
+    });
+    $( "#forward" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-seek-next"
+      }
+    });
+    $( "#end" ).button({
+      text: false,
+      icons: {
+        primary: "ui-icon-seek-end"
+      }
+    });
+    $( "#shuffle" ).button();
+    $( "#repeat" ).buttonset();
+  });
+  </script>
+</head>
+<body>
+
+<div id="toolbar" class="ui-widget-header ui-corner-all">
+  <button id="beginning">开头</button>
+  <button id="rewind">快退</button>
+  <button id="play">播放</button>
+  <button id="stop">停止</button>
+  <button id="forward">快进</button>
+  <button id="end">结尾</button>
+
+  <input type="checkbox" id="shuffle"><label for="shuffle">Shuffle</label>
+
+  <span id="repeat">
+    <input type="radio" id="repeat0" name="repeat" checked="checked"><label for="repeat0">No Repeat</label>
+    <input type="radio" id="repeat1" name="repeat"><label for="repeat1">Once</label>
+    <input type="radio" id="repeatall" name="repeat"><label for="repeatall">All</label>
+  </span>
+</div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 复习重点
+
+- 能说明 `按钮（Button）` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

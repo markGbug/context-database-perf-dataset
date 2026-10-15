@@ -1,34 +1,109 @@
-# PostgreSQL：PostgreSQL LIKE 练习笔记
+# PostgreSQL：PostgreSQL LIKE 子句
 
 - 来源：[PostgreSQL LIKE](https://www.runoob.com/postgresql/postgresql-like.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1569
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL LIKE` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 PostgreSQL 数据库中，我们如果要获取包含某些字符的数据，可以使用 LIKE 子句。
 
-## 练习步骤
+在 LIKE 子句中，通常与通配符结合使用，通配符表示任意字符，在 PostgreSQL 中，主要有以下两种通配符：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 百分号 %
+- 下划线 _
 
-## 验收清单
+如果没有使用以上两种通配符，LIKE 子句和等号 = 得到的结果是一样的。
 
-- 我能独立说出 `PostgreSQL LIKE` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 语法
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+以下是使用 LIKE 子句搭配百分号 % 和下划线 _ 从数据库中获取数据的通用语法：
+
+```text
+SELECT FROM table_name WHERE column LIKE 'XXXX%';
+或者
+SELECT FROM table_name WHERE column LIKE '%XXXX%';
+或者
+SELECT FROM table_name WHERE column LIKE 'XXXX_';
+或者
+SELECT FROM table_name WHERE column LIKE '_XXXX';
+或者
+SELECT FROM table_name WHERE column LIKE '_XXXX_';
+```
+
+你可以在 WHERE 子句中指定任何条件。
+
+你可以使用 AND 或者 OR 指定一个或多个条件。
+
+XXXX 可以是任何数字或者字符。
+
+
+### 实例
+
+下面是 LIKE 语句中演示了 % 和 _ 的一些差别:
+
+在 PostgreSQL 中，LIKE 子句是只能用于对字符进行比较，因此在上面例子中，我们要将整型数据类型转化为字符串数据类型。
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+下面实例将找出 AGE 以 2 开头的数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE AGE::text LIKE '2%';
+```
+
+得到以下结果：
+
+```text
+id | name  | age | address     | salary
+----+-------+-----+-------------+--------
+  2 | Allen |  25 | Texas       |  15000
+  3 | Teddy |  23 | Norway      |  20000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+  6 | Kim   |  22 | South-Hall  |  45000
+  7 | James |  24 | Houston     |  10000
+  8 | Paul  |  24 | Houston     |  20000
+(7 rows)
+```
+
+下面实例将找出 address 字段中含有 - 字符的数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE ADDRESS  LIKE '%-%';
+```
+
+得到结果如下：
+
+```text
+id | name | age |                      address              | salary
+----+------+-----+-------------------------------------------+--------
+  4 | Mark |  25 | Rich-Mond                                 |  65000
+  6 | Kim  |  22 | South-Hall                                |  45000
+(2 rows)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL LIKE` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

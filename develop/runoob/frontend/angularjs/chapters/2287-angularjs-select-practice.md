@@ -1,34 +1,120 @@
-# AngularJS：AngularJS Select 练习笔记
+# AngularJS：AngularJS Select(选择框)
 
 - 来源：[AngularJS Select](https://www.runoob.com/angularjs/angularjs-select.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2287
 
-## 练习目标
+## 本章内容
 
-把 `AngularJS Select` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+AngularJS 可以使用数组或对象创建一个下拉列表选项。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 使用 ng-options 创建选择框
 
-## 验收清单
+在 AngularJS 中我们可以使用 ng-option 指令来创建一个下拉列表，列表项通过对象和数组循环输出，如下实例:
 
-- 我能独立说出 `AngularJS Select` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+
+<select ng-init="selectedName = names[0]" ng-model="selectedName" ng-options="x for x in names">
+</select>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.names = ["Google", "Runoob", "Taobao"];
+});
+</script>
+```
+
+ng-init 设置默认选中值。
+
+
+## ng-options 与 ng-repeat
+
+我们也可以使用ng-repeat 指令来创建下拉列表：
+
+
+### 实例
+
+ng-repeat 指令是通过数组来循环 HTML 代码来创建下拉列表，但 ng-options 指令更适合创建下拉列表，它有以下优势：
+
+使用 ng-options 的选项是一个对象， ng-repeat 是一个字符串。
+
+
+## 应该用哪个更好?
+
+假设我们使用以下对象:
+
+```text
+$scope.sites = [
+    {site : "Google", url : "http://www.google.com"},
+    {site : "Runoob", url : "http://www.runoob.com"},
+    {site : "Taobao", url : "http://www.taobao.com"}
+];
+```
+
+ng-repeat 有局限性，选择的值是一个字符串:
+
+
+### 实例
+
+使用 ng-repeat:
+
+使用 ng-options 指令，选择的值是一个对象：
+
+
+### 实例
+
+使用 ng-options:
+
+当选择值是一个对象时，我们就可以获取更多信息，应用也更灵活。
+
+
+## 数据源为对象
+
+前面实例我们使用了数组作为数据源，以下我们将数据对象作为数据源。
+
+```text
+$scope.sites = {
+    site01 : "Google",
+    site02 : "Runoob",
+    site03 : "Taobao"
+};
+```
+
+ng-options 使用对象有很大的不同，如下所示：
+
+
+### 实例
+
+使用对象作为数据源, x 为键(key), y 为值(value):
+
+你选择的值为在 key-value 对中的 value。
+
+value 在 key-value 对中也可以是个对象：
+
+
+### 实例
+
+选择的值在 key-value 对的 value 中, 这时它是一个对象:
+
+在下拉菜单也可以不使用 key-value 对中的 key , 直接使用对象的属性：
+
+
+### 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AngularJS Select` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,119 @@
-# Servlet：Servlet 包 学习笔记
+# Servlet：Servlet 包
 
 - 来源：[Servlet 包](https://www.runoob.com/servlet/servlet-packaging.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1190
 
-## 学习目标
+## 本章内容
 
-Servlet 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Servlet 包` 建立学习路径，先理解它在 Servlet 体系中的位置，再做可运行或可复述的验证。
+涉及到 WEB-INF 子目录的 Web 应用程序结构是所有的 Java web 应用程序的标准，并由 Servlet API 规范指定。给定一个顶级目录名 myapp，目录结构如下所示：
 
-## 阅读抓手
+```text
+/myapp
+    /images
+    /WEB-INF
+        /classes
+        /lib
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+WEB-INF 子目录中包含应用程序的部署描述符，名为 web.xml。所有的 HTML 文件都位于顶级目录 myapp 下。对于 admin 用户，您会发现 ROOT 目录是 myApp 的父目录。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 创建包中的 Servlet
 
-## 完成标准
+WEB-INF/classes 目录包含了所有的 Servlet 类和其他类文件，类文件所在的目录结构与他们的包名称匹配。例如，如果您有一个完全合格的类名称 com.myorg.MyServlet，那么这个 Servlet 类必须位于以下目录中：
 
-- 能用 3 到 5 句话解释 `Servlet 包`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+/myapp/WEB-INF/classes/com/myorg/MyServlet.class
+```
+
+下面的例子创建包名为 com.myorg 的 MyServlet 类。
+
+```java
+// 为包命名
+package com.myorg;
+
+// 导入必需的 java 库
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+@WebServlet("/MyServlet")
+public class MyServlet extends HttpServlet {
+
+  private String message;
+
+  public void init() throws ServletException
+  {
+      // 执行必需的的初始化
+      message = "Hello World";
+  }
+
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+            throws ServletException, IOException
+  {
+      // 设置响应内容类型
+      response.setContentType("text/html;charset=UTF-8");
+
+      // 实际的逻辑是在这里
+      PrintWriter out = response.getWriter();
+      out.println("<h1>" + message + "</h1>");
+  }
+
+  public void destroy()
+  {
+      // 什么也不做
+  }
+}
+```
+
+
+## 编译包中的 Servlet
+
+编译包中的类与编译其他的类没有什么大的不同。最简单的方法是让您的 java 文件保留完全限定路径，如上面提到的类，将被保留在 com.myorg 中。您还需要在 CLASSPATH 中添加该目录。
+
+假设您的环境已正确设置，进入 <Tomcat-installation-directory>/webapps/ROOT/WEB-INF/classes 目录，并编译 MyServlet.java，如下所示：
+
+```text
+$ javac MyServlet.java
+```
+
+如果 Servlet 依赖于其他库，那么您必须在 CLASSPATH 中也要引用那些 JAR 文件。这里我只引用了 servlet-api.jar JAR 文件，因为我在 Hello World 程序中并没有使用任何其他库。
+
+该命令行使用内置的 javac 编译器，它是 Sun Microsystems Java 软件开发工具包（JDK，全称 Java Software Development Kit）附带的。 Microsystems的Java软件开发工具包（JDK）。为了让该命令正常工作，必须包括您在 PATH 环境变量中所使用的 Java SDK 的位置。
+
+如果一切顺利，上述编译会在同一目录下生成 MyServlet.class 文件。下一节将解释如何把一个已编译的 Servlet 部署到生产中。
+
+
+## Servlet 打包部署
+
+默认情况下，Servlet 应用程序位于路径 <Tomcat-installation-directory>/webapps/ROOT 下，且类文件放在 <Tomcat-installation-directory>/webapps/ROOT/WEB-INF/classes 中。
+
+如果您有一个完全合格的类名称 com.myorg.MyServlet，那么这个 Servlet 类必须位于 WEB-INF/classes/com/myorg/MyServlet.class 中，您需要在位于 <Tomcat-installation-directory>/webapps/ROOT/WEB-INF/ 的 web.xml 文件中创建以下条目：
+
+```html
+    <servlet>
+        <servlet-name>MyServlet</servlet-name>
+        <servlet-class>com.myorg.MyServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MyServlet</servlet-name>
+        <url-pattern>/MyServlet</url-pattern>
+    </servlet-mapping>
+```
+
+上面的条目要被创建在 web.xml 文件中的 <web-app>...</web-app> 标签内。在该文件中可能已经有各种可用的条目，但不要在意。
+
+到这里，您基本上已经完成了，现在让我们使用 <Tomcat-installation-directory>\bin\startup.bat（在 Windows 上）或 <Tomcat-installation-directory>/bin/startup.sh（在 Linux/Solaris 等上）启动 tomcat 服务器，最后在浏览器的地址栏中输入 http://localhost:8080/MyServlet。如果一切顺利，您会看到下面的结果：
+
+
+## 复习重点
+
+- 能说明 `Servlet 包` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

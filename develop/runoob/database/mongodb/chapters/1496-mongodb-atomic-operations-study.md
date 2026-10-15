@@ -1,35 +1,104 @@
-# MongoDB：MongoDB 原子操作 学习笔记
+# MongoDB：MongoDB 原子操作
 
 - 来源：[MongoDB 原子操作](https://www.runoob.com/mongodb/mongodb-atomic-operations.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1496
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 原子操作` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+mongodb不支持事务，所以，在你的项目中应用时，要注意这点。无论什么设计，都不要要求mongodb保证数据的完整性。
 
-## 阅读抓手
+但是mongodb提供了许多原子操作，比如文档的保存，修改，删除等，都是原子操作。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+所谓原子操作就是要么这个文档保存到Mongodb，要么没有保存到Mongodb，不会出现查询到的文档没有保存完整的情况。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 原子操作数据模型
 
-## 完成标准
+考虑下面的例子，图书馆的书籍及结账信息。
 
-- 能用 3 到 5 句话解释 `MongoDB 原子操作`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+实例说明了在一个相同的文档中如何确保嵌入字段关联原子操作（update：更新）的字段是同步的。
+
+```text
+book = {
+          _id: 123456789,
+          title: "MongoDB: The Definitive Guide",
+          author: [ "Kristina Chodorow", "Mike Dirolf" ],
+          published_date: ISODate("2010-09-24"),
+          pages: 216,
+          language: "English",
+          publisher_id: "oreilly",
+          available: 3,
+          checkout: [ { by: "joe", date: ISODate("2012-10-15") } ]
+        }
+```
+
+你可以使用 db.collection.findAndModify() 方法来判断书籍是否可结算并更新新的结算信息。
+
+在同一个文档中嵌入的 available 和 checkout 字段来确保这些字段是同步更新的:
+
+```text
+db.books.findAndModify ( {
+   query: {
+            _id: 123456789,
+            available: { $gt: 0 }
+          },
+   update: {
+             $inc: { available: -1 },
+             $push: { checkout: { by: "abc", date: new Date() } }
+           }
+} )
+```
+
+
+## 原子操作常用命令
+
+用来指定一个键并更新键值，若键不存在并创建。
+
+```text
+{ $set : { field : value } }
+```
+
+用来删除一个键。
+
+```text
+{ $unset : { field : 1} }
+```
+
+$inc可以对文档的某个值为数字型（只能为满足要求的数字）的键进行增减的操作。
+
+```text
+{ $inc : { field : value } }
+```
+
+用法：
+
+```text
+{ $push : { field : value } }
+```
+
+把value追加到field里面去，field一定要是数组类型才行，如果field不存在，会新增一个数组类型加进去。
+
+同$push,只是一次可以追加多个值到一个数组字段内。
+
+```text
+{ $pushAll : { field : value_array } }
+```
+
+从数组field内删除一个等于value值。
+
+```text
+{ $pull : { field : _value } }
+```
+
+增加一个值到数组内，而且只有当这个值不在数组内才增加。
+
+
+## 复习重点
+
+- 能说明 `MongoDB 原子操作` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,253 @@
-# RESTful API：RESTful API 实际应用 练习笔记
+# RESTful API：RESTful API 实际应用
 
 - 来源：[RESTful API 实际应用](https://www.runoob.com/restfulapi/restful-api-application.html)
 - 分类：后端开发
 - 技术：RESTful API
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1136
 
-## 练习目标
+## 本章内容
 
-把 `RESTful API 实际应用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 用户管理 API 设计
 
-## 练习步骤
+让我们设计一个完整的用户管理系统 API，这是最常见的应用场景。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### API 端点设计
 
-- 我能独立说出 `RESTful API 实际应用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+// 用户相关操作
+GET    /api/users           # 获取用户列表
+GET    /api/users/{id}      # 获取特定用户
+POST   /api/users           # 创建新用户
+PUT    /api/users/{id}      # 更新用户信息
+DELETE /api/users/{id}      # 删除用户
 
-## 复盘问题
+// 用户订单相关操作
+GET    /api/users/{id}/orders     # 获取用户的订单列表
+POST   /api/users/{id}/orders     # 为用户创建订单
+GET    /api/orders/{orderId}      # 获取特定订单详情
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 完整的 CRUD 操作
+
+
+### 1. 创建用户（Create）
+
+```text
+// 请求
+POST /api/users
+Content-Type: application/json
+
+{
+  "name": "王五",
+  "email": "wangwu@example.com",
+  "phone": "13800000000",
+  "address": {
+    "city": "上海",
+    "street": "南京路100号"
+  }
+}
+
+// 成功响应（状态码：201 Created）
+{
+  "success": true,
+  "data": {
+    "id": 125,
+    "name": "王五",
+    "email": "wangwu@example.com",
+    "phone": "13800000000",
+    "address": {
+      "city": "上海",
+      "street": "南京路100号"
+    },
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  "message": "用户创建成功"
+}
+```
+
+
+### 2. 读取用户（Read）
+
+```text
+// 获取用户列表
+GET /api/users?page=1&limit=5&sort=createdAt&order=desc
+
+// 响应（状态码：200 OK）
+{
+  "success": true,
+  "data": [
+    {
+      "id": 125,
+      "name": "王五",
+      "email": "wangwu@example.com",
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": 124,
+      "name": "李四",
+      "email": "lisi@example.com",
+      "createdAt": "2024-01-15T09:00:00Z"
+    }
+  ],
+  "pagination": {
+    "currentPage": 1,
+    "totalPages": 3,
+    "totalItems": 15,
+    "itemsPerPage": 5
+  }
+}
+
+// 获取特定用户
+GET /api/users/125
+
+// 响应
+{
+  "success": true,
+  "data": {
+    "id": 125,
+    "name": "王五",
+    "email": "wangwu@example.com",
+    "phone": "13800000000",
+    "address": {
+      "city": "上海",
+      "street": "南京路100号"
+    },
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  }
+}
+```
+
+
+### 3. 更新用户（Update）
+
+```text
+// 请求
+PUT /api/users/125
+Content-Type: application/json
+
+{
+  "name": "王五",
+  "email": "wangwu.new@example.com",
+  "phone": "13900000000",
+  "address": {
+    "city": "深圳",
+    "street": "科技园路200号"
+  }
+}
+
+// 响应（状态码：200 OK）
+{
+  "success": true,
+  "data": {
+    "id": 125,
+    "name": "王五",
+    "email": "wangwu.new@example.com",
+    "phone": "13900000000",
+    "address": {
+      "city": "深圳",
+      "street": "科技园路200号"
+    },
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T11:30:00Z"
+  },
+  "message": "用户信息更新成功"
+}
+```
+
+
+### 4. 删除用户（Delete）
+
+```text
+// 请求
+DELETE /api/users/125
+
+// 响应（状态码：200 OK）
+{
+  "success": true,
+  "message": "用户删除成功"
+}
+
+// 如果用户不存在（状态码：404 Not Found）
+{
+  "success": false,
+  "error": {
+    "code": "USER_NOT_FOUND",
+    "message": "用户不存在"
+  }
+}
+```
+
+
+## 错误处理
+
+
+### 数据验证错误
+
+```text
+// 请求（邮箱格式错误）
+POST /api/users
+{
+  "name": "",
+  "email": "invalid-email",
+  "phone": "123"
+}
+
+// 响应（状态码：400 Bad Request）
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "数据验证失败",
+    "details": [
+      {
+        "field": "name",
+        "message": "姓名不能为空"
+      },
+      {
+        "field": "email",
+        "message": "邮箱格式不正确"
+      },
+      {
+        "field": "phone",
+        "message": "手机号格式不正确"
+      }
+    ]
+  }
+}
+```
+
+
+### 资源不存在错误
+
+```text
+// 请求
+GET /api/users/999
+
+// 响应（状态码：404 Not Found）
+{
+  "success": false,
+  "error": {
+    "code": "USER_NOT_FOUND",
+    "message": "用户不存在"
+  }
+}
+```
+
+
+## 使用 JavaScript 调用 API
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `RESTful API 实际应用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

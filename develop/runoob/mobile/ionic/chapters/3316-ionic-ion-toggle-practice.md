@@ -1,34 +1,115 @@
-# Ionic：ionic 切换开关操作 练习笔记
+# Ionic：ionic 切换开关操作
 
 - 来源：[ionic 切换开关操作](https://www.runoob.com/ionic/ionic-ion-toggle.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3316
 
-## 练习目标
+## 本章内容
 
-把 `ionic 切换开关操作` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+以下实例中，通过切换不同开关 checked 显示不同的值，true 为打开，false 为关闭。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### HTML 代码
 
-## 验收清单
+```html
+<ion-header-bar class="bar-positive">
+  <h1 class="title">开关切换</h1>
+</ion-header-bar>
 
-- 我能独立说出 `ionic 切换开关操作` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+<ion-content>
 
-## 复盘问题
+  <div class="list">
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+    <div class="item item-divider">
+      Settings
+    </div>
+
+    <ion-toggle ng-repeat="item in settingsList"
+                ng-model="item.checked"
+                ng-checked="item.checked">
+      {{ item.text }}
+    </ion-toggle>
+
+    <div class="item">
+        <!-- 使用 pre 标签展示效果更美观 -->
+      <div ng-bind="settingsList | json"></div>
+    </div>
+
+    <div class="item item-divider">
+      Notifications
+    </div>
+
+    <ion-toggle ng-model="pushNotification.checked"
+                ng-change="pushNotificationChange()">
+      Push Notifications
+    </ion-toggle>
+
+    <div class="item">
+        <!-- 使用 pre 标签展示效果更美观 -->
+      <div ng-bind="pushNotification | json"></div>
+    </div>
+
+    <ion-toggle toggle-class="toggle-assertive"
+                ng-model="emailNotification"
+                ng-true-value="'Subscribed'"
+                ng-false-value="'Unubscribed'">
+      Newsletter
+    </ion-toggle>
+
+    <div class="item">
+        <!-- 使用 pre 标签展示效果更美观 -->
+      <div ng-bind="emailNotification | json"></div>
+    </div>
+
+  </div>
+
+</ion-content>
+```
+
+由于pre标签冲突，实例中的 pre 已替换为 div标签，具体可以在"尝试一下"中查看。
+
+
+### JavaScript 代码
+
+```javascript
+angular.module('ionicApp', ['ionic'])
+
+.controller('MainCtrl', function($scope) {
+
+  $scope.settingsList = [
+    { text: "Wireless", checked: true },
+    { text: "GPS", checked: false },
+    { text: "Bluetooth", checked: false }
+  ];
+
+  $scope.pushNotificationChange = function() {
+    console.log('Push Notification Change', $scope.pushNotification.checked);
+  };
+
+  $scope.pushNotification = { checked: true };
+  $scope.emailNotification = 'Subscribed';
+
+});
+```
+
+css 代码：
+
+```text
+body {
+  cursor: url('http://www.runoob.com/try/demo_source/finger.png'), auto;
+}
+```
+
+尝试一下 »
+
+效果如下所示：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 切换开关操作` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

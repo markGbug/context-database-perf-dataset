@@ -1,35 +1,101 @@
-# Vue3：环境搭建 学习笔记
+# Vue3：环境搭建
 
 - 来源：[环境搭建](https://www.runoob.com/vue3/vue3-taskhub-config.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3230
 
-## 学习目标
+## 本章内容
 
-Vue3 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `环境搭建` 建立学习路径，先理解它在 Vue3 体系中的位置，再做可运行或可复述的验证。
+我们将使用 Vite 快速构建项目 TaskHub，Vite 内容参考：Vite 教程。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 1. 创建项目
 
-## 笔记模板
+打开终端，执行以下命令创建 Vite + Vue3 项目（选择 Script Setup 语法）：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+# npm 命令
+npm create vite@latest task-hub -- --template vue
 
-## 完成标准
+# yarn 命令
+yarn create vite task-hub --template vue
 
-- 能用 3 到 5 句话解释 `环境搭建`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+# pnpm 命令（推荐，速度更快）
+pnpm create vite task-hub -- --template vue
+```
+
+执行成功后，输出如下：
+
+启动成功后，访问终端提示的本地地址（默认 http://localhost:5173/），即可看到 Vue3 初始页面。
+
+2. 项目目录
+
+我们可以进入目录：
+
+```text
+cd task-hub
+```
+
+如果安装了 VS Code，可以使用 VS Code 的 code 命令打开目录，VS Code 内容参考：VS Code 教程。
+
+```text
+code .
+```
+
+启动后目录结构如下：
+
+其他相关命令：
+
+```text
+# 安装依赖
+npm install
+
+# 启动
+npm run dev
+# 清理默认代码
+```
+
+
+### 2. 清理默认代码
+
+删除 src/components/HelloWorld.vue。
+
+清空 src/style.css。
+
+修改 src/App.vue，代码如下：
+
+
+## 实例
+
+
+### 引入 Tailwind CSS
+
+安装并配置原子化 CSS 框架。
+
+```text
+npm install tailwindcss @tailwindcss/vite
+```
+
+修改 vite.config.js：
+
+
+## 实例
+
+在 v4 中，Tailwind 作为一个 Vite 插件运行，它会自动扫描你的 .vue 文件。
+
+在 src/style.css 中引入：
+
+在 Tailwind v4 中，所有的配置（主题、变量）都直接写在 CSS 里。 重置 src/style.css 如下：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `环境搭建` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

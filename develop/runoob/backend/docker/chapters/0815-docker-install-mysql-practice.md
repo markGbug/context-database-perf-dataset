@@ -1,34 +1,82 @@
-# Docker：Docker 安装 MySQL 练习笔记
+# Docker：Docker 安装 MySQL
 
 - 来源：[Docker 安装 MySQL](https://www.runoob.com/docker/docker-install-mysql.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0815
 
-## 练习目标
+## 本章内容
 
-把 `Docker 安装 MySQL` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MySQL 是世界上最受欢迎的开源数据库。凭借其可靠性、易用性和性能，MySQL 已成为 Web 应用程序的数据库优先选择。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 1、查看可用的 MySQL 版本
 
-## 验收清单
+访问 MySQL 镜像库地址：https://hub.docker.com/_/mysql?tab=tags 。
 
-- 我能独立说出 `Docker 安装 MySQL` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+可以通过 Sort by 查看其他版本的 MySQL，默认是最新版本 mysql:latest 。
 
-## 复盘问题
+此外，我们还可以用 docker search mysql 命令来查看可用版本：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+$ docker search mysql
+NAME                     DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+mysql                    MySQL is a widely used, open-source relati...   2529      [OK]
+mysql/mysql-server       Optimized MySQL Server Docker images. Crea...   161                  [OK]
+centurylink/mysql        Image containing mysql. Optimized to be li...   45                   [OK]
+sameersbn/mysql                                                          36                   [OK]
+google/mysql             MySQL server for Google Compute Engine          16                   [OK]
+appcontainers/mysql      Centos/Debian Based Customizable MySQL Con...   8                    [OK]
+marvambass/mysql         MySQL Server based on Ubuntu 14.04              6                    [OK]
+drupaldocker/mysql       MySQL for Drupal                                2                    [OK]
+azukiapp/mysql           Docker image to run MySQL by Azuki - http:...   2                    [OK]
+...
+```
+
+
+### 2、拉取 MySQL 镜像
+
+这里我们拉取官方的最新版本的镜像：
+
+```text
+$ docker pull mysql:latest
+```
+
+
+### 3、查看本地镜像
+
+```text
+$ docker images
+```
+
+在上图中可以看到我们已经安装了最新版本（latest）的 mysql 镜像。
+
+
+### 4、运行容器
+
+安装完成后，我们可以使用以下命令来运行 mysql 容器：
+
+```text
+$ docker run -itd --name mysql-test -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql
+```
+
+参数说明：
+
+- -p 3306:3306 ：映射容器服务的 3306 端口到宿主机的 3306 端口，外部主机可以直接通过 宿主机ip:3306 访问到 MySQL 的服务。
+- MYSQL_ROOT_PASSWORD=123456：设置 MySQL 服务 root 用户的密码。
+
+
+### 5、安装成功
+
+通过 docker ps 命令查看是否安装成功：
+
+本机可以通过 root 和密码 123456 访问 MySQL 服务。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker 安装 MySQL` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

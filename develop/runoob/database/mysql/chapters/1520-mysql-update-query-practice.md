@@ -1,34 +1,129 @@
-# MySQL：MySQL UPDATE 更新 练习笔记
+# MySQL：MySQL UPDATE 更新
 
 - 来源：[MySQL UPDATE 更新](https://www.runoob.com/mysql/mysql-update-query.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1520
 
-## 练习目标
+## 本章内容
 
-把 `MySQL UPDATE 更新` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+如果我们需要修改或更新 MySQL 中的数据，我们可以使用 UPDATE 命令来操作。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 语法
 
-## 验收清单
+以下是 UPDATE 命令修改 MySQL 数据表数据的通用 SQL 语法：
 
-- 我能独立说出 `MySQL UPDATE 更新` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+```
 
-## 复盘问题
+参数说明：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- table_name 是你要更新数据的表的名称。
+- column1, column2, ... 是你要更新的列的名称。
+- value1, value2, ... 是新的值，用于替换旧的值。
+- WHERE condition 是一个可选的子句，用于指定更新的行。如果省略 WHERE 子句，将更新表中的所有行。
+
+更多说明：
+
+- 你可以同时更新一个或多个字段。
+- 你可以在 WHERE 子句中指定任何条件。
+- 你可以在一个单独表中同时更新数据。
+
+当你需要更新数据表中指定行的数据时 WHERE 子句是非常有用的。
+
+
+### 实例
+
+以下实例演示了如何使用 UPDATE 语句。
+
+1. 更新单个列的值：
+
+```text
+UPDATE employees
+SET salary = 60000
+WHERE employee_id = 101;
+```
+
+2. 更新多个列的值：
+
+```text
+UPDATE orders
+SET status = 'Shipped', ship_date = '2023-03-01'
+WHERE order_id = 1001;
+```
+
+3. 使用表达式更新值：
+
+```text
+UPDATE products
+SET price = price * 1.1
+WHERE category = 'Electronics';
+```
+
+以上 SQL 语句将每个属于 'Electronics' 类别的产品的价格都增加了 10%。
+
+4. 更新符合条件的所有行：
+
+```text
+UPDATE students
+SET status = 'Graduated';
+```
+
+以上 SQL 语句将所有学生的状态更新为 'Graduated'。
+
+5. 更新使用子查询的值：
+
+```text
+UPDATE customers
+SET total_purchases = (
+    SELECT SUM(amount)
+    FROM orders
+    WHERE orders.customer_id = customers.customer_id
+)
+WHERE customer_type = 'Premium';
+```
+
+以上 SQL 语句通过子查询计算每个 'Premium' 类型客户的总购买金额，并将该值更新到 total_purchases 列中。
+
+注意： 在使用 UPDATE 语句时，请确保你提供了足够的条件来确保只有你想要更新的行被修改。如果不提供 WHERE 子句，将更新表中的所有行，可能导致不可预测的结果。
+
+
+## 通过命令提示符更新数据
+
+以下我们将在 UPDATE 命令使用 WHERE 子句来更新 runoob_tbl 表中指定的数据。
+
+以下实例将更新数据表中 runoob_id 为 3 的 runoob_title 字段值：
+
+
+## SQL UPDATE 语句：
+
+```text
+mysql> UPDATE runoob_tbl SET runoob_title='学习 C++' WHERE runoob_id=3;
+Query OK, 1 rows affected (0.01 sec)
+
+mysql> SELECT * from runoob_tbl WHERE runoob_id=3;
++-----------+--------------+---------------+-----------------+
+| runoob_id | runoob_title | runoob_author | submission_date |
++-----------+--------------+---------------+-----------------+
+| 3         | 学习 C++   | RUNOOB.COM    | 2016-05-06      |
++-----------+--------------+---------------+-----------------+
+1 rows in set (0.01 sec)
+```
+
+从结果上看，runoob_id 为 3 的 runoob_title 已被修改。
+
+
+## 使用PHP脚本更新数据
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL UPDATE 更新` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

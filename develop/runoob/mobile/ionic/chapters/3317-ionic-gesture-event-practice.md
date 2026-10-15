@@ -1,34 +1,170 @@
-# Ionic：ionic 手势事件 练习笔记
+# Ionic：ionic 手势事件
 
 - 来源：[ionic 手势事件](https://www.runoob.com/ionic/ionic-gesture-event.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3317
 
-## 练习目标
+## 本章内容
 
-把 `ionic 手势事件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+```html
+<button
+    on-hold="onHold()"
+    class="button">
+    Test
+    </button>
+```
 
-## 练习步骤
+```html
+<button
+    on-tap="onTap()"
+    class="button">
+    Test
+    </button>
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+<button
+    on-double-tap="onDoubleTap()"
+    class="button">
+    Test
+    </button>
+```
 
-## 验收清单
+```html
+    <button on-touch="onTouch()"
+    class="button">
+    Test
+    </button>
+```
 
-- 我能独立说出 `ionic 手势事件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<button
+    on-release="onRelease()"
+    class="button">
+    Test
+</button>
+```
 
-## 复盘问题
+```html
+<button
+    on-drag="onDrag()"
+    class="button">
+    Test
+</button>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<button
+    on-drag-up="onDragUp()"
+    class="button">
+    Test
+</button>
+```
+
+```html
+<button
+    on-drag-right="onDragRight()"
+    class="button">
+    Test
+</button>
+```
+
+```html
+<button
+    on-drag-down="onDragDown()"
+    class="button">
+    Test
+</button>
+```
+
+```html
+<button
+    on-drag-left="onDragLeft()"
+    class="button">
+    Test
+</button>
+```
+
+```html
+<button
+    on-swipe="onSwipe()"
+    class="button">
+    Test
+</button>
+```
+
+```html
+<button
+    on-swipe-up="onSwipeUp()"
+    class="button">
+    Test
+</button>
+```
+
+```html
+<button
+    on-swipe-right="onSwipeRight()"
+    class="button">
+    Test
+</button>
+```
+
+```html
+<button
+    on-swipe-down="onSwipeDown()"
+    class="button">
+    Test
+</button>
+```
+
+```html
+<button
+    on-swipe-left="onSwipeLeft()"
+    class="button">
+    Test
+</button>
+```
+
+
+## $ionicGesture
+
+一个angular服务展示ionicionic.EventController手势。
+
+
+### 方法
+
+```text
+on(eventType, callback, $element)
+```
+
+在一个元素上添加一个事件监听器。
+
+监听的手势事件。
+
+当手势事件发生时触发的事件。
+
+angular元素监听的事件。
+
+对象。
+
+```text
+off(eventType, callback, $element)
+```
+
+在一个元素上移除一个手势事件监听器。
+
+移除监听的手势事件。
+
+移除监听器。
+
+被监听事件的angular元素。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 手势事件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

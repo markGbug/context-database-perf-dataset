@@ -1,34 +1,159 @@
-# VS Code：VSCode AI 扩展 练习笔记
+# VS Code：VS Code AI 扩展
 
 - 来源：[VSCode AI 扩展](https://www.runoob.com/vscode/vscode-ai-extensions.html)
 - 分类：DevOps / 工程化
 - 技术：VS Code
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1915
 
-## 练习目标
+## 本章内容
 
-把 `VSCode AI 扩展` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 AI 技术深度融入编程领域的今天，VSCode 作为开发者最青睐的编辑器之一，其丰富的 AI 插件生态正成为提升生产力的关键。
 
-## 练习步骤
+本文我们将介绍 VS Code 中常用的 AI 扩展，我们可以选择合适的扩展来提高编程效率。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 1、Cline
 
-- 我能独立说出 `VSCode AI 扩展` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Cline 是一款强大的 VSCode 插件，旨在通过集成多种 AI 模型（如 OpenAI、DeepSeek、Claude 3.5 等）来提升开发效率。
 
-## 复盘问题
+Cline 可以在大型项目中轻松创建、修改和浏览文件，实现代码库的无缝导航。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Cline 支持代码生成、终端命令执行、Web 开发辅助等功能。
+
+Cline 可以通过无头浏览器启动网站，进行交互操作并捕获日志，助力调试和优化。
+
+扩展搜索关键词：Cline
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev
+
+Github 地址：https://github.com/cline/cline
+
+
+## 2、Roo Code
+
+Roo Code（前身为 Roo Cline）是一款集成于 VSCode 的强大 AI 编程助手，基于 Cline 进行二次开发，功能更为强大和灵活。
+
+Roo Code 支持多种 AI 模型，包括 DeepSeek-V3、DeepSeek-R1、OpenAI、Google Gemini 等，并兼容自定义 API 和本地部署模型（如 Ollama）。
+
+扩展搜索关键词：Roo Code
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline
+
+Github 地址：https://github.com/RooVetGit/Roo-Code
+
+
+## 3、Continue
+
+Continue 是一款开源的 AI 代码助手插件，通过接入多种大语言模型（如 OpenAI、DeepSeek、Claude 等）来实现代码补全、生成、优化、错误修复等功能。
+
+Continue 提供了一个聊天界面，开发者可以通过自然语言与 AI 交互，帮助理解代码逻辑、解决问题或生成代码片段。
+
+扩展搜索关键词：Continue
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=Continue.continue
+
+Github 地址：https://github.com/continuedev/continue
+
+
+## 4、其他扩展
+
+
+### Codeium
+
+Codeium 是一款免费的 AI 编程助手，支持多种 IDE 和超过 70 种编程语言。
+
+扩展搜索关键词：Codeium
+
+
+### 通义灵码
+
+通义灵码是由阿里巴巴推出的一款 AI 编程工具，支持多种编程语言和主流 IDE。
+
+扩展搜索关键词：通义灵码
+
+
+### Fitten Code
+
+Fitten Code 是一款由非十科技（Fitten Tech）开发的 AI 编程助手，基于自研的大型代码模型，旨在通过智能代码生成、补全、调试等功能，显著提升开发效率。
+
+扩展搜索关键词：Fitten Code
+
+
+### CodeGeeX
+
+CodeGeeX 是一款由智谱 AI 开发的智能编程助手，基于强大的多语言代码生成模型。
+
+扩展搜索关键词：CodeGeeX
+
+
+### GitHub Copilot
+
+GitHub Copilot 是由 GitHub 和 OpenAI 合作开发的一款 AI 编程助手，通过智能代码补全、生成、调试等功能，显著提升开发效率。
+
+扩展搜索关键词：GitHub Copilot
+
+
+### Tabnine
+
+Tabnine 是以色列团队开发的 AI 补全工具，支持 80+ 语言，能预测整行甚至函数级代码。
+
+扩展搜索关键词：Tabnine
+
+
+### Codeium
+
+Codeium 扩展是一款免费的 AI 驱动代码补全工具，支持 70+ 编程语言，提供智能代码生成、搜索和交互式对话功能。
+
+扩展搜索关键词：Codeium
+
+
+### AI Toolkit
+
+AI Toolkit 是一个用于开发、部署和维护人工智能应用的工具集合，旨在简化 AI 开发流程，帮助开发者快速构建和运行 AI 系统。
+
+AI Toolkit 提供丰富的预训练模型，支持从公共目录（如 Azure AI Studio、Hugging Face、GitHub 等）下载和集成模型。
+
+AI Toolkit 支持本地和云端的模型微调，允许开发者根据需求对模型进行定制化调整。
+
+扩展搜索关键词：AI Toolkit
+
+
+### Blackbox AI
+
+Blackbox AI 是一款基于深度学习的智能编码助手，支持代码生成、错误检测、代码翻译和实时搜索等功能。
+
+扩展搜索关键词：Blackbox AI
+
+
+### Qoder
+
+Qoder 是阿里推出的一款面向开发者的 AI 驱动的集成开发环境（IDE），可以直接下载安装，基于 VS Code，用起来更 VS Code 差不多。
+
+访问 Qoder 官网 https://qoder.com/，默认情况，下载按钮会自动匹配我们的电脑系统，我们也可以找到适合自己电脑操作系统的 Qoder 安装包，进行下载。
+
+
+### Trae
+
+Trae（/treɪ/）是字节跳动推出的一款面向开发者的 AI 驱动的集成开发环境（IDE），类似 Cursor，支持中文，集成 Claude 和 GPT-4o 模型，目前免费。
+
+Trae与 AI 深度集成，提供智能问答、代码自动补全以及基于 Agent 的 AI 自动编程能力。
+
+访问 Trae 官网 https://www.trae.cn/，默认情况，下载按钮会自动匹配我们的电脑系统，我们也可以找到适合自己电脑操作系统的 Trae 安装包，进行下载。
+
+
+### Cursor
+
+Cursor 不是 VS Code 的扩展，但是它是基于 VS Code 开发的一款编辑器，它在保留 VS Code 强大功能和熟悉操作体验的同时，专注于集成 AI 技术。
+
+Cursor 操作界面类似 VSCode，是个付费开发工具，免费使用的有限制。
+
+Cursor 教程：https://www.runoob.com/cursor/cursor-intro.html
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `VSCode AI 扩展` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

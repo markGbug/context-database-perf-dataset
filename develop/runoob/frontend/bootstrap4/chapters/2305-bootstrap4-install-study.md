@@ -1,35 +1,153 @@
-# Bootstrap4：Bootstrap4 安装使用 学习笔记
+# Bootstrap4：Bootstrap4 安装使用
 
 - 来源：[Bootstrap4 安装使用](https://www.runoob.com/bootstrap4/bootstrap4-install.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2305
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 安装使用` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+我们可以通过以下两种方式来安装 Bootstrap4：
 
-## 阅读抓手
+- 使用 Bootstrap 4 CDN。
+- 从官网 getbootstrap.com 下载 Bootstrap 4。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### Bootstrap 4 CDN
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+国内推荐使用字节跳动静态资源公共库：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Bootstrap4 安装使用`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## Bootstrap4 CDN
+
+```html
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"></script>
+
+<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
+```
+
+国内推荐使用 Staticfile CDN 上的库：
+
+
+## Bootstrap4 CDN
+
+```html
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.net/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script src="https://cdn.staticfile.net/popper.js/1.15.0/umd/popper.min.js"></script>
+
+<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.net/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+```
+
+注意：popper.min.js 用于设置弹窗、提示、下拉菜单，目前 bootstrap.bundle.min.js 已经包含了 popper.min.js。
+
+此外，你还可以使用以下的 CDN 服务：
+
+- 国内推荐使用 1：https://cdn.bytedance.com/
+- 国内推荐使用 2：https://www.staticfile.net/
+- 国际推荐使用：https://cdnjs.com/
+
+
+### 下载 Bootstrap 4
+
+你可以去官网 https://getbootstrap.com/ 下载 Bootstrap4 资源库。
+
+注：此外你还可以通过包的管理工具 npm、 gem、 composer 等来安装：
+
+```text
+npm install bootstrap@4.0.0-beta.2
+gem 'bootstrap', '~> 4.0.0.beta2'
+composer require twbs/bootstrap:4.0.0-beta.2
+```
+
+
+## 创建第一个 Bootstrap 4 页面
+
+
+### 1、添加 HTML5 doctype
+
+Bootstrap 要求使用 HTML5 文件类型，所以需要添加 HTML5 doctype 声明。
+
+HTML5 doctype 在文档头部声明，并设置对应编码:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+</html>
+```
+
+
+### 移动设备优先
+
+为了让 Bootstrap 开发的网站对移动设备友好，确保适当的绘制和触屏缩放，需要在网页的 head 之中添加 viewport meta 标签，如下所示：
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+```
+
+width=device-width 表示宽度是设备屏幕的宽度。
+
+initial-scale=1 表示初始的缩放比例。
+
+shrink-to-fit=no 自动适应手机屏幕的宽度。
+
+
+## 容器类
+
+Bootstrap 4 需要一个容器元素来包裹网站的内容。
+
+我们可以使用以下两个容器类：
+
+- .container 类用于固定宽度并支持响应式布局的容器。
+- .container-fluid 类用于 100% 宽度，占据全部视口（viewport）的容器。
+
+
+## 两个 Bootstrap 4 页面
+
+
+## Bootstrap4 .container 实例
+
+```html
+<div class="container">
+  <h1>我的第一个 Bootstrap 页面</h1>
+  <p>这是一些文本。</p>
+</div>
+```
+
+以下实例展示了占据全部视口（viewport）的容器。
+
+
+## Bootstrap4 .container-fluid 实例
+
+```html
+<div class="container-fluid">
+  <h1>我的第一个 Bootstrap 页面</h1>
+  <p>使用了 .container-fluid，100% 宽度，占据全部视口（viewport）的容器。</p>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 安装使用` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

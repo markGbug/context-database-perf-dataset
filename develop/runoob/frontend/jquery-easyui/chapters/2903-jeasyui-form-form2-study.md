@@ -1,35 +1,55 @@
-# jQuery EasyUI：jEasyUI 创建树形下拉框 学习笔记
+# jQuery EasyUI：jQuery EasyUI 表单 - 创建树形下拉框
 
 - 来源：[jEasyUI 创建树形下拉框](https://www.runoob.com/jeasyui/jeasyui-form-form2.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2903
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 创建树形下拉框` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+树形下拉框（ComboTree）是一个带有下列树形结构（Tree）的下拉框（ComboBox）。它可以作为一个表单字段进行使用，可以提交给远程服务器。
 
-## 阅读抓手
+在本教程中，我们将要创建一个注册表单，带有 name、address、city 字段。city 字段是一个树形下拉框（ComboTree）字段，在里面用户可以下拉树面板（tree panel），并选择一个特定的城市。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+    <div id="dlg" class="easyui-dialog" style="width:500px;height:250px;padding:10px 30px;"
+            title="Register" buttons="#dlg-buttons">
+        <h2>Account Information</h2>
+        <form id="ff" method="post">
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" name="name" style="width:350px;"/></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><input type="text" name="address" style="width:350px;"/></td>
+                </tr>
+                <tr>
+                    <td>City:</td>
+                    <td><select class="easyui-combotree" url="data/city_data.json" name="city" style="width:156px;"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div id="dlg-buttons">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="savereg()">Submit</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+    </div>
+```
 
-## 笔记模板
+从上面的代码可以看到，我们为一个名为 'city' 的树形下拉框（ComboTree）字段设置了一个 url 属性，这个字段可以从远程服务器检索树形结构（Tree）数据。请注意，这个字段有一个样式名字叫 'easyui-combotree'，所以我们不需要写任何的 js 代码，树形下拉框（ComboTree）字段将自动渲染。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 下载 jQuery EasyUI 实例
 
-- 能用 3 到 5 句话解释 `jEasyUI 创建树形下拉框`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+jeasyui-form-form2.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 创建树形下拉框` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

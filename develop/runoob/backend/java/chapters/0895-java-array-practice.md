@@ -1,34 +1,329 @@
-# Java：Java 数组 练习笔记
+# Java：Java 数组
 
 - 来源：[Java 数组](https://www.runoob.com/java/java-array.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0895
 
-## 练习目标
+## 本章内容
 
-把 `Java 数组` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+数组对于每一门编程语言来说都是重要的数据结构之一，当然不同语言对数组的实现及处理也不尽相同。
 
-## 练习步骤
+Java 语言中提供的数组是用来存储固定大小的同类型元素。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+你可以声明一个数组变量，如 numbers[100] 来代替直接声明 100 个独立变量 number0，number1，....，number99。
 
-## 验收清单
+本教程将为大家介绍 Java 数组的声明、创建和初始化，并给出其对应的代码。
 
-- 我能独立说出 `Java 数组` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 声明数组变量
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+首先必须声明数组变量，才能在程序中使用数组。下面是声明数组变量的语法：
+
+```text
+dataType[] arrayRefVar;   // 首选的方法
+
+或
+
+dataType arrayRefVar[];  // 效果相同，但不是首选方法
+```
+
+注意: 建议使用 dataType[] arrayRefVar 的声明风格声明数组变量。 dataType arrayRefVar[] 风格是来自 C/C++ 语言 ，在Java中采用是为了让 C/C++ 程序员能够快速理解java语言。
+
+
+### 实例
+
+下面是这两种语法的代码示例：
+
+```text
+double[] myList;         // 首选的方法
+
+或
+
+double myList[];         //  效果相同，但不是首选方法
+```
+
+
+## 创建数组
+
+Java语言使用new操作符来创建数组，语法如下：
+
+```text
+arrayRefVar = new dataType[arraySize];
+```
+
+上面的语法语句做了两件事：
+
+- 一、使用 dataType[arraySize] 创建了一个数组。
+- 二、把新创建的数组的引用赋值给变量 arrayRefVar。
+
+数组变量的声明，和创建数组可以用一条语句完成，如下所示：
+
+```text
+dataType[] arrayRefVar = new dataType[arraySize];
+```
+
+另外，你还可以使用如下的方式创建数组。
+
+```text
+dataType[] arrayRefVar = {value0, value1, ..., valuek};
+```
+
+数组的元素是通过索引访问的。数组索引从 0 开始，所以索引值从 0 到 arrayRefVar.length-1。
+
+
+### 实例
+
+下面的语句首先声明了一个数组变量 myList，接着创建了一个包含 10 个 double 类型元素的数组，并且把它的引用赋值给 myList 变量。
+
+
+## TestArray.java 文件代码：
+
+```java
+public class TestArray {
+   public static void main(String[] args) {
+      // 数组大小
+      int size = 10;
+      // 定义数组
+      double[] myList = new double[size];
+      myList[0] = 5.6;
+      myList[1] = 4.5;
+      myList[2] = 3.3;
+      myList[3] = 13.2;
+      myList[4] = 4.0;
+      myList[5] = 34.33;
+      myList[6] = 34.0;
+      myList[7] = 45.45;
+      myList[8] = 99.993;
+      myList[9] = 11123;
+      // 计算所有元素的总和
+      double total = 0;
+      for (int i = 0; i < size; i++) {
+         total += myList[i];
+      }
+      System.out.println("总和为： " + total);
+   }
+}
+```
+
+以上实例输出结果为：
+
+```text
+总和为： 11367.373
+```
+
+下面的图片描绘了数组 myList。这里 myList 数组里有 10 个 double 元素，它的下标从 0 到 9。
+
+
+## 处理数组
+
+数组的元素类型和数组的大小都是确定的，所以当处理数组元素时候，我们通常使用基本循环或者 For-Each 循环。
+
+
+### 示例
+
+该实例完整地展示了如何创建、初始化和操纵数组：
+
+
+## TestArray.java 文件代码：
+
+```java
+public class TestArray {
+   public static void main(String[] args) {
+      double[] myList = {1.9, 2.9, 3.4, 3.5};
+
+      // 打印所有数组元素
+      for (int i = 0; i < myList.length; i++) {
+         System.out.println(myList[i] + " ");
+      }
+      // 计算所有元素的总和
+      double total = 0;
+      for (int i = 0; i < myList.length; i++) {
+         total += myList[i];
+      }
+      System.out.println("Total is " + total);
+      // 查找最大元素
+      double max = myList[0];
+      for (int i = 1; i < myList.length; i++) {
+         if (myList[i] > max) max = myList[i];
+      }
+      System.out.println("Max is " + max);
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+1.9
+2.9
+3.4
+3.5
+Total is 11.7
+Max is 3.5
+```
+
+
+## For-Each 循环
+
+JDK 1.5 引进了一种新的循环类型，被称为 For-Each 循环或者加强型循环，它能在不使用下标的情况下遍历数组。
+
+语法格式如下：
+
+```java
+for(type element: array)
+{
+    System.out.println(element);
+}
+```
+
+
+### 实例
+
+该实例用来显示数组 myList 中的所有元素：
+
+
+## TestArray.java 文件代码：
+
+```java
+public class TestArray {
+   public static void main(String[] args) {
+      double[] myList = {1.9, 2.9, 3.4, 3.5};
+
+      // 打印所有数组元素
+      for (double element: myList) {
+         System.out.println(element);
+      }
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+1.9
+2.9
+3.4
+3.5
+```
+
+
+## 数组作为函数的参数
+
+数组可以作为参数传递给方法。
+
+例如，下面的例子就是一个打印 int 数组中元素的方法:
+
+```java
+public static void printArray(int[] array) {
+  for (int i = 0; i < array.length; i++) {
+    System.out.print(array[i] + " ");
+  }
+}
+```
+
+下面例子调用 printArray 方法打印出 3，1，2，6，4 和 2：
+
+```text
+printArray(new int[]{3, 1, 2, 6, 4, 2});
+```
+
+
+## 数组作为函数的返回值
+
+```java
+public static int[] reverse(int[] list) {
+  int[] result = new int[list.length];
+
+  for (int i = 0, j = result.length - 1; i < list.length; i++, j--) {
+    result[j] = list[i];
+  }
+  return result;
+}
+```
+
+以上实例中 result 数组作为函数的返回值。
+
+
+## 多维数组
+
+多维数组可以看成是数组的数组，比如二维数组就是一个特殊的一维数组，其每一个元素都是一个一维数组，例如：
+
+```java
+String[][] str = new String[3][4];
+```
+
+
+### 多维数组的动态初始化（以二维数组为例）
+
+1. 直接为每一维分配空间，格式如下：
+
+```text
+type[][] typeName = new type[typeLength1][typeLength2];
+```
+
+type 可以为基本数据类型和复合数据类型，typeLength1 和 typeLength2 必须为正整数，typeLength1 为行数，typeLength2 为列数。
+
+例如：
+
+```text
+int[][] a = new int[2][3];
+```
+
+解析：
+
+二维数组 a 可以看成一个两行三列的数组。
+
+2. 从最高维开始，分别为每一维分配空间，例如：
+
+```java
+String[][] s = new String[2][];
+s[0] = new String[2];
+s[1] = new String[3];
+s[0][0] = new String("Good");
+s[0][1] = new String("Luck");
+s[1][0] = new String("to");
+s[1][1] = new String("you");
+s[1][2] = new String("!");
+```
+
+解析：
+
+s[0]=new String[2] 和 s[1]=new String[3] 是为最高维分配引用空间，也就是为最高维限制其能保存数据的最长的长度，然后再为其每个数组元素单独分配空间 s0=new String("Good") 等操作。
+
+
+### 多维数组的引用（以二维数组为例）
+
+对二维数组中的每个元素，引用方式为 arrayName[index1][index2]，例如：
+
+```text
+num[1][0];
+```
+
+
+## Arrays 类
+
+java.util.Arrays 类能方便地操作数组，它提供的所有方法都是静态的。
+
+具有以下功能：
+
+- 给数组赋值：通过 fill 方法。
+- 对数组排序：通过 sort 方法,按升序。
+- 比较数组：通过 equals 方法比较数组中元素值是否相等。
+- 查找数组元素：通过 binarySearch 方法能对排序好的数组进行二分查找法操作。
+
+具体说明请查看下表：
+
+
+### 练习
+
+Java 数组测验
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java 数组` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

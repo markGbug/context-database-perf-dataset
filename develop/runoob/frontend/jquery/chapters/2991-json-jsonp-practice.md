@@ -1,34 +1,152 @@
-# jQuery：jQuery JSONP 练习笔记
+# jQuery：JSONP 教程
 
 - 来源：[jQuery JSONP](https://www.runoob.com/json/json-jsonp.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2991
 
-## 练习目标
+## 本章内容
 
-把 `jQuery JSONP` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们将向大家介绍 JSONP 的知识。
 
-## 练习步骤
+Jsonp(JSON with Padding) 是 json 的一种"使用模式"，可以让网页从别的域名（网站）那获取资料，即跨域读取数据。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+为什么我们从不同的域（网站）访问数据需要一个特殊的技术( JSONP )呢？这是因为同源策略。
 
-## 验收清单
+同源策略，它是由 Netscape 提出的一个著名的安全策略，现在所有支持 JavaScript 的浏览器都会使用这个策略。
 
-- 我能独立说出 `jQuery JSONP` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## JSONP 应用
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 1. 服务端 JSONP 格式数据
+
+如客户想访问 : https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=callbackFunction。
+
+假设客户期望返回数据：["customername1","customername2"]。
+
+真正返回到客户端的数据显示为: callbackFunction(["customername1","customername2"])。
+
+服务端文件 jsonp.php 代码为：
+
+
+## jsonp.php 文件代码
+
+```text
+<?php
+header('Content-type: application/json');
+//获取回调函数名
+$jsoncallback = htmlspecialchars($_REQUEST ['jsoncallback']);
+//json数据
+$json_data = '["customername1","customername2"]';
+//输出jsonp格式的数据
+echo $jsoncallback . "(" . $json_data . ")";
+?>
+```
+
+
+### 2. 客户端实现 callbackFunction 函数
+
+```java
+<script type="text/javascript">
+function callbackFunction(result, methodName)
+{
+    var html = '<ul>';
+    for(var i = 0; i < result.length; i++)
+    {
+        html += '<li>' + result[i] + '</li>';
+    }
+    html += '</ul>';
+    document.getElementById('divCustomers').innerHTML = html;
+}
+</script>
+```
+
+
+### 页面展示
+
+```html
+<div id="divCustomers"></div>
+```
+
+
+### 客户端页面完整代码
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JSONP 实例</title>
+</head>
+<body>
+<div id="divCustomers"></div>
+<script type="text/javascript">
+```
+
+```java
+function callbackFunction(result, methodName)
+{
+    var html = '<ul>';
+    for(var i = 0; i < result.length; i++)
+    {
+        html += '<li>' + result[i] + '</li>';
+    }
+    html += '</ul>';
+    document.getElementById('divCustomers').innerHTML = html;
+}
+```
+
+```html
+</script>
+<script type="text/javascript" src="https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=callbackFunction"></script>
+</body>
+</html>
+```
+
+
+## jQuery 使用 JSONP
+
+以上代码可以使用 jQuery 代码实例：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JSONP 实例</title>
+    <script src="https://cdn.static.runoob.com/libs/jquery/1.8.3/jquery.js"></script>
+</head>
+<body>
+<div id="divCustomers"></div>
+<script>
+```
+
+```java
+$.getJSON("https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=?", function(data) {
+
+    var html = '<ul>';
+    for(var i = 0; i < data.length; i++)
+    {
+        html += '<li>' + data[i] + '</li>';
+    }
+    html += '</ul>';
+
+    $('#divCustomers').html(html);
+});
+```
+
+```text
+</script>
+</body>
+</html>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery JSONP` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

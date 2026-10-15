@@ -1,35 +1,70 @@
-# SQL：SQL FOREIGN KEY 学习笔记
+# SQL：SQL FOREIGN KEY 约束
 
 - 来源：[SQL FOREIGN KEY](https://www.runoob.com/sql/sql-foreignkey.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1652
 
-## 学习目标
+## 本章内容
 
-SQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQL FOREIGN KEY` 建立学习路径，先理解它在 SQL 体系中的位置，再做可运行或可复述的验证。
+## SQL FOREIGN KEY 约束
 
-## 阅读抓手
+一个表中的 FOREIGN KEY 指向另一个表中的 UNIQUE KEY(唯一约束的键)。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+让我们通过一个实例来解释外键。请看下面两个表：
 
-## 笔记模板
+"Persons" 表：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+"Orders" 表：
 
-## 完成标准
+请注意，"Orders" 表中的 "P_Id" 列指向 "Persons" 表中的 "P_Id" 列。
 
-- 能用 3 到 5 句话解释 `SQL FOREIGN KEY`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+"Persons" 表中的 "P_Id" 列是 "Persons" 表中的 PRIMARY KEY。
+
+"Orders" 表中的 "P_Id" 列是 "Orders" 表中的 FOREIGN KEY。
+
+FOREIGN KEY 约束用于预防破坏表之间连接的行为。
+
+FOREIGN KEY 约束也能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。
+
+
+## CREATE TABLE 时的 SQL FOREIGN KEY 约束
+
+下面的 SQL 在 "Orders" 表创建时在 "P_Id" 列上创建 FOREIGN KEY 约束：
+
+MySQL：
+
+SQL Server / Oracle / MS Access：
+
+如需命名 FOREIGN KEY 约束，并定义多个列的 FOREIGN KEY 约束，请使用下面的 SQL 语法：
+
+MySQL / SQL Server / Oracle / MS Access：
+
+
+## ALTER TABLE 时的 SQL FOREIGN KEY 约束
+
+当 "Orders" 表已被创建时，如需在 "P_Id" 列创建 FOREIGN KEY 约束，请使用下面的 SQL：
+
+MySQL / SQL Server / Oracle / MS Access：
+
+如需命名 FOREIGN KEY 约束，并定义多个列的 FOREIGN KEY 约束，请使用下面的 SQL 语法：
+
+MySQL / SQL Server / Oracle / MS Access：
+
+
+## 撤销 FOREIGN KEY 约束
+
+如需撤销 FOREIGN KEY 约束，请使用下面的 SQL：
+
+MySQL：
+
+SQL Server / Oracle / MS Access：
+
+
+## 复习重点
+
+- 能说明 `SQL FOREIGN KEY` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

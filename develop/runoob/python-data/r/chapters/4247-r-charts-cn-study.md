@@ -1,35 +1,67 @@
-# R：R 绘图 - 中文支持 学习笔记
+# R：R 绘图 - 中文支持
 
 - 来源：[R 绘图 - 中文支持](https://www.runoob.com/r/r-charts-cn.html)
 - 分类：Python / 数据科学
 - 技术：R
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4247
 
-## 学习目标
+## 本章内容
 
-R 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `R 绘图 - 中文支持` 建立学习路径，先理解它在 R 体系中的位置，再做可运行或可复述的验证。
+不同系统的字体库目录：
 
-## 阅读抓手
+- Windows 字体在 C:\Windows\Fonts\ 文件下，直接打开就能看到了。
+- mac OS 字体在 /System/Library/Fonts 和 /Library/Fonts 目录下。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+系统支持的字体库，可以通过安装 showtext 来查看：
 
-## 笔记模板
+```text
+> install.packages("showtext", repos = "https://mirrors.ustc.edu.cn/CRAN/")  # 安装 showtext
+...
+> font_files()   # 查看字体
+            path              file           family    face       version
+1 /Library/Fonts Arial Unicode.ttf Arial Unicode MS Regular Version 1.01x
+         ps_name
+1 ArialUnicodeMS
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+看到有 ArialUnicodeMS，我们就可以用了：
 
-## 完成标准
+```text
+pie3D(info,labels = names,explode = 0.1, main = "3D 图",family = "ArialUnicodeMS")
+```
 
-- 能用 3 到 5 句话解释 `R 绘图 - 中文支持`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 载入自定义字体
+
+系统的字体库有时候不是支持的很好， showtext() 函数可以载入我们自定义的字体，可以下载字体包 ttf，然后使用 font_add() 函数添加。
+
+这里我们使用思源黑体，思源黑体是 Adobe 与 Google 推出的一款开源字体。
+
+官网：https://source.typekit.com/source-han-serif/cn/
+
+GitHub 地址：https://github.com/adobe-fonts/source-han-sans/tree/release/OTF/SimplifiedChinese
+
+打开链接后，在里面选一个就好了：
+
+你也可以在网盘下载: https://pan.baidu.com/s/14cRhgYvvYotVIFkRVd71fQ 。
+
+可以下载个 OTF 字体，比如 SourceHanSansSC-Bold.otf，将该文件文件放在当前执行的代码文件中：
+
+柱形图使用字体库：
+
+
+## 实例
+
+3D 饼图使用中文：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `R 绘图 - 中文支持` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

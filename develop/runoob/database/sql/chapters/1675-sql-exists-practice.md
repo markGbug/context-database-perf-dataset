@@ -1,34 +1,101 @@
-# SQL：SQL EXISTS 练习笔记
+# SQL：SQL EXISTS 运算符
 
 - 来源：[SQL EXISTS](https://www.runoob.com/sql/sql-exists.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1675
 
-## 练习目标
+## 本章内容
 
-把 `SQL EXISTS` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## EXISTS 运算符
 
-## 练习步骤
+EXISTS 运算符用于判断查询子句是否有记录，如果有一条或多条记录存在返回 True，否则返回 False。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### SQL EXISTS 语法
 
-- 我能独立说出 `SQL EXISTS` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS
+(SELECT column_name FROM table_name WHERE condition);
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 演示数据库
+
+在本教程中，我们将使用 RUNOOB 样本数据库。
+
+下面是选自 "Websites" 表的数据：
+
+```text
++----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝       | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程 | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博       | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
++----+--------------+---------------------------+-------+---------+
+```
+
+下面是 "access_log" 网站访问记录表的数据：
+
+```text
+mysql> SELECT * FROM access_log;
++-----+---------+-------+------------+
+| aid | site_id | count | date       |
++-----+---------+-------+------------+
+|   1 |       1 |    45 | 2016-05-10 |
+|   2 |       3 |   100 | 2016-05-13 |
+|   3 |       1 |   230 | 2016-05-14 |
+|   4 |       2 |    10 | 2016-05-14 |
+|   5 |       5 |   205 | 2016-05-14 |
+|   6 |       4 |    13 | 2016-05-15 |
+|   7 |       3 |   220 | 2016-05-15 |
+|   8 |       5 |   545 | 2016-05-16 |
+|   9 |       3 |   201 | 2016-05-17 |
++-----+---------+-------+------------+
+9 rows in set (0.00 sec)
+```
+
+
+## SQL EXISTS 实例
+
+现在我们想要查找总访问量(count 字段)大于 200 的网站是否存在。
+
+我们使用下面的 SQL 语句：
+
+
+## 实例
+
+```text
+SELECT Websites.name, Websites.url
+FROM Websites
+WHERE EXISTS (SELECT count FROM access_log WHERE Websites.id = access_log.site_id AND count > 200);
+```
+
+执行以上 SQL 输出结果如下：
+
+EXISTS 可以与 NOT 一同使用，查找出不符合查询语句的记录：
+
+
+## 实例
+
+```text
+SELECT Websites.name, Websites.url
+FROM Websites
+WHERE NOT EXISTS (SELECT count FROM access_log WHERE Websites.id = access_log.site_id AND count > 200);
+```
+
+执行以上 SQL 输出结果如下：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL EXISTS` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

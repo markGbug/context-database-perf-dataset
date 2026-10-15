@@ -1,35 +1,103 @@
-# JavaScript：JavaScript 事件 学习笔记
+# JavaScript：JavaScript 事件
 
 - 来源：[JavaScript 事件](https://www.runoob.com/js/js-events.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2767
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 事件` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+HTML 事件是发生在 HTML 元素上的事情。
 
-## 阅读抓手
+当在 HTML 页面中使用 JavaScript 时， JavaScript 可以触发这些事件。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## HTML 事件
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+HTML 事件可以是浏览器行为，也可以是用户行为。
 
-## 完成标准
+以下是 HTML 事件的实例：
 
-- 能用 3 到 5 句话解释 `JavaScript 事件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- HTML 页面完成加载
+- HTML input 字段改变时
+- HTML 按钮被点击
+
+通常，当事件发生时，你可以做些事情。
+
+在事件触发时 JavaScript 可以执行一些代码。
+
+HTML 元素中可以添加事件属性，使用 JavaScript 代码来添加 HTML 元素。
+
+单引号:
+
+```html
+<some-HTML-element some-event='JavaScript 代码'>
+```
+
+双引号:
+
+```html
+<some-HTML-element some-event="JavaScript 代码">
+```
+
+在以下实例中，按钮元素中添加了 onclick 属性 (并加上代码):
+
+
+## 实例
+
+```html
+<button onclick="getElementById('demo').innerHTML=Date()">现在的时间是?</button>
+```
+
+以上实例中，JavaScript 代码将修改 id="demo" 元素的内容。
+
+在下一个实例中，代码将修改自身元素的内容 (使用 this.innerHTML):
+
+
+## 实例
+
+```html
+<button onclick="this.innerHTML=Date()">现在的时间是?</button>
+```
+
+
+## 实例
+
+```html
+<button onclick="displayDate()">现在的时间是?</button>
+```
+
+
+## 常见的HTML事件
+
+下面是一些常见的HTML事件的列表:
+
+更多事件列表: JavaScript 参考手册 - HTML DOM 事件。
+
+
+## JavaScript 可以做什么?
+
+事件可以用于处理表单验证，用户输入，用户行为及浏览器动作:
+
+- 页面加载时触发事件
+- 页面关闭时触发事件
+- 用户点击按钮执行动作
+- 验证用户输入内容的合法性
+- 等等 ...
+
+可以使用多种方法来执行 JavaScript 事件代码：
+
+- HTML 事件属性可以直接执行 JavaScript 代码
+- HTML 事件属性可以调用 JavaScript 函数
+- 你可以为 HTML 元素指定自己的事件处理程序
+- 你可以阻止事件的发生。
+- 等等 ...
+
+
+## 复习重点
+
+- 能说明 `JavaScript 事件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

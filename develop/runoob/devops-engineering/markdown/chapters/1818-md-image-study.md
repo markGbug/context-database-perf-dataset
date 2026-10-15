@@ -1,35 +1,280 @@
-# Markdown：Markdown 图片 学习笔记
+# Markdown：Markdown 图片
 
 - 来源：[Markdown 图片](https://www.runoob.com/markdown/md-image.html)
 - 分类：DevOps / 工程化
 - 技术：Markdown
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1818
 
-## 学习目标
+## 本章内容
 
-Markdown 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Markdown 图片` 建立学习路径，先理解它在 Markdown 体系中的位置，再做可运行或可复述的验证。
+图片能让文档更加生动和易于理解。
 
-## 阅读抓手
+Markdown 的图片语法简洁而灵活。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Markdown 图片语法格式如下：
 
-## 笔记模板
+```text
+![替代文字](图片路径)
+![替代文字](图片路径 "图片标题")
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 开头一个感叹号 !
+- 接着一个方括号，里面放上图片的替代文字
+- 接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 'title' 属性的文字。
 
-## 完成标准
+相对路径示例：
 
-- 能用 3 到 5 句话解释 `Markdown 图片`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+![项目截图](./images/screenshot.png)
+![用户界面](../assets/ui-demo.jpg "用户界面演示")
+![图标](images/icon.svg "应用图标")
+```
+
+绝对路径示例：
+
+```text
+![本地图片](/Users/username/Documents/image.png)
+![系统截图](C:\Users\username\Pictures\screenshot.png)
+```
+
+路径使用建议：
+
+- 推荐使用相对路径，便于项目移植
+- 建议创建专门的图片文件夹（如 images/、assets/）
+- 使用有意义的文件名，便于管理
+- 注意路径分隔符在不同操作系统中的差异
+
+直接引用网络图片：
+
+```text
+![RUNOOB 图标](https://static.jyshare.com/images/runoob-logo.png)
+
+![RUNOOB 图标](https://static.jyshare.com/images/runoob-logo.png "RUNOOB")
+```
+
+
+### 图片 alt 文本的重要性
+
+Alt 文本（替代文字）在图片无法显示时提供替代信息，同时对无障碍访问和 SEO 很重要：
+
+好的 alt 文本示例：
+
+```text
+![苹果公司总部大楼外观，现代玻璃幕墙建筑](./images/apple-headquarters.jpg)
+![网站流量统计图表，显示过去六个月的访问量呈上升趋势](./charts/traffic-stats.png)
+![用户登录界面，包含用户名和密码输入框](./screenshots/login-page.png)
+```
+
+避免的 alt 文本：
+
+```text
+![图片](image.jpg)  // 太简单，没有描述性
+![](image.jpg)      // 完全没有 alt 文本
+![点击这里](image.jpg)  // 不描述图片内容
+```
+
+alt 文本最佳实践：
+
+- 简洁但有描述性
+- 描述图片的主要内容和用途
+- 避免使用"图片"、"照片"等冗余词汇
+- 对于装饰性图片，可以使用空的 alt 文本
+- 考虑上下文，提供有意义的信息
+
+
+## 图片尺寸控制（HTML方式）
+
+标准 Markdown 不支持直接控制图片尺寸，但可以使用 HTML 标签。
+
+使用 HTML img 标签：
+
+```html
+<img src="image.jpg" alt="描述文字" width="300" height="200">
+<img src="image.jpg" alt="描述文字" width="50%">
+<img src="image.jpg" alt="描述文字" style="width: 300px; height: auto;">
+```
+
+响应式图片：
+
+```html
+<img src="image.jpg" alt="描述文字" style="max-width: 100%; height: auto;">
+```
+
+图片对齐：
+
+```html
+<!-- 居中对齐 -->
+<div align="center">
+  <img src="image.jpg" alt="居中图片" width="400">
+</div>
+
+<!-- 左对齐（默认） -->
+<img src="image.jpg" alt="左对齐图片" style="float: left; margin-right: 20px;">
+
+<!-- 右对齐 -->
+<img src="image.jpg" alt="右对齐图片" style="float: right; margin-left: 20px;">
+```
+
+
+## 链接和图片的高级用法
+
+
+### 图片链接组合
+
+将图片作为链接的可点击元素。
+
+基本语法：
+
+```text
+[![图片alt文本](图片URL)](链接URL)
+```
+
+实际示例：
+
+```text
+[![GitHub项目截图](./images/project-screenshot.png)](https://github.com/username/project)
+[![访问官网](https://example.com/logo.png)](https://example.com "点击访问官网")
+```
+
+常见应用场景：
+
+```text
+<!-- 项目徽章 -->
+[![Build Status](https://travis-ci.org/user/repo.svg?branch=master)](https://travis-ci.org/user/repo)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+<!-- 应用商店下载 -->
+[![App Store](./images/app-store-badge.png)](https://apps.apple.com/app/your-app)
+[![Google Play](./images/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.yourapp)
+```
+
+
+### 相对路径与绝对路径
+
+相对路径的优势：
+
+```text
+<!-- 项目结构 -->
+project/
+├── README.md
+├── docs/
+│   ├── guide.md
+│   └── images/
+│       └── screenshot.png
+└── assets/
+    └── logo.png
+
+<!-- 在 README.md 中 -->
+![Logo](./assets/logo.png)
+
+<!-- 在 docs/guide.md 中 -->
+![Screenshot](./images/screenshot.png)
+![Logo](../assets/logo.png)
+```
+
+路径规划建议：
+
+- 在项目根目录创建统一的资源文件夹
+- 使用描述性的文件夹名称
+- 保持路径结构的一致性
+- 考虑静态网站生成器的路径规则
+
+
+### 图片居中和对齐
+
+方法一：HTML + CSS
+
+```html
+<div style="text-align: center;">
+  <img src="image.jpg" alt="居中图片" style="max-width: 100%;">
+</div>
+```
+
+方法二：使用 HTML 对齐属性
+
+```html
+<p align="center">
+  <img src="image.jpg" alt="居中图片" width="400">
+</p>
+```
+
+方法三：创建图片画廊
+
+```html
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+  <img src="image1.jpg" alt="图片1" style="width: 30%; margin: 10px;">
+  <img src="image2.jpg" alt="图片2" style="width: 30%; margin: 10px;">
+  <img src="image3.jpg" alt="图片3" style="width: 30%; margin: 10px;">
+</div>
+```
+
+实用的图片展示模板：
+
+```html
+## 产品展示
+
+### 主要功能
+<table>
+  <tr>
+    <td align="center">
+      <img src="./images/feature1.png" width="200" alt="功能1">
+      <br>
+      <strong>智能识别</strong>
+      <br>
+      <sub>AI驱动的图像识别技术</sub>
+    </td>
+    <td align="center">
+      <img src="./images/feature2.png" width="200" alt="功能2">
+      <br>
+      <strong>快速处理</strong>
+      <br>
+      <sub>毫秒级响应速度</sub>
+    </td>
+  </tr>
+</table>
+
+### 界面预览
+| 移动端 | 桌面端 |
+|:---:|:---:|
+| ![移动界面](./images/mobile.png) | ![桌面界面](./images/desktop.png) |
+| 响应式设计，完美适配 | 大屏体验，功能齐全 |
+```
+
+性能优化建议：
+
+- 优化图片大小和格式（WebP > PNG > JPG）
+- 使用适当的图片尺寸，避免在网页中缩放大图
+- 考虑使用图片压缩工具
+- 为不同设备准备不同尺寸的图片
+
+
+### 链接和图片的故障排除
+
+常见问题及解决方案：
+
+- 链接无法点击：检查语法格式，确保方括号和圆括号正确配对
+- 图片无法显示：验证图片路径和文件存在性
+- 图片过大：使用 HTML 控制尺寸或优化图片文件
+- 链接在新窗口打开：使用 HTML <a target="_blank"> 标签
+
+调试技巧：
+
+```text
+<!-- 测试链接是否有效 -->
+测试链接：[点击测试](https://httpbin.org/get)
+
+<!-- 测试图片路径 -->
+![测试图片](./images/test.png)
+<!-- 如果不显示，尝试绝对路径或检查文件名大小写 -->
+```
+
+通过掌握链接和图片的各种用法，你可以创建内容丰富、导航清晰的 Markdown 文档。这些技能对于编写技术文档、项目说明和在线内容都非常重要。
+
+
+## 复习重点
+
+- 能说明 `Markdown 图片` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

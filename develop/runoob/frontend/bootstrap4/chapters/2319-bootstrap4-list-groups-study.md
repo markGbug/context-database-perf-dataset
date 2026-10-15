@@ -1,35 +1,155 @@
-# Bootstrap4：Bootstrap4 列表组 学习笔记
+# Bootstrap4：Bootstrap4 列表组
 
 - 来源：[Bootstrap4 列表组](https://www.runoob.com/bootstrap4/bootstrap4-list-groups.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2319
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 列表组` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+大部分基础列表组都是无序的。
 
-## 阅读抓手
+要创建列表组，可以在 <ul> 元素上添加 .list-group 类, 在 <li> 元素上添加 .list-group-item 类:
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<ul class="list-group">
+  <li class="list-group-item">First item</li>
+  <li class="list-group-item">Second item</li>
+  <li class="list-group-item">Third item</li>
+</ul>
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Bootstrap4 列表组`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 激活状态的列表项
+
+通过添加 .active 类来设置激活状态的列表项：
+
+
+## 实例
+
+```html
+<ul class="list-group">
+  <li class="list-group-item active">Active item</li>
+  <li class="list-group-item">Second item</li>
+  <li class="list-group-item">Third item</li>
+</ul>
+```
+
+
+## 禁用的列表项
+
+.disabled 类用于设置禁用的列表项:
+
+
+## 实例
+
+```html
+<ul class="list-group">
+  <li class="list-group-item disabled">Disabled item</li>
+  <li class="list-group-item">Second item</li>
+  <li class="list-group-item">Third item</li>
+</ul>
+```
+
+
+## 链接列表项
+
+要创建一个链接的列表项，可以将 <ul> 替换为 <div> ， <a> 替换 <li>。如果你想鼠标悬停显示灰色背景就添加.list-group-item-action 类:
+
+
+## 实例
+
+```html
+<div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action">First item</a>
+  <a href="#" class="list-group-item list-group-item-action">Second item</a>
+  <a href="#" class="list-group-item list-group-item-action">Third item</a>
+</div>
+```
+
+
+## 移除列表边框
+
+使用 .list-group-flush 类来删除列表的边框和圆角：
+
+
+## 实例
+
+```html
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">First item</li>
+  <li class="list-group-item">Second item</li>
+  <li class="list-group-item">Third item</li>
+  <li class="list-group-item">Fourth item</li>
+</ul>
+```
+
+
+## 水平列表组
+
+我们可以将 .list-group-horizontal 类添加到 .list-group 类后面来创建水平列表组：
+
+
+## 实例
+
+```html
+<ul class="list-group list-group-horizontal">
+  <li class="list-group-item">First item</li>
+  <li class="list-group-item">Second item</li>
+  <li class="list-group-item">Third item</li>
+  <li class="list-group-item">Fourth item</li>
+</ul>
+```
+
+
+## 多种颜色列表项
+
+列表项目的颜色可以通过以下列来设置： .list-group-item-success, list-group-item-secondary, list-group-item-info, list-group-item-warning, .list-group-item-danger, list-group-item-dark 和 list-group-item-light:
+
+
+## 实例
+
+```html
+<ul class="list-group">
+  <li class="list-group-item list-group-item-success">成功列表项</li>
+  <li class="list-group-item list-group-item-secondary">次要列表项</li>
+  <li class="list-group-item list-group-item-info">信息列表项</li>
+  <li class="list-group-item list-group-item-warning">警告列表项</li>
+  <li class="list-group-item list-group-item-danger">危险列表项</li>
+  <li class="list-group-item list-group-item-primary">主要列表项</li>
+  <li class="list-group-item list-group-item-dark">深灰色列表项</li>
+  <li class="list-group-item list-group-item-light">浅色列表项</li>
+</ul>
+```
+
+
+### 链接的多种颜色列表项
+
+
+## 实例
+
+```html
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action">激活列表项</a>
+    <a href="#" class="list-group-item list-group-item-success">成功列表项</a>
+    <a href="#" class="list-group-item list-group-item-secondary">次要列表项</a>
+    <a href="#" class="list-group-item list-group-item-info">信息列表项</a>
+    <a href="#" class="list-group-item list-group-item-warning">警告列表项</a>
+    <a href="#" class="list-group-item list-group-item-danger">危险列表项</a>
+    <a href="#" class="list-group-item list-group-item-primary">主要列表项</a>
+    <a href="#" class="list-group-item list-group-item-dark">深灰色列表项</a>
+    <a href="#" class="list-group-item list-group-item-light">浅色列表项</a>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 列表组` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

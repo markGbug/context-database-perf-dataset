@@ -1,34 +1,155 @@
-# Maven：Maven 快照(SNAPSHOT) 练习笔记
+# Maven：Maven 快照(SNAPSHOT)
 
 - 来源：[Maven 快照(SNAPSHOT)](https://www.runoob.com/maven/maven-snapshots.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1844
 
-## 练习目标
+## 本章内容
 
-把 `Maven 快照(SNAPSHOT)` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+一个大型的软件应用通常包含多个模块，并且通常的场景是多个团队开发同一应用的不同模块。举个例子，设想一个团队开发应用的前端，项目为 app-ui(app-ui.jar:1.0)，而另一个团队开发应用的后台，使用的项目是 data-service(data-service.jar:1.0)。
 
-## 练习步骤
+现在可能出现的情况是开发 data-service 的团队正在进行快节奏的 bug 修复或者项目改进，并且他们几乎每隔一天就要发布库到远程仓库。 现在如果 data-service 团队每隔一天上传一个新版本，那么将会出现下面的问题：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- data-service 团队每次发布更新的代码时都要告知 app-ui 团队。
+- app-ui 团队需要经常地更新他们 pom.xml 文件到最新版本。
 
-## 验收清单
+为了解决这种情况，快照的概念派上了用场。
 
-- 我能独立说出 `Maven 快照(SNAPSHOT)` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 什么是快照?
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+快照是一种特殊的版本，指定了某个当前的开发进度的副本。不同于常规的版本，Maven 每次构建都会在远程仓库中检查新的快照。 现在 data-service 团队会每次发布更新代码的快照到仓库中，比如说 data-service:1.0-SNAPSHOT 来替代旧的快照 jar 包。
+
+
+## 项目快照 vs 版本
+
+对于版本，如果 Maven 以前下载过指定的版本文件，比如说 data-service:1.0，Maven 将不会再从仓库下载新的可用的 1.0 文件。若要下载更新的代码，data-service 的版本需要升到1.1。
+
+快照的情况下，每次 app-ui 团队构建他们的项目时，Maven 将自动获取最新的快照(data-service:1.0-SNAPSHOT)。
+
+
+### app-ui 项目的 pom.xml 文件
+
+app-ui 项目使用的是 data-service 项目的 1.0 快照。
+
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>app-ui</groupId>
+   <artifactId>app-ui</artifactId>
+   <version>1.0</version>
+   <packaging>jar</packaging>
+   <name>health</name>
+   <url>http://maven.apache.org</url>
+   <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   </properties>
+   <dependencies>
+      <dependency>
+      <groupId>data-service</groupId>
+         <artifactId>data-service</artifactId>
+         <version>1.0-SNAPSHOT</version>
+         <scope>test</scope>
+      </dependency>
+   </dependencies>
+</project>
+```
+
+
+### data-service 项目的 pom.xml 文件
+
+data-service 项目为每次小的改动发布 1.0 快照。
+
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>data-service</groupId>
+   <artifactId>data-service</artifactId>
+   <version>1.0-SNAPSHOT</version>
+   <packaging>jar</packaging>
+   <name>health</name>
+   <url>http://maven.apache.org</url>
+   <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   </properties>
+</project>
+```
+
+虽然，快照的情况下，Maven 在日常工作中会自动获取最新的快照， 你也可以在任何 maven 命令中使用 -U 参数强制 maven 下载最新的快照构建。
+
+```text
+mvn clean package -U
+```
+
+让我们打开命令控制台，去到 C:\ > MVN > app-ui 目录，然后执行下面的 mvn 命令。
+
+```text
+C:\MVN\app-ui>mvn clean package -U
+```
+
+Maven 将在下载 data-service 最新的快照之后，开始构建项目。
+
+```text
+[INFO] Scanning for projects...
+[INFO] -------------------------------------------------------------------
+[INFO] Building consumerBanking
+[INFO]    task-segment: [clean, package]
+[INFO] -------------------------------------------------------------------
+[INFO] Downloading data-service:1.0-SNAPSHOT
+[INFO] 290K downloaded.
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting directory C:\MVN\app-ui\target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (Cp1252 actually) to copy filtered resources,
+i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory C:\MVN\app-ui\src\main\
+resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Compiling 1 source file to C:\MVN\app-ui\target\classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (Cp1252 actually) to copy filtered resources,
+i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory C:\MVN\app-ui\src\test\
+resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] Compiling 1 source file to C:\MVN\app-ui\target\test-classes
+[INFO] [surefire:test {execution: default-test}]
+[INFO] Surefire report directory: C:\MVN\app-ui\target\
+surefire-reports
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.companyname.bank.AppTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: C:\MVN\app-ui\target\
+app-ui-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Tue Jul 10 16:52:18 IST 2012
+[INFO] Final Memory: 16M/89M
+[INFO] ------------------------------------------------------------------------
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Maven 快照(SNAPSHOT)` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

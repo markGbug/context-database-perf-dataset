@@ -1,35 +1,180 @@
-# Django：Django Nginx+uwsgi 学习笔记
+# Django：Django Nginx+uwsgi 安装配置
 
 - 来源：[Django Nginx+uwsgi](https://www.runoob.com/django/django-nginx-uwsgi.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3825
 
-## 学习目标
+## 本章内容
 
-Django 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Django Nginx+uwsgi` 建立学习路径，先理解它在 Django 体系中的位置，再做可运行或可复述的验证。
+在前面的章节中我们使用 python manage.py runserver 来运行服务器。这只适用测试环境中使用。
 
-## 阅读抓手
+正式发布的服务，我们需要一个可以稳定而持续的服务器，比如apache, Nginx, lighttpd等，本文将以 Nginx 为例。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+你也可以直接参考：Python uwsgi 安装配置
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 安装基础开发包
 
-## 完成标准
+Centos 下安装步骤如下：
 
-- 能用 3 到 5 句话解释 `Django Nginx+uwsgi`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+yum groupinstall "Development tools"
+yum install zlib-devel bzip2-devel pcre-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel
+```
+
+CentOS 自带 Python 2.4.3，但我们可以再安装Python2.7.5：
+
+```text
+cd ~
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tar.bz2
+tar xvf Python-2.7.5.tar.bz2
+cd Python-2.7.5
+./configure --prefix=/usr/local
+make && make altinstall
+```
+
+
+### 安装Python包管理
+
+easy_install 包 https://pypi.python.org/pypi/distribute
+
+安装步骤:
+
+```text
+cd ~
+wget https://pypi.python.org/packages/source/d/distribute/distribute-0.6.49.tar.gz
+tar xf distribute-0.6.49.tar.gz
+cd distribute-0.6.49
+python2.7 setup.py install
+easy_install --version
+```
+
+pip 包: https://pypi.python.org/pypi/pip
+
+安装 pip 的好处是可以用 pip list、pip uninstall 管理 Python 包， easy_install 没有这个功能，只有 uninstall。
+
+
+## 安装 uwsgi
+
+uwsgi:https://pypi.python.org/pypi/uWSGI
+
+uwsgi 参数详解：http://uwsgi-docs.readthedocs.org/en/latest/Options.html
+
+```text
+pip install uwsgi
+uwsgi --version    # 查看 uwsgi 版本
+```
+
+测试 uwsgi 是否正常：
+
+新建 test.py 文件，内容如下：
+
+```text
+def application(env, start_response):
+    start_response('200 OK', [('Content-Type','text/html')])
+    return "Hello World"
+```
+
+然后在终端运行：
+
+```text
+uwsgi --http :8001 --wsgi-file test.py
+```
+
+在浏览器内输入：http://127.0.0.1:8001，查看是否有"Hello World"输出，若没有输出，请检查你的安装过程。
+
+
+## 安装 Django
+
+```text
+pip install django
+```
+
+测试 django 是否正常，运行：
+
+```text
+django-admin.py startproject demosite
+cd demosite
+python2.7 manage.py runserver 0.0.0.0:8002
+```
+
+在浏览器内输入：http://127.0.0.1:8002，检查django是否运行正常。
+
+
+## 安装 Nginx
+
+安装命令如下：
+
+```text
+cd ~
+wget http://nginx.org/download/nginx-1.5.6.tar.gz
+tar xf nginx-1.5.6.tar.gz
+cd nginx-1.5.6
+./configure --prefix=/usr/local/nginx-1.5.6 \
+--with-http_stub_status_module \
+--with-http_gzip_static_module
+make && make install
+```
+
+你可以阅读 Nginx 安装配置 了解更多内容。
+
+
+## uwsgi 配置
+
+uwsgi支持ini、xml等多种配置方式，本文以 ini 为例， 在/etc/目录下新建uwsgi9090.ini，添加如下配置：
+
+```text
+[uwsgi]
+socket = 127.0.0.1:9090
+master = true         //主进程
+vhost = true          //多站模式
+no-site = true        //多站模式时不设置入口模块和文件
+workers = 2           //子进程数
+reload-mercy = 10
+vacuum = true         //退出、重启时清理文件
+max-requests = 1000
+limit-as = 512
+buffer-size = 30000
+pidfile = /var/run/uwsgi9090.pid    //pid文件，用于下面的脚本启动、停止该进程
+daemonize = /website/uwsgi9090.log
+```
+
+
+## Nginx 配置
+
+找到nginx的安装目录（如：/usr/local/nginx/），打开conf/nginx.conf文件，修改server配置：
+
+```text
+server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            include  uwsgi_params;
+            uwsgi_pass  127.0.0.1:9090;              //必须和uwsgi中的设置一致
+            uwsgi_param UWSGI_SCRIPT demosite.wsgi;  //入口文件，即wsgi.py相对于项目根目录的位置，“.”相当于一层目录
+            uwsgi_param UWSGI_CHDIR /demosite;       //项目根目录
+            index  index.html index.htm;
+            client_max_body_size 35m;
+        }
+    }
+```
+
+你可以阅读 Nginx 安装配置 了解更多内容。
+
+设置完成后，在终端运行：
+
+```text
+uwsgi --ini /etc/uwsgi9090.ini &
+/usr/local/nginx/sbin/nginx
+```
+
+
+## 复习重点
+
+- 能说明 `Django Nginx+uwsgi` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

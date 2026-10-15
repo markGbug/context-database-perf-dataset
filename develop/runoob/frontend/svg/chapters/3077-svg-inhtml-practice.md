@@ -1,34 +1,102 @@
-# SVG：SVG 在 HTML 中 练习笔记
+# SVG：SVG 在 HTML 页面
 
 - 来源：[SVG 在 HTML 中](https://www.runoob.com/svg/svg-inhtml.html)
 - 分类：前端开发
 - 技术：SVG
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3077
 
-## 练习目标
+## 本章内容
 
-把 `SVG 在 HTML 中` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SVG 文件可通过以下标签嵌入 HTML 文档：<img>、<object> 或者 <iframe>。
 
-## 练习步骤
+SVG 的代码可以直接嵌入到 HTML 页面中，或您可以直接链接到 SVG 文件。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 使用 < img> 标签
 
-- 我能独立说出 `SVG 在 HTML 中` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+通过 <img> 标签可以将 SVG 图像作为图片嵌入到 HTML 页面中，可以使用 src 属性指定 SVG 文件的路径，也可以设置 width 和 height 属性来指定图片的宽度和高度。
 
-## 复盘问题
+语法:
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<img src="example.svg" alt="SVG Image" width="200" height="200">
+```
+
+
+## 使用 <object> 标签
+
+<object> 标签用于将外部资源嵌入到HTML页面中，可以使用 data 属性指定 SVG 文件的路径，type 属性指定资源的 MIME 类型。
+
+支持 SVG 的浏览器会直接显示 SVG 图像，不支持的浏览器会显示替代内容。
+
+语法:
+
+```html
+<object data="example.svg" type="image/svg+xml" width="200" height="200">
+  Your browser does not support SVG
+</object>
+```
+
+
+## 使用 <iframe> 标签
+
+<iframe> 标签用于在 HTML 页面中嵌入另一个HTML文档。可以使用 src 属性指定 SVG 文件的路径，并设置 width 和 height 属性来指定 iframe 的宽度和高度。
+
+语法:
+
+```html
+<iframe src="example.svg" width="200" height="200"></iframe>
+```
+
+
+## 直接在 HTML 嵌入 SVG 代码
+
+在 HTML 页面中直接嵌入 SVG 代码，SVG 代码可以放置在 <body> 标签中或其他合适的位置。
+
+这种方式使得 SVG 图像与 HTML 内容混合在一起，可以直接在 HTML 页面中编辑和调整 SVG 图像。
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red" />
+</svg>
+```
+
+
+## 链接到 SVG 文件
+
+您还可以用 <a> 标签链接到一个 SVG 文件：
+
+```html
+<a href="circle1.svg">查看 SVG 文件</a>
+```
+
+结果:查看 SVG 文件
+
+
+## 使用 CSS 背景图
+
+通过 CSS 的 background-image 属性，可以将 SVG 图像作为背景图嵌入到 HTML 元素中。这种方法适用于需要在 CSS 中控制背景图样式的情况。
+
+
+## 实例
+
+```text
+.svg-bg {
+  width: 200px;
+  height: 200px;
+  background-image: url('circle1.svg');
+  background-size: cover;
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SVG 在 HTML 中` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

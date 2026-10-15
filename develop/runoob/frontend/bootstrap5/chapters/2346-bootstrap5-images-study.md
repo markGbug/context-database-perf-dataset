@@ -1,35 +1,96 @@
-# Bootstrap5：Bootstrap5 图像形状 学习笔记
+# Bootstrap5：Bootstrap5 图像形状
 
 - 来源：[Bootstrap5 图像形状](https://www.runoob.com/bootstrap5/bootstrap5-images.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2346
 
-## 学习目标
+## 本章内容
 
-Bootstrap5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap5 图像形状` 建立学习路径，先理解它在 Bootstrap5 体系中的位置，再做可运行或可复述的验证。
+Bootstrap 5 提供了许多类来帮助你快速调整和优化图像的外观，尤其是控制图像的形状、尺寸和响应式布局。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 圆角图片
 
-## 笔记模板
+.rounded 类可以让图片显示圆角效果：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `Bootstrap5 图像形状`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<img src="cinqueterre.jpg" class="rounded" alt="Cinque Terre">
+```
+
+
+## 椭圆图片
+
+.rounded-circle 类可以设置椭圆形图片:
+
+
+## 实例
+
+```html
+<img src="cinqueterre.jpg" class="rounded-circle" alt="Cinque Terre">
+```
+
+
+## 缩略图
+
+.img-thumbnail 类用于设置图片缩略图(图片有边框):
+
+
+## 实例
+
+```html
+<img src="cinqueterre.jpg" class="img-thumbnail" alt="Cinque Terre">
+```
+
+
+## 图片对齐方式
+
+使用 .float-start 类来设置图片左对齐，使用 .float-end 类设置图片右对齐:
+
+
+## 实例
+
+```html
+<img src="paris.jpg" class="float-start">
+<img src="cinqueterre.jpg" class="float-end">
+```
+
+
+## 图片居中
+
+使用 .mx-auto (margin:auto) 和 .d-block (display:block) 类来设置图片居中对齐：
+
+
+## 实例
+
+```html
+<img src="paris.jpg" class="mx-auto d-block">
+```
+
+
+## 响应式图片
+
+图像有各种各样的尺寸，我们需要根据屏幕的大小自动适应。
+
+我们可以通过在 <img> 标签中添加 .img-fluid 类来设置响应式图片。
+
+.img-fluid 类设置了 max-width: 100%; 、 height: auto; :
+
+
+## 实例
+
+```html
+<img class="img-fluid" src="img_chania.jpg" alt="Chania">
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap5 图像形状` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

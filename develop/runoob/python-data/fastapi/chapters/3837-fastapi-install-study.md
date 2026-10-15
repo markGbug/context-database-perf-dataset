@@ -1,35 +1,135 @@
-# FastAPI：FastAPI 安装 学习笔记
+# FastAPI：FastAPI 安装与环境配置
 
 - 来源：[FastAPI 安装](https://www.runoob.com/fastapi/fastapi-install.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3837
 
-## 学习目标
+## 本章内容
 
-FastAPI 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `FastAPI 安装` 建立学习路径，先理解它在 FastAPI 体系中的位置，再做可运行或可复述的验证。
+FastAPI 依赖 Python 3.8 及更高版本。本节介绍如何安装 FastAPI 以及配置开发环境。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 检查 Python 版本
 
-## 笔记模板
+在安装 FastAPI 之前，先确认你的 Python 版本：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+$ python --version
+Python 3.11.0
 
-## 完成标准
+# 或者
+$ python3 --version
+Python 3.11.0
+```
 
-- 能用 3 到 5 句话解释 `FastAPI 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+如果你的 Python 版本低于 3.8，请先升级 Python。
+
+
+## 创建虚拟环境
+
+推荐在虚拟环境中安装 FastAPI，避免与系统 Python 包产生冲突：
+
+```text
+# 创建虚拟环境
+$ python -m venv venv
+
+# 激活虚拟环境（macOS/Linux）
+$ source venv/bin/activate
+
+# 激活虚拟环境（Windows）
+$ venv\Scripts\activate
+```
+
+虚拟环境是 Python 开发的最佳实践。每个项目使用独立的虚拟环境，可以避免不同项目之间的依赖冲突。
+
+
+## 安装 FastAPI
+
+使用 pip 安装 FastAPI：
+
+```text
+$ pip install fastapi
+```
+
+这条命令只安装 FastAPI 核心包。如果你需要一次性安装 FastAPI 及其所有可选依赖，可以使用：
+
+```text
+$ pip install "fastapi[all]"
+```
+
+fastapi[all] 会安装以下组件：
+
+
+## 安装 Uvicorn
+
+FastAPI 是一个 ASGI 框架，需要一个 ASGI 服务器来运行。最常用的是 Uvicorn：
+
+```text
+$ pip install "uvicorn[standard]"
+```
+
+[standard] 会安装 uvloop（高性能事件循环）和 httptools（高性能 HTTP 解析器），显著提升性能。
+
+ASGI（Asynchronous Server Gateway Interface）是 Python 异步 Web 服务器与应用程序之间的标准接口，是 WSGI 的异步版本。传统框架如 Flask 使用 WSGI（同步），而 FastAPI 使用 ASGI（异步），能够更高效地处理并发请求。
+
+
+## 运行第一个 FastAPI 应用
+
+安装完成后，创建一个名为 main.py 的文件：
+
+
+## 实例
+
+在命令行中启动应用：
+
+```text
+$ uvicorn main:app --reload
+```
+
+参数说明：
+
+启动成功后，终端会显示：
+
+```text
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process
+INFO:     Started server process
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+```
+
+打开浏览器访问 http://127.0.0.1:8000，你将看到如下 JSON 响应：
+
+```text
+{"message": "Hello World"}
+```
+
+同时，FastAPI 自动生成了交互式 API 文档：
+
+
+## 使用 FastAPI CLI
+
+FastAPI 新版本提供了 fastapi 命令行工具，可以更方便地运行应用：
+
+```text
+# 开发模式（自动重载）
+$ fastapi dev
+
+# 生产模式
+$ fastapi run
+```
+
+fastapi dev 会自动查找项目中的 FastAPI 应用并启动开发服务器，等同于 uvicorn main:app --reload。
+
+
+## 推荐开发工具
+
+
+## 复习重点
+
+- 能说明 `FastAPI 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

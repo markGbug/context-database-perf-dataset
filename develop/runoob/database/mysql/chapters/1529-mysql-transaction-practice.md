@@ -1,34 +1,189 @@
-# MySQL：MySQL 事务 练习笔记
+# MySQL：MySQL 事务
 
 - 来源：[MySQL 事务](https://www.runoob.com/mysql/mysql-transaction.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1529
 
-## 练习目标
+## 本章内容
 
-把 `MySQL 事务` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MySQL 事务主要用于处理操作量大，复杂度高的数据。比如说，在人员管理系统中，你删除一个人员，你既需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务！
 
-## 练习步骤
+在 MySQL 中，事务是一组SQL语句的执行，它们被视为一个单独的工作单元。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 在 MySQL 中只有使用了 Innodb 数据库引擎的数据库或表才支持事务。
+- 事务处理可以用来维护数据库的完整性，保证成批的 SQL 语句要么全部执行，要么全部不执行。
+- 事务用来管理 insert、update、delete 语句
 
-## 验收清单
+一般来说，事务是必须满足4个条件（ACID）：：原子性（Atomicity，或称不可分割性）、一致性（Consistency）、隔离性（Isolation，又称独立性）、持久性（Durability）。
 
-- 我能独立说出 `MySQL 事务` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- 原子性：一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。
+- 一致性：在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。
+- 隔离性：数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。
+- 持久性：事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。
 
-## 复盘问题
+在 MySQL 命令行的默认设置下，事务都是自动提交的，即执行 SQL 语句后就会马上执行 COMMIT 操作。因此要显式地开启一个事务务须使用命令 BEGIN 或 START TRANSACTION，或者执行命令 SET AUTOCOMMIT=0，用来禁止使用当前会话的自动提交。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 事务控制语句：
+
+- BEGIN 或 START TRANSACTION 显式地开启一个事务；
+- COMMIT 也可以使用 COMMIT WORK，不过二者是等价的。COMMIT 会提交事务，并使已对数据库进行的所有修改成为永久性的；
+- ROLLBACK 也可以使用 ROLLBACK WORK，不过二者是等价的。回滚会结束用户的事务，并撤销正在进行的所有未提交的修改；
+- SAVEPOINT identifier，SAVEPOINT 允许在事务中创建一个保存点，一个事务中可以有多个 SAVEPOINT；
+- RELEASE SAVEPOINT identifier 删除一个事务的保存点，当没有指定的保存点时，执行该语句会抛出一个异常；
+- ROLLBACK TO identifier 把事务回滚到标记点；
+- SET TRANSACTION 用来设置事务的隔离级别。InnoDB 存储引擎提供事务的隔离级别有READ UNCOMMITTED、READ COMMITTED、REPEATABLE READ 和 SERIALIZABLE。
+
+
+### MYSQL 事务处理主要有两种方法：
+
+1、用 BEGIN, ROLLBACK, COMMIT 来实现
+
+- BEGIN 或 START TRANSACTION：开用于开始一个事务。
+- ROLLBACK 事务回滚，取消之前的更改。
+- COMMIT：事务确认，提交事务，使更改永久生效。
+
+2、直接用 SET 来改变 MySQL 的自动提交模式:
+
+- SET AUTOCOMMIT=0 禁止自动提交
+- SET AUTOCOMMIT=1 开启自动提交
+
+BEGIN 或 START TRANSACTION -- 用于开始一个事务：
+
+```text
+BEGIN; -- 或者使用 START TRANSACTION;
+```
+
+COMMIT -- 用于提交事务，将所有的修改永久保存到数据库：
+
+```text
+COMMIT;
+```
+
+ROLLBACK -- 用于回滚事务，撤销自上次提交以来所做的所有更改：
+
+```text
+ROLLBACK;
+```
+
+SAVEPOINT -- 用于在事务中设置保存点，以便稍后能够回滚到该点：
+
+```text
+SAVEPOINT savepoint_name;
+```
+
+ROLLBACK TO SAVEPOINT -- 用于回滚到之前设置的保存点：
+
+```text
+ROLLBACK TO SAVEPOINT savepoint_name;
+```
+
+下面是一个简单的 MySQL 事务的例子：
+
+
+## 实例
+
+
+### 实例
+
+一个简单的事务实例：
+
+
+## 事务测试
+
+```text
+mysql> use RUNOOB;
+Database changed
+mysql> CREATE TABLE runoob_transaction_test( id int(5)) engine=innodb;  # 创建数据表
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from runoob_transaction_test;
+Empty set (0.01 sec)
+
+mysql> begin;  # 开始事务
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into runoob_transaction_test value(5);
+Query OK, 1 rows affected (0.01 sec)
+
+mysql> insert into runoob_transaction_test value(6);
+Query OK, 1 rows affected (0.00 sec)
+
+mysql> commit; # 提交事务
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  select * from runoob_transaction_test;
++------+
+| id   |
++------+
+| 5    |
+| 6    |
++------+
+2 rows in set (0.01 sec)
+
+mysql> begin;    # 开始事务
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>  insert into runoob_transaction_test values(7);
+Query OK, 1 rows affected (0.00 sec)
+
+mysql> rollback;   # 回滚
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>   select * from runoob_transaction_test;   # 因为回滚所以数据没有插入
++------+
+| id   |
++------+
+| 5    |
+| 6    |
++------+
+2 rows in set (0.01 sec)
+
+mysql>
+```
+
+
+### PHP中使用事务实例
+
+
+## MySQL ORDER BY 测试：
+
+```text
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+    die('连接失败: ' . mysqli_error($conn));
+}
+// 设置编码，防止中文乱码
+mysqli_query($conn, "set names utf8");
+mysqli_select_db( $conn, 'RUNOOB' );
+mysqli_query($conn, "SET AUTOCOMMIT=0"); // 设置为不自动提交，因为MYSQL默认立即执行
+mysqli_begin_transaction($conn);            // 开始事务定义
+
+if(!mysqli_query($conn, "insert into runoob_transaction_test (id) values(8)"))
+{
+    mysqli_query($conn, "ROLLBACK");     // 判断当执行失败时回滚
+}
+
+if(!mysqli_query($conn, "insert into runoob_transaction_test (id) values(9)"))
+{
+    mysqli_query($conn, "ROLLBACK");      // 判断执行失败时回滚
+}
+mysqli_commit($conn);            //执行事务
+mysqli_close($conn);
+?>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL 事务` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

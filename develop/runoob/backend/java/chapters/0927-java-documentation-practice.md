@@ -1,34 +1,155 @@
-# Java：Java 文档注释 练习笔记
+# Java：Java 文档注释
 
 - 来源：[Java 文档注释](https://www.runoob.com/java/java-documentation.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0927
 
-## 练习目标
+## 本章内容
 
-把 `Java 文档注释` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Java 支持三种注释方式：
 
-## 练习步骤
+- 单行注释
+- 多行注释
+- 文档注释
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+前两种分别是 // 和 /* */，第三种被称作文档注释，它以 /** 开始，以 */ 结束。
 
-## 验收清单
+前两种注释内容可以参考：Java 注释
 
-- 我能独立说出 `Java 文档注释` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+文档注释允许你在程序中嵌入关于程序的信息。
 
-## 复盘问题
+你可以使用 javadoc 工具软件来生成信息，并输出到 HTML 文件中。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+文档注释，使你更加方便的记录你的程序信息。
+
+
+## javadoc 标签
+
+javadoc 工具软件识别以下标签：
+
+
+## 文档注释
+
+在开始的 /** 之后，第一行或几行是关于类、变量和方法的主要描述。
+
+之后，你可以包含一个或多个各种各样的 @ 标签。每一个 @ 标签必须在一个新行的开始或者在一行的开始紧跟星号 *。
+
+多个相同类型的标签应该放成一组。例如，如果你有三个 @see 标签，可以将它们一个接一个的放在一起。
+
+下面是一个类的稳定注释的实例：
+
+```text
+/*** 这个类绘制一个条形图
+* @author runoob
+* @version 1.2
+*/
+```
+
+
+## javadoc 输出什么
+
+javadoc 工具将你 Java 程序的源代码作为输入，输出一些包含你程序注释的HTML文件。
+
+每一个类的信息将在独自的HTML文件里。javadoc 也可以输出继承的树形结构和索引。
+
+由于 javadoc 的实现不同，工作也可能不同，你需要检查你的 Java 开发系统的版本等细节，选择合适的 Javadoc 版本。
+
+
+### 实例
+
+下面是一个使用说明注释的简单实例。注意每一个注释都在它描述的项目的前面。
+
+在经过 javadoc 处理之后，SquareNum 类的注释将在 SquareNum.html 中找到。
+
+
+## SquareNum.java 文件代码：
+
+```java
+import java.io.*;
+
+/**
+* 这个类演示了文档注释
+* @author Ayan Amhed
+* @version 1.2
+*/
+public class SquareNum {
+   /**
+   * This method returns the square of num.
+   * This is a multiline description. You can use
+   * as many lines as you like.
+   * @param num The value to be squared.
+   * @return num squared.
+   */
+   public double square(double num) {
+      return num * num;
+   }
+   /**
+   * This method inputs a number from the user.
+   * @return The value input as a double.
+   * @exception IOException On input error.
+   * @see IOException
+   */
+   public double getNumber() throws IOException {
+      InputStreamReader isr = new InputStreamReader(System.in);
+      BufferedReader inData = new BufferedReader(isr);
+      String str;
+      str = inData.readLine();
+      return (new Double(str)).doubleValue();
+   }
+   /**
+   * This method demonstrates square().
+   * @param args Unused.
+   * @return Nothing.
+   * @exception IOException On input error.
+   * @see IOException
+   */
+   public static void main(String args[]) throws IOException
+   {
+      SquareNum ob = new SquareNum();
+      double val;
+      System.out.println("Enter value to be squared: ");
+      val = ob.getNumber();
+      val = ob.square(val);
+      System.out.println("Squared value is " + val);
+   }
+}
+```
+
+如下，使用 javadoc 工具处理 SquareNum.java 文件：
+
+```javascript
+$ javadoc SquareNum.java
+Loading source file SquareNum.java...
+Constructing Javadoc information...
+Standard Doclet version 1.5.0_13
+Building tree for all the packages and classes...
+Generating SquareNum.html...
+SquareNum.java:39: warning - @return tag cannot be used\
+                      in method with void return type.
+Generating package-frame.html...
+Generating package-summary.html...
+Generating package-tree.html...
+Generating constant-values.html...
+Building index for all the packages and classes...
+Generating overview-tree.html...
+Generating index-all.html...
+Generating deprecated-list.html...
+Building index for all classes...
+Generating allclasses-frame.html...
+Generating allclasses-noframe.html...
+Generating index.html...
+Generating help-doc.html...
+Generating stylesheet.css...
+1 warning
+$
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java 文档注释` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

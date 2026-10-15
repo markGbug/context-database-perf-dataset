@@ -1,34 +1,46 @@
-# jQuery EasyUI：jEasyUI 创建菜单按钮 练习笔记
+# jQuery EasyUI：jQuery EasyUI 菜单与按钮 - 创建菜单按钮（Menu Button）
 
 - 来源：[jEasyUI 创建菜单按钮](https://www.runoob.com/jeasyui/jeasyui-mb-menubutton.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2851
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 创建菜单按钮` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+菜单按钮（Menu Button）包含一个按钮（button）和一个菜单（menu）组件，当点击或移动鼠标到按钮上，将显示一个对应的菜单。
 
-## 练习步骤
+为了定义一个菜单按钮（Menu Button），您应该定义一个链接按钮（Link Button）和一个菜单（menu），下面是一个实例：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <div style="background:#fafafa;padding:5px;width:200px;border:1px solid #ccc">
+        <a href="#" class="easyui-menubutton" menu="#mm1" iconCls="icon-edit">Edit</a>
+        <a href="#" class="easyui-menubutton" menu="#mm2" iconCls="icon-help">Help</a>
+    </div>
+    <div id="mm1" style="width:150px;">
+        <div iconCls="icon-undo">Undo</div>
+        <div iconCls="icon-redo">Redo</div>
+        <div class="menu-sep"></div>
+        <div>Cut</div>
+        <div>Copy</div>
+        <div>Paste</div>
+        <div class="menu-sep"></div>
+        <div iconCls="icon-remove">Delete</div>
+        <div>Select All</div>
+    </div>
+    <div id="mm2" style="width:100px;">
+        <div>Help</div>
+        <div>Update</div>
+        <div>About</div>
+    </div>
+```
 
-## 验收清单
+现在已经定义好了一个菜单按钮（Menu Button），您不需要写任何的 javascript 代码。
 
-- 我能独立说出 `jEasyUI 创建菜单按钮` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 动手验证
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 创建菜单按钮` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

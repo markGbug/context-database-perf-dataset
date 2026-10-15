@@ -1,34 +1,60 @@
-# SQLite：SQLite 分离数据库 练习笔记
+# SQLite：SQLite 分离数据库
 
 - 来源：[SQLite 分离数据库](https://www.runoob.com/sqlite/sqlite-detach-database.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1696
 
-## 练习目标
+## 本章内容
 
-把 `SQLite 分离数据库` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQLite 的 DETACH DATABASE 语句是用来把命名数据库从一个数据库连接分离和游离出来，连接是之前使用 ATTACH 语句附加的。如果同一个数据库文件已经被附加上多个别名，DETACH 命令将只断开给定名称的连接，而其余的仍然有效。您无法分离 main 或 temp 数据库。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 语法
 
-## 验收清单
+SQLite 的 DETACH DATABASE 'Alias-Name' 语句的基本语法如下：
 
-- 我能独立说出 `SQLite 分离数据库` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+DETACH DATABASE 'Alias-Name';
+```
 
-## 复盘问题
+在这里，'Alias-Name' 与您之前使用 ATTACH 语句附加数据库时所用到的别名相同。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+假设在前面的章节中您已经创建了一个数据库，并给它附加了 'test' 和 'currentDB'，使用 .database 命令，我们可以看到：
+
+```text
+sqlite>.databases
+seq  name             file
+---  ---------------  ----------------------
+0    main             /home/sqlite/testDB.db
+2    test             /home/sqlite/testDB.db
+3    currentDB        /home/sqlite/testDB.db
+```
+
+现在，让我们尝试把 'currentDB' 从 testDB.db 中分离出来，如下所示：
+
+```text
+sqlite> DETACH DATABASE 'currentDB';
+```
+
+现在，如果检查当前附加的数据库，您会发现，testDB.db 仍与 'test' 和 'main' 保持连接。
+
+```text
+sqlite>.databases
+seq  name             file
+---  ---------------  ----------------------
+0    main             /home/sqlite/testDB.db
+2    test             /home/sqlite/testDB.db
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite 分离数据库` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

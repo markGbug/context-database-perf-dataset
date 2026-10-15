@@ -1,34 +1,202 @@
-# Redis：Redis Stream 练习笔记
+# Redis：Redis Stream
 
 - 来源：[Redis Stream](https://www.runoob.com/redis/redis-stream.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1612
 
-## 练习目标
+## 本章内容
 
-把 `Redis Stream` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Redis Stream 是 Redis 5.0 版本新增加的数据结构。
 
-## 练习步骤
+Redis Stream 主要用于消息队列（MQ，Message Queue），Redis 本身是有一个 Redis 发布订阅 (pub/sub) 来实现消息队列的功能，但它有个缺点就是消息无法持久化，如果出现网络断开、Redis 宕机等，消息就会被丢弃。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+简单来说发布订阅 (pub/sub) 可以分发消息，但无法记录历史消息。
 
-## 验收清单
+而 Redis Stream 提供了消息的持久化和主备复制功能，可以让任何客户端访问任何时刻的数据，并且能记住每一个客户端的访问位置，还能保证消息不丢失。
 
-- 我能独立说出 `Redis Stream` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Redis Stream 的结构如下所示，它有一个消息链表，将所有加入的消息都串起来，每个消息都有一个唯一的 ID 和对应的内容：
 
-## 复盘问题
+每个 Stream 都有唯一的名称，它就是 Redis 的 key，在我们首次使用 xadd 指令追加消息时自动创建。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+上图解析：
+
+- Consumer Group ：消费组，使用 XGROUP CREATE 命令创建，一个消费组有多个消费者(Consumer)。
+- last_delivered_id ：游标，每个消费组会有个游标 last_delivered_id，任意一个消费者读取了消息都会使游标 last_delivered_id 往前移动。
+- pending_ids ：消费者(Consumer)的状态变量，作用是维护消费者的未确认的 id。 pending_ids 记录了当前已经被客户端读取的消息，但是还没有 ack (Acknowledge character：确认字符）。
+
+消息队列相关命令：
+
+- XADD - 添加消息到末尾
+- XTRIM - 对流进行修剪，限制长度
+- XDEL - 删除消息
+- XLEN - 获取流包含的元素数量，即消息长度
+- XRANGE - 获取消息列表，会自动过滤已经删除的消息
+- XREVRANGE - 反向获取消息列表，ID 从大到小
+- XREAD - 以阻塞或非阻塞方式获取消息列表
+
+
+### XADD
+
+使用 XADD 向队列添加消息，如果指定的队列不存在，则创建一个队列，XADD 语法格式：
+
+```text
+XADD key ID field value [field value ...]
+```
+
+- key ：队列名称，如果不存在就创建
+- ID ：消息 id，我们使用 * 表示由 redis 生成，可以自定义，但是要自己保证递增性。
+- field value ： 记录。
+
+
+## 实例
+
+
+### XTRIM
+
+使用 XTRIM 对流进行修剪，限制长度， 语法格式：
+
+```text
+XTRIM key MAXLEN [~] count
+```
+
+- key ：队列名称
+- MAXLEN ：长度
+- count ：数量
+
+
+## 实例
+
+
+### XDEL
+
+使用 XDEL 删除消息，语法格式：
+
+```text
+XDEL key ID [ID ...]
+```
+
+- key：队列名称
+- ID ：消息 ID
+
+
+## 实例
+
+
+### XLEN
+
+使用 XLEN 获取流包含的元素数量，即消息长度，语法格式：
+
+```text
+XLEN key
+```
+
+- key：队列名称
+
+
+## 实例
+
+
+### XRANGE
+
+使用 XRANGE 获取消息列表，会自动过滤已经删除的消息 ，语法格式：
+
+```text
+XRANGE key start end [COUNT count]
+```
+
+- key ：队列名
+- start ：开始值， - 表示最小值
+- end ：结束值， + 表示最大值
+- count ：数量
+
+
+## 实例
+
+
+### XREVRANGE
+
+使用 XREVRANGE 获取消息列表，会自动过滤已经删除的消息 ，语法格式：
+
+```text
+XREVRANGE key end start [COUNT count]
+```
+
+- key ：队列名
+- end ：结束值， + 表示最大值
+- start ：开始值， - 表示最小值
+- count ：数量
+
+
+## 实例
+
+
+### XREAD
+
+使用 XREAD 以阻塞或非阻塞方式获取消息列表 ，语法格式：
+
+```text
+XREAD [COUNT count] [BLOCK milliseconds] STREAMS key [key ...] id [id ...]
+```
+
+- count ：数量
+- milliseconds ：可选，阻塞毫秒数，没有设置就是非阻塞模式
+- key ：队列名
+- id ：消息 ID
+
+
+## 实例
+
+
+### XGROUP CREATE
+
+使用 XGROUP CREATE 创建消费者组，语法格式：
+
+```text
+XGROUP [CREATE key groupname id-or-$] [SETID key groupname id-or-$] [DESTROY key groupname] [DELCONSUMER key groupname consumername]
+```
+
+- key ：队列名称，如果不存在就创建
+- groupname ：组名。
+- $ ： 表示从尾部开始消费，只接受新消息，当前 Stream 消息会全部忽略。
+
+从头开始消费:
+
+```text
+XGROUP CREATE mystream consumer-group-name 0-0
+```
+
+从尾部开始消费:
+
+```text
+XGROUP CREATE mystream consumer-group-name $
+```
+
+
+### XREADGROUP GROUP
+
+使用 XREADGROUP GROUP 读取消费组中的消息，语法格式：
+
+```text
+XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds] [NOACK] STREAMS key [key ...] ID [ID ...]
+```
+
+- group ：消费组名
+- consumer ：消费者名。
+- count ： 读取数量。
+- milliseconds ： 阻塞毫秒数。
+- key ： 队列名。
+- ID ： 消息 ID。
+
+```text
+XREADGROUP GROUP consumer-group-name consumer-name COUNT 1 STREAMS mystream >
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Redis Stream` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

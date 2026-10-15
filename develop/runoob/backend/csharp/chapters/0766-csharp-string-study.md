@@ -1,35 +1,110 @@
-# C#：C# 字符串（String） 学习笔记
+# C#：C# 字符串（String）
 
 - 来源：[C# 字符串（String）](https://www.runoob.com/csharp/csharp-string.html)
 - 分类：后端开发
 - 技术：C#
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0766
 
-## 学习目标
+## 本章内容
 
-C# 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `C# 字符串（String）` 建立学习路径，先理解它在 C# 体系中的位置，再做可运行或可复述的验证。
+在 C# 中，您可以使用字符数组来表示字符串，但是，更常见的做法是使用 string 关键字来声明一个字符串变量。string 关键字是 System.String 类的别名。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 创建 String 对象
 
-## 笔记模板
+您可以使用以下方法之一来创建 string 对象：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 通过给 String 变量指定一个字符串
+- 通过使用 String 类构造函数
+- 通过使用字符串串联运算符（ + ）
+- 通过检索属性或调用一个返回字符串的方法
+- 通过格式化方法来转换一个值或对象为它的字符串表示形式
 
-## 完成标准
+下面的实例演示了这点：
 
-- 能用 3 到 5 句话解释 `C# 字符串（String）`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+Full Name: RowanAtkinson
+Greetings: Hello
+Message: Hello From Tutorials Point
+Message: Message sent at 17:58 on Wednesday, 10 October 2012
+```
+
+
+## String 类的属性
+
+String 类有以下两个属性：
+
+
+## String 类的方法
+
+String 类有许多方法用于 string 对象的操作。下面的表格提供了一些最常用的方法：
+
+上面的方法列表并不详尽，请访问 MSDN 库，查看完整的方法列表和 String 类构造函数。
+
+
+## 实例
+
+下面的实例演示了上面提到的一些方法：
+
+比较字符串
+
+
+## 实例
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+This is test and This is text are not equal.
+```
+
+字符串包含字符串：
+
+
+## 实例
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+The sequence 'test' was found.
+```
+
+获取子字符串：
+
+
+## 实例
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+Last night I dreamt of San Pedro
+San Pedro
+```
+
+连接字符串：
+
+
+## 实例
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+Down the way nights are dark
+And the sun shines daily on the mountain top
+I took a trip on a sailing ship
+And when I reached Jamaica
+I made a stop
+```
+
+
+## 复习重点
+
+- 能说明 `C# 字符串（String）` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

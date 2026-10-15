@@ -1,35 +1,191 @@
-# Vue3：Vue3 混入 学习笔记
+# Vue3：Vue3 混入
 
 - 来源：[Vue3 混入](https://www.runoob.com/vue3/vue3-mixins.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3214
 
-## 学习目标
+## 本章内容
 
-Vue3 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Vue3 混入` 建立学习路径，先理解它在 Vue3 体系中的位置，再做可运行或可复述的验证。
+混入 (mixins)定义了一部分可复用的方法或者计算属性。混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被混入该组件本身的选项。
 
-## 阅读抓手
+来看一个简单的实例：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```javascript
+// 定义混入对象
+const myMixin = {
+  created() {
+    this.hello()
+  },
+  methods: {
+    hello() {
+      console.log('欢迎来到混入实例-RUNOOB!')
+    }
+  }
+}
 
-## 完成标准
+// 定义一个应用，使用混入
+const app = Vue.createApp({
+  mixins: [myMixin]
+})
 
-- 能用 3 到 5 句话解释 `Vue3 混入`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+app.mount('#app') // => "欢迎来到混入实例-RUNOOB!"
+```
+
+
+## 选项合并
+
+当组件和混入对象含有同名选项时，这些选项将以恰当的方式混合。
+
+比如，数据对象在内部会进行浅合并 (一层属性深度)，在和组件的数据发生冲突时以组件数据优先。
+
+以下实例中，Vue 实例与混入对象包含了相同的方法。从输出结果可以看出两个选项合并了。
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id = "app"></div>
+<script type = "text/javascript">
+const myMixin = {
+  data() {
+    return {
+      message: 'hello',
+      foo: 'runoob'
+    }
+  }
+}
+
+const app = Vue.createApp({
+  mixins: [myMixin],
+  data() {
+    return {
+      message: 'goodbye',
+      bar: 'def'
+    }
+  },
+  created() {
+    document.write(JSON.stringify(this.$data))
+  }
+})
+```
+
+输出结果为：
+
+```text
+{"message":"goodbye","foo":"runoob","bar":"def"}
+```
+
+同名钩子函数将合并为一个数组，因此都将被调用。另外，mixin 对象的钩子将在组件自身钩子之前调用。
+
+```javascript
+const myMixin = {
+  created() {
+    console.log('mixin 对象的钩子被调用')
+  }
+}
+
+const app = Vue.createApp({
+  mixins: [myMixin],
+  created() {
+    console.log('组件钩子被调用')
+  }
+})
+
+// => "mixin 对象的钩子被调用"
+// => "组件钩子被调用"
+```
+
+值为对象的选项，例如 methods、components 和 directives，将被合并为同一个对象。两个对象键名冲突时，取组件对象的键值对。
+
+
+## 实例
+
+```javascript
+const myMixin = {
+  methods: {
+    foo() {
+      console.log('foo')
+    },
+    conflicting() {
+      console.log('from mixin')
+    }
+  }
+}
+
+const app = Vue.createApp({
+  mixins: [myMixin],
+  methods: {
+    bar() {
+      console.log('bar')
+    },
+    conflicting() {
+      console.log('from self')
+    }
+  }
+})
+
+const vm = app.mount('#app')
+
+vm.foo() // => "foo"
+vm.bar() // => "bar"
+vm.conflicting() // => "from self"
+```
+
+以上实例，我们调用了以下三个方法：
+
+```text
+vm.foo();
+vm.bar();
+vm.conflicting();
+```
+
+从输出结果 methods 选项中如果碰到相同的函数名则 Vue 实例有更高的优先级会执行输出。
+
+
+## 全局混入
+
+也可以全局注册混入对象。注意使用！ 一旦使用全局混入对象，将会影响到 所有 之后创建的 Vue 实例。使用恰当时，可以为自定义对象注入处理逻辑。
+
+
+## 实例
+
+```javascript
+const app = Vue.createApp({
+  myOption: 'hello!'
+})
+
+// 为自定义的选项 'myOption' 注入一个处理器。
+app.mixin({
+  created() {
+    const myOption = this.$options.myOption
+    if (myOption) {
+      document.write(myOption)
+    }
+  }
+})
+
+app.mount('#app') // => "hello!"
+```
+
+谨慎使用全局混入对象，因为会影响到每个单独创建的 Vue 实例 (包括第三方模板)。
+
+
+## 复习重点
+
+- 能说明 `Vue3 混入` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

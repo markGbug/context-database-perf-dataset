@@ -1,35 +1,191 @@
-# Vue3：Vue3 基础语法 学习笔记
+# Vue3：Vue3 基础语法
 
 - 来源：[Vue3 基础语法](https://www.runoob.com/vue3/vue3-syntax.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3200
 
-## 学习目标
+## 本章内容
 
-Vue3 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Vue3 基础语法` 建立学习路径，先理解它在 Vue3 体系中的位置，再做可运行或可复述的验证。
+Vue.js 是一个渐进式 JavaScript 框架，主要用于构建用户界面。
 
-## 阅读抓手
+Vue.js 基于组件化和响应式数据的理念，提供了一种简单高效的方式来构建用户界面。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### Vue 单文件组件
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Vue 单文件组件（Single File Component，简称 SFC）是 Vue.js 框架的文件格式，它允许开发者将 HTML、JavaScript 和 CSS 代码放在一个文件中，通常以 .vue 为文件后缀。
 
-## 完成标准
+单文件组件是一种可复用的代码组织形式，它将从属于同一个组件的 HTML、CSS 和 JavaScript 封装在使用 .vue 后缀的文件中。
 
-- 能用 3 到 5 句话解释 `Vue3 基础语法`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下是一些常见的 Vue.js 基础语法和概念，包括模板语法、指令、事件处理、计算属性和组件等，在后面章节还会详细说明。
+
+
+## 1. 创建 Vue 实例
+
+创建 Vue 实例是开始使用 Vue.js 的第一步，通常你会在一个 HTML 文件中创建一个 Vue 实例并将其挂载到一个 DOM 元素上。
+
+
+## 实例
+
+HTML 部分说明：
+
+<div id="hello-vue" class="demo">:
+
+- 这是一个 <div> 元素，它具有 id 为 hello-vue 和 class 为 demo。
+- 在 Vue 应用中，这个 <div> 将会被 Vue 实例管理，并且会在数据发生变化时更新内容。
+
+{{ message }}:
+
+- 这是 Vue.js 的模板语法，用于将 Vue 实例中的 message 数据绑定到页面上。
+- 当 Vue 实例中的 message 数据变化时，页面上的内容也会随之更新。
+
+JavaScript 部分说明：
+
+Vue 实例定义:
+
+```javascript
+const HelloVueApp = {
+  data() {
+    return {
+      message: 'Hello Vue!!'
+    }
+  }
+}
+```
+
+- HelloVueApp 是一个普通的 JavaScript 对象，包含了 Vue 组件选项。
+- data() 方法返回一个包含 message 属性的对象，这个属性的初始值是 'Hello Vue!!'。
+
+创建并挂载 Vue 应用:
+
+- Vue.createApp() 方法用于创建一个 Vue 应用实例，参数是一个包含组件选项的对象（这里是 HelloVueApp）。
+- .mount('#hello-vue') 方法将 Vue 应用实例挂载到页面中具有 id="hello-vue" 的 DOM 元素上。
+
+
+### 执行过程
+
+- 页面加载时，浏览器解析 HTML 和 JavaScript。
+- Vue.js 脚本执行时，创建了一个 Vue 应用实例，并将其绑定到 <div id="hello-vue"> 元素上。
+- Vue 应用实例根据 data() 中的初始数据，将 message 的值渲染到页面上的 {{ message }} 处。
+- 当 message 数据发生变化时（例如通过用户交互或异步操作），页面会自动更新以反映这些变化。
+
+
+## 2. 模板语法
+
+
+### 插值
+
+Vue.js 使用双大括号 {{ }} 来表示文本插值：
+
+
+## 实例
+
+
+### 指令
+
+指令是带有前缀 v- 的特殊属性，用于在模板中表达逻辑。
+
+v-bind: 动态绑定一个或多个特性，或一个组件 prop。
+
+```html
+<a v-bind:href="url">Link</a>
+```
+
+简写：
+
+```html
+<a :href="url">Link</a>
+```
+
+v-if / v-else-if / v-else: 条件渲染。
+
+```html
+<p v-if="visible">内容可见</p>
+<p v-else>内容不可见</p>
+```
+
+v-for: 列表渲染。
+
+```html
+<ul>
+  <li v-for="item in items" :key="item.id">{{ item.text }}</li>
+</ul>
+```
+
+v-model: 双向数据绑定。
+
+```html
+<input v-model="message" placeholder="edit me">
+<p>Message is: {{ message }}</p>
+```
+
+v-on: 事件监听器。
+
+```html
+<button v-on:click="doSomething">Click me</button>
+```
+
+简写：
+
+```html
+<button @click="doSomething">Click me</button>
+```
+
+
+## 3. 事件处理
+
+在 Vue.js 中，你可以使用 v-on 指令来监听 DOM 事件，并在触发时执行一些 JavaScript 代码。
+
+
+## 实例
+
+
+## 4. 计算属性
+
+计算属性是基于其依赖进行缓存的属性。计算属性只有在其相关依赖发生变化时才会重新计算。
+
+
+## 实例
+
+
+## 5. 组件
+
+组件是 Vue.js 最强大的功能之一。组件允许你使用小型、独立和通常可复用的组件构建大型应用。
+
+
+## 实例
+
+
+### 使用组件
+
+
+## 实例
+
+
+## 6. Props 和事件
+
+
+### Props
+
+Props 用于在组件之间传递数据。
+
+
+## 实例
+
+
+### 事件
+
+子组件通过 $emit 触发事件，父组件可以监听这些事件。
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Vue3 基础语法` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

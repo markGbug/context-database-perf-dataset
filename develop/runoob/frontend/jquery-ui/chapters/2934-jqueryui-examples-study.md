@@ -1,35 +1,65 @@
-# jQuery UI：jQuery UI 实例 学习笔记
+# jQuery UI：jQuery UI 实例
 
 - 来源：[jQuery UI 实例](https://www.runoob.com/jqueryui/jqueryui-examples.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2934
 
-## 学习目标
+## 本章内容
 
-jQuery UI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery UI 实例` 建立学习路径，先理解它在 jQuery UI 体系中的位置，再做可运行或可复述的验证。
+jQuery UI 提供了一组用户界面交互、特效、小部件、实用工具及主题。通过实例演示、查看源代码、创建主题、阅读API 文档，开始学习使用 jQuery UI。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 交互（Interactions）
 
-## 笔记模板
+交互（Interactions）向任何元素添加基本的基于鼠标的行为。您可以只通过短短的几行代码即可创建排序列表、缩放元素、拖放行为等等。交互（Interactions）也作用于更复杂的小部件和应用程序。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 拖动（Draggable）
+- 放置（Droppable）
+- 缩放（Resizable）
+- 选择（Selectable）
+- 排序（Sortable）
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jQuery UI 实例`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 小部件（Widgets）
+
+小部件（Widgets）有功能齐全的 UI 控件，使桌面应用程序也具备 Web 应用程序一样丰富的功能。所有的小部件（Widgets）提供了一个核心，带有定制行为的大量扩展以及完整的主题支持。
+
+- 折叠面板（Accordion）
+- 自动完成（Autocomplete）
+- 按钮（Button）
+- 日期选择器（Datepicker）
+- 对话框（Dialog）
+- 菜单（Menu）
+- 进度条（Progressbar）
+- 滑块（Slider）
+- 旋转器（Spinner）
+- 标签页（Tabs）
+- 工具提示框（Tooltip）
+
+
+## 特效（Effects）
+
+特效（Effects）支持颜色动画和 Class 转换，同时也提供了一些额外的 Easings。另外，提供了一套完整的定制特效，供显示和隐藏元素时或者只是添加一些视觉显示时使用。
+
+- 特效（Effect）
+- 可见性（Visibility） 显示（Show） 隐藏（Hide） 切换（Toggle）
+- Class 动画（Class Animation） 添加 Class（Add Class） 移除 Class（Remove Class） 切换 Class（Toggle Class） 转换 Class（Switch Class）
+- 颜色动画（Color Animation）
+
+
+## 实用工具（Utilities）
+
+jQuery UI 使用实体工具（Utilities）来创建交互（interactions）和小部件（widgets）。
+
+- 定位（Position）
+- 部件库（Widget Factory）
+
+
+## 复习重点
+
+- 能说明 `jQuery UI 实例` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

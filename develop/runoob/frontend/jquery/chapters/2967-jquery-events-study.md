@@ -1,35 +1,216 @@
-# jQuery：jQuery 事件 学习笔记
+# jQuery：jQuery 事件
 
 - 来源：[jQuery 事件](https://www.runoob.com/jquery/jquery-events.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2967
 
-## 学习目标
+## 本章内容
 
-jQuery 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery 事件` 建立学习路径，先理解它在 jQuery 体系中的位置，再做可运行或可复述的验证。
+jQuery 是为事件处理特别设计的。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 什么是事件？
 
-## 笔记模板
+页面对不同访问者的响应叫做事件。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+事件处理程序指的是当 HTML 中发生某些事件时所调用的方法。
 
-## 完成标准
+实例：
 
-- 能用 3 到 5 句话解释 `jQuery 事件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 在元素上移动鼠标。
+- 选取单选按钮
+- 点击元素
+
+在事件中经常使用术语"触发"（或"激发"）例如： "当您按下按键时触发 keypress 事件"。
+
+常见 DOM 事件：
+
+
+## jQuery 事件方法语法
+
+在 jQuery 中，大多数 DOM 事件都有一个等效的 jQuery 方法。
+
+页面中指定一个点击事件：
+
+```text
+$("p").click();
+```
+
+下一步是定义了点击后触发事件。您可以通过一个事件函数实现：
+
+```text
+$("p").click(function(){
+    // 动作触发后执行的代码!!
+});
+```
+
+
+## 常用的 jQuery 事件方法
+
+
+### $(document).ready()
+
+$(document).ready() 方法允许我们在文档完全加载完后执行函数。该事件方法在 jQuery 语法 章节中已经提到过。
+
+
+### click()
+
+click() 方法是当按钮点击事件被触发时会调用一个函数。
+
+该函数在用户点击 HTML 元素时执行。
+
+在下面的实例中，当点击事件在某个 <p> 元素上触发时，隐藏当前的 <p> 元素：
+
+
+## 实例
+
+```text
+$("p").click(function(){
+  $(this).hide();
+});
+```
+
+
+### dblclick()
+
+当双击元素时，会发生 dblclick 事件。
+
+dblclick() 方法触发 dblclick 事件，或规定当发生 dblclick 事件时运行的函数：
+
+
+## 实例
+
+```text
+$("p").dblclick(function(){
+  $(this).hide();
+});
+```
+
+
+### mouseenter()
+
+当鼠标指针穿过元素时，会发生 mouseenter 事件。
+
+mouseenter() 方法触发 mouseenter 事件，或规定当发生 mouseenter 事件时运行的函数：
+
+
+## 实例
+
+```text
+$("#p1").mouseenter(function(){
+    alert('您的鼠标移到了 id="p1" 的元素上!');
+});
+```
+
+
+### mouseleave()
+
+当鼠标指针离开元素时，会发生 mouseleave 事件。
+
+mouseleave() 方法触发 mouseleave 事件，或规定当发生 mouseleave 事件时运行的函数：
+
+
+## 实例
+
+```text
+$("#p1").mouseleave(function(){
+    alert("再见，您的鼠标离开了该段落。");
+});
+```
+
+
+### mousedown()
+
+当鼠标指针移动到元素上方，并按下鼠标按键时，会发生 mousedown 事件。
+
+mousedown() 方法触发 mousedown 事件，或规定当发生 mousedown 事件时运行的函数：
+
+
+## 实例
+
+```text
+$("#p1").mousedown(function(){
+    alert("鼠标在该段落上按下！");
+});
+```
+
+
+### mouseup()
+
+当在元素上松开鼠标按钮时，会发生 mouseup 事件。
+
+mouseup() 方法触发 mouseup 事件，或规定当发生 mouseup 事件时运行的函数：
+
+
+## 实例
+
+```text
+$("#p1").mouseup(function(){
+    alert("鼠标在段落上松开。");
+});
+```
+
+
+### hover()
+
+hover()方法用于模拟光标悬停事件。
+
+当鼠标移动到元素上时，会触发指定的第一个函数(mouseenter);当鼠标移出这个元素时，会触发指定的第二个函数(mouseleave)。
+
+
+## 实例
+
+```text
+$("#p1").hover(
+    function(){
+        alert("你进入了 p1!");
+    },
+    function(){
+        alert("拜拜! 现在你离开了 p1!");
+    }
+);
+```
+
+
+### focus()
+
+当元素获得焦点时，发生 focus 事件。
+
+当通过鼠标点击选中元素或通过 tab 键定位到元素时，该元素就会获得焦点。
+
+focus() 方法触发 focus 事件，或规定当发生 focus 事件时运行的函数：
+
+
+## 实例
+
+```text
+$("input").focus(function(){
+  $(this).css("background-color","#cccccc");
+});
+```
+
+
+### blur()
+
+当元素失去焦点时，发生 blur 事件。
+
+blur() 方法触发 blur 事件，或规定当发生 blur 事件时运行的函数：
+
+
+## 实例
+
+```text
+$("input").blur(function(){
+  $(this).css("background-color","#ffffff");
+});
+```
+
+
+## 复习重点
+
+- 能说明 `jQuery 事件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

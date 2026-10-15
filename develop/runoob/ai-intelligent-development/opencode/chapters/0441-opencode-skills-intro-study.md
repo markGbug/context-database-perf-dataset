@@ -1,35 +1,123 @@
-# OpenCode：OpenCode skills 使用 学习笔记
+# OpenCode：OpenCode skills 使用
 
 - 来源：[OpenCode skills 使用](https://www.runoob.com/opencode/opencode-skills-intro.html)
 - 分类：AI / 智能开发
 - 技术：OpenCode
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0441
 
-## 学习目标
+## 本章内容
 
-OpenCode 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `OpenCode skills 使用` 建立学习路径，先理解它在 OpenCode 体系中的位置，再做可运行或可复述的验证。
+在之前的内容，我们已经了解了 OpenCode 和 skills，如果还没阅读，可以参阅：
 
-## 阅读抓手
+- OpenCode 入门教程
+- Skills 教程
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+接下来我们将将介绍如何在 OpenCode 中使用 skills。
 
-## 笔记模板
+现在市面上已经有很多现成的 skills，我么可以直接拿来使用，我们可以在 https://skills.sh/ 查找更多的 skill。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+安装方式：
 
-## 完成标准
+```html
+npx skills add <owner/repo>
+```
 
-- 能用 3 到 5 句话解释 `OpenCode skills 使用`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+注：如果对 npx 不了解，可以参阅：npx 入门教程
+
+
+## ui-ux-pro-max
+
+接下来我们使用 ui-ux-pro-max 这个 skill 演示，地址：https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max。
+
+UI/UX Pro Max 是一个 AI 设计智能技能（AI Skill），为构建专业级 用户界面（UI）和用户体验（UX） 提供结构化设计知识和自动化辅助，主要用于与 AI 编码助手集成（例如 Claude Code、Cursor、Windsurf 等）。
+
+UI/UX Pro Max 包含一个可搜索的设计数据库，可根据自然语言提示智能推荐界面风格、配色、排版与组件实现方式。
+
+安装命令：
+
+```text
+npx skills add https://github.com/nextlevelbuilder/ui-ux-pro-max-skill --skill ui-ux-pro-max
+```
+
+安装过程，可以勾选我们需要的环境，比如 OpenCode：
+
+接下来这里选择当前目录也就是我们之前创建的 opencode-runoob-test，另一个选项 Global 是全局安装：
+
+接下来一路回车就好了。
+
+使用 opencode 命令打开 OpenCode，输入 /ui 就可以看到安装的 skill：
+
+接下来我们就可以直接输入需求：
+
+```text
+为宠物美容服务搭建一个着陆页，风格活泼亲和，并设置预约类行动召唤按钮。
+```
+
+AI 会自动调用我们安装的 skill 来设计，一路回车就好了：
+
+接下来自动生成目录与文件：
+
+然后查看最终效果，好看很多：
+
+
+## remotion-best-practices
+
+接下来使用 remotion-best-practices 这个 skill 来演示。
+
+- Opencode：一个负责让 AI 写代码自动化流程
+- remotion-best-practices：一个负责用 React 直接生成视频的 skills
+
+remotion-best-practices 是针对 Remotion 的专门技能，包含数十个规则文件（基于官方最佳实践），例如：
+
+- 三维内容（3D）
+- 动画基础
+- 媒体导入（图片、音频、字体）
+- 字幕与字幕同步
+- 序列与场景组织
+- 透明视频与剪辑
+- 文本动画 & 插值方法 …
+
+skill 地址：https://skills.sh/remotion-dev/skills/remotion-best-practices
+
+
+### 安装与使用
+
+开始前我们先创建一个目录 opencode-runoob-test:
+
+```text
+mkdir opencode-runoob-test
+cd opencode-runoob-test
+```
+
+在 opencode-runoob-test 目录下我们可以使用 npx 命令来安装：
+
+```text
+npx skills add remotion-dev/skills
+```
+
+安装过程，可以勾选我们需要的环境，比如 OpenCode：
+
+接下来这里选择当前目录也就是我们之前创建的 opencode-runoob-test，另一个选项 Global 是全局安装：
+
+接下来一路回车就好了，之后会显示安装目录及支持的开发工具：
+
+我们也可以打开 OpenCode，输入 /remotion 就可以看到这个 skill：
+
+然后在输入框输入：
+
+```text
+生成一个 Hello Runoob！的演示视频
+```
+
+接下来 AI 就会找到这个 skill（技能）：
+
+然后 AI 就会使用这个 skill 来开始设计编写：
+
+
+## 复习重点
+
+- 能说明 `OpenCode skills 使用` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

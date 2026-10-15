@@ -1,34 +1,147 @@
-# React：React 元素渲染 练习笔记
+# React：React 元素渲染
 
 - 来源：[React 元素渲染](https://www.runoob.com/react/react-rendering-elements.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3041
 
-## 练习目标
+## 本章内容
 
-把 `React 元素渲染` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 React 18 中，元素渲染与之前的版本有一些变化，特别是在使用 ReactDOM.createRoot 和新的并发特性方面。下面是一个详细的示例和解释，展示如何在 React 18 中渲染元素。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 实例
 
-## 验收清单
+React 元素是构建 React 应用的最小单元，它描述了你希望在屏幕上看到的内容。React 元素是不可变对象，一旦创建就不能更改。
 
-- 我能独立说出 `React 元素渲染` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+const element = <h1>Hello, world!</h1>;
+```
 
-## 复盘问题
+与浏览器的 DOM 元素不同，React 当中的元素事实上是普通的对象，React DOM 可以确保浏览器 DOM 的数据内容与 React 元素保持一致。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 将元素渲染到 DOM 中
+
+首先我们在一个 HTML 页面中添加一个 id="example" 的 <div>:
+
+```html
+<div id="example"></div>
+```
+
+在此 div 中的所有内容都将由 React DOM 来管理，所以我们将其称为 "根" DOM 节点。
+
+我们用 React 开发应用时一般只会定义一个根节点。但如果你是在一个已有的项目当中引入 React 的话，你可能会需要在不同的部分单独定义 React 根节点。
+
+要将 React 元素渲染到根DOM节点中，我们通过把它们都传递给 root.render() 的方法来将其渲染到页面上：
+
+
+## 实例
+
+```html
+// 创建一个 React 元素
+const element =<h1>Hello, world!</h1>;
+
+// 获取 DOM 容器并创建根节点
+const root = ReactDOM.createRoot(document.getElementById("example"));
+
+// 渲染 React 元素到 DOM 中的根节点
+root.render(element);
+```
+
+root.render 方法将 element 渲染到之前创建的根节点中，这样 element 就会显示在 id 为 "example" 的 DOM 元素内。
+
+
+### 更新元素渲染
+
+React 元素都是不可变的。当元素被创建之后，你是无法改变其内容或属性的。
+
+目前更新界面的唯一办法是创建一个新的元素，然后将它传入 ReactDOM.render() 方法：
+
+来看一下这个计时器的例子:
+
+
+## 实例
+
+```html
+const root = ReactDOM.createRoot(document.getElementById("example"));
+
+function tick() {
+  const element = (
+    <div>
+      <h1>Hello, world!</h1>
+      <h2>现在是 {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  );
+  root.render(element);
+}
+
+setInterval(tick, 1000);
+```
+
+以上实例通过 setInterval() 方法，每秒钟调用一次 ReactDOM.render()。
+
+我们可以将要展示的部分封装起来，以下实例用一个函数来表示：
+
+
+## 实例
+
+```html
+function Clock(props) {
+  return (
+    <div>
+      <h1>Hello, world!</h1>
+      <h2>现在是 {props.date.toLocaleTimeString()}.</h2>
+    </div>
+  );
+}
+
+function tick() {
+  const root = ReactDOM.createRoot(document.getElementById("example"));
+  root.render(
+    <Clock date={new Date()} />
+  );
+}
+
+setInterval(tick, 1);
+```
+
+除了函数外我们还可以创建一个 React.Component 的 ES6 类，该类封装了要展示的元素，需要注意的是在 render() 方法中，需要使用 this.props 替换 props：
+
+
+## 实例
+
+```html
+class Clock extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>现在是 {this.props.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+}
+
+function tick() {
+  const root = ReactDOM.createRoot(document.getElementById("example"));
+  root.render(
+    <Clock date={new Date()} />
+  );
+}
+
+setInterval(tick, 1);
+```
+
+React 只会更新必要的部分
+
+值得注意的是 React DOM 首先会比较元素内容先后的不同，而在渲染过程中只会更新改变了的部分。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `React 元素渲染` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

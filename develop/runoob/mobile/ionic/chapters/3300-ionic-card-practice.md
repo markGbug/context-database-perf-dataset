@@ -1,34 +1,173 @@
-# Ionic：ionic 卡片 练习笔记
+# Ionic：ionic 卡片
 
 - 来源：[ionic 卡片](https://www.runoob.com/ionic/ionic-card.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3300
 
-## 练习目标
+## 本章内容
 
-把 `ionic 卡片` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+近年来卡片(card)的应用越来越流行，卡片提供了一个更好组织信息展示的工具。
 
-## 练习步骤
+针对移动端的应用，卡片会根据屏幕大小自适应大小。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+我们可以很灵活的控制卡片的显示效果，甚至实现动画效果。
 
-## 验收清单
+卡片一般放在页面顶部，当然也可以实现左右切换的功能。
 
-- 我能独立说出 `ionic 卡片` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<div class="card">
+  <div class="item item-text-wrap">
+    基本卡片，包含了文本信息。
+  </div>
+</div>
+```
 
-## 复盘问题
+尝试一下 »
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+卡片(card)默认样式带有box-shadow(阴影)，由于性能的原因，和他类似的元素像 list list-inset 并没有阴影。
+
+如果你有很多的卡片，每个卡片都有很多子元素，建议使用内嵌列表（inset list）。
+
+
+## 卡片的头部与底部
+
+我们可以通过添加 item-divider 类为卡片添加头部与底部：
+
+```html
+<div class="card">
+  <div class="item item-divider">
+    卡片头部！
+  </div>
+  <div class="item item-text-wrap">
+    基本卡片，包含了文本信息。
+  </div>
+  <div class="item item-divider">
+    卡片底部！
+  </div>
+</div>
+```
+
+尝试一下 »
+
+
+## 卡片列表
+
+使用 list card 类来设置卡片列表：
+
+```html
+<div class="list card">
+
+  <a href="#" class="item item-icon-left">
+    <i class="icon ion-home"></i>
+    Enter home address
+  </a>
+
+  <a href="#" class="item item-icon-left">
+    <i class="icon ion-ios-telephone"></i>
+    Enter phone number
+  </a>
+
+  <a href="#" class="item item-icon-left">
+    <i class="icon ion-wifi"></i>
+    Enter wireless password
+  </a>
+
+  <a href="#" class="item item-icon-left">
+    <i class="icon ion-card"></i>
+    Enter card information
+  </a>
+
+</div>
+```
+
+尝试一下 »
+
+
+## 带图片卡片
+
+卡片中使用图片，效果会更好，实例如下：
+
+```html
+<div class="list card">
+
+  <div class="item item-avatar">
+    <img src="avatar.jpg">
+    <h2>Pretty Hate Machine</h2>
+    <p>Nine Inch Nails</p>
+  </div>
+
+  <div class="item item-image">
+    <img src="cover.jpg">
+  </div>
+
+  <a class="item item-icon-left assertive" href="#">
+    <i class="icon ion-music-note"></i>
+    Start listening
+  </a>
+
+</div>
+```
+
+尝试一下 »
+
+运行效果如下：
+
+
+## 卡片展现
+
+以下实例中使用几种不同的选项的卡片展现方式。 开始使用了 list card 元素，并使用了 item-avatar , item-body 元素用于展示图片和文本信息，底部使用 item-divider 类。
+
+```html
+<div class="list card">
+
+  <div class="item item-avatar">
+    <img src="mcfly.jpg">
+    <h2>Marty McFly</h2>
+    <p>November 05, 1955</p>
+  </div>
+
+  <div class="item item-body">
+    <img class="full-image" src="delorean.jpg">
+    <p>
+      菜鸟教程 -- 学的不仅是技术，更是梦想！<br>
+      菜鸟教程 -- 学的不仅是技术，更是梦想！<br>
+      菜鸟教程 -- 学的不仅是技术，更是梦想！<br>
+      菜鸟教程 -- 学的不仅是技术，更是梦想！
+    </p>
+    <p>
+      <a href="#" class="subdued">1 喜欢</a>
+      <a href="#" class="subdued">5 评论</a>
+    </p>
+  </div>
+
+  <div class="item tabs tabs-secondary tabs-icon-left">
+    <a class="tab-item" href="#">
+      <i class="icon ion-thumbsup"></i>
+      喜欢
+    </a>
+    <a class="tab-item" href="#">
+      <i class="icon ion-chatbox"></i>
+      评论
+    </a>
+    <a class="tab-item" href="#">
+      <i class="icon ion-share"></i>
+      分享
+    </a>
+  </div>
+
+</div>
+```
+
+尝试一下 »
+
+运行效果如下：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 卡片` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

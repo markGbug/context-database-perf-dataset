@@ -1,34 +1,114 @@
-# SQL：SQL UNION 练习笔记
+# SQL：SQL UNION 操作符
 
 - 来源：[SQL UNION](https://www.runoob.com/sql/sql-union.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1643
 
-## 练习目标
+## 本章内容
 
-把 `SQL UNION` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQL UNION 操作符合并两个或多个 SELECT 语句的结果。
 
-## 练习步骤
+UNION 操作符用于合并两个或多个 SELECT 语句的结果集。它可以从多个表中选择数据，并将结果集组合成一个结果集。使用 UNION 时，每个 SELECT 语句必须具有相同数量的列，且对应列的数据类型必须相似。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### SQL UNION 语法
 
-- 我能独立说出 `SQL UNION` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+SELECT column1, column2, ...
+FROM table1
+UNION
+SELECT column1, column2, ...
+FROM table2;
+```
 
-## 复盘问题
+UNION 操作符默认会去除重复的记录，如果需要保留所有重复记录，可以使用 UNION ALL 操作符。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### SQL UNION ALL 语法
+
+```text
+SELECT column1, column2, ...
+FROM table1
+UNION ALL
+SELECT column1, column2, ...
+FROM table2;
+```
+
+注释：UNION 结果集中的列名总是等于 UNION 中第一个 SELECT 语句中的列名。
+
+
+## 演示数据库
+
+在本教程中，我们将使用 RUNOOB 样本数据库。
+
+下面是选自 "Websites" 表的数据：
+
+```text
+mysql> SELECT * FROM Websites;
++----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
+| 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |
++----+---------------+---------------------------+-------+---------+
+```
+
+下面是 "apps" APP 的数据：
+
+```text
+mysql> SELECT * FROM apps;
++----+------------+-------------------------+---------+
+| id | app_name   | url                     | country |
++----+------------+-------------------------+---------+
+|  1 | QQ APP     | http://im.qq.com/       | CN      |
+|  2 | 微博 APP | http://weibo.com/       | CN      |
+|  3 | 淘宝 APP | https://www.taobao.com/ | CN      |
++----+------------+-------------------------+---------+
+3 rows in set (0.00 sec)
+```
+
+
+## SQL UNION 实例
+
+下面的 SQL 语句从 "Websites" 和 "apps" 表中选取所有不同的country（只有不同的值）：
+
+
+## 实例
+
+执行以上 SQL 输出结果如下：
+
+注释：UNION 不能用于列出两个表中所有的country。如果一些网站和APP来自同一个国家，每个国家只会列出一次。UNION 只会选取不同的值。请使用 UNION ALL 来选取重复的值！
+
+
+## SQL UNION ALL 实例
+
+下面的 SQL 语句使用 UNION ALL 从 "Websites" 和 "apps" 表中选取所有的country（也有重复的值）：
+
+
+## 实例
+
+执行以上 SQL 输出结果如下：
+
+
+## 带有 WHERE 的 SQL UNION ALL
+
+下面的 SQL 语句使用 UNION ALL 从 "Websites" 和 "apps" 表中选取所有的中国(CN)的数据（也有重复的值）：
+
+
+## 实例
+
+执行以上 SQL 输出结果如下：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL UNION` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,195 @@
-# Ruby：Ruby 发送邮件 - SMTP 学习笔记
+# Ruby：Ruby 发送邮件 - SMTP
 
 - 来源：[Ruby 发送邮件 - SMTP](https://www.runoob.com/ruby/ruby-sending-email.html)
 - 分类：编程语言
 - 技术：Ruby
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3747
 
-## 学习目标
+## 本章内容
 
-Ruby 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Ruby 发送邮件 - SMTP` 建立学习路径，先理解它在 Ruby 体系中的位置，再做可运行或可复述的验证。
+SMTP（Simple Mail Transfer Protocol）即简单邮件传输协议,它是一组用于由源地址到目的地址传送邮件的规则，由它来控制信件的中转方式。
 
-## 阅读抓手
+Ruby提供了 Net::SMTP 来发送邮件，并提供了两个方法 new 和 start:
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+new 方法有两个参数：
 
-## 笔记模板
+- server name 默认为 localhost
+- port number 默认为 25
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+start 方法有以下参数：
 
-## 完成标准
+- server - SMTP 服务器 IP, 默认为 localhost
+- port - 端口号，默认为 25
+- domain - 邮件发送者域名，默认为 ENV["HOSTNAME"]
+- account - 用户名，默认为 nil
+- password - 用户密码，默认为nil
+- authtype - 验证类型，默认为 cram_md5
 
-- 能用 3 到 5 句话解释 `Ruby 发送邮件 - SMTP`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+SMTP 对象实例化方法调用了 sendmail, 参数如下：
+
+- source - 一个字符串或数组或每个迭代器在任一时间中返回的任何东西。
+- sender -一个字符串，出现在 email 的表单字段。
+- recipients - 一个字符串或字符串数组，表示收件人的地址。
+
+
+### 实例
+
+以下提供了简单的Ruby脚本来发送邮件:
+
+
+## 实例
+
+```html
+require 'net/smtp'
+
+message = <<MESSAGE_END
+From: Private Person <me@fromdomain.com>
+To: A Test User <test@todomain.com>
+Subject: SMTP e-mail test
+
+This is a test e-mail message.
+MESSAGE_END
+
+Net::SMTP.start('localhost') do |smtp|
+  smtp.send_message message, 'me@fromdomain.com',
+                             'test@todomain.com'
+end
+```
+
+使用Net::SMTP连接到本地机器上的SMTP服务器，使用send_message方法来发送邮件，方法参数为发送者邮件与接收者邮件。
+
+如果你没有运行在本机上的SMTP服务器，您可以使用Net::SMTP与远程SMTP服务器进行通信。如果使用网络邮件服务（如Hotmail或雅虎邮件），您的电子邮件提供者会为您提供发送邮件服务器的详细信息:
+
+```text
+Net::SMTP.start('mail.your-domain.com')
+```
+
+以上代码将连接主机为 mail.your-domain.com，端口号为 25的邮件服务器，如果需要填写用户名密码，则代码如下：
+
+```text
+Net::SMTP.start('mail.your-domain.com',
+                25,
+                'localhost',
+                'username', 'password', :plain)
+```
+
+以上实例使用了指定的用户名密码连接到主机为 mail.your-domain.com，端口号为 25的邮件服务器。
+
+
+## 使用 Ruby 发送 HTML 邮件
+
+Net::SMTP同样提供了支持发送 HTML 格式的邮件。
+
+发送电子邮件时你可以设置MIME版本，文档类型，字符集来发送HTML格式的邮件。
+
+
+### 实例
+
+以下实例用于发送 HTML 格式的邮件：
+
+
+## 实例
+
+```html
+require 'net/smtp'
+
+message = <<MESSAGE_END
+From: Private Person <me@fromdomain.com>
+To: A Test User <test@todomain.com>
+MIME-Version: 1.0
+Content-type: text/html
+Subject: SMTP e-mail test
+
+This is an e-mail message to be sent in HTML format
+
+<b>This is HTML message.</b>
+<h1>This is headline.</h1>
+MESSAGE_END
+
+Net::SMTP.start('localhost') do |smtp|
+  smtp.send_message message, 'me@fromdomain.com',
+                             'test@todomain.com'
+end
+```
+
+
+## 发送带附件的邮件
+
+如果需要发送混合内容的电子邮件，需要设置Content-type为multipart/mixed。 这样就可以在邮件中添加附件内容。
+
+附件在传输前需要使用 pack("m") 函数将其内容转为 base64 格式。
+
+
+### 实例
+
+以下实例将发送附件为 /tmp/test.txt 的邮件：
+
+
+## 实例
+
+```java
+require 'net/smtp'
+
+filename = "/tmp/test.txt"
+# 读取文件并编码为base64格式
+filecontent = File.read(filename)
+encodedcontent = [filecontent].pack("m")   # base64
+
+marker = "AUNIQUEMARKER"
+
+body =<<EOF
+This is a test email to send an attachement.
+EOF
+
+# 定义主要的头部信息
+part1 =<<EOF
+From: Private Person <me@fromdomain.net>
+To: A Test User <test@todmain.com>
+Subject: Sending Attachement
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary=#{marker}
+--#{marker}
+EOF
+
+# 定义消息动作
+part2 =<<EOF
+Content-Type: text/plain
+Content-Transfer-Encoding:8bit
+
+#{body}
+--#{marker}
+EOF
+
+# 定义附件部分
+part3 =<<EOF
+Content-Type: multipart/mixed; name=\"#{filename}\"
+Content-Transfer-Encoding:base64
+Content-Disposition: attachment; filename="#{filename}"
+
+#{encodedcontent}
+--#{marker}--
+EOF
+
+mailtext = part1 + part2 + part3
+
+# 发送邮件
+begin
+  Net::SMTP.start('localhost') do |smtp|
+     smtp.sendmail(mailtext, 'me@fromdomain.net',
+                          ['test@todmain.com'])
+  end
+rescue Exception => e
+  print "Exception occured: " + e
+end
+```
+
+注意：你可以指定多个发送的地址，但需要使用逗号隔开。
+
+
+## 复习重点
+
+- 能说明 `Ruby 发送邮件 - SMTP` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

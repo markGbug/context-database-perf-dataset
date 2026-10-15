@@ -1,35 +1,80 @@
-# Bootstrap5：Bootstrap5 徽章 学习笔记
+# Bootstrap5：Bootstrap5 徽章（Badges）
 
 - 来源：[Bootstrap5 徽章](https://www.runoob.com/bootstrap5/bootstrap5-badges.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2351
 
-## 学习目标
+## 本章内容
 
-Bootstrap5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap5 徽章` 建立学习路径，先理解它在 Bootstrap5 体系中的位置，再做可运行或可复述的验证。
+徽章（Badges）主要用于突出显示新的或未读的项。如需使用徽章，只需要将 .badge 类加上带有指定意义的颜色类 (如 .bg-secondary) 添加到 <span> 元素上即可。 徽章可以根据父元素的大小的变化而变化:
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 实例
 
-## 笔记模板
+```html
+<h1>测试标题 <span class="badge bg-secondary">New</span></h1>
+<h2>测试标题 <span class="badge bg-secondary">New</span></h2>
+<h3>测试标题 <span class="badge bg-secondary">New</span></h3>
+<h4>测试标题 <span class="badge bg-secondary">New</span></h4>
+<h5>测试标题 <span class="badge bg-secondary">New</span></h5>
+<h6>测试标题 <span class="badge bg-secondary">New</span></h6>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 各种颜色类型的徽章
 
-- 能用 3 到 5 句话解释 `Bootstrap5 徽章`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下列出了所有颜色类型的徽章:
+
+
+## 实例
+
+```html
+<span class="badge bg-primary">主要</span>
+<span class="badge bg-secondary">次要</span>
+<span class="badge bg-success">成功</span>
+<span class="badge bg-danger">危险</span>
+<span class="badge bg-warning">警告</span>
+<span class="badge bg-info">信息</span>
+<span class="badge bg-light">浅色</span>
+<span class="badge bg-dark">深色</span>
+```
+
+
+## 药丸形状徽章
+
+使用 .rounded-pill 类来设置药丸形状徽章:
+
+
+## 实例
+
+```html
+<span class="badge rounded-pill bg-primary">主要</span>
+<span class="badge rounded-pill bg-success">成功</span>
+<span class="badge rounded-pill bg-info">信息</span>
+<span class="badge rounded-pill bg-warning">警告</span>
+<span class="badge rounded-pill bg-danger">危险</span>
+```
+
+
+## 徽章插入到元素内
+
+以下实例将徽章嵌入到按钮内：
+
+
+## 实例
+
+```html
+<button type="button" class="btn btn-primary">
+  Messages <span class="badge bg-light">4</span>
+</button>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap5 徽章` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

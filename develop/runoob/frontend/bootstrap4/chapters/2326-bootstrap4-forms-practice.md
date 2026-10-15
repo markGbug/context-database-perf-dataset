@@ -1,34 +1,244 @@
-# Bootstrap4：Bootstrap4 表单 练习笔记
+# Bootstrap4：Bootstrap4 表单
 
 - 来源：[Bootstrap4 表单](https://www.runoob.com/bootstrap4/bootstrap4-forms.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2326
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap4 表单` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在本章中，我们将学习如何使用 Bootstrap 创建表单。Bootstrap 通过一些简单的 HTML 标签和扩展的类即可创建出不同样式的表单。
 
-## 练习步骤
+表单元素 <input>, <textarea>, 和 <select> elements 在使用 .form-control 类的情况下，宽度都是设置为 100%。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### Bootstrap4 表单布局
 
-- 我能独立说出 `Bootstrap4 表单` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- 堆叠表单 (全屏宽度)：垂直方向
+- 内联表单：水平方向
 
-## 复盘问题
+Bootstrap 提供了两种类型的表单布局:
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 堆叠表单
+
+以下实例使用两个输入框，一个复选框，一个提交按钮来创建堆叠表单：
+
+
+## 实例
+
+```html
+<form action="">
+  <div class="form-group">
+  <label for="email">Email address:</label>
+  <input type="email" class="form-control" placeholder="Enter email" id="email">
+  </div>
+  <div class="form-group">
+  <label for="pwd">Password:</label>
+  <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+  </div>
+  <div class="form-group form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" type="checkbox"> Remember me
+  </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+```
+
+显示效果：
+
+
+## 内联表单
+
+所有内联表单中的元素都是左对齐的。
+
+注意：在屏幕宽度小于 576px 时为垂直堆叠，如果屏幕宽度大于等于576px时表单元素才会显示在同一个水平线上。
+
+内联表单需要在 <form> 元素上添加 .form-inline类。
+
+以下实例使用两个输入框，一个复选框，一个提交按钮来创建内联表单：
+
+
+## 实例
+
+```html
+<form class="form-inline">
+  <label for="email">Email address:</label>
+  <input type="email" class="form-control" id="email">
+  <label for="pwd">Password:</label>
+  <input type="password" class="form-control" id="pwd">
+  <div class="form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+```
+
+显示效果：
+
+上面的实例元素排列看起来很紧凑，可以使用 .mr-sm-2 类来设置右边距，使用.mb-2 类设置底部边距：
+
+
+## 实例
+
+```html
+<form class="form-inline" action="">
+  <label for="email" class="mr-sm-2">Email address:</label>
+  <input type="email" class="form-control mb-2 mr-sm-2" placeholder="Enter email" id="email">
+  <label for="pwd" class="mr-sm-2">Password:</label>
+  <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter password" id="pwd">
+  <div class="form-check mb-2 mr-sm-2">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+</form>
+```
+
+显示效果：
+
+
+## 表单行/网格
+
+我们还可以使用 .col 类来控制表单元素的宽度和对齐方式，不需要使用间距类。 .col 类来控制的表单需要放在 .row 容器中。
+
+以下实例将两个列并排显示：
+
+
+## 实例
+
+```html
+<form>
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="col">
+      <input type="password" class="form-control" placeholder="Enter password" name="pswd">
+    </div>
+  </div>
+</form>
+```
+
+显示效果：
+
+如果网格要使用比较小的间距可以使用 .form-row 替代 .row:
+
+
+## 实例
+
+```html
+<form>
+  <div class="form-row">
+    <div class="col">
+      <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="col">
+      <input type="password" class="form-control" placeholder="Enter password" name="pswd">
+    </div>
+  </div>
+</form>
+```
+
+
+## 表单验证
+
+我们可以使用不同的验证类来设置表单的验证功能。
+
+.was-validated 或 .needs-validation 添加到 <form> 元素中，input 输入字段将具有绿色（有效）或红色（无效）边框效果，用于说明表单是否需要输入内容。
+
+.valid-feedback 或 .invalid-feedback 类用来告诉用户缺少什么信息，或者在提交表单之前需要完成什么。
+
+
+## 实例
+
+使用 .was-validated 类显示表单在提交之前需要填写的内容：
+
+```html
+<form action="" class="was-validated">
+  <div class="form-group">
+    <label for="uname">Username:</label>
+    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+    <div class="valid-feedback">验证成功！</div>
+    <div class="invalid-feedback">请输入用户名！</div>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+    <div class="valid-feedback">验证成功！</div>
+    <div class="invalid-feedback">请输入密码！</div>
+  </div>
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" name="remember" required> 同意协议
+      <div class="valid-feedback">验证成功！</div>
+      <div class="invalid-feedback">同意协议才能提交。</div>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">提交</button>
+</form>
+```
+
+
+## 实例
+
+使用 .needs-validation，它将在表单提交之后验证缺少的内容。这里需要添加一些 JavaScript 代码才能使代码正常工作：
+
+```html
+<form action="" class="needs-validation" novalidate>
+  <div class="form-group">
+    <label for="uname">Username:</label>
+    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+    <div class="valid-feedback">验证成功！</div>
+    <div class="invalid-feedback">请输入用户名！</div>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+    <div class="valid-feedback">验证成功！</div>
+    <div class="invalid-feedback">请输入密码！</div>
+  </div>
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" name="remember" required> 同意协议
+      <div class="valid-feedback">验证成功！</div>
+      <div class="invalid-feedback">同意协议才能提交。</div>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">提交</button>
+</form>
+
+<script>
+// 如果验证不通过禁止提交表单
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // 获取表单验证样式
+    var forms = document.getElementsByClassName('needs-validation');
+    // 循环并禁止提交
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap4 表单` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

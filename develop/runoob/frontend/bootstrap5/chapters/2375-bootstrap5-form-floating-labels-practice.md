@@ -1,34 +1,71 @@
-# Bootstrap5：Bootstrap5 表单浮动标签 练习笔记
+# Bootstrap5：Bootstrap5 表单浮动标签
 
 - 来源：[Bootstrap5 表单浮动标签](https://www.runoob.com/bootstrap5/bootstrap5-form-floating-labels.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2375
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap5 表单浮动标签` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+默认情况下，标签内容一般显示在 input 输入框的上方：
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## Bootstrap 实例
 
-## 验收清单
+```html
+<div class="form-floating mb-3 mt-3">
+  <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+  <label for="email">Email</label>
+</div>
 
-- 我能独立说出 `Bootstrap5 表单浮动标签` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+<div class="form-floating mt-3 mb-3">
+  <input type="text" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+  <label for="pwd">Password</label>
+</div>
+```
 
-## 复盘问题
+注意事项： <label> 元素必须在 <input> 元素之后，并且每个 <input> 元素都需要 placeholder 属性。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 文本框
+
+文本框 textarea 也可以有浮动效果：
+
+
+## Bootstrap 实例
+
+```html
+<div class="form-floating">
+  <textarea class="form-control" id="comment" name="text" placeholder="Comment goes here"></textarea>
+  <label for="comment">Comments</label>
+</div>
+```
+
+
+## 选择框
+
+我们可以在选择菜单上使用浮动标签，它将始终显示在选择菜单的左上角，不会有点击浮动效果：
+
+
+## Bootstrap 实例
+
+```html
+<div class="form-floating">
+  <select class="form-select" id="sel1" name="sellist">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+  </select>
+  <label for="sel1" class="form-label">Select list (select one):</label>
+</div>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap5 表单浮动标签` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

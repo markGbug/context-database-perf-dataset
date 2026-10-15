@@ -1,34 +1,81 @@
-# Docker：Docker 镜像加速 练习笔记
+# Docker：Docker 镜像加速
 
 - 来源：[Docker 镜像加速](https://www.runoob.com/docker/docker-mirror-acceleration.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0800
 
-## 练习目标
+## 本章内容
 
-把 `Docker 镜像加速` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+国内从 DockerHub 拉取镜像有时会遇到困难，此时可以配置镜像加速器。
 
-## 练习步骤
+目前国内 Docker 镜像源出现了一些问题，基本不能用了，后期能用我再更新下。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Docker 官方和国内很多云服务商都提供了国内加速器服务，例如：
 
-## 验收清单
+- 科大镜像：https://docker.mirrors.ustc.edu.cn/
+- 网易：https://hub-mirror.c.163.com/
+- 阿里云：https://<你的ID>.mirror.aliyuncs.com
+- 七牛云加速器：https://reg-mirror.qiniu.com
 
-- 我能独立说出 `Docker 镜像加速` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+当配置某一个加速器地址之后，若发现拉取不到镜像，请切换到另一个加速器地址。国内各大云服务商均提供了 Docker 镜像加速服务，建议根据运行 Docker 的云平台选择对应的镜像加速服务。
 
-## 复盘问题
+阿里云镜像获取地址：https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors，登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+之前还有 Docker 官方加速器 https://registry.docker-cn.com ，现在好像已经不能使用了，我们可以多添加几个国内的镜像，如果有不能使用的，会切换到可以使用的镜像来拉取。
+
+
+### Ubuntu14.04、Debian7Wheezy
+
+对于使用 upstart 的系统而言，编辑 /etc/default/docker 文件，在其中的 DOCKER_OPTS 中配置加速器地址：
+
+```text
+DOCKER_OPTS="--registry-mirror=https://registry.docker-cn.com"
+```
+
+重新启动服务:
+
+```text
+$ sudo service docker restart
+```
+
+
+### Ubuntu16.04+、Debian8+、CentOS7
+
+对于使用 systemd 的系统，请在 /etc/docker/daemon.json 中写入如下内容（如果文件不存在请新建该文件）：
+
+```text
+{"registry-mirrors":["https://reg-mirror.qiniu.com/"]}
+```
+
+之后重新启动服务：
+
+
+### Windows 10
+
+对于使用 Windows 10 的系统，在系统右下角托盘 Docker 图标内右键菜单选择 Settings，打开配置窗口后左侧导航菜单选择 Daemon。在 Registrymirrors 一栏中填写加速器地址 https://docker.mirrors.ustc.edu.cn/ ，之后点击 Apply 保存后 Docker 就会重启并应用配置的镜像地址了。
+
+
+### Mac OS X
+
+对于使用 Mac OS X 的用户，在任务栏点击 Docker for mac 应用图标-> Perferences...-> Daemon-> Registrymirrors。在列表中填写加速器地址 https://reg-mirror.qiniu.com 。修改完成之后，点击 Apply&Restart 按钮，Docker 就会重启并应用配置的镜像地址了。
+
+
+### 检查加速器是否生效
+
+检查加速器是否生效配置加速器之后，如果拉取镜像仍然十分缓慢，请手动检查加速器配置是否生效，在命令行执行 docker info，如果从结果中看到了如下内容，说明配置成功。
+
+```text
+$ docker info
+Registry Mirrors:
+    https://reg-mirror.qiniu.com
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker 镜像加速` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

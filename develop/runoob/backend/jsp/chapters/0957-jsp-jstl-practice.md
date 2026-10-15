@@ -1,34 +1,145 @@
-# JSP：JSP 标准标签库（JSTL） 练习笔记
+# JSP：JSP 标准标签库（JSTL）
 
 - 来源：[JSP 标准标签库（JSTL）](https://www.runoob.com/jsp/jsp-jstl.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0957
 
-## 练习目标
+## 本章内容
 
-把 `JSP 标准标签库（JSTL）` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。
 
-## 练习步骤
+JSTL支持通用的、结构化的任务，比如迭代，条件判断，XML文档操作，国际化标签，SQL标签。 除了这些，它还提供了一个框架来使用集成JSTL的自定义标签。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+根据JSTL标签所提供的功能，可以将其分为5个类别。
 
-## 验收清单
+- 核心标签
+- 格式化标签
+- SQL 标签
+- XML 标签
+- JSTL 函数
 
-- 我能独立说出 `JSP 标准标签库（JSTL）` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## JSTL 库安装
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Apache Tomcat安装JSTL 库步骤如下：
+
+从Apache的标准标签库中下载的二进包(jakarta-taglibs-standard-current.zip)。
+
+- 官方下载地址：http://archive.apache.org/dist/jakarta/taglibs/standard/binaries/
+- 本站下载地址：jakarta-taglibs-standard-1.1.2.zip
+
+下载 jakarta-taglibs-standard-1.1.2.zip 包并解压，将 jakarta-taglibs-standard-1.1.2/lib/ 下的两个 jar 文件：standard.jar 和 jstl.jar 文件拷贝到 /WEB-INF/lib/ 下。
+
+将 tld 下的需要引入的 tld 文件复制到 WEB-INF 目录下。
+
+接下来我们在 web.xml 文件中添加以下配置：
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4"
+    xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+        http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <jsp-config>
+    <taglib>
+    <taglib-uri>http://java.sun.com/jsp/jstl/fmt</taglib-uri>
+    <taglib-location>/WEB-INF/fmt.tld</taglib-location>
+    </taglib>
+    <taglib>
+    <taglib-uri>http://java.sun.com/jsp/jstl/fmt-rt</taglib-uri>
+    <taglib-location>/WEB-INF/fmt-rt.tld</taglib-location>
+    </taglib>
+    <taglib>
+    <taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
+    <taglib-location>/WEB-INF/c.tld</taglib-location>
+    </taglib>
+    <taglib>
+    <taglib-uri>http://java.sun.com/jsp/jstl/core-rt</taglib-uri>
+    <taglib-location>/WEB-INF/c-rt.tld</taglib-location>
+    </taglib>
+    <taglib>
+    <taglib-uri>http://java.sun.com/jsp/jstl/sql</taglib-uri>
+    <taglib-location>/WEB-INF/sql.tld</taglib-location>
+    </taglib>
+    <taglib>
+    <taglib-uri>http://java.sun.com/jsp/jstl/sql-rt</taglib-uri>
+    <taglib-location>/WEB-INF/sql-rt.tld</taglib-location>
+    </taglib>
+    <taglib>
+    <taglib-uri>http://java.sun.com/jsp/jstl/x</taglib-uri>
+    <taglib-location>/WEB-INF/x.tld</taglib-location>
+    </taglib>
+    <taglib>
+    <taglib-uri>http://java.sun.com/jsp/jstl/x-rt</taglib-uri>
+    <taglib-location>/WEB-INF/x-rt.tld</taglib-location>
+    </taglib>
+    </jsp-config>
+</web-app>
+```
+
+使用任何库，你必须在每个 JSP 文件中的头部包含 <taglib> 标签。
+
+
+## 核心标签
+
+核心标签是最常用的 JSTL标签。引用核心标签库的语法如下：
+
+```text
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+```
+
+
+## 格式化标签
+
+JSTL格式化标签用来格式化并输出文本、日期、时间、数字。引用格式化标签库的语法如下：
+
+```text
+<%@ taglib prefix="fmt"
+           uri="http://java.sun.com/jsp/jstl/fmt" %>
+```
+
+
+## SQL标签
+
+JSTL SQL标签库提供了与关系型数据库（Oracle，MySQL，SQL Server等等）进行交互的标签。引用SQL标签库的语法如下：
+
+```text
+<%@ taglib prefix="sql"
+           uri="http://java.sun.com/jsp/jstl/sql" %>
+```
+
+
+## XML 标签
+
+JSTL XML标签库提供了创建和操作XML文档的标签。引用XML标签库的语法如下：
+
+```text
+<%@ taglib prefix="x"
+           uri="http://java.sun.com/jsp/jstl/xml" %>
+```
+
+在使用xml标签前，你必须将XML 和 XPath 的相关包拷贝至你的<Tomcat 安装目录>\lib下:
+
+- XercesImpl.jar下载地址： http://www.apache.org/dist/xerces/j/
+- xalan.jar 下载地址： http://xml.apache.org/xalan-j/index.html
+
+
+## JSTL函数
+
+JSTL包含一系列标准函数，大部分是通用的字符串处理函数。引用JSTL函数库的语法如下：
+
+```text
+<%@ taglib prefix="fn"
+           uri="http://java.sun.com/jsp/jstl/functions" %>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JSP 标准标签库（JSTL）` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

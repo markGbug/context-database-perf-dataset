@@ -1,35 +1,141 @@
-# MongoDB：MongoDB 更新文档 学习笔记
+# MongoDB：MongoDB 更新文档
 
 - 来源：[MongoDB 更新文档](https://www.runoob.com/mongodb/mongodb-update.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1474
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 更新文档` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+在 MongoDB 中，更新文档的操作可以使用多种方法实现，常用的方法包括 updateOne()、updateMany()、replaceOne() 和 findOneAndUpdate()。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 1、updateOne()
 
-## 笔记模板
+updateOne() 方法用于更新匹配过滤器的单个文档。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+语法：
 
-## 完成标准
+```text
+db.collection.updateOne(filter, update, options)
+```
 
-- 能用 3 到 5 句话解释 `MongoDB 更新文档`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- filter：用于查找文档的查询条件。
+- update：指定更新操作的文档或更新操作符。
+- options：可选参数对象，如 upsert、arrayFilters 等。
+
+
+## 实例
+
+
+### 2、updateMany()
+
+updateMany() 方法用于更新所有匹配过滤器的文档。
+
+语法：
+
+```text
+db.collection.updateMany(filter, update, options)
+```
+
+- filter：用于查找文档的查询条件。
+- update：指定更新操作的文档或更新操作符。
+- options：可选参数对象，如 upsert、arrayFilters 等。
+
+
+## 实例
+
+
+### 3、replaceOne()
+
+replaceOne() 方法用于替换匹配过滤器的单个文档，新的文档将完全替换旧的文档。
+
+语法：
+
+```text
+db.collection.replaceOne(filter, replacement, options)
+```
+
+- filter：用于查找文档的查询条件。
+- replacement：新的文档，将替换旧的文档。
+- options：可选参数对象，如 upsert 等。
+
+
+## 实例
+
+
+### 4、findOneAndUpdate()
+
+findOneAndUpdate() 方法用于查找并更新单个文档，可以选择返回更新前或更新后的文档。
+
+语法：
+
+```text
+db.collection.findOneAndUpdate(filter, update, options)
+```
+
+- filter：用于查找文档的查询条件。
+- update：指定更新操作的文档或更新操作符。
+- options：可选参数对象，如 projection、sort、upsert、returnDocument 等。
+
+
+## 实例
+
+
+### 选项参数
+
+这些更新方法的 options 参数通常可以包含以下选项：
+
+- upsert：如果没有匹配的文档，是否插入一个新文档。
+- arrayFilters：当更新嵌套数组时，指定应更新的数组元素的条件。
+- collation：指定比较字符串时使用的排序规则。
+- returnDocument：在 findOneAndUpdate 中使用，指定返回更新前 ("before") 或更新后 ("after") 的文档。
+
+
+### 简单实例
+
+更新单个文档：
+
+```text
+db.myCollection.updateOne(
+    { name: "Alice" },
+    { $set: { age: 26 } }
+);
+```
+
+更新多个文档：
+
+```text
+db.myCollection.updateMany(
+    { age: { $lt: 30 } },
+    { $set: { status: "active" } }
+);
+```
+
+替换单个文档：
+
+```text
+db.myCollection.replaceOne(
+    { name: "Bob" },
+    { name: "Bob", age: 31 }
+);
+```
+
+查找并更新单个文档：
+
+```text
+db.myCollection.findOneAndUpdate(
+    { name: "Charlie" },
+    { $set: { age: 36 } },
+    { returnDocument: "after" }
+);
+```
+
+
+## 复习重点
+
+- 能说明 `MongoDB 更新文档` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

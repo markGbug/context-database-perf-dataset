@@ -1,35 +1,117 @@
-# FastAPI：FastAPI Pydantic 模型 学习笔记
+# FastAPI：FastAPI Pydantic 模型
 
 - 来源：[FastAPI Pydantic 模型](https://www.runoob.com/fastapi/fastapi-pydantic.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3843
 
-## 学习目标
+## 本章内容
 
-FastAPI 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `FastAPI Pydantic 模型` 建立学习路径，先理解它在 FastAPI 体系中的位置，再做可运行或可复述的验证。
+Pydantic 是 FastAPI 的核心依赖，用于数据校验和序列化。它让你使用标准的 Python 类型注解来定义数据模型，自动完成数据校验、类型转换和文档生成。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## Pydantic 是什么
 
-## 笔记模板
+Pydantic 是一个 Python 数据校验库，它的核心思想是：用 Python 类型注解定义数据结构，Pydantic 自动负责校验和转换。在 FastAPI 中，Pydantic 主要用于：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 定义 Pydantic 模型
 
-- 能用 3 到 5 句话解释 `FastAPI Pydantic 模型`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+创建一个继承 BaseModel 的类，使用 Python 标准类型声明字段：
+
+
+## 实例
+
+字段是否必填取决于是否有默认值：
+
+
+## 使用 Pydantic 模型
+
+
+### 作为请求体
+
+最常见的用法是将模型声明为路径操作函数的参数：
+
+
+## 实例
+
+
+### 访问和操作模型数据
+
+
+## 实例
+
+Pydantic v2 使用 model_dump() 和 model_dump_json() 替代了 v1 的 dict() 和 json() 方法。新方法性能更好（底层使用 Rust 实现）。
+
+
+## 模型校验示例
+
+当客户端发送的数据不符合模型定义时，FastAPI 会返回详细的校验错误：
+
+
+## 实例
+
+如果发送了类型错误的数据：
+
+```text
+// price 应该是数字，但传了字符串
+{
+    "name": "Foo",
+    "price": "not a number"
+}
+
+// FastAPI 返回的错误
+{
+    "detail": [
+        {
+            "type": "float_parsing",
+            "loc": ["body", "price"],
+            "msg": "Input should be a valid number, unable to parse string as a number",
+            "input": "not a number"
+        }
+    ]
+}
+```
+
+
+## Pydantic v2 常用方法
+
+
+## 模型配置（model_config）
+
+Pydantic v2 使用 model_config 替代了 v1 的 Config 内部类：
+
+
+## 实例
+
+Pydantic v2 中，orm_mode = True 已改为 from_attributes = True，schema_extra 已改为 json_schema_extra，allow_population_by_field_name 已改为 populate_by_name。
+
+
+## 模型继承
+
+Pydantic 模型支持继承，可以方便地创建输入模型和输出模型：
+
+
+## 实例
+
+使用不同的输入和输出模型是保护敏感数据的重要手段。永远不要在 API 响应中返回密码等敏感字段。
+
+
+## 小结
+
+Pydantic 模型的核心要点：
+
+- 使用 BaseModel 定义数据模型，标准 Python 类型声明字段
+- 有默认值的字段可选，没有默认值的字段必填
+- v2 使用 model_dump()、model_validate() 等新方法
+- 通过模型继承创建不同的输入/输出模型，保护敏感数据
+- 所有校验和文档都是自动的，只需声明一次类型
+
+
+## 复习重点
+
+- 能说明 `FastAPI Pydantic 模型` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

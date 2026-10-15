@@ -1,35 +1,91 @@
-# Redis：Redis 事务 学习笔记
+# Redis：Redis 事务
 
 - 来源：[Redis 事务](https://www.runoob.com/redis/redis-transactions.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1607
 
-## 学习目标
+## 本章内容
 
-Redis 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Redis 事务` 建立学习路径，先理解它在 Redis 体系中的位置，再做可运行或可复述的验证。
+Redis 事务可以一次执行多个命令， 并且带有以下三个重要的保证：
 
-## 阅读抓手
+- 批量操作在发送 EXEC 命令前被放入队列缓存。
+- 收到 EXEC 命令后进入事务执行，事务中任意命令执行失败，其余的命令依然被执行。
+- 在事务执行过程，其他客户端提交的命令请求不会插入到事务执行命令序列中。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+一个事务从开始到执行会经历以下三个阶段：
 
-## 笔记模板
+- 开始事务。
+- 命令入队。
+- 执行事务。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `Redis 事务`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下是一个事务的例子， 它先以 MULTI 开始一个事务， 然后将多个命令入队到事务中， 最后由 EXEC 命令触发事务， 一并执行事务中的所有命令：
+
+```text
+redis 127.0.0.1:6379> MULTI
+OK
+
+redis 127.0.0.1:6379> SET book-name "Mastering C++ in 21 days"
+QUEUED
+
+redis 127.0.0.1:6379> GET book-name
+QUEUED
+
+redis 127.0.0.1:6379> SADD tag "C++" "Programming" "Mastering Series"
+QUEUED
+
+redis 127.0.0.1:6379> SMEMBERS tag
+QUEUED
+
+redis 127.0.0.1:6379> EXEC
+1) OK
+2) "Mastering C++ in 21 days"
+3) (integer) 3
+4) 1) "Mastering Series"
+   2) "C++"
+   3) "Programming"
+```
+
+单个 Redis 命令的执行是原子性的，但 Redis 没有在事务上增加任何维持原子性的机制，所以 Redis 事务的执行并不是原子性的。
+
+事务可以理解为一个打包的批量执行脚本，但批量指令并非原子化的操作，中间某条指令的失败不会导致前面已做指令的回滚，也不会造成后续的指令不做。
+
+这是官网上的说明 From redis docs on transactions:
+
+It's important to note that even when a command fails, all the other commands in the queue are processed – Redis will not stop the processing of commands.
+
+比如：
+
+```text
+redis 127.0.0.1:7000> multi
+OK
+redis 127.0.0.1:7000> set a aaa
+QUEUED
+redis 127.0.0.1:7000> set b bbb
+QUEUED
+redis 127.0.0.1:7000> set c ccc
+QUEUED
+redis 127.0.0.1:7000> exec
+1) OK
+2) OK
+3) OK
+```
+
+如果在 set b bbb 处失败，set a 已成功不会回滚，set c 还会继续执行。
+
+
+## Redis 事务命令
+
+下表列出了 redis 事务的相关命令：
+
+
+## 复习重点
+
+- 能说明 `Redis 事务` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,80 @@
-# PHP：PHP RESTful 学习笔记
+# PHP：PHP RESTful
 
 - 来源：[PHP RESTful](https://www.runoob.com/php/php-restful.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1127
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP RESTful` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+REST（英文：Representational State Transfer，简称REST) ，指的是一组架构约束条件和原则。
 
-## 阅读抓手
+符合REST设计风格的Web API称为RESTful API。它从以下三个方面资源进行定义：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 直观简短的资源地址：URI，比如：http://example.com/resources/。
+- 传输的资源：Web服务接受与返回的互联网媒体类型，比如：JSON，XML，YAM等。
+- 对资源的操作：Web服务在该资源上所支持的一系列请求方法（比如：POST，GET，PUT或DELETE）。
 
-## 笔记模板
+本教程我们将使用 PHP(不用框架) 来创建一个 RESTful web service，在文章末尾你可以下载本章节使用到的代码。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+通过本教程你将学习到以下内容：
 
-## 完成标准
+- 创建一个 RESTful Webservice。
+- 使用原生 PHP, 不依赖任何框架。
+- URI 模式需要遵循 REST 规则。
+- RESTful service 接受与返回的格式可以是 JSON, XML等。
+- 根据不同情况响应对应的 HTTP 状态码。
+- 演示请求头的使用。
+- 使用 REST 客户端来测试 RESTful web service。
 
-- 能用 3 到 5 句话解释 `PHP RESTful`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## RESTful Webservice 实例
+
+以下代码是 RESTful 服务类 Site.php：
+
+
+## 实例
+
+```javascript
+<?php
+/*
+ * 菜鸟教程 RESTful 演示实例
+ * RESTful 服务类
+ */
+Class Site {
+
+    private $sites = array(
+        1 => 'TaoBao',
+        2 => 'Google',
+        3 => 'Runoob',
+        4 => 'Baidu',
+        5 => 'Weibo',
+        6 => 'Sina'
+
+    );
+
+
+    public function getAllSite(){
+        return $this->sites;
+    }
+
+    public function getSite($id){
+
+        $site = array($id => ($this->sites[$id]) ? $this->sites[$id] : $this->sites[1]);
+        return $site;
+    }
+}
+?>
+```
+
+
+## RESTful Services URI 映射
+
+
+## 复习重点
+
+- 能说明 `PHP RESTful` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

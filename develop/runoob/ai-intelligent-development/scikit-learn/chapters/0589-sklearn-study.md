@@ -1,35 +1,60 @@
-# Scikit-learn：Sklearn 教程 学习笔记
+# Scikit-learn：Sklearn 教程
 
 - 来源：[Sklearn 教程](https://www.runoob.com/sklearn/sklearn-tutorial.html)
 - 分类：AI / 智能开发
 - 技术：Scikit-learn
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0589
 
-## 学习目标
+## 本章内容
 
-Scikit-learn 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Sklearn 教程` 建立学习路径，先理解它在 Scikit-learn 体系中的位置，再做可运行或可复述的验证。
+Sklearn（全称 scikit-learn）是一个开源的机器学习库。
 
-## 阅读抓手
+Sklearn 是一个基于 Python 编程语言的开源机器学习库，致力于提供简单而高效的工具。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Sklearn 建立在 NumPy、SciPy 和 matplotlib 这些科学计算库之上，提供了简单而高效的数据挖掘和数据分析工具。
 
-## 笔记模板
+Sklearn 是许多机器学习项目的核心工具之一，并且在学术界、工业界和个人项目中广泛应用。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Sklearn 适用于各类机器学习任务，如分类、回归、聚类、降维等。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Sklearn 教程`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 学习本教程前你需要了解
+
+在开学习 scikit-learn 教程之前，我们需要具备基本的 Python 基础，如果你对 Python 还不了解，可以阅读我们的教程：
+
+- Python 3.x 教程
+- Numpy 教程
+- SciPy 教程
+
+
+## Sklearn 应用
+
+Sklearn 构建在 NumPy 和 SciPy 基础之上，因此它能够高效地处理数值计算和数组操作。
+
+Sklearn 广泛应用于数据科学和机器学习领域，帮助进行数据分析、模型训练和预测。
+
+Sklearn 也常用于教育，以教授机器学习算法。
+
+Sklearn 在自然语言处理和图像识别等特定领域也有应用。
+
+
+## 相关链接
+
+- Sklearn 官网 https://scikit-learn.org/
+- Sklearn 源代码：https://github.com/scikit-learn/scikit-learn
+- NumPy 官网 http://www.numpy.org/
+- NumPy 源代码：https://github.com/numpy/numpy
+- SciPy 官网：https://www.scipy.org/
+- SciPy 源代码：https://github.com/scipy/scipy
+- Matplotlib 官网：https://matplotlib.org/
+- Matplotlib 源代码：https://github.com/matplotlib/matplotlib
+- pandas visualization官方文档：https://pandas.pydata.org/docs/user_guide/visualization.html
+
+
+## 复习重点
+
+- 能说明 `Sklearn 教程` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

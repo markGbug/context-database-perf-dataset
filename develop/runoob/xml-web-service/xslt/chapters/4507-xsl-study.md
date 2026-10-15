@@ -1,35 +1,64 @@
-# XSLT：XSLT 教程 学习笔记
+# XSLT：XSLT 教程
 
 - 来源：[XSLT 教程](https://www.runoob.com/xsl/xsl-tutorial.html)
 - 分类：XML / Web Service
 - 技术：XSLT
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4507
 
-## 学习目标
+## 本章内容
 
-XSLT 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XSLT 教程` 建立学习路径，先理解它在 XSLT 体系中的位置，再做可运行或可复述的验证。
+XSL 指扩展样式表语言（EXtensible Stylesheet Language）, 它是一个 XML 文档的样式表语言。
 
-## 阅读抓手
+XSLT 指 XSL 转换。在此教程中，你将学习如何使用 XSLT 将 XML 文档转换为其他文档，比如 XHTML。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+现在开始学习 XSLT !
 
-## 笔记模板
+在线 XSLT 转换工具 – XML 转 HTML 在线预览
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## XSLT 实例
 
-- 能用 3 到 5 句话解释 `XSLT 教程`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<?xml version="1.0"?>
+
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <body>
+    <h2>My CD Collection</h2>
+    <table border="1">
+      <tr bgcolor="#9acd32">
+        <th>Title</th>
+        <th>Artist</th>
+      </tr>
+      <xsl:for-each select="catalog/cd">
+        <tr>
+          <td><xsl:value-of select="title"/></td>
+          <td><xsl:value-of select="artist"/></td>
+        </tr>
+      </xsl:for-each>
+    </table>
+  </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>
+```
+
+
+## XSLT 参考手册
+
+XSLT 元素 对所有来自 W3C 标准的 XSLT 元素进行了描述，以及关于浏览器支持的信息。
+
+XSLT 函数 XSLT 包含了超过 100 个内置函数。 这些函数可以用于字符串、数值、日期和时间比较、节点和 QName 处理, 序列处理, 逻辑值等等。
+
+
+## 复习重点
+
+- 能说明 `XSLT 教程` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

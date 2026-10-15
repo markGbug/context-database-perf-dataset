@@ -1,34 +1,58 @@
-# NumPy：NumPy 教程 练习笔记
+# NumPy：NumPy 教程
 
 - 来源：[NumPy 教程](https://www.runoob.com/numpy/numpy-tutorial.html)
 - 分类：Python / 数据科学
 - 技术：NumPy
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3978
 
-## 练习目标
+## 本章内容
 
-把 `NumPy 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+NumPy(Numerical Python) 是 Python 语言的一个扩展程序库，支持大量的维度数组与矩阵运算，此外也针对数组运算提供大量的数学函数库。
 
-## 练习步骤
+NumPy 的前身 Numeric 最早是由 Jim Hugunin 与其它协作者共同开发，2005 年，Travis Oliphant 在 Numeric 中结合了另一个同性质的程序库 Numarray 的特色，并加入了其它扩展而开发了 NumPy。NumPy 为开放源代码并且由许多协作者共同维护开发。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+NumPy 是一个运行速度非常快的数学库，主要用于数组计算，包含：
 
-## 验收清单
+- 一个强大的N维数组对象 ndarray
+- 广播功能函数
+- 整合 C/C++/Fortran 代码的工具
+- 线性代数、傅里叶变换、随机数生成等功能
 
-- 我能独立说出 `NumPy 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 学习本教程前你需要了解
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在开学习 NumPy 教程之前，我们需要具备基本的 Python 基础，如果你对 Python还不了解，可以阅读我们的教程：
+
+- Python 2.x 版本
+- Python 3.x 版本
+
+
+## NumPy 应用
+
+NumPy 通常与 SciPy（Scientific Python）和 Matplotlib（绘图库）一起使用， 这种组合广泛用于替代 MatLab，是一个强大的科学计算环境，有助于我们通过 Python 学习数据科学或者机器学习。
+
+SciPy 是一个开源的 Python 算法库和数学工具包。
+
+SciPy 包含的模块有最优化、线性代数、积分、插值、特殊函数、快速傅里叶变换、信号处理和图像处理、常微分方程求解和其他科学与工程中常用的计算。
+
+Matplotlib 是 Python 编程语言及其数值数学扩展包 NumPy 的可视化操作界面。它为利用通用的图形用户界面工具包，如 Tkinter, wxPython, Qt 或 GTK+ 向应用程序嵌入式绘图提供了应用程序接口（API）。
+
+
+## 相关链接
+
+- NumPy 官网 http://www.numpy.org/
+- NumPy 源代码：https://github.com/numpy/numpy
+- SciPy 官网：https://www.scipy.org/
+- SciPy 源代码：https://github.com/scipy/scipy
+- Matplotlib 教程：Matplotlib 教程
+- Matplotlib 官网：https://matplotlib.org/
+- Matplotlib 源代码：https://github.com/matplotlib/matplotlib
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `NumPy 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

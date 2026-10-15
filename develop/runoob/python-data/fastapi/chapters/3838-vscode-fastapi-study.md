@@ -1,35 +1,228 @@
-# FastAPI：VSCode FastAPI 学习笔记
+# FastAPI：VS Code 开发 FastAPI
 
 - 来源：[VSCode FastAPI](https://www.runoob.com/fastapi/vscode-fastapi.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3838
 
-## 学习目标
+## 本章内容
 
-FastAPI 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `VSCode FastAPI` 建立学习路径，先理解它在 FastAPI 体系中的位置，再做可运行或可复述的验证。
+VS Code（全称 Visual Studio Code）是一款由微软推出的免费、开源、跨平台的代码编辑器。
 
-## 阅读抓手
+VS Code 支持 Windows、macOS 和 Linux，拥有强大的功能和灵活的扩展性。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+VS Code 教程：https://www.runoob.com/vscode/vscode-tutorial.html
 
-## 笔记模板
+下载地址： https://code.visualstudio.com/ 。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+推荐安装以下扩展：
 
-## 完成标准
+- Python (Microsoft)
+- Pylance (Microsoft)
+- FastAPI Snippets
 
-- 能用 3 到 5 句话解释 `VSCode FastAPI`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+另外国内阿里与字节也有基于 VS Code 开发的 AI IDE：
+
+
+### 创建虚拟环境
+
+我们那可以先搭建好 Python 开发环境，如果已安装或配置可以跳过。
+
+
+### 安装 FastAPI 和 Uvicorn
+
+```text
+pip install fastapi uvicorn
+```
+
+
+## 创建 FastAPI 应用
+
+在 fastapi-demo 目录下创建一个 main.py 文件，代码如下：
+
+
+## 实例
+
+
+### 运行应用
+
+```text
+uvicorn main:app --reload
+```
+
+参数说明：
+
+- main：Python 模块名（不含 .py）
+- app：FastAPI 实例变量名
+- --reload：开发时启用自动重载
+
+
+### 访问 API
+
+- 打开浏览器访问 http://127.0.0.1:8000
+- 交互式文档：http://127.0.0.1:8000/docs
+- 替代文档：http://127.0.0.1:8000/redoc
+
+
+## VS Code 开发技巧
+
+VS Code 中选择菜单 File > Open Folder…，打开你刚才创建的 fastapi-demo 文件夹。
+
+第一次打开项目时 VS Code 会提示 "是否信任该工作区"，选择 "Yes, I trust the authors" 以确保扩展和资源正常运行。
+
+```text
+code .
+```
+
+
+### 创建 requirements.txt
+
+新建文件（File > New Text File 或快捷键 ⌘N），也可以直接在项目名右侧的新建文件图标创建：
+
+添加以下内容（项目依赖）：
+
+```text
+fastapi
+redis
+types-redis
+uvicorn
+```
+
+保存文件（⌘S），命名为 requirements.txt。
+
+
+### 创建虚拟环境
+
+创建虚拟环境
+
+- 打开命令面板（⇧⌘P）
+- 输入并选择：Python: Create Environment
+- 选择环境类型：Venv（内建虚拟环境）
+- 选择 Python 版本（推荐使用本机最新版本）
+- 选择 requirements.txt 文件以自动安装依赖
+- 点击确认，系统会创建虚拟环境并自动安装依赖项
+
+接下来我们就可以编辑 main.py 文件：
+
+
+## 实例
+
+按 F5 启动调试器来运行代码。
+
+在弹出的下拉菜单中，选择列表中的 FastAPI 调试配置选项：
+
+此操作将自动创建一个调试配置，该配置使用 uvicorn 通过调试器启动应用程序服务器，并允许你逐步调试源代码以检查其行为。
+
+你应该在终端中看到类似以下内容的信息：
+
+在终端中 Ctrl+点击显示的 URL 地址 http://127.0.0.1:8000/，在浏览器中打开它：
+
+如果默认端口已经被占用：
+
+- 停止调试器
+- 打开命令面板（⇧⌘P），搜索并选择 Debug: Add Configuration
+- 选择 Python Debugger，然后选择 FastAPI
+- 这将会在 .vscode/launch.json 中创建一个自定义配置文件
+- 在 "args":[] 中添加如下内容以设置自定义端口："args": ["--port=5000"]
+
+
+## 项目结构建议
+
+对于大型项目，推荐以下结构：
+
+```text
+my_fastapi_project/
+├── app/
+│   ├── __init__.py
+│   ├── main.py         # 应用入口
+│   ├── api/            # API路由
+│   │   ├── __init__.py
+│   │   ├── items.py
+│   │   └── users.py
+│   ├── models/         # 数据模型
+│   │   ├── __init__.py
+│   │   └── user.py
+│   ├── schemas/        # Pydantic模型
+│   │   ├── __init__.py
+│   │   └── user.py
+│   └── db/             # 数据库相关
+│       ├── __init__.py
+│       └── session.py
+├── tests/              # 测试代码
+│   ├── __init__.py
+│   └── test_api.py
+├── requirements.txt    # 依赖列表
+└── .env                # 环境变量
+```
+
+
+## 调试与测试
+
+
+### 调试 FastAPI
+
+在 VS Code 中：
+
+- 设置断点
+- 按 F5 启动调试
+- 在浏览器中访问 API 端点
+
+
+### 单元测试
+
+使用 pytest：
+
+
+## 实例
+
+运行测试：
+
+```text
+pytest
+```
+
+
+## 部署准备
+
+
+### 生产服务器
+
+推荐使用：
+
+- Uvicorn + Gunicorn
+- Hypercorn
+- Daphne
+
+
+### Docker 部署
+
+创建 Dockerfile：
+
+```text
+FROM python:3.9
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+```
+
+构建并运行：
+
+```text
+docker build -t fastapi-app .
+docker run -d -p 80:80 fastapi-app
+```
+
+
+## 复习重点
+
+- 能说明 `VSCode FastAPI` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

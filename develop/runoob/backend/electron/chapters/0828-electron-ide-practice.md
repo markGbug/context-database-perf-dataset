@@ -1,34 +1,121 @@
-# Electron：Electron 开发工具 练习笔记
+# Electron：Electron 开发工具
 
 - 来源：[Electron 开发工具](https://www.runoob.com/electron/electron-ide.html)
 - 分类：后端开发
 - 技术：Electron
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0828
 
-## 练习目标
+## 本章内容
 
-把 `Electron 开发工具` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Electron 开发工具推荐使用 VS Code，如果你还不熟悉 VS Code 可以参考我们的 VS Code 教程。
 
-## 练习步骤
+VS Code 下载地址：https://code.visualstudio.com/。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+VS Code 本身就是用 Electron 构建的，因此它对 Electron 开发有天然的支持优势：
 
-## 验收清单
+- 内置终端集成
+- 强大的调试功能
+- 丰富的插件生态
+- Git 集成
+- IntelliSense 智能提示
+- 完全免费且开源
 
-- 我能独立说出 `Electron 开发工具` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### VS Code 必装插件推荐
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## Chrome DevTools 调试（渲染进程）
+
+Electron 的渲染进程其实就是一个 Chromium 浏览器页面， 所以你可以像调网页一样，用 Chrome DevTools 直接调试。
+
+
+### 启用 DevTools
+
+在 main.js 中创建窗口时添加：
+
+
+## 实例
+
+
+### 可以调试的内容
+
+- HTML / CSS / JS 代码
+- 网络请求（Network）
+- 控制台日志（Console）
+- DOM 结构
+- 性能分析（Performance）
+- 内存泄漏（Memory）
+
+
+### 提示
+
+渲染进程调试几乎与 Chrome 一致，因此：
+
+- 你可以使用 console.log() 输出调试信息
+- 也能直接使用 Chrome 的快捷键（Cmd + Option + I / Ctrl + Shift + I）打开 DevTools
+
+
+## Electron 主进程调试技巧
+
+主进程不是网页，而是 Node.js 环境，调试方式与网页不同。
+
+
+### 方法 1：使用 VS Code 内置调试器
+
+在项目根目录创建 .vscode/launch.json 文件。
+
+内容如下（可直接用）：
+
+```text
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Electron 主进程调试",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/electron/dist/electron.js",
+      "args": ["."],
+      "outputCapture": "std",
+      "runtimeExecutable": null,
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
+```
+
+然后在 main.js 中设置断点，点击调试 ▶️ 即可。
+
+
+### 方法 2：命令行远程调试
+
+启动时加上参数：
+
+```text
+electron . --inspect=5858
+```
+
+然后在 Chrome 地址栏打开：
+
+```text
+chrome://inspect
+```
+
+即可远程连接主进程，像调 Node.js 一样断点调试。
+
+
+## 常见调试技巧汇总
+
+
+## 进阶工具推荐
+
+用 VS Code 写，用 DevTools 看，用 launch.json 调，用 Builder 打包 —— 这就是一个专业 Electron 开发者的完整工具链。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Electron 开发工具` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

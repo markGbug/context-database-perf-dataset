@@ -1,34 +1,244 @@
-# Vue.js：Vue.js 路由 练习笔记
+# Vue.js：Vue.js 路由
 
 - 来源：[Vue.js 路由](https://www.runoob.com/vue2/vue-routing.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3262
 
-## 练习目标
+## 本章内容
 
-把 `Vue.js 路由` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们将为大家介绍 Vue.js 路由。
 
-## 练习步骤
+Vue.js 路由允许我们通过不同的 URL 访问不同的内容。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+通过 Vue.js 可以实现多视图的单页Web应用（single page web application，SPA）。
 
-## 验收清单
+Vue.js 路由需要载入 vue-router 库
 
-- 我能独立说出 `Vue.js 路由` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+中文文档地址：vue-router文档。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 安装
+
+
+### 1、直接下载 / CDN
+
+```text
+https://unpkg.com/vue-router/dist/vue-router.js
+```
+
+
+### NPM
+
+推荐使用淘宝镜像：
+
+```text
+cnpm install vue-router
+```
+
+
+## 简单实例
+
+Vue.js + vue-router 可以很简单的实现单页应用。
+
+<router-link> 是一个组件，该组件用于设置一个导航链接，切换不同 HTML 内容。 to 属性为目标地址， 即要显示的内容。
+
+以下实例中我们将 vue-router 加进来，然后配置组件和路由映射，再告诉 vue-router 在哪里渲染它们。代码如下所示：
+
+
+## HTML 代码
+
+```html
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+<div id="app">
+  <h1>Hello App!</h1>
+  <p>
+    <!-- 使用 router-link 组件来导航. -->
+    <!-- 通过传入 `to` 属性指定链接. -->
+    <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+    <router-link to="/foo">Go to Foo</router-link>
+    <router-link to="/bar">Go to Bar</router-link>
+  </p>
+  <!-- 路由出口 -->
+  <!-- 路由匹配到的组件将渲染在这里 -->
+  <router-view></router-view>
+</div>
+```
+
+
+## JavaScript 代码
+
+```html
+// 0. 如果使用模块化机制编程，导入 Vue 和 VueRouter，要调用 Vue.use(VueRouter)
+
+// 1. 定义（路由）组件。
+// 可以从其他文件 import 进来
+const Foo = { template: '<div>foo</div>' }
+const Bar = { template: '<div>bar</div>' }
+
+// 2. 定义路由
+// 每个路由应该映射一个组件。 其中"component" 可以是
+// 通过 Vue.extend() 创建的组件构造器，
+// 或者，只是一个组件配置对象。
+// 我们晚点再讨论嵌套路由。
+const routes = [
+  { path: '/foo', component: Foo },
+  { path: '/bar', component: Bar }
+]
+
+// 3. 创建 router 实例，然后传 `routes` 配置
+// 你还可以传别的配置参数, 不过先这么简单着吧。
+const router = new VueRouter({
+  routes // （缩写）相当于 routes: routes
+})
+
+// 4. 创建和挂载根实例。
+// 记得要通过 router 配置参数注入路由，
+// 从而让整个应用都有路由功能
+const app = new Vue({
+  router
+}).$mount('#app')
+
+// 现在，应用已经启动了！
+```
+
+点击过的导航链接都会加上样式 class ="router-link-exact-active router-link-active"。
+
+
+## <router-link> 相关属性
+
+接下来我们可以了解下更多关于 <router-link> 的属性。
+
+
+### to
+
+表示目标路由的链接。 当被点击后，内部会立刻把 to 的值传到 router.push()，所以这个值可以是一个字符串或者是描述目标位置的对象。
+
+```html
+<!-- 字符串 -->
+<router-link to="home">Home</router-link>
+<!-- 渲染结果 -->
+<a href="home">Home</a>
+
+<!-- 使用 v-bind 的 JS 表达式 -->
+<router-link v-bind:to="'home'">Home</router-link>
+
+<!-- 不写 v-bind 也可以，就像绑定别的属性一样 -->
+<router-link :to="'home'">Home</router-link>
+
+<!-- 同上 -->
+<router-link :to="{ path: 'home' }">Home</router-link>
+
+<!-- 命名的路由 -->
+<router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link>
+
+<!-- 带查询参数，下面的结果为 /register?plan=private -->
+<router-link :to="{ path: 'register', query: { plan: 'private' }}">Register</router-link>
+```
+
+
+### replace
+
+设置 replace 属性的话，当点击时，会调用 router.replace() 而不是 router.push()，导航后不会留下 history 记录。
+
+```html
+<router-link :to="{ path: '/abc'}" replace></router-link>
+```
+
+
+### append
+
+设置 append 属性后，则在当前 (相对) 路径前添加其路径。例如，我们从 /a 导航到一个相对路径 b，如果没有配置 append，则路径为 /b，如果配了，则为 /a/b
+
+```html
+<router-link :to="{ path: 'relative/path'}" append></router-link>
+```
+
+
+### tag
+
+有时候想要 <router-link> 渲染成某种标签，例如 <li>。 于是我们使用 tag prop 类指定何种标签，同样它还是会监听点击，触发导航。
+
+```html
+<router-link to="/foo" tag="li">foo</router-link>
+<!-- 渲染结果 -->
+<li>foo</li>
+```
+
+
+### active-class
+
+设置 链接激活时使用的 CSS 类名。可以通过以下代码来替代。
+
+```html
+<style>
+   ._active{
+      background-color : red;
+   }
+</style>
+<p>
+   <router-link v-bind:to = "{ path: '/route1'}" active-class = "_active">Router Link 1</router-link>
+   <router-link v-bind:to = "{ path: '/route2'}" tag = "span">Router Link 2</router-link>
+</p>
+```
+
+注意这里 class 使用 active-class="_active"。
+
+
+### exact-active-class
+
+配置当链接被精确匹配的时候应该激活的 class。可以通过以下代码来替代。
+
+```html
+<p>
+   <router-link v-bind:to = "{ path: '/route1'}" exact-active-class = "_active">Router Link 1</router-link>
+   <router-link v-bind:to = "{ path: '/route2'}" tag = "span">Router Link 2</router-link>
+</p>
+```
+
+
+### event
+
+声明可以用来触发导航的事件。可以是一个字符串或是一个包含字符串的数组。
+
+```html
+<router-link v-bind:to = "{ path: '/route1'}" event = "mouseover">Router Link 1</router-link>
+```
+
+以上代码设置了 event 为 mouseover ，及在鼠标移动到 Router Link 1 上时导航的 HTML 内容会发生改变。
+
+
+### NPM 路由实例
+
+接下来我们演示了一个使用 npm 简单的路由实例，开始前，请先下载该实例源代码：
+
+你也可以在 Github 上下载：https://github.com/chrisvfritz/vue-2.0-simple-routing-example
+
+下载完后，解压该目录，重命名目录为 vue-demo，vu 并进入该目录，执行以下命令：
+
+```text
+# 安装依赖，使用淘宝资源命令 cnpm
+cnpm install
+
+# 启动应用，地址为 localhost:8080
+cnpm run dev
+```
+
+如果你需要发布到正式环境可以执行以下命令：
+
+```text
+cnpm run build
+```
+
+执行成功后，访问 http://localhost:8080 即可看到如下界面：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue.js 路由` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

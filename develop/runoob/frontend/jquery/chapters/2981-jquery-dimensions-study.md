@@ -1,35 +1,97 @@
-# jQuery：jQuery 尺寸 学习笔记
+# jQuery：jQuery 尺寸
 
 - 来源：[jQuery 尺寸](https://www.runoob.com/jquery/jquery-dimensions.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2981
 
-## 学习目标
+## 本章内容
 
-jQuery 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery 尺寸` 建立学习路径，先理解它在 jQuery 体系中的位置，再做可运行或可复述的验证。
+通过 jQuery，很容易处理元素和浏览器窗口的尺寸。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## jQuery 尺寸方法
 
-## 笔记模板
+jQuery 提供多个处理尺寸的重要方法：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- width()
+- height()
+- innerWidth()
+- innerHeight()
+- outerWidth()
+- outerHeight()
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jQuery 尺寸`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## jQuery 尺寸
+
+
+## jQuery width() 和 height() 方法
+
+width() 方法设置或返回元素的宽度（不包括内边距、边框或外边距）。
+
+height() 方法设置或返回元素的高度（不包括内边距、边框或外边距）。
+
+下面的例子返回指定的 <div> 元素的宽度和高度：
+
+
+## 实例
+
+```javascript
+$("button").click(function(){
+  var txt="";
+  txt+="div 的宽度是: " + $("#div1").width() + "</br>";
+  txt+="div 的高度是: " + $("#div1").height();
+  $("#div1").html(txt);
+});
+```
+
+
+## jQuery innerWidth() 和 innerHeight() 方法
+
+innerWidth() 方法返回元素的宽度（包括内边距）。
+
+innerHeight() 方法返回元素的高度（包括内边距）。
+
+下面的例子返回指定的 <div> 元素的 inner-width/height：
+
+
+## 实例
+
+```javascript
+$("button").click(function(){
+  var txt="";
+  txt+="div 宽度，包含内边距: " + $("#div1").innerWidth() + "</br>";
+    txt+="div 高度，包含内边距: " + $("#div1").innerHeight();
+  $("#div1").html(txt);
+});
+```
+
+
+## jQuery outerWidth() 和 outerHeight() 方法
+
+outerWidth() 方法返回元素的宽度（包括内边距和边框）。
+
+outerHeight() 方法返回元素的高度（包括内边距和边框）。
+
+下面的例子返回指定的 <div> 元素的 outer-width/height：
+
+
+## 实例
+
+```javascript
+$("button").click(function(){
+  var txt="";
+  txt+="div 宽度，包含内边距和边框: " + $("#div1").outerWidth() + "</br>";
+  txt+="div 高度，包含内边距和边框: " + $("#div1").outerHeight();
+  $("#div1").html(txt);
+});
+```
+
+
+## 复习重点
+
+- 能说明 `jQuery 尺寸` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

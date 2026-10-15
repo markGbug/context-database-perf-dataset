@@ -1,34 +1,55 @@
-# jQuery EasyUI：jEasyUI 条件设置行背景颜色 练习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 条件设置行背景颜色
 
 - 来源：[jEasyUI 条件设置行背景颜色](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid18.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2879
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 条件设置行背景颜色` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本教程将向您展示如何根据一些条件改变数据网格（datagrid）组件的行样式。当 listprice 值大于 50 时，我们将为该行设置不同的颜色。
 
-## 练习步骤
+数据网格（datagrid）的 rowStyler 函数的设计目的是允许您自定义行样式。以下代码展示如何改变行样式：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <table id="tt" title="DataGrid" style="width:600px;height:250px"
+            url="data/datagrid_data.json"
+            singleSelect="true" fitColumns="true">
+        <thead>
+            <tr>
+                <th field="itemid" width="80">Item ID</th>
+                <th field="productid" width="80">Product ID</th>
+                <th field="listprice" width="80" align="right">List Price</th>
+                <th field="unitcost" width="80" align="right">Unit Cost</th>
+                <th field="attr1" width="150">Attribute</th>
+                <th field="status" width="60" align="center">Stauts</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-## 验收清单
+```text
+    $('#tt').datagrid({
+        rowStyler:function(index,row){
+            if (row.listprice>50){
+                return 'background-color:pink;color:blue;font-weight:bold;';
+            }
+        }
+    });
+```
 
-- 我能独立说出 `jEasyUI 条件设置行背景颜色` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+正如您所看到的，我们根据一些条件设置 background-color（背景色）为 pink（粉红色），设置文本颜色为 blue（蓝色）。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid18.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 条件设置行背景颜色` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,132 @@
-# MongoDB：MongoDB 删除文档 练习笔记
+# MongoDB：MongoDB 删除文档
 
 - 来源：[MongoDB 删除文档](https://www.runoob.com/mongodb/mongodb-remove.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1475
 
-## 练习目标
+## 本章内容
 
-把 `MongoDB 删除文档` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在前面的几个章节中我们已经学习了 MongoDB 中如何为集合添加数据和更新数据，在本章节中我们将继续学习 MongoDB 集合的删除。
 
-## 练习步骤
+常用的删除文档方法包括 deleteOne()、deleteMany() 以及 findOneAndDelete()。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+使用场景：
 
-## 验收清单
+- 数据清理：删除不再需要的旧数据或无效数据。
+- 数据修正：在数据修正过程中删除错误的或重复的文档。
+- 自动化任务：在自动化脚本或任务中，根据特定条件删除文档。
 
-- 我能独立说出 `MongoDB 删除文档` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 1、deleteOne()
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+deleteOne() 方法用于删除匹配过滤器的单个文档。
+
+语法：
+
+```text
+db.collection.deleteOne(filter, options)
+```
+
+- filter：用于查找要删除的文档的查询条件。
+- options（可选）：一个可选参数对象。
+
+
+## 实例
+
+返回结果：
+
+```text
+{
+    "acknowledged": true,
+    "deletedCount": 1
+}
+```
+
+
+### 2、deleteMany()
+
+deleteMany() 方法用于删除所有匹配过滤器的文档。
+
+语法：
+
+```text
+db.collection.deleteMany(filter, options)
+```
+
+- filter：用于查找要删除的文档的查询条件。
+- options（可选）：一个可选参数对象。
+
+
+## 实例
+
+返回结果：
+
+```text
+{
+    "acknowledged": true,
+    "deletedCount": 1
+}
+```
+
+
+### 3、findOneAndDelete()
+
+findOneAndDelete() 方法用于查找并删除单个文档，并可以选择返回删除的文档。
+
+语法：
+
+```text
+db.collection.findOneAndDelete(filter, options)
+```
+
+- filter：用于查找要删除的文档的查询条件。
+- options：可选参数对象，如 projection、sort 等。
+
+
+## 实例
+
+findOneAndDelete 返回被删除的文档，如果找不到匹配的文档，则返回 null。
+
+
+### 删除操作的选项
+
+这些删除方法的 options 参数通常可以包含以下选项：
+
+- writeConcern：指定写操作的确认级别。
+- collation：指定比较字符串时使用的排序规则。
+- projection（仅适用于 findOneAndDelete）：指定返回的字段。
+- sort（仅适用于 findOneAndDelete）：指定排序顺序以确定要删除的文档。
+
+
+### 实例
+
+删除单个文档：
+
+```text
+db.myCollection.deleteOne({ name: "Alice" });
+```
+
+删除多个文档：
+
+```text
+db.myCollection.deleteMany({ status: "inactive" });
+```
+
+查找并删除单个文档：
+
+```text
+db.myCollection.findOneAndDelete(
+    { name: "Charlie" },
+    { projection: { name: 1, age: 1 } }
+);
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MongoDB 删除文档` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

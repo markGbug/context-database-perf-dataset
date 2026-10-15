@@ -1,35 +1,185 @@
-# Hermes Agent：Hermes Agent 部署模式 学习笔记
+# Hermes Agent：Hermes Agent 部署模式与 Dashboard
 
 - 来源：[Hermes Agent 部署模式](https://www.runoob.com/hermes-agent/hermes-agent-dashboard.html)
 - 分类：AI / 智能开发
 - 技术：Hermes Agent
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0258
 
-## 学习目标
+## 本章内容
 
-Hermes Agent 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Hermes Agent 部署模式` 建立学习路径，先理解它在 Hermes Agent 体系中的位置，再做可运行或可复述的验证。
+Hermes 支持从笔记本到 GPU 集群的全场景部署。
 
-## 阅读抓手
+本章逐一介绍六种部署模式的配置方法、适用场景和对比，以及 Web Dashboard 的可视化管理功能。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 六种部署模式详解
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 模式一：本地 CLI
 
-- 能用 3 到 5 句话解释 `Hermes Agent 部署模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+最简单的部署方式，Agent 与你同机运行，零配置。
+
+直接对话：
+
+```text
+hermes chat
+```
+
+TUI 界面：
+
+```text
+hermes --tui
+```
+
+桌面应用：
+
+```text
+hermes desktop
+```
+
+特点：最简单，零配置，适合开发和个人日常使用。
+
+
+### 模式二：网关服务
+
+让 Agent 作为 24/7 在线 Bot 持续运行，随时响应消息平台的消息，支持定时任务。
+
+前台调试运行，日志直接输出控制台：
+
+```text
+hermes gateway
+```
+
+注册系统服务并后台启动，用于生产常驻：
+
+```text
+hermes gateway install && hermes gateway start
+```
+
+查看网关运行状态：
+
+```text
+hermes gateway status
+```
+
+其他命令：
+
+```text
+# 停止服务
+hermes gateway stop
+# 重启服务
+hermes gateway restart
+# 卸载系统服务
+hermes gateway uninstall
+```
+
+特点：Agent 持续在线，适合个人 Bot、团队助手等场景。
+
+
+### 模式三：Docker 容器
+
+官方镜像支持多 Profile 网关，由 s6-overlay 管理进程。
+
+拉取官方镜像：
+
+```text
+docker pull nousresearch/hermes-agent:latest
+```
+
+运行（挂载配置目录）：
+
+```text
+docker run -d \
+  --name hermes \
+  -v ~/.hermes:/root/.hermes \
+  -e OPENROUTER_API_KEY=sk-or-... \
+  -e TELEGRAM_BOT_TOKEN=... \
+  nousresearch/hermes-agent:latest
+```
+
+Docker 内多 Profile 网关由 s6-overlay 自动监督。
+
+hermes profile create 会自动注册 s6 服务槽位，Docker 重启后自动恢复之前运行中的所有网关。
+
+让 Agent 的终端命令也在容器内执行：
+
+
+## 实例
+
+特点：进程和命令双重容器隔离，适合 CI/CD 和生产环境。
+
+
+### 模式四：SSH 远程服务器
+
+Agent 在本地运行，但所有终端命令在远程服务器上执行。
+
+
+## 实例
+
+典型场景：在本地发送消息，让 Agent 在远程 GPU 服务器上训练模型、处理大数据集。
+
+
+### 模式五：Modal Serverless
+
+Agent 在 Modal 云沙箱（VM）中执行命令，空闲时几乎不产生费用。
+
+
+## 实例
+
+特点：按需计费，适合偶发性的高强度计算任务。
+
+
+### 模式六：Daytona 托管工作区
+
+Hermes 进程和终端沙箱都在云端，完全不依赖本地机器。
+
+
+## 实例
+
+特点：完全云端，托管的云开发环境。
+
+
+### 六种模式对比
+
+
+## Web Dashboard
+
+Dashboard 是 Hermes 的可视化管理界面，可以管理任意 Profile 的配置、模型、技能、MCP 和会话。
+
+
+### 启动 Dashboard
+
+使用以下命令启动 Dashboard：
+
+```text
+hermes dashboard
+```
+
+启动界面如下：
+
+查看 skills：
+
+相关命令：
+
+```text
+# 启动 Dashboard（默认 Profile）
+hermes dashboard
+
+# 启动并预选指定 Profile
+coder dashboard
+
+# 指定端口
+hermes dashboard --port 8080
+```
+
+
+### Dashboard 功能一览
+
+
+## 复习重点
+
+- 能说明 `Hermes Agent 部署模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

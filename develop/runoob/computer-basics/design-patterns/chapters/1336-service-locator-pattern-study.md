@@ -1,35 +1,260 @@
-# 设计模式：服务定位器模式 学习笔记
+# 设计模式：服务定位器模式
 
 - 来源：[服务定位器模式](https://www.runoob.com/design-pattern/service-locator-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1336
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `服务定位器模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+服务定位器模式（Service Locator Pattern）用在我们想使用 JNDI 查询定位各种服务的时候。考虑到为某个服务查找 JNDI 的代价很高，服务定位器模式充分利用了缓存技术。在首次请求某个服务时，服务定位器在 JNDI 中查找服务，并缓存该服务对象。当再次请求相同的服务时，服务定位器会在它的缓存中查找，这样可以在很大程度上提高应用程序的性能。以下是这种设计模式的实体。
 
-## 阅读抓手
+- 服务（Service） - 实际处理请求的服务。对这种服务的引用可以在 JNDI 服务器中查找到。
+- Context / 初始的 Context - JNDI Context 带有对要查找的服务的引用。
+- 服务定位器（Service Locator） - 服务定位器是通过 JNDI 查找和缓存服务来获取服务的单点接触。
+- 缓存（Cache） - 缓存存储服务的引用，以便复用它们。
+- 客户端（Client） - Client 是通过 ServiceLocator 调用服务的对象。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 概要
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 意图
 
-- 能用 3 到 5 句话解释 `服务定位器模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+用于在应用程序中提供一个中心化的服务访问点，用以获取各种服务或资源。
+
+
+### 主要解决的问题
+
+- 解决在应用程序中需要访问各种服务或资源时，避免硬编码服务访问逻辑的问题。
+
+
+### 使用场景
+
+- 当应用程序需要访问多个外部服务或资源，并且希望将这些访问逻辑集中管理时。
+
+
+### 实现方式
+
+- 服务定位器接口：定义获取服务的方法。
+- 服务定位器实现：实现服务定位器接口，封装服务的查找和访问逻辑。
+- 服务接口：定义服务的接口或契约。
+- 具体服务：实现服务接口，提供具体的服务功能。
+
+
+### 关键代码
+
+- 服务定位器：包含逻辑以查找和返回请求的服务实例。
+- 服务接口：定义服务的抽象表示。
+
+
+### 应用实例
+
+- 企业应用程序：应用程序使用服务定位器来访问数据库服务、消息队列服务等。
+
+
+### 优点
+
+- 解耦服务访问：将服务访问逻辑与使用服务的业务逻辑分离。
+- 集中管理：服务的访问点集中管理，便于维护和扩展。
+- 灵活性：易于添加、修改或替换服务。
+
+
+### 缺点
+
+- 性能问题：服务定位器可能引入性能开销，特别是在每次服务请求都进行查找时。
+- 过度使用：可能导致设计模式的滥用，从而隐藏系统结构。
+
+
+### 使用建议
+
+- 当应用程序需要以一种灵活且可维护的方式访问多个服务时，考虑使用服务定位器模式。
+
+
+### 注意事项
+
+- 避免过度依赖服务定位器，因为它可能掩盖系统的依赖关系，使得调试和优化变得困难。
+
+
+### 包含的几个主要角色
+
+- 服务定位器接口（Service Locator Interface）： 定义获取服务的方法。
+- 服务定位器实现（Service Locator Implementation）： 实现服务定位器接口，封装服务的查找和访问逻辑。
+- 服务接口（Service Interface）： 定义服务的抽象表示。
+- 具体服务（Concrete Service）： 实现服务接口，提供具体的服务功能。
+- 客户端（Client）： 使用服务定位器来访问所需的服务。
+
+服务定位器模式通过提供一个集中的服务访问点，有助于简化服务访问逻辑，并提高应用程序的灵活性和可维护性。
+
+
+## 实现
+
+我们将创建 ServiceLocator、InitialContext、Cache、Service 作为表示实体的各种对象。Service1 和 Service2 表示实体服务。
+
+ServiceLocatorPatternDemo 类在这里是作为一个客户端，将使用 ServiceLocator 来演示服务定位器设计模式。
+
+
+## 步骤 1
+
+创建服务接口 Service。
+
+
+## Service.java
+
+```text
+public interface Service {
+   public String getName();
+   public void execute();
+}
+```
+
+
+## 步骤 2
+
+创建实体服务。
+
+
+## Service1.java
+
+```java
+public class Service1 implements Service {
+   public void execute(){
+      System.out.println("Executing Service1");
+   }
+
+   @Override
+   public String getName() {
+      return "Service1";
+   }
+}
+```
+
+
+## Service2.java
+
+```java
+public class Service2 implements Service {
+   public void execute(){
+      System.out.println("Executing Service2");
+   }
+
+   @Override
+   public String getName() {
+      return "Service2";
+   }
+}
+```
+
+
+## 步骤 3
+
+为 JNDI 查询创建 InitialContext。
+
+
+## InitialContext.java
+
+```java
+public class InitialContext {
+   public Object lookup(String jndiName){
+      if(jndiName.equalsIgnoreCase("SERVICE1")){
+         System.out.println("Looking up and creating a new Service1 object");
+         return new Service1();
+      }else if (jndiName.equalsIgnoreCase("SERVICE2")){
+         System.out.println("Looking up and creating a new Service2 object");
+         return new Service2();
+      }
+      return null;
+   }
+}
+```
+
+
+## 步骤 4
+
+创建缓存 Cache。
+
+
+## Cache.java
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Cache {
+
+   private List<Service> services;
+
+   public Cache(){
+      services = new ArrayList<Service>();
+   }
+
+   public Service getService(String serviceName){
+      for (Service service : services) {
+         if(service.getName().equalsIgnoreCase(serviceName)){
+            System.out.println("Returning cached  "+serviceName+" object");
+            return service;
+         }
+      }
+      return null;
+   }
+
+   public void addService(Service newService){
+      boolean exists = false;
+      for (Service service : services) {
+         if(service.getName().equalsIgnoreCase(newService.getName())){
+            exists = true;
+         }
+      }
+      if(!exists){
+         services.add(newService);
+      }
+   }
+}
+```
+
+
+## 步骤 5
+
+创建服务定位器。
+
+
+## ServiceLocator.java
+
+```java
+public class ServiceLocator {
+   private static Cache cache;
+
+   static {
+      cache = new Cache();
+   }
+
+   public static Service getService(String jndiName){
+
+      Service service = cache.getService(jndiName);
+
+      if(service != null){
+         return service;
+      }
+
+      InitialContext context = new InitialContext();
+      Service service1 = (Service)context.lookup(jndiName);
+      cache.addService(service1);
+      return service1;
+   }
+}
+```
+
+
+## 后续章节
+
+- 步骤 6
+- ServiceLocatorPatternDemo.java
+- 步骤 7
+
+## 复习重点
+
+- 能说明 `服务定位器模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

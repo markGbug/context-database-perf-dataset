@@ -1,34 +1,74 @@
-# XSLT：XSLT <template> 练习笔记
+# XSLT：XSLT <xsl:template> 元素
 
 - 来源：[XSLT <template>](https://www.runoob.com/xsl/xsl-templates.html)
 - 分类：XML / Web Service
 - 技术：XSLT
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4512
 
-## 练习目标
+## 本章内容
 
-把 `XSLT <template>` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+XSL 样式表由一个或多套被称为模板（template）的规则组成。
 
-## 练习步骤
+每个模板含有当某个指定的节点被匹配时所应用的规则。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## <xsl:template> 元素
 
-- 我能独立说出 `XSLT <template>` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+<xsl:template> 元素用于构建模板。
 
-## 复盘问题
+match 属性用于关联 XML 元素和模板。match 属性也可用来为整个 XML 文档定义模板。match 属性的值是 XPath 表达式（举例，match="/" 定义整个文档）。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+好了，让我们看一下上一章中的 XSL 文件的简化版本：
+
+
+## 实例
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <body>
+  <h2>My CD Collection</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th>Title</th>
+      <th>Artist</th>
+    </tr>
+    <tr>
+      <td>.</td>
+      <td>.</td>
+    </tr>
+  </table>
+  </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>
+```
+
+
+## 实例解释
+
+由于 XSL 样式表本身也是一个 XML 文档，因此它总是由 XML 声明起始：<?xml version="1.0" encoding="ISO-8859-1"?>.
+
+下一个元素，<xsl:stylesheet>， ，定义此文档是一个 XSLT 样式表文档（连同版本号和 XSLT 命名空间属性）。
+
+<xsl:template> 元素定义了一个模板。而 match="/" 属性则把此模板与 XML 源文档的根相联系。
+
+<xsl:template> 元素内部的内容定义了写到输出结果的 HTML 代码。
+
+最后两行定义了模板的结尾及样式表的结尾。
+
+这个实例的结果有一点小缺陷，因为数据没有从 XML 文档被复制到输出。在下一章中，您将学习到如何使用 <xsl:value-of> 元素从 XML 元素选取值。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `XSLT <template>` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

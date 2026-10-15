@@ -1,35 +1,173 @@
-# Ionic：ionic 头部与底部 学习笔记
+# Ionic：ionic 头部与底部
 
 - 来源：[ionic 头部与底部](https://www.runoob.com/ionic/ionic-header-footer.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3297
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic 头部与底部` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+## Header(头部)
 
-## 阅读抓手
+Header是固定在屏幕顶部的组件,可以包如标题和左右的功能按钮。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+ionic 默认提供了许多种颜色样式，你可以调用不同的样式名，当然也可以自定义一个。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### bar-light
 
-## 完成标准
+```html
+<div class="bar bar-header bar-light">
+  <h1 class="title">bar-light</h1>
+</div>
+```
 
-- 能用 3 到 5 句话解释 `ionic 头部与底部`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+尝试一下 »
+
+
+### bar-stable
+
+```html
+<div class="bar bar-header bar-stable">
+  <h1 class="title">bar-stable</h1>
+</div>
+```
+
+尝试一下 »
+
+
+### bar-positive
+
+```html
+<div class="bar bar-header bar-positive">
+  <h1 class="title">bar-positive</h1>
+</div>
+```
+
+尝试一下 »
+
+
+### bar-calm
+
+```html
+<div class="bar bar-header bar-calm">
+  <h1 class="title">bar-calm</h1>
+</div>
+```
+
+尝试一下 »
+
+
+### bar-balanced
+
+```html
+<div class="bar bar-header bar-balanced">
+  <h1 class="title">bar-balanced</h1>
+</div>
+```
+
+尝试一下 »
+
+
+### bar-energized
+
+```html
+<div class="bar bar-header bar-energized">
+  <h1 class="title">bar-energized</h1>
+</div>
+```
+
+尝试一下 »
+
+
+### bar-assertive
+
+```html
+<div class="bar bar-header bar-assertive">
+  <h1 class="title">bar-assertive</h1>
+</div>
+```
+
+尝试一下 »
+
+
+### bar-royal
+
+```html
+<div class="bar bar-header bar-royal">
+  <h1 class="title">bar-royal</h1>
+</div>
+```
+
+尝试一下 »
+
+
+### bar-dark
+
+```html
+<div class="bar bar-header bar-dark">
+  <h1 class="title">bar-dark</h1>
+</div>
+```
+
+尝试一下 »
+
+
+## Sub Header（副标题）
+
+Sub Header同样是固定在顶部，只是是在Header的下面，就算没有写Header这个，Sub Header这个样式也会距离顶部有一个Header的距离。颜色样式同 Header 。
+
+```html
+<div class="bar bar-header">
+  <h1 class="title">Header</h1>
+</div>
+<div class="bar bar-subheader">
+  <h2 class="title">Sub Header</h2>
+</div>
+```
+
+尝试一下 »
+
+
+## Footer(底部)
+
+Footer 是在屏幕的最下方，可以包含多种内容类型。
+
+```html
+<div class="bar bar-footer bar-balanced">
+  <div class="title">Footer</div>
+</div>
+```
+
+尝试一下 »
+
+Footer 同上面的 Header，只是把样式名 bar-header 换做 bar-footer 。
+
+```html
+<div class="bar bar-footer">
+  <button class="button button-clear">Left</button>
+  <div class="title">Title</div>
+  <button class="button button-clear">Right</button>
+</div>
+```
+
+尝试一下 »
+
+此外，如果底部没有标题，但是又需要右边的按钮，你需要在右侧按钮添加 pull-right如:
+
+```html
+<div class="bar bar-footer">
+  <button class="button button-clear pull-right">Right</button>
+</div>
+```
+
+尝试一下 »
+
+
+## 复习重点
+
+- 能说明 `ionic 头部与底部` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

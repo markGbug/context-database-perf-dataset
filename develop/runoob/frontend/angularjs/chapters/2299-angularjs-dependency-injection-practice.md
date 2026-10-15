@@ -1,34 +1,197 @@
-# AngularJS：AngularJS 依赖注入 练习笔记
+# AngularJS：AngularJS 依赖注入
 
 - 来源：[AngularJS 依赖注入](https://www.runoob.com/angularjs/angularjs-dependency-injection.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2299
 
-## 练习目标
+## 本章内容
 
-把 `AngularJS 依赖注入` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 什么是依赖注入
 
-## 练习步骤
+wiki 上的解释是：依赖注入（Dependency Injection，简称DI）是一种软件设计模式，在这种模式下，一个或更多的依赖（或服务）被注入（或者通过引用传递）到一个独立的对象（或客户端）中，然后成为了该客户端状态的一部分。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+该模式分离了客户端依赖本身行为的创建，这使得程序设计变得松耦合，并遵循了依赖反转和单一职责原则。与服务定位器模式形成直接对比的是，它允许客户端了解客户端如何使用该系统找到依赖
 
-## 验收清单
+一句话 --- 没事你不要来找我，有事我会去找你。
 
-- 我能独立说出 `AngularJS 依赖注入` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+AngularJS 提供很好的依赖注入机制。以下5个核心组件用来作为依赖注入：
 
-## 复盘问题
+- value
+- factory
+- service
+- provider
+- constant
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## value
+
+Value 是一个简单的 javascript 对象，用于向控制器传递值（配置阶段）：
+
+```javascript
+// 定义一个模块
+var mainApp = angular.module("mainApp", []);
+
+// 创建 value 对象 "defaultInput" 并传递数据
+mainApp.value("defaultInput", 5);
+...
+
+// 将 "defaultInput" 注入到控制器
+mainApp.controller('CalcController', function($scope, CalcService, defaultInput) {
+   $scope.number = defaultInput;
+   $scope.result = CalcService.square($scope.number);
+
+   $scope.square = function() {
+      $scope.result = CalcService.square($scope.number);
+   }
+});
+```
+
+
+## factory
+
+factory 是一个函数用于返回值。在 service 和 controller 需要时创建。
+
+通常我们使用 factory 函数来计算或返回值。
+
+```javascript
+// 定义一个模块
+var mainApp = angular.module("mainApp", []);
+
+// 创建 factory "MathService" 用于两数的乘积 provides a method multiply to return multiplication of two numbers
+mainApp.factory('MathService', function() {
+   var factory = {};
+
+   factory.multiply = function(a, b) {
+      return a * b
+   }
+   return factory;
+});
+
+// 在 service 中注入 factory "MathService"
+mainApp.service('CalcService', function(MathService){
+   this.square = function(a) {
+      return MathService.multiply(a,a);
+   }
+});
+...
+```
+
+
+## provider
+
+AngularJS 中通过 provider 创建一个 service、factory等(配置阶段)。
+
+Provider 中提供了一个 factory 方法 get()，它用于返回 value/service/factory。
+
+```javascript
+// 定义一个模块
+var mainApp = angular.module("mainApp", []);
+...
+
+// 使用 provider 创建 service 定义一个方法用于计算两数乘积
+mainApp.config(function($provide) {
+   $provide.provider('MathService', function() {
+      this.$get = function() {
+         var factory = {};
+
+         factory.multiply = function(a, b) {
+            return a * b;
+         }
+         return factory;
+      };
+   });
+});
+```
+
+
+## constant
+
+constant(常量)用来在配置阶段传递数值，注意这个常量在配置阶段是不可用的。
+
+```text
+mainApp.constant("configParam", "constant value");
+```
+
+
+## 实例
+
+以下实例提供了以上几个依赖注入机制的演示。
+
+
+## AngularJS 实例 - factory
+
+```javascript
+var mainApp = angular.module("mainApp", []);
+mainApp.value("defaultInput", 5);
+
+mainApp.factory('MathService', function() {
+    var factory = {};
+
+    factory.multiply = function(a, b) {
+        return a * b;
+    }
+    return factory;
+});
+
+mainApp.service('CalcService', function(MathService){
+    this.square = function(a) {
+        return MathService.multiply(a,a);
+    }
+});
+
+mainApp.controller('CalcController', function($scope, CalcService, defaultInput) {
+    $scope.number = defaultInput;
+    $scope.result = CalcService.square($scope.number);
+
+    $scope.square = function() {
+        $scope.result = CalcService.square($scope.number);
+    }
+});
+```
+
+
+## AngularJS 实例 - provider
+
+```javascript
+var mainApp = angular.module("mainApp", []);
+
+mainApp.config(function($provide) {
+    $provide.provider('MathService', function() {
+        this.$get = function() {
+            var factory = {};
+
+            factory.multiply = function(a, b) {
+                return a * b;
+            }
+            return factory;
+        };
+    });
+});
+
+mainApp.value("defaultInput", 5);
+
+mainApp.service('CalcService', function(MathService){
+    this.square = function(a) {
+        return MathService.multiply(a,a);
+    }
+});
+
+mainApp.controller('CalcController', function($scope, CalcService, defaultInput) {
+    $scope.number = defaultInput;
+    $scope.result = CalcService.square($scope.number);
+
+    $scope.square = function() {
+        $scope.result = CalcService.square($scope.number);
+    }
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AngularJS 依赖注入` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

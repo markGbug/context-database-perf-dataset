@@ -1,35 +1,159 @@
-# XML DOM：DOM 删除节点 学习笔记
+# XML DOM：XML DOM 删除节点
 
 - 来源：[DOM 删除节点](https://www.runoob.com/dom/dom-nodes-remove.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4387
 
-## 学习目标
+## 本章内容
 
-XML DOM 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `DOM 删除节点` 建立学习路径，先理解它在 XML DOM 体系中的位置，再做可运行或可复述的验证。
+removeChild() 方法删除指定节点。
 
-## 阅读抓手
+removeAttribute() 方法删除指定属性。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 尝试一下 - 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+下面的实例使用 XML 文件 books.xml。 函数 loadXMLDoc()，位于外部 JavaScript 中，用于加载 XML 文件。
 
-## 完成标准
+删除元素节点 本例使用 removeChild() 来删除第一个 <book> 元素。
 
-- 能用 3 到 5 句话解释 `DOM 删除节点`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+删除当前元素节点 本例使用 parentNode 和 removeChild() 来删除当前的 <book> 元素。
+
+删除文本节点 本例使用 removeChild() 来删除第一个 <title> 元素的文本节点。
+
+清空文本节点的文本 本例使用 nodeValue() 属性来清空第一个 <title> 元素的文本节点。
+
+根据名称删除属性 本例使用 removeAttribute() 从第一个 <book> 元素中删除 "category" 属性。
+
+根据对象删除属性 本例使用 removeAttributeNode() 从所有 <book> 元素中删除所有属性。
+
+
+## 删除元素节点
+
+removeChild() 方法删除指定的节点。
+
+当一个节点被删除时，其所有子节点也会被删除。
+
+下面的代码片段将从载入的 xml 中删除第一个 <book> 元素：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 把变量 y 设置为要删除的元素节点
+- 通过使用 removeChild() 方法从父节点删除元素节点
+
+
+## 删除自身 - 删除当前的节点
+
+removeChild() 方法是唯一可以删除指定节点的方法。
+
+当您已导航到需要删除的节点时，就可以通过使用 parentNode 属性和 removeChild() 方法来删除此节点：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 把变量 y 设置为要删除的元素节点
+- 通过使用 parentNode 属性和 removeChild() 方法来删除此元素节点
+
+
+## 删除文本节点
+
+removeChild() 方法可用于删除文本节点：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 把变量 x 设置为第一个 title 元素节点
+- 把变量 y 设置为要删除的文本节点
+- 通过使用 removeChild() 方法从父节点删除元素节点
+
+不太常用 removeChild() 从节点删除文本。可以使用 nodeValue 属性代替它。请看下一段。
+
+
+## 清空文本节点
+
+nodeValue 属性可用于改变或清空文本节点的值：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 把变量 x 设置为第一个 title 元素的文本节点
+- 使用 nodeValue 属性来清空文本节点的文本
+
+遍历并更改所有 <title> 元素的文本节点： 尝试一下
+
+
+## 根据名称删除属性节点
+
+removeAttribute(name) 方法用于根据名称删除属性节点。
+
+实例：removeAttribute('category')
+
+下面的代码片段删除第一个 <book> 元素中的 "category" 属性：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 使用 getElementsByTagName() 来获取 book 节点
+- 从第一个 book 元素节点中删除 "category" 属性
+
+遍历并删除所有 <book> 元素的 "category" 属性： 尝试一下
+
+
+## 根据对象删除属性节点
+
+removeAttributeNode(node) 方法通过使用 node 对象作为参数，来删除属性节点。
+
+实例: removeAttributeNode(x)
+
+下面的代码片段删除所有 <book> 元素的所有属性：
+
+
+## 实例
+
+```java
+xmlDoc=loadXMLDoc("books.xml");
+
+x=xmlDoc.getElementsByTagName("book");
+
+for (i=0;i<x.length;i++)
+{
+  while (x[i].attributes.length>0)
+  {
+    attnode=x[i].attributes[0];
+    old_att=x[i].removeAttributeNode(attnode);
+  }
+}
+```
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 使用 getElementsByTagName() 来获取所有 book 节点
+- 检查每个 book 元素是否拥有属性
+- 如果在某个 book 元素中存在属性，则删除该属性
+
+
+## 复习重点
+
+- 能说明 `DOM 删除节点` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

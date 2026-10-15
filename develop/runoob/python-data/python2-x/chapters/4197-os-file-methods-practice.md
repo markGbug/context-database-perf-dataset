@@ -1,34 +1,59 @@
-# Python2.x：Python OS 文件/目录方法 练习笔记
+# Python2.x：Python OS 文件/目录方法
 
 - 来源：[Python OS 文件/目录方法](https://www.runoob.com/python/os-file-methods.html)
 - 分类：Python / 数据科学
 - 技术：Python2.x
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4197
 
-## 练习目标
+## 本章内容
 
-把 `Python OS 文件/目录方法` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+os 模块提供了非常丰富的方法用来处理文件和目录。常用的方法如下表所示：
 
-## 练习步骤
+os.access(path, mode)
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+os.chdir(path)
 
-## 验收清单
+os.chflags(path, flags)
 
-- 我能独立说出 `Python OS 文件/目录方法` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+os.chmod(path, mode)
 
-## 复盘问题
+os.chown(path, uid, gid)
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+os.chroot(path)
+
+os.close(fd)
+
+os.closerange(fd_low, fd_high)
+
+os.dup(fd)
+
+os.dup2(fd, fd2)
+
+os.fchdir(fd)
+
+os.fchmod(fd, mode)
+
+os.fchown(fd, uid, gid)
+
+os.fdatasync(fd)
+
+os.fdopen(fd[, mode[, bufsize]])
+
+os.fpathconf(fd, name)
+
+os.fstat(fd)
+
+
+### 参考地址：
+
+- https://blog.konghy.cn/2015/08/02/python-os/
+- https://python.usyiyi.cn/python_278/library/os.html
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python OS 文件/目录方法` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

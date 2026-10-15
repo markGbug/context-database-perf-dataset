@@ -1,35 +1,124 @@
-# Perl：Perl 环境安装 学习笔记
+# Perl：Perl 环境安装
 
 - 来源：[Perl 环境安装](https://www.runoob.com/perl/perl-environment.html)
 - 分类：编程语言
 - 技术：Perl
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3682
 
-## 学习目标
+## 本章内容
 
-Perl 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Perl 环境安装` 建立学习路径，先理解它在 Perl 体系中的位置，再做可运行或可复述的验证。
+在我们开始学习 Perl 语言前，我们需要先安装 Perl 的执行环境。
 
-## 阅读抓手
+Perl 可以在以下平台下运行：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- Unix (Solaris, Linux, FreeBSD, AIX, HP/UX, SunOS, IRIX etc.)
+- Win 9x/NT/2000/
+- WinCE
+- Macintosh (PPC, 68K)
+- Solaris (x86, SPARC)
+- OpenVMS
+- Alpha (7.2 and later)
+- Symbian
+- Debian GNU/kFreeBSD
+- MirOS BSD
+- 等等...
 
-## 笔记模板
+很多系统平台上已经默认安装了 perl，我们可以通过以下命令来查看是否已安装：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如果输出以上信息说明已安装，如果还未安装，可以看接下来的安装指导。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Perl 环境安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 安装 Perl
+
+我们可以在 Perl 的官网下载对应平台的安装包:https://www.perl.org/get.html
+
+
+### Unix 和 Linux 安装 Perl
+
+Unix/Linux 系统上 Perl 安装步骤如下：
+
+- 通过浏览器打开 http://www.perl.org/get.html。
+- 下载适用于 Unix/Linux 的源码包。
+- 下载 perl-5.x.y.tar.gz 文件后执行以下操作。 $ tar -xzf perl-5.x.y.tar.gz $ cd perl-5.x.y $ ./Configure -de $ make $ make test $ make install
+
+接下来我们如果 perl -v 命令查看是否安装成功。
+
+安装成功后，Perl 的安装路径为 /usr/local/bin ，库安装在 /usr/local/lib/perlXX, XX 为版本号。
+
+
+### Window 安装 Perl
+
+Perl 在 Window 平台上有 ActiveStatePerl 和 Strawberry Perl 编译器。
+
+ActiveState Perl和 Strawberry Perl最大的区别是 Strawberry Perl 里面有多包含一些 CPAN 里的模块， 所以Strawberry Perl 下载的安装文件有 80多M, 而ActiveState Perl 只有20M 左右。
+
+我们这里使用了 Strawberry Perl 。
+
+Window 系统上 Perl 安装步骤如下：
+
+- Strawberry 安装包链接： http://strawberryperl.com。
+- 下载对应你系统的版本： 32bit 或 64bit 。
+- 下载后双击打开，按安装向导一步步安装即可。
+
+
+### Mac OS 安装 Perl
+
+Mac OS 系统一般默认已经安装了 Perl，如果未安装则执行以下步骤：
+
+- 通过浏览器打开 http://www.perl.org/get.html。
+- 下载适用于 Mac OS 的源码包。
+- 下载 perl-5.x.y.tar.gz 文件后执行以下操作。 $ tar -xzf perl-5.x.y.tar.gz $ cd perl-5.x.y $ ./Configure -de $ make $ make test $ make install
+
+执行成功后 Perl 的安装路径为 /usr/local/bin ，库安装在 /usr/local/lib/perlXX, XX 为版本号。
+
+
+## 运行 Perl
+
+Perl 有不同的执行方式。
+
+
+### 1、交互式
+
+我们可以在命令行中直接执行 perl 代码，语法格式如下：
+
+```html
+$perl  -e <perl code>           # Unix/Linux
+
+或
+
+C:>perl -e <perl code>          # Windows/DOS
+```
+
+命令行参数如下所示：
+
+允许污染检测
+
+
+### 2、脚本执行
+
+我们可以将 perl 代码放在脚本文件中，通过以下命令来执行文件代码：
+
+```text
+$perl  script.pl          # Unix/Linux
+
+或
+
+C:>perl script.pl         # Windows/DOS
+```
+
+
+### 集成开发环境(IDE:Integrated Development Environment)
+
+我们也可以在一些图形用户界面(GUI) 环境上执行 perl 脚本。以下推荐两款常用的 Perl 集成开发环境：
+
+- Padre：Padre 是一个为 Perl 语言开发者提供的集成开发环境，提供了语法高亮和代码重构功能。
+- EPIC : EPIC 是 Perl Eclipse IDE 的插件，如果你熟悉 Eclipse，你可以使用它。 安装步骤：Help-->Eclipse Marketplace-->输入EPIC--> 选择安装并更新即可。
+
+
+## 复习重点
+
+- 能说明 `Perl 环境安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

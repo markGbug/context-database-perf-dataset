@@ -1,34 +1,184 @@
-# Java：Java switch case 练习笔记
+# Java：Java switch case 语句
 
 - 来源：[Java switch case](https://www.runoob.com/java/java-switch-case.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0890
 
-## 练习目标
+## 本章内容
 
-把 `Java switch case` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+switch case 语句判断一个变量与一系列值中某个值是否相等，每个值称为一个分支。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 语法
 
-## 验收清单
+switch case 语句语法格式如下：
 
-- 我能独立说出 `Java switch case` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```java
+switch(expression){
+    case value :
+       //语句
+       break; //可选
+    case value :
+       //语句
+       break; //可选
+    //你可以有任意数量的case语句
+    default : //可选
+       //语句
+}
+```
 
-## 复盘问题
+switch case 语句有如下规则：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- switch 语句中的变量类型可以是： byte、short、int 或者 char。从 Java SE 7 开始，switch 支持字符串 String 类型了，同时 case 标签必须为字符串常量或字面量。
+- switch 语句可以拥有多个 case 语句。每个 case 后面跟一个要比较的值和冒号。
+- case 语句中的值的数据类型必须与变量的数据类型相同，而且只能是常量或者字面常量。
+- 当变量的值与 case 语句的值相等时，那么 case 语句之后的语句开始执行，直到 break 语句出现才会跳出 switch 语句。
+- 当遇到 break 语句时，switch 语句终止。程序跳转到 switch 语句后面的语句执行。case 语句不必须要包含 break 语句。如果没有 break 语句出现，程序会继续执行下一条 case 语句，直到出现 break 语句。
+- switch 语句可以包含一个 default 分支，该分支一般是 switch 语句的最后一个分支（可以在任何位置，但建议在最后一个）。default 在没有 case 语句的值和变量值相等的时候执行。default 分支不需要 break 语句。
+
+switch case 执行时，一定会先进行匹配，匹配成功返回当前 case 的值，再根据是否有 break，判断是否继续输出，或是跳出判断。
+
+
+### 实例
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String args[]){
+      //char grade = args[0].charAt(0);
+      char grade = 'C';
+
+      switch(grade)
+      {
+         case 'A' :
+            System.out.println("优秀");
+            break;
+         case 'B' :
+         case 'C' :
+            System.out.println("良好");
+            break;
+         case 'D' :
+            System.out.println("及格");
+            break;
+         case 'F' :
+            System.out.println("你需要再努力努力");
+            break;
+         default :
+            System.out.println("未知等级");
+      }
+      System.out.println("你的等级是 " + grade);
+   }
+}
+```
+
+以上代码编译运行结果如下：
+
+```text
+良好
+你的等级是 C
+```
+
+如果 case 语句块中没有 break 语句时，JVM 并不会顺序输出每一个 case 对应的返回值，而是继续匹配，匹配不成功则返回默认 case。
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String args[]){
+      int i = 5;
+      switch(i){
+         case 0:
+            System.out.println("0");
+         case 1:
+            System.out.println("1");
+         case 2:
+            System.out.println("2");
+         default:
+            System.out.println("default");
+      }
+   }
+}
+```
+
+以上代码编译运行结果如下：
+
+```text
+default
+```
+
+如果 case 语句块中没有 break 语句时，匹配成功后，从当前 case 开始，后续所有 case 的值都会输出。
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String args[]){
+      int i = 1;
+      switch(i){
+         case 0:
+            System.out.println("0");
+         case 1:
+            System.out.println("1");
+         case 2:
+            System.out.println("2");
+         default:
+            System.out.println("default");
+      }
+   }
+}
+```
+
+以上代码编译运行结果如下：
+
+```text
+1
+2
+default
+```
+
+如果当前匹配成功的 case 语句块没有 break 语句，则从当前 case 开始，后续所有 case 的值都会输出，如果后续的 case 语句块有 break 语句则会跳出判断。
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+   public static void main(String args[]){
+      int i = 1;
+      switch(i){
+         case 0:
+            System.out.println("0");
+         case 1:
+            System.out.println("1");
+         case 2:
+            System.out.println("2");
+         case 3:
+            System.out.println("3"); break;
+         default:
+            System.out.println("default");
+      }
+   }
+}
+```
+
+以上代码编译运行结果如下：
+
+```text
+1
+2
+3
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java switch case` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

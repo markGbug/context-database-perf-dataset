@@ -1,35 +1,84 @@
-# JSON：JSON 使用 学习笔记
+# JSON：JSON 使用
 
 - 来源：[JSON 使用](https://www.runoob.com/json/json-eval.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3018
 
-## 学习目标
+## 本章内容
 
-JSON 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JSON 使用` 建立学习路径，先理解它在 JSON 体系中的位置，再做可运行或可复述的验证。
+## 把 JSON 文本转换为 JavaScript 对象
 
-## 阅读抓手
+JSON 最常见的用法之一，是从 web 服务器上读取 JSON 数据（作为文件或作为 HttpRequest），将 JSON 数据转换为 JavaScript 对象，然后在网页中使用该数据。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+为了更简单地为您讲解，我们使用字符串作为输入进行演示（而不是文件）。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## JSON 实例 - 来自字符串的对象
 
-## 完成标准
+创建包含 JSON 语法的 JavaScript 字符串：
 
-- 能用 3 到 5 句话解释 `JSON 使用`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```javascript
+var txt = '{ "sites" : [' +
+'{ "name":"菜鸟教程" , "url":"www.runoob.com" },' +
+'{ "name":"google" , "url":"www.google.com" },' +
+'{ "name":"微博" , "url":"www.weibo.com" } ]}';
+```
+
+由于 JSON 语法是 JavaScript 语法的子集，JavaScript 函数 eval() 可用于将 JSON 文本转换为 JavaScript 对象。
+
+eval() 函数使用的是 JavaScript 编译器，可解析 JSON 文本，然后生成 JavaScript 对象。必须把文本包围在括号中，这样才能避免语法错误：
+
+在网页中使用 JavaScript 对象：
+
+
+## 实例
+
+```javascript
+var txt = '{ "sites" : [' +
+'{ "name":"菜鸟教程" , "url":"www.runoob.com" },' +
+'{ "name":"google" , "url":"www.google.com" },' +
+'{ "name":"微博" , "url":"www.weibo.com" } ]}';
+
+var obj = eval ("(" + txt + ")");
+
+document.getElementById("name").innerHTML=obj.sites[0].name
+document.getElementById("url").innerHTML=obj.sites[0].url
+```
+
+
+## JSON 解析器
+
+eval() 函数可编译并执行任何 JavaScript 代码。这隐藏了一个潜在的安全问题。
+
+使用 JSON 解析器将 JSON 转换为 JavaScript 对象是更安全的做法。JSON 解析器只能识别 JSON 文本，而不会编译脚本。
+
+在浏览器中，这提供了原生的 JSON 支持，而且 JSON 解析器的速度更快。
+
+较新的浏览器和最新的 ECMAScript (JavaScript) 标准中均包含了原生的对 JSON 的支持。
+
+- Firefox (Mozilla) 3.5
+- Internet Explorer 8
+- Chrome
+- Opera 10
+- Safari 4
+- jQuery
+- Yahoo UI
+- Prototype
+- Dojo
+- ECMAScript 1.5
+
+尝试一下 »
+
+对于较老的浏览器，可使用 JavaScript 库： https://github.com/douglascrockford/JSON-js
+
+JSON 格式最初是 originally specified by Douglas Crockford
+
+
+## 复习重点
+
+- 能说明 `JSON 使用` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,236 @@
-# 设计模式：前端控制器模式 练习笔记
+# 设计模式：前端控制器模式
 
 - 来源：[前端控制器模式](https://www.runoob.com/design-pattern/front-controller-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1334
 
-## 练习目标
+## 本章内容
 
-把 `前端控制器模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+前端控制器模式（Front Controller Pattern）是用来提供一个集中的请求处理机制，所有的请求都将由一个单一的处理程序处理。该处理程序可以做认证/授权/记录日志，或者跟踪请求，然后把请求传给相应的处理程序。以下是这种设计模式的实体。
 
-## 练习步骤
+- 前端控制器（Front Controller） - 处理应用程序所有类型请求的单个处理程序，应用程序可以是基于 web 的应用程序，也可以是基于桌面的应用程序。
+- 调度器（Dispatcher） - 前端控制器可能使用一个调度器对象来调度请求到相应的具体处理程序。
+- 视图（View） - 视图是为请求而创建的对象。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 概要
 
-- 我能独立说出 `前端控制器模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 意图
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+使用一个中心控制器（或处理器）来转发客户端请求到适当的处理程序。
+
+
+### 主要解决的问题
+
+- 解决Web应用程序中请求处理分散的问题，提供统一的请求处理入口。
+
+
+### 使用场景
+
+- 当需要对Web应用程序中的请求进行统一管理和分发时。
+
+
+### 实现方式
+
+- 前端控制器：作为请求的单一入口点，负责请求的接收和转发。
+- 视图：用于呈现处理结果。
+- 处理程序：实际执行请求处理的组件。
+
+
+### 关键代码
+
+- 前端控制器：包含逻辑以决定将请求转发到哪个处理程序。
+- 处理程序映射：将请求映射到相应的处理程序。
+
+
+### 应用实例
+
+- Web框架：如Spring MVC中的DispatcherServlet，作为前端控制器。
+
+
+### 优点
+
+- 集中请求处理：简化请求处理流程，易于管理和维护。
+- 减少代码重复：通过重用控制器减少视图和处理程序中的重复代码。
+- 易于扩展：新增请求处理逻辑时，只需添加新的处理程序。
+
+
+### 缺点
+
+- 可能成为性能瓶颈：所有请求都通过前端控制器，可能影响性能。
+
+
+### 使用建议
+
+- 当需要构建一个具有清晰请求处理流程的Web应用程序时，考虑使用前端控制器模式。
+
+
+### 注意事项
+
+- 确保前端控制器不会由于集中处理所有请求而成为性能瓶颈。
+
+
+### 包含的几个主要角色
+
+前端控制器（Front Controller）：
+
+- 作为请求的单一入口点，负责接收请求并决定如何处理。
+
+处理程序（Handler）：
+
+- 实际执行请求处理的组件。
+
+视图（View）：
+
+- 用于呈现处理程序生成的响应。
+
+处理程序映射（Handler Mapping）（可选）：
+
+- 将请求映射到相应的处理程序。
+
+客户端（Client）（可选）：
+
+- 发出请求的Web浏览器或API客户端。
+
+前端控制器模式通过提供一个集中的请求处理机制，有助于构建易于维护和扩展的Web应用程序。
+
+
+## 实现
+
+我们将创建 FrontController、Dispatcher 分别当作前端控制器和调度器。HomeView 和 StudentView 表示各种为前端控制器接收到的请求而创建的视图。
+
+FrontControllerPatternDemo，我们的演示类使用 FrontController 来演示前端控制器设计模式。
+
+
+## 步骤 1
+
+创建视图。
+
+
+## HomeView.java
+
+```java
+public class HomeView {
+   public void show(){
+      System.out.println("Displaying Home Page");
+   }
+}
+```
+
+
+## StudentView.java
+
+```java
+public class StudentView {
+   public void show(){
+      System.out.println("Displaying Student Page");
+   }
+}
+```
+
+
+## 步骤 2
+
+创建调度器 Dispatcher。
+
+
+## Dispatcher.java
+
+```java
+public class Dispatcher {
+   private StudentView studentView;
+   private HomeView homeView;
+   public Dispatcher(){
+      studentView = new StudentView();
+      homeView = new HomeView();
+   }
+
+   public void dispatch(String request){
+      if(request.equalsIgnoreCase("STUDENT")){
+         studentView.show();
+      }else{
+         homeView.show();
+      }
+   }
+}
+```
+
+
+## 步骤 3
+
+创建前端控制器 FrontController。
+
+
+## FrontController.java
+
+```java
+public class FrontController {
+
+   private Dispatcher dispatcher;
+
+   public FrontController(){
+      dispatcher = new Dispatcher();
+   }
+
+   private boolean isAuthenticUser(){
+      System.out.println("User is authenticated successfully.");
+      return true;
+   }
+
+   private void trackRequest(String request){
+      System.out.println("Page requested: " + request);
+   }
+
+   public void dispatchRequest(String request){
+      //记录每一个请求
+      trackRequest(request);
+      //对用户进行身份验证
+      if(isAuthenticUser()){
+         dispatcher.dispatch(request);
+      }
+   }
+}
+```
+
+
+## 步骤 4
+
+使用 FrontController 来演示前端控制器设计模式。
+
+
+## FrontControllerPatternDemo.java
+
+```java
+public class FrontControllerPatternDemo {
+   public static void main(String[] args) {
+      FrontController frontController = new FrontController();
+      frontController.dispatchRequest("HOME");
+      frontController.dispatchRequest("STUDENT");
+   }
+}
+```
+
+
+## 步骤 5
+
+执行程序，输出结果：
+
+```text
+Page requested: HOME
+User is authenticated successfully.
+Displaying Home Page
+Page requested: STUDENT
+User is authenticated successfully.
+Displaying Student Page
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `前端控制器模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

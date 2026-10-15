@@ -1,35 +1,169 @@
-# Bootstrap4：Bootstrap4 表单控件 学习笔记
+# Bootstrap4：Bootstrap4 表单控件
 
 - 来源：[Bootstrap4 表单控件](https://www.runoob.com/bootstrap4/bootstrap4-forms-inputs.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2327
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 表单控件` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+Bootstrap4 支持以下表单控件：
 
-## 阅读抓手
+- input
+- textarea
+- checkbox
+- radio
+- select
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## Bootstrap Input
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Bootstrap 支持所有的 HTML5 输入类型: text, password, datetime, datetime-local, date, month, time, week, number, email, url, search, tel, 以及 color。
 
-## 完成标准
+注意：: 如果 input 的 type 属性未正确声明，输入框的样式将不会显示。
 
-- 能用 3 到 5 句话解释 `Bootstrap4 表单控件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下实例使用两个 input 元素，一个是 text，一个是 password ：
+
+
+## 实例
+
+```html
+<div class="form-group">
+  <label for="usr">用户名:</label>
+  <input type="text" class="form-control" id="usr">
+</div>
+<div class="form-group">
+  <label for="pwd">密码:</label>
+  <input type="password" class="form-control" id="pwd">
+</div>
+```
+
+
+## Bootstrap textarea
+
+以下实例演示了 textarea 的样式。
+
+
+## 实例
+
+```html
+<div class="form-group">
+  <label for="comment">评论:</label>
+  <textarea class="form-control" rows="5" id="comment"></textarea>
+</div>
+```
+
+
+## Bootstrap 复选框(checkbox)
+
+复选框用于让用户从一系列预设置的选项中进行选择，可以选一个或多个。
+
+以下实例包含了三个选项。最后一个是禁用的：
+
+
+## 实例
+
+```html
+<div class="form-check">
+  <label class="form-check-label">
+    <input type="checkbox" class="form-check-input" value="">Option 1
+  </label>
+</div>
+<div class="form-check">
+  <label class="form-check-label">
+    <input type="checkbox" class="form-check-input" value="">Option 2
+  </label>
+</div>
+<div class="form-check disabled">
+  <label class="form-check-label">
+    <input type="checkbox" class="form-check-input" value="" disabled>Option 3
+  </label>
+</div>
+```
+
+使用 .form-check-inline 类可以让选项显示在同一行上：
+
+
+## 实例
+
+```html
+<div class="form-check form-check-inline">
+  <label class="form-check-label">
+    <input type="checkbox" class="form-check-input" value="">Option 1
+  </label>
+</div>
+<div class="form-check form-check-inline">
+  <label class="form-check-label">
+    <input type="checkbox" class="form-check-input" value="">Option 2
+  </label>
+</div>
+<div class="form-check form-check-inline disabled">
+  <label class="form-check-label">
+    <input type="checkbox" class="form-check-input" value="" disabled>Option 3
+  </label>
+</div>
+```
+
+
+## Bootstrap 单选框(Radio)
+
+单选框用于让用户从一系列预设置的选项中进行选择，只能选一个。
+
+以下实例包含了三个选项。最后一个是禁用的：
+
+
+## 实例
+
+```html
+<div class="radio">
+  <label><input type="radio" name="optradio">Option 1</label>
+</div>
+<div class="radio">
+  <label><input type="radio" name="optradio">Option 2</label>
+</div>
+<div class="radio disabled">
+  <label><input type="radio" name="optradio" disabled>Option 3</label>
+</div>
+```
+
+使用 .radio-inline 类可以让选项显示在同一行上：
+
+
+## 实例
+
+```html
+<label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
+<label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
+<label class="radio-inline"><input type="radio" name="optradio" disabled>Option 3</label>
+```
+
+
+## Bootstrap select 下拉菜单
+
+当您想让用户从多个选项中进行选择，但是默认情况下只能选择一个选项时，则使用选择框。
+
+以下实例包含了两个下拉菜单：
+
+
+## 实例
+
+```html
+<div class="form-group">
+  <label for="sel1">下拉菜单:</label>
+  <select class="form-control" id="sel1">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+  </select>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 表单控件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

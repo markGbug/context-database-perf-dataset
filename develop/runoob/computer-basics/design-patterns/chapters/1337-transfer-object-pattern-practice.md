@@ -1,34 +1,225 @@
-# 设计模式：传输对象模式 练习笔记
+# 设计模式：传输对象模式
 
 - 来源：[传输对象模式](https://www.runoob.com/design-pattern/transfer-object-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1337
 
-## 练习目标
+## 本章内容
 
-把 `传输对象模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+传输对象模式（Transfer Object Pattern）用于从客户端向服务器一次性传递带有多个属性的数据。传输对象也被称为数值对象。传输对象是一个具有 getter/setter 方法的简单的 POJO 类，它是可序列化的，所以它可以通过网络传输。它没有任何的行为。服务器端的业务类通常从数据库读取数据，然后填充 POJO，并把它发送到客户端或按值传递它。对于客户端，传输对象是只读的。客户端可以创建自己的传输对象，并把它传递给服务器，以便一次性更新数据库中的数值。以下是这种设计模式的实体。
 
-## 练习步骤
+- 业务对象（Business Object） - 为传输对象填充数据的业务服务。
+- 传输对象（Transfer Object） - 简单的 POJO，只有设置/获取属性的方法。
+- 客户端（Client） - 客户端可以发送请求或者发送传输对象到业务对象。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 概要
 
-- 我能独立说出 `传输对象模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 意图
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+用于简化网络或应用程序层之间的数据传输。它通过创建一个包含多个属性的类来封装数据，这些属性代表需要传输的数据。
+
+
+### 主要解决的问题
+
+- 解决在分布式系统中，尤其是多层应用程序中，数据在层与层之间传输时的效率和封装性问题。
+
+
+### 使用场景
+
+- 当需要在客户端和服务器之间传输大量数据时，特别是Web服务或远程过程调用（RPC）。
+
+
+### 实现方式
+
+- 传输对象类：定义一个包含多个属性的类，这些属性代表需要传输的数据。
+- 数据访问层：负责从数据库或其他数据源提取数据，并填充到传输对象中。
+- 业务逻辑层：可选，处理业务逻辑，可能需要使用传输对象。
+- 表示层或客户端：使用传输对象来显示数据或作为用户输入的数据载体。
+
+
+### 关键代码
+
+- 传输对象类：包含属性和可能的业务逻辑，用于数据的封装和传输。
+
+
+### 应用实例
+
+- Web应用程序：表示层通过传输对象从服务器获取或发送数据。
+
+
+### 优点
+
+- 减少网络通信开销：通过一次性传输多个数据，减少网络请求次数。
+- 封装性：传输对象作为数据的封装载体，隐藏了内部数据结构。
+- 易于维护：集中管理传输数据，便于修改和扩展。
+
+
+### 缺点
+
+- 过度使用：可能会因为创建过多的传输对象而导致系统复杂性增加。
+
+
+### 使用建议
+
+- 当需要在多层应用程序的不同层之间传输大量数据时，考虑使用传输对象模式。
+
+
+### 注意事项
+
+- 传输对象应该保持轻量级，避免包含过多的业务逻辑。
+
+
+### 包含的几个主要角色
+
+- 传输对象类（Transfer Object Class）： 封装了需要传输的数据。
+- 数据访问层（Data Access Layer）： 提供数据，并可能负责将数据填充到传输对象中。
+- 业务逻辑层（Business Logic Layer）（可选）： 可选，处理业务逻辑，可能使用传输对象。
+- 表示层或客户端（Presentation Layer or Client）： 使用传输对象来显示数据或发送请求。
+
+传输对象模式通过封装传输数据为一个对象，提供了一种有效的方式来减少网络通信次数，并简化数据传输过程。
+
+
+## 实现
+
+我们将创建一个作为业务对象的 StudentBO 和作为传输对象的 StudentVO，它们都代表了我们的实体。
+
+TransferObjectPatternDemo 类在这里是作为一个客户端，将使用 StudentBO 和 Student 来演示传输对象设计模式。
+
+
+## 步骤 1
+
+创建传输对象。
+
+
+## StudentVO.java
+
+```java
+public class StudentVO {
+   private String name;
+   private int rollNo;
+
+   StudentVO(String name, int rollNo){
+      this.name = name;
+      this.rollNo = rollNo;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public int getRollNo() {
+      return rollNo;
+   }
+
+   public void setRollNo(int rollNo) {
+      this.rollNo = rollNo;
+   }
+}
+```
+
+
+## 步骤 2
+
+创建业务对象。
+
+
+## StudentBO.java
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentBO {
+
+   //列表是当作一个数据库
+   List<StudentVO> students;
+
+   public StudentBO(){
+      students = new ArrayList<StudentVO>();
+      StudentVO student1 = new StudentVO("Robert",0);
+      StudentVO student2 = new StudentVO("John",1);
+      students.add(student1);
+      students.add(student2);
+   }
+   public void deleteStudent(StudentVO student) {
+      students.remove(student.getRollNo());
+      System.out.println("Student: Roll No "
+      + student.getRollNo() +", deleted from database");
+   }
+
+   //从数据库中检索学生名单
+   public List<StudentVO> getAllStudents() {
+      return students;
+   }
+
+   public StudentVO getStudent(int rollNo) {
+      return students.get(rollNo);
+   }
+
+   public void updateStudent(StudentVO student) {
+      students.get(student.getRollNo()).setName(student.getName());
+      System.out.println("Student: Roll No "
+      + student.getRollNo() +", updated in the database");
+   }
+}
+```
+
+
+## 步骤 3
+
+使用 StudentBO 来演示传输对象设计模式。
+
+
+## TransferObjectPatternDemo.java
+
+```java
+public class TransferObjectPatternDemo {
+   public static void main(String[] args) {
+      StudentBO studentBusinessObject = new StudentBO();
+
+      //输出所有的学生
+      for (StudentVO student : studentBusinessObject.getAllStudents()) {
+         System.out.println("Student: [RollNo : "
+         +student.getRollNo()+", Name : "+student.getName()+" ]");
+      }
+
+      //更新学生
+      StudentVO student =studentBusinessObject.getAllStudents().get(0);
+      student.setName("Michael");
+      studentBusinessObject.updateStudent(student);
+
+      //获取学生
+      studentBusinessObject.getStudent(0);
+      System.out.println("Student: [RollNo : "
+      +student.getRollNo()+", Name : "+student.getName()+" ]");
+   }
+}
+```
+
+
+## 步骤 4
+
+执行程序，输出结果：
+
+```text
+Student: [RollNo : 0, Name : Robert ]
+Student: [RollNo : 1, Name : John ]
+Student: Roll No 0, updated in the database
+Student: [RollNo : 0, Name : Michael ]
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `传输对象模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,151 @@
-# Ionic：ionic 加载动作 练习笔记
+# Ionic：ionic 加载动作
 
 - 来源：[ionic 加载动作](https://www.runoob.com/ionic/ionic-ionicloading.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3320
 
-## 练习目标
+## 本章内容
 
-把 `ionic 加载动作` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+$ionicLoading 是 ionic 默认的一个加载交互效果。里面的内容也是可以在模板里面修改。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 用法
 
-## 验收清单
+```text
+angular.module('LoadingApp', ['ionic'])
+.controller('LoadingCtrl', function($scope, $ionicLoading) {
+  $scope.show = function() {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  };
+  $scope.hide = function(){
+    $ionicLoading.hide();
+  };
+});
+```
 
-- 我能独立说出 `ionic 加载动作` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 方法
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+显示一个加载效果。
+
+```text
+show(opts)
+```
+
+loading指示器的选项。可用属性：
+
+- {string=} template 指示器的html内容。
+- {string=} templateUrl 一个加载html模板的url作为指示器的内容。
+- {boolean=} noBackdrop 是否隐藏背景。默认情况下它会显示。
+- {number=} delay 指示器延迟多少毫秒显示。默认为不延迟。
+- {number=} duration 等待多少毫秒后自动隐藏指示器。默认情况下，指示器会一直显示，直到触发.hide()。
+
+隐藏一个加载效果。
+
+```text
+hide()
+```
+
+
+### API
+
+该句柄定义带有$ionicListDelegate的列表。
+
+列表项的删除按钮当前是显示还是隐藏。
+
+列表项的排序按钮当前是显示还是隐藏。
+
+列表项是否被允许滑动显示选项按钮。默认：true。
+
+
+## 实例
+
+
+### HTML 代码：
+
+```html
+<html ng-app="ionicApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>Ionic Modal</title>
+
+     <link href="http://www.runoob.com/static/ionic/css/ionic.min.css" rel="stylesheet">
+    <script src="http://www.runoob.com/static/ionic/js/ionic.bundle.min.js"></script>
+  </head>
+  <body ng-controller="AppCtrl">
+
+      <ion-view title="Home">
+        <ion-header-bar>
+          <h1 class="title">The Stooges</h1>
+        </ion-header-bar>
+        <ion-content has-header="true">
+          <ion-list>
+            <ion-item ng-repeat="stooge in stooges" href="#">{{stooge.name}}</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-view>
+
+  </body>
+</html>
+```
+
+
+### JavaScript 代码
+
+```javascript
+angular.module('ionicApp', ['ionic'])
+.controller('AppCtrl', function($scope, $timeout, $ionicLoading) {
+
+  // Setup the loader
+  $ionicLoading.show({
+    content: 'Loading',
+    animation: 'fade-in',
+    showBackdrop: true,
+    maxWidth: 200,
+    showDelay: 0
+  });
+
+  // Set a timeout to clear loader, however you would actually call the $ionicLoading.hide(); method whenever everything is ready or loaded.
+  $timeout(function () {
+    $ionicLoading.hide();
+    $scope.stooges = [{name: 'Moe'}, {name: 'Larry'}, {name: 'Curly'}];
+  }, 2000);
+
+});
+```
+
+尝试一下 »
+
+
+## $ionicLoadingConfig
+
+设置加载的默认选项:
+
+
+### 用法:
+
+```javascript
+var app = angular.module('myApp', ['ionic'])
+app.constant('$ionicLoadingConfig', {
+  template: '默认加载模板……'
+});
+app.controller('AppCtrl', function($scope, $ionicLoading) {
+  $scope.showLoading = function() {
+    $ionicLoading.show(); //配置选项在 $ionicLoadingConfig 设置
+  };
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 加载动作` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

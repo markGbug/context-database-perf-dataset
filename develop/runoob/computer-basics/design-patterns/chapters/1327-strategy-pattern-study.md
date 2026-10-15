@@ -1,35 +1,214 @@
-# 设计模式：策略模式 学习笔记
+# 设计模式：策略模式
 
 - 来源：[策略模式](https://www.runoob.com/design-pattern/strategy-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1327
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `策略模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+在策略模式（Strategy Pattern）中一个类的行为或其算法可以在运行时更改。这种类型的设计模式属于行为型模式。
 
-## 阅读抓手
+在策略模式定义了一系列算法或策略，并将每个算法封装在独立的类中，使得它们可以互相替换。通过使用策略模式，可以在运行时根据需要选择不同的算法，而不需要修改客户端代码。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+在策略模式中，我们创建表示各种策略的对象和一个行为随着策略对象改变而改变的 context 对象。策略对象改变 context 对象的执行算法。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 介绍
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `策略模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 意图
+
+将每个算法封装起来，使它们可以互换使用。
+
+
+### 主要解决的问题
+
+- 解决在多种相似算法存在时，使用条件语句（如if...else）导致的复杂性和难以维护的问题。
+
+
+### 使用场景
+
+- 当一个系统中有许多类，它们之间的区别仅在于它们的行为时。
+
+
+### 实现方式
+
+- 定义策略接口：所有策略类都将实现这个统一的接口。
+- 创建具体策略类：每个策略类封装一个具体的算法或行为。
+- 上下文类：包含一个策略对象的引用，并通过该引用调用策略。
+
+
+### 关键代码
+
+- 策略接口：规定了所有策略类必须实现的方法。
+- 具体策略类：实现了策略接口，包含具体的算法实现。
+
+
+### 应用实例
+
+- 锦囊妙计：每个锦囊代表一个策略，包含不同的计策。
+- 旅行方式选择：骑自行车、坐汽车等，每种方式都是一个可替换的策略。
+- Java AWT的LayoutManager：不同的布局管理器实现了相同的接口，但提供了不同的布局算法。
+
+
+### 优点
+
+- 算法切换自由：可以在运行时根据需要切换算法。
+- 避免多重条件判断：消除了复杂的条件语句。
+- 扩展性好：新增算法只需新增一个策略类，无需修改现有代码。
+
+
+### 缺点
+
+- 策略类数量增多：每增加一个算法，就需要增加一个策略类。
+- 所有策略类都需要暴露：策略类需要对外公开，以便可以被选择和使用。
+
+
+### 使用建议
+
+- 当系统中有多种算法或行为，且它们之间可以相互替换时，使用策略模式。
+- 当系统需要动态选择算法时，策略模式是一个合适的选择。
+
+
+### 注意事项
+
+- 如果系统中策略类数量过多，考虑使用其他模式或设计技巧来解决类膨胀问题。
+
+
+### 结构
+
+策略模式包含以下几个核心角色：
+
+- 环境（Context）：维护一个对策略对象的引用，负责将客户端请求委派给具体的策略对象执行。环境类可以通过依赖注入、简单工厂等方式来获取具体策略对象。
+- 抽象策略（Abstract Strategy）：定义了策略对象的公共接口或抽象类，规定了具体策略类必须实现的方法。
+- 具体策略（Concrete Strategy）：实现了抽象策略定义的接口或抽象类，包含了具体的算法实现。
+
+策略模式通过将算法与使用算法的代码解耦，提供了一种动态选择不同算法的方法。客户端代码不需要知道具体的算法细节，而是通过调用环境类来使用所选择的策略。
+
+
+## 实现
+
+我们将创建一个定义活动的 Strategy 接口和实现了 Strategy 接口的实体策略类。Context 是一个使用了某种策略的类。
+
+StrategyPatternDemo，我们的演示类使用 Context 和策略对象来演示 Context 在它所配置或使用的策略改变时的行为变化。
+
+
+### 步骤 1
+
+创建一个接口。
+
+
+## Strategy.java
+
+```java
+public interface Strategy {
+   public int doOperation(int num1, int num2);
+}
+```
+
+
+### 步骤 2
+
+创建实现接口的实体类。
+
+
+## OperationAdd.java
+
+```java
+public class OperationAdd implements Strategy{
+   @Override
+   public int doOperation(int num1, int num2) {
+      return num1 + num2;
+   }
+}
+```
+
+
+## OperationSubtract.java
+
+```java
+public class OperationSubtract implements Strategy{
+   @Override
+   public int doOperation(int num1, int num2) {
+      return num1 - num2;
+   }
+}
+```
+
+
+## OperationMultiply.java
+
+```java
+public class OperationMultiply implements Strategy{
+   @Override
+   public int doOperation(int num1, int num2) {
+      return num1 * num2;
+   }
+}
+```
+
+
+### 步骤 3
+
+创建 Context 类。
+
+
+## Context.java
+
+```java
+public class Context {
+   private Strategy strategy;
+
+   public Context(Strategy strategy){
+      this.strategy = strategy;
+   }
+
+   public int executeStrategy(int num1, int num2){
+      return strategy.doOperation(num1, num2);
+   }
+}
+```
+
+
+### 步骤 4
+
+使用 Context 来查看当它改变策略 Strategy 时的行为变化。
+
+
+## StrategyPatternDemo.java
+
+```java
+public class StrategyPatternDemo {
+   public static void main(String[] args) {
+      Context context = new Context(new OperationAdd());
+      System.out.println("10 + 5 = " + context.executeStrategy(10, 5));
+
+      context = new Context(new OperationSubtract());
+      System.out.println("10 - 5 = " + context.executeStrategy(10, 5));
+
+      context = new Context(new OperationMultiply());
+      System.out.println("10 * 5 = " + context.executeStrategy(10, 5));
+   }
+}
+```
+
+
+### 步骤 5
+
+执行程序，输出结果：
+
+```text
+10 + 5 = 15
+10 - 5 = 5
+10 * 5 = 50
+```
+
+
+## 复习重点
+
+- 能说明 `策略模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

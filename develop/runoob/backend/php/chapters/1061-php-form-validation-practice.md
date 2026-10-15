@@ -1,34 +1,195 @@
-# PHP：PHP 表单验证 练习笔记
+# PHP：PHP 表单验证
 
 - 来源：[PHP 表单验证](https://www.runoob.com/php/php-form-validation.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1061
 
-## 练习目标
+## 本章内容
 
-把 `PHP 表单验证` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们将介绍如何使用PHP验证客户端提交的表单数据。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## PHP 表单验证
 
-## 验收清单
+本章节我们将展示PHP表单数据安全处理，为了防止黑客及垃圾信息我们需要对表单进行数据安全验证。
 
-- 我能独立说出 `PHP 表单验证` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在本章节介绍的HTML表单中包含以下输入字段： 必须与可选文本字段，单选按钮，及提交按钮：
 
-## 复盘问题
+查看代码 »
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+上述表单验证规则如下：
+
+首先让我们先看看纯HTML的表单代码：
+
+
+## 文本字段
+
+"名字", "E-mail", 及"网址"字段为文本输入元素，"备注"字段是 textarea。HTML代码如下所示:
+
+```html
+“名字”: <input type="text" name="name">
+E-mail: <input type="text" name="email">
+网址: <input type="text" name="website">
+备注: <textarea name="comment" rows="5" cols="40"></textarea>
+```
+
+
+## 单选按钮
+
+"性别"字段是单选按钮，HTML代码如下所示：
+
+```html
+性别:
+<input type="radio" name="gender" value="female">女
+<input type="radio" name="gender" value="male">男
+```
+
+
+## 表单元素
+
+HTML 表单代码如下所示:
+
+```html
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+```
+
+该表单使用 method="post" 方法来提交数据。
+
+所以， $_SERVER["PHP_SELF"] 会发送表单数据到当前页面，而不是跳转到不同的页面。
+
+预定义的字符是：
+
+- & （和号） 成为 &
+- " （双引号） 成为 "
+- ' （单引号） 成为 '
+- < （小于） 成为 <
+- > （大于） 成为 >
+
+
+## PHP表单中需引起注重的地方？
+
+$_SERVER["PHP_SELF"] 变量有可能会被黑客使用！
+
+当黑客使用跨网站脚本的HTTP链接来攻击时，$_SERVER["PHP_SELF"]服务器变量也会被植入脚本。原因就是跨网站脚本是附在执行文件的路径后面的，因此$_SERVER["PHP_SELF"]的字符串就会包含HTTP链接后面的JavaScript程序代码。
+
+指定以下表单文件名为 "test_form.php":
+
+```html
+<form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
+```
+
+现在，我们使用URL来指定提交地址 "test_form.php",以上代码修改为如下所示:
+
+```html
+<form method="post" action="test_form.php">
+```
+
+这样做就很好了。
+
+但是，考虑到用户会在浏览器地址栏中输入以下地址:
+
+```text
+http://www.runoob.com/test_form.php/%22%3E%3Cscript%3Ealert('hacked')%3C/script%3E
+```
+
+以上的 URL 中，将被解析为如下代码并执行：
+
+```html
+<form method="post" action="test_form.php/"><script>alert('hacked')</script>
+```
+
+代码中添加了 script 标签，并添加了alert命令。 当页面载入时会执行该Javascript代码（用户会看到弹出框）。 这仅仅只是一个简单的实例来说明PHP_SELF变量会被黑客利用。
+
+请注意， 任何JavaScript代码可以添加在<script>标签中！ 黑客可以利用这点重定向页面到另外一台服务器的页面上，页面 代码文件中可以保护恶意代码，代码可以修改全局变量或者获取用户的表单数据。
+
+
+## 如何避免 $_SERVER["PHP_SELF"] 被利用?
+
+$_SERVER["PHP_SELF"] 可以通过 htmlspecialchars() 函数来避免被利用。
+
+form 代码如下所示：
+
+```html
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+```
+
+htmlspecialchars() 把一些预定义的字符转换为 HTML 实体。现在如果用户想利用 PHP_SELF 变量, 结果将输出如下所示：
+
+```html
+<form method="post" action="test_form.php/"><script>alert('hacked')</script>">
+```
+
+尝试该漏洞失败！
+
+
+## 使用 PHP 验证表单数据
+
+首先我们对用户所有提交的数据都通过 PHP 的 htmlspecialchars() 函数处理。
+
+当我们使用 htmlspecialchars() 函数时，在用户尝试提交以下文本域:
+
+```html
+<script>location.href('http://www.runoob.com')</script>
+```
+
+该代码将不会被执行，因为它会被保存为HTML转义代码，如下所示：
+
+```html
+<script>location.href('http://www.runoob.com')</script>
+```
+
+以上代码是安全的，可以正常在页面显示或者插入邮件中。
+
+当用户提交表单时，我们将做以下两件事情：
+
+- 使用 PHP trim() 函数去除用户输入数据中不必要的字符 (如：空格，tab，换行)。
+- 使用PHP stripslashes()函数去除用户输入数据中的反斜杠 (\)
+
+接下来让我们将这些过滤的函数写在一个我们自己定义的函数中，这样可以大大提高代码的复用性。
+
+将函数命名为 test_input()。
+
+现在，我们可以通过test_input()函数来检测 $_POST 中的所有变量, 脚本代码如下所示：
+
+
+## 实例
+
+```javascript
+<?php
+// 定义变量并默认设置为空值
+$name = $email = $gender = $comment = $website = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+  $name = test_input($_POST["name"]);
+  $email = test_input($_POST["email"]);
+  $website = test_input($_POST["website"]);
+  $comment = test_input($_POST["comment"]);
+  $gender = test_input($_POST["gender"]);
+}
+
+function test_input($data)
+{
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
+```
+
+注意我们在执行以上脚本时，会通过$_SERVER["REQUEST_METHOD"]来检测表单是否被提交 。如果 REQUEST_METHOD 是 POST, 表单将被提交 - 数据将被验证。如果表单未提交将跳过验证并显示空白。
+
+在以上实例中使用输入项都是可选的，即使用户不输入任何数据也可以正常显示。
+
+在接下来的章节中我们将介绍如何对用户输入的数据进行验证。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PHP 表单验证` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

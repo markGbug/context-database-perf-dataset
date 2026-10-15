@@ -1,35 +1,406 @@
-# SQLite：SQLite - Java 学习笔记
+# SQLite：SQLite - Java
 
 - 来源：[SQLite - Java](https://www.runoob.com/sqlite/sqlite-java.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1735
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite - Java` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+## 安装
 
-## 阅读抓手
+在 Java 程序中使用 SQLite 之前，我们需要确保机器上已经有 SQLite JDBC Driver 驱动程序和 Java。可以查看 Java 教程了解如何在计算机上安装 Java。现在，我们来看看如何在机器上安装 SQLite JDBC 驱动程序。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 本站提供 sqlite-jdbc 3.7.2 版本下载，最新 sqlite-jdbc-(VERSION).jar 版本可以访问 https://github.com/xerial/sqlite-jdbc/releases 下载。
+- 在您的 class 路径中添加下载的 jar 文件 sqlite-jdbc-(VERSION).jar，或者在 -classpath 选项中使用它，这将在后面的实例中进行讲解。
 
-## 笔记模板
+在学习下面部分的知识之前，您必须对 Java JDBC 概念有初步了解。如果您还未了解相关知识，那么建议您可以先花半个小时学习下 JDBC 教程相关知识，这将有助于您学习接下来讲解的知识。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 连接数据库
 
-- 能用 3 到 5 句话解释 `SQLite - Java`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+下面的 Java 程序显示了如何连接到一个现有的数据库。如果数据库不存在，那么它就会被创建，最后将返回一个数据库对象。
+
+```java
+import java.sql.*;
+
+public class SQLiteJDBC
+{
+  public static void main( String args[] )
+  {
+    Connection c = null;
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
+    System.out.println("Opened database successfully");
+  }
+}
+```
+
+现在，让我们来编译和运行上面的程序，在当前目录中创建我们的数据库 test.db。您可以根据需要改变路径。我们假设当前路径下可用的 JDBC 驱动程序的版本是 sqlite-jdbc-3.7.2.jar。
+
+```text
+$javac SQLiteJDBC.java
+$java -classpath ".:sqlite-jdbc-3.7.2.jar" SQLiteJDBC
+Open database successfully
+```
+
+如果您想要使用 Windows 机器，可以按照下列所示编译和运行您的代码：
+
+```text
+$javac SQLiteJDBC.java
+$java -classpath ".;sqlite-jdbc-3.7.2.jar" SQLiteJDBC
+Opened database successfully
+```
+
+
+## 创建表
+
+下面的 Java 程序将用于在先前创建的数据库中创建一个表：
+
+```java
+import java.sql.*;
+
+public class SQLiteJDBC
+{
+  public static void main( String args[] )
+  {
+    Connection c = null;
+    Statement stmt = null;
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      System.out.println("Opened database successfully");
+
+      stmt = c.createStatement();
+      String sql = "CREATE TABLE COMPANY " +
+                   "(ID INT PRIMARY KEY     NOT NULL," +
+                   " NAME           TEXT    NOT NULL, " +
+                   " AGE            INT     NOT NULL, " +
+                   " ADDRESS        CHAR(50), " +
+                   " SALARY         REAL)";
+      stmt.executeUpdate(sql);
+      stmt.close();
+      c.close();
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
+    System.out.println("Table created successfully");
+  }
+}
+```
+
+上述程序编译和执行时，它会在 test.db 中创建 COMPANY 表，最终文件列表如下所示：
+
+```text
+-rw-r--r--. 1 root root 3201128 Jan 22 19:04 sqlite-jdbc-3.7.2.jar
+-rw-r--r--. 1 root root    1506 May  8 05:43 SQLiteJDBC.class
+-rw-r--r--. 1 root root     832 May  8 05:42 SQLiteJDBC.java
+-rw-r--r--. 1 root root    3072 May  8 05:43 test.db
+```
+
+
+## INSERT 操作
+
+下面的 Java 代码显示了如何在上面创建的 COMPANY 表中创建记录：
+
+```java
+import java.sql.*;
+
+public class SQLiteJDBC
+{
+  public static void main( String args[] )
+  {
+    Connection c = null;
+    Statement stmt = null;
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c.setAutoCommit(false);
+      System.out.println("Opened database successfully");
+
+      stmt = c.createStatement();
+      String sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) " +
+                   "VALUES (1, 'Paul', 32, 'California', 20000.00 );";
+      stmt.executeUpdate(sql);
+
+      sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) " +
+            "VALUES (2, 'Allen', 25, 'Texas', 15000.00 );";
+      stmt.executeUpdate(sql);
+
+      sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) " +
+            "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );";
+      stmt.executeUpdate(sql);
+
+      sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) " +
+            "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
+      stmt.executeUpdate(sql);
+
+      stmt.close();
+      c.commit();
+      c.close();
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
+    System.out.println("Records created successfully");
+  }
+}
+```
+
+上述程序编译和执行时，它会在 COMPANY 表中创建给定记录，并会显示以下两行：
+
+```text
+Opened database successfully
+Records created successfully
+```
+
+
+## SELECT 操作
+
+下面的 Java 程序显示了如何从前面创建的 COMPANY 表中获取并显示记录：
+
+```java
+import java.sql.*;
+
+public class SQLiteJDBC
+{
+  public static void main( String args[] )
+  {
+    Connection c = null;
+    Statement stmt = null;
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c.setAutoCommit(false);
+      System.out.println("Opened database successfully");
+
+      stmt = c.createStatement();
+      ResultSet rs = stmt.executeQuery( "SELECT * FROM COMPANY;" );
+      while ( rs.next() ) {
+         int id = rs.getInt("id");
+         String  name = rs.getString("name");
+         int age  = rs.getInt("age");
+         String  address = rs.getString("address");
+         float salary = rs.getFloat("salary");
+         System.out.println( "ID = " + id );
+         System.out.println( "NAME = " + name );
+         System.out.println( "AGE = " + age );
+         System.out.println( "ADDRESS = " + address );
+         System.out.println( "SALARY = " + salary );
+         System.out.println();
+      }
+      rs.close();
+      stmt.close();
+      c.close();
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
+    System.out.println("Operation done successfully");
+  }
+}
+```
+
+上述程序编译和执行时，它会产生以下结果：
+
+```text
+Opened database successfully
+ID = 1
+NAME = Paul
+AGE = 32
+ADDRESS = California
+SALARY = 20000.0
+
+ID = 2
+NAME = Allen
+AGE = 25
+ADDRESS = Texas
+SALARY = 15000.0
+
+ID = 3
+NAME = Teddy
+AGE = 23
+ADDRESS = Norway
+SALARY = 20000.0
+
+ID = 4
+NAME = Mark
+AGE = 25
+ADDRESS = Rich-Mond
+SALARY = 65000.0
+
+Operation done successfully
+```
+
+
+## UPDATE 操作
+
+下面的 Java 代码显示了如何使用 UPDATE 语句来更新任何记录，然后从 COMPANY 表中获取并显示更新的记录：
+
+```java
+import java.sql.*;
+
+public class SQLiteJDBC
+{
+  public static void main( String args[] )
+  {
+    Connection c = null;
+    Statement stmt = null;
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c.setAutoCommit(false);
+      System.out.println("Opened database successfully");
+
+      stmt = c.createStatement();
+      String sql = "UPDATE COMPANY set SALARY = 25000.00 where ID=1;";
+      stmt.executeUpdate(sql);
+      c.commit();
+
+      ResultSet rs = stmt.executeQuery( "SELECT * FROM COMPANY;" );
+      while ( rs.next() ) {
+         int id = rs.getInt("id");
+         String  name = rs.getString("name");
+         int age  = rs.getInt("age");
+         String  address = rs.getString("address");
+         float salary = rs.getFloat("salary");
+         System.out.println( "ID = " + id );
+         System.out.println( "NAME = " + name );
+         System.out.println( "AGE = " + age );
+         System.out.println( "ADDRESS = " + address );
+         System.out.println( "SALARY = " + salary );
+         System.out.println();
+      }
+      rs.close();
+      stmt.close();
+      c.close();
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
+    System.out.println("Operation done successfully");
+  }
+}
+```
+
+上述程序编译和执行时，它会产生以下结果：
+
+```text
+Opened database successfully
+ID = 1
+NAME = Paul
+AGE = 32
+ADDRESS = California
+SALARY = 25000.0
+
+ID = 2
+NAME = Allen
+AGE = 25
+ADDRESS = Texas
+SALARY = 15000.0
+
+ID = 3
+NAME = Teddy
+AGE = 23
+ADDRESS = Norway
+SALARY = 20000.0
+
+ID = 4
+NAME = Mark
+AGE = 25
+ADDRESS = Rich-Mond
+SALARY = 65000.0
+
+Operation done successfully
+```
+
+
+## DELETE 操作
+
+下面的 Java 代码显示了如何使用 DELETE 语句删除任何记录，然后从 COMPANY 表中获取并显示剩余的记录：
+
+```java
+import java.sql.*;
+
+public class SQLiteJDBC
+{
+  public static void main( String args[] )
+  {
+    Connection c = null;
+    Statement stmt = null;
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c.setAutoCommit(false);
+      System.out.println("Opened database successfully");
+
+      stmt = c.createStatement();
+      String sql = "DELETE from COMPANY where ID=2;";
+      stmt.executeUpdate(sql);
+      c.commit();
+
+      ResultSet rs = stmt.executeQuery( "SELECT * FROM COMPANY;" );
+      while ( rs.next() ) {
+         int id = rs.getInt("id");
+         String  name = rs.getString("name");
+         int age  = rs.getInt("age");
+         String  address = rs.getString("address");
+         float salary = rs.getFloat("salary");
+         System.out.println( "ID = " + id );
+         System.out.println( "NAME = " + name );
+         System.out.println( "AGE = " + age );
+         System.out.println( "ADDRESS = " + address );
+         System.out.println( "SALARY = " + salary );
+         System.out.println();
+      }
+      rs.close();
+      stmt.close();
+      c.close();
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
+    System.out.println("Operation done successfully");
+  }
+}
+```
+
+上述程序编译和执行时，它会产生以下结果：
+
+```text
+Opened database successfully
+ID = 1
+NAME = Paul
+AGE = 32
+ADDRESS = California
+SALARY = 25000.0
+
+ID = 3
+NAME = Teddy
+AGE = 23
+ADDRESS = Norway
+SALARY = 20000.0
+
+ID = 4
+NAME = Mark
+AGE = 25
+ADDRESS = Rich-Mond
+SALARY = 65000.0
+
+Operation done successfully
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite - Java` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

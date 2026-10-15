@@ -1,34 +1,64 @@
-# jQuery EasyUI：jEasyUI 创建异步提交表单 练习笔记
+# jQuery EasyUI：jQuery EasyUI 表单 - 创建异步提交表单
 
 - 来源：[jEasyUI 创建异步提交表单](https://www.runoob.com/jeasyui/jeasyui-form-form1.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2901
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 创建异步提交表单` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本教程向您展示如何通过 easyui 提交一个表单（Form）。我们创建一个带有 name、email 和 phone 字段的表单。通过使用 easyui 表单（form）插件来改变表单（form）为 ajax 表单（form）。表单（form）提交所有字段到后台服务器，服务器处理和发送一些数据返回到前端页面。我们接收返回数据，并将它显示出来。
 
-## 练习步骤
+```html
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc">Ajax Form</div>
+    <form id="ff" action="form1_proc.php" method="post">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input name="name" type="text"></input></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input name="email" type="text"></input></td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td><input name="phone" type="text"></input></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit"></input></td>
+            </tr>
+        </table>
+    </form>
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```text
+    $('#ff').form({
+        success:function(data){
+            $.messager.alert('Info', data, 'info');
+        }
+    });
+```
 
-## 验收清单
+```html
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
 
-- 我能独立说出 `jEasyUI 创建异步提交表单` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+    echo "Your Name: $name <br/> Your Email: $email <br/> Your Phone: $phone";
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 下载 jQuery EasyUI 实例
+
+jeasyui-form-form1.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 创建异步提交表单` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

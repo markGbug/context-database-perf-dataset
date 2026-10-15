@@ -1,35 +1,96 @@
-# Maven：Maven IntelliJ 学习笔记
+# Maven：Maven IntelliJ
 
 - 来源：[Maven IntelliJ](https://www.runoob.com/maven/maven-intellij.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1851
 
-## 学习目标
+## 本章内容
 
-Maven 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Maven IntelliJ` 建立学习路径，先理解它在 Maven 体系中的位置，再做可运行或可复述的验证。
+IntelliJ IDEA 已经内建了对 Maven 的支持。我们在此例中使用的是 IntelliJ IDEA 社区版 11.1。
 
-## 阅读抓手
+IntelliJ IDEA 的一些特性列出如下：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 可以通过 IntelliJ IDEA 来运行 Maven 目标。
+- 可以在 IntelliJ IDEA 自己的终端里查看 Maven 命令的输出结果。
+- 可以在 IDE 里更新 Maven 的依赖关系。
+- 可以在 IntelliJ IDEA 中启动 Maven 的构建。
+- IntelliJ IDEA 基于 Maven 的 pom.xml 来实现自动化管理依赖关系。
+- IntelliJ IDEA 可以通过自己的工作区解决 Maven 的依赖问题，而无需安装到本地的 Maven 仓库，虽然需要依赖的项目在同一个工作区。
+- IntelliJ IDEA 可以自动从远程 Maven 仓库上下载需要的依赖和源码。
+- IntelliJ IDEA 提供了创建 Maven 项目，pom.xml 文件的向导。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 在 IntelliJ IDEA 里创建一个新的项目
 
-## 完成标准
+使用新建项目向导来导入一个 Maven 项目。
 
-- 能用 3 到 5 句话解释 `Maven IntelliJ`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 打开 IntelliJ IDEA。
+- 选择 File Menu > New Project 选项。
+- 选择 import project from existing model 选项。
+- 选择 Maven 选项。
+- 选择项目路径，即使用 Maven 创建一个项目时的存储路径。 假设我们创建了一个项目 consumerBanking。 通过 Maven 构建 Java 项目 查看如何使用 Maven 创建一个项目。
+- 选择要导入的 Maven 项目。
+- 输入项目名称，点击 "finish"。
+
+现在，我们可以在 IntelliJ IDEA 里看到 Maven 项目了。看一下 consumerBanking 项目的 Libraries 和 Test Libraries，你可以发现 IntelliJ IDEA 已经将 Maven 所依赖的都添加到了它的构建路径里了。
+
+
+## 在 IntelliJ IDEA 里构建一个 Maven 项目
+
+好了，接下来我们来使用 IntelliJ IDEA 的编译功能来构建这个 Maven 项目 。
+
+- 选中 consumerBanking 项目。
+- 选择 Buid menu > Rebuild Project 选项。
+
+你可以在 IntelliJ IDEA 的终端里看到构建过程输出的log：
+
+```text
+4:01:56 PM Compilation completed successfully
+```
+
+
+## 在 IntelliJ IDEA 里运行应用程序
+
+- 选中 consumerBanking 项目。
+- 右键点击 App.java 弹出上下文菜单。
+- 选择 Run App.main() 。
+
+你将会在 IntelliJ IDEA 的终端下看到如下运行结果：
+
+```text
+"C:\Program Files\Java\jdk1.6.0_21\bin\java"
+-Didea.launcher.port=7533
+"-Didea.launcher.bin.path=
+C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 11.1.2\bin"
+-Dfile.encoding=UTF-8
+-classpath "C:\Program Files\Java\jdk1.6.0_21\jre\lib\charsets.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\deploy.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\javaws.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\jce.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\jsse.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\management-agent.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\plugin.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\resources.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\rt.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\ext\dnsns.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\ext\localedata.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\ext\sunjce_provider.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\ext\sunmscapi.jar;
+C:\Program Files\Java\jdk1.6.0_21\jre\lib\ext\sunpkcs11.jar
+C:\MVN\consumerBanking\target\classes;
+C:\Program Files\JetBrains\
+IntelliJ IDEA Community Edition 11.1.2\lib\idea_rt.jar"
+com.intellij.rt.execution.application.AppMain com.companyname.bank.App
+Hello World!
+Process finished with exit code 0
+```
+
+
+## 复习重点
+
+- 能说明 `Maven IntelliJ` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,187 @@
-# PostgreSQL：PostgreSQL WHERE 学习笔记
+# PostgreSQL：PostgreSQL WHERE 子句
 
 - 来源：[PostgreSQL WHERE](https://www.runoob.com/postgresql/postgresql-where-clause.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1565
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PostgreSQL WHERE` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+在 PostgreSQL 中，当我们需要根据指定条件从单张表或者多张表中查询数据时，就可以在 SELECT 语句中添加 WHERE 子句，从而过滤掉我们不需要数据。
 
-## 阅读抓手
+WHERE 子句不仅可以用于 SELECT 语句中，同时也可以用于 UPDATE，DELETE 等等语句中。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+以下是 SELECT 语句中使用 WHERE 子句从数据库中读取数据的通用语法：
 
-## 完成标准
+```text
+SELECT column1, column2, columnN
+FROM table_name
+WHERE [condition1]
+```
 
-- 能用 3 到 5 句话解释 `PostgreSQL WHERE`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+我们可以在 WHERE 子句中使用比较运算符或逻辑运算符，例如 >, <, =, LIKE, NOT 等等。
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+
+### AND
+
+找出 AGE(年龄) 字段大于等于 25，并且 SALARY(薪资) 字段大于等于 65000 的数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE AGE >= 25 AND SALARY >= 65000;
+ id | name  | age |  address   | salary
+----+-------+-----+------------+--------
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+(2 rows)
+```
+
+
+### OR
+
+找出 AGE(年龄) 字段大于等于 25，或者 SALARY(薪资) 字段大于等于 65000 的数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE AGE >= 25 OR SALARY >= 65000;
+id | name  | age | address     | salary
+----+-------+-----+-------------+--------
+  1 | Paul  |  32 | California  |  20000
+  2 | Allen |  25 | Texas       |  15000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+(4 rows)
+```
+
+
+### NOT NULL
+
+在公司表中找出 AGE(年龄) 字段不为空的记录：
+
+```text
+runoobdb=#  SELECT * FROM COMPANY WHERE AGE IS NOT NULL;
+  id | name  | age | address    | salary
+ ----+-------+-----+------------+--------
+   1 | Paul  |  32 | California |  20000
+   2 | Allen |  25 | Texas      |  15000
+   3 | Teddy |  23 | Norway     |  20000
+   4 | Mark  |  25 | Rich-Mond  |  65000
+   5 | David |  27 | Texas      |  85000
+   6 | Kim   |  22 | South-Hall |  45000
+   7 | James |  24 | Houston    |  10000
+(7 rows)
+```
+
+
+### LIKE
+
+在 COMPANY 表中找出 NAME(名字) 字段中以 Pa 开头的的数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE NAME LIKE 'Pa%';
+id | name | age |address    | salary
+----+------+-----+-----------+--------
+  1 | Paul |  32 | California|  20000
+```
+
+
+### IN
+
+以下 SELECT 语句列出了 AGE(年龄) 字段为 25 或 27 的数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE AGE IN ( 25, 27 );
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  2 | Allen |  25 | Texas      |  15000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+(3 rows)
+```
+
+
+### NOT IN
+
+以下 SELECT 语句列出了 AGE(年龄) 字段不为 25 或 27 的数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE AGE NOT IN ( 25, 27 );
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  3 | Teddy |  23 | Norway     |  20000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+(4 rows)
+```
+
+
+### BETWEEN
+
+以下 SELECT 语句列出了 AGE(年龄) 字段在 25 到 27 的数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE AGE BETWEEN 25 AND 27;
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  2 | Allen |  25 | Texas      |  15000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+(3 rows)
+```
+
+
+### 子查询
+
+以下的 SELECT 语句使用了 SQL 的子查询，子查询语句中读取 SALARY(薪资) 字段大于 65000 的数据，然后通过 EXISTS 运算符判断它是否返回行，如果有返回行则读取所有的 AGE(年龄) 字段。
+
+```text
+runoobdb=# SELECT AGE FROM COMPANY
+        WHERE EXISTS (SELECT AGE FROM COMPANY WHERE SALARY > 65000);
+ age
+-----
+  32
+  25
+  23
+  25
+  27
+  22
+  24
+(7 rows)
+```
+
+以下的 SELECT 语句同样使用了 SQL 的子查询，子查询语句中读取 SALARY(薪资) 字段大于 65000 的 AGE(年龄) 字段数据，然后用 > 运算符查询大于该 AGE(年龄) 字段数据：
+
+```text
+runoobdb=# SELECT * FROM COMPANY
+        WHERE AGE > (SELECT AGE FROM COMPANY WHERE SALARY > 65000);
+ id | name | age | address    | salary
+----+------+-----+------------+--------
+  1 | Paul |  32 | California |  20000
+```
+
+
+## 复习重点
+
+- 能说明 `PostgreSQL WHERE` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

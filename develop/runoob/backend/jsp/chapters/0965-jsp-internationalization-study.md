@@ -1,35 +1,200 @@
-# JSP：JSP 国际化 学习笔记
+# JSP：JSP 国际化
 
 - 来源：[JSP 国际化](https://www.runoob.com/jsp/jsp-internationalization.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0965
 
-## 学习目标
+## 本章内容
 
-JSP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `JSP 国际化` 建立学习路径，先理解它在 JSP 体系中的位置，再做可运行或可复述的验证。
+在开始前，需要解释几个重要的概念：
 
-## 阅读抓手
+- 国际化（i18n）：表明一个页面根据访问者的语言或国家来呈现不同的翻译版本。
+- 本地化（l10n）：向网站添加资源，以使它适应不同的地区和文化。比如网站的印度语版本。
+- 区域：这是一个特定的区域或文化，通常认为是一个语言标志和国家标志通过下划线连接起来。比如"en_US"代表美国英语地区。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+如果想要建立一个全球化的网站，就需要关心一系列项目。本章将会详细告诉您如何处理国际化问题，并给出了一些例子来加深理解。
 
-## 笔记模板
+JSP容器能够根据request的locale属性来提供正确地页面版本。接下来给出了如何通过request对象来获得Locale对象的语法：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+java.util.Locale request.getLocale()
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `JSP 国际化`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 检测Locale
+
+下表列举出了Locale对象中比较重要的方法，用于检测request对象的地区，语言，和区域。所有这些方法都会在浏览器中显示国家名称和语言名称：
+
+
+## 实例演示
+
+这个例子告诉我们如何在JSP中显示语言和国家：
+
+```html
+<%@ page import="java.io.*,java.util.Locale" %>
+<%@ page import="javax.servlet.*,javax.servlet.http.* "%>
+<%
+   //获取客户端本地化信息
+   Locale locale = request.getLocale();
+   String language = locale.getLanguage();
+   String country = locale.getCountry();
+%>
+<html>
+<head>
+<title>Detecting Locale</title>
+</head>
+<body>
+<center>
+<h1>Detecting Locale</h1>
+</center>
+<p align="center">
+<%
+   out.println("Language : " + language  + "<br />");
+   out.println("Country  : " + country   + "<br />");
+%>
+</p>
+</body>
+</html>
+```
+
+
+## 语言设置
+
+JSP 可以使用西欧语言来输出一个页面，比如英语，西班牙语，德语，法语，意大利语等等。由此可见，设置 Content-Language 信息头来正确显示所有字符是很重要的。
+
+第二点就是，需要使用 HTML 字符实体来显示特殊字符，比如 "ñ" 代表的是 ñ，"¡"代表的是 ¡ ：
+
+```html
+<%@ page import="java.io.*,java.util.Locale" %>
+<%@ page import="javax.servlet.*,javax.servlet.http.* "%>
+<%
+    // Set response content type
+    response.setContentType("text/html");
+    // Set spanish language code.
+    response.setHeader("Content-Language", "es");
+    String title = "En Espa?ol";
+
+%>
+<html>
+<head>
+<title><%  out.print(title); %></title>
+</head>
+<body>
+<center>
+<h1><%  out.print(title); %></h1>
+</center>
+<div align="center">
+<p>En Espa?ol</p>
+<p>?Hola Mundo!</p>
+</div>
+</body>
+</html>
+```
+
+
+## 区域特定日期
+
+可以使用java.text.DateFormat类和它的静态方法getDateTimeInstance()来格式化日期和时间。接下来的这个例子显示了如何根据指定的区域来格式化日期和时间：
+
+```html
+<%@ page import="java.io.*,java.util.Locale" %>
+<%@ page import="javax.servlet.*,javax.servlet.http.* "%>
+<%@ page import="java.text.DateFormat,java.util.Date" %>
+
+<%
+    String title = "Locale Specific Dates";
+    //Get the client's Locale
+    Locale locale = request.getLocale( );
+    String date = DateFormat.getDateTimeInstance(
+                                  DateFormat.FULL,
+                                  DateFormat.SHORT,
+                                  locale).format(new Date( ));
+%>
+<html>
+<head>
+<title><% out.print(title); %></title>
+</head>
+<body>
+<center>
+<h1><% out.print(title); %></h1>
+</center>
+<div align="center">
+<p>Local Date: <%  out.print(date); %></p>
+</div>
+</body>
+</html>
+```
+
+
+## 区域特定货币
+
+可以使用java.text.NumberFormat类和它的静态方法getCurrencyInstance()来格式化数字。比如在区域特定货币中的long型和double型。接下来的例子显示了如何根据指定的区域来格式化货币：
+
+```html
+<%@ page import="java.io.*,java.util.Locale" %>
+<%@ page import="javax.servlet.*,javax.servlet.http.* "%>
+<%@ page import="java.text.NumberFormat,java.util.Date" %>
+
+<%
+    String title = "Locale Specific Currency";
+    //Get the client's Locale
+    Locale locale = request.getLocale( );
+    NumberFormat nft = NumberFormat.getCurrencyInstance(locale);
+    String formattedCurr = nft.format(1000000);
+%>
+<html>
+<head>
+<title><% out.print(title); %></title>
+</head>
+<body>
+<center>
+<h1><% out.print(title); %></h1>
+</center>
+<div align="center">
+<p>Formatted Currency: <%  out.print(formattedCurr); %></p>
+</div>
+</body>
+</html>
+```
+
+
+## 区域特定百分比
+
+可以使用java.text.NumberFormat类和它的静态方法getPercentInstance()来格式化百分比。接下来的例子告诉我们如何根据指定的区域来格式化百分比：
+
+```html
+<%@ page import="java.io.*,java.util.Locale" %>
+<%@ page import="javax.servlet.*,javax.servlet.http.* "%>
+<%@ page import="java.text.NumberFormat,java.util.Date" %>
+
+<%
+    String title = "Locale Specific Percentage";
+    //Get the client's Locale
+    Locale locale = request.getLocale( );
+    NumberFormat nft = NumberFormat.getPercentInstance(locale);
+    String formattedPerc = nft.format(0.51);
+%>
+<html>
+<head>
+<title><% out.print(title); %></title>
+</head>
+<body>
+<center>
+<h1><% out.print(title); %></h1>
+</center>
+<div align="center">
+<p>Formatted Percentage: <%  out.print(formattedPerc); %></p>
+</div>
+</body>
+</html>
+```
+
+
+## 复习重点
+
+- 能说明 `JSP 国际化` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

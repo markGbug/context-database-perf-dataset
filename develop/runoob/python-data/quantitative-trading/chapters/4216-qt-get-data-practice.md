@@ -1,34 +1,206 @@
-# 量化交易：Python 获取金融数据 练习笔记
+# 量化交易：Python 获取金融数据
 
 - 来源：[Python 获取金融数据](https://www.runoob.com/python-qt/qt-get-data.html)
 - 分类：Python / 数据科学
 - 技术：量化交易
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4216
 
-## 练习目标
+## 本章内容
 
-把 `Python 获取金融数据` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 Python 中，要进行量化分析，需要先获取金融数据，Python 中有多个库可以用于获取金融市场数据。
 
-## 练习步骤
+本站实例演示用到的库为 yfinance。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+安装如下：
 
-## 验收清单
+```text
+pip install yfinance
+```
 
-- 我能独立说出 `Python 获取金融数据` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+yfinance 库使用 yf.download() 函数下载金融数据的函数。
 
-## 复盘问题
+以下是它的基本语法格式：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+yf.download(tickers, start=None, end=None, actions=False, threads=True)
+```
+
+参数说明：
+
+tickers:
+
+- 说明： 要下载数据的股票、指数、基金等金融工具的代码。
+- 类型： 字符串（单个代码）或列表（多个代码）。
+- 示例： "AAPL"、["AAPL", "GOOGL"]。
+
+start:
+
+- 说明： 下载数据的开始日期。
+- 类型： 字符串（日期格式："YYYY-MM-DD"）。
+- 默认值： None，表示从可获取的最早日期开始。
+- 示例： "2020-01-01"。
+
+end:
+
+
+## 实例
+
+以上代码我们使用 yfinance 的 download 函数获取了贵州茅台（600519.SS）的股票数据，时间范围是从 2022 年 1 月 1 日到 2023 年 11 月 1 日。返回的数据是一个包含日期(Date)、开盘价(Open)、最高价(High)、最低价(Low)、收盘价(Close)、成交量(Volume)和调整后的收盘价(Adj Close)等信息的 Pandas DataFrame。
+
+Pandas DataFrame 内容可以参考：Pandas 数据结构 - DataFrame
+
+执行以上代码，输出结果如下：
+
+```text
+# python3 mt.py
+[*********************100%%**********************]  1 of 1 completed
+                  Open         High          Low        Close    Adj Close   Volume
+Date
+2022-01-04  2055.00000  2068.949951  2014.000000  2051.229980  1973.508057  3384262
+2022-01-05  2045.00000  2065.000000  2018.000000  2024.000000  1947.309937  2839551
+2022-01-06  2022.01001  2036.000000  1938.510010  1982.219971  1907.112793  5179475
+2022-01-07  1975.00000  1988.880005  1939.319946  1942.000000  1868.416870  2981669
+2022-01-10  1928.01001  1977.000000  1917.550049  1966.000000  1891.507568  2962670
+```
+
+
+### Ticker 类
+
+yfinance Ticker 类 用于获取特定金融工具的信息和实时数据。
+
+Ticker 类构造函数：
+
+- 用法：yf.Ticker('AAPL')
+- 描述：创建一个 Ticker 对象，代表特定股票或金融资产。在括号内传入股票代码（例如：'AAPL'）。
+
+history 方法：
+
+- 用法：ticker.history(period='1d', interval='1m')
+- 描述：获取历史价格数据。period 参数指定时间跨度，可以是 '1d'（一天）、'1mo'（一个月）、'1y'（一年）等；interval 参数指定时间间隔，可以是 '1m'（一分钟）、'1d'（一天）、'1wk'（一周）等。
+
+info 属性：
+
+- 用法：ticker.info
+- 描述：获取有关股票的基本信息，如公司名称、行业、市值等。
+
+dividends 属性：
+
+- 用法：ticker.dividends
+- 描述：获取分红数据，返回一个包含日期和分红金额的 DataFrame。
+
+splits 属性：
+
+- 用法：ticker.splits
+- 描述：获取拆股数据，返回一个包含日期和拆股比例的 DataFrame。
+
+recommendations 属性：
+
+- 用法：ticker.recommendations
+- 描述：获取股票的推荐信息，返回一个包含日期和推荐信息的 DataFrame。
+
+major_holders 属性：
+
+- 用法：ticker.major_holders
+- 描述：获取股票的主要持有者信息，返回一个包含主要股东和其持股比例的 DataFrame。
+
+sustainability 属性：
+
+- 用法：ticker.sustainability
+- 描述：获取股票的可持续性信息，返回一个包含环境、社会和治理（ESG）指标的 DataFrame。
+
+actions 属性：
+
+- 用法：ticker.actions
+- 描述：获取股票的行动数据，包括拆股、分红等。
+
+
+## 实例
+
+
+### 获取多个股票数据
+
+以下代码使用 yfinance 库初始化了一个包含多个股票代码的 Tickers 对象，并通过该对象访问了不同股票的信息、历史数据和行为：
+
+
+## 实例
+
+
+### 下载历史数据
+
+以下代码使用 yfinance 库下载了标普 500 ETF（SPY）和苹果公司（AAPL）过去一个月的历史市场数据：
+
+
+## 实例
+
+period="1mo" 参数表示下载的时间范围是过去一个月。
+
+
+## 更多金融库
+
+以下是一些主要用于获取金融数据的库：
+
+
+### yfinance
+
+- 官方网站： yfinance
+- 简介： yfinance 是一个用于获取Yahoo Finance数据的库。它提供简单的API，允许用户获取股票、指数等金融数据。
+- 安装： pip install yfinance
+
+
+### Tushare
+
+- 官方网站： Tushare
+- 简介： Tushare 是一个开放的金融数据平台，提供了丰富的股票、期货、基金等金融市场数据的接口。它支持Python，提供了易于使用的API。
+- 安装： pip install tushare
+
+
+### pandas-datareader
+
+- 官方网站： pandas-datareader
+- 简介： pandas-datareader 是一个从多个在线数据源（如Yahoo Finance、Google Finance等）获取金融数据的库。
+- 安装： pip install pandas-datareader
+- 官方网站： baostock
+
+
+### baostock
+
+- 官方网站： baostock
+- 简介： baostock 是一个免费提供A股、港股、期权等金融数据的库。它提供了Python接口，方便用户获取数据。
+- 安装： pip install baostock
+
+
+### alpha_vantage
+
+- 官方网站： alpha_vantage
+- 简介： alpha_vantage 提供了一个简单的API，可以用来获取股票、外汇等金融数据。它还支持一些技术指标的计算。
+- 安装： pip install alpha_vantage
+
+
+### quandl
+
+- 官方网站： Quandl
+- 简介： Quandl 提供了来自各种来源的金融和经济数据。它提供了Python库，方便用户获取数据。
+- 安装： pip install quandl
+
+
+### ccxt
+
+- 官方网站： ccxt
+- 简介： ccxt 是一个用于交易和获取金融数据的开源库，支持多个交易所的数据获取。
+- 安装： pip install ccxt
+
+
+### AKShare
+
+- 官方网站： AKShare
+- 简介： AKShare 是基于 Python 的财经数据接口库，目的是实现对股票、期货、期权、基金、外汇、债券、指数、加密货币等金融产品的基本面数据、实时和历史行情数据、衍生数据从数据采集、数据清洗到数据落地的一套工具，主要用于学术研究目的。
+- 安装： pip install akshare
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python 获取金融数据` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

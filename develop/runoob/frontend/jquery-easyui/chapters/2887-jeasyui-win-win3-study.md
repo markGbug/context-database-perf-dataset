@@ -1,35 +1,62 @@
-# jQuery EasyUI：jEasyUI 窗口与布局 学习笔记
+# jQuery EasyUI：jQuery EasyUI 窗口 - 窗口与布局
 
 - 来源：[jEasyUI 窗口与布局](https://www.runoob.com/jeasyui/jeasyui-win-win3.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2887
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 窗口与布局` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+Layout 组件可以内嵌在窗口（window）中。我们可以创建一个复杂的布局窗口，甚至不需要写任何的 js 代码。jquery-easyui 框架帮我们在后台做渲染和调整尺寸。
 
-## 阅读抓手
+作为一个实例，我们创建一个窗口（window），它包含两个部分，一个放置在左边一个放置在右边。在窗口（window）的左边我们创建一个树形菜单（tree），在窗口（window）的右边我们创建一个 tabs 容器。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+    <div class="easyui-window" title="Layout Window" icon="icon-help" style="width:500px;height:250px;padding:5px;background: #fafafa;">
+        <div class="easyui-layout" fit="true">
+            <div region="west" split="true" style="width:120px;">
+                <ul class="easyui-tree">
+                    <li>
+                        <span>Library</span>
+                        <ul>
+                            <li><span>easyui</span></li>
+                            <li><span>Music</span></li>
+                            <li><span>Picture</span></li>
+                            <li><span>Database</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div region="center" border="false" border="false">
+                <div class="easyui-tabs" fit="true">
+                    <div title="Home" style="padding:10px;">
+                        jQuery easyui framework help you build your web page easily.
+                    </div>
+                    <div title="Contacts">
+                        No contact data.
+                    </div>
+                </div>
+            </div>
+            <div region="south" border="false" style="text-align:right;height:30px;line-height:30px;">
+                <a class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)">Ok</a>
+                <a class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)">Cancel</a>
+            </div>
+        </div>
+    </div>
+```
 
-## 笔记模板
+请看上面的代码，我们仅仅使用了 HTML 标记，一个复杂的布局窗口（window）将显示。这就是 jquery-easyui 框架，简单而强大。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 下载 jQuery EasyUI 实例
 
-- 能用 3 到 5 句话解释 `jEasyUI 窗口与布局`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+jeasyui-win-win3.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 窗口与布局` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

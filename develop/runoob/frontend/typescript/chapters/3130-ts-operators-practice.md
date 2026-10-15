@@ -1,34 +1,487 @@
-# TypeScript：TypeScript 运算符 练习笔记
+# TypeScript：TypeScript 运算符
 
 - 来源：[TypeScript 运算符](https://www.runoob.com/typescript/ts-operators.html)
 - 分类：前端开发
 - 技术：TypeScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3130
 
-## 练习目标
+## 本章内容
 
-把 `TypeScript 运算符` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+运算符用于执行程序代码运算，会针对一个以上操作数项目来进行运算。
 
-## 练习步骤
+考虑以下计算：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```text
+7 + 5 = 12
+```
 
-## 验收清单
+以上实例中 7、5 和 12 是操作数。
 
-- 我能独立说出 `TypeScript 运算符` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+运算符 + 用于加值。
 
-## 复盘问题
+运算符 = 用于赋值。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+TypeScript 主要包含以下几种运算：
+
+- 算术运算符
+- 逻辑运算符
+- 关系运算符
+- 按位运算符
+- 赋值运算符
+- 三元/条件运算符
+- 字符串运算符
+- 类型运算符
+
+
+## 算术运算符
+
+假定 y=5，下面的表格解释了这些算术运算符的操作：
+
+
+### 实例
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var num1 = 10;
+var num2 = 2;
+var res = 0;
+res = num1 + num2;
+console.log("加:        " + res);
+res = num1 - num2;
+console.log("减: " + res);
+res = num1 * num2;
+console.log("乘:    " + res);
+res = num1 / num2;
+console.log("除:   " + res);
+res = num1 % num2;
+console.log("余数:   " + res);
+num1++;
+console.log("num1 自增运算: " + num1);
+num2--;
+console.log("num2 自减运算: " + num2);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+加:        12
+减: 8
+乘:    20
+除:   5
+余数:   0
+num1 自增运算: 11
+num2 自减运算: 1
+```
+
+
+## 关系运算符
+
+关系运算符用于计算结果是否为 true 或者 false。
+
+x=5，下面的表格解释了关系运算符的操作：
+
+
+### 实例
+
+```html
+var num1:number = 5;
+var num2:number = 9;
+
+console.log("num1 的值为: "+num1);
+console.log("num2 的值为:"+num2);
+
+var res = num1>num2
+console.log("num1 大于n num2: "+res)
+
+res = num1<num2
+console.log("num1 小于 num2: "+res)
+
+res = num1>=num2
+console.log("num1 大于或等于  num2: "+res)
+
+res = num1<=num2
+console.log("num1 小于或等于 num2: "+res)
+
+res = num1==num2
+console.log("num1 等于 num2: "+res)
+
+res = num1!=num2
+console.log("num1 不等于 num2: "+res)
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var num1 = 5;
+var num2 = 9;
+console.log("num1 的值为: " + num1);
+console.log("num2 的值为:" + num2);
+var res = num1 > num2;
+console.log("num1 大于n num2: " + res);
+res = num1 < num2;
+console.log("num1 小于 num2: " + res);
+res = num1 >= num2;
+console.log("num1 大于或等于  num2: " + res);
+res = num1 <= num2;
+console.log("num1 小于或等于 num2: " + res);
+res = num1 == num2;
+console.log("num1 等于 num2: " + res);
+res = num1 != num2;
+console.log("num1 不等于 num2: " + res);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+num1 的值为: 5
+num2 的值为:9
+num1 大于n num2: false
+num1 小于 num2: true
+num1 大于或等于  num2: false
+num1 小于或等于 num2: true
+num1 等于 num2: false
+num1 不等于 num2: true
+```
+
+
+## 逻辑运算符
+
+逻辑运算符用于测定变量或值之间的逻辑。
+
+给定 x=6 以及 y=3，下表解释了逻辑运算符：
+
+
+### 实例
+
+```java
+var avg:number = 20;
+var percentage:number = 90;
+
+console.log("avg 值为: "+avg+" ,percentage 值为: "+percentage);
+
+var res:boolean = ((avg>50)&&(percentage>80));
+console.log("(avg>50)&&(percentage>80): ",res);
+
+var res:boolean = ((avg>50)||(percentage>80));
+console.log("(avg>50)||(percentage>80): ",res);
+
+var res:boolean=!((avg>50)&&(percentage>80));
+console.log("!((avg>50)&&(percentage>80)): ",res);
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var avg = 20;
+var percentage = 90;
+console.log("avg 值为: " + avg + " ,percentage 值为: " + percentage);
+var res = ((avg > 50) && (percentage > 80));
+console.log("(avg>50)&&(percentage>80): ", res);
+var res = ((avg > 50) || (percentage > 80));
+console.log("(avg>50)||(percentage>80): ", res);
+var res = !((avg > 50) && (percentage > 80));
+console.log("!((avg>50)&&(percentage>80)): ", res);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+avg 值为: 20 ,percentage 值为: 90
+(avg>50)&&(percentage>80):  false
+(avg>50)||(percentage>80):  true
+!((avg>50)&&(percentage>80)):  true
+```
+
+
+### 短路运算符(&& 与 ||)
+
+&& 与 || 运算符可用于组合表达式。 && 运算符只有在左右两个表达式都为 true 时才返回 true。
+
+考虑以下实例：
+
+```javascript
+var a = 10
+var result = ( a<10 && a>5)
+```
+
+以上实例中 a < 10 与 a > 5 是使用了 && 运算符的组合表达式，第一个表达式返回了 false，由于 && 运算需要两个表达式都为 true，所以如果第一个为 false，就不再执行后面的判断(a > 5 跳过计算)，直接返回 false。
+
+|| 运算符只要其中一个表达式为 true ，则该组合表达式就会返回 true。
+
+考虑以下实例：
+
+```javascript
+var a = 10
+var result = ( a>5 || a<10)
+```
+
+以上实例中 a > 5 与 a < 10 是使用了 || 运算符的组合表达式，第一个表达式返回了 true，由于 || 组合运算只需要一个表达式为 true，所以如果第一个为 true，就不再执行后面的判断(a < 10 跳过计算)，直接返回 true。
+
+
+## 位运算符
+
+位操作是程序设计中对位模式按位或二进制数的一元和二元操作。
+
+
+### 实例
+
+```javascript
+var a:number = 2;   // 二进制 10
+var b:number = 3;   // 二进制 11
+
+var result;
+
+result = (a & b);
+console.log("(a & b) => ",result)
+
+result = (a | b);
+console.log("(a | b) => ",result)
+
+result = (a ^ b);
+console.log("(a ^ b) => ",result);
+
+result = (~b);
+console.log("(~b) => ",result);
+
+result = (a << b);
+console.log("(a << b) => ",result);
+
+result = (a >> b);
+console.log("(a >> b) => ",result);
+
+result = (a >>> 1);
+console.log("(a >>> 1) => ",result);
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var a = 2; // 二进制 10
+var b = 3; // 二进制 11
+var result;
+result = (a & b);
+console.log("(a & b) => ", result);
+result = (a | b);
+console.log("(a | b) => ", result);
+result = (a ^ b);
+console.log("(a ^ b) => ", result);
+result = (~b);
+console.log("(~b) => ", result);
+result = (a << b);
+console.log("(a << b) => ", result);
+result = (a >> b);
+console.log("(a >> b) => ", result);
+result = (a >>> 1);
+console.log("(a >>> 1) => ", result);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+(a & b) =>  2
+(a | b) =>  3
+(a ^ b) =>  1
+(~b) =>  -4
+(a << b) =>  16
+(a >> b) =>  0
+(a >>> 1) =>  1
+```
+
+
+## 赋值运算符
+
+赋值运算符用于给变量赋值。
+
+给定 x=10 和 y=5，下面的表格解释了赋值运算符：
+
+类似的逻辑运算符也可以与赋值运算符联合使用：<<=, >>=, >>>=, &=, |= 与 ^=。
+
+
+### 实例
+
+```javascript
+var a: number = 12
+var b:number = 10
+
+a = b
+console.log("a = b: "+a)
+
+a += b
+console.log("a+=b: "+a)
+
+a -= b
+console.log("a-=b: "+a)
+
+a *= b
+console.log("a*=b: "+a)
+
+a /= b
+console.log("a/=b: "+a)
+
+a %= b
+console.log("a%=b: "+a)
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var a = 12;
+var b = 10;
+a = b;
+console.log("a = b: " + a);
+a += b;
+console.log("a+=b: " + a);
+a -= b;
+console.log("a-=b: " + a);
+a *= b;
+console.log("a*=b: " + a);
+a /= b;
+console.log("a/=b: " + a);
+a %= b;
+console.log("a%=b: " + a);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+a = b: 10
+a+=b: 20
+a-=b: 10
+a*=b: 100
+a/=b: 10
+a%=b: 0
+```
+
+
+## 三元运算符 (?)
+
+三元运算有 3 个操作数，并且需要判断布尔表达式的值。该运算符的主要是决定哪个值应该赋值给变量。
+
+```text
+Test ? expr1 : expr2
+```
+
+- Test − 指定的条件语句
+- expr1 − 如果条件语句 Test 返回 true 则返回该值
+- expr2 − 如果条件语句 Test 返回 false 则返回该值
+
+让我们看下以下实例：
+
+```javascript
+var num:number = -2
+var result = num > 0 ? "大于 0" : "小于 0，或等于 0"
+console.log(result)
+```
+
+实例中用于判断变量是否大于 0。
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var num = -2;
+var result = num > 0 ? "大于 0" : "小于 0，或等于 0";
+console.log(result);
+```
+
+以上实例输出结果如下：
+
+```text
+小于 0，或等于 0
+```
+
+
+## 类型运算符
+
+
+### typeof 运算符
+
+typeof 是一元运算符，返回操作数的数据类型。
+
+查看以下实例:
+
+```javascript
+var num = 12
+console.log(typeof num);   //输出结果: number
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var num = 12;
+console.log(typeof num); //输出结果: number
+```
+
+以上实例输出结果如下：
+
+```text
+number
+```
+
+
+### instanceof
+
+instanceof 运算符用于判断对象是否为指定的类型，后面章节我们会具体介绍它。
+
+
+## 其他运算符
+
+
+### 负号运算符(-)
+
+更改操作数的符号，查看以下实例：
+
+```javascript
+var x:number = 4
+var y = -x;
+console.log("x 值为: ",x);   // 输出结果 4
+console.log("y 值为: ",y);   // 输出结果 -4
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var x = 4;
+var y = -x;
+console.log("x 值为: ", x); // 输出结果 4
+console.log("y 值为: ", y); // 输出结果 -4
+```
+
+以上实例输出结果如下：
+
+```text
+x 值为:  4
+y 值为:  -4
+```
+
+
+### 字符串运算符: 连接运算符 (+)
+
++ 运算符可以拼接两个字符串，查看以下实例：
+
+```javascript
+var msg:string = "RUNOOB"+".COM"
+console.log(msg)
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var msg = "RUNOOB" + ".COM";
+console.log(msg);
+```
+
+以上实例输出结果如下：
+
+```text
+RUNOOB.COM
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `TypeScript 运算符` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

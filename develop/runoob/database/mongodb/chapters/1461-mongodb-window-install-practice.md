@@ -1,34 +1,29 @@
-# MongoDB：Windows MongoDB 练习笔记
+# MongoDB：Windows 平台安装 MongoDB
 
 - 来源：[Windows MongoDB](https://www.runoob.com/mongodb/mongodb-window-install.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1461
 
-## 练习目标
+## 本章内容
 
-把 `Windows MongoDB` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## MongoDB 下载
 
-## 练习步骤
+最新版本的 MongoDB 提供了可用于 64 位系统的预编译二进制包，你可以从 MongoDB 官网下载安装，MongoDB 预编译二进制包下载地址：https://www.mongodb.com/try/download/community
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+注意：在 MongoDB 2.2 版本后已经不再支持 Windows XP 系统。最新版本也已经没有了 32 位系统的安装文件。
 
-## 验收清单
+- MongoDB for Windows 64-bit 适合 64 位的 Windows Server 2008 R2, Windows 7 , 及最新版本的 Window 系统。
+- MongoDB for Windows 32-bit 适合 32 位的 Window 系统及最新的 Windows Vista。 32 位系统上 MongoDB 的数据库最大为 2GB。
+- MongoDB for Windows 64-bit Legacy 适合 64 位的 Windows Vista, Windows Server 2003, 及 Windows Server 2008 。
 
-- 我能独立说出 `Windows MongoDB` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+下载 .msi 文件，下载后双击该文件，按操作提示安装即可。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Windows MongoDB` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

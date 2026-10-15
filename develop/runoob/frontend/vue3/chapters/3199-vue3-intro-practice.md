@@ -1,34 +1,131 @@
-# Vue3：Vue3 起步 练习笔记
+# Vue3：Vue3 起步
 
 - 来源：[Vue3 起步](https://www.runoob.com/vue3/vue3-intro.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3199
 
-## 练习目标
+## 本章内容
 
-把 `Vue3 起步` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Vue.js 是一个渐进式 JavaScript 框架，主要用于构建用户界面。
 
-## 练习步骤
+刚开始学习 Vue，我们不推荐使用 vue-cli 命令行工具来创建项目，更简单的方式是直接在页面引入 vue.global.js 文件来测试学习。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Vue3 中的应用是通过使用 createApp 函数来创建的，语法格式如下：
 
-## 验收清单
+```javascript
+const app = Vue.createApp({ /* 根组件选项 */ })
+```
 
-- 我能独立说出 `Vue3 起步` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+传递给 createApp 的选项用于配置根组件。
 
-## 复盘问题
+应用实例必须在调用了 .mount() 方法后才会渲染出来，.mount()方法接收一个"容器"参数，可以是一个实际的 DOM 元素或是一个 CSS 选择器字符串：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<div id="app"></div>
+```
+
+```text
+app.mount('#app')
+```
+
+一个简单的实例：
+
+```text
+Vue.createApp(HelloVueApp).mount('#hello-vue')
+```
+
+createApp 的参数是根组件（HelloVueApp），在挂载应用时，该组件是渲染的起点。
+
+一个应用需要被挂载到一个 DOM 元素中，以上代码使用 mount('#hello-vue') 将 Vue 应用 HelloVueApp 挂载到 <div id="hello-vue"></div> 中。
+
+接下来我们从 Hello Vue!! 的代码开始学起。
+
+
+## Vue 3.0 实例
+
+```html
+<div id="hello-vue" class="demo">
+  {{ message }}
+</div>
+​
+<script>
+const HelloVueApp = {
+  data() {
+    return {
+      message: 'Hello Vue!!'
+    }
+  }
+}
+​
+Vue.createApp(HelloVueApp).mount('#hello-vue')
+</script>
+```
+
+点击 "尝试一下" 按钮查看在线实例
+
+以上实例中，我们先在 HTML 页面中引入 Vue 的 JS 文件：
+
+```html
+<script src="https://cdn.staticfile.net/vue/3.2.36/vue.global.min.js"></script>
+```
+
+HTML 页面中有一个 div 元素:
+
+```html
+<div id="hello-vue" class="demo">
+  {{ message }}
+</div>
+```
+
+mount('#hello-vue') 将 Vue 应用 HelloVueApp 挂载到 <div id="hello-vue"></div> 中。
+
+{{ }} 用于输出对象属性和函数返回值。
+
+{{ message }} 对应应用中 message 的值。
+
+
+### 根组件模板
+
+根组件的模板通常嵌入在组件定义中，不过也可以通过直接在挂载点的容器内定义模板来单独指定。
+
+
+## 实例
+
+当根组件没有设置 template 选项时，Vue 将自动使用容器的 innerHTML 作为模板。
+
+代码说明：
+
+- 使用setup函数：在Vue 3中，组件的逻辑通常在setup函数中定义。这里我们使用setup函数来定义响应式数据count和方法increment。
+- 使用ref：在setup函数中，我们使用ref来创建响应式数据count。
+- 定义increment方法：定义一个increment方法来增加count的值。
+- 返回响应式数据和方法：在setup函数中返回count和increment，这样它们就可以在模板中被访问和使用。
+
+
+### data 选项
+
+data 选项是一个函数。Vue 在创建新组件实例的过程中调用此函数。它应该返回一个对象，然后 Vue 会通过响应性系统将其包裹起来，并以 $data 的形式存储在组件实例中。
+
+
+## 实例
+
+以上实例属性仅在实例首次创建时被添加，所以你需要确保它们都在 data 函数返回的对象中。
+
+
+## 方法
+
+我们可以在组件中添加方法，使用 methods 选项，该选项包含了所需方法的对象。
+
+以下实例我们添加了 methods 选项，选项中包含了 increment() 方法：
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue3 起步` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

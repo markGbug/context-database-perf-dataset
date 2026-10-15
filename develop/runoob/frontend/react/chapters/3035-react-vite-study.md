@@ -1,35 +1,209 @@
-# React：React 安装(Vite) 学习笔记
+# React：React 安装(Vite)
 
 - 来源：[React 安装(Vite)](https://www.runoob.com/react/react-vite.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3035
 
-## 学习目标
+## 本章内容
 
-React 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `React 安装(Vite)` 建立学习路径，先理解它在 React 体系中的位置，再做可运行或可复述的验证。
+Vite 是一个现代化的前端构建工具，旨在通过利用现代浏览器的原生 ES 模块支持，提供快速的开发体验。
 
-## 阅读抓手
+Vite 是当前 React 官方推荐的首选工具，比传统的 Create React App 更快、更轻量、开发体验更好。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Vite 基于原生 ES Modules，支持秒级热更新（HMR），启动时间通常只需几百毫秒。
 
-## 笔记模板
+Vite 详细内容查看： Vite 教程。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 为什么选择 Vite + React？
 
-- 能用 3 到 5 句话解释 `React 安装(Vite)`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 极速启动：开发服务器秒开，热更新几乎实时。
+- 现代特性：开箱支持 JSX、TypeScript、CSS Modules、PostCSS 等。
+- 轻量灵活：配置文件简单，可轻松自定义。
+- 生产优化：内置 Rollup 构建，输出体积小、性能高。
+- 官方背书：React 官方文档已将 Vite 作为默认推荐。
+
+
+## 创建你的第一个 Vite + React 项目
+
+打开终端（Windows: PowerShell/Command Prompt；macOS/Linux: Terminal）。
+
+使用 npm 安装：
+
+```text
+npm create vite@latest my-first-react-app -- --template react
+```
+
+推荐命令（使用 pnpm，最快最省磁盘）：
+
+```text
+pnpm create vite@latest my-first-react-app -- --template react
+```
+
+其他包管理器命令：
+
+使用 yarn 安装：
+
+```text
+yarn create vite my-first-react-app --template react
+```
+
+命令解释：
+
+- create vite@latest：使用最新版 Vite 创建工具。
+- my-first-react-app：你的项目名称（小写字母 + 连字符推荐）。
+- -- --template react：指定 React 模板。
+
+交互过程（会提示选择）：
+
+- 项目名称：直接回车确认或修改。
+- 选择框架：选择 React。
+- 选择变体： JavaScript（推荐入门，先用纯 JS）。 TypeScript（进阶推荐，类型安全更好，后续可切换）。
+
+我们这里选择 JavaScript。
+
+等待几秒钟，项目骨架就创建好了！
+
+
+### 安装依赖并启动项目
+
+进入项目目录 cd my-first-react-app，安装依赖：
+
+```text
+npm install
+```
+
+启动开发服务器：
+
+```text
+npm run dev
+```
+
+浏览器会自动打开 http://localhost:5173（Vite 默认端口）。
+
+你会看到一个欢迎页面，带有 Vite + React 的 Logo 和计数器示例，这就是你的第一个 React 应用在运行！
+
+热模块替换（HMR）体验：修改任何代码（后面会教），保存后页面自动更新，无需刷新！这就是 Vite 的魔法。
+
+
+### 项目结构详解
+
+打开项目文件夹（推荐用 VS Code：code . 命令一键打开）。
+
+```text
+cd my-first-react-app
+code .
+```
+
+典型结构如下：
+
+```text
+my-first-react-app/
+├── public/              # 静态资源（直接复制到构建输出）
+│   └── vite.svg         # Vite Logo
+├── src/                 # 源码主目录（重点！）
+│   ├── assets/          # 图片等资源
+│   │   └── react.svg
+│   ├── App.jsx          # 主组件（应用入口）
+│   ├── main.jsx         # 入口文件（挂载根组件）
+│   ├── index.css        # 全局样式
+│   └── vite-env.d.ts    # TypeScript 声明（JS 项目可忽略）
+├── .gitignore
+├── index.html           # HTML 入口模板
+├── package.json         # 依赖和脚本
+├── vite.config.js       # Vite 配置文件（目前为空，可自定义）
+└── README.md
+```
+
+关键文件解释：
+
+- index.html：页面入口，<div></div> 是 React 挂载点。
+- src/main.jsx：React 启动文件，使用 React 18 的新 API 创建根节点。
+- src/App.jsx：你的主组件，默认带有一个计数器示例。
+
+
+### 修改代码：你的第一个 React 组件
+
+打开 src/App.jsx，替换全部内容为以下代码（我们从一个简单问候开始）：
+
+
+## 实例
+
+保存后，页面自动更新！你已经写了一个完整的函数组件：
+
+- import { useState } from 'react'：引入 Hook。
+- useState(0)：声明状态变量 count，初始值 0。
+- onClick 事件：点击按钮更新状态，触发重渲染。
+- JSX 语法：看起来像 HTML，但其实是 JavaScript。
+
+小练习：
+
+- 把标题改成你的名字：<h1>你好，[你的名字]！</h1>
+- 添加一个新按钮：显示减法计数。 <button onClick={() => setCount(count - 1)}> 减一 </button>
+
+
+### 理解入口文件：src/main.jsx
+
+打开 src/main.jsx：
+
+
+## 实例
+
+解释：
+
+- ReactDOM.createRoot：React 18 新 API，启用并发特性。
+- <App />：渲染你的主组件。
+- <React.StrictMode>：开发模式下严格检查，帮助发现问题。
+
+
+### 添加新组件（组件化实践）
+
+在 src/ 下创建新文件 components/HelloWorld.jsx（先手动创建文件夹）：
+
+```html
+// src/components/HelloWorld.jsx
+function HelloWorld({ name }) {
+  return <h2>欢迎，{name || '陌生人'}！</h2>
+}
+
+export default HelloWorld
+```
+
+在 App.jsx 中引入并使用：
+
+```html
+import HelloWorld from './components/HelloWorld.jsx'
+
+// 在 return 中添加：
+<HelloWorld name="Runoob" />
+```
+
+保存刷新，你会看到新组件渲染。这就是 组件化 的魅力：复用、可组合！
+
+
+### 样式与资源处理
+
+- CSS：直接 import ./App.css，支持普通 CSS。
+- 图片：import 后作为变量使用（Vite 自动优化）。
+- 进阶：支持 CSS Modules（文件名 .module.css）、Tailwind CSS（后续可配置）。
+
+
+### 构建生产版本
+
+开发完成后，构建用于部署的静态文件：
+
+```text
+npm run build
+```
+
+输出在 dist/ 文件夹：纯 HTML/CSS/JS，可上传到 Vercel、Netlify 等。
+
+
+## 复习重点
+
+- 能说明 `React 安装(Vite)` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

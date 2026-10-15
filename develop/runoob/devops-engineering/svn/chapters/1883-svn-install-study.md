@@ -1,35 +1,111 @@
-# SVN：SVN 安装 学习笔记
+# SVN：SVN 安装
 
 - 来源：[SVN 安装](https://www.runoob.com/svn/svn-install.html)
 - 分类：DevOps / 工程化
 - 技术：SVN
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1883
 
-## 学习目标
+## 本章内容
 
-SVN 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `SVN 安装` 建立学习路径，先理解它在 SVN 体系中的位置，再做可运行或可复述的验证。
+## 在windows下安装 SVN
 
-## 阅读抓手
+1、准备svn的安装文件
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+下载地址：https://sourceforge.net/projects/win32svn/
 
-## 笔记模板
+2、下载完成后，在相应的盘符中会有一个Setup-Subversion-1.8.16.msi的文件，目前最新的版本是1.8.16， 这里就使用这个版本。然后双击安装文件进行安装。我们指定安装在D:\Program Files (x86)\Subversion目录里。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+3、查看目录结构
 
-## 完成标准
+把svn安装目录里的bin目录添加到path路径中，在命令行窗口中输入 svnserve --help ,查看安装正常与否。
 
-- 能用 3 到 5 句话解释 `SVN 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+至此，windows下的SVN安装完成
+
+
+## 在CentOS下安装 SVN
+
+大多数 GNU/Linux 发行版系统自带了Subversion ，所以它很有可能已经安装在你的系统上了。可以使用下面命令检查是否安装了。
+
+```text
+svn --version
+```
+
+如果 Subversion 客户端没有安装，命令将报告svn命令找不到的错误。
+
+```text
+[runoob@centos6 ~]$ svn --version
+bash: svn: command not found
+```
+
+我们可以使用 yum install subversion 命令进行安装。
+
+```text
+[runoob@centos6 root]$ su -
+密码：
+[root@centos6 ~]# yum install subversion
+已加载插件：fastestmirror, security
+设置安装进程
+Loading mirror speeds from cached hostfile
+ * base: mirrors.aliyun.com
+ * epel: mirrors.neusoft.edu.cn
+ * extras: mirrors.zju.edu.cn
+ * updates: mirrors.aliyun.com
+解决依赖关系
+--> 执行事务检查
+...
+```
+
+安装成功之后，执行 svn --version 命令。
+
+```text
+[root@centos6 ~]# svn --version
+svn，版本 1.6.11 (r934486)
+   编译于 Aug 17 2015，08:37:43
+```
+
+至此，centos下的SVN安装完成。
+
+
+## 在Ubuntu下安装 SVN
+
+如果 Subversion 客户端没有安装，命令将报告svn命令找不到的错误。
+
+```text
+root@runoob:~# svn --version
+The program 'svn' is currently not installed. You can install it by typing:
+apt-get install subversion
+```
+
+我们可以使用 apt-get 命令进行安装
+
+```text
+root@runoob:~# apt-get install subversion
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  augeas-lenses hiera libaugeas0 libxslt1.1 ruby-augeas ruby-deep-merge ruby-json ruby-nokogiri ruby-rgen ruby-safe-yaml ruby-selinux ruby-shadow
+Use 'apt-get autoremove' to remove them.
+The following extra packages will be installed:
+  libserf-1-1 libsvn1
+...
+```
+
+安装成功之后，执行 svn --version 命令。
+
+```text
+root@runoob:~# svn --version
+svn, version 1.8.13 (r1667537)
+   compiled Sep  8 2015, 14:59:01 on x86_64-pc-linux-gnu
+```
+
+至此，Ubuntu下的SVN安装完成。
+
+
+## 复习重点
+
+- 能说明 `SVN 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

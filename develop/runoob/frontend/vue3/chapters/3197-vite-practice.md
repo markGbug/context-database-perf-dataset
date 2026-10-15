@@ -1,34 +1,310 @@
-# Vue3：Vite 教程 练习笔记
+# Vue3：Vite 教程
 
 - 来源：[Vite 教程](https://www.runoob.com/vue3/vite-tutorial.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3197
 
-## 练习目标
+## 本章内容
 
-把 `Vite 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Vite 是一个现代化的前端构建工具，旨在通过利用现代浏览器的原生 ES 模块支持，提供快速的开发体验。
 
-## 练习步骤
+Vite 由两部分组成：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 开发服务器： 基于原生 ES 模块，提供超快的热更新。
+- 构建命令： 使用 Rollup 打包代码，生成适用于生产环境的优化静态资源。
 
-## 验收清单
+Vite 需要 Node.js 版本 18+ 或 20+。然而，有些模板需要依赖更高的 Node 版本才能正常运行，当你的包管理器发出警告时，请注意升级你的 Node 版本。
 
-- 我能独立说出 `Vite 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 传统构建工具的痛点
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在 Vite 出现之前，前端开发通常使用 Webpack 等构建工具，这些工具虽然功能强大，但也存在一些痛点：
+
+- 启动速度慢： 项目越大，启动时间越长，影响开发效率。
+- 热更新慢： 每次修改代码后，都需要重新构建整个项目，导致热更新速度慢。
+- 配置复杂： Webpack 等工具配置复杂，学习成本高。
+
+Vite 的出现解决了传统构建工具的痛点，具有以下优势：
+
+- 极速启动： 利用浏览器原生 ES 模块支持，无需打包，启动速度极快。
+- 快速热更新： 仅更新修改的模块，保持应用状态，提升开发效率。
+- 丰富的功能： 支持 TypeScript、JSX、CSS 等，开箱即用。
+- 高度可扩展： 通过插件系统，轻松集成其他工具和框架。
+
+
+### Vite 的工作原理
+
+Vite 的工作原理可以分为开发模式和生产模式：
+
+- 开发模式：Vite 启动一个开发服务器，利用浏览器原生支持 ES 模块的特性，直接加载源代码。当代码发生变化时，Vite 只会更新修改的模块，并通知浏览器进行热更新，保持应用状态。
+- 生产模式：Vite 使用 Rollup 打包代码，生成优化后的静态资源文件。这些文件可以部署到任何静态文件服务器上。
+
+
+### Vite 适用场景
+
+Vite 适用于各种项目，尤其适合：
+
+- 单页应用 (SPA)： 如 Vue、React 项目。
+- 静态网站： 快速构建博客、文档等。
+- 库开发： 利用 Vite 的构建功能，高效开发和打包库。
+
+
+## 创建 Vite 项目
+
+Vite 提供了多种方式来创建新项目，最简单的方式是使用命令行工具。
+
+打开终端或命令行工具，运行以下命令来创建一个新的 Vite 项目：
+
+```text
+npm create vite@latest
+```
+
+按照提示输入项目名称并选择模板。
+
+Vite 提供了多种模板，包括：
+
+- vanilla: 纯 JavaScript 项目
+- vue: Vue.js 项目
+- react: React 项目
+- preact: Preact 项目
+- lit: Lit 项目
+- svelte: Svelte 项目
+
+选择模板后，Vite 会自动创建项目目录并安装依赖，本章节我们选择了 Vue 框架。
+
+如果暂时不懂的怎么选择，一路回车也行，窗口输出的信息类似如下：
+
+使用 Vite 创建的项目通常包含以下文件和文件夹：
+
+- node_modules: 存放项目依赖的文件夹。
+- public: 存放静态资源的文件夹，例如图片、字体等。
+- src: 存放项目源代码的文件夹。main.js: 项目入口文件。App.vue: Vue 项目根组件。
+- index.html: 项目首页。
+- package.json: 项目配置文件，包含项目信息、依赖和脚本命令。
+- vite.config.js: Vite 配置文件，用于配置 Vite 的各种选项。
+
+
+### 启动开发服务器
+
+进入项目目录：
+
+```text
+cd runoob-vite-test
+```
+
+安装依赖：
+
+```text
+npm install
+```
+
+npm run dev
+
+执行后，出现如下信息：
+
+```text
+VITE v6.2.0  ready in 684 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
+  ➜  Vue DevTools: Press Option(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+  ➜  press h + enter to show help
+```
+
+Vite 会启动一个本地开发服务器，并打印出访问地址，例如 http://localhost:5173，端口可以在 vite.config.js 中配置修改。
+
+打开浏览器访问该地址，即可看到你的 Vite 项目。
+
+
+### 修改代码并查看效果
+
+打开 src/App.vue 文件，修改代码并保存文件。
+
+你会发现浏览器会自动刷新，并显示修改后的效果。
+
+
+## Vite 启动流程
+
+package.json 中定义：
+
+```text
+"scripts": {
+  "dev": "vite"
+}
+```
+
+执行 npm run dev 命令后，npm 会查找本地 node_modules/.bin/vite 可执行文件，调用这个文件，启动开发服务器。
+
+Vite 的启动过程核心步骤：
+
+- 读取配置 默认读取根目录下的 vite.config.js 或 vite.config.ts。 配置包括 root、alias、插件、端口等。
+- 解析依赖 扫描 src/main.js（或 src/main.ts）作为入口文件。 对 ES 模块进行依赖分析。 对导入路径（如 @/components/Hello.vue）进行别名解析。
+- 启动开发服务器 创建一个 HTTP 服务器，默认端口 5173。 提供热更新（HMR, Hot Module Replacement）能力。 将 Vue 文件、JS/TS、CSS 等通过内置的 Vite 插件转换成浏览器可识别的代码。
+
+
+### 文件调用顺序（以典型 Vue3 项目为例）
+
+```text
+npm run dev
+    ↓
+vite 命令执行
+    ↓
+读取 vite.config.js
+    ↓
+扫描入口文件 src/main.js / src/main.ts
+    ↓
+main.js 导入 App.vue 和 router/store 等
+    ↓
+App.vue -> template + script + style 分别由 Vite Vue 插件处理
+    ↓
+浏览器请求资源时，Vite 进行按需编译和模块缓存
+    ↓
+页面呈现，支持 HMR 热更新
+```
+
+
+### 关键点
+
+- 入口文件：main.js 或 main.ts，Vue 应用的起点。
+- 模块解析：Vite 使用 esbuild 快速处理 JS/TS，并处理 Vue 单文件组件。
+- 别名解析：@ 对应 src/，在 vite.config.js 中通过 resolve.alias 配置。
+- 热更新：修改 .vue 文件或 JS/TS 文件时，Vite 会局部更新模块而不刷新整个页面。
+
+
+## Vite 常用功能
+
+Vite 提供了丰富的功能，可以帮助你更高效地开发前端应用。
+
+
+### 1. 使用 CSS 预处理器
+
+Vite 支持使用 Sass、Less、Stylus 等 CSS 预处理器。
+
+要使用这些预处理器，你需要先安装相应的依赖：
+
+Sass:
+
+```text
+npm install -D sass
+```
+
+Less:
+
+```text
+npm install -D less
+```
+
+Stylus:
+
+```text
+npm install -D stylus
+```
+
+安装完成后，你就可以在项目中使用相应的 CSS 预处理器了。
+
+例如，在 Vue 项目中，你可以使用 <style lang="scss"> 来编写 Sass 代码。
+
+
+### 2. 使用 TypeScript
+
+Vite 支持使用 TypeScript 编写代码。
+
+要使用 TypeScript，你需要先安装 TypeScript：
+
+```text
+npm install -D typescript
+```
+
+安装完成后，你可以将 .js 文件重命名为 .ts 文件，并使用 TypeScript 语法编写代码。
+
+Vite 会自动编译 TypeScript 代码。
+
+
+### 3. 使用静态资源
+
+Vite 支持使用图片、字体等静态资源。
+
+我们可以将这些资源放在 public 目录下，或者使用 import 语句导入资源。
+
+如何使用使用 public 目录？
+
+将图片 logo.png 放在 public 目录下，然后在代码中使用 /logo.png 引用图片。
+
+
+### 4. 使用 import 语句
+
+
+## 实例
+
+
+### 5.使用环境变量
+
+Vite 支持使用环境变量来配置不同的环境。
+
+你可以使用 .env 文件来定义环境变量。
+
+创建 .env 文件:
+
+```text
+VITE_API_URL=https://api.example.com
+```
+
+在代码中使用环境变量:
+
+```javascript
+const apiUrl = import.meta.env.VITE_API_URL
+```
+
+
+### 6.使用插件
+
+Vite 拥有丰富的插件生态系统，可以帮助你扩展 Vite 的功能。
+
+我们可以使用 Vite 插件来实现代码压缩、图片优化、代码分析等功能。
+
+安装插件:
+
+```text
+npm install -D vite-plugin-xxx
+```
+
+配置插件:
+
+在 vite.config.js 文件中配置插件：
+
+```text
+import xxx from 'vite-plugin-xxx'
+
+export default {
+  plugins: [
+    xxx()
+  ]
+}
+```
+
+vite.config.js 是 Vite 项目的核心配置文件，通过配置 vite.config.js，你可以自定义 Vite 的各种行为，例如开发服务器、构建选项、插件等。
+
+以下是一个 vite.config.js 配置示例：
+
+
+## vite.config.js 配置说明
+
+- root 指定项目的根目录，默认为当前工作目录。这里设置为 ./src，表示项目源代码放在 src 目录下。
+- base 指定项目的基础路径，适用于项目部署在子路径的情况。例如，如果项目部署在 https://example.com/my-app/，则设置为 /my-app/。
+- server 开发服务器配置：port：指定开发服务器的端口号。open：是否在启动开发服务器时自动打开浏览器。proxy：配置代理服务器，用于解决跨域问题。例如，将 /api 开头的请求代理到 http://localhost:8080。
+- build 构建配置：outDir：指定构建输出的目录。assetsDir：指定静态资源（如图片、字体）的存放目录。sourcemap：是否生成 sourcemap 文件，便于调试。minify：是否压缩代码，terser 是默认的压缩工具。rollupOptions：配置 Rollup 打包选项，例如外部依赖和代码分割。
+- plugins 配置 Vite 插件。这里使用了 @vitejs/plugin-vue 插件，用于支持 Vue 项目。
+- resolve.alias 配置路径别名。例如，将 @ 映射到 src 目录，方便在代码中引用。
+- css.preprocessorOptions 配置 CSS 预处理器选项。例如，全局注入 SCSS 变量文件。
+- envPrefix 配置环境变量的前缀。默认情况下，Vite 只会加载以 VITE_ 开头的环境变量。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vite 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

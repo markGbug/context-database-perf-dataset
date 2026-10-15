@@ -1,34 +1,87 @@
-# MVC：MVC 模型 练习笔记
+# MVC：ASP.NET MVC - 模型
 
 - 来源：[MVC 模型](https://www.runoob.com/aspnet/mvc-models.html)
 - 分类：.NET
 - 技术：MVC
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2021
 
-## 练习目标
+## 本章内容
 
-把 `MVC 模型` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+为了学习 ASP.NET MVC，我们将构建一个 Internet 应用程序。
 
-## 练习步骤
+第 7 部分：添加数据模型。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## MVC 模型
 
-- 我能独立说出 `MVC 模型` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+MVC 模型包含了除纯视图和控制器逻辑以外的其他所有应用程序逻辑（业务逻辑、验证逻辑、数据访问逻辑）。
 
-## 复盘问题
+通过 MVC，模型可以控制并操作应用程序数据。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## Models 文件夹
+
+Models 文件夹包含表示应用程序模型的类。
+
+Visual Web Developer 自动创建一个 AccountModels.cs 文件，该文件包含用于应用程序安全的模型。
+
+AccountModels 包含 LogOnModel、ChangePasswordModel 和 RegisterModel。
+
+
+## 添加数据库模型
+
+本教程所需的数据库模型可以通过以下几个简单的步骤来创建：
+
+- 在 Solution Explorer窗口中，右击 Models 文件夹，并选择 Add 和 Class。
+- 将类命名为 MovieDB.cs，然后点击 Add。
+- 编辑这个类：
+
+注释：
+
+我们特意把模型命名为 "MovieDB"。在上一章中，您已经看到用于数据库表的 "MovieDBs"（以 s 结尾）。这看起来有点奇怪，不过这种命名惯例能确保模型连接上数据库表，您必须这么使用。
+
+
+## 添加数据库控制器
+
+本教程所需的数据库控制器可以通过以下几个简单的步骤来创建：
+
+- 重建您的项目：选择 Debug，然后从菜单中选择 Build MvcDemo。
+- 在 Solution Explorer（解决方案资源管理器）中，右击 Controllers 文件夹，选择 Add 和 Controller。
+- 设置控制器名称为 MoviesController。
+- 选择模板：Controller with read/write actions and views, using Entity Framework
+- 选择模型类：MovieDB (MvcDemo.Models)
+- 选择 data context 类：MovieDBContext (MvcDemo.Models)
+- 选择视图 Razor (CSHTML)
+- 点击 Add
+
+Visual Web Developer 将创建以下文件：
+
+- Controllers 文件夹中的 MoviesController.cs 文件
+- Views 文件夹中的 Movies 文件夹
+
+
+## 添加数据库视图
+
+在 Movies 文件夹中，会自动创建以下文件：
+
+- Create.cshtml
+- Delete.cshtml
+- Details.cshtml
+- Edit.cshtml
+- Index.cshtml
+
+
+## 祝贺您
+
+祝贺您。您已经向应用程序添加了您的第一个 MVC 数据模型。
+
+现在您可以点击 "Movies" 标签页了。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MVC 模型` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

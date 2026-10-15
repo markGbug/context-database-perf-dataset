@@ -1,35 +1,153 @@
-# AI Agent（智能体）：Hugging Face Transformers 学习笔记
+# AI Agent（智能体）：Hugging Face Transformers
 
 - 来源：[Hugging Face Transformers](https://www.runoob.com/ai-agent/hugging-face-transformers.html)
 - 分类：AI / 智能开发
 - 技术：AI Agent（智能体）
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0048
 
-## 学习目标
+## 本章内容
 
-AI Agent（智能体） 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Hugging Face Transformers` 建立学习路径，先理解它在 AI Agent（智能体） 体系中的位置，再做可运行或可复述的验证。
+Hugging Face Transformers 是目前最流行的开源 NLP / AI 库，提供数千个预训练模型，覆盖文本、图像、音频、多模态等几乎所有 AI 任务。
 
-## 阅读抓手
+它的核心价值：把复杂的模型加载、推理、训练流程封装成几行代码。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 支持的任务类型
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## Transformer 架构核心原理
 
-- 能用 3 到 5 句话解释 `Hugging Face Transformers`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+在使用库之前，理解底层架构会让你知道为什么这样调参。
+
+
+### 整体架构：Encoder-Decoder
+
+
+### 三大模型家族
+
+
+## 安装与环境配置
+
+
+### 安装
+
+```text
+# 基础安装
+pip install transformers
+
+# 完整安装（包含训练依赖）
+pip install transformers[torch]       # PyTorch 后端（推荐）
+pip install transformers[tf-cpu]      # TensorFlow 后端
+pip install transformers[flax]        # JAX/Flax 后端
+
+# 常用配套库
+pip install datasets          # HuggingFace 数据集库
+pip install evaluate          # 模型评估指标
+pip install accelerate        # 多GPU/混合精度训练
+pip install peft              # 参数高效微调（LoRA等）
+pip install tokenizers        # 高性能分词器
+pip install sentencepiece     # 部分模型（T5/LLaMA）需要
+
+# 验证安装
+python -c "import transformers; print(transformers.__version__)"
+```
+
+
+### 环境变量配置
+
+```text
+# 设置模型缓存目录（模型下载后缓存到此路径，默认 ~/.cache/huggingface）
+export HF_HOME=/data/huggingface_cache
+
+# 国内用户：使用镜像站加速下载（推荐 hf-mirror.com）
+export HF_ENDPOINT=https://hf-mirror.com
+
+# 离线模式（网络不可用时，只使用已缓存的模型）
+export TRANSFORMERS_OFFLINE=1
+
+# 禁用进度条（CI/CD 环境）
+export DISABLE_TQDM=1
+```
+
+
+## 实例
+
+
+## Pipeline：五行代码跑 AI
+
+Pipeline 是 Transformers 最高级别的抽象，把模型加载、预处理、推理、后处理全部封装好，三到五行代码即可完成推理。
+
+
+### Pipeline 快速示例大全
+
+
+## 实例
+
+
+### Pipeline 进阶配置
+
+
+## 实例
+
+
+## Tokenizer 深度解析
+
+Tokenizer 是 NLP 的第一步：把原始文本转换成模型能理解的数字序列。
+
+
+### Tokenization 完整流程
+
+
+### Tokenizer 核心用法
+
+
+## 实例
+
+
+### 常见 Tokenizer 类型对比
+
+
+## 模型加载与推理
+
+
+### AutoClass：自动选择正确的模型类
+
+
+## 实例
+
+
+### 提取句子向量
+
+
+## 实例
+
+
+## 十大常见任务实战
+
+
+## 后续章节
+
+- 文本分类（情感分析）
+- 实例
+- 文本生成（对话 / 续写）
+- 实例
+- 命名实体识别（NER）
+- 实例
+- 机器翻译
+- 实例
+- 文本摘要
+- 实例
+- 微调（Fine-tuning）
+- 微调流程全景
+- 完整微调示例：文本分类
+- 实例
+- LoRA 参数高效微调（推荐）
+- 实例
+
+## 复习重点
+
+- 能说明 `Hugging Face Transformers` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

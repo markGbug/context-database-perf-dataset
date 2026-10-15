@@ -1,34 +1,458 @@
-# React：React JSX 练习笔记
+# React：React JSX
 
 - 来源：[React JSX](https://www.runoob.com/react/react-jsx.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3042
 
-## 练习目标
+## 本章内容
 
-把 `React JSX` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+JSX（JavaScript XML）是看起来像 XML 的 JavaScript 语法扩展，React 中常用它替代常规 JavaScript 来编写 UI 组件，让你能用类 HTML 的方式描述组件结构与行为。
 
-## 练习步骤
+使用 JSX 并非强制要求，但它具备以下核心优势：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 执行高效：编译为 JavaScript 代码后经过优化，运行速度更快；
+- 类型安全：编译阶段即可发现错误（配合 TypeScript 时效果更佳）；
+- 编写便捷：UI 结构直观清晰，嵌入 JavaScript 表达式更灵活，编写模板简单快速；
+- 本质特性：非字符串/HTML，会被 Babel（Vite 内置）编译为 React.createElement 调用。
 
-## 验收清单
+我们先看下以下代码：
 
-- 我能独立说出 `React JSX` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+const element = <h1>Hello, world!</h1>;
+```
 
-## 复盘问题
+这种看起来可能有些奇怪的标签语法既不是字符串也不是 HTML。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+它被称为 JSX， 一种 JavaScript 的语法扩展。 我们推荐在 React 中使用 JSX 来描述用户界面。
+
+JSX 是在 JavaScript 内部实现的。
+
+我们知道元素是构成 React 应用的最小单位，JSX 就是用来声明 React 当中的元素。
+
+与浏览器的 DOM 元素不同，React 当中的元素事实上是普通的对象，React DOM 可以确保 浏览器 DOM 的数据内容与 React 元素保持一致。
+
+要将 React 元素渲染到根 DOM 节点中，我们通过把它们都传递给 ReactDOM.render() 的方法来将其渲染到页面上：
+
+
+## React 实例
+
+```html
+const element = <h1 className="foo">Hello, world</h1>;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(element);
+```
+
+注意:
+
+由于 JSX 就是 JavaScript，一些标识符像 class 和 for 不建议作为 XML 属性名。作为替代，React DOM 使用 className 和 htmlFor 来做对应的属性。
+
+
+## JSX 语法规则
+
+JSX 看起来像 HTML，但有严格规则：
+
+必须闭合标签：
+
+- HTML 可以 <br>，但 JSX 必须 <br />（自闭合）。
+- 所有标签都要闭合：<div></div>。
+
+class → className：
+
+因为 class 是 JavaScript 关键字，用 className 代替。
+
+```html
+<div className="container">内容</div>
+```
+
+htmlFor（标签内）：
+
+```html
+<label for="id"> → <label htmlFor="id">
+```
+
+大写开头组件：
+
+自定义组件必须大写开头（小写会被当成 HTML 标签）。
+
+```html
+<Card />  {/* 正确，自定义组件 */}
+<card />  {/* 错误，会被当成 <card> HTML 标签 */}
+```
+
+注释：
+
+用 {/* 注释内容 */}。
+
+```text
+jsx{/* 这是一个 JSX 注释 */}
+```
+
+根元素：
+
+return 只能有一个根节点。
+
+```html
+return (
+  <>  {/* 碎片 Fragment，空标签，不渲染 DOM */}
+    <h1>标题</h1>
+    <p>段落</p>
+  </>
+);
+```
+
+我们可以打开 src/App.jsx，把 return 改成：
+
+```html
+return (
+  <>
+    <h1 className="title">JSX 语法规则演示</h1>
+    <img src="/vite.svg" alt="Vite Logo" />
+    <br />
+    {/* 自闭合标签和注释 */}
+    <p>注意 className 和闭合标签</p>
+  </>
+);
+```
+
+保存查看效果。
+
+
+## 表达式嵌入、条件渲染、列表渲染
+
+JSX 最强大的地方是可以用 {} 嵌入 JavaScript 表达式（只能是表达式，不能是语句如 if/for）。
+
+
+### 表达式嵌入
+
+任何有效的 JS 表达式都可以放进 {}：
+
+```html
+const name = 'runoob';
+const now = new Date().toLocaleString();
+
+return (
+  <div>
+    <h1>你好，{name}！</h1>
+    <p>当前时间：{now}</p>
+    <p>计算结果：{2 + 3 * 5}</p>  {/* 17 */}
+  </div>
+);
+```
+
+
+### 条件渲染
+
+用三元运算符或 &&：
+
+```html
+const isLoggedIn = true;
+const count = 0;
+
+return (
+  <div>
+    {isLoggedIn ? <h1>欢迎回来，{name}！</h1> : <h1>请登录</h1>}
+
+    {count > 0 && <p>你有 {count} 条未读消息</p>}  {/* count 为 0 时不渲染 */}
+  </div>
+);
+```
+
+避免：不要用 if 语句直接在 JSX 中（可以用在函数体里）。
+
+
+### 列表渲染（key 的重要性）
+
+用 map() 渲染数组，必须给每个元素加 key 属性（唯一标识，帮助 React 高效更新 DOM）。
+
+```html
+const items = [
+  { id: 1, name: '苹果' },
+  { id: 2, name: '香蕉' },
+  { id: 3, name: '橙子' },
+];
+
+return (
+  <ul>
+    {items.map(item => (
+      <li key={item.id}>  {/* key 必须唯一且稳定！ */}
+        {item.name}
+      </li>
+    ))}
+  </ul>
+);
+```
+
+key 的重要性：
+
+- 没有 key：React 会警告，可能导致渲染错误（尤其是列表动态变化时）。
+- 坏习惯：用 index 作为 key（key={index}）——当列表顺序变化时，会导致不必要的重渲染或状态丢失。
+- 最佳实践：用数据中的唯一 ID（如数据库 id）。
+
+
+### 样式处理
+
+React 有多种样式方式，我们先学两种最基础的。
+
+用 style 属性，值是对象（驼峰命名）：
+
+```html
+return (
+  <div
+    style={{
+      backgroundColor: '#f0f0f0',
+      padding: '20px',
+      borderRadius: '8px',
+      textAlign: 'center',
+      fontFamily: 'Arial, sans-serif',
+    }}
+  >
+    <h2 style={{ color: 'blue', marginBottom: '10px' }}>
+      内联样式示例
+    </h2>
+  </div>
+);
+```
+
+- 优点：动态样式容易（可以用变量）。
+- 缺点：不方便维护复杂样式。
+
+
+### CSS Modules（推荐，作用域隔离）
+
+Vite 默认支持 CSS Modules，避免全局污染。
+
+创建 src/App.css（已存在）或新文件 src/styles/Card.module.css：
+
+```text
+/* Card.module.css */
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin: 20px;
+}
+
+.title {
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.content {
+  color: #666;
+}
+```
+
+在组件中导入并使用（自动生成作用域类名）：
+
+```html
+import styles from './styles/Card.module.css';
+
+return (
+  <div className={styles.card}>
+    <h3 className={styles.title}>标题</h3>
+    <p className={styles.content}>内容</p>
+  </div>
+);
+```
+
+- 优点：类名自动哈希（如 .card__abc123），不会冲突。
+
+完整实践：把之前的 Card 组件改用 CSS Modules。
+
+创建 src/components/Card.module.css：
+
+```text
+.container {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: white;
+}
+
+.image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.title {
+  margin: 0 0 10px 0;
+  padding: 20px 20px 0;
+  color: #333;
+}
+
+.content {
+  padding: 0 20px 20px;
+  color: #666;
+}
+```
+
+修改 Card.jsx：
+
+```html
+import styles from './Card.module.css';
+
+const Card = ({ title, content, imageUrl }) => {
+  return (
+    <div className={styles.container}>
+      {imageUrl && <img src={imageUrl} alt={title} className={styles.image} />}
+      <h3 className={styles.title}>{title}</h3>
+      <p className={styles.content}>{content}</p>
+    </div>
+  );
+};
+
+export default Card;
+```
+
+
+## 使用 JSX
+
+JSX 看起来类似 HTML ，我们可以看下实例:
+
+```html
+const element = <h1 className="foo">Hello, world</h1>;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(element);
+```
+
+我们可以在以上代码中嵌套多个 HTML 标签，需要使用一个 div 元素包裹它，实例中的 p 元素添加了自定义属性 data-myattribute，添加自定义属性需要使用 data- 前缀。
+
+
+## React 实例
+
+```html
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <div>
+    <h1>菜鸟教程</h1>
+    <h2>欢迎学习 React</h2>
+    <p data-myattribute = "somevalue">这是一个很不错的 JavaScript 库!</p>
+    </div>
+);
+```
+
+
+### 独立文件
+
+你的 React JSX 代码可以放在一个独立文件上，例如我们创建一个 helloworld_react.js 文件，代码如下：
+
+```html
+const element = <h1 className="foo">Hello, world</h1>;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(element);
+```
+
+然后在 HTML 文件中引入该 JS 文件：
+
+
+## React 实例
+
+```html
+<body>
+  <div id="example"></div>
+<script type="text/babel" src="helloworld_react.js"></script>
+</body>
+```
+
+
+## JavaScript 表达式
+
+我们可以在 JSX 中使用 JavaScript 表达式。表达式写在花括号 {} 中。实例如下：
+
+
+## React 实例
+
+```html
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <div>
+        <h1>{1+1}</h1>
+    </div>
+);
+```
+
+在 JSX 中不能使用 if else 语句，但可以使用 conditional (三元运算) 表达式来替代。以下实例中如果变量 i 等于 1 浏览器将输出 true, 如果修改 i 的值，则会输出 false.
+
+
+## React 实例
+
+```html
+var i = 1;
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <div>
+        <h1>{i == 1 ? 'True!' : 'False'}</h1>
+    </div>
+);
+```
+
+
+## 样式
+
+React 推荐使用内联样式。我们可以使用 camelCase 语法来设置内联样式. React 会在指定元素数字后自动添加 px 。以下实例演示了为 h1 元素添加 myStyle 内联样式：
+
+
+## React 实例
+
+```html
+var myStyle = {
+    fontSize: 100,
+    color: '#FF0000'
+};
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <h1 style = {myStyle}>菜鸟教程</h1>
+);
+```
+
+
+## 注释
+
+注释需要写在花括号中，实例如下：
+
+
+## React 实例
+
+```html
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <div>
+    <h1>菜鸟教程</h1>
+    {/*注释...*/}
+    </div>
+);
+```
+
+
+## 数组
+
+JSX 允许在模板中插入数组，数组会自动展开所有成员：
+
+
+## React 实例
+
+```html
+var arr = [
+  <h1>菜鸟教程</h1>,
+  <h2>学的不仅是技术，更是梦想！</h2>,
+];
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <div>{arr}</div>
+);
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `React JSX` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

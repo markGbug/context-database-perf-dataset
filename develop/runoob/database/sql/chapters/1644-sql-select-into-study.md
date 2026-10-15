@@ -1,35 +1,87 @@
-# SQL：SQL SELECT INTO 学习笔记
+# SQL：SQL SELECT INTO 语句
 
 - 来源：[SQL SELECT INTO](https://www.runoob.com/sql/sql-select-into.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1644
 
-## 学习目标
+## 本章内容
 
-SQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQL SELECT INTO` 建立学习路径，先理解它在 SQL 体系中的位置，再做可运行或可复述的验证。
+通过 SQL，您可以从一个表复制信息到另一个表。
 
-## 阅读抓手
+SELECT INTO 语句从一个表复制数据，然后把数据插入到另一个新表中。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## SQL SELECT INTO 语句
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+SELECT INTO 语句从一个表复制数据，然后把数据插入到另一个新表中。
 
-## 完成标准
+注意：
 
-- 能用 3 到 5 句话解释 `SQL SELECT INTO`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+MySQL 数据库不支持 SELECT ... INTO 语句，但支持 INSERT INTO ... SELECT 。
+
+当然你可以使用以下语句来拷贝表结构及数据：
+
+```text
+CREATE TABLE 新表
+AS
+SELECT * FROM 旧表
+```
+
+
+### SQL SELECT INTO 语法
+
+假设有一个名为 employees 的表，包含以下数据：
+
+要创建一个名为 employees_backup 的新表，并将 employees 表中的所有数据插入到新表中，可以使用以下 SQL 语句：
+
+```text
+SELECT *
+INTO employees_backup
+FROM employees;
+```
+
+执行此语句后，新的 employees_backup 表将仅包含年龄大于 25 岁的员工的数据。
+
+```text
+SELECT EmployeeID, FirstName, LastName, Age, Department
+INTO employees_backup
+FROM employees
+WHERE Age > 25;
+```
+
+
+### 使用注意事项
+
+表结构：
+
+- SELECT INTO 会创建一个新表，并且新表的结构将基于选择的列和数据类型。
+- 如果新表已经存在，SELECT INTO 语句将失败。在这种情况下，可以使用 INSERT INTO ... SELECT 语句。
+
+数据库支持：
+
+- SELECT INTO 语句在 SQL Server 中非常常用，但在 MySQL 和 PostgreSQL 中通常使用 CREATE TABLE ... AS SELECT 语句。
+
+
+## 在其他数据库中的替代方案
+
+
+### MySQL 和 PostgreSQL
+
+在 MySQL 和 PostgreSQL 中，可以使用 CREATE TABLE ... AS SELECT 来实现类似的功能：
+
+```text
+CREATE TABLE employees_backup AS
+SELECT EmployeeID, FirstName, LastName, Age, Department
+FROM employees
+WHERE Age > 25;
+```
+
+
+## 复习重点
+
+- 能说明 `SQL SELECT INTO` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,211 @@
-# Julia：Julia 语言环境安装 练习笔记
+# Julia：Julia 环境安装
 
 - 来源：[Julia 语言环境安装](https://www.runoob.com/julia/julia-environment.html)
 - 分类：Python / 数据科学
 - 技术：Julia
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3928
 
-## 练习目标
+## 本章内容
 
-把 `Julia 语言环境安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Julia 语言支持以下系统：
 
-## 练习步骤
+- Windows
+- macOS
+- Linux
+- FreeBSD
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Julia 官方推荐使用 Juliaup 版本管理器安装，它会自动管理多个 Julia 版本并保持更新。
 
-## 验收清单
+Julia 安装包下载地址为：https://julialang.org/downloads/。
 
-- 我能独立说出 `Julia 语言环境安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Github 源码地址：https://github.com/JuliaLang/julia。
 
-## 复盘问题
+国内镜像地址：https://mirrors.tuna.tsinghua.edu.cn/julia-releases/bin/
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+各个系统对应的包名（以 Julia 1.10.4 为例）：
+
+注：CPU 是 X86 还是 ARM 可以通过 uname -m 命令查看，输出 x86_64 表示 X86 架构，输出 arm64 或 aarch64 表示 ARM 架构：
+
+```text
+$ uname -m
+x86_64
+```
+
+
+## 使用 Juliaup 安装（推荐）
+
+
+### Windows 安装
+
+Windows 下最简单的方式是从 Microsoft Store 安装 Julia，或者用 winget 命令安装：
+
+```text
+winget install --name Julia --id 9NJNWW8PVKMN -e -s msstore
+```
+
+
+### Linux 和 macOS 安装
+
+在 Linux 或 macOS 上，执行以下命令安装 Juliaup 及最新稳定版 Julia：
+
+```text
+curl -fsSL https://install.julialang.org | sh
+```
+
+安装完成后重新打开终端，即可使用 julia 命令。
+
+常用的安装器参数：
+
+安装后可以使用 juliaup 命令管理版本：
+
+```text
+$ juliaup status          # 查看当前使用的版本
+$ juliaup add 1.10        # 安装 1.10 版本
+$ juliaup default 1.10    # 设置默认版本
+```
+
+
+## 使用二进制包安装
+
+如果不使用 Juliaup，也可以直接下载二进制包安装。
+
+
+### Windows 下安装
+
+从 https://julialang.org/downloads/ 下载 Windows Julia 安装程序。
+
+注：32 位 Julia 二进制文件可在 32 位和 64 位 Windows 上运行，但 64 位 Julia 二进制文件只能在 64 位 Windows (x86_64) 上运行，现在电脑基本上都是 64 位的。
+
+运行安装程序，安装过程点击 Next 就好了。
+
+勾选 Add Julia To PATH 自动将 Julia 添加到环境变量。
+
+这样我们就可以在终端执行 julia 命令了。
+
+Julia 默认安装目录类似于 C:\Users\RUNOOB\AppData\Local\Programs\Julia 1.10.4。
+
+
+### Linux/FreeBSD 安装
+
+下载 x86_64 二进制包：
+
+```text
+wget https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.4-linux-x86_64.tar.gz
+```
+
+以上是官网提供的下载地址，如果速度慢，可以采用国内镜像地址下载（注意路径中是 x64 目录）：
+
+```text
+wget https://mirrors.tuna.tsinghua.edu.cn/julia-releases/bin/linux/x64/1.10/julia-1.10.4-linux-x86_64.tar.gz
+```
+
+解压：
+
+```text
+tar zxvf julia-1.10.4-linux-x86_64.tar.gz
+```
+
+Linux/FreeBSD 二进制文件不需要安装，但需要我们的系统可以找到 julia 可执行文件，这就需要将 julia 的目录添加到系统环境中。
+
+解压完成后将 julia 的解压目录移动到 /usr/local 目录下：
+
+```text
+sudo mv julia-1.10.4 /usr/local/
+```
+
+移动完成后我们就可以使用完整目录执行 julia 命令：
+
+```text
+$ /usr/local/julia-1.10.4/bin/julia -v
+julia version 1.10.4
+```
+
+julia -v 命令用于查看版本号。
+
+也可以将 julia 命令添加到您的系统 PATH 环境变量中，编辑 ~/.bashrc（或 ~/.bash_profile）文件，在最后一行添加以下代码：
+
+```text
+export PATH="$PATH:/usr/local/julia-1.10.4/bin/"
+```
+
+添加后执行以下命令，让环境变量立即生效：
+
+```text
+source ~/.bashrc
+或
+source ~/.bash_profile
+```
+
+这样我们就可以直接执行 julia 命令而不需要添加完整路径：
+
+```text
+$ julia -v
+julia version 1.10.4
+```
+
+
+### macOS 安装
+
+Apple Silicon（M1/M2/M3 等）芯片下载 macaarch64 包，Intel 芯片下载 mac64 包：
+
+```text
+# Apple Silicon 版本
+wget https://julialang-s3.julialang.org/bin/mac/aarch64/1.10/julia-1.10.4-macaarch64.tar.gz
+
+# Intel 版本
+wget https://julialang-s3.julialang.org/bin/mac/x64/1.10/julia-1.10.4-mac64.tar.gz
+```
+
+解压：
+
+```text
+tar zxvf julia-1.10.4-macaarch64.tar.gz
+```
+
+将解压目录移动到 /usr/local 目录下：
+
+```text
+sudo mv julia-1.10.4 /usr/local/
+```
+
+将 julia 添加到 PATH 环境变量，编辑 ~/.zshrc（macOS 默认 shell 是 zsh）文件，在最后一行添加：
+
+```text
+export PATH="$PATH:/usr/local/julia-1.10.4/bin/"
+```
+
+添加后执行以下命令，让环境变量立即生效：
+
+```text
+source ~/.zshrc
+```
+
+验证安装：
+
+```text
+$ julia -v
+julia version 1.10.4
+```
+
+也可以使用 Homebrew 安装：
+
+```text
+brew install julia
+```
+
+
+## 验证安装
+
+安装完成后，执行 julia 命令进入交互式窗口，执行 versioninfo() 查看详细的版本信息：
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Julia 语言环境安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

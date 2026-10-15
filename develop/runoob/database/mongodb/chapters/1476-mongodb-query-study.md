@@ -1,35 +1,267 @@
-# MongoDB：MongoDB 查询文档 学习笔记
+# MongoDB：MongoDB 查询文档
 
 - 来源：[MongoDB 查询文档](https://www.runoob.com/mongodb/mongodb-query.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1476
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 查询文档` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+MongoDB 查询文档使用 find()、findOne() 方法。
 
-## 阅读抓手
+find() 方法以非结构化的方式来显示所有文档。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+MongoDB 查询数据的语法格式如下：
 
-## 完成标准
+```text
+db.collection.find(query, projection)
+```
 
-- 能用 3 到 5 句话解释 `MongoDB 查询文档`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- query：用于查找文档的查询条件。默认为 {}，即匹配所有文档。
+- projection（可选）：指定返回结果中包含或排除的字段。
+
+查找所有文档：
+
+
+## 实例
+
+按条件查找文档：
+
+
+## 实例
+
+按条件查找文档，并只返回指定字段：
+
+
+## 实例
+
+如果你需要以易读的方式来读取数据，可以使用 pretty() 方法，语法格式如下：
+
+```text
+>db.col.find().pretty()
+```
+
+pretty() 方法以格式化的方式来显示所有文档。
+
+
+## 实例
+
+
+### 2、findOne()
+
+findOne() 方法用于查找集合中的单个文档。如果找到多个匹配的文档，它只返回第一个。
+
+语法：
+
+```text
+db.collection.findOne(query, projection)
+```
+
+- query：用于查找文档的查询条件。默认为 {}，即匹配所有文档。
+- projection（可选）：指定返回结果中包含或排除的字段。
+
+查找单个文档：
+
+```text
+db.myCollection.findOne({ name: "Alice" });
+```
+
+```text
+db.myCollection.findOne(
+    { name: "Alice" },
+    { name: 1, age: 1, _id: 0 }
+);
+```
+
+
+## 高级查询方法
+
+
+### 1、使用比较操作符
+
+MongoDB 支持多种比较操作符，如 $gt、$lt、$gte、$lte、$eq、$ne 等。
+
+查找年龄大于 25 的文档:
+
+```text
+db.myCollection.find({ age: { $gt: 25 } });
+```
+
+
+### 2、使用逻辑操作符
+
+MongoDB 支持多种逻辑操作符，如 $and、$or、$not、$nor 等。
+
+查找年龄大于 25 且城市为 "New York" 的文档:
+
+
+## 实例
+
+
+### 3、使用正则表达式
+
+可以使用正则表达式进行模式匹配查询。
+
+查找名字以 "A" 开头的文档：
+
+```text
+db.myCollection.find({ name: /^A/ });
+```
+
+
+### 4、投影
+
+投影用于控制查询结果中返回的字段。可以使用包含字段和排除字段两种方式。
+
+只返回名字和年龄字段：
+
+
+## 实例
+
+
+### 5、排序
+
+可以对查询结果进行排序。
+
+按年龄降序排序：
+
+```text
+db.myCollection.find().sort({ age: -1 });
+```
+
+
+### 6、限制与跳过
+
+可以对查询结果进行限制和跳过指定数量的文档。
+
+返回前 10 个文档：
+
+```text
+db.myCollection.find().limit(10);
+```
+
+跳过前 5 个文档，返回接下来的 10 个文档：
+
+```text
+db.myCollection.find().skip(5).limit(10);
+```
+
+
+### 实例
+
+查找年龄大于 25 且城市为 "New York" 的文档，只返回名字和年龄字段，按年龄降序排序，并返回前 10 个文档。
+
+
+## 实例
+
+
+## MongoDB 与 RDBMS Where 语句比较
+
+如果你熟悉常规的 SQL 数据，通过下表可以更好的理解 MongoDB 的条件语句查询：
+
+
+## MongoDB AND 条件
+
+MongoDB 的 find() 方法可以传入多个键(key)，每个键(key)以逗号隔开，即常规 SQL 的 AND 条件。
+
+语法格式如下：
+
+```text
+>db.col.find({key1:value1, key2:value2}).pretty()
+```
+
+
+### 实例
+
+以下实例通过 by 和 title 键来查询 菜鸟教程 中 MongoDB 教程 的数据
+
+```text
+> db.col.find({"by":"菜鸟教程", "title":"MongoDB 教程"}).pretty()
+{
+        "_id" : ObjectId("56063f17ade2f21f36b03133"),
+        "title" : "MongoDB 教程",
+        "description" : "MongoDB 是一个 Nosql 数据库",
+        "by" : "菜鸟教程",
+        "url" : "http://www.runoob.com",
+        "tags" : [
+                "mongodb",
+                "database",
+                "NoSQL"
+        ],
+        "likes" : 100
+}
+```
+
+以上实例中类似于 WHERE 语句：WHERE by='菜鸟教程' AND title='MongoDB 教程'
+
+
+## MongoDB OR 条件
+
+MongoDB OR 条件语句使用了关键字 $or,语法格式如下：
+
+```text
+>db.col.find(
+   {
+      $or: [
+         {key1: value1}, {key2:value2}
+      ]
+   }
+).pretty()
+```
+
+
+### 实例
+
+以下实例中，我们演示了查询键 by 值为 菜鸟教程 或键 title 值为 MongoDB 教程 的文档。
+
+```text
+>db.col.find({$or:[{"by":"菜鸟教程"},{"title": "MongoDB 教程"}]}).pretty()
+{
+        "_id" : ObjectId("56063f17ade2f21f36b03133"),
+        "title" : "MongoDB 教程",
+        "description" : "MongoDB 是一个 Nosql 数据库",
+        "by" : "菜鸟教程",
+        "url" : "http://www.runoob.com",
+        "tags" : [
+                "mongodb",
+                "database",
+                "NoSQL"
+        ],
+        "likes" : 100
+}
+>
+```
+
+
+## AND 和 OR 联合使用
+
+以下实例演示了 AND 和 OR 联合使用，类似常规 SQL 语句为： 'where likes>50 AND (by = '菜鸟教程' OR title = 'MongoDB 教程')'
+
+```text
+>db.col.find({"likes": {$gt:50}, $or: [{"by": "菜鸟教程"},{"title": "MongoDB 教程"}]}).pretty()
+{
+        "_id" : ObjectId("56063f17ade2f21f36b03133"),
+        "title" : "MongoDB 教程",
+        "description" : "MongoDB 是一个 Nosql 数据库",
+        "by" : "菜鸟教程",
+        "url" : "http://www.runoob.com",
+        "tags" : [
+                "mongodb",
+                "database",
+                "NoSQL"
+        ],
+        "likes" : 100
+}
+```
+
+
+## 复习重点
+
+- 能说明 `MongoDB 查询文档` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

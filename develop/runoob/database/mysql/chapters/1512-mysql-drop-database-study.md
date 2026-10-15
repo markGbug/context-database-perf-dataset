@@ -1,35 +1,91 @@
-# MySQL：MySQL 删除数据库 学习笔记
+# MySQL：MySQL 删除数据库
 
 - 来源：[MySQL 删除数据库](https://www.runoob.com/mysql/mysql-drop-database.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1512
 
-## 学习目标
+## 本章内容
 
-MySQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MySQL 删除数据库` 建立学习路径，先理解它在 MySQL 体系中的位置，再做可运行或可复述的验证。
+使用普通用户登陆 MySQL 服务器，你可能需要特定的权限来创建或者删除 MySQL 数据库，所以我们这边使用 root 用户登录，root 用户拥有最高权限。
 
-## 阅读抓手
+在删除数据库过程中，务必要十分谨慎，因为在执行删除命令后，所有数据将会消失。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+drop 命令删除数据库 drop 命令格式： DROP DATABASE <database_name>; -- 直接删除数据库，不检查是否存在 或 DROP DATABASE [IF EXISTS] <database_name>; 参数说明： IF EXISTS 是一个可选的子句，表示如果数据库存在才执行删除操作，避免因为数据库不存在而引发错误。database_name 是你要删除的数据库的名称。 例如删除名为 RUNOOB 的数据库： -- 直接删除数据库，不检查是否存在 mysql> DROP DATABASE RUNOOB; -- 删除数据库，如果存在的话 DROP DATABASE IF EXISTS RUNOOB; 注意： 在执行删除数据库操作前，请确保你确实想要删除数据库及其所有数据，因为该操作是不可逆的。为了避免误操作，通常建议在执行删除之前备份数据库。 使用 mysqladmin 删除数据库 你也可以使用 MySQL mysqladmin 命令在终端来执行删除命令。 以下是使用 mysqladmin 删除数据库的命令： mysqladmin -u your_username -p drop your_database your_username 是 MySQL 用户名，your_database 是要删除的数据库的名称。 执行此命令后，系统会提示输入密码，输入密码后按 Enter 键即可删除数据库。 以下实例删除数据库 RUNOOB(该数据库在前一章节已创建)：
 
-## 笔记模板
+```text
+[root@host]# mysqladmin -u root -p drop RUNOOB
+Enter password:******
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+执行以上删除数据库命令后，会出现一个提示框，来确认是否真的删除数据库：
 
-## 完成标准
+```text
+Dropping the database is potentially a very bad thing to do.
+Any data stored in the database will be destroyed.
 
-- 能用 3 到 5 句话解释 `MySQL 删除数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Do you really want to drop the 'RUNOOB' database [y/N] y
+Database "RUNOOB" dropped
+```
+
+
+## 使用 PHP 脚本删除数据库
+
+PHP使用 mysqli_query 函数来创建或者删除 MySQL 数据库。
+
+该函数有两个参数，在执行成功时返回 TRUE，否则返回 FALSE。
+
+
+### 语法
+
+```text
+mysqli_query(connection,query,resultmode);
+```
+
+可选。一个常量。可以是下列值中的任意一个：
+
+- MYSQLI_USE_RESULT（如果需要检索大量数据，请使用这个）
+- MYSQLI_STORE_RESULT（默认）
+
+
+### 实例
+
+以下实例演示了使用PHP mysqli_query函数来删除数据库：
+
+
+## 删除数据库
+
+```html
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+    die('连接失败: ' . mysqli_error($conn));
+}
+echo '连接成功<br />';
+$sql = 'DROP DATABASE RUNOOB';
+$retval = mysqli_query( $conn, $sql );
+if(! $retval )
+{
+    die('删除数据库失败: ' . mysqli_error($conn));
+}
+echo "数据库 RUNOOB 删除成功\n";
+mysqli_close($conn);
+?>
+```
+
+执行成功后，数结果为：
+
+注意： 在使用PHP脚本删除数据库时，不会出现确认是否删除信息，会直接删除指定数据库，所以你在删除数据库时要特别小心。
+
+
+## 复习重点
+
+- 能说明 `MySQL 删除数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

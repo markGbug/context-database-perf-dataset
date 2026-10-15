@@ -1,34 +1,219 @@
-# Docker：Docker 安装 Apache 练习笔记
+# Docker：Docker 安装 Apache
 
 - 来源：[Docker 安装 Apache](https://www.runoob.com/docker/docker-install-apache.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0820
 
-## 练习目标
+## 本章内容
 
-把 `Docker 安装 Apache` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+### 方法一、docker pull httpd
 
-## 练习步骤
+查找 Docker Hub 上的 httpd 镜像:
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+可以通过 Sort by 查看其他版本的 httpd，默认是最新版本 httpd:latest。
 
-## 验收清单
+此外，我们还可以用 docker search httpd 命令来查看可用版本：
 
-- 我能独立说出 `Docker 安装 Apache` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+runoob@runoob:~/apache$ docker search httpd
+NAME                           DESCRIPTION                  STARS  OFFICIAL AUTOMATED
+httpd                          The Apache HTTP Server ..    524     [OK]
+centos/httpd                                                7                [OK]
+rgielen/httpd-image-php5       Docker image for Apache...   1                [OK]
+microwebapps/httpd-frontend    Httpd frontend allowing...   1                [OK]
+lolhens/httpd                  Apache httpd 2 Server        1                [OK]
+publici/httpd                  httpd:latest                 0                [OK]
+publicisworldwide/httpd        The Apache httpd webser...   0                [OK]
+rgielen/httpd-image-simple     Docker image for simple...   0                [OK]
+solsson/httpd                  Derivatives of the offi...   0                [OK]
+rgielen/httpd-image-drush      Apache HTTPD + Drupal S...   0                [OK]
+learninglayers/httpd                                        0                [OK]
+sohrabkhan/httpd               Docker httpd + php5.6 (...   0                [OK]
+aintohvri/docker-httpd         Apache HTTPD Docker ext...   0                [OK]
+alizarion/httpd                httpd on centos with mo...   0                [OK]
+...
+```
 
-## 复盘问题
+这里我们拉取官方的镜像
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+runoob@runoob:~/apache$ docker pull httpd
+```
+
+等待下载完成后，我们就可以在本地镜像列表里查到REPOSITORY为httpd的镜像。
+
+```text
+runoob@runoob:~/apache$ docker images httpd
+REPOSITORY     TAG        IMAGE ID        CREATED           SIZE
+httpd          latest     da1536b4ef14    23 seconds ago    195.1 MB
+```
+
+
+### 方法二、通过 Dockerfile 构建
+
+创建 Dockerfile
+
+首先，创建目录apache,用于存放后面的相关东西。
+
+```text
+runoob@runoob:~$ mkdir -p  ~/apache/www ~/apache/logs ~/apache/conf
+```
+
+www 目录将映射为 apache 容器配置的应用程序目录。
+
+logs 目录将映射为 apache 容器的日志目录。
+
+conf 目录里的配置文件将映射为 apache 容器的配置文件。
+
+进入创建的 apache 目录，创建 Dockerfile。
+
+```text
+FROM debian:jessie
+
+# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
+#RUN groupadd -r www-data && useradd -r --create-home -g www-data www-data
+
+ENV HTTPD_PREFIX /usr/local/apache2
+ENV PATH $PATH:$HTTPD_PREFIX/bin
+RUN mkdir -p "$HTTPD_PREFIX" \
+    && chown www-data:www-data "$HTTPD_PREFIX"
+WORKDIR $HTTPD_PREFIX
+
+# install httpd runtime dependencies
+# https://httpd.apache.org/docs/2.4/install.html#requirements
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libapr1 \
+        libaprutil1 \
+        libaprutil1-ldap \
+        libapr1-dev \
+        libaprutil1-dev \
+        libpcre++0 \
+        libssl1.0.0 \
+    && rm -r /var/lib/apt/lists/*
+
+ENV HTTPD_VERSION 2.4.20
+ENV HTTPD_BZ2_URL https://www.apache.org/dist/httpd/httpd-$HTTPD_VERSION.tar.bz2
+
+RUN buildDeps=' \
+        ca-certificates \
+        curl \
+        bzip2 \
+        gcc \
+        libpcre++-dev \
+        libssl-dev \
+        make \
+    ' \
+    set -x \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends $buildDeps \
+    && rm -r /var/lib/apt/lists/* \
+    \
+    && curl -fSL "$HTTPD_BZ2_URL" -o httpd.tar.bz2 \
+    && curl -fSL "$HTTPD_BZ2_URL.asc" -o httpd.tar.bz2.asc \
+# see https://httpd.apache.org/download.cgi#verify
+    && export GNUPGHOME="$(mktemp -d)" \
+    && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys A93D62ECC3C8EA12DB220EC934EA76E6791485A8 \
+    && gpg --batch --verify httpd.tar.bz2.asc httpd.tar.bz2 \
+    && rm -r "$GNUPGHOME" httpd.tar.bz2.asc \
+    \
+    && mkdir -p src \
+    && tar -xvf httpd.tar.bz2 -C src --strip-components=1 \
+    && rm httpd.tar.bz2 \
+    && cd src \
+    \
+    && ./configure \
+        --prefix="$HTTPD_PREFIX" \
+        --enable-mods-shared=reallyall \
+    && make -j"$(nproc)" \
+    && make install \
+    \
+    && cd .. \
+    && rm -r src \
+    \
+    && sed -ri \
+        -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
+        -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
+        "$HTTPD_PREFIX/conf/httpd.conf" \
+    \
+    && apt-get purge -y --auto-remove $buildDeps
+
+COPY httpd-foreground /usr/local/bin/
+
+EXPOSE 80
+CMD ["httpd-foreground"]
+```
+
+Dockerfile文件中 COPY httpd-foreground /usr/local/bin/ 是将当前目录下的httpd-foreground拷贝到镜像里，作为httpd服务的启动脚本，所以我们要在本地创建一个脚本文件httpd-foreground
+
+```text
+#!/bin/bash
+set -e
+
+# Apache gets grumpy about PID files pre-existing
+rm -f /usr/local/apache2/logs/httpd.pid
+
+exec httpd -DFOREGROUND
+```
+
+赋予 httpd-foreground 文件可执行权限。
+
+```text
+runoob@runoob:~/apache$ chmod +x httpd-foreground
+```
+
+通过 Dockerfile 创建一个镜像，替换成你自己的名字。
+
+```text
+runoob@runoob:~/apache$ docker build -t httpd .
+```
+
+创建完成后，我们可以在本地的镜像列表里查找到刚刚创建的镜像。
+
+```text
+runoob@runoob:~/apache$ docker images httpd
+REPOSITORY     TAG        IMAGE ID        CREATED           SIZE
+httpd          latest     da1536b4ef14    23 seconds ago    195.1 MB
+```
+
+
+## 使用 apache 镜像
+
+
+### 运行容器
+
+```text
+docker run -p 80:80 -v $PWD/www/:/usr/local/apache2/htdocs/ -v $PWD/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf -v $PWD/logs/:/usr/local/apache2/logs/ -d httpd
+```
+
+命令说明：
+
+-p 80:80:第一个 80 端口为主机端口，后面一个是容器端口，效果为将容器的 80 端口映射到主机的 80 端口。
+
+-v $PWD/www/:/usr/local/apache2/htdocs/: 将主机中当前目录下的 www 目录挂载到容器的 /usr/local/apache2/htdocs/。
+
+-v $PWD/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf: 将主机中当前目录下的 conf/httpd.conf 文件挂载到容器的 /usr/local/apache2/conf/httpd.conf。
+
+-v $PWD/logs/:/usr/local/apache2/logs/: 将主机中当前目录下的 logs 目录挂载到容器的 /usr/local/apache2/logs/。
+
+更详细的命令参考：Docker run 命令
+
+查看容器启动情况：
+
+```text
+runoob@runoob:~/apache$ docker ps
+CONTAINER ID  IMAGE   COMMAND             ... PORTS               NAMES
+79a97f2aac37  httpd   "httpd-foreground"  ... 0.0.0.0:80->80/tcp  sharp_swanson
+```
+
+通过浏览器访问
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker 安装 Apache` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,143 @@
-# Java：Java 枚举 学习笔记
+# Java：Java 枚举(enum)
 
 - 来源：[Java 枚举](https://www.runoob.com/java/java-enum.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0909
 
-## 学习目标
+## 本章内容
 
-Java 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Java 枚举` 建立学习路径，先理解它在 Java 体系中的位置，再做可运行或可复述的验证。
+Java 枚举是一个特殊的类，一般表示一组常量，比如一年的 4 个季节，一年的 12 个月份，一个星期的 7 天，方向有东南西北等。
 
-## 阅读抓手
+Java 枚举类使用 enum 关键字来定义，各个常量使用逗号 , 来分割。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+例如定义一个颜色的枚举类。
 
-## 笔记模板
+```text
+enum Color
+{
+    RED, GREEN, BLUE;
+}
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+以上枚举类 Color 颜色常量有 RED, GREEN, BLUE，分别表示红色，绿色，蓝色。
 
-## 完成标准
+使用实例：
 
-- 能用 3 到 5 句话解释 `Java 枚举`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+执行以上代码输出结果为：
+
+```text
+RED
+```
+
+
+### 内部类中使用枚举
+
+枚举类也可以声明在内部类中：
+
+
+## 实例
+
+执行以上代码输出结果为：
+
+```text
+RED
+```
+
+每个枚举都是通过 Class 在内部实现的，且所有的枚举值都是 public static final 的。
+
+以上的枚举类 Color 转化在内部类实现：
+
+```text
+class Color
+{
+     public static final Color RED = new Color();
+     public static final Color BLUE = new Color();
+     public static final Color GREEN = new Color();
+}
+```
+
+
+### 迭代枚举元素
+
+可以使用 for 语句来迭代枚举元素：
+
+
+## 实例
+
+执行以上代码输出结果为：
+
+```text
+RED
+GREEN
+BLUE
+```
+
+
+### 在 switch 中使用枚举类
+
+枚举类常应用于 switch 语句中：
+
+
+## 实例
+
+执行以上代码输出结果为：
+
+```text
+蓝色
+```
+
+
+### values(), ordinal() 和 valueOf() 方法
+
+enum 定义的枚举类默认继承了 java.lang.Enum 类，并实现了 java.lang.Serializable 和 java.lang.Comparable 两个接口。
+
+values(), ordinal() 和 valueOf() 方法位于 java.lang.Enum 类中：
+
+- values() 返回枚举类中所有的值。
+- ordinal()方法可以找到每个枚举常量的索引，就像数组索引一样。
+- valueOf()方法返回指定字符串值的枚举常量。
+
+
+## 实例
+
+执行以上代码输出结果为：
+
+```text
+RED at index 0
+GREEN at index 1
+BLUE at index 2
+RED
+```
+
+
+### 枚举类成员
+
+枚举跟普通类一样可以用自己的变量、方法和构造函数，构造函数只能使用 private 访问修饰符，所以外部无法调用。
+
+枚举既可以包含具体方法，也可以包含抽象方法。 如果枚举类具有抽象方法，则枚举类的每个实例都必须实现它。
+
+
+## 实例
+
+执行以上代码输出结果为：
+
+```text
+Constructor called for : RED
+Constructor called for : GREEN
+Constructor called for : BLUE
+RED
+Universal Color
+```
+
+
+## 复习重点
+
+- 能说明 `Java 枚举` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

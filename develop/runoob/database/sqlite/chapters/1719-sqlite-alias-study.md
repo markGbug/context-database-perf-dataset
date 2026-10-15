@@ -1,35 +1,116 @@
-# SQLite：SQLite 别名 学习笔记
+# SQLite：SQLite 别名
 
 - 来源：[SQLite 别名](https://www.runoob.com/sqlite/sqlite-alias.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1719
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite 别名` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+您可以暂时把表或列重命名为另一个名字，这被称为别名。使用表别名是指在一个特定的 SQLite 语句中重命名表。重命名是临时的改变，在数据库中实际的表的名称不会改变。
 
-## 阅读抓手
+列别名用来为某个特定的 SQLite 语句重命名表中的列。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+表 别名的基本语法如下：
 
-## 完成标准
+```text
+SELECT column1, column2....
+FROM table_name AS alias_name
+WHERE [condition];
+```
 
-- 能用 3 到 5 句话解释 `SQLite 别名`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+列 别名的基本语法如下：
+
+```text
+SELECT column_name AS alias_name
+FROM table_name
+WHERE [condition];
+```
+
+
+## 实例
+
+假设有下面两个表，（1）COMPANY 表如下所示：
+
+```text
+sqlite> select * from COMPANY;
+ID          NAME                  AGE         ADDRESS     SALARY
+----------  --------------------  ----------  ----------  ----------
+1           Paul                  32          California  20000.0
+2           Allen                 25          Texas       15000.0
+3           Teddy                 23          Norway      20000.0
+4           Mark                  25          Rich-Mond   65000.0
+5           David                 27          Texas       85000.0
+6           Kim                   22          South-Hall  45000.0
+7           James                 24          Houston     10000.0
+```
+
+（2）另一个表是 DEPARTMENT，如下所示：
+
+```text
+ID          DEPT                  EMP_ID
+----------  --------------------  ----------
+1           IT Billing            1
+2           Engineering           2
+3           Finance               7
+4           Engineering           3
+5           Finance               4
+6           Engineering           5
+7           Finance               6
+```
+
+现在，下面是 表别名 的用法，在这里我们使用 C 和 D 分别作为 COMPANY 和 DEPARTMENT 表的别名：
+
+```text
+sqlite> SELECT C.ID, C.NAME, C.AGE, D.DEPT
+        FROM COMPANY AS C, DEPARTMENT AS D
+        WHERE  C.ID = D.EMP_ID;
+```
+
+上面的 SQLite 语句将产生下面的结果：
+
+```text
+ID          NAME        AGE         DEPT
+----------  ----------  ----------  ----------
+1           Paul        32          IT Billing
+2           Allen       25          Engineerin
+3           Teddy       23          Engineerin
+4           Mark        25          Finance
+5           David       27          Engineerin
+6           Kim         22          Finance
+7           James       24          Finance
+```
+
+让我们看一个 列别名 的实例，在这里 COMPANY_ID 是 ID 列的别名，COMPANY_NAME 是 name 列的别名：
+
+```text
+sqlite> SELECT C.ID AS COMPANY_ID, C.NAME AS COMPANY_NAME, C.AGE, D.DEPT
+        FROM COMPANY AS C, DEPARTMENT AS D
+        WHERE  C.ID = D.EMP_ID;
+```
+
+上面的 SQLite 语句将产生下面的结果：
+
+```text
+COMPANY_ID  COMPANY_NAME  AGE         DEPT
+----------  ------------  ----------  ----------
+1           Paul          32          IT Billing
+2           Allen         25          Engineerin
+3           Teddy         23          Engineerin
+4           Mark          25          Finance
+5           David         27          Engineerin
+6           Kim           22          Finance
+7           James         24          Finance
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite 别名` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

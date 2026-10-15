@@ -1,35 +1,144 @@
-# PostgreSQL：PostgreSQL GROUP BY 学习笔记
+# PostgreSQL：PostgreSQL GROUP BY 语句
 
 - 来源：[PostgreSQL GROUP BY](https://www.runoob.com/postgresql/postgresql-group-by.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1572
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PostgreSQL GROUP BY` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+在 PostgreSQL 中，GROUP BY 语句和 SELECT 语句一起使用，用来对相同的数据进行分组。
 
-## 阅读抓手
+GROUP BY 在一个 SELECT 语句中，放在 WHERE 子句的后面，ORDER BY 子句的前面。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+SELECT column-list
+FROM table_name
+WHERE [ conditions ]
+GROUP BY column1, column2....columnN
+ORDER BY column1, column2....columnN
+```
 
-## 完成标准
+GROUP BY 子句必须放在 WHERE 子句中的条件之后，必须放在 ORDER BY 子句之前。
 
-- 能用 3 到 5 句话解释 `PostgreSQL GROUP BY`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+在 GROUP BY 子句中，你可以对一列或者多列进行分组，但是被分组的列必须存在于列清单中。
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+下面实例将根据 NAME 字段值进行分组，找出每个人的工资总额：
+
+```text
+runoobdb=# SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME;
+```
+
+得到以下结果：
+
+```text
+  name  |  sum
+ -------+-------
+  Teddy | 20000
+  Paul  | 20000
+  Mark  | 65000
+  David | 85000
+  Allen | 15000
+  Kim   | 45000
+  James | 10000
+(7 rows)
+```
+
+现在我们添加使用下面语句在 CAMPANY 表中添加三条记录：
+
+```text
+INSERT INTO COMPANY VALUES (8, 'Paul', 24, 'Houston', 20000.00);
+INSERT INTO COMPANY VALUES (9, 'James', 44, 'Norway', 5000.00);
+INSERT INTO COMPANY VALUES (10, 'James', 45, 'Texas', 5000.00);
+```
+
+现在 COMPANY 表中存在重复的名称，数据如下：
+
+```text
+ id | name  | age | address      | salary
+ ----+-------+-----+--------------+--------
+   1 | Paul  |  32 | California   |  20000
+   2 | Allen |  25 | Texas        |  15000
+   3 | Teddy |  23 | Norway       |  20000
+   4 | Mark  |  25 | Rich-Mond    |  65000
+   5 | David |  27 | Texas        |  85000
+   6 | Kim   |  22 | South-Hall   |  45000
+   7 | James |  24 | Houston      |  10000
+   8 | Paul  |  24 | Houston      |  20000
+   9 | James |  44 | Norway       |   5000
+  10 | James |  45 | Texas        |   5000
+(10 rows)
+```
+
+现在再根据 NAME 字段值进行分组，找出每个客户的工资总额：
+
+```text
+runoobdb=# SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME ORDER BY NAME;
+```
+
+这时的得到的结果如下：
+
+```text
+name  |  sum
+-------+-------
+ Allen | 15000
+ David | 85000
+ James | 20000
+ Kim   | 45000
+ Mark  | 65000
+ Paul  | 40000
+ Teddy | 20000
+(7 rows)
+```
+
+下面实例将 ORDER BY 子句与 GROUP BY 子句一起使用：
+
+```text
+runoobdb=#  SELECT NAME, SUM(SALARY) FROM COMPANY GROUP BY NAME ORDER BY NAME DESC;
+```
+
+得到以下结果：
+
+```text
+name  |  sum
+-------+-------
+ Teddy | 20000
+ Paul  | 40000
+ Mark  | 65000
+ Kim   | 45000
+ James | 20000
+ David | 85000
+ Allen | 15000
+(7 rows)
+```
+
+
+## 复习重点
+
+- 能说明 `PostgreSQL GROUP BY` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

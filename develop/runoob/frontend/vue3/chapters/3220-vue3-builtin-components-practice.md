@@ -1,34 +1,109 @@
-# Vue3：Vue3 内置组件 练习笔记
+# Vue3：Vue3 内置组件
 
 - 来源：[Vue3 内置组件](https://www.runoob.com/vue3/vue3-builtin-components.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3220
 
-## 练习目标
+## 本章内容
 
-把 `Vue3 内置组件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 Vue.js 中，有一些内置的全局组件和内置组件，它们提供了一些常用的功能和布局支持，可以帮助开发者快速构建应用界面。
 
-## 练习步骤
+以下是一些常见的 Vue 内置组件和它们的作用：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 1. component
 
-- 我能独立说出 `Vue3 内置组件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+<component> 是一个抽象的组件，用于动态地渲染不同的组件或元素。
 
-## 复盘问题
+通过绑定 is 属性可以实现动态组件的切换和渲染。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<component :is="currentComponent"></component>
+```
+
+
+### 2. transition 和 transition-group
+
+<transition> 和 <transition-group> 提供了在 Vue.js 中实现过渡和动画效果的功能。
+
+通过定义过渡的 CSS 类名，可以控制元素在进入或离开 DOM 时的动画效果。
+
+```html
+<transition name="fade">
+  <div v-if="show">Hello!</div>
+</transition>
+```
+
+```html
+<transition-group name="list" tag="ul">
+  <li v-for="item in items" :key="item.id">{{ item.text }}</li>
+</transition-group>
+```
+
+
+### 3. keep-alive
+
+<keep-alive> 是一个抽象组件，用于保持组件状态或避免多次渲染。
+
+当组件被 <keep-alive> 包裹时，其状态将会被缓存，而不是每次切换时重新渲染。
+
+```html
+<keep-alive>
+  <component :is="currentComponent"></component>
+</keep-alive>
+```
+
+
+### 4. slot
+
+<slot> 是 Vue.js 中用于插入内容的插槽组件。它允许父组件将子组件的内容传递到特定的插槽位置，使得组件更加灵活和可复用。
+
+```html
+<child-component>
+  <template #header>
+    <h2>Header Content</h2>
+  </template>
+  <template #default>
+    <p>Default Content</p>
+  </template>
+</child-component>
+```
+
+
+### 5. teleport
+
+<teleport> 允许你将 DOM 元素渲染到应用的任何地方，而不受当前 DOM 结构的限制。这在需要在应用中动态移动元素时非常有用，例如在模态框中渲染弹出内容。
+
+```html
+<teleport to="body">
+  <modal-dialog v-if="showModal">
+    <!-- modal content -->
+  </modal-dialog>
+</teleport>
+```
+
+
+### 6. Suspense
+
+<Suspense> 是 Vue.js 3.x 中新增的组件，用于处理异步组件的加载和状态。它可以在异步组件加载完成之前显示占位内容，并处理加载状态和错误。
+
+```html
+<Suspense>
+  <template #default>
+    <AsyncComponent />
+  </template>
+  <template #fallback>
+    <div>Loading...</div>
+  </template>
+</Suspense>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue3 内置组件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

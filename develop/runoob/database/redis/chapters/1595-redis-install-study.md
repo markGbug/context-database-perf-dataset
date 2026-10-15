@@ -1,35 +1,135 @@
-# Redis：Redis 安装 学习笔记
+# Redis：Redis 安装
 
 - 来源：[Redis 安装](https://www.runoob.com/redis/redis-install.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1595
 
-## 学习目标
+## 本章内容
 
-Redis 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Redis 安装` 建立学习路径，先理解它在 Redis 体系中的位置，再做可运行或可复述的验证。
+## Windows 下安装
 
-## 阅读抓手
+下载地址：https://github.com/redis-windows/redis-windows/releases。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Redis 支持 32 位和 64 位。这个需要根据你系统平台的实际情况选择，这里我们下载 Redis-x64-xxx.zip压缩包到 C 盘，解压后，将文件夹重新命名为 redis。
 
-## 笔记模板
+打开文件夹，内容如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+打开一个 cmd 窗口 使用 cd 命令切换目录到 C:\redis 运行：
 
-## 完成标准
+```text
+redis-server.exe redis.windows.conf
+```
 
-- 能用 3 到 5 句话解释 `Redis 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+如果想方便的话，可以把 redis 的路径加到系统的环境变量里，这样就省得再输路径了，后面的那个 redis.windows.conf 可以省略，如果省略，会启用默认的。输入之后，会显示如下界面：
+
+这时候另启一个 cmd 窗口，原来的不要关闭，不然就无法访问服务端了。
+
+切换到 redis 目录下运行:
+
+```text
+redis-cli.exe -h 127.0.0.1 -p 6379
+```
+
+设置键值对:
+
+```text
+set myKey abc
+```
+
+取出键值对:
+
+```text
+get myKey
+```
+
+
+## Linux 源码安装
+
+下载地址：http://redis.io/download，下载最新稳定版本。
+
+本教程使用的最新文档版本为 2.8.17，下载并安装：
+
+```text
+# wget http://download.redis.io/releases/redis-6.0.8.tar.gz
+# tar -xzvf redis-6.0.8.tar.gz
+# cd redis-6.0.8
+# make
+```
+
+执行完 make 命令后，redis-6.0.8 的 src 目录下会出现编译后的 redis 服务程序 redis-server，还有用于测试的客户端程序 redis-cli：
+
+下面启动 redis 服务：
+
+```text
+# cd src
+# ./redis-server
+```
+
+注意这种方式启动 redis 使用的是默认配置。也可以通过启动参数告诉 redis 使用指定配置文件使用下面命令启动。
+
+```text
+# cd src
+# ./redis-server ../redis.conf
+```
+
+redis.conf 是一个默认的配置文件。我们可以根据需要使用自己的配置文件。
+
+启动 redis 服务进程后，就可以使用测试客户端程序 redis-cli 和 redis 服务交互了。 比如：
+
+```text
+# cd src
+# ./redis-cli
+redis> set foo bar
+OK
+redis> get foo
+"bar"
+```
+
+
+## Ubuntu apt 命令安装
+
+在 Ubuntu 系统安装 Redis 可以使用以下命令:
+
+```text
+# sudo apt update
+# sudo apt install redis-server
+```
+
+
+### 启动 Redis
+
+```text
+# redis-server
+```
+
+
+### 查看 redis 是否启动？
+
+```text
+# redis-cli
+```
+
+以上命令将打开以下终端：
+
+```text
+redis 127.0.0.1:6379>
+```
+
+127.0.0.1 是本机 IP ，6379 是 redis 服务端口。现在我们输入 PING 命令。
+
+```text
+redis 127.0.0.1:6379> ping
+PONG
+```
+
+以上说明我们已经成功安装了redis。
+
+
+## 复习重点
+
+- 能说明 `Redis 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

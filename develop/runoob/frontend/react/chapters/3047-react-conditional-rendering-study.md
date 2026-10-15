@@ -1,35 +1,237 @@
-# React：React 条件渲染 学习笔记
+# React：React 条件渲染
 
 - 来源：[React 条件渲染](https://www.runoob.com/react/react-conditional-rendering.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3047
 
-## 学习目标
+## 本章内容
 
-React 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `React 条件渲染` 建立学习路径，先理解它在 React 体系中的位置，再做可运行或可复述的验证。
+在 React 中，你可以创建不同的组件来封装各种你需要的行为。然后还可以根据应用的状态变化只渲染其中的一部分。
 
-## 阅读抓手
+React 中的条件渲染和 JavaScript 中的一致，使用 JavaScript 操作符 if 或条件运算符来创建表示当前状态的元素，然后让 React 根据它们来更新 UI。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+先来看两个组件:
 
-## 笔记模板
+```html
+function UserGreeting(props) {
+  return <h1>欢迎回来!</h1>;
+}
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+function GuestGreeting(props) {
+  return <h1>请先注册。</h1>;
+}
+```
 
-## 完成标准
+我们将创建一个 Greeting 组件，它会根据用户是否登录来显示其中之一：
 
-- 能用 3 到 5 句话解释 `React 条件渲染`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## React 实例
+
+```html
+function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  // 尝试修改 isLoggedIn={true}:
+  <Greeting isLoggedIn={false} />
+);
+```
+
+
+## 元素变量
+
+你可以使用变量来储存元素。它可以帮助你有条件的渲染组件的一部分，而输出的其他部分不会更改。
+
+在下面的例子中，我们将要创建一个名为 LoginControl 的有状态的组件。
+
+它会根据当前的状态来渲染 <LoginButton /> 或 <LogoutButton />，它也将渲染前面例子中的 <Greeting />。
+
+
+## React 实例
+
+```html
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = {isLoggedIn: false};
+  }
+
+  handleLoginClick() {
+    this.setState({isLoggedIn: true});
+  }
+
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false});
+  }
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+
+    let button = null;
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      button = <LoginButton onClick={this.handleLoginClick} />;
+    }
+
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <LoginControl />
+);
+```
+
+
+## 与运算符 &&
+
+你可以通过用花括号包裹代码在 JSX 中嵌入任何表达式 ，也包括 JavaScript 的逻辑与 &&，它可以方便地条件渲染一个元素。
+
+
+## React 实例
+
+```html
+function Mailbox(props) {
+  const unreadMessages = props.unreadMessages;
+  return (
+    <div>
+      <h1>Hello!</h1>
+      {unreadMessages.length > 0 &&
+        <h2>
+          您有 {unreadMessages.length} 条未读信息。
+        </h2>
+      }
+    </div>
+  );
+}
+
+const messages = ['React', 'Re: React', 'Re:Re: React'];
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Mailbox unreadMessages={messages} />
+);
+```
+
+在 JavaScript 中，true && expression 总是返回 expression，而 false && expression 总是返回 false。
+
+因此，如果条件是 true，&& 右侧的元素就会被渲染，如果是 false，React 会忽略并跳过它。
+
+
+## 三目运算符
+
+条件渲染的另一种方法是使用 JavaScript 的条件运算符:
+
+```text
+condition ? true : false。
+```
+
+在下面的例子中，我们用它来有条件的渲染一小段文本。
+
+```html
+render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  return (
+    <div>
+      The user is <b>{isLoggedIn ? 'currently' : 'not'}</b> logged in.
+    </div>
+  );
+}
+```
+
+同样它也可以用在较大的表达式中，虽然不太直观：
+
+```html
+render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  return (
+    <div>
+      {isLoggedIn ? (
+        <LogoutButton onClick={this.handleLogoutClick} />
+      ) : (
+        <LoginButton onClick={this.handleLoginClick} />
+      )}
+    </div>
+  );
+}
+```
+
+
+## 阻止组件渲染
+
+在极少数情况下，你可能希望隐藏组件，即使它被其他组件渲染。让 render 方法返回 null 而不是它的渲染结果即可实现。
+
+在下面的例子中，<WarningBanner /> 根据属性 warn 的值条件渲染。如果 warn 的值是 false，则组件不会渲染：
+
+
+## React 实例
+
+```html
+function WarningBanner(props) {
+  if (!props.warn) {
+    return null;
+  }
+
+  return (
+    <div className="warning">
+      警告!
+    </div>
+  );
+}
+
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {showWarning: true}
+    this.handleToggleClick = this.handleToggleClick.bind(this);
+  }
+
+  handleToggleClick() {
+    this.setState(prevState => ({
+      showWarning: !prevState.showWarning
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <WarningBanner warn={this.state.showWarning} />
+        <button onClick={this.handleToggleClick}>
+          {this.state.showWarning ? '隐藏' : '显示'}
+        </button>
+      </div>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Page />
+);
+```
+
+组件的 render 方法返回 null 并不会影响该组件生命周期方法的回调。例如，componentWillUpdate 和 componentDidUpdate 依然可以被调用。
+
+
+## 复习重点
+
+- 能说明 `React 条件渲染` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

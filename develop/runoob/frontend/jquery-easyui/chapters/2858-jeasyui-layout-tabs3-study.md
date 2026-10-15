@@ -1,35 +1,59 @@
-# jQuery EasyUI：jEasyUI 添加自动播放标签页 学习笔记
+# jQuery EasyUI：jQuery EasyUI 布局 - 添加自动播放标签页（Tabs）
 
 - 来源：[jEasyUI 添加自动播放标签页](https://www.runoob.com/jeasyui/jeasyui-layout-tabs3.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2858
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 添加自动播放标签页` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+本教程将向您展示如何创建一个自动播放的 Tabs。 Tabs 组件显示第一个 tab 面板，然后显示第二个、第三个... 我们将写一些代码来自动地切换 tab 面板，然后让它循环。
 
-## 阅读抓手
+```html
+    <div id="tt" class="easyui-tabs" style="width:330px;height:270px;">
+        <div title="Shirt1" style="padding:20px;">
+            <img src="images/shirt1.gif">
+        </div>
+        <div title="Shirt2" style="padding:20px;">
+            <img src="images/shirt2.gif">
+        </div>
+        <div title="Shirt3" style="padding:20px;">
+            <img src="images/shirt3.gif">
+        </div>
+        <div title="Shirt4" style="padding:20px;">
+            <img src="images/shirt4.gif">
+        </div>
+        <div title="Shirt5" style="padding:20px;">
+            <img src="images/shirt5.gif">
+        </div>
+    </div>
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```javascript
+    var index = 0;
+    var t = $('#tt');
+    var tabs = t.tabs('tabs');
+    setInterval(function(){
+        t.tabs('select', tabs[index].panel('options').title);
+        index++;
+        if (index >= tabs.length){
+            index = 0;
+        }
+    }, 3000);
+```
 
-## 笔记模板
+正如您所看到的，我们调用 'tabs' 方法来得到所有 tab 面板，并使用 'setInterval' 函数来切换他们。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 下载 jQuery EasyUI 实例
 
-- 能用 3 到 5 句话解释 `jEasyUI 添加自动播放标签页`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+jeasyui-layout-tabs3.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 添加自动播放标签页` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

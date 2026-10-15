@@ -1,34 +1,96 @@
-# PostgreSQL：PostgreSQL 创建表格 练习笔记
+# PostgreSQL：PostgreSQL 创建表格
 
 - 来源：[PostgreSQL 创建表格](https://www.runoob.com/postgresql/postgresql-create-table.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1558
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL 创建表格` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PostgreSQL 使用 CREATE TABLE 语句来创建数据库表格。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 语法
 
-## 验收清单
+CREATE TABLE 语法格式如下：
 
-- 我能独立说出 `PostgreSQL 创建表格` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+CREATE TABLE table_name(
+   column1 datatype,
+   column2 datatype,
+   column3 datatype,
+   .....
+   columnN datatype,
+   PRIMARY KEY( 一个或多个列 )
+);
+```
 
-## 复盘问题
+CREATE TABLE 是一个关键词，用于告诉数据库系统将创建一个数据表。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+表名字必需在同一模式中的其它表、 序列、索引、视图或外部表名字中唯一。
+
+CREATE TABLE 在当前数据库创建一个新的空白表，该表将由发出此命令的用户所拥有。
+
+表格中的每个字段都会定义数据类型，如下：
+
+
+### 实例
+
+以下创建了一个表，表名为 COMPANY 表格，主键为 ID，NOT NULL 表示字段不允许包含 NULL 值：
+
+```text
+CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+接下来我们再创建一个表格，在后面章节会用到：
+
+```text
+CREATE TABLE DEPARTMENT(
+   ID INT PRIMARY KEY      NOT NULL,
+   DEPT           CHAR(50) NOT NULL,
+   EMP_ID         INT      NOT NULL
+);
+```
+
+我们可以使用 \d 命令来查看表格是否创建成功：
+
+```text
+runoobdb=# \d
+           List of relations
+ Schema |    Name    | Type  |  Owner
+--------+------------+-------+----------
+ public | company    | table | postgres
+ public | department | table | postgres
+(2 rows)
+```
+
+\d tablename 查看表格信息：
+
+```text
+runoobdb=# \d company
+                  Table "public.company"
+ Column  |     Type      | Collation | Nullable | Default
+---------+---------------+-----------+----------+---------
+ id      | integer       |           | not null |
+ name    | text          |           | not null |
+ age     | integer       |           | not null |
+ address | character(50) |           |          |
+ salary  | real          |           |          |
+Indexes:
+    "company_pkey" PRIMARY KEY, btree (id)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL 创建表格` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

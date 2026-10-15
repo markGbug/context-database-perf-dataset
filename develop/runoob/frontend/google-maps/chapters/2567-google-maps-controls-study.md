@@ -1,35 +1,107 @@
-# Google 地图：Google 地图控件集 学习笔记
+# Google 地图：Google 地图控件集
 
 - 来源：[Google 地图控件集](https://www.runoob.com/googleapi/google-maps-controls.html)
 - 分类：前端开发
 - 技术：Google 地图
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2567
 
-## 学习目标
+## 本章内容
 
-Google 地图 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Google 地图控件集` 建立学习路径，先理解它在 Google 地图 体系中的位置，再做可运行或可复述的验证。
+一个Google 地图 - 默认控件集设置：
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## Google 地图 - 默认控件集设置：
 
-## 笔记模板
+当使用一个标准的google地图，它的默认设置如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- .Zoom-显示一个滑动条来控制map的Zoom级别
+- .PPan-地图上显示的是一个平底碗样的控件，点击4个角平移地图
+- .MapType-允许用户在map types(roadmap 和 satellite)之间切换
+- .StreetView-显示为一个街景小人图标，可拖拽到地图上某个点来打开街景
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Google 地图控件集`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## Google 地图 - 更多控件集
+
+除了以上默认控件集,Google还有：
+
+- .Scale-显示地图比例尺
+- .Rotate-显示一个小的圆周图标，可以转动地图
+- .verview Map-从一个广域的视角俯视地图
+
+创建地图时你可以通过设置选项指定哪些控件集显示或者通过调用 setOptions() 来改变地图的设置选项。
+
+
+## Google 地图 - 关闭默认控件集
+
+你可能希望能够关闭默认的控件集。
+
+为了关闭默认控件集,设置地图的disableDefaultUI的属性为true:
+
+
+## 实例
+
+
+## Google 地图 - 开所有控件集
+
+一些控件集默认显示在地图上，而其它的不会，除非你设置它们。
+
+设置控件为true使其可见-设置控件为false则隐藏它。
+
+以下实例开启所有的控件：
+
+
+## 实例
+
+
+## Google 地图 - 修改控件集
+
+某些地图控件是可配置的。通过制定控件选项域改变控件集。
+
+F举个例子来说，修改Zoom 控件的选项在zoomControlOptions指定。zoomControlOptions包含如下3种选项：
+
+- .google.maps.ZoomControlStyle.SMALL-显示最小化zoom 控件
+- .google.maps.ZoomControlStyle.LARGE-显示标准zoom滑动控件
+- .google.maps.ZoomControlStyle.DEFAULT-基于设备和地图大小，选择最合适的控件
+
+
+## 实例
+
+注意： 如果需要修改一个控件，首先开启控件(设置其为true)。
+
+另一个控件为 MapType 控件。
+
+MapType 控件可显示为以下 style 选项之一：
+
+- google.maps.MapTypeControlStyle.HORIZONTAL_BAR，用于在水平栏中将一组控件显示为如 Google Maps 中所示按钮。
+- google.maps.MapTypeControlStyle.DROPDOWN_MENU，用于显示单个按钮控件，以便您从下拉菜单中选择地图类型。
+- google.maps.MapTypeControlStyle.DEFAULT，用于显示"默认"的行为，该行为取决于屏幕尺寸，并且可能会在 API 以后的版本中有所变化。
+
+
+## 实例
+
+同样你可以使用ControlPosition属性指定控件的位置:
+
+
+## 实例
+
+
+## Google 地图 - 自定义控件集
+
+创建一个返回伦敦自定义控件，用于点击事件： (如果地图被拖拽):
+
+
+## 实例
+
+
+## Google 地图 - 控件集参考手册
+
+Google Maps API 参考手册.
+
+
+## 复习重点
+
+- 能说明 `Google 地图控件集` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

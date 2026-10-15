@@ -1,35 +1,95 @@
-# Ruby：Ruby JSON 学习笔记
+# Ruby：Ruby JSON
 
 - 来源：[Ruby JSON](https://www.runoob.com/ruby/ruby-json.html)
 - 分类：编程语言
 - 技术：Ruby
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3752
 
-## 学习目标
+## 本章内容
 
-Ruby 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Ruby JSON` 建立学习路径，先理解它在 Ruby 体系中的位置，再做可运行或可复述的验证。
+本章节我们将为大家介绍如何使用 Ruby 语言来编码和解码 JSON 对象。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 环境配置
 
-## 笔记模板
+在使用 Ruby 编码或解码 JSON 数据前，我们需要先安装 Ruby JSON 模块。在安装该模块前你需要先安装 Ruby gem，我们使用 Ruby gem 安装 JSON 模块。 但是，如果你使用的是最新版本的 Ruby，可能已经安装了 gem，解析来我们就可以使用以下命令来安装Ruby JSON 模块：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+$gem install json
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Ruby JSON`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 使用 Ruby 解析 JSON
+
+以下为JSON数据，将该数据存储在 input.json 文件中：
+
+
+## input.json 文件
+
+```text
+{
+  "President": "Alan Isaac",
+  "CEO": "David Richardson",
+
+  "India": [
+    "Sachin Tendulkar",
+    "Virender Sehwag",
+    "Gautam Gambhir"
+  ],
+
+  "Srilanka": [
+    "Lasith Malinga",
+    "Angelo Mathews",
+    "Kumar Sangakkara"
+  ],
+
+  "England": [
+    "Alastair Cook",
+    "Jonathan Trott",
+    "Kevin Pietersen"
+  ]
+}
+```
+
+以下的 Ruby 程序用于解析以上 JSON 文件；
+
+
+## 实例
+
+```text
+#!/usr/bin/ruby
+require 'rubygems'
+require 'json'
+require 'pp'
+
+json = File.read('input.json')
+obj = JSON.parse(json)
+
+pp obj
+```
+
+以上实例执行结果为：
+
+```text
+{"President"=>"Alan Isaac",
+ "CEO"=>"David Richardson",
+
+ "India"=>
+  ["Sachin Tendulkar", "Virender Sehwag", "Gautam Gambhir"],
+
+"Srilanka"=>
+  ["Lasith Malinga ", "Angelo Mathews", "Kumar Sangakkara"],
+
+ "England"=>
+  ["Alastair Cook", "Jonathan Trott", "Kevin Pietersen"]
+}
+```
+
+
+## 复习重点
+
+- 能说明 `Ruby JSON` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

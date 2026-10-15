@@ -1,35 +1,152 @@
-# Java：Java HashMap 学习笔记
+# Java：Java HashMap
 
 - 来源：[Java HashMap](https://www.runoob.com/java/java-hashmap.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0917
 
-## 学习目标
+## 本章内容
 
-Java 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Java HashMap` 建立学习路径，先理解它在 Java 体系中的位置，再做可运行或可复述的验证。
+Java 集合框架
 
-## 阅读抓手
+HashMap 是一个散列表，它存储的内容是键值对(key-value)映射。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+HashMap 实现了 Map 接口，根据键的 HashCode 值存储数据，具有很快的访问速度，最多允许一条记录的键为 null，不支持线程同步。
 
-## 笔记模板
+HashMap 是无序的，即不会记录插入的顺序。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+HashMap 继承于AbstractMap，实现了 Map、Cloneable、java.io.Serializable 接口。
 
-## 完成标准
+HashMap 的 key 与 value 类型可以相同也可以不同，可以是字符串（String）类型的 key 和 value，也可以是整型（Integer）的 key 和字符串（String）类型的 value。
 
-- 能用 3 到 5 句话解释 `Java HashMap`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+HashMap 中的元素实际上是对象，一些常见的基本类型可以使用它的包装类。
+
+基本类型对应的包装类表如下：
+
+HashMap 类位于 java.util 包中，使用前需要引入它，语法格式如下：
+
+```text
+import java.util.HashMap; // 引入 HashMap 类
+```
+
+以下实例我们创建一个 HashMap 对象 Sites， 整型（Integer）的 key 和字符串（String）类型的 value：
+
+```html
+HashMap<Integer, String> Sites = new HashMap<Integer, String>();
+```
+
+
+### 添加元素
+
+HashMap 类提供了很多有用的方法，添加键值对(key-value)可以使用 put() 方法:
+
+
+## 实例
+
+执行以上代码，输出结果如下：
+
+```text
+{1=Google, 2=Runoob, 3=Taobao, 4=Zhihu}
+```
+
+以下实例创建一个字符串（String）类型的 key 和字符串（String）类型的 value：
+
+
+## 实例
+
+执行以上代码，输出结果如下：
+
+```text
+{four=Zhihu, one=Google, two=Runoob, three=Taobao}
+```
+
+
+### 访问元素
+
+我们可以使用 get(key) 方法来获取 key 对应的 value:
+
+
+## 实例
+
+执行以上代码，输出结果如下：
+
+```text
+Taobao
+```
+
+
+### 删除元素
+
+我们可以使用 remove(key) 方法来删除 key 对应的键值对(key-value):
+
+
+## 实例
+
+执行以上代码，输出结果如下：
+
+```text
+{1=Google, 2=Runoob, 3=Taobao}
+```
+
+删除所有键值对(key-value)可以使用 clear 方法：
+
+
+## 实例
+
+执行以上代码，输出结果如下：
+
+```text
+{}
+```
+
+
+### 计算大小
+
+如果要计算 HashMap 中的元素数量可以使用 size() 方法：
+
+
+## 实例
+
+执行以上代码，输出结果如下：
+
+```text
+4
+```
+
+
+### 迭代 HashMap
+
+可以使用 for-each 来迭代 HashMap 中的元素。
+
+如果你只想获取 key，可以使用 keySet() 方法，然后可以通过 get(key) 获取对应的 value，如果你只想获取 value，可以使用 values() 方法。
+
+
+## 实例
+
+执行以上代码，输出结果如下：
+
+```text
+key: 1 value: Google
+key: 2 value: Runoob
+key: 3 value: Taobao
+key: 4 value: Zhihu
+Google, Runoob, Taobao, Zhihu,
+```
+
+
+## Java HashMap 方法
+
+Java HashMap 常用方法列表如下：
+
+更多 API 方法可以查看：https://www.runoob.com/manual/jdk11api/java.base/java/util/HashMap.html
+
+Java 集合框架
+
+
+## 复习重点
+
+- 能说明 `Java HashMap` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

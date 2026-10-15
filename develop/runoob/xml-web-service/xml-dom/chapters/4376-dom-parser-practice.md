@@ -1,34 +1,99 @@
-# XML DOM：DOM 解析 练习笔记
+# XML DOM：XML DOM 解析器
 
 - 来源：[DOM 解析](https://www.runoob.com/dom/dom-parser.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4376
 
-## 练习目标
+## 本章内容
 
-把 `DOM 解析` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+大多数浏览器都内建了供读取和操作 XML 的 XML 解析器。
 
-## 练习步骤
+解析器把 XML 转换为 JavaScript 可存取的对象（XML DOM）。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## XML 解析器
 
-- 我能独立说出 `DOM 解析` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+XML DOM 包含了遍历 XML 树，访问、插入及删除节点的方法（函数）。
 
-## 复盘问题
+然而，在访问和操作 XML 文档之前，它必须加载到 XML DOM 对象。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+XML 解析器读取 XML，并把它转换为 XML DOM 对象，这样才可以使用 JavaScript 访问它。
+
+大多数浏览器有一个内建的 XML 解析器。
+
+
+## 加载 XML 文档
+
+下面的 JavaScript 片段加载一个 XML 文档（"books.xml"）：
+
+
+## 实例
+
+```text
+if (window.XMLHttpRequest)
+{
+  // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+  xhttp=new XMLHttpRequest();
+}
+else
+{
+  // IE6, IE5 浏览器执行代码
+  xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+}
+xhttp.open("GET","books.xml",false);
+xhttp.send();
+xmlDoc=xhttp.responseXML;
+```
+
+代码解释：
+
+- 创建一个 XMLHTTP 对象
+- 打开 XMLHTTP 对象
+- 发送一个 XML HTTP 请求到服务器
+- 设置响应为 XML DOM 对象
+
+
+## 加载 XML 字符串
+
+下面的代码加载并解析一个 XML 字符串：
+
+
+## 实例
+
+```text
+if (window.DOMParser)
+{
+  parser=new DOMParser();
+  xmlDoc=parser.parseFromString(text,"text/xml");
+}
+else
+{
+   // Internet Explorer
+  xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+  xmlDoc.async=false;
+  xmlDoc.loadXML(text);
+}
+```
+
+注意：Internet Explorer 使用 loadXML() 方法来解析 XML 字符串，而其他浏览器使用 DOMParser 对象。
+
+
+## 跨域访问
+
+出于安全原因，现代的浏览器不允许跨域访问。
+
+这意味着，网页以及 XML 文件，它必须位于同一台服务器上尝试加载。
+
+菜鸟教程上的实例中所有打开的 XML 文件都是位于菜鸟教程域上的。
+
+如果您想要在您的网页上使用上面的实例，您加载的 XML 文件必须位于您自己的服务器上。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `DOM 解析` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

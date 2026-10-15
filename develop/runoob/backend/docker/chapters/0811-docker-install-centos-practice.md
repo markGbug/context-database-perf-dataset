@@ -1,34 +1,56 @@
-# Docker：Docker 安装 Centos 练习笔记
+# Docker：Docker 安装 CentOS
 
 - 来源：[Docker 安装 Centos](https://www.runoob.com/docker/docker-install-centos.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0811
 
-## 练习目标
+## 本章内容
 
-把 `Docker 安装 Centos` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+CentOS（Community Enterprise Operating System）是 Linux 发行版之一，它是来自于 Red Hat Enterprise Linux(RHEL) 依照开放源代码规定发布的源代码所编译而成。由于出自同样的源代码，因此有些要求高度稳定性的服务器以 CentOS 替代商业版的 Red Hat Enterprise Linux 使用。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 1、查看可用的 CentOS 版本
 
-## 验收清单
+访问 CentOS 镜像库地址：https://hub.docker.com/_/centos?tab=tags&page=1。
 
-- 我能独立说出 `Docker 安装 Centos` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+可以通过 Sort by 查看其他版本的 CentOS 。默认是最新版本 centos:latest 。
 
-## 复盘问题
+你也可以在下拉列表中找到其他你想要的版本：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 2、拉取指定版本的 CentOS 镜像，这里我们安装指定版本为例(centos7):
+
+```text
+$ docker pull centos:centos7
+```
+
+
+### 3、查看本地镜像
+
+使用以下命令来查看是否已安装了 centos7：
+
+```text
+$ docker images
+```
+
+
+### 4、运行容器，并且可以通过 exec 命令进入 CentOS 容器。
+
+```text
+$ docker run -itd --name centos-test centos:centos7
+```
+
+
+### 5、安装成功
+
+最后我们可以通过 docker ps 命令查看容器的运行信息：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker 安装 Centos` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

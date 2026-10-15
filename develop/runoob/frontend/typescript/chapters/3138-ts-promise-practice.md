@@ -1,34 +1,149 @@
-# TypeScript：TypeScript Promise 练习笔记
+# TypeScript：TypeScript Promise 详解
 
 - 来源：[TypeScript Promise](https://www.runoob.com/typescript/ts-promise.html)
 - 分类：前端开发
 - 技术：TypeScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3138
 
-## 练习目标
+## 本章内容
 
-把 `TypeScript Promise` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Promise 是 JavaScript 异步编程的基础，TypeScript 对 Promise 有完整的类型支持。
 
-## 练习步骤
+通过泛型参数，可以精确地指定 Promise 解决值和拒绝值的类型。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 为什么需要 Promise
 
-- 我能独立说出 `TypeScript Promise` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在 JavaScript 中，很多操作是异步的，如网络请求、文件读取、定时器等。
 
-## 复盘问题
+Promise 提供了统一的异步编程接口，让异步代码更容易编写和管理。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+TypeScript 通过泛型支持，让 Promise 的类型安全得到了保障。
+
+概念说明：Promise 是一个对象，表示一个异步操作的最终结果。它有三种状态：pending（进行中）、fulfilled（已成功）、rejected（已失败）。
+
+
+## 创建 Promise
+
+使用 Promise 构造函数创建 Promise，传入执行器函数。
+
+
+## 实例
+
+运行结果：
+
+```text
+完成: 成功!
+```
+
+泛型说明：Promise<T> 中的 T 是 Promise 成功解决时的值的类型。这让 TypeScript 能够推断返回值的类型。
+
+
+## Promise 链式调用
+
+then 和 catch 方法返回新的 Promise，可以链式调用。
+
+
+## 实例
+
+运行结果：
+
+```text
+最终结果: 12
+Promise 链: [object Promise]
+```
+
+链式调用：每个 then 会返回一个新的 Promise，这允许我们按顺序执行多个异步操作。
+
+
+## Promise.all
+
+Promise.all 等待所有 Promise 完成，返回一个包含所有结果的数组。
+
+
+## 实例
+
+运行结果：
+
+```text
+全部完成: 1,2,3
+总和: 6
+```
+
+注意：如果任何一个 Promise 失败，Promise.all 会立即 rejection，不会等待其他 Promise 完成。
+
+
+## Promise.race
+
+Promise.race 返回最先完成（无论成功或失败）的 Promise 的结果。
+
+
+## 实例
+
+运行结果：
+
+```text
+最先完成: p3
+```
+
+应用场景：Promise.race 常用于实现超时功能：把一个长时间操作的 Promise 和一个超时 Promise 竞争。
+
+
+## Promise.allSettled
+
+Promise.allSettled 等待所有 Promise 结束（无论成功或失败），返回每个 Promise 的状态和结果。
+
+
+## 实例
+
+运行结果：
+
+```text
+Promise 0: 成功
+Promise 1: 失败
+Promise 2: 完成
+```
+
+区别：Promise.all 会在第一个失败时立即停止；Promise.allSettled 会等待所有 Promise 结束。
+
+
+## Promise 类型注解
+
+TypeScript 的泛型支持让 Promise 的类型声明变得精确。
+
+
+## 实例
+
+类型推断：TypeScript 会根据泛型参数自动推断 Promise 的返回类型，这让我们在 async/await 中也能获得完整的类型提示。
+
+
+## 注意事项
+
+- 泛型参数：始终为 Promise 指定泛型参数，明确返回类型
+- 错误处理：记得使用 catch 处理 Promise 失败的情况
+- all vs allSettled：需要全部结果时用 allSettled，需要快速失败时用 all
+- async/await：现代代码推荐使用 async/await，语法更简洁
+
+最佳实践：优先使用 async/await 语法，它本质上还是基于 Promise，但写起来像同步代码。
+
+
+## 总结
+
+Promise 是 TypeScript 异步编程的核心。
+
+- Promise：异步操作容器，有 pending/fulfilled/rejected 三种状态
+- then/catch：链式处理异步结果
+- Promise.all：等待全部完成，任一失败则整体失败
+- Promise.race：返回最先完成的结果
+- Promise.allSettled：等待全部结束，返回每个的状态
+
+建议：使用 async/await 语法配合 Promise，让异步代码既类型安全又易于阅读。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `TypeScript Promise` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

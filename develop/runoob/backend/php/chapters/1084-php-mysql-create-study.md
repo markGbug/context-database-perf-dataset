@@ -1,35 +1,93 @@
-# PHP：PHP MySQL 创建数据库 学习笔记
+# PHP：PHP MySQL 创建数据库
 
 - 来源：[PHP MySQL 创建数据库](https://www.runoob.com/php/php-mysql-create.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1084
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP MySQL 创建数据库` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+数据库存有一个或多个表。
 
-## 阅读抓手
+你需要 CREATE 权限来创建或删除 MySQL 数据库。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 使用 MySQLi 和 PDO 创建 MySQL 数据库
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+CREATE DATABASE 语句用于在 MySQL 中创建数据库。
 
-## 完成标准
+在下面的实例中，创建了一个名为 "myDB" 的数据库：
 
-- 能用 3 到 5 句话解释 `PHP MySQL 创建数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例 (MySQLi - 面向对象)
+
+```text
+<?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+
+// 创建连接
+$conn = new mysqli($servername, $username, $password);
+// 检测连接
+if ($conn->connect_error) {
+    die("连接失败: " . $conn->connect_error);
+}
+
+// 创建数据库
+$sql = "CREATE DATABASE myDB";
+if ($conn->query($sql) === TRUE) {
+    echo "数据库创建成功";
+} else {
+    echo "Error creating database: " . $conn->error;
+}
+
+$conn->close();
+?>
+```
+
+
+## 实例 (MySQLi Procedural)
+
+```text
+<?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+
+// 创建连接
+$conn = mysqli_connect($servername, $username, $password);
+// 检测连接
+if (!$conn) {
+    die("连接失败: " . mysqli_connect_error());
+}
+
+// 创建数据库
+$sql = "CREATE DATABASE myDB";
+if (mysqli_query($conn, $sql)) {
+    echo "数据库创建成功";
+} else {
+    echo "Error creating database: " . mysqli_error($conn);
+}
+
+mysqli_close($conn);
+?>
+```
+
+注意： 以下使用 PDO 实例创建数据库 myDBPDO :
+
+
+## 实例
+
+使用 PDO：
+
+提示： 使用 PDO 的最大好处是在数据库查询过程出现问题时可以使用异常类来 处理问题。如果 try{ } 代码块出现异常，脚本会停止执行并会跳到第一个 catch(){ } 代码块执行代码。 在以上捕获的代码块中我们输出了 SQL 语句并生成错误信息。
+
+
+## 复习重点
+
+- 能说明 `PHP MySQL 创建数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

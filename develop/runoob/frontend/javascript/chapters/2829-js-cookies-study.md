@@ -1,35 +1,215 @@
-# JavaScript：JavaScript Cookie 学习笔记
+# JavaScript：JavaScript Cookie
 
 - 来源：[JavaScript Cookie](https://www.runoob.com/js/js-cookies.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2829
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript Cookie` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+Cookie 用于存储 web 页面的用户信息。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 什么是 Cookie？
 
-## 笔记模板
+Cookie 是一些数据, 存储于你电脑上的文本文件中。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+当 web 服务器向浏览器发送 web 页面时，在连接关闭后，服务端不会记录用户的信息。
 
-## 完成标准
+Cookie 的作用就是用于解决 "如何记录客户端的用户信息":
 
-- 能用 3 到 5 句话解释 `JavaScript Cookie`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 当用户访问 web 页面时，他的名字可以记录在 cookie 中。
+- 在用户下一次访问该页面时，可以在 cookie 中读取用户访问记录。
+
+Cookie 以名/值对形式存储，如下所示:
+
+当浏览器从服务器上请求 web 页面时， 属于该页面的 cookie 会被添加到该请求中。服务端通过这种方式来获取用户的信息。
+
+
+## 使用 JavaScript 创建Cookie
+
+JavaScript 可以使用 document.cookie 属性来创建 、读取、及删除 cookie。
+
+JavaScript 中，创建 cookie 如下所示：
+
+您还可以为 cookie 添加一个过期时间（以 UTC 或 GMT 时间）。默认情况下，cookie 在浏览器关闭时删除：
+
+您可以使用 path 参数告诉浏览器 cookie 的路径。默认情况下，cookie 属于当前页面。
+
+
+## 使用 JavaScript 读取 Cookie
+
+在 JavaScript 中, 可以使用以下代码来读取 cookie：
+
+
+## 使用 JavaScript 修改 Cookie
+
+在 JavaScript 中，修改 cookie 类似于创建 cookie，如下所示：
+
+旧的 cookie 将被覆盖。
+
+
+## 使用 JavaScript 删除 Cookie
+
+删除 cookie 非常简单。您只需要设置 expires 参数为以前的时间即可，如下所示，设置为 Thu, 01 Jan 1970 00:00:00 GMT:
+
+注意，当您删除时不必指定 cookie 的值。
+
+
+## Cookie 字符串
+
+document.cookie 属性看起来像一个普通的文本字符串，其实它不是。
+
+即使您在 document.cookie 中写入一个完整的 cookie 字符串, 当您重新读取该 cookie 信息时，cookie 信息是以名/值对的形式展示的。
+
+如果您设置了新的 cookie，旧的 cookie 不会被覆盖。 新 cookie 将添加到 document.cookie 中，所以如果您重新读取document.cookie，您将获得如下所示的数据：
+
+cookie1=value; cookie2=value;
+
+显示所有 Cookie 创建 Cookie 1 创建 Cookie 2 删除 Cookie 1 删除 Cookie 2
+
+如果您需要查找一个指定 cookie 值，您必须创建一个JavaScript 函数在 cookie 字符串中查找 cookie 值。
+
+
+## JavaScript Cookie 实例
+
+在以下实例中，我们将创建 cookie 来存储访问者名称。
+
+首先，访问者访问 web 页面, 他将被要求填写自己的名字。该名字会存储在 cookie 中。
+
+访问者下一次访问页面时，他会看到一个欢迎的消息。
+
+在这个实例中我们会创建 3 个 JavaScript 函数:
+
+- 设置 cookie 值的函数
+- 获取 cookie 值的函数
+- 检测 cookie 值的函数
+
+
+## 设置 cookie 值的函数
+
+首先，我们创建一个函数用于存储访问者的名字：
+
+```javascript
+function setCookie(cname,cvalue,exdays)
+{
+  var d = new Date();
+  d.setTime(d.getTime()+(exdays*24*60*60*1000));
+  var expires = "expires="+d.toGMTString();
+  document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+```
+
+函数解析：
+
+以上的函数参数中，cookie 的名称为 cname，cookie 的值为 cvalue，并设置了 cookie 的过期时间 expires。
+
+该函数设置了 cookie 名、cookie 值、cookie过期时间。
+
+
+## 获取 cookie 值的函数
+
+然后，我们创建一个函数用于返回指定 cookie 的值：
+
+```java
+function getCookie(cname)
+{
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0; i<ca.length; i++)
+  {
+    var c = ca[i].trim();
+    if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+  }
+  return "";
+}
+```
+
+函数解析：
+
+cookie 名的参数为 cname。
+
+创建一个文本变量用于检索指定 cookie :cname + "="。
+
+使用分号来分割 document.cookie 字符串，并将分割后的字符串数组赋值给 ca (ca = document.cookie.split(';'))。
+
+循环 ca 数组 (i=0;i<ca.length;i++)，然后读取数组中的每个值，并去除前后空格 (c=ca[i].trim())。
+
+如果找到 cookie(c.indexOf(name) == 0)，返回 cookie 的值 (c.substring(name.length,c.length)。
+
+如果没有找到 cookie, 返回 ""。
+
+
+## 检测 cookie 值的函数
+
+最后，我们可以创建一个检测 cookie 是否创建的函数。
+
+如果设置了 cookie，将显示一个问候信息。
+
+如果没有设置 cookie，将会显示一个弹窗用于询问访问者的名字，并调用 setCookie 函数将访问者的名字存储 365 天：
+
+```javascript
+function checkCookie()
+{
+  var username=getCookie("username");
+  if (username!="")
+  {
+    alert("Welcome again " + username);
+  }
+  else
+  {
+    username = prompt("Please enter your name:","");
+    if (username!="" && username!=null)
+    {
+      setCookie("username",username,365);
+    }
+  }
+}
+```
+
+
+## 完整实例
+
+
+## 实例
+
+```java
+function setCookie(cname,cvalue,exdays){
+    var d = new Date();
+    d.setTime(d.getTime()+(exdays*24*60*60*1000));
+    var expires = "expires="+d.toGMTString();
+    document.cookie = cname+"="+cvalue+"; "+expires;
+}
+function getCookie(cname){
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+    }
+    return "";
+}
+function checkCookie(){
+    var user=getCookie("username");
+    if (user!=""){
+        alert("欢迎 " + user + " 再次访问");
+    }
+    else {
+        user = prompt("请输入你的名字:","");
+          if (user!="" && user!=null){
+            setCookie("username",user,30);
+        }
+    }
+}
+```
+
+以下实例在页面载入时执行 checkCookie() 函数。
+
+
+## 复习重点
+
+- 能说明 `JavaScript Cookie` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

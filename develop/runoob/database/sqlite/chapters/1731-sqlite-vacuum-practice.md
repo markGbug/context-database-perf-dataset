@@ -1,34 +1,63 @@
-# SQLite：SQLite Vacuum 练习笔记
+# SQLite：SQLite Vacuum
 
 - 来源：[SQLite Vacuum](https://www.runoob.com/sqlite/sqlite-vacuum.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1731
 
-## 练习目标
+## 本章内容
 
-把 `SQLite Vacuum` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+VACUUM 命令通过复制主数据库中的内容到一个临时数据库文件，然后清空主数据库，并从副本中重新载入原始的数据库文件。这消除了空闲页，把表中的数据排列为连续的，另外会清理数据库文件结构。
 
-## 练习步骤
+如果表中没有明确的整型主键（INTEGER PRIMARY KEY），VACUUM 命令可能会改变表中条目的行 ID（ROWID）。VACUUM 命令只适用于主数据库，附加的数据库文件是不可能使用 VACUUM 命令。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+如果有一个活动的事务，VACUUM 命令就会失败。VACUUM 命令是一个用于内存数据库的任何操作。由于 VACUUM 命令从头开始重新创建数据库文件，所以 VACUUM 也可以用于修改许多数据库特定的配置参数。
 
-## 验收清单
 
-- 我能独立说出 `SQLite Vacuum` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 手动 VACUUM
 
-## 复盘问题
+下面是在命令提示符中对整个数据库发出 VACUUM 命令的语法：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+$sqlite3 database_name "VACUUM;"
+```
+
+您也可以在 SQLite 提示符中运行 VACUUM，如下所示：
+
+```text
+sqlite> VACUUM;
+```
+
+您也可以在特定的表上运行 VACUUM，如下所示：
+
+```text
+sqlite> VACUUM table_name;
+```
+
+
+## 自动 VACUUM（Auto-VACUUM）
+
+SQLite 的 Auto-VACUUM 与 VACUUM 不大一样，它只是把空闲页移到数据库末尾，从而减小数据库大小。通过这样做，它可以明显地把数据库碎片化，而 VACUUM 则是反碎片化。所以 Auto-VACUUM 只会让数据库更小。
+
+在 SQLite 提示符中，您可以通过下面的编译运行，启用/禁用 SQLite 的 Auto-VACUUM：
+
+```text
+sqlite> PRAGMA auto_vacuum = NONE;  -- 0 means disable auto vacuum
+sqlite> PRAGMA auto_vacuum = INCREMENTAL;  -- 1 means enable incremental vacuum
+sqlite> PRAGMA auto_vacuum = FULL;  -- 2 means enable full auto vacuum
+```
+
+您可以从命令提示符中运行下面的命令来检查 auto-vacuum 设置：
+
+```text
+$sqlite3 database_name "PRAGMA auto_vacuum;"
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite Vacuum` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

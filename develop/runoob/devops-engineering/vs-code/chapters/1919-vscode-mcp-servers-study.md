@@ -1,35 +1,69 @@
-# VS Code：VS Code MCP 服务 学习笔记
+# VS Code：VS Code MCP 服务
 
 - 来源：[VS Code MCP 服务](https://www.runoob.com/vscode/vscode-mcp-servers.html)
 - 分类：DevOps / 工程化
 - 技术：VS Code
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1919
 
-## 学习目标
+## 本章内容
 
-VS Code 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `VS Code MCP 服务` 建立学习路径，先理解它在 VS Code 体系中的位置，再做可运行或可复述的验证。
+MCP（Model Context Protocol）是一种开放标准，提供统一接口，让 AI 模型（例如 Copilot Chat）能够发现和调用外部工具，实现读取文件、调用 API、执行任务等多种操作。
 
-## 阅读抓手
+在 VS Code 中，MCP 客户端（Copilot）通过 MCP 服务器提供的工具完成任务，而服务器端可以部署在本地或远程。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+上图是 MCP 架构图：
 
-## 笔记模板
+- MCP 是核心，一边连 客户端（MCP clients），像用 client.py 写的程序；另一边通过服务器（MCP server），连远程服务（比如图里的彩色图标 App）和本地数据源（蓝色笑脸图标这类）。
+- 客户端还能对接 MCP 主机（hosts），像 Claude、ChatGPT 这些，让 MCP 能调用它们的能力，把各方串起来干活～ 就像给不同工具搭了个 "协作网"，让 MCP 能连通远程、本地，还能借外部大模型的力 。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在使用 VS Code MCP 服务前，确保安装最新版的 Visual Studio Code。
 
-## 完成标准
+然后还要安装相关的 VS Code 的 AI 扩展，我们可以使用微软的 GitHub Copilot，登录账号（包括 Free、Business 或 Enterprise 计划）即可。
 
-- 能用 3 到 5 句话解释 `VS Code MCP 服务`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+从 VS Code 1.102 版本开始，VS Code 中的 MCP 支持已全面可用，可以在设置中看是否启用。
+
+
+## 配置 MCP 服务器
+
+在 VS Code 中添加 MCP 服务器有多种方式：
+
+- 直接安装：访问精选的 MCP 服务器列表 https://code.visualstudio.com/mcp，选择任意 MCP 服务器上的 "安装"，即可自动将其添加到你的 VS Code 实例中。
+- 工作区设置：在工作区中添加 .vscode/mcp.json 文件，为该工作区配置 MCP 服务器，并与团队成员共享配置。
+- 用户设置：在用户配置（通过 "MCP：打开用户配置"）中指定服务器，使该 MCP 服务器在所有工作区中启用，并通过 "设置同步" 进行同步。
+- 自动发现：启用自动发现功能（chat.mcp.discovery.enabled），以发现其他工具（如 Claude 桌面版）中定义的 MCP 服务器。
+
+本章节我们使用工作区设的方法。
+
+
+### 实例
+
+以下是一个简单的 VS Code 中 MCP 应用的 "Hello World" 示例，我们先创建一个 python 文件 test.py，代码如下：
+
+
+## test.py 文件代码
+
+接下来我们创建一个能返回 "Hello World" 的 MCP 服务器配置。
+
+在你的工作区文件夹中创建 .vscode/mcp.json（没有 .vscode 目录就创建它） 文件，填入以下配置（模拟一个简单的本地 MCP 服务器）:
+
+
+## .vscode/mcp.json 文件代码
+
+保存文件后，打开 VS Code 命令面板（Ctrl+Shift+P）：运行 "MCP: Show Installed Servers" 命令:
+
+你会看到配置的 "HelloWorldServer":
+
+启动该服务器，它会立即返回 "Hello World from MCP!" 信息
+
+我们可以在 AI 的聊天窗口输入"执行 HelloWorldServer"，就可以看到输出结果了：
+
+打开 .vscode/mcp.json 右下角有个"添加服务器..."的图标，我们可以通过它添加更多服务，包含执行的命令或者远程的 http 服务：
+
+
+## 复习重点
+
+- 能说明 `VS Code MCP 服务` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

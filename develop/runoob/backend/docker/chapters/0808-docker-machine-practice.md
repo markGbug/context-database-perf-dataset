@@ -1,34 +1,158 @@
-# Docker：Docker Machine 练习笔记
+# Docker：Docker Machine
 
 - 来源：[Docker Machine](https://www.runoob.com/docker/docker-machine.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0808
 
-## 练习目标
+## 本章内容
 
-把 `Docker Machine` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Docker Machine 是 Docker 早期为创建和管理 Docker 主机而生的工具，但随着 Docker Desktop、Terraform 和 Kubernetes 的成熟，它已经完成历史使命，被全面替代。
 
-## 练习步骤
+Docker Desktop 在本地开发场景中 完全替代 了 Docker Machine，不再适合实际使用。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 简介
 
-- 我能独立说出 `Docker Machine` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Docker Machine 是一种可以让您在虚拟主机上安装 Docker 的工具，并可以使用 docker-machine 命令来管理主机。
 
-## 复盘问题
+Docker Machine 也可以集中管理所有的 docker 主机，比如快速的给 100 台服务器安装上 docker。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Docker Machine 管理的虚拟主机可以是机上的，也可以是云供应商，如阿里云，腾讯云，AWS，或 DigitalOcean。
+
+使用 docker-machine 命令，您可以启动，检查，停止和重新启动托管主机，也可以升级 Docker 客户端和守护程序，以及配置 Docker 客户端与您的主机进行通信。
+
+
+## 安装
+
+安装 Docker Machine 之前你需要先安装 Docker。
+
+Docker Machine 可以在多种平台上安装使用，包括 Linux 、MacOS 以及 windows。
+
+
+### Linux 安装命令
+
+```text
+$ base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+  sudo mv /tmp/docker-machine /usr/local/bin/docker-machine &&
+  chmod +x /usr/local/bin/docker-machine
+```
+
+
+### macOS 安装命令
+
+```text
+$ base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/usr/local/bin/docker-machine &&
+  chmod +x /usr/local/bin/docker-machine
+```
+
+
+### Windows 安装命令
+
+如果你是 Windows 平台，可以使用 Git BASH，并输入以下命令：
+
+```text
+$ base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+  mkdir -p "$HOME/bin" &&
+  curl -L $base/docker-machine-Windows-x86_64.exe > "$HOME/bin/docker-machine.exe" &&
+  chmod +x "$HOME/bin/docker-machine.exe"
+```
+
+查看是否安装成功：
+
+```text
+$ docker-machine version
+docker-machine version 0.16.0, build 9371605
+```
+
+注意：各版本更新日志里面也有安装说明：https://github.com/docker/machine/releases
+
+
+## 使用
+
+本章通过 virtualbox 来介绍 docker-machine 的使用方法。其他云服务商操作与此基本一致。具体可以参考每家服务商的指导文档。
+
+
+### 1、列出可用的机器
+
+可以看到目前只有这里默认的 default 虚拟机。
+
+```text
+$ docker-machine ls
+```
+
+
+### 2、创建机器
+
+创建一台名为 test 的机器。
+
+```text
+$ docker-machine create --driver virtualbox test
+```
+
+- --driver：指定用来创建机器的驱动类型，这里是 virtualbox。
+
+
+### 3、查看机器的 ip
+
+```text
+$ docker-machine ip test
+```
+
+
+### 4、停止机器
+
+```text
+$ docker-machine stop test
+```
+
+
+### 5、启动机器
+
+```text
+$ docker-machine start test
+```
+
+
+### 6、进入机器
+
+```text
+$ docker-machine ssh test
+```
+
+
+### docker-machine 命令参数说明
+
+- docker-machine active：查看当前激活状态的 Docker 主机。 $ docker-machine ls NAME ACTIVE DRIVER STATE URL dev - virtualbox Running tcp://192.168.99.103:2376 staging * digitalocean Running tcp://203.0.113.81:2376 $ echo $DOCKER_HOST tcp://203.0.113.81:2376 $ docker-machine active staging
+- config：查看当前激活状态 Docker 主机的连接信息。
+- create：创建 Docker 主机
+- env：显示连接到某个主机需要的环境变量
+- inspect： 以 json 格式输出指定Docker的详细信息
+- ip： 获取指定 Docker 主机的地址
+- kill： 直接杀死指定的 Docker 主机
+- ls： 列出所有的管理主机
+- provision： 重新配置指定主机
+- regenerate-certs： 为某个主机重新生成 TLS 信息
+- restart： 重启指定的主机
+- rm： 删除某台 Docker 主机，对应的虚拟机也会被删除
+- ssh： 通过 SSH 连接到主机上，执行命令
+- scp： 在 Docker 主机之间以及 Docker 主机和本地主机之间通过 scp 远程复制数据
+- mount： 使用 SSHFS 从计算机装载或卸载目录
+- start： 启动一个指定的 Docker 主机，如果对象是个虚拟机，该虚拟机将被启动
+- status： 获取指定 Docker 主机的状态(包括：Running、Paused、Saved、Stopped、Stopping、Starting、Error)等
+- stop： 停止一个指定的 Docker 主机
+- upgrade： 将一个指定主机的 Docker 版本更新为最新
+- url： 获取指定 Docker 主机的监听 URL
+- version： 显示 Docker Machine 的版本或者主机 Docker 版本
+- help： 显示帮助信息
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker Machine` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,198 @@
-# HTML5：HTML 速查列表 练习笔记
+# HTML5：HTML 速查列表
 
 - 来源：[HTML 速查列表](https://www.runoob.com/html/html-quicklist.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2702
 
-## 练习目标
+## 本章内容
 
-把 `HTML 速查列表` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+HTML 速查列表. 你可以打印它，以备日常使用。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## HTML 基本文档
 
-## 验收清单
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>文档标题</title>
+</head>
+<body>
+可见文本...
+</body>
+</html>
+```
 
-- 我能独立说出 `HTML 速查列表` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 基本标签（Basic Tags）
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<h1>最大的标题</h1>
+<h2> . . . </h2>
+<h3> . . . </h3>
+<h4> . . . </h4>
+<h5> . . . </h5>
+<h6>最小的标题</h6>
+
+<p>这是一个段落。</p>
+<br> （换行）
+<hr> （水平线）
+<!-- 这是注释 -->
+```
+
+
+## 文本格式化（Formatting）
+
+```html
+<b>粗体文本</b>
+<code>计算机代码</code>
+<em>强调文本</em>
+<i>斜体文本</i>
+<kbd>键盘输入</kbd>
+<pre>预格式化文本</pre>
+<small>更小的文本</small>
+<strong>重要的文本</strong>
+
+<abbr> （缩写）
+<address> （联系信息）
+<bdo> （文字方向）
+<blockquote> （从另一个源引用的部分）
+<cite> （工作的名称）
+<del> （删除的文本）
+<ins> （插入的文本）
+<sub> （下标文本）
+<sup> （上标文本）
+```
+
+
+## 链接（Links）
+
+```html
+普通的链接：<a href="http://www.example.com/">链接文本</a>
+图像链接： <a href="http://www.example.com/"><img src="URL" alt="替换文本"></a>
+邮件链接： <a href="mailto:webmaster@example.com">发送e-mail</a>
+书签：
+<a id="tips">提示部分</a>
+<a href="#tips">跳到提示部分</a>
+```
+
+
+## 图片（Images）
+
+```html
+<img src="URL" alt="替换文本" height="42" width="42">
+```
+
+
+## 样式/区块（Styles/Sections）
+
+```html
+<style type="text/css">
+```
+
+```text
+h1 {color:red;}
+p {color:blue;}
+```
+
+```html
+</style>
+<div>文档中的块级元素</div>
+<span>文档中的内联元素</span>
+```
+
+
+## 无序列表
+
+```html
+<ul>
+    <li>项目</li>
+    <li>项目</li>
+</ul>
+```
+
+
+## 有序列表
+
+```html
+<ol>
+    <li>第一项</li>
+    <li>第二项</li>
+</ol>
+```
+
+
+## 定义列表
+
+```html
+<dl>
+  <dt>项目 1</dt>
+    <dd>描述项目 1</dd>
+  <dt>项目 2</dt>
+    <dd>描述项目 2</dd>
+</dl>
+```
+
+
+## 表格（Tables）
+
+```html
+<table border="1">
+  <tr>
+    <th>表格标题</th>
+    <th>表格标题</th>
+  </tr>
+  <tr>
+    <td>表格数据</td>
+    <td>表格数据</td>
+  </tr>
+</table>
+```
+
+
+## 框架（Iframe）
+
+```html
+<iframe src="demo_iframe.htm"></iframe>
+```
+
+
+## 表单（Forms）
+
+```html
+<form action="demo_form.php" method="post/get">
+<input type="text" name="email" size="40" maxlength="50">
+<input type="password">
+<input type="checkbox" checked="checked">
+<input type="radio" checked="checked">
+<input type="submit" value="Send">
+<input type="reset">
+<input type="hidden">
+<select>
+<option>苹果</option>
+<option selected="selected">香蕉</option>
+<option>樱桃</option>
+</select>
+<textarea name="comment" rows="60" cols="20"></textarea>
+
+</form>
+```
+
+
+## 实体（Entities）
+
+```text
+< 等同于 <
+> 等同于 >
+© 等同于 ©
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML 速查列表` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

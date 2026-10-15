@@ -1,34 +1,109 @@
-# AJAX：AJAX JSON 实例 练习笔记
+# AJAX：AJAX JSON 实例
 
 - 来源：[AJAX JSON 实例](https://www.runoob.com/ajax/ajax-json.html)
 - 分类：前端开发
 - 技术：AJAX
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2267
 
-## 练习目标
+## 本章内容
 
-把 `AJAX JSON 实例` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+AJAX 可用来与 JSON 文件进行交互式通信。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## AJAX JSON 实例
 
-## 验收清单
+下面的例子将演示网页如何使用 AJAX 来读取来自 JSON 文件的信息：
 
-- 我能独立说出 `AJAX JSON 实例` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例解析 - loadXMLDoc() 函数
+
+当用户点击上面的"获取课程数据"这个按钮，就会执行 loadXMLDoc() 函数。
+
+loadXMLDoc() 函数创建 XMLHttpRequest 对象，添加当服务器响应就绪时执行的函数，并将请求发送到服务器。
+
+当服务器响应就绪时，我们就使用 JSON.parse() 方法将数据转换为 JavaScript 对象。：
+
+
+## 异步加载 JSON 文档
+
+```java
+function loadXMLDoc()
+{
+  var xmlhttp;
+  if (window.XMLHttpRequest)
+  {
+    // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+    xmlhttp=new XMLHttpRequest();
+  }
+  else
+  {
+    // IE6, IE5 浏览器执行代码
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function()
+  {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+      var myArr = JSON.parse(this.responseText);
+      myFunction(myArr)
+    }
+  }
+  xmlhttp.open("GET","/try/ajax/json_ajax.json",true);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.send();
+}
+function myFunction(arr) {
+  var out = "";
+  var i;
+  for(i = 0; i < arr.length; i++) {
+    out += '<a href="' + arr[i].url + '">' +
+    arr[i].title + '</a><br>';
+  }
+ document.getElementById("myDiv").innerHTML=out;
+}
+```
+
+
+## AJAX 服务器页面
+
+上面这个例子中使用的服务器页面实际上是一个名为 "json_ajax.json" JSON 文件。
+
+JSON 数据如下：
+
+
+## json_ajax.json 文件：
+
+```text
+[
+  {
+    "title": "JavaScript 教程",
+    "url": "https://www.runoob.com/js/"
+  },
+  {
+    "title": "HTML 教程",
+    "url": "https://www.runoob.com/html/"
+  },
+  {
+    "title": "CSS 教程",
+    "url": "https://www.runoob.com/css/"
+  }
+]
+```
+
+发送 JSON 数据：
+
+```text
+xmlhttp.send(JSON.stringify({ "email": "admin@runoob.com", "response": { "name": "runoob" } }));
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AJAX JSON 实例` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

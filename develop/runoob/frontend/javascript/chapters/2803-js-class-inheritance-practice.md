@@ -1,34 +1,267 @@
-# JavaScript：JavaScript 类继承 练习笔记
+# JavaScript：JavaScript 类继承
 
 - 来源：[JavaScript 类继承](https://www.runoob.com/js/js-class-inheritance.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2803
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript 类继承` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+JavaScript 类继承使用 extends 关键字。
 
-## 练习步骤
+继承允许我们依据另一个类来定义一个类，这使得创建和维护一个应用程序变得更容易。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+super() 方法用于调用父类的构造函数。
 
-## 验收清单
+当创建一个类时，您不需要重新编写新的数据成员和成员函数，只需指定新建的类继承了一个已有的类的成员即可。这个已有的类称为基类（父类），新建的类称为派生类（子类）。
 
-- 我能独立说出 `JavaScript 类继承` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+继承代表了 is a 关系。例如，哺乳动物是动物，狗是哺乳动物，因此，狗是动物，等等。
 
-## 复盘问题
+代码如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+// 基类
+class Animal {
+    // eat() 函数
+    // sleep() 函数
+};
+
+
+//派生类
+class Dog extends Animal {
+    // bark() 函数
+};
+```
+
+以下实例创建的类 "Runoob" 继承了 "Site" 类:
+
+
+## 实例
+
+```javascript
+class Site {
+  constructor(name) {
+    this.sitename = name;
+  }
+  present() {
+    return '我喜欢' + this.sitename;
+  }
+}
+
+class Runoob extends Site {
+  constructor(name, age) {
+    super(name);
+    this.age = age;
+  }
+  show() {
+    return this.present() + ', 它创建了 ' + this.age + ' 年。';
+  }
+}
+
+let noob = new Runoob("菜鸟教程", 5);
+document.getElementById("demo").innerHTML = noob.show();
+```
+
+super() 方法引用父类的构造方法。
+
+通过在构造方法中调用 super() 方法，我们调用了父类的构造方法，这样就可以访问父类的属性和方法。
+
+继承对于代码可复用性很有用。
+
+JavaScript 并没有像其他编程语言一样具有传统的类，而是基于原型的继承模型。
+
+ES6 引入了类和 class 关键字，但底层机制仍然基于原型继承。
+
+
+### 使用原型链继承
+
+在下面实例中，Animal 是一个基类，Dog 是一个继承自 Animal 的子类，Dog.prototype 使用 Object.create(Animal.prototype) 来创建一个新对象，它继承了 Animal.prototype 的方法和属性，通过将 Dog.prototype.constructor 设置为 Dog，确保继承链上的构造函数正确。
+
+
+## 实例
+
+```javascript
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.eat = function() {
+  console.log(this.name + " is eating.");
+};
+
+function Dog(name, breed) {
+  Animal.call(this, name);
+  this.breed = breed;
+}
+
+// 建立原型链，让 Dog 继承 Animal
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+
+Dog.prototype.bark = function() {
+  console.log(this.name + " is barking.");
+};
+
+var dog = new Dog("Buddy", "Labrador");
+dog.eat();  // 调用从 Animal 继承的方法
+dog.bark(); // 调用 Dog 的方法
+```
+
+
+### 使用 ES6 类继承
+
+ES6 引入了 class 关键字，使得定义类和继承更加清晰，extends 关键字用于建立继承关系，super 关键字用于在子类构造函数中调用父类的构造函数。
+
+
+## 实例
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  eat() {
+    console.log(this.name + " is eating.");
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
+  }
+
+  bark() {
+    console.log(this.name + " is barking.");
+  }
+}
+
+const dog = new Dog("Buddy", "Labrador");
+dog.eat();
+dog.bark();
+```
+
+不论是使用原型链继承还是 ES6 类继承，都可以实现类似的继承效果，在选择哪种方法时，可以根据个人偏好和项目需求来决定。
+
+
+## getter 和 setter
+
+类中我们可以使用 getter 和 setter 来获取和设置值，getter 和 setter 都需要在严格模式下执行。
+
+getter 和 setter 可以使得我们对属性的操作变的很灵活。
+
+类中添加 getter 和 setter 使用的是 get 和 set 关键字。
+
+以下实例为 sitename 属性创建 getter 和 setter：
+
+
+## 实例
+
+```javascript
+class Runoob {
+  constructor(name) {
+    this.sitename = name;
+  }
+  get s_name() {
+    return this.sitename;
+  }
+  set s_name(x) {
+    this.sitename = x;
+  }
+}
+
+let noob = new Runoob("菜鸟教程");
+
+document.getElementById("demo").innerHTML = noob.s_name;
+```
+
+注意：即使 getter 是一个方法，当你想获取属性值时也不要使用括号。
+
+getter/setter 方法的名称不能与属性的名称相同，在本例中属名为 sitename。
+
+很多开发者在属性名称前使用下划线字符 _ 将 getter/setter 与实际属性分开：
+
+以下实例使用下划线 _ 来设置属性，并创建对应的 getter/setter 方法：
+
+
+## 实例
+
+```javascript
+class Runoob {
+  constructor(name) {
+    this._sitename = name;
+  }
+  get sitename() {
+    return this._sitename;
+  }
+  set sitename(x) {
+    this._sitename = x;
+  }
+}
+
+let noob = new Runoob("菜鸟教程");
+
+document.getElementById("demo").innerHTML = noob.sitename;
+```
+
+要使用 setter，请使用与设置属性值时相同的语法，虽然 set 是一个方法，但需要不带括号：
+
+
+## 实例
+
+```javascript
+class Runoob {
+  constructor(name) {
+    this._sitename = name;
+  }
+  set sitename(x) {
+    this._sitename = x;
+  }
+  get sitename() {
+    return this._sitename;
+  }
+}
+
+let noob = new Runoob("菜鸟教程");
+noob.sitename = "RUNOOB";
+document.getElementById("demo").innerHTML = noob.sitename;
+```
+
+
+## 提升
+
+函数声明和类声明之间的一个重要区别在于, 函数声明会提升，类声明不会。
+
+你首先需要声明你的类，然后再访问它，否则类似以下的代码将抛出 ReferenceError：
+
+
+## 实例
+
+```javascript
+// 这里不能这样使用类，因为还没有声明
+// noob = new Runoob("菜鸟教程")
+// 报错
+
+class Runoob {
+  constructor(name) {
+    this.sitename = name;
+  }
+}
+
+// 这里可以使用类了
+let noob = new Runoob("菜鸟教程")
+```
+
+使用前没有声明会报错：
+
+使用前已经声明可以正常执行：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript 类继承` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

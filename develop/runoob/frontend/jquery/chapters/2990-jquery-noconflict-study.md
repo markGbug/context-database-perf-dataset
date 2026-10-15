@@ -1,35 +1,79 @@
-# jQuery：jQuery noConflict() 方法 学习笔记
+# jQuery：jQuery - noConflict() 方法
 
 - 来源：[jQuery noConflict() 方法](https://www.runoob.com/jquery/jquery-noconflict.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2990
 
-## 学习目标
+## 本章内容
 
-jQuery 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery noConflict() 方法` 建立学习路径，先理解它在 jQuery 体系中的位置，再做可运行或可复述的验证。
+如何在页面上同时使用 jQuery 和其他框架？
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## jQuery 和其他 JavaScript 框架
 
-## 笔记模板
+正如您已经了解到的，jQuery 使用 $ 符号作为 jQuery 的简写。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如果其他 JavaScript 框架也使用 $ 符号作为简写怎么办？
 
-## 完成标准
+其他一些 JavaScript 框架包括：MooTools、Backbone、Sammy、Cappuccino、Knockout、JavaScript MVC、Google Web Toolkit、Google Closure、Ember、Batman 以及 Ext JS。
 
-- 能用 3 到 5 句话解释 `jQuery noConflict() 方法`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+其中某些框架也使用 $ 符号作为简写（就像 jQuery），如果您在用的两种不同的框架正在使用相同的简写符号，有可能导致脚本停止运行。
+
+jQuery 的团队考虑到了这个问题，并实现了 noConflict() 方法。
+
+
+## jQuery noConflict() 方法
+
+noConflict() 方法会释放对 $ 标识符的控制，这样其他脚本就可以使用它了。
+
+当然，您仍然可以通过全名替代简写的方式来使用 jQuery：
+
+
+## 实例
+
+```text
+$.noConflict();
+jQuery(document).ready(function(){
+  jQuery("button").click(function(){
+    jQuery("p").text("jQuery 仍然在工作!");
+  });
+});
+```
+
+您也可以创建自己的简写。noConflict() 可返回对 jQuery 的引用，您可以把它存入变量，以供稍后使用。请看这个例子：
+
+
+## 实例
+
+```javascript
+var jq = $.noConflict();
+jq(document).ready(function(){
+  jq("button").click(function(){
+    jq("p").text("jQuery 仍然在工作!");
+  });
+});
+```
+
+如果你的 jQuery 代码块使用 $ 简写，并且您不愿意改变这个快捷方式，那么您可以把 $ 符号作为变量传递给 ready 方法。这样就可以在函数内使用 $ 符号了 - 而在函数外，依旧不得不使用 "jQuery"：
+
+
+## 实例
+
+```text
+$.noConflict();
+jQuery(document).ready(function($){
+  $("button").click(function(){
+    $("p").text("jQuery 仍然在工作!");
+  });
+});
+```
+
+
+## 复习重点
+
+- 能说明 `jQuery noConflict() 方法` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

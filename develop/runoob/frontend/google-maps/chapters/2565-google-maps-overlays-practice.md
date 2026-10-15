@@ -1,34 +1,192 @@
-# Google 地图：Google 地图叠加层 练习笔记
+# Google 地图：Google 地图
 
 - 来源：[Google 地图叠加层](https://www.runoob.com/googleapi/google-maps-overlays.html)
 - 分类：前端开发
 - 技术：Google 地图
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2565
 
-## 练习目标
+## 本章内容
 
-把 `Google 地图叠加层` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在Google地图中添加一个标记
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## Google 地图 - 叠加层
 
-## 验收清单
+叠加层是地图上绑定到经度/纬度坐标的对象，会随您拖动或缩放地图而移动。
 
-- 我能独立说出 `Google 地图叠加层` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Google 地图 API 有如下几种叠加层：
 
-## 复盘问题
+- 地图上的点使用标记来显示，通常显示自定义图标。标记是 GMarker 类型的对象，并且可以利用 GIcon 类型的对象来自定义图标。
+- 地图上的线使用折线（表示点的集合）来显示。线是类型为 GPolyline 的对象。
+- 地图上的区域显示为多边形（如果是任意形状的区域）或底面叠加层（如果是矩形区域）。多边形类似于闭合的折线，因此可以是任何形状。地面叠加层通常用于地图上与图块有直接或间接关联的区域。
+- 地图本身使用图块叠加层显示。如果您有自己的系列图块，可以使用 GTileLayerOverlay 类来改变地图上已有的图块，甚至可以使用 GMapType 来创建您自己的地图类型。
+- 信息窗口也是一种特殊的叠加层。但是请注意，信息窗口会自动添加到地图中，并且地图只能添加一个类型为 GInfoWindow 的对象。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## Google 地图 - 添加标记
+
+记标识地图上的点。默认情况下，它们使用 G_DEFAULT_ICON（您也可以指定自定义图标）。GMarker 构造函数将 GLatLng 和 GMarkerOptions（可选）对象作为参数。 标记设计为可交互。例如，默认情况下它们接收 "click" 事件，常用于在事件侦听器中打开信息窗口。
+
+通过 setMap() 方法在地图上添加标记:
+
+
+## 实例
+
+```javascript
+var marker=new google.maps.Marker({
+    position:myCenter,
+});
+
+marker.setMap(map);
+```
+
+
+## Google 地图 - 可拖动的标记
+
+以下实例将介绍如何使用 animation 属性来拖动标记:
+
+
+## 实例
+
+```text
+marker=new google.maps.Marker({
+    position:myCenter,
+    animation:google.maps.Animation.BOUNCE
+});
+
+marker.setMap(map);
+```
+
+
+## Google 地图 - 图标
+
+标记可以用自定义的新图标来显示，以替代默认图标:
+
+
+## 实例
+
+```javascript
+var marker=new google.maps.Marker({
+    position:myCenter,
+    icon:'pinkball.png'
+});
+
+marker.setMap(map);
+```
+
+
+## Google 地图 - 折线
+
+GPolyline 对象可在地图上创建线性叠加层。GPolyline 包括一系列点，并创建一系列有序连接这些点的线段。
+
+折线支持以下属性：
+
+- path - 指定了多个直线的纬度/经度坐标
+- strokeColor - 指定直线的十六进制颜色值(格式: "#FFFFFF")
+- strokeOpacity - 指定直线的透明度(该值为 0.0 到 1.0)
+- strokeWeight - 定义线的宽度,以像素为单位。
+- editable - 定义用户是否可编辑直线(true/false)
+
+
+## 实例
+
+```javascript
+var myTrip = [stavanger,amsterdam,london];
+var flightPath = new google.maps.Polyline({
+  path:myTrip,
+  strokeColor:"#0000FF",
+  strokeOpacity:0.8,
+  strokeWeight:2
+});
+```
+
+
+## Google 地图 - 多边形
+
+GPolygon 对象类似于 GPolyline 对象，因为它们都包括一系列有序的点。但是，多边形不像折线一样有两个端点，而是设计为定义形成闭环的区域。
+
+和折线一样，您可以自定义多边形边（线）的颜色、粗细和透明度，以及封闭的填充区域的颜色和透明度。颜色应是十六进制数字 HTML 样式。
+
+多边形支持以下属性：
+
+- path - 指定多个直线纬度的坐标 (第一个和最后一个坐标是相等的)
+- strokeColor - 指定直线的十六进制颜色值(格式: "#FFFFFF")
+- strokeOpacity -指定直线的透明度(该值为 0.0 到 1.0)
+- strokeWeight - 定义线的宽度,以像素为单位。
+- fillColor - 指定闭合区域的十六进制颜色值 (格式: "#FFFFFF")
+- fillOpacity - 指定填充颜色的透明度 (该值为 0.0 到 1.0)
+- editable - 定义用户是否可编辑直线(true/false)
+
+
+## 实例
+
+```javascript
+var myTrip = [stavanger,amsterdam,london,stavanger];
+var flightPath = new google.maps.Polygon({
+  path:myTrip,
+  strokeColor:"#0000FF",
+  strokeOpacity:0.8,
+  strokeWeight:2,
+  fillColor:"#0000FF",
+  fillOpacity:0.4
+});
+```
+
+
+## Google 地图 - 圆
+
+圆支持以下属性：
+
+- center - 指定圆的中心点参数 google.maps.LatLng
+- radius - 指定圆的半径，以米为单位
+- strokeColor - 指定弧线的十六进制颜色值(格式: "#FFFFFF")
+- strokeOpacity - 指定弧线的透明度(该值为 0.0 到 1.0)
+- strokeWeight -定义线的宽度,以像素为单位。
+- fillColor - 指定圆的十六进制颜色值填充值 (格式: "#FFFFFF")
+- fillOpacity - 指定填充颜色的透明度 (该值为 0.0 到 1.0)
+- 定义用户是否可编辑直线(true/false)
+
+
+## 实例
+
+```javascript
+var myCity = new google.maps.Circle({
+  center:amsterdam,
+  radius:20000,
+  strokeColor:"#0000FF",
+  strokeOpacity:0.8,
+  strokeWeight:2,
+  fillColor:"#0000FF",
+  fillOpacity:0.4
+});
+```
+
+
+## Google 地图 - 信息窗口
+
+在一个标记上显示一个文本信息窗口：
+
+
+## 实例
+
+```javascript
+var infowindow = new google.maps.InfoWindow({
+  content:"Hello World!"
+});
+
+infowindow.open(map,marker);
+```
+
+
+## Google 地图 - 叠加层参考手册
+
+Google Maps API 参考手册.
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Google 地图叠加层` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,111 @@
-# Servlet：Servlet 自动刷新页面 学习笔记
+# Servlet：Servlet 自动刷新页面
 
 - 来源：[Servlet 自动刷新页面](https://www.runoob.com/servlet/servlet-auto-refresh.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1188
 
-## 学习目标
+## 本章内容
 
-Servlet 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Servlet 自动刷新页面` 建立学习路径，先理解它在 Servlet 体系中的位置，再做可运行或可复述的验证。
+假设有一个网页，它是显示现场比赛成绩或股票市场状况或货币兑换率。对于所有这些类型的页面，您需要定期刷新网页。
 
-## 阅读抓手
+Java Servlet 提供了一个机制，使得网页会在给定的时间间隔自动刷新。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+刷新网页的最简单的方式是使用响应对象的方法 setIntHeader()。以下是这种方法的定义：
 
-## 笔记模板
+```java
+public void setIntHeader(String header, int headerValue)
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+此方法把头信息 "Refresh" 连同一个表示时间间隔的整数值（以秒为单位）发送回浏览器。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Servlet 自动刷新页面`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 自动刷新页面实例
+
+本实例演示了 Servlet 如何使用 setIntHeader() 方法来设置 Refresh 头信息，从而实现自动刷新页面。
+
+```java
+package com.runoob.test;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
+
+import java.util.GregorianCalendar;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Refresh
+ */
+@WebServlet("/Refresh")
+public class Refresh extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // 设置刷新自动加载的事件间隔为 5 秒
+        response.setIntHeader("Refresh", 5);
+
+        // 设置响应内容类型
+        response.setContentType("text/html;charset=UTF-8");
+
+        // 获取当前的时间
+        Calendar calendar = new GregorianCalendar();
+        String am_pm;
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        if(calendar.get(Calendar.AM_PM) == 0)
+            am_pm = "AM";
+        else
+            am_pm = "PM";
+
+        String CT = hour+":"+ minute +":"+ second +" "+ am_pm;
+
+        PrintWriter out = response.getWriter();
+        String title = "使用 Servlet 自动刷新页面";
+        String docType = "<!DOCTYPE html> \n";
+        out.println(docType +
+            "<html>\n" +
+            "<head><title>" + title + "</title></head>\n"+
+            "<body bgcolor=\"#f0f0f0\">\n" +
+            "<h1 align=\"center\">" + title + "</h1>\n" +
+            "<p>当前时间是：" + CT + "</p>\n");
+    }
+
+}
+```
+
+现在让我们来编译上面的 Servlet，并在 web.xml 文件中创建以下条目：
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+  <servlet>
+    <servlet-name>Refresh</servlet-name>
+    <servlet-class>com.runoob.test.Refresh</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Refresh</servlet-name>
+    <url-pattern>/TomcatTest/Refresh</url-pattern>
+  </servlet-mapping>
+</web-app>
+```
+
+现在通过访问 http://localhost:8080/TomcatTest/Refresh 来调用这个 Servlet。这将会每隔 5 秒钟显示一次当前系统时间。运行该 Servlet，并等待查看结果：
+
+当前时间是：9:44:50 PM
+
+
+## 复习重点
+
+- 能说明 `Servlet 自动刷新页面` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

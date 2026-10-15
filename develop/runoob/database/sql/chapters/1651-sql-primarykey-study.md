@@ -1,35 +1,117 @@
-# SQL：SQL PRIMARY KEY 学习笔记
+# SQL：SQL PRIMARY KEY 约束
 
 - 来源：[SQL PRIMARY KEY](https://www.runoob.com/sql/sql-primarykey.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1651
 
-## 学习目标
+## 本章内容
 
-SQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQL PRIMARY KEY` 建立学习路径，先理解它在 SQL 体系中的位置，再做可运行或可复述的验证。
+## SQL PRIMARY KEY 约束
 
-## 阅读抓手
+PRIMARY KEY 约束唯一标识数据库表中的每条记录。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+PRIMARY KEY 必须包含唯一的值，且不能包含 NULL 值。
 
-## 笔记模板
+每个表只能有一个 PRIMARY KEY，该主键可以由单个列或多个列组成。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## CREATE TABLE 时的 SQL PRIMARY KEY 约束
 
-- 能用 3 到 5 句话解释 `SQL PRIMARY KEY`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+下面的 SQL 在 "Persons" 表创建时在 "P_Id" 列上创建 PRIMARY KEY 约束：
+
+MySQL：
+
+```java
+CREATE TABLE Persons
+(
+    P_Id int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255),
+    PRIMARY KEY (P_Id)
+)
+```
+
+SQL Server / Oracle / MS Access：
+
+```java
+CREATE TABLE Persons
+(
+    P_Id int NOT NULL PRIMARY KEY,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+)
+```
+
+如需命名 PRIMARY KEY 约束，并定义多个列的 PRIMARY KEY 约束，请使用下面的 SQL 语法：
+
+MySQL / SQL Server / Oracle / MS Access：
+
+```java
+CREATE TABLE Persons
+(
+    P_Id int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255),
+    CONSTRAINT pk_PersonID PRIMARY KEY (P_Id,LastName)
+)
+```
+
+注释：在上面的实例中，只有一个主键 PRIMARY KEY（pk_PersonID）。然而，pk_PersonID 的值是由两个列（P_Id 和 LastName）组成的。
+
+
+## ALTER TABLE 时的 SQL PRIMARY KEY 约束
+
+当表已被创建时，如需在 "P_Id" 列创建 PRIMARY KEY 约束，请使用下面的 SQL：
+
+MySQL / SQL Server / Oracle / MS Access：
+
+```text
+ALTER TABLE Persons
+ADD PRIMARY KEY (P_Id)
+```
+
+如需命名 PRIMARY KEY 约束，并定义多个列的 PRIMARY KEY 约束，请使用下面的 SQL 语法：
+
+MySQL / SQL Server / Oracle / MS Access：
+
+```text
+ALTER TABLE Persons
+ADD CONSTRAINT pk_PersonID PRIMARY KEY (P_Id,LastName)
+```
+
+注释：如果您使用 ALTER TABLE 语句添加主键，必须把主键列声明为不包含 NULL 值（在表首次创建时）。
+
+
+## 撤销 PRIMARY KEY 约束
+
+如需撤销 PRIMARY KEY 约束，请使用下面的 SQL：
+
+MySQL：
+
+```text
+ALTER TABLE Persons
+DROP PRIMARY KEY
+```
+
+SQL Server / Oracle / MS Access：
+
+```text
+ALTER TABLE Persons
+DROP CONSTRAINT pk_PersonID
+```
+
+
+## 复习重点
+
+- 能说明 `SQL PRIMARY KEY` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

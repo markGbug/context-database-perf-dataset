@@ -1,35 +1,121 @@
-# W3C：W3C DOM 活动 学习笔记
+# W3C：W3C DOM Activities
 
 - 来源：[W3C DOM 活动](https://www.runoob.com/w3c/w3c-dom.html)
 - 分类：计算机基础
 - 技术：W3C
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1432
 
-## 学习目标
+## 本章内容
 
-W3C 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `W3C DOM 活动` 建立学习路径，先理解它在 W3C 体系中的位置，再做可运行或可复述的验证。
+文档对象模型 (DOM：Document Object Model) 是一个平台，一个中立于语言的应用程序编程接口 (API)，允许程序访问并更改文档的内容、结构和样式。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## DOM Tutorials
 
-## 笔记模板
+如需学习更多有关 DOM 的知识，请阅读我们的 HTML DOM 教程和 XML DOM 教程。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## DOM 级别 0
 
-- 能用 3 到 5 句话解释 `W3C DOM 活动`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+DOM 级别 0 不是 W3C 规范。而仅仅是对在 Netscape Navigator 3.0 和 Microsoft Internet Explorer 3.0 中的等价功能性的一种定义。
+
+DOM 发展过程中的关键角色有：ArborText、IBM、Inso EPS、JavaSoft、Microsoft、Netscape、Novell、the Object Management Group、SoftQuad、Sun Microsystems 以及 Texcel。
+
+W3C 的 DOM 级别 1 建立于此功能性之上。
+
+
+## DOM 级别 1
+
+DOM 级别 1 专注于 HTML 和 XML 文档模型。它含有文档导航和处理功能。
+
+DOM 级别 1 于 1998 年 10 月 1 日成为 W3C 推荐标准。
+
+第二版的工作草案在 2000 年 9 月 29 日。
+
+
+## DOM 级别 2
+
+DOM 级别 2 对 DOM 级别 1 添加了样式表对象模型，并定义了操作附于文档之上的样式信息的功能性。
+
+DOM 级别 2 同时还定义了一个事件模型，并提供了对 XML 命名空间的支持。
+
+作为一项 W3C 推荐标准，DOM 级别 2 规范发布于 2000 年 11 月 13 日：
+
+
+### DOM Level 2 核心
+
+DOM Level 2 核心 规定了访问和更改文档内容及结构的一个 API，此 API 同时包含用于 XML 的接口。
+
+
+### DOM Level 2 HTML
+
+DOM Level 2 HTML 规定了操作 HTML 文档结构和内容的 API。（这部分规范仍然是工作草案）
+
+
+### DOM Level 2 Views
+
+DOM Level 2 规定了对文档视图进行访问和更改的 API。视图是与原文档相关联的表现形式或某种备用的表现形式。
+
+
+### DOM Level 2 Style
+
+DOM Level 2 Style 规定了动态访问及更改内容样式表的 API。
+
+
+### DOM Level 2 Events
+
+DOM Level 2 Events 规定了访问文档事件的 API。
+
+
+### DOM Level 2 Traversal-Range
+
+DOM Level 2 Traversal-Range 规定了动态遍历和识别文档中内容范围的 API。
+
+
+## DOM 级别 3
+
+DOM Level 3 规定了内容模型 (DTD 和 Schemas) 和文档验证。同时规定了文档加载和保存、文档查看、文档格式化和关键事件。DOM Level 3 建立于 DOM Core Level 2 之上。
+
+
+### DOM Level 3 Requirements
+
+DOM Requirements 文档已经为 Level 3 requirements 进行了更新，并于 2000 年 4 月 12 日发布为工作草案。
+
+下面的 DOM Level 3 工作草案发布于 2000 年 9 月 1 日：
+
+
+### DOM Level 3 Core
+
+DOM Level 3 Core 规定了访问和更改文档内容、结构及样式的一个 API。
+
+
+### DOM Level 3 Events
+
+通过增加新的接口和新的事件集，DOM Level 3 Events API 对 Level 2 Event API 的功能进行了扩展。
+
+
+### DOM Level 3 Load and Save
+
+DOM Level 3 Content Model 规定了用于内容加载和保存、内容模型 (DTD and Schemas) 和文档验证支持的 API。
+
+
+### DOM Level 3 Views and Formatting
+
+DOM Level 3 Views 规定了对文档视图进行访问和更改的 API。视图是与原文档相关联的表现形式或某种备用的表现形式。
+
+
+## W3C DOM 规范和时间线
+
+
+## W3C 参考手册:
+
+W3C DOM 首页
+
+
+## 复习重点
+
+- 能说明 `W3C DOM 活动` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

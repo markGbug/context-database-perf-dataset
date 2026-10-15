@@ -1,35 +1,116 @@
-# JavaScript：JavaScript 表单 学习笔记
+# JavaScript：JavaScript 表单
 
 - 来源：[JavaScript 表单](https://www.runoob.com/js/js-validation.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2785
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 表单` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+## JavaScript 表单验证
 
-## 阅读抓手
+HTML 表单验证可以通过 JavaScript 来完成。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+以下实例代码用于判断表单字段(fname)值是否存在， 如果不存在，就弹出信息，阻止表单提交：
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## JavaScript 实例
 
-## 完成标准
+```javascript
+function validateForm() {
+    var x = document.forms["myForm"]["fname"].value;
+    if (x == null || x == "") {
+        alert("需要输入名字。");
+        return false;
+    }
+}
+```
 
-- 能用 3 到 5 句话解释 `JavaScript 表单`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以上 JavaScript 代码可以通过 HTML 代码来调用：
+
+
+## HTML 表单实例
+
+```html
+<form name="myForm" action="demo_form.php" onsubmit="return validateForm()" method="post">
+名字: <input type="text" name="fname">
+<input type="submit" value="提交">
+</form>
+```
+
+
+## JavaScript 验证输入的数字
+
+JavaScript 常用于对输入数字的验证：
+
+请输入 1 到 10 之间的数字：
+
+
+## HTML 表单自动验证
+
+HTML 表单验证也可以通过浏览器来自动完成。
+
+如果表单字段 (fname) 的值为空, required 属性会阻止表单提交：
+
+
+## 实例
+
+```html
+<form action="demo_form.php" method="post">
+  <input type="text" name="fname" required="required">
+  <input type="submit" value="提交">
+</form>
+```
+
+Internet Explorer 9 及更早 IE 浏览器不支持表单自动验证。
+
+
+## 数据验证
+
+数据验证用于确保用户输入的数据是有效的。
+
+典型的数据验证有：
+
+- 必需字段是否有输入?
+- 用户是否输入了合法的数据?
+- 在数字字段是否输入了文本?
+
+大多数情况下，数据验证用于确保用户正确输入数据。
+
+数据验证可以使用不同方法来定义，并通过多种方式来调用。
+
+服务端数据验证是在数据提交到服务器上后再验证。
+
+客户端数据验证是在数据发送到服务器前，在浏览器上完成验证。
+
+
+## HTML 约束验证
+
+HTML5 新增了 HTML 表单的验证方式：约束验证（constraint validation）。
+
+约束验证是表单被提交时浏览器用来实现验证的一种算法。
+
+HTML 约束验证基于：
+
+- HTML 输入属性
+- CSS 伪类选择器
+- DOM 属性和方法
+
+
+### 约束验证 HTML 输入属性
+
+完整列表，请查看 HTML 输入属性。
+
+
+### 约束验证 CSS 伪类选择器
+
+完整列表，请查看 CSS 伪类。
+
+
+## 复习重点
+
+- 能说明 `JavaScript 表单` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

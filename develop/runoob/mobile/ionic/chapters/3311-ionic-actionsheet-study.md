@@ -1,35 +1,90 @@
-# Ionic：ionic 上拉菜单 学习笔记
+# Ionic：ionic 上拉菜单(ActionSheet)
 
 - 来源：[ionic 上拉菜单](https://www.runoob.com/ionic/ionic-actionsheet.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3311
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic 上拉菜单` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+上拉菜单(ActionSheet)通过往上弹出的框，来让用户选择选项。
 
-## 阅读抓手
+非常危险的选项会以高亮的红色来让人第一时间识别。你可以通过点击取消按钮或者点击空白的地方来让它消失。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### HTML 代码
 
-- 能用 3 到 5 句话解释 `ionic 上拉菜单`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<body ng-app="starter" ng-controller="actionsheetCtl" >
+
+    <ion-pane>
+        <ion-content >
+            <h2 ng-click="show()">Action Sheet</h2>
+        </ion-content>
+    </ion-pane>
+</body>
+```
+
+
+### JavaScript 代码
+
+在代码中触发上拉菜单，需要在你的 angular 控制器中使用 $ionicActionSheet 服务：
+
+```html
+angular.module('starter', ['ionic'])
+
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }
+    if(window.StatusBar) {
+      StatusBar.styleDefault();
+    }
+  });
+})
+
+.controller( 'actionsheetCtl',['$scope','$ionicActionSheet','$timeout' ,function($scope,$ionicActionSheet,$timeout){
+    $scope.show = function() {
+
+        var hideSheet = $ionicActionSheet.show({
+            buttons: [
+              { text: '<b>Share</b> This' },
+              { text: 'Move' }
+            ],
+            destructiveText: 'Delete',
+            titleText: 'Modify your album',
+            cancelText: 'Cancel',
+            cancel: function() {
+                 // add cancel code..
+               },
+            buttonClicked: function(index) {
+              return true;
+            }
+        });
+
+        $timeout(function() {
+            hideSheet();
+        }, 2000);
+
+    };
+}])
+```
+
+尝试一下 »
+
+运行效果如下图：
+
+
+## 复习重点
+
+- 能说明 `ionic 上拉菜单` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

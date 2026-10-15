@@ -1,35 +1,76 @@
-# Foundation：Foundation CSS 可见性 学习笔记
+# Foundation：Foundation CSS 可见性
 
 - 来源：[Foundation CSS 可见性](https://www.runoob.com/foundation/foundation-ref-visibility.html)
 - 分类：前端开发
 - 技术：Foundation
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2561
 
-## 学习目标
+## 本章内容
 
-Foundation 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Foundation CSS 可见性` 建立学习路径，先理解它在 Foundation 体系中的位置，再做可运行或可复述的验证。
+## 根据屏幕尺寸显示元素
 
-## 阅读抓手
+以下类会根据设备(屏幕尺寸)来显示元素。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+以下实例演示了以上所有 .show- 类的可见性。
 
-## 笔记模板
+```html
+<p class="show-for-small-only">你在小型设备上。</p>
+<p class="show-for-medium-up">你在中型、大型、更大型、超大型的设备上。</p>
+<p class="show-for-medium-only">你在中型设备上。</p>
+<p class="show-for-large-up">你在大型、更大型、超大型的设备上</p>
+<p class="show-for-large-only">你在大型设备上。</p>
+<p class="show-for-xlarge-up">你在更大型、超大型的设备上。</p>
+<p class="show-for-xlarge-only">你在更大型设备上。</p>
+<p class="show-for-xxlarge-up">你在超大型设备上。</p>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+尝试一下 »
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Foundation CSS 可见性`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 根据屏幕尺寸隐藏元素
+
+以下类会根据设备(屏幕尺寸)来隐藏元素。
+
+```html
+<p class="hide-for-small-only">你不在小型设备上。</p>
+<p class="hide-for-medium-up">你不在中型、大型、更大型、超大型的设备上。</p>
+<p class="hide-for-medium-only">你不在中型设备上。</p>
+<p class="hide-for-large-up">你不在大型、更大型、超大型的设备上。</p>
+<p class="hide-for-large-only">你不在大型设备上。</p>
+<p class="hide-for-xlarge-up">你不在更大型、超大型的设备上。</p>
+<p class="hide-for-xlarge-only">你不在更大型设备上。</p>
+<p class="hide-for-xxlarge-up">你不在超大型设备上。</p>
+```
+
+尝试一下 »
+
+
+## 根据屏幕方向显示元素
+
+以下类会根据设备(屏幕尺寸)来隐藏元素。
+
+我们可以设置元素在不同方向是是否显示或隐藏。笔记本等桌面设备一般是横向的，但是手机和平板设备可以是横向或纵向，我们可以根据用户手机拿的方向来设置元素隐藏与显示：
+
+下面实例根据使用的方向显示文本内容：
+
+
+### 实例
+
+
+## 触屏设备的显示与隐藏
+
+你可以根据设备是否支持触摸来显示与隐藏元素。
+
+下面实例根据设备是否支持触摸来显示文本内容：
+
+
+### 实例
+
+
+## 复习重点
+
+- 能说明 `Foundation CSS 可见性` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

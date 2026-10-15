@@ -1,35 +1,214 @@
-# 设计模式：桥接模式 学习笔记
+# 设计模式：桥接模式
 
 - 来源：[桥接模式](https://www.runoob.com/design-pattern/bridge-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1311
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `桥接模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+桥接（Bridge）是用于把抽象化与实现化解耦，使得二者可以独立变化。这种类型的设计模式属于结构型模式，它通过提供抽象化和实现化之间的桥接结构，来实现二者的解耦。
 
-## 阅读抓手
+这种模式涉及到一个作为桥接的接口，使得实体类的功能独立于接口实现类，这两种类型的类可被结构化改变而互不影响。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+桥接模式的目的是将抽象与实现分离，使它们可以独立地变化，该模式通过将一个对象的抽象部分与它的实现部分分离，使它们可以独立地改变。它通过组合的方式，而不是继承的方式，将抽象和实现的部分连接起来。
 
-## 笔记模板
+我们通过下面的实例来演示桥接模式（Bridge Pattern）的用法。其中，可以使用相同的抽象类方法但是不同的桥接实现类，来画出不同颜色的圆。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 介绍
 
-- 能用 3 到 5 句话解释 `桥接模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 意图
+
+用于将抽象部分与实现部分分离，使得它们可以独立地变化。。
+
+
+### 主要解决的问题
+
+避免使用继承导致的类爆炸问题，提供更灵活的扩展方式。
+
+
+### 使用场景
+
+当系统可能从多个角度进行分类，且每个角度都可能独立变化时，桥接模式是合适的。
+
+
+### 实现方式
+
+- 分离多角度分类：将不同角度的分类逻辑分离，允许它们独立变化。
+- 减少耦合：降低抽象与实现之间的耦合度。
+
+
+### 关键代码
+
+- 抽象类：定义一个抽象类，作为系统的一部分。
+- 实现类：定义一个或多个实现类，与抽象类通过聚合（而非继承）关联。
+
+
+### 应用实例
+
+- 转世投胎：灵魂（抽象）与肉体（实现）的分离，允许灵魂选择不同的肉体。
+- 墙上的开关：开关（抽象）与内部实现（实现）的分离，用户无需关心开关的内部工作机制。
+
+
+### 优点
+
+- 抽象与实现分离：提高了系统的灵活性和可维护性。
+- 扩展能力强：可以独立地扩展抽象和实现。
+- 实现细节透明：用户不需要了解实现细节。
+
+
+### 缺点
+
+- 理解与设计难度：桥接模式增加了系统的理解与设计难度。
+- 聚合关联：要求开发者在抽象层进行设计与编程。
+
+
+### 使用建议
+
+- 当系统需要在抽象化角色和具体化角色之间增加灵活性时，考虑使用桥接模式。
+- 对于不希望使用继承或因多层次继承导致类数量急剧增加的系统，桥接模式特别适用。
+- 当一个类存在两个独立变化的维度，且这两个维度都需要扩展时，使用桥接模式。
+
+
+### 注意事项
+
+- 桥接模式适用于两个独立变化的维度，确保它们可以独立地扩展和变化。
+
+
+### 结构
+
+以下是桥接模式的几个关键角色：
+
+- 抽象（Abstraction）：定义抽象接口，通常包含对实现接口的引用。
+- 扩展抽象（Refined Abstraction）：对抽象的扩展，可以是抽象类的子类或具体实现类。
+- 实现（Implementor）：定义实现接口，提供基本操作的接口。
+- 具体实现（Concrete Implementor）：实现实现接口的具体类。
+
+
+## 实现
+
+我们有一个作为桥接实现的 DrawAPI 接口和实现了 DrawAPI 接口的实体类 RedCircle、GreenCircle。Shape 是一个抽象类，将使用 DrawAPI 的对象。BridgePatternDemo 类使用 Shape 类来画出不同颜色的圆。
+
+
+### 步骤 1
+
+创建桥接实现接口。
+
+
+## DrawAPI.java
+
+```java
+public interface DrawAPI {
+   public void drawCircle(int radius, int x, int y);
+}
+```
+
+
+### 步骤 2
+
+创建实现了 DrawAPI 接口的实体桥接实现类。
+
+
+## RedCircle.java
+
+```java
+public class RedCircle implements DrawAPI {
+   @Override
+   public void drawCircle(int radius, int x, int y) {
+      System.out.println("Drawing Circle[ color: red, radius: "
+         + radius +", x: " +x+", "+ y +"]");
+   }
+}
+```
+
+
+## GreenCircle.java
+
+```java
+public class GreenCircle implements DrawAPI {
+   @Override
+   public void drawCircle(int radius, int x, int y) {
+      System.out.println("Drawing Circle[ color: green, radius: "
+         + radius +", x: " +x+", "+ y +"]");
+   }
+}
+```
+
+
+### 步骤 3
+
+使用 DrawAPI 接口创建抽象类 Shape。
+
+
+## Shape.java
+
+```text
+public abstract class Shape {
+   protected DrawAPI drawAPI;
+   protected Shape(DrawAPI drawAPI){
+      this.drawAPI = drawAPI;
+   }
+   public abstract void draw();
+}
+```
+
+
+### 步骤 4
+
+创建实现了 Shape 抽象类的实体类。
+
+
+## Circle.java
+
+```java
+public class Circle extends Shape {
+   private int x, y, radius;
+
+   public Circle(int x, int y, int radius, DrawAPI drawAPI) {
+      super(drawAPI);
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+   }
+
+   public void draw() {
+      drawAPI.drawCircle(radius,x,y);
+   }
+}
+```
+
+
+### 步骤 5
+
+使用 Shape 和 DrawAPI 类画出不同颜色的圆。
+
+
+## BridgePatternDemo.java
+
+```java
+public class BridgePatternDemo {
+   public static void main(String[] args) {
+      Shape redCircle = new Circle(100,100, 10, new RedCircle());
+      Shape greenCircle = new Circle(100,100, 10, new GreenCircle());
+
+      redCircle.draw();
+      greenCircle.draw();
+   }
+}
+```
+
+
+## 后续章节
+
+- 步骤 6
+- 相关文章推荐
+
+## 复习重点
+
+- 能说明 `桥接模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

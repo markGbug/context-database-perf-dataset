@@ -1,35 +1,194 @@
-# Maven：Maven 自动化构建 学习笔记
+# Maven：Maven 自动化构建
 
 - 来源：[Maven 自动化构建](https://www.runoob.com/maven/maven-build-automation.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1845
 
-## 学习目标
+## 本章内容
 
-Maven 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Maven 自动化构建` 建立学习路径，先理解它在 Maven 体系中的位置，再做可运行或可复述的验证。
+自动化构建定义了这样一种场景: 在一个项目成功构建完成后，其相关的依赖工程即开始构建，这样可以保证其依赖项目的稳定。
 
-## 阅读抓手
+比如一个团队正在开发一个项目 bus-core-api， 并且有其他两个项目 app-web-ui 和 app-desktop-ui 依赖于这个项目。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+app-web-ui 项目使用的是 bus-core-api 项目的 1.0 快照：
 
-## 笔记模板
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>app-web-ui</groupId>
+   <artifactId>app-web-ui</artifactId>
+   <version>1.0</version>
+   <packaging>jar</packaging>
+   <dependencies>
+      <dependency>
+      <groupId>bus-core-api</groupId>
+         <artifactId>bus-core-api</artifactId>
+         <version>1.0-SNAPSHOT</version>
+      </dependency>
+   </dependencies>
+</project>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+app-desktop-ui 项目使用的是 bus-core-api 项目的 1.0 快照：
 
-## 完成标准
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>app-desktop-ui</groupId>
+   <artifactId>app-desktop-ui</artifactId>
+   <version>1.0</version>
+   <packaging>jar</packaging>
+   <dependencies>
+      <dependency>
+      <groupId>bus-core-api</groupId>
+         <artifactId>bus-core-api</artifactId>
+         <version>1.0-SNAPSHOT</version>
+      </dependency>
+   </dependencies>
+</project>
+```
 
-- 能用 3 到 5 句话解释 `Maven 自动化构建`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+bus-core-api 项目：
+
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>bus-core-api</groupId>
+   <artifactId>bus-core-api</artifactId>
+   <version>1.0-SNAPSHOT</version>
+   <packaging>jar</packaging>
+</project>
+```
+
+现在 app-web-ui 和 app-desktop-ui 项目的团队要求不管 bus-core-api 项目何时变化，他们的构建过程都应当可以启动。
+
+使用快照可以确保最新的 bus-core-api 项目被使用，但要达到上面的要求，我们还需要做一些额外的工作。
+
+可以使用两种方式：
+
+- 在 bus-core-api 项目的 pom 文件中添加一个 post-build 目标操作来启动 app-web-ui 和 app-desktop-ui 项目的构建。
+- 使用持续集成（CI） 服务器，比如 Hudson，来自行管理构建自动化。
+
+
+## 使用 Maven
+
+修改 bus-core-api 项目的 pom.xml 文件。
+
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>bus-core-api</groupId>
+   <artifactId>bus-core-api</artifactId>
+   <version>1.0-SNAPSHOT</version>
+   <packaging>jar</packaging>
+   <build>
+   <plugins>
+   <plugin>
+      <artifactId>maven-invoker-plugin</artifactId>
+      <version>1.6</version>
+      <configuration>
+         <debug>true</debug>
+         <pomIncludes>
+            <pomInclude>app-web-ui/pom.xml</pomInclude>
+            <pomInclude>app-desktop-ui/pom.xml</pomInclude>
+         </pomIncludes>
+      </configuration>
+      <executions>
+         <execution>
+            <id>build</id>
+            <goals>
+               <goal>run</goal>
+            </goals>
+         </execution>
+      </executions>
+   </plugin>
+   </plugins>
+   </build>
+</project>
+```
+
+打开命令控制台，切换到 C:\ > MVN > bus-core-api 目录下，然后执行以下命令。
+
+```text
+C:\MVN\bus-core-api>mvn clean package -U
+```
+
+执行完命令后，Maven 将开始构建项目 bus-core-api。
+
+```text
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------
+[INFO] Building bus-core-api
+[INFO]    task-segment: [clean, package]
+[INFO] ------------------------------------------------------------------
+...
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: C:\MVN\bus-core-ui\target\
+bus-core-ui-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------
+```
+
+bus-core-api 构建成功后，Maven 将开始构建 app-web-ui 项目。
+
+```text
+[INFO] ------------------------------------------------------------------
+[INFO] Building app-web-ui
+[INFO]    task-segment: [package]
+[INFO] ------------------------------------------------------------------
+...
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: C:\MVN\app-web-ui\target\
+app-web-ui-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------
+```
+
+app-web-ui 构建成功后，Maven 将开始构建 app-desktop-ui 项目。
+
+```text
+[INFO] ------------------------------------------------------------------
+[INFO] Building app-desktop-ui
+[INFO]    task-segment: [package]
+[INFO] ------------------------------------------------------------------
+...
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: C:\MVN\app-desktop-ui\target\
+app-desktop-ui-1.0-SNAPSHOT.jar
+[INFO] -------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] -------------------------------------------------------------------
+```
+
+
+## 使用持续集成服务器（CI）
+
+如果使用 CI 服务器更，我们每次的一个新项目，比如说实例中的 app-mobile-ui，添加为依赖 bus-core-api 项目时，开发者就不需要更新 bus-core-api 项目的 pom。Hudson 将会借助 Maven 的依赖管理功能实现工程的自动化创建。
+
+Hudson 把每个项目构建当成一次任务。在一个项目的代码提交到 SVN （或者任何映射到 Hudson 的代码管理工具）后，Hudson 将开始项目的构建任务，并且一旦此构建任务完成，Hudson 将自动启动其他依赖的构建任务（其他依赖项目的构建）。
+
+在上面的例子中，当 bus-core-ui 源代码在 SVN 更新后，Hudson 开始项目构建。一旦构建成功，Hudson 自动地查找依赖的项目，然后开始构建 app-web-ui 和 app-desktop-ui 项目。
+
+
+## 复习重点
+
+- 能说明 `Maven 自动化构建` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,103 @@
-# HTML：HTML5 表单元素 练习笔记
+# HTML：HTML5 表单元素
 
 - 来源：[HTML5 表单元素](https://www.runoob.com/html/html5-form-elements.html)
 - 分类：前端开发
 - 技术：HTML
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2642
 
-## 练习目标
+## 本章内容
 
-把 `HTML5 表单元素` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## HTML5 新的表单元素
 
-## 练习步骤
+HTML5 有以下新的表单元素:
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- <datalist>
+- <keygen>
+- <output>
 
-## 验收清单
+注意:不是所有的浏览器都支持HTML5 新的表单元素，但是你可以在使用它们，即使浏览器不支持表单属性，仍然可以显示为常规的表单元素。
 
-- 我能独立说出 `HTML5 表单元素` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## HTML5 <datalist> 元素
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+<datalist> 元素规定输入域的选项列表。
+
+<datalist> 属性规定 form 或 input 域应该拥有自动完成功能。当用户在自动完成域中开始输入时，浏览器应该在该域中显示填写的选项：
+
+使用 <input> 元素的列表属性与 <datalist> 元素绑定.
+
+
+## 实例
+
+<input> 元素使用<datalist>预定义值:
+
+```html
+<input list="browsers">
+
+<datalist id="browsers">
+  <option value="Internet Explorer">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+</datalist>
+```
+
+
+## HTML5 <keygen> 元素
+
+<keygen> 元素的作用是提供一种验证用户的可靠方法。
+
+<keygen>标签规定用于表单的密钥对生成器字段。
+
+当提交表单时，会生成两个键，一个是私钥，一个公钥。
+
+私钥（private key）存储于客户端，公钥（public key）则被发送到服务器。公钥可用于之后验证用户的客户端证书（client certificate）。
+
+该元素已被废弃，不再推荐使用，替代方案包括：
+
+- 使用 Web Cryptography API 在 JavaScript 中生成密钥
+- 使用专门的加密库
+
+
+## 实例
+
+带有keygen字段的表单:
+
+```html
+<form action="demo_keygen.asp" method="get">
+用户名: <input type="text" name="usr_name">
+加密: <keygen name="security">
+<input type="submit">
+</form>
+```
+
+
+## HTML5 <output> 元素
+
+<output> 元素用于不同类型的输出，比如计算或脚本输出：
+
+
+## 实例
+
+将计算结果显示在 <output> 元素:
+
+```html
+<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+<input type="range" id="a" value="50">100 +
+<input type="number" id="b" value="50">=
+<output name="x" for="a b"></output>
+</form>
+```
+
+
+## HTML5 新表单元素
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML5 表单元素` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

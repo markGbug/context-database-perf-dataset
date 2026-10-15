@@ -1,35 +1,100 @@
-# AngularJS：AngularJS Service 学习笔记
+# AngularJS：AngularJS 服务(Service)
 
 - 来源：[AngularJS Service](https://www.runoob.com/angularjs/angularjs-services.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2285
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS Service` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+AngularJS 中你可以创建自己的服务，或使用内建服务。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 什么是服务？
 
-## 笔记模板
+在 AngularJS 中，服务是一个函数或对象，可在你的 AngularJS 应用中使用。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+AngularJS 内建了30 多个服务。
 
-## 完成标准
+有个 $location 服务，它可以返回当前页面的 URL 地址。
 
-- 能用 3 到 5 句话解释 `AngularJS Service`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 实例
+
+注意 $location 服务是作为一个参数传递到 controller 中。如果要使用它，需要在 controller 中定义。
+
+
+## 为什么使用服务?
+
+在很多服务中，比如 $location 服务，它可以使用 DOM 中存在的对象，类似 window.location 对象，但 window.location 对象在 AngularJS 应用中有一定的局限性。
+
+AngularJS 会一直监控应用，处理事件变化， AngularJS 使用 $location 服务比使用 window.location 对象更好。
+
+
+### $location vs window.location
+
+
+## $http 服务
+
+$http 是 AngularJS 应用中最常用的服务。 服务向服务器发送请求，应用响应服务器传送过来的数据。
+
+
+### 实例
+
+使用 $http 服务向服务器请求数据:
+
+以上是一个非常简单的 $http 服务实例，更多 $http 服务应用请查看 AngularJS Http 教程。
+
+
+## $timeout 服务
+
+AngularJS $timeout 服务对应了 JS window.setTimeout 函数。
+
+
+### 实例
+
+两秒后显示信息:
+
+
+## $interval 服务
+
+AngularJS $interval 服务对应了 JS window.setInterval 函数。
+
+
+### 实例
+
+每一秒显示信息:
+
+
+## 创建自定义服务
+
+你可以创建自定义服务，链接到你的模块中：
+
+创建名为hexafy 的服务:
+
+要使用自定义服务，需要在定义控制器的时候独立添加，设置依赖关系:
+
+
+### 实例
+
+使用自定义的的服务 hexafy 将一个数字转换为16进制数:
+
+
+## 过滤器中，使用自定义服务
+
+当你创建了自定义服务，并连接到你的应用上后，你可以在控制器，指令，过滤器或其他服务中使用它。
+
+在过滤器 myFormat 中使用服务 hexafy:
+
+在对象数组中获取值时你可以使用过滤器：
+
+创建服务 hexafy:
+
+
+## 复习重点
+
+- 能说明 `AngularJS Service` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

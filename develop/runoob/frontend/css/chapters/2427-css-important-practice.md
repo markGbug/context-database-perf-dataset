@@ -1,34 +1,132 @@
-# CSS：CSS !important 练习笔记
+# CSS：CSS !important 规则
 
 - 来源：[CSS !important](https://www.runoob.com/css/css-important.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2427
 
-## 练习目标
+## 本章内容
 
-把 `CSS !important` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+### 什么是 !important
 
-## 练习步骤
+CSS 中的 !important 规则用于增加样式的权重。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+!important 与优先级无关，但它与最终的结果直接相关，使用一个 !important 规则时，此声明将覆盖任何其他声明。
 
-## 验收清单
 
-- 我能独立说出 `CSS !important` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
+```text
+#myid {
+  background-color: blue;
+}
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+.myclass {
+  background-color: gray;
+}
+
+p {
+  background-color: red !important;
+}
+```
+
+以上实例中，尽管 ID 选择器和类选择器具有更高的优先级，但三个段落背景颜色都显示为红色，因为 !important 规则会覆盖 background-color 属性。
+
+
+### 重要说明
+
+使用 !important 是一个坏习惯，应该尽量避免，因为这破坏了样式表中的固有的级联规则 使得调试找 bug 变得更加困难了。
+
+当两条相互冲突的带有 !important 规则的声明被应用到相同的元素上时，拥有更大优先级的声明将会被采用。
+
+以下实例我们在查看 CSS 源码时就不是很清楚哪种颜色最重要：
+
+
+## 实例
+
+```text
+#myid {
+  background-color: blue !important;
+}
+
+.myclass {
+  background-color: gray !important;
+}
+
+p {
+  background-color: red !important;
+}
+```
+
+使用建议：
+
+- 一定要优先考虑使用样式规则的优先级来解决问题而不是 !important
+- 只有在需要覆盖全站或外部 CSS 的特定页面中使用 !important
+- 永远不要在你的插件中使用 !important
+- 永远不要在全站范围的 CSS 代码中使用 !important
+
+
+### 何时使用 !important
+
+如果要在你的网站上设定一个全站样式的 CSS 样式可以使用 !important。
+
+比如我们要让网站上所有按钮的样式都一样：
+
+
+## 实例
+
+```text
+.button {
+  background-color: #8c8c8c;
+  color: white;
+  padding: 5px;
+  border: 1px solid black;
+}
+```
+
+如果我们将按钮放在另一个具有更优先级的元素中，按钮的外观就会发生变化，并且属性会发生冲突，如下实例：
+
+
+## 实例
+
+```text
+.button {
+  background-color: #8c8c8c;
+  color: white;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+#myDiv a {
+  color: red;
+  background-color: yellow;
+}
+```
+
+如果想要设置所有按钮具有相同的外观，我们可以将 !important 规则添加到按钮的样式属性中，如下所示：
+
+
+## 实例
+
+```text
+.button {
+  background-color: #8c8c8c !important;
+  color: white !important;
+  padding: 5px !important;
+  border: 1px solid black !important;
+}
+
+#myDiv a {
+  color: red;
+  background-color: yellow;
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS !important` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

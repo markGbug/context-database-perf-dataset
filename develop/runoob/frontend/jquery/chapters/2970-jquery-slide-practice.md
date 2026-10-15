@@ -1,34 +1,113 @@
-# jQuery：jQuery 滑动 练习笔记
+# jQuery：jQuery 效果 - 滑动
 
 - 来源：[jQuery 滑动](https://www.runoob.com/jquery/jquery-slide.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2970
 
-## 练习目标
+## 本章内容
 
-把 `jQuery 滑动` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+jQuery 滑动方法可使元素上下滑动。
 
-## 练习步骤
+点击这里，隐藏/显示面板
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+一寸光阴一寸金，因此，我们为您提供快捷易懂的学习内容。
 
-## 验收清单
+在这里，您可以通过一种易懂的便利的模式获得您需要的任何知识。
 
-- 我能独立说出 `jQuery 滑动` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+jQuery slideDown() 演示 jQuery slideDown() 方法。
+
+jQuery slideUp() 演示 jQuery slideUp() 方法。
+
+jQuery slideToggle() 演示 jQuery slideToggle() 方法。
+
+
+## jQuery 滑动方法
+
+通过 jQuery，您可以在元素上创建滑动效果。
+
+jQuery 拥有以下滑动方法：
+
+- slideDown()
+- slideUp()
+- slideToggle()
+
+
+## jQuery slideDown() 方法
+
+jQuery slideDown() 方法用于向下滑动元素。
+
+语法:
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是滑动完成后所执行的函数名称。
+
+下面的例子演示了 slideDown() 方法：
+
+
+## 实例
+
+```text
+$("#flip").click(function(){
+  $("#panel").slideDown();
+});
+```
+
+
+## jQuery slideUp() 方法
+
+jQuery slideUp() 方法用于向上滑动元素。
+
+语法:
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是滑动完成后所执行的函数名称。
+
+下面的例子演示了 slideUp() 方法：
+
+
+## 实例
+
+```text
+$("#flip").click(function(){
+  $("#panel").slideUp();
+});
+```
+
+
+## jQuery slideToggle() 方法
+
+jQuery slideToggle() 方法可以在 slideDown() 与 slideUp() 方法之间进行切换。
+
+如果元素向下滑动，则 slideToggle() 可向上滑动它们。
+
+如果元素向上滑动，则 slideToggle() 可向下滑动它们。
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是滑动完成后所执行的函数名称。
+
+下面的例子演示了 slideToggle() 方法：
+
+
+## 实例
+
+```text
+$("#flip").click(function(){
+  $("#panel").slideToggle();
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery 滑动` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

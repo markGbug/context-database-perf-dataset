@@ -1,34 +1,166 @@
-# MySQL：MySQL 创建数据库 练习笔记
+# MySQL：MySQL 创建数据库
 
 - 来源：[MySQL 创建数据库](https://www.runoob.com/mysql/mysql-create-database.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1511
 
-## 练习目标
+## 本章内容
 
-把 `MySQL 创建数据库` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们可以在登陆 MySQL 服务后，使用 create 命令创建数据库，语法如下:
 
-## 练习步骤
+```text
+CREATE DATABASE 数据库名;
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+以下命令简单的演示了创建数据库的过程，数据名为 RUNOOB:
 
-## 验收清单
+```text
+[root@host]# mysql -u root -p
+Enter password:******  # 登录后进入终端
 
-- 我能独立说出 `MySQL 创建数据库` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+mysql> create DATABASE RUNOOB;
+```
 
-## 复盘问题
+建数据库的基本语法如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+CREATE DATABASE [IF NOT EXISTS] database_name
+  [CHARACTER SET charset_name]
+  [COLLATE collation_name];
+```
+
+如果你希望在创建数据库时指定一些选项，可以使用 CREATE DATABASE 语句的其他参数，例如，你可以指定字符集和排序规则：
+
+
+## 实例
+
+如果数据库已经存在，执行 CREATE DATABASE 将导致错误。
+
+为了避免这种情况，你可以在 CREATE DATABASE 语句中添加 IF NOT EXISTS 子句：
+
+
+## 实例
+
+
+## 使用 mysqladmin 创建数据库
+
+mysqladmin 是 MySQL 提供的一个用于执行管理任务的命令行工具。
+
+通过 mysqladmin，你可以执行各种数据库管理操作，包括创建数据库。
+
+以下是使用 mysqladmin 创建数据库的基本语法：
+
+```text
+mysqladmin -u your_username -p create your_database
+```
+
+- -u 参数用于指定 MySQL 用户名。
+- -p 参数表示需要输入密码。
+- create 是执行的操作，表示创建数据库。
+- your_database 是要创建的数据库的名称。
+
+使用普通用户，你可能需要特定的权限来创建或者删除 MySQL 数据库。
+
+我们这边使用 root 用户登录，root 用户拥有最高权限，可以使用 mysql mysqladmin 命令来创建数据库。
+
+执行上述命令后，系统会提示你输入密码，输入密码后按 Enter 键即可。
+
+以下命令简单的演示了创建数据库的过程，数据名为 RUNOOB:
+
+```text
+[root@host]# mysqladmin -u root -p create RUNOOB
+Enter password:******
+```
+
+以上命令执行成功后会创建 MySQL 数据库 RUNOOB。
+
+如果你希望在创建数据库时指定字符集和排序规则，可以使用 -default-character-set 和 -default-collation 参数：
+
+```text
+mysqladmin -u your_username -p create your_database \
+  --default-character-set=utf8mb4 \
+  --default-collation=utf8mb4_general_ci
+```
+
+以上代码创建一个使用 utf8mb4 字符集和 utf8mb4_general_ci 排序规则的数据库。
+
+请注意，在执行这些命令时，请确保 MySQL 服务器正在运行，并且你有足够的权限执行这些操作。
+
+如果你希望使用 mysqladmin 连接到 MySQL 服务器执行其他管理任务，例如查看服务器状态、重启服务器等，可以使用以下形式的命令：
+
+```text
+mysqladmin -u your_username -p your_command
+```
+
+在这里，your_command 是你希望执行的具体管理命令。
+
+例如，要查看 MySQL 服务器的状态，可以使用：
+
+```text
+mysqladmin -u your_username -p status
+```
+
+这将要求你输入密码，并显示有关服务器状态的信息。
+
+
+## 使用 PHP脚本 创建数据库
+
+PHP 使用 mysqli_query 函数来创建或者删除 MySQL 数据库。
+
+该函数有两个参数，在执行成功时返回 TRUE，否则返回 FALSE。
+
+
+### 语法
+
+```text
+mysqli_query(connection,query,resultmode);
+```
+
+可选。一个常量。可以是下列值中的任意一个：
+
+- MYSQLI_USE_RESULT（如果需要检索大量数据，请使用这个）
+- MYSQLI_STORE_RESULT（默认）
+
+
+### 实例
+
+以下实例演示了使用 PHP 来创建一个数据库：
+
+
+## 创建数据库
+
+```html
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('连接错误: ' . mysqli_error($conn));
+}
+echo '连接成功<br />';
+$sql = 'CREATE DATABASE RUNOOB';
+$retval = mysqli_query($conn,$sql );
+if(! $retval )
+{
+    die('创建数据库失败: ' . mysqli_error($conn));
+}
+echo "数据库 RUNOOB 创建成功\n";
+mysqli_close($conn);
+?>
+```
+
+执行成功后，返回如下结果：
+
+如果数据库已存在，执行后，返回如下结果：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL 创建数据库` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,266 @@
-# TypeScript：TypeScript Number 学习笔记
+# TypeScript：TypeScript Number
 
 - 来源：[TypeScript Number](https://www.runoob.com/typescript/ts-number.html)
 - 分类：前端开发
 - 技术：TypeScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3139
 
-## 学习目标
+## 本章内容
 
-TypeScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `TypeScript Number` 建立学习路径，先理解它在 TypeScript 体系中的位置，再做可运行或可复述的验证。
+TypeScript 与 JavaScript 类似，支持 Number 对象。
 
-## 阅读抓手
+Number 对象是原始数值的包装对象。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+类似于 String 对象，Number 对象是引用类型，与基本的 number 类型有所不同。
 
-## 笔记模板
+尽管 Number 对象提供了一些额外的属性和方法，但在 TypeScript 中更推荐直接使用基本的 number 类型，因为 Number 对象会带来性能开销和类型混淆。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 语法
 
-- 能用 3 到 5 句话解释 `TypeScript Number`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```javascript
+var num = new Number(value);
+```
+
+需要注意的是，这会创建一个引用类型的对象，而非基本的 number 类型。
+
+注意： 如果一个参数值不能转换为一个数字将返回 NaN (非数字值)。
+
+
+### Number 对象与基本 number 类型的区别
+
+- 基本类型 number：原始数据类型，用于存储数值。
+- Number 对象：引用类型，是一个包装对象，用于包装基本数值。
+
+
+## 实例
+
+
+### Number 对象属性
+
+下表列出了 Number 对象支持的属性：
+
+MAX_VALUE
+
+可表示的最大的数，MAX_VALUE 属性值接近于 1.79E+308。大于 MAX_VALUE 的值代表 "Infinity"。
+
+MIN_VALUE
+
+可表示的最小的数，即最接近 0 的正数 (实际上不会变成 0)。最大的负数是 -MIN_VALUE，MIN_VALUE 的值约为 5e-324。小于 MIN_VALUE ("underflow values") 的值将会转换为 0。
+
+NaN
+
+非数字值（Not-A-Number）。
+
+NEGATIVE_INFINITY
+
+负无穷大，溢出时返回该值。该值小于 MIN_VALUE。
+
+POSITIVE_INFINITY
+
+正无穷大，溢出时返回该值。该值大于 MAX_VALUE。
+
+prototype
+
+Number 对象的静态属性。使您有能力向对象添加属性和方法。
+
+constructor
+
+返回对创建此对象的 Number 函数的引用。
+
+
+## TypeScript
+
+```javascript
+console.log("TypeScript Number 属性: ");
+console.log("最大值为: " + Number.MAX_VALUE);
+console.log("最小值为: " + Number.MIN_VALUE);
+console.log("负无穷大: " + Number.NEGATIVE_INFINITY);
+console.log("正无穷大:" + Number.POSITIVE_INFINITY);
+```
+
+编译以上代码，得到以下 JavaScript 代码：
+
+
+## JavaScript
+
+```javascript
+console.log("TypeScript Number 属性: ");
+console.log("最大值为: " + Number.MAX_VALUE);
+console.log("最小值为: " + Number.MIN_VALUE);
+console.log("负无穷大: " + Number.NEGATIVE_INFINITY);
+console.log("正无穷大:" + Number.POSITIVE_INFINITY);
+```
+
+输出结果为：
+
+```text
+TypeScript Number 属性:
+最大值为: 1.7976931348623157e+308
+最小值为: 5e-324
+负无穷大: -Infinity
+正无穷大:Infinity
+```
+
+
+### NaN 实例
+
+
+## TypeScript
+
+```javascript
+var month = 0
+if( month<=0 || month >12) {
+    month = Number.NaN
+    console.log("月份是："+ month)
+} else {
+    console.log("输入月份数值正确。")
+}
+```
+
+编译以上代码，得到以下 JavaScript 代码：
+
+
+## JavaScript
+
+```javascript
+var month = 0;
+if (month <= 0 || month > 12) {
+    month = Number.NaN;
+    console.log("月份是：" + month);
+}
+else {
+    console.log("输入月份数值正确。");
+}
+```
+
+输出结果为：
+
+```text
+月份是：NaN
+```
+
+
+### prototype 实例
+
+
+## TypeScript
+
+```javascript
+function employee(id:number,name:string) {
+    this.id = id
+    this.name = name
+}
+
+var emp = new employee(123,"admin")
+employee.prototype.email = "admin@runoob.com"
+
+console.log("员工号: "+emp.id)
+console.log("员工姓名: "+emp.name)
+console.log("员工邮箱: "+emp.email)
+```
+
+编译以上代码，得到以下 JavaScript 代码：
+
+
+## JavaScript
+
+```javascript
+function employee(id, name) {
+    this.id = id;
+    this.name = name;
+}
+var emp = new employee(123, "admin");
+employee.prototype.email = "admin@runoob.com";
+console.log("员工号: " + emp.id);
+console.log("员工姓名: " + emp.name);
+console.log("员工邮箱: " + emp.email);
+```
+
+输出结果为：
+
+```text
+员工号: 123
+员工姓名: admin
+员工邮箱: admin@runoob.com
+```
+
+
+## Number 对象方法
+
+Number对象 支持以下方法：
+
+把对象的值转换为指数计数法。
+
+```javascript
+//toExponential()
+var num1 = 1225.30
+var val = num1.toExponential();
+console.log(val) // 输出： 1.2253e+3
+```
+
+把数字转换为字符串，并对小数点指定位数。
+
+```javascript
+var num3 = 177.234
+console.log("num3.toFixed() 为 "+num3.toFixed())    // 输出：177
+console.log("num3.toFixed(2) 为 "+num3.toFixed(2))  // 输出：177.23
+console.log("num3.toFixed(6) 为 "+num3.toFixed(6))  // 输出：177.234000
+```
+
+把数字转换为字符串，使用本地数字格式顺序。
+
+```javascript
+var num = new Number(177.1234);
+console.log( num.toLocaleString());  // 输出：177.1234
+```
+
+把数字格式化为指定的长度。
+
+```javascript
+var num = new Number(7.123456);
+console.log(num.toPrecision());  // 输出：7.123456
+console.log(num.toPrecision(1)); // 输出：7
+console.log(num.toPrecision(2)); // 输出：7.1
+```
+
+把数字转换为字符串，使用指定的基数。数字的基数是 2 ~ 36 之间的整数。若省略该参数，则使用基数 10。
+
+```javascript
+var num = new Number(10);
+console.log(num.toString());  // 输出10进制：10
+console.log(num.toString(2)); // 输出2进制：1010
+console.log(num.toString(8)); // 输出8进制：12
+```
+
+返回一个 Number 对象的原始数字值。
+
+```javascript
+var num = new Number(10);
+console.log(num.valueOf()); // 输出：10
+```
+
+
+### Number 对象的使用建议
+
+在 TypeScript 中，通常更推荐使用基本的 number 类型，而不是 Number 对象。原因如下：
+
+- 性能：基本类型更轻量，性能更好。
+- 类型一致性：TypeScript 的类型系统更倾向于基本类型，使用 Number 对象可能导致意外的类型不匹配。
+- 最佳实践：基本类型的 number 更符合 TypeScript 的最佳实践，避免了对象包装带来的不必要复杂性。
+
+如果确实需要使用 Number 对象的特定方法，可以通过 valueOf() 方法将 Number 对象转换为基本的 number 类型。
+
+总之，TypeScript 更推荐使用基本类型 number 而不是 Number 对象，以保持代码的简洁、高效和一致性。
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `TypeScript Number` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

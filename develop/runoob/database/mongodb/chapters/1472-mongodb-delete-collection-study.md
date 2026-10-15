@@ -1,35 +1,73 @@
-# MongoDB：MongoDB 删除集合 学习笔记
+# MongoDB：MongoDB 删除集合
 
 - 来源：[MongoDB 删除集合](https://www.runoob.com/mongodb/mongodb-delete-collection.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1472
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 删除集合` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+本章节我们为大家介绍如何使用 MongoDB 来删除集合。
 
-## 阅读抓手
+MongoDB 中使用 drop() 方法来删除集合。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+drop() 方法可以永久地从数据库中删除指定的集合及其所有文档，这是一个不可逆的操作，因此需要谨慎使用。
 
-## 笔记模板
+语法格式：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+db.collection.drop()
+```
 
-## 完成标准
+参数说明：
 
-- 能用 3 到 5 句话解释 `MongoDB 删除集合`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 无
+
+返回值
+
+如果成功删除选定集合，则 drop() 方法返回 true，否则返回 false。
+
+
+### 实例
+
+在数据库 mydb 中，我们可以先通过 show collections 命令查看已存在的集合：
+
+```text
+>use mydb
+switched to db mydb
+>show collections
+mycol
+mycol2
+system.indexes
+runoob
+>
+```
+
+接着删除集合 mycol2 :
+
+```text
+>db.mycol2.drop()
+true
+>
+```
+
+通过 show collections 再次查看数据库 mydb 中的集合：
+
+```text
+>show collections
+mycol
+system.indexes
+runoob
+>
+```
+
+从结果中可以看出 mycol2 集合已被删除。
+
+
+## 复习重点
+
+- 能说明 `MongoDB 删除集合` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

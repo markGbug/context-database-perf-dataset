@@ -1,34 +1,69 @@
-# JSP：JSP 隐式对象 练习笔记
+# JSP：JSP 隐式对象
 
 - 来源：[JSP 隐式对象](https://www.runoob.com/jsp/jsp-implicit-objects.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0943
 
-## 练习目标
+## 本章内容
 
-把 `JSP 隐式对象` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+JSP隐式对象是JSP容器为每个页面提供的Java对象，开发者可以直接使用它们而不用显式声明。JSP隐式对象也被称为预定义变量。
 
-## 练习步骤
+JSP所支持的九大隐式对象：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## request对象
 
-- 我能独立说出 `JSP 隐式对象` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+request对象是javax.servlet.http.HttpServletRequest 类的实例。每当客户端请求一个JSP页面时，JSP引擎就会制造一个新的request对象来代表这个请求。
 
-## 复盘问题
+request对象提供了一系列方法来获取HTTP头信息，cookies，HTTP方法等等。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## response对象
+
+response对象是javax.servlet.http.HttpServletResponse类的实例。当服务器创建request对象时会同时创建用于响应这个客户端的response对象。
+
+response对象也定义了处理HTTP头模块的接口。通过这个对象，开发者们可以添加新的cookies，时间戳，HTTP状态码等等。
+
+
+## out对象
+
+out对象是 javax.servlet.jsp.JspWriter 类的实例，用来在response对象中写入内容。
+
+最初的JspWriter类对象根据页面是否有缓存来进行不同的实例化操作。可以在page指令中使用buffered='false'属性来轻松关闭缓存。
+
+JspWriter类包含了大部分java.io.PrintWriter类中的方法。不过，JspWriter新增了一些专为处理缓存而设计的方法。还有就是，JspWriter类会抛出IOExceptions异常，而PrintWriter不会。
+
+下表列出了我们将会用来输出boolean，char，int，double，String，object等类型数据的重要方法：
+
+
+## session对象
+
+session对象是 javax.servlet.http.HttpSession 类的实例。和Java Servlets中的session对象有一样的行为。
+
+session对象用来跟踪在各个客户端请求间的会话。
+
+
+## application对象
+
+application对象直接包装了servlet的ServletContext类的对象，是javax.servlet.ServletContext 类的实例。
+
+这个对象在JSP页面的整个生命周期中都代表着这个JSP页面。这个对象在JSP页面初始化时被创建，随着jspDestroy()方法的调用而被移除。
+
+通过向application中添加属性，则所有组成您web应用的JSP文件都能访问到这些属性。
+
+
+## config对象
+
+config对象是 javax.servlet.ServletConfig 类的实例，直接包装了servlet的ServletConfig类的对象。
+
+这个对象允许开发者访问Servlet或者JSP引擎的初始化参数，比如文件路径等。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JSP 隐式对象` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

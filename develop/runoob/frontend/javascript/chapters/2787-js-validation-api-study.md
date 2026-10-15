@@ -1,35 +1,133 @@
-# JavaScript：JavaScript 验证 API 学习笔记
+# JavaScript：JavaScript 验证 API
 
 - 来源：[JavaScript 验证 API](https://www.runoob.com/js/js-validation-api.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2787
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 验证 API` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+## 约束验证 DOM 方法
 
-## 阅读抓手
+设置 input 元素的 validationMessage 属性，用于自定义错误提示信息的方法。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+使用 setCustomValidity 设置了自定义提示后，validity.customError 就会变成 true，checkValidity 总是会返回 false。如果要重新判断需要取消自定义提示，方式如下：
 
-## 笔记模板
+```text
+setCustomValidity('')
+setCustomValidity(null)
+setCustomValidity(undefined)
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+以下实例如果输入信息不合法，则返回错误信息：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `JavaScript 验证 API`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## checkValidity() 方法
+
+```html
+<input id="id1" type="number" min="100" max="300" required>
+<button onclick="myFunction()">验证</button>
+
+<p id="demo"></p>
+
+<script>
+```
+
+```javascript
+function myFunction() {
+    var inpObj = document.getElementById("id1");
+    if (inpObj.checkValidity() == false) {
+        document.getElementById("demo").innerHTML = inpObj.validationMessage;
+    }
+}
+```
+
+```text
+</script>
+```
+
+
+## 约束验证 DOM 属性
+
+
+## Validity 属性
+
+input 元素的 validity 属性包含一系列关于 validity 数据属性:
+
+
+## 实例
+
+如果输入的值大于 100，显示一个信息：
+
+
+## rangeOverflow 属性
+
+```html
+<input id="id1" type="number" max="100">
+<button onclick="myFunction()">验证</button>
+
+<p id="demo"></p>
+
+<script>
+```
+
+```javascript
+function myFunction() {
+    var txt = "";
+    if (document.getElementById("id1").validity.rangeOverflow) {
+       txt = "输入的值太大了";
+    }
+    document.getElementById("demo").innerHTML = txt;
+}
+```
+
+```text
+</script>
+```
+
+如果输入的值小于 100，显示一个信息：
+
+
+## rangeUnderflow 属性
+
+```html
+<input id="id1" type="number" min="100" required>
+<button onclick="myFunction()">OK</button>
+
+<p id="demo"></p>
+
+<script>
+```
+
+```javascript
+function myFunction() {
+    var txt = "";
+    var inpObj = document.getElementById("id1");
+    if(!isNumeric(inpObj.value)) {
+        txt = "你输入的不是数字";
+    } else if (inpObj.validity.rangeUnderflow) {
+        txt = "输入的值太小了";
+    } else {
+        txt = "输入正确";
+    }
+    document.getElementById("demo").innerHTML = txt;
+}
+
+// 判断输入是否为数字
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+```
+
+```text
+</script>
+```
+
+
+## 复习重点
+
+- 能说明 `JavaScript 验证 API` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

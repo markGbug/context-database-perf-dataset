@@ -1,34 +1,170 @@
-# PostgreSQL：PostgreSQL WITH 练习笔记
+# PostgreSQL：PostgreSQL WITH 子句
 
 - 来源：[PostgreSQL WITH](https://www.runoob.com/postgresql/postgresql-with.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1573
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL WITH` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 PostgreSQL 中，WITH 子句提供了一种编写辅助语句的方法，以便在更大的查询中使用。
 
-## 练习步骤
+WITH 子句有助于将复杂的大型查询分解为更简单的表单，便于阅读。这些语句通常称为通用表表达式（Common Table Express， CTE），也可以当做一个为查询而存在的临时表。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+WITH 子句是在多次执行子查询时特别有用，允许我们在查询中通过它的名称(可能是多次)引用它。
 
-## 验收清单
+WITH 子句在使用前必须先定义。
 
-- 我能独立说出 `PostgreSQL WITH` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 语法
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+WITH 查询的基础语法如下：
+
+```text
+WITH
+   name_for_summary_data AS (
+      SELECT Statement)
+   SELECT columns
+   FROM name_for_summary_data
+   WHERE conditions <=> (
+      SELECT column
+      FROM name_for_summary_data)
+   [ORDER BY columns]
+```
+
+name_for_summary_data 是 WITH 子句的名称，name_for_summary_data 可以与现有的表名相同，并且具有优先级。
+
+可以在 WITH 中使用数据 INSERT, UPDATE 或 DELETE 语句，允许您在同一个查询中执行多个不同的操作。
+
+
+### WITH 递归
+
+在 WITH 子句中可以使用自身输出的数据。
+
+公用表表达式 (CTE) 具有一个重要的优点，那就是能够引用其自身，从而创建递归 CTE。递归 CTE 是一个重复执行初始 CTE 以返回数据子集直到获取完整结果集的公用表表达式。
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+下面将使用 WITH 子句在上表中查询数据：
+
+```text
+With CTE AS
+(Select
+ ID
+, NAME
+, AGE
+, ADDRESS
+, SALARY
+FROM COMPANY )
+Select * From CTE;
+```
+
+得到结果如下：
+
+```text
+id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+接下来让我们使用 RECURSIVE 关键字和 WITH 子句编写一个查询，查找 SALARY(工资) 字段小于 20000 的数据并计算它们的和：
+
+```text
+WITH RECURSIVE t(n) AS (
+   VALUES (0)
+   UNION ALL
+   SELECT SALARY FROM COMPANY WHERE SALARY < 20000
+)
+SELECT sum(n) FROM t;
+```
+
+得到结果如下：
+
+```text
+ sum
+-------
+ 25000
+(1 row)
+```
+
+下面我们建立一张和 COMPANY 表相似的 COMPANY1 表，使用 DELETE 语句和 WITH 子句删除 COMPANY 表中 SALARY(工资) 字段大于等于 30000 的数据，并将删除的数据插入 COMPANY1 表，实现将 COMPANY 表数据转移到 COMPANY1 表中：
+
+```text
+CREATE TABLE COMPANY1(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+
+
+WITH moved_rows AS (
+   DELETE FROM COMPANY
+   WHERE
+      SALARY >= 30000
+   RETURNING *
+)
+INSERT INTO COMPANY1 (SELECT * FROM moved_rows);
+```
+
+得到结果如下：
+
+```text
+INSERT 0 3
+```
+
+此时，CAMPANY 表和 CAMPANY1 表的数据如下：
+
+```text
+runoobdb=# SELECT * FROM COMPANY;
+ id | name  | age |  address   | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  2 | Allen |  25 | Texas      |  15000
+  3 | Teddy |  23 | Norway     |  20000
+  7 | James |  24 | Houston    |  10000
+(4 rows)
+
+
+runoobdb=# SELECT * FROM COMPANY1;
+ id | name  | age | address | salary
+----+-------+-----+-------------+--------
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+  6 | Kim   |  22 | South-Hall  |  45000
+(3 rows)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL WITH` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

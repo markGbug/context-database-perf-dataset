@@ -1,35 +1,58 @@
-# WSDL：WSDL 文档 学习笔记
+# WSDL：WSDL 文档
 
 - 来源：[WSDL 文档](https://www.runoob.com/wsdl/wsdl-documents.html)
 - 分类：XML / Web Service
 - 技术：WSDL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4359
 
-## 学习目标
+## 本章内容
 
-WSDL 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `WSDL 文档` 建立学习路径，先理解它在 WSDL 体系中的位置，再做可运行或可复述的验证。
+WSDL 文档仅仅是一个简单的 XML 文档。
 
-## 阅读抓手
+它包含一系列描述某个 web service 的定义。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## WSDL 文档结构
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+WSDL 文档是利用这些主要的元素来描述某个 web service 的：
 
-## 完成标准
+一个 WSDL 文档的主要结构是类似这样的：
 
-- 能用 3 到 5 句话解释 `WSDL 文档`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## WSDL 文档实例
+
+```html
+<definitions>
+
+<types>
+  data type definitions........
+</types>
+
+<message>
+  definition of the data being communicated....
+</message>
+
+<portType>
+  set of operations......
+</portType>
+
+<binding>
+  protocol and data format specification....
+</binding>
+
+</definitions>
+```
+
+WSDL 文档可包含其它的元素，比如 extension 元素，以及一个 service 元素，此元素可把若干个 web services 的定义组合在一个单一的 WSDL 文档中。
+
+
+## WSDL 端口
+
+
+## 复习重点
+
+- 能说明 `WSDL 文档` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

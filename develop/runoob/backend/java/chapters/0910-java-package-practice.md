@@ -1,34 +1,220 @@
-# Java：Java 包(package) 练习笔记
+# Java：Java 包(package)
 
 - 来源：[Java 包(package)](https://www.runoob.com/java/java-package.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0910
 
-## 练习目标
+## 本章内容
 
-把 `Java 包(package)` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+为了更好地组织类，Java 提供了包机制，用于区别类名的命名空间。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 包的作用
 
-## 验收清单
+- 1、把功能相似或相关的类或接口组织在同一个包中，方便类的查找和使用。
+- 2、如同文件夹一样，包也采用了树形目录的存储方式。同一个包中的类名字是不同的，不同的包中的类的名字是可以相同的，当同时调用两个不同包中相同类名的类时，应该加上包名加以区别。因此，包可以避免名字冲突。
+- 3、包也限定了访问权限，拥有包访问权限的类才能访问某个包中的类。
 
-- 我能独立说出 `Java 包(package)` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Java 使用包（package）这种机制是为了防止命名冲突，访问控制，提供搜索和定位类（class）、接口、枚举（enumerations）和注释（annotation）等。
 
-## 复盘问题
+包语句的语法格式为：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+package pkg1[．pkg2[．pkg3…]];
+```
+
+例如,一个Something.java 文件它的内容
+
+```java
+package net.java.util;
+public class Something{
+   ...
+}
+```
+
+那么它的路径应该是 net/java/util/Something.java 这样保存的。 package(包) 的作用是把不同的 java 程序分类保存，更方便的被其他 java 程序调用。
+
+一个包（package）可以定义为一组相互联系的类型（类、接口、枚举和注释），为这些类型提供访问保护和命名空间管理的功能。
+
+以下是一些 Java 中的包：
+
+- java.lang-打包基础的类
+- java.io-包含输入输出功能的函数
+
+开发者可以自己把一组类和接口等打包，并定义自己的包。而且在实际开发中这样做是值得提倡的，当你自己完成类的实现之后，将相关的类分组，可以让其他的编程者更容易地确定哪些类、接口、枚举和注释等是相关的。
+
+由于包创建了新的命名空间（namespace），所以不会跟其他包中的任何名字产生命名冲突。使用包这种机制，更容易实现访问控制，并且让定位相关类更加简单。
+
+
+## 创建包
+
+创建包的时候，你需要为这个包取一个合适的名字。之后，如果其他的一个源文件包含了这个包提供的类、接口、枚举或者注释类型的时候，都必须将这个包的声明放在这个源文件的开头。
+
+包声明应该在源文件的第一行，每个源文件只能有一个包声明，这个文件中的每个类型都应用于它。
+
+如果一个源文件中没有使用包声明，那么其中的类，函数，枚举，注释等将被放在一个无名的包（unnamed package）中。
+
+
+### 例子
+
+让我们来看一个例子，这个例子创建了一个叫做animals的包。通常使用小写的字母来命名避免与类、接口名字的冲突。
+
+在 animals 包中加入一个接口（interface）：
+
+
+## Animal.java 文件代码：
+
+```text
+/* 文件名: Animal.java */
+package animals;
+
+interface Animal {
+   public void eat();
+   public void travel();
+}
+```
+
+接下来，在同一个包中加入该接口的实现：
+
+
+## MammalInt.java 文件代码：
+
+```java
+package animals;
+
+/* 文件名 : MammalInt.java */
+public class MammalInt implements Animal{
+
+   public void eat(){
+      System.out.println("Mammal eats");
+   }
+
+   public void travel(){
+      System.out.println("Mammal travels");
+   }
+
+   public int noOfLegs(){
+      return 0;
+   }
+
+   public static void main(String args[]){
+      MammalInt m = new MammalInt();
+      m.eat();
+      m.travel();
+   }
+}
+```
+
+然后，编译这两个文件，并把他们放在一个叫做animals的子目录中。 用下面的命令来运行：
+
+```text
+$ mkdir animals
+$ cp Animal.class  MammalInt.class animals
+$ java animals/MammalInt
+Mammal eats
+Mammal travel
+```
+
+
+## import 关键字
+
+为了能够使用某一个包的成员，我们需要在 Java 程序中明确导入该包。
+
+在 Java 中，import 关键字用于导入其他类或包中定义的类型，以便在当前源文件中使用这些类型。
+
+import 关键字用于引入其他包中的类、接口或静态成员，它允许你在代码中直接使用其他包中的类，而不需要完整地指定类的包名。
+
+在 java 源文件中 import 语句必须位于 Java 源文件的头部，其语法格式为：
+
+```text
+import package1[.package2…].(classname|*);
+```
+
+import 语句位于 package 语句之后：
+
+```java
+// 第一行非注释行是 package 语句
+package com.example;
+
+// import 语句引入其他包中的类
+import java.util.ArrayList;
+import java.util.List;
+
+// 类的定义
+public class MyClass {
+    // 类的成员和方法
+}
+```
+
+如果在一个包中，一个类想要使用本包中的另一个类，那么该包名可以省略。
+
+可以使用 import语句来引入一个特定的类：
+
+```text
+import com.runoob.MyClass;
+```
+
+这样，你就可以在当前源文件中直接使用 MyClass 类的方法、变量或常量。
+
+也可以使用通配符 * 来引入整个包或包的子包：
+
+```text
+import com.runoob.mypackage.*;
+```
+
+这样，你可以导入 com.runoob.mypackage 包中的所有类，从而在当前源文件中使用该包中的任何类的方法、变量或常量。注意，使用通配符 * 导入整个包时，只会导入包中的类，而不会导入包中的子包。
+
+在导入类或包时，你需要提供类的完全限定名或包的完全限定名。完全限定名包括包名和类名的组合，以点号 . 分隔。
+
+
+## 实例
+
+
+### 例子
+
+下面的 payroll 包已经包含了 Employee 类，接下来向 payroll 包中添加一个 Boss 类。Boss 类引用 Employee 类的时候可以不用使用 payroll 前缀，Boss 类的实例如下。
+
+
+## Boss.java 文件代码：
+
+```java
+package payroll;
+
+public class Boss
+{
+   public void payEmployee(Employee e)
+   {
+      e.mailCheck();
+   }
+}
+```
+
+如果 Boss 类不在 payroll 包中又会怎样？Boss 类必须使用下面几种方法之一来引用其他包中的类。
+
+使用类全名描述，例如：
+
+```text
+payroll.Employee
+```
+
+用 import 关键字引入，使用通配符 *：
+
+```text
+import payroll.*;
+```
+
+使用 import 关键字引入 Employee 类：
+
+```text
+import payroll.Employee;
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java 包(package)` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

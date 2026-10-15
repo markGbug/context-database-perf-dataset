@@ -1,34 +1,181 @@
-# jQuery UI：进度条（Progressbar） 练习笔记
+# jQuery UI：jQuery UI 实例 - 进度条（Progressbar）
 
 - 来源：[进度条（Progressbar）](https://www.runoob.com/jqueryui/example-progressbar.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2946
 
-## 练习目标
+## 本章内容
 
-把 `进度条（Progressbar）` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+显示一个确定的或不确定的进程状态。
 
-## 练习步骤
+如需了解更多有关 progressbar 部件的细节，请查看 API 文档 进度条部件（Progressbar Widget）。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 默认功能
 
-- 我能独立说出 `进度条（Progressbar）` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+默认的确定的进度条。
 
-## 复盘问题
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 进度条（Progressbar） - 默认功能</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#progressbar" ).progressbar({
+      value: 37
+    });
+  });
+  </script>
+</head>
+<body>
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+<div id="progressbar"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 自定义标签
+
+自定义更新的标签。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 进度条（Progressbar） - 自定义标签</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+  .ui-progressbar {
+    position: relative;
+  }
+  .progress-label {
+    position: absolute;
+    left: 50%;
+    top: 4px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+  }
+  </style>
+  <script>
+  $(function() {
+    var progressbar = $( "#progressbar" ),
+      progressLabel = $( ".progress-label" );
+
+    progressbar.progressbar({
+      value: false,
+      change: function() {
+        progressLabel.text( progressbar.progressbar( "value" ) + "%" );
+      },
+      complete: function() {
+        progressLabel.text( "完成！" );
+      }
+    });
+
+    function progress() {
+      var val = progressbar.progressbar( "value" ) || 0;
+
+      progressbar.progressbar( "value", val + 1 );
+
+      if ( val < 99 ) {
+        setTimeout( progress, 100 );
+      }
+    }
+
+    setTimeout( progress, 3000 );
+  });
+  </script>
+</head>
+<body>
+
+<div id="progressbar"><div class="progress-label">加载...</div></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 不确定的值
+
+不确定的进度条，并可在确定和不确定的样式之间切换。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 进度条（Progressbar） - 不确定的值</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#progressbar" ).progressbar({
+      value: false
+    });
+    $( "button" ).on( "click", function( event ) {
+      var target = $( event.target ),
+        progressbar = $( "#progressbar" ),
+        progressbarValue = progressbar.find( ".ui-progressbar-value" );
+
+      if ( target.is( "#numButton" ) ) {
+        progressbar.progressbar( "option", {
+          value: Math.floor( Math.random() * 100 )
+        });
+      } else if ( target.is( "#colorButton" ) ) {
+        progressbarValue.css({
+          "background": '#' + Math.floor( Math.random() * 16777215 ).toString( 16 )
+        });
+      } else if ( target.is( "#falseButton" ) ) {
+        progressbar.progressbar( "option", "value", false );
+      }
+    });
+  });
+  </script>
+  <style>
+  #progressbar .ui-progressbar-value {
+    background-color: #ccc;
+  }
+  </style>
+</head>
+<body>
+
+<div id="progressbar"></div>
+<button id="numButton">随机值 - 确定</button>
+<button id="falseButton">不确定</button>
+<button id="colorButton">随机颜色</button>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `进度条（Progressbar）` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,83 @@
-# Bootstrap4：Bootstrap4 颜色 学习笔记
+# Bootstrap4：Bootstrap4 颜色
 
 - 来源：[Bootstrap4 颜色](https://www.runoob.com/bootstrap4/bootstrap4-colors.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2308
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 颜色` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+Bootstrap 4 提供了一些有代表意义的颜色类：.text-muted, .text-primary, .text-success, .text-info, .text-warning, .text-danger, .text-secondary, .text-white, .text-dark and .text-light:
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 实例
 
-## 笔记模板
+```html
+<div class="container">
+  <h2>代表指定意义的文本颜色</h2>
+  <p class="text-muted">柔和的文本。</p>
+  <p class="text-primary">重要的文本。</p>
+  <p class="text-success">执行成功的文本。</p>
+  <p class="text-info">代表一些提示信息的文本。</p>
+  <p class="text-warning">警告文本。</p>
+  <p class="text-danger">危险操作文本。</p>
+  <p class="text-secondary">副标题。</p>
+  <p class="text-dark">深灰色文字。</p>
+  <p class="text-light">浅灰色文本（白色背景上看不清楚）。</p>
+  <p class="text-white">白色文本（白色背景上看不清楚）。</p>
+</div>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在链接中使用
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Bootstrap4 颜色`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+```html
+<div class="container">
+  <h2>文本颜色</h2>
+  <p>鼠标移动到链接。</p>
+  <a href="#" class="text-muted">柔和的链接。</a>
+  <a href="#" class="text-primary">主要链接。</a>
+  <a href="#" class="text-success">成功链接。</a>
+  <a href="#" class="text-info">信息文本链接。</a>
+  <a href="#" class="text-warning">警告链接。</a>
+  <a href="#" class="text-danger">危险链接。</a>
+  <a href="#" class="text-secondary">副标题链接。</a>
+  <a href="#" class="text-dark">深灰色链接。</a>
+  <a href="#" class="text-light">浅灰色链接。</a>
+</div>
+```
+
+
+## 背景颜色
+
+提供背景颜色的类有: .bg-primary, .bg-success, .bg-info, .bg-warning, .bg-danger, .bg-secondary, .bg-dark 和 .bg-light。
+
+注意背景颜色不会设置文本的颜色，在一些实例中你需要与 .text-* 类一起使用。
+
+
+## 实例
+
+```html
+<div class="container">
+  <h2>背景颜色</h2>
+  <p class="bg-primary text-white">重要的背景颜色。</p>
+  <p class="bg-success text-white">执行成功背景颜色。</p>
+  <p class="bg-info text-white">信息提示背景颜色。</p>
+  <p class="bg-warning text-white">警告背景颜色</p>
+  <p class="bg-danger text-white">危险背景颜色。</p>
+  <p class="bg-secondary text-white">副标题背景颜色。</p>
+  <p class="bg-dark text-white">深灰背景颜色。</p>
+  <p class="bg-light text-dark">浅灰背景颜色。</p>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 颜色` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

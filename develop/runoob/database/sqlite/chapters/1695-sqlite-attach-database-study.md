@@ -1,35 +1,60 @@
-# SQLite：SQLite 附加数据库 学习笔记
+# SQLite：SQLite 附加数据库
 
 - 来源：[SQLite 附加数据库](https://www.runoob.com/sqlite/sqlite-attach-database.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1695
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite 附加数据库` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+假设这样一种情况，当在同一时间有多个数据库可用，您想使用其中的任何一个。SQLite 的 ATTACH DATABASE 语句是用来选择一个特定的数据库，使用该命令后，所有的 SQLite 语句将在附加的数据库下执行。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 语法
 
-## 笔记模板
+SQLite 的 ATTACH DATABASE 语句的基本语法如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+ATTACH DATABASE file_name AS database_name;
+```
 
-## 完成标准
+如果数据库尚未被创建，上面的命令将创建一个数据库，如果数据库已存在，则把数据库文件名称与逻辑数据库 'Alias-Name' 绑定在一起。
 
-- 能用 3 到 5 句话解释 `SQLite 附加数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+打开的数据库和使用 ATTACH附加进来的数据库的必须位于同一文件夹下。
+
+
+## 实例
+
+如果想附加一个现有的数据库 testDB.db，则 ATTACH DATABASE 语句将如下所示：
+
+```text
+sqlite> ATTACH DATABASE 'testDB.db' as 'TEST';
+```
+
+使用 SQLite .database 命令来显示附加的数据库。
+
+```text
+sqlite> .database
+seq  name             file
+---  ---------------  ----------------------
+0    main             /home/sqlite/testDB.db
+2    test             /home/sqlite/testDB.db
+```
+
+数据库名称 main 和 temp 被保留用于主数据库和存储临时表及其他临时数据对象的数据库。这两个数据库名称可用于每个数据库连接，且不应该被用于附加，否则将得到一个警告消息，如下所示：
+
+```text
+sqlite>  ATTACH DATABASE 'testDB.db' as 'TEMP';
+Error: database TEMP is already in use
+sqlite>  ATTACH DATABASE 'testDB.db' as 'main';
+Error: database main is already in use；
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite 附加数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

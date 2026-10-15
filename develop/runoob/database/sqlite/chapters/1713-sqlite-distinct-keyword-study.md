@@ -1,35 +1,95 @@
-# SQLite：SQLite Distinct 关键字 学习笔记
+# SQLite：SQLite Distinct 关键字
 
 - 来源：[SQLite Distinct 关键字](https://www.runoob.com/sqlite/sqlite-distinct-keyword.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1713
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite Distinct 关键字` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+SQLite 的 DISTINCT 关键字与 SELECT 语句一起使用，来消除所有重复的记录，并只获取唯一一次记录。
 
-## 阅读抓手
+有可能出现一种情况，在一个表中有多个重复的记录。当提取这样的记录时，DISTINCT 关键字就显得特别有意义，它只获取唯一一次记录，而不是获取重复记录。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+用于消除重复记录的 DISTINCT 关键字的基本语法如下：
 
-## 完成标准
+```text
+SELECT DISTINCT column1, column2,.....columnN
+FROM table_name
+WHERE [condition]
+```
 
-- 能用 3 到 5 句话解释 `SQLite Distinct 关键字`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+假设 COMPANY 表有以下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+8           Paul        24          Houston     20000.0
+9           James       44          Norway      5000.0
+10          James       45          Texas       5000.0
+```
+
+首先，让我们来看看下面的 SELECT 查询，它将返回重复的工资记录：
+
+```text
+sqlite> SELECT name FROM COMPANY;
+```
+
+这将产生以下结果：
+
+```text
+NAME
+----------
+Paul
+Allen
+Teddy
+Mark
+David
+Kim
+James
+Paul
+James
+James
+```
+
+现在，让我们在上述的 SELECT 查询中使用 DISTINCT 关键字：
+
+```text
+sqlite> SELECT DISTINCT name FROM COMPANY;
+```
+
+这将产生以下结果，没有任何重复的条目：
+
+```text
+NAME
+----------
+Paul
+Allen
+Teddy
+Mark
+David
+Kim
+James
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite Distinct 关键字` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

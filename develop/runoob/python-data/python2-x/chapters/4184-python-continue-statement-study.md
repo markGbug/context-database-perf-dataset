@@ -1,35 +1,74 @@
-# Python2.x：Python continue 语句 学习笔记
+# Python2.x：Python continue 语句
 
 - 来源：[Python continue 语句](https://www.runoob.com/python/python-continue-statement.html)
 - 分类：Python / 数据科学
 - 技术：Python2.x
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4184
 
-## 学习目标
+## 本章内容
 
-Python2.x 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python continue 语句` 建立学习路径，先理解它在 Python2.x 体系中的位置，再做可运行或可复述的验证。
+Python continue 语句跳出本次循环，而break跳出整个循环。
 
-## 阅读抓手
+continue 语句用来告诉Python跳过当前循环的剩余语句，然后继续进行下一轮循环。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+continue语句用在while和for循环中。
 
-## 笔记模板
+Python 语言 continue 语句语法格式如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+continue
+```
 
-## 完成标准
+流程图：
 
-- 能用 3 到 5 句话解释 `Python continue 语句`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+实例：
+
+
+## 实例(Python 2.0+)
+
+```java
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+for letter in 'Python':     # 第一个实例
+   if letter == 'h':
+      continue
+   print '当前字母 :', letter
+
+var = 10                    # 第二个实例
+while var > 0:
+   var = var -1
+   if var == 5:
+      continue
+   print '当前变量值 :', var
+print "Good bye!"
+```
+
+以上实例执行结果：
+
+```text
+当前字母 : P
+当前字母 : y
+当前字母 : t
+当前字母 : o
+当前字母 : n
+当前变量值 : 9
+当前变量值 : 8
+当前变量值 : 7
+当前变量值 : 6
+当前变量值 : 4
+当前变量值 : 3
+当前变量值 : 2
+当前变量值 : 1
+当前变量值 : 0
+Good bye!
+```
+
+
+## 复习重点
+
+- 能说明 `Python continue 语句` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,140 @@
-# SQL：SQL 语法 练习笔记
+# SQL：SQL 语法
 
 - 来源：[SQL 语法](https://www.runoob.com/sql/sql-syntax.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1623
 
-## 练习目标
+## 本章内容
 
-把 `SQL 语法` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQL（Structured Query Language）是一种用于管理和操作关系数据库的标准语言，包括数据查询、数据插入、数据更新、数据删除、数据库结构创建和修改等功能。。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 数据库表
 
-## 验收清单
+一个数据库通常包含一个或多个表，每个表有一个名字标识（例如:"Websites"），表包含带有数据的记录（行）。
 
-- 我能独立说出 `SQL 语法` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在本教程中，我们在 MySQL 的 RUNOOB 数据库中创建了 Websites 表，用于存储网站记录。
 
-## 复盘问题
+我们可以通过以下命令查看 "Websites" 表的数据：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+mysql> use RUNOOB;
+Database changed
+
+mysql> set names utf8;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM Websites;
++----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
++----+--------------+---------------------------+-------+---------+
+5 rows in set (0.01 sec)
+```
+
+
+### 解析
+
+- use RUNOOB; 命令用于选择数据库。
+- set names utf8; 命令用于设置使用的字符集。
+- SELECT * FROM Websites; 读取数据表的信息。
+- 上面的表包含五条记录（每一条对应一个网站信息）和5个列（id、name、url、alexa 和country）。
+
+
+## SQL 语句
+
+您需要在数据库上执行的大部分工作都由 SQL 语句完成。
+
+下面的 SQL 语句从 "Websites" 表中选取所有记录：
+
+
+## 实例
+
+```text
+SELECT * FROM Websites;
+```
+
+在本教程中，我们将为您讲解各种不同的 SQL 语句。
+
+
+## 请记住...
+
+- SQL 对大小写不敏感：SELECT 与 select 是相同的。
+
+
+## SQL 语句后面的分号？
+
+某些数据库系统要求在每条 SQL 语句的末端使用分号。
+
+分号是在数据库系统中分隔每条 SQL 语句的标准方法，这样就可以在对服务器的相同请求中执行一条以上的 SQL 语句。
+
+在本教程中，我们将在每条 SQL 语句的末端使用分号。
+
+
+## 一些最重要的 SQL 命令
+
+- SELECT - 从数据库中提取数据
+- UPDATE - 更新数据库中的数据
+- DELETE - 从数据库中删除数据
+- INSERT INTO - 向数据库中插入新数据
+- CREATE DATABASE - 创建新数据库
+- ALTER DATABASE - 修改数据库
+- CREATE TABLE - 创建新表
+- ALTER TABLE - 变更（改变）数据库表
+- DROP TABLE - 删除表
+- CREATE INDEX - 创建索引（搜索键）
+- DROP INDEX - 删除索引
+
+以下是一些常用的 SQL 语句和语法：
+
+SELECT：用于从数据库中查询数据。
+
+```text
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+ORDER BY column_name [ASC|DESC]
+```
+
+- column_name(s): 要查询的列。
+- table_name: 要查询的表。
+- condition: 查询条件（可选）。
+- ORDER BY: 排序方式，ASC 表示升序，DESC 表示降序（可选）。
+
+INSERT INTO：用于向数据库表中插入新数据。
+
+```text
+INSERT INTO table_name (column1, column2, ...)
+VALUES (value1, value2, ...)
+```
+
+- table_name: 要插入数据的表。
+- column1, column2, ...: 要插入数据的列。
+- value1, value2, ...: 对应列的值。
+
+UPDATE：用于更新数据库表中的现有数据。
+
+```text
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition
+```
+
+- table_name: 要更新数据的表。
+- column1 = value1, column2 = value2, ...: 要更新的列及其新值。
+- condition: 更新条件。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL 语法` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

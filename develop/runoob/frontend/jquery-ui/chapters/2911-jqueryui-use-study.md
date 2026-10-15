@@ -1,35 +1,51 @@
-# jQuery UI：jQuery UI 使用 学习笔记
+# jQuery UI：jQuery UI 使用
 
 - 来源：[jQuery UI 使用](https://www.runoob.com/jqueryui/jqueryui-use.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2911
 
-## 学习目标
+## 本章内容
 
-jQuery UI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery UI 使用` 建立学习路径，先理解它在 jQuery UI 体系中的位置，再做可运行或可复述的验证。
+一旦您下载了 jQuery UI，您将得到一个 zip 压缩包，包含下列文件：
 
-## 阅读抓手
+- /css/
+- /development-bundle/
+- /js/
+- index.html
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 在网页上使用 jQuery UI
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在文本编辑器中打开 index.html，您将看到引用了一些外部文件：主题、jQuery 和 jQuery UI。通常情况下，您需要在页面中引用这三个文件，以便使用 jQuery UI 的窗体小部件和交互部件：
 
-## 完成标准
+```html
+<link rel="stylesheet" href="css/themename/jquery-ui.custom.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.custom.min.js"></script>
+```
 
-- 能用 3 到 5 句话解释 `jQuery UI 使用`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+一旦您引用了这些必要的文件，您就能向您的页面添加一些 jQuery 小部件。比如，要制作一个日期选择器（datepicker）小部件，您需要向页面添加一个文本输入框，然后再调用 .datepicker()，如下所示：
+
+HTML:
+
+```html
+<input type="text" name="date" id="date" />
+```
+
+JavaScript:
+
+```text
+$( "#date" ).datepicker();
+```
+
+如需查看 jQuery UI 小部件和交互部件的实例演示，请访问 jQuery UI 实例。
+
+
+## 复习重点
+
+- 能说明 `jQuery UI 使用` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,113 @@
-# JavaScript：JavaScript Date（日期） 练习笔记
+# JavaScript：JavaScript Date（日期） 对象
 
 - 来源：[JavaScript Date（日期）](https://www.runoob.com/js/js-obj-date.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2817
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript Date（日期）` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+日期对象用于处理日期和时间。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 在线实例
 
-## 验收清单
+Date() 如何使用 Date() 方法获得当日的日期。
 
-- 我能独立说出 `JavaScript Date（日期）` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+getFullYear() 使用 getFullYear() 获取年份。
 
-## 复盘问题
+getTime() getTime() 返回从 1970 年 1 月 1 日至今的毫秒数。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+setFullYear() 如何使用 setFullYear() 设置具体的日期。
+
+toUTCString() 如何使用 toUTCString() 将当日的日期（根据 UTC）转换为字符串。
+
+getDay() 如何使用 getDay() 和数组来显示星期，而不仅仅是数字。
+
+Display a clock 如何在网页上显示一个钟表。
+
+
+## 完整的 Date 对象参考手册
+
+我们提供 JavaScript Date 对象参考手册，其中包括所有可用于日期对象的属性和方法。JavaScript Date 对象参考手册。
+
+该手册包含了对每个属性和方法的详细描述以及相关实例。
+
+
+## 创建日期
+
+Date 对象用于处理日期和时间。
+
+可以通过 new 关键词来定义 Date 对象。以下代码定义了名为 myDate 的 Date 对象：
+
+有四种方式初始化日期:
+
+```text
+new Date();
+new Date(value);
+new Date(dateString);
+new Date(year, monthIndex [, day [, hours [, minutes [, seconds [, milliseconds]]]]]);
+```
+
+上面的参数大多数都是可选的，在不指定的情况下，默认参数是0。
+
+实例化一个日期的一些例子：
+
+```javascript
+var today = new Date()
+var d1 = new Date("October 13, 1975 11:13:00")
+var d2 = new Date(79,5,24)
+var d3 = new Date(79,5,24,11,33,0)
+```
+
+
+## 设置日期
+
+通过使用针对日期对象的方法，我们可以很容易地对日期进行操作。
+
+在下面的例子中，我们为日期对象设置了一个特定的日期 (2010 年 1 月 14 日)：
+
+```javascript
+var myDate=new Date();
+myDate.setFullYear(2010,0,14);// 第二个参数为月份， 0 到 11 之间的整数值，表示从一月到十二月
+```
+
+在下面的例子中，我们将日期对象设置为 5 天后的日期：
+
+```javascript
+var myDate=new Date();
+myDate.setDate(myDate.getDate()+5);
+```
+
+注意: 如果增加天数会改变月份或者年份，那么日期对象会自动完成这种转换。
+
+
+## 两个日期比较
+
+日期对象也可用于比较两个日期。
+
+下面的代码将当前日期与 2100 年 1 月 14 日做了比较：
+
+```javascript
+var x=new Date();
+x.setFullYear(2100,0,14);
+var today = new Date();
+
+if (x>today)
+{
+    alert("今天是2100年1月14日之前");
+}
+else
+{
+    alert("今天是2100年1月14日之后");
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript Date（日期）` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

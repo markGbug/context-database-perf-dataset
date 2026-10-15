@@ -1,35 +1,150 @@
-# Ruby：Ruby RubyGems 学习笔记
+# Ruby：Ruby RubyGems
 
 - 来源：[Ruby RubyGems](https://www.runoob.com/ruby/ruby-rubygems.html)
 - 分类：编程语言
 - 技术：Ruby
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3753
 
-## 学习目标
+## 本章内容
 
-Ruby 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Ruby RubyGems` 建立学习路径，先理解它在 Ruby 体系中的位置，再做可运行或可复述的验证。
+RubyGems 是 Ruby 的一个包管理器，它提供一个分发 Ruby 程序和库的标准格式，还提供一个管理程序包安装的工具。
 
-## 阅读抓手
+RubyGems 旨在方便地管理 gem 安装的工具，以及用于分发 gem 的服务器。这类似于 Ubuntu 下的apt-get, Centos 的 yum，Python 的 pip。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+RubyGems大约创建于2003年11月，从Ruby 1.9版起成为Ruby标准库的一部分。
 
-## 笔记模板
+如果你的 Ruby 低于 1.9 版本，也可以通过手动安装:
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 首先下载安装包：https://rubygems.org/pages/download。
+- 解压并进入目录，执行命令：ruby setup.rb
 
-## 完成标准
+更新 RubyGems 命令：
 
-- 能用 3 到 5 句话解释 `Ruby RubyGems`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+$ gem update --system          # 需要管理员或root用户
+```
+
+
+## Gem
+
+Gem 是 Ruby 模块 (叫做 Gems) 的包管理器。其包含包信息，以及用于安装的文件。
+
+Gem通常是依照".gemspec"文件构建的，包含了有关Gem信息的YAML文件。Ruby代码也可以直接建立Gem，这种情况下通常利用Rake来进行。
+
+
+### gem命令
+
+gem命令用于构建、上传、下载以及安装Gem包。
+
+
+### gem用法
+
+RubyGems 在功能上与 apt-get、portage、yum 和 npm 非常相似。
+
+安装：
+
+```text
+gem install mygem
+```
+
+卸载：
+
+```text
+gem uninstall mygem
+```
+
+列出已安装的gem：
+
+```text
+gem list --local
+```
+
+列出可用的gem，例如：
+
+```text
+gem list --remote
+```
+
+为所有的gems创建RDoc文档：
+
+```text
+gem rdoc --all
+```
+
+下载一个gem，但不安装：
+
+```text
+gem fetch mygem
+```
+
+从可用的gem中搜索，例如：
+
+```text
+gem search STRING --remote
+```
+
+
+## gem 包的构建
+
+gem命令也被用来构建和维护.gemspec和.gem文件。
+
+利用.gemspec文件构建.gem：
+
+```text
+gem build mygem.gemspec
+```
+
+
+## 修改国内源
+
+由于国内网络原因（你懂的），导致 rubygems.org 存放在 Amazon S3 上面的资源文件间歇性连接失败。
+
+所以你会与遇到 gem install rack 或 bundle install 的时候半天没有响应，具体可以用 gem install rails -V 来查看执行过程。
+
+首先，查看当前源：
+
+```text
+$ gem sources -l
+*** CURRENT SOURCES ***
+
+https://rubygems.org/
+```
+
+接着，移除 https://rubygems.org/，并添加国内下载源 https://gems.ruby-china.com/。
+
+```text
+$ gem sources --remove https://rubygems.org/
+$ gem sources -a https://gems.ruby-china.com/
+$ gem sources -l
+*** CURRENT SOURCES ***
+
+https://gems.ruby-china.com/
+# 请确保只有 gems.ruby-china.com
+$ gem install rails
+```
+
+
+### 如果你使用 Gemfile 和 Bundle (例如：Rails 项目)
+
+你可以用bundle的gem源代码镜像命令。
+
+```text
+$ bundle config mirror.https://rubygems.org https://gems.ruby-china.com/
+```
+
+这样你不用改你的 Gemfile 的 source。
+
+```text
+source 'https://rubygems.org/'
+gem 'rails', '4.1.0'
+...
+```
+
+
+## 复习重点
+
+- 能说明 `Ruby RubyGems` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

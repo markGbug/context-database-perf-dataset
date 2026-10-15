@@ -1,35 +1,26 @@
-# XML DOM：DOM ProcessingInst 学习笔记
+# XML DOM：XML DOM - ProcessingInstruction 对象
 
 - 来源：[DOM ProcessingInst](https://www.runoob.com/dom/dom-processinginstruction.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4400
 
-## 学习目标
+## 本章内容
 
-XML DOM 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `DOM ProcessingInst` 建立学习路径，先理解它在 XML DOM 体系中的位置，再做可运行或可复述的验证。
+## ProcessingInstruction 对象
 
-## 阅读抓手
+ProcessingInstruction 对象代表一个处理指令。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+处理指令用于维护 XML 文档的文本中特定处理器的信息。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## ProcessingInstruction 对象属性
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `DOM ProcessingInst`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 复习重点
+
+- 能说明 `DOM ProcessingInst` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

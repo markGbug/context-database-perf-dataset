@@ -1,35 +1,170 @@
-# Foundation：Foundation 文本 学习笔记
+# Foundation：Foundation 文本
 
 - 来源：[Foundation 文本](https://www.runoob.com/foundation/foundation-typography.html)
 - 分类：前端开发
 - 技术：Foundation
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2524
 
-## 学习目标
+## 本章内容
 
-Foundation 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Foundation 文本` 建立学习路径，先理解它在 Foundation 体系中的位置，再做可运行或可复述的验证。
+## Foundation 默认设置
 
-## 阅读抓手
+Foundation 使用浏览器默认字体大小 (font-size:100%)。对于大多数桌面浏览器来说，字体默认为 16px。对于大多数移动端浏览器来说，字体默认为 12px。默认的字体为 "Helvetica Neue"， line-height 默认为 1.5。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+以上默认的设置均是针对 <body> 元素。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## Foundation 文字排列设计
 
-## 完成标准
+本章节我们将讨论 Foundation 的文字排列设计。
 
-- 能用 3 到 5 句话解释 `Foundation 文本`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下实例的真实样式请通过点击"尝试一下"按钮查看。
+
+
+## <h1> - <h6>
+
+Foundation 渲染的 HTML 标题 (<h1> 到 <h6>) 如下所示:
+
+
+### 实例
+
+```html
+<h1>h1 标题</h1>
+<h2>h2 标题</h2>
+<h3>h3 标题</h3>
+<h4>h4 标题</h4>
+<h5>h5 标题</h5>
+<h6>h6 标题</h6>
+```
+
+提示： 如果需要创建一个浅色的标题，可以在元素上添加 .subheader 类:
+
+
+### 实例
+
+```html
+<h1 class="subheader">h1.subheader</h1>
+<h2 class="subheader">h2.subheader</h2>
+<h3 class="subheader">h3.subheader</h3>
+<h4 class="subheader">h4.subheader</h4>
+<h5 class="subheader">h5.subheader</h5>
+<h6 class="subheader">h6.subheader</h6>
+```
+
+
+## <small>
+
+在 Foundation 中， HTML <small> 元素用于创建一个浅色的副标题：
+
+
+### 实例
+
+```html
+<h1>h1 heading <small>secondary text</small></h1>
+<h2>h2 heading <small>secondary text</small></h2>
+<h3>h3 heading <small>secondary text</small></h3>
+<h4>h4 heading <small>secondary text</small></h4>
+<h5>h5 heading <small>secondary text</small></h5>
+<h6>h6 heading <small>secondary text</small></h6>
+```
+
+
+## <a>
+
+Foundation <a> 元素的样式如下所示：
+
+
+### 实例
+
+```html
+<p>这是一个 <a class="a" href="#">链接</a>。</p>
+```
+
+
+## <abbr>
+
+Foundation <abbr> 元素的样式如下所示：
+
+
+### 实例
+
+```html
+<p>The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.</p>
+```
+
+
+## <blockquote>
+
+Foundation <blockquote> 元素的样式如下所示：
+
+
+### 实例
+
+```html
+<blockquote>
+  <p>学的不仅是技术，更是梦想！</p>
+  <cite>菜鸟教程</cite>
+</blockquote>
+```
+
+
+## <dl>
+
+Foundation <dl> 元素的样式如下所示：
+
+
+### 实例
+
+```html
+<dl>
+  <dt>Coffee</dt>
+  <dd>- black hot drink</dd>
+  <dt>Milk</dt>
+  <dd>- white cold drink</dd>
+</dl>
+```
+
+
+## <code>
+
+Foundation <code> 元素的样式如下所示：
+
+
+### 实例
+
+```html
+<p>以下 HTML 元素: <code>span</code>, <code>section</code>, 和 <code>div</code> 是文档的一部分。</p>
+```
+
+
+## <kbd>
+
+Foundation <kbd> 元素的样式如下所示：
+
+
+### 实例
+
+```html
+<p>按下 <kbd>ctrl + p</kbd> 键打开打印窗口。</p>
+```
+
+
+## <hr>
+
+Foundation <hr> 元素的样式如下所示：
+
+
+### 实例
+
+```html
+<hr>
+```
+
+
+## 复习重点
+
+- 能说明 `Foundation 文本` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

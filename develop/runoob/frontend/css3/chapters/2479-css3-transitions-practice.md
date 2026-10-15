@@ -1,34 +1,130 @@
-# CSS3：CSS3 过渡 练习笔记
+# CSS3：CSS3 过渡
 
 - 来源：[CSS3 过渡](https://www.runoob.com/css3/css3-transitions.html)
 - 分类：前端开发
 - 技术：CSS3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2479
 
-## 练习目标
+## 本章内容
 
-把 `CSS3 过渡` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## CSS3 过渡
 
-## 练习步骤
+CSS3中，我们为了添加某种效果可以从一种样式转变到另一个的时候，无需使用Flash动画或JavaScript。用鼠标移过下面的元素：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+用鼠标移过下面的元素：
 
-## 验收清单
 
-- 我能独立说出 `CSS3 过渡` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 浏览器支持
 
-## 复盘问题
+表格中的数字表示支持该属性的第一个浏览器版本号。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+紧跟在 -webkit-, -ms- 或 -moz- 前的数字为支持该前缀属性的第一个浏览器版本号。
+
+
+## 它是如何工作？
+
+CSS3 过渡是元素从一种样式逐渐改变为另一种的效果。
+
+要实现这一点，必须规定两项内容：
+
+- 指定要添加效果的CSS属性
+- 指定效果的持续时间。
+
+
+## 实例
+
+应用于宽度属性的过渡效果，时长为 2 秒：
+
+```text
+div
+{
+    transition: width 2s;
+    -webkit-transition: width 2s; /* Safari */
+}
+```
+
+注意： 如果未指定的期限，transition将没有任何效果，因为默认值是0。
+
+指定的CSS属性的值更改时效果会发生变化。一个典型CSS属性的变化是用户鼠标放在一个元素上时：
+
+
+## 实例
+
+规定当鼠标指针悬浮(:hover)于 <div>元素上时：
+
+```text
+div:hover
+{
+    width:300px;
+}
+```
+
+注意： 当鼠标光标移动到该元素时，它逐渐改变它原有样式
+
+
+## 多项改变
+
+要添加多个样式的变换效果，添加的属性由逗号分隔：
+
+
+## 实例
+
+添加了宽度，高度和转换效果：
+
+```text
+div
+{
+    transition: width 2s, height 2s, transform 2s;
+    -webkit-transition: width 2s, height 2s, -webkit-transform 2s;
+}
+```
+
+
+## 过渡属性
+
+下表列出了所有的过渡属性:
+
+下面的两个例子设置所有过渡属性：
+
+
+## 实例
+
+在一个例子中使用所有过渡属性：
+
+```text
+div
+{
+    transition-property: width;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+    transition-delay: 2s;
+    /* Safari */
+    -webkit-transition-property:width;
+    -webkit-transition-duration:1s;
+    -webkit-transition-timing-function:linear;
+    -webkit-transition-delay:2s;
+}
+```
+
+
+## 实例
+
+与上面的例子相同的过渡效果，但是使用了简写的 transition 属性：
+
+```text
+div
+{
+    transition: width 1s linear 2s;
+    /* Safari */
+    -webkit-transition:width 1s linear 2s;
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS3 过渡` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

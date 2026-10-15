@@ -1,35 +1,196 @@
-# Java：Java Number & Math 类 学习笔记
+# Java：Java Number & Math 类
 
 - 来源：[Java Number & Math 类](https://www.runoob.com/java/java-number.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0891
 
-## 学习目标
+## 本章内容
 
-Java 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Java Number & Math 类` 建立学习路径，先理解它在 Java 体系中的位置，再做可运行或可复述的验证。
+## Java Number
 
-## 阅读抓手
+一般地，当需要使用数字的时候，我们通常使用内置数据类型，如：byte、int、long、double 等。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```java
+int a = 5000;
+float b = 13.65f;
+byte c = 0x4a;
+```
 
-## 完成标准
+然而，在实际开发过程中，我们经常会遇到需要使用对象，而不是内置数据类型的情形。为了解决这个问题，Java 语言为每一个内置数据类型提供了对应的包装类。
 
-- 能用 3 到 5 句话解释 `Java Number & Math 类`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+所有的包装类（Integer、Long、Byte、Double、Float、Short）都是抽象类 Number 的子类。
+
+这种由编译器特别支持的包装称为装箱，所以当内置数据类型被当作对象使用的时候，编译器会把内置类型装箱为包装类。相似的，编译器也可以把一个对象拆箱为内置类型。
+
+Number 类属于 java.lang 包。
+
+Number 是一个抽象类，主要作用是为各种数值类型提供统一的转换方法：
+
+
+## 实例
+
+下面是一个使用 Integer 对象的实例：
+
+
+## Test.java 文件代码：
+
+```java
+public class Test{
+
+   public static void main(String[] args){
+      Integer x = 5;
+      x =  x + 10;
+      System.out.println(x);
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+15
+```
+
+当 x 被赋为整型值时，由于x是一个对象，所以编译器要对x进行装箱。然后，为了使x能进行加运算，所以要对x进行拆箱。
+
+
+### 常用方法示例
+
+
+## 实例
+
+
+## 实例
+
+
+### 特殊数值处理
+
+
+## 实例
+
+
+## 实例
+
+
+### 自动装箱与拆箱
+
+Java 5+ 支持自动转换：
+
+
+## 实例
+
+
+## Java Math 类
+
+Math 类是 Java 提供的数学工具类，位于 java.lang 包中，包含执行基本数值运算的静态方法。
+
+Java 的 Math 包含了用于执行基本数学运算的属性和方法，如初等指数、对数、平方根和三角函数。
+
+Math 的方法都被定义为 static 形式，通过 Math 类可以在主函数中直接调用。
+
+
+## Test.java 文件代码：
+
+```java
+public class Test {
+    public static void main (String []args)
+    {
+        System.out.println("90 度的正弦值：" + Math.sin(Math.PI/2));
+        System.out.println("0度的余弦值：" + Math.cos(0));
+        System.out.println("60度的正切值：" + Math.tan(Math.PI/3));
+        System.out.println("1的反正切值： " + Math.atan(1));
+        System.out.println("π/2的角度值：" + Math.toDegrees(Math.PI/2));
+        System.out.println(Math.PI);
+    }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+90 度的正弦值：1.0
+0度的余弦值：1.0
+60度的正切值：1.7320508075688767
+1的反正切值： 0.7853981633974483
+π/2的角度值：90.0
+3.141592653589793
+```
+
+
+### 高级数学运算
+
+
+## 实例
+
+
+## 实例
+
+
+## 实例
+
+
+## 实例
+
+
+## Number & Math 类方法
+
+下面的表中列出的是 Number & Math 类常用的一些方法：
+
+
+## Math 的 floor,round 和 ceil 方法实例比较
+
+
+## floor,round 和 ceil 实例：
+
+```java
+public class Main {
+  public static void main(String[] args) {
+    double[] nums = { 1.4, 1.5, 1.6, -1.4, -1.5, -1.6 };
+    for (double num : nums) {
+      test(num);
+    }
+  }
+
+  private static void test(double num) {
+    System.out.println("Math.floor(" + num + ")=" + Math.floor(num));
+    System.out.println("Math.round(" + num + ")=" + Math.round(num));
+    System.out.println("Math.ceil(" + num + ")=" + Math.ceil(num));
+  }
+}
+```
+
+以上实例执行输出结果为：
+
+```text
+Math.floor(1.4)=1.0
+Math.round(1.4)=1
+Math.ceil(1.4)=2.0
+Math.floor(1.5)=1.0
+Math.round(1.5)=2
+Math.ceil(1.5)=2.0
+Math.floor(1.6)=1.0
+Math.round(1.6)=2
+Math.ceil(1.6)=2.0
+Math.floor(-1.4)=-2.0
+Math.round(-1.4)=-1
+Math.ceil(-1.4)=-1.0
+Math.floor(-1.5)=-2.0
+Math.round(-1.5)=-1
+Math.ceil(-1.5)=-1.0
+Math.floor(-1.6)=-2.0
+Math.round(-1.6)=-2
+Math.ceil(-1.6)=-1.0
+```
+
+
+## 复习重点
+
+- 能说明 `Java Number & Math 类` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

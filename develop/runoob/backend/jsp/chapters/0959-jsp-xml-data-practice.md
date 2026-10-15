@@ -1,34 +1,180 @@
-# JSP：JSP XML 数据处理 练习笔记
+# JSP：JSP XML 数据处理
 
 - 来源：[JSP XML 数据处理](https://www.runoob.com/jsp/jsp-xml-data.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0959
 
-## 练习目标
+## 本章内容
 
-把 `JSP XML 数据处理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+当通过HTTP发送XML数据时，就有必要使用JSP来处理传入和流出的XML文档了，比如RSS文档。作为一个XML文档，它仅仅只是一堆文本而已，使用JSP创建XML文档并不比创建一个HTML文档难。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 使用JSP发送XML
 
-## 验收清单
+使用JSP发送XML内容就和发送HTML内容一样。唯一的不同就是您需要把页面的context属性设置为text/xml。要设置context属性，使用<%@page % >命令，就像这样：
 
-- 我能独立说出 `JSP XML 数据处理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+<%@ page contentType="text/xml" %>
+```
 
-## 复盘问题
+接下来这个例子向浏览器发送XML内容：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<%@ page contentType="text/xml" %>
+
+<books>
+   <book>
+      <name>Padam History</name>
+      <author>ZARA</author>
+      <price>100</price>
+   </book>
+</books>
+```
+
+使用不同的浏览器来访问这个例子，看看这个例子所呈现的文档树。
+
+
+## 在JSP中处理XML
+
+在使用JSP处理XML之前，您需要将与XML 和XPath相关的两个库文件放在<Tomcat Installation Directory>\lib目录下：
+
+- XercesImpl.jar：在这下载http://www.apache.org/dist/xerces/j/
+- xalan.jar：在这下载http://archive.apache.org/dist/xml/xalan-j/
+
+books.xml文件:
+
+```html
+<books>
+<book>
+  <name>Padam History</name>
+  <author>ZARA</author>
+  <price>100</price>
+</book>
+<book>
+  <name>Great Mistry</name>
+  <author>NUHA</author>
+  <price>2000</price>
+</book>
+</books>
+```
+
+main.jsp文件：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+
+<html>
+<head>
+  <title>JSTL x:parse Tags</title>
+</head>
+<body>
+<h3>Books Info:</h3>
+<c:import var="bookInfo" url="http://localhost:8080/books.xml"/>
+
+<x:parse xml="${bookInfo}" var="output"/>
+<b>The title of the first book is</b>:
+<x:out select="$output/books/book[1]/name" />
+<br>
+<b>The price of the second book</b>:
+<x:out select="$output/books/book[2]/price" />
+
+</body>
+</html>
+```
+
+访问http://localhost:8080/main.jsp，运行结果如下：
+
+```text
+BOOKS INFO:
+The title of the first book is:Padam History
+The price of the second book: 2000
+```
+
+
+## 使用JSP格式化XML
+
+这个是XSLT样式表style.xsl文件：
+
+```html
+<?xml version="1.0"?>
+<xsl:stylesheet xmlns:xsl=
+"http://www.w3.org/1999/XSL/Transform" version="1.0">
+
+<xsl:output method="html" indent="yes"/>
+
+<xsl:template match="/">
+  <html>
+  <body>
+   <xsl:apply-templates/>
+  </body>
+  </html>
+</xsl:template>
+
+<xsl:template match="books">
+  <table border="1" width="100%">
+    <xsl:for-each select="book">
+      <tr>
+        <td>
+          <i><xsl:value-of select="name"/></i>
+        </td>
+        <td>
+          <xsl:value-of select="author"/>
+        </td>
+        <td>
+          <xsl:value-of select="price"/>
+        </td>
+      </tr>
+    </xsl:for-each>
+  </table>
+</xsl:template>
+</xsl:stylesheet>
+```
+
+这个是main.jsp文件：
+
+```html
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+
+<html>
+<head>
+  <title>JSTL x:transform Tags</title>
+</head>
+<body>
+<h3>Books Info:</h3>
+<c:set var="xmltext">
+  <books>
+    <book>
+      <name>Padam History</name>
+      <author>ZARA</author>
+      <price>100</price>
+    </book>
+    <book>
+      <name>Great Mistry</name>
+      <author>NUHA</author>
+      <price>2000</price>
+    </book>
+  </books>
+</c:set>
+
+<c:import url="http://localhost:8080/style.xsl" var="xslt"/>
+<x:transform xml="${xmltext}" xslt="${xslt}"/>
+
+</body>
+</html>
+```
+
+运行结果如下：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JSP XML 数据处理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

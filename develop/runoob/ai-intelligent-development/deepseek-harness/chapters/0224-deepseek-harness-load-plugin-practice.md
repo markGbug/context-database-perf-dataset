@@ -1,34 +1,75 @@
-# DeepSeek Harness：DeepSeek Harness 加载插件 练习笔记
+# DeepSeek Harness：DeepSeek Harness 加载本地插件
 
 - 来源：[DeepSeek Harness 加载插件](https://www.runoob.com/deepseek-harness/deepseek-harness-load-plugin.html)
 - 分类：AI / 智能开发
 - 技术：DeepSeek Harness
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0224
 
-## 练习目标
+## 本章内容
 
-把 `DeepSeek Harness 加载插件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+上一篇 DeepSeek Harness 第一个插件 写好了 hello-plugin 的源码，接下来我们把它加载进 Web UI。
 
-## 练习步骤
+这里我们会用到两个东西：patch 覆盖层 cordis.yml 和 --patch 启动参数。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## scratch-plugin 目录结构
 
-- 我能独立说出 `DeepSeek Harness 加载插件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+之前我们创建了 scratch-plugin/src，现在再加一个 cordis.yml。
 
-## 复盘问题
+整个临时项目的结构如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+scratch-plugin/
+├── src/
+│   └── my-plugin.ts    # 插件源码（上一篇写的 hello-plugin）
+└── cordis.yml          # patch 覆盖层：告诉框架插入哪个插件
+```
+
+
+## cordis.yml 的 insert
+
+在仓库根目录运行 pwd，拿到绝对路径。
+
+然后创建 scratch-plugin/cordis.yml，内容如下：
+
+
+## 实例
+
+把 /absolute/path/to/deepseek-harness 替换成 pwd 打印的真实路径。
+
+插件路径必须是绝对路径。
+
+patch 文件只贡献配置，不会改变 loader 解析模块路径时使用的 profile 目录。
+
+
+## 用 --patch 启动
+
+用这个覆盖层启动 Web UI：
+
+```text
+pnpm dsh web --patch ./scratch-plugin/cordis.yml
+```
+
+启动期间，终端会打印 [hello-plugin] plugin loaded!。
+
+打开 http://127.0.0.1:3080，在设置插件列表中搜索 hello，可以看到我们安装的插件。
+
+
+## 工作原理
+
+dsh 把多个配置来源按顺序叠加成一个最终配置。
+
+--patch 传入的 cordis.yml 是一个覆盖层，在启动时叠加进 profile。
+
+提示：--patch 适合本地开发调试。
+
+要把插件交付给其他人时，用组合包（bundle）的方式，见第 21 篇。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `DeepSeek Harness 加载插件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

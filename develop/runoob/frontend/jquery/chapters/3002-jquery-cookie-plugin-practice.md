@@ -1,34 +1,176 @@
-# jQuery：jQuery Cookie 练习笔记
+# jQuery：jQuery Cookie 插件
 
 - 来源：[jQuery Cookie](https://www.runoob.com/jquery/jquery-cookie-plugin.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3002
 
-## 练习目标
+## 本章内容
 
-把 `jQuery Cookie` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+jQuery 可以通过 jquery.cookie.js 插件来操作 Cookie。
 
-## 练习步骤
+官方地址：http://plugins.jquery.com/cookie/
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Github 地址：https://github.com/carhartl/jquery-cookie
 
-## 验收清单
+使用 jquery.cookie.js 之前需要先引入 jQuery：
 
-- 我能独立说出 `jQuery Cookie` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<script src="/path/to/jquery.min.js"></script>
+<script src="/path/to/jquery.cookie.js"></script>
+```
 
-## 复盘问题
+我们可以使用第三方资源库引入这两个文件：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+```
+
+
+## 使用方法
+
+创建 cookie：
+
+```text
+$.cookie('name', 'value');
+```
+
+如果未指定过期时间，则会在关闭浏览器时过期。
+
+创建 cookie，并设置 7 天后过期：
+
+```text
+$.cookie('name', 'value', { expires: 7 });
+```
+
+创建 cookie，并设置 cookie 的有效路径，路径为网站的根目录：
+
+```text
+$.cookie('name', 'value', { expires: 7, path: '/' });
+```
+
+注：在默认情况下，只有设置 cookie 的网页才能读取该 cookie。如果想让一个页面读取另一个页面设 置的cookie，必须设置 cookie 的路径。cookie 的路径用于设置能够读取 cookie 的顶级目录。将这 个路径设置为网站的根目录，可以让所有网页都能互相读取 cookie （一般不要这样设置，防止出现冲突）。
+
+读取 cookie：
+
+```text
+$.cookie('name'); // => "value"
+$.cookie('nothing'); // => undefined
+```
+
+读取所有的 cookie 信息：
+
+```text
+$.cookie(); // => { "name": "value" }
+```
+
+删除 cookie：
+
+```text
+// cookie 删除成功返回 true，否则返回 false
+$.removeCookie('name'); // => true
+$.removeCookie('nothing'); // => false
+
+// 写入使用了 path时，读取也需要使用相同的属性 (path, domain)
+$.cookie('name', 'value', { path: '/' });
+
+// 以下代码【删除失败】
+$.removeCookie('name'); // => false
+// 以下代码【删除成功】
+$.removeCookie('name', { path: '/' }); // => true
+```
+
+注意：删除 cookie 时，必须传递用于设置 cookie 的完全相同的路径，域及安全选项。
+
+
+## 实例
+
+```text
+$(document).ready(function(){
+  $.cookie('name', 'runoob');  // 创建 cookie
+  name = $.cookie('name');     // 读取 cookie
+  $("#test").text(name);
+  $.cookie('name2', 'runoob2', { expires: 7, path: '/' });
+  name2 = $.cookie('name2');
+  $("#test2").text(name2);
+});
+```
+
+执行完后，我们可以在浏览器中查看 Cookie 信息，如下图所示：
+
+
+## 参数说明
+
+
+### raw
+
+默认值：false。
+
+默认情况下，读取和写入 cookie 的时候自动进行编码和解码（使用 encodeURIComponent 编码，decodeURIComponent 解码）。要关闭这个功能设置 raw:true 即可：
+
+```text
+$.cookie.raw = true;
+```
+
+
+### json
+
+设置 cookie 的数据使用 json 存储与读取，这时就不需要使用 JSON.stringify 和 JSON.parse 了。
+
+```text
+$.cookie.json = true;
+```
+
+
+### expires
+
+```text
+expires: 365
+```
+
+定义 cookie 的有效时间，值可以是一个数字（从创建 cookie 时算起，以天为单位）或一个 Date 对象。如果省略，那么创建的 cookie 是会话 cookie，将在用户退出浏览器时被删除。
+
+
+### path
+
+```text
+path: '/'
+```
+
+默认情况：只有设置 cookie 的网页才能读取该 cookie。
+
+定义 cookie 的有效路径。默认情况下， 该参数的值为创建 cookie 的网页所在路径（标准浏览器的行为）。
+
+如果你想在整个网站中访问这个 cookie 需要这样设置有效路径：path: '/'。如果你想删除一个定义了有效路径的 cookie，你需要在调用函数时包含这个路径:
+
+```text
+$.cookie('the_cookie', null,{ path: '/' });
+```
+
+
+### domain
+
+```text
+domain: 'example.com'
+```
+
+默认值：创建 cookie 的网页所拥有的域名。
+
+
+### secure
+
+```text
+secure: true
+```
+
+默认值：false。如果为 true，cookie 的传输需要使用安全协议（HTTPS）。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery Cookie` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

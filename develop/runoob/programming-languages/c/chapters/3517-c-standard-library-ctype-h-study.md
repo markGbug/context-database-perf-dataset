@@ -1,35 +1,86 @@
-# C：C 标准库 - <ctype.h> 学习笔记
+# C：C 标准库 - <ctype.h>
 
 - 来源：[C 标准库 - <ctype.h>](https://www.runoob.com/cprogramming/c-standard-library-ctype-h.html)
 - 分类：编程语言
 - 技术：C
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3517
 
-## 学习目标
+## 本章内容
 
-C 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `C 标准库 - <ctype.h>` 建立学习路径，先理解它在 C 体系中的位置，再做可运行或可复述的验证。
+## 简介
 
-## 阅读抓手
+C 标准库的 ctype.h 头文件提供了一些函数，可用于测试和转换字符，这些函数主要用于检查字符的类型（如字母、数字、空白字符等）以及进行字符大小写转换。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+<ctype.h> 提供了一组方便的函数，用于处理字符的分类和转换操作，是 C 标准库中处理字符操作的重要工具。
 
-## 笔记模板
+以下是一个简单的示例，演示了如何使用 <ctype.h> 提供的函数：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `C 标准库 - <ctype.h>`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+输出结果为：
+
+```text
+Character: 'a'
+ - isalpha: Yes
+ - isdigit: No
+ - isspace: No
+ - isprint: Yes
+ - ispunct: No
+Character: '1'
+ - isalpha: No
+ - isdigit: Yes
+ - isspace: No
+ - isprint: Yes
+ - ispunct: No
+Character: ' '
+ - isalpha: No
+ - isdigit: No
+ - isspace: Yes
+ - isprint: Yes
+ - ispunct: No
+Character: 'B'
+ - isalpha: Yes
+ - isdigit: No
+ - isspace: No
+ - isprint: Yes
+ - ispunct: No
+Character: '?'
+ - isalpha: No
+ - isdigit: No
+ - isspace: No
+ - isprint: Yes
+ - ispunct: Yes
+Character: '
+'
+ - isalpha: No
+ - isdigit: No
+ - isspace: Yes
+ - isprint: No
+ - ispunct: No
+tolower('A') = 'a'
+toupper('a') = 'A'
+```
+
+
+## 库函数
+
+下面列出了头文件 ctype.h 中定义的函数。
+
+这些函数用于测试字符是否属于某种类型，这些函数接受 int 作为参数，它的值必须是 EOF 或表示为一个无符号字符。
+
+如果参数 c 满足描述的条件，则这些函数返回非零（true）。如果参数 c 不满足描述的条件，则这些函数返回零。
+
+标准库还包含了两个转换函数，它们接受并返回一个 "int"
+
+
+## 字符类
+
+
+## 复习重点
+
+- 能说明 `C 标准库 - <ctype.h>` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

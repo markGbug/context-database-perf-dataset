@@ -1,34 +1,121 @@
-# HTML DOM：HTML DOM 属性 练习笔记
+# HTML DOM：HTML DOM 属性
 
 - 来源：[HTML DOM 属性](https://www.runoob.com/htmldom/htmldom-properties.html)
 - 分类：前端开发
 - 技术：HTML DOM
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2591
 
-## 练习目标
+## 本章内容
 
-把 `HTML DOM 属性` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+属性是节点（HTML 元素）的值，您能够获取或设置。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 编程接口
 
-## 验收清单
+可通过 JavaScript （以及其他编程语言）对 HTML DOM 进行访问。
 
-- 我能独立说出 `HTML DOM 属性` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+所有 HTML 元素被定义为对象，而编程接口则是对象方法和对象属性。
 
-## 复盘问题
+方法是您能够执行的动作（比如添加或修改元素）。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+属性是您能够获取或设置的值（比如节点的名称或内容）。
+
+
+## innerHTML 属性
+
+获取元素内容的最简单方法是使用 innerHTML 属性。
+
+innerHTML 属性对于获取或替换 HTML 元素的内容很有用。
+
+
+## 实例
+
+下面的代码获取 id="intro" 的 <p> 元素的 innerHTML：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+
+<p id="intro">Hello World!</p>
+
+<script>
+var txt=document.getElementById("intro").innerHTML;
+document.write(txt);
+</script>
+
+</body>
+</html>
+```
+
+在上面的例子中，getElementById 是一个方法，而 innerHTML 是属性。
+
+innerHTML 属性可用于获取或改变任意 HTML 元素，包括 <html> 和 <body>。
+
+nodeName 属性规定节点的名称。
+
+- nodeName 是只读的
+- 元素节点的 nodeName 与标签名相同
+- 属性节点的 nodeName 与属性名相同
+- 文本节点的 nodeName 始终是 #text
+- 文档节点的 nodeName 始终是 #document
+
+注意： nodeName 始终包含 HTML 元素的大写字母标签名。
+
+
+## nodeValue 属性
+
+nodeValue 属性规定节点的值。
+
+- 元素节点的 nodeValue 是 undefined 或 null
+- 文本节点的 nodeValue 是文本本身
+- 属性节点的 nodeValue 是属性值
+
+
+## 获取元素的值
+
+下面的例子会取回 <p id="intro"> 标签的文本节点值：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+
+<p id="intro">Hello World!</p>
+
+<script>
+x=document.getElementById("intro");
+document.write(x.firstChild.nodeValue);
+</script>
+
+</body>
+</html>
+```
+
+
+## nodeType 属性
+
+nodeType 属性返回节点的类型。nodeType 是只读的。
+
+比较重要的节点类型有：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML DOM 属性` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

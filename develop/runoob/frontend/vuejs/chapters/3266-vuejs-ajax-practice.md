@@ -1,34 +1,138 @@
-# Vue.js：Vue.js Ajax(vue-resource) 练习笔记
+# Vue.js：Vue.js Ajax(vue-resource)
 
 - 来源：[Vue.js Ajax(vue-resource)](https://www.runoob.com/vue2/vuejs-ajax.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3266
 
-## 练习目标
+## 本章内容
 
-把 `Vue.js Ajax(vue-resource)` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Vue 要实现异步加载需要使用到 vue-resource 库。
 
-## 练习步骤
+Vue.js 2.0 版本推荐使用 axios 来完成 ajax 请求。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+```
 
-## 验收清单
 
-- 我能独立说出 `Vue.js Ajax(vue-resource)` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### Get 请求
 
-## 复盘问题
+以下是一个简单的 Get 请求实例，请求地址是一个简单的 txt 文本：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+```javascript
+window.onload = function(){
+    var vm = new Vue({
+        el:'#box',
+        data:{
+            msg:'Hello World!',
+        },
+        methods:{
+            get:function(){
+                //发送get请求
+                this.$http.get('/try/ajax/ajax_info.txt').then(function(res){
+                    document.write(res.body);
+                },function(){
+                    console.log('请求失败处理');
+                });
+            }
+        }
+    });
+}
+```
+
+如果需要传递数据，可以使用 this.$http.get('get.php',{params : jsonData}) 格式，第二个参数 jsonData 就是传到后端的数据。
+
+```javascript
+this.$http.get('get.php',{params : {a:1,b:2}}).then(function(res){
+    document.write(res.body);
+},function(res){
+    console.log(res.status);
+});
+```
+
+
+### post 请求
+
+post 发送数据到后端，需要第三个参数 {emulateJSON:true}。
+
+emulateJSON 的作用： 如果Web服务器无法处理编码为 application/json 的请求，你可以启用 emulateJSON 选项。
+
+
+## 实例
+
+```javascript
+window.onload = function(){
+    var vm = new Vue({
+        el:'#box',
+        data:{
+            msg:'Hello World!',
+        },
+        methods:{
+            post:function(){
+                //发送 post 请求
+                this.$http.post('/try/ajax/demo_test_post.php',{name:"菜鸟教程",url:"http://www.runoob.com"},{emulateJSON:true}).then(function(res){
+                    document.write(res.body);
+                },function(res){
+                    console.log(res.status);
+                });
+            }
+        }
+    });
+}
+```
+
+demo_test_post.php 代码如下：
+
+```text
+<?php
+$name = isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '';
+$city = isset($_POST['url']) ? htmlspecialchars($_POST['url']) : '';
+echo '网站名: ' . $name;
+echo "\n";
+echo 'URL 地址: ' .$city;
+?>
+```
+
+
+### 语法 & API
+
+你可以使用全局对象方式 Vue.http 或者在一个 Vue 实例的内部使用 this.$http来发起 HTTP 请求。
+
+```text
+// 基于全局Vue对象使用http
+Vue.http.get('/someUrl', [options]).then(successCallback, errorCallback);
+Vue.http.post('/someUrl', [body], [options]).then(successCallback, errorCallback);
+
+// 在一个Vue实例内使用$http
+this.$http.get('/someUrl', [options]).then(successCallback, errorCallback);
+this.$http.post('/someUrl', [body], [options]).then(successCallback, errorCallback);
+```
+
+```text
+get(url, [options])
+head(url, [options])
+delete(url, [options])
+jsonp(url, [options])
+post(url, [body], [options])
+put(url, [body], [options])
+patch(url, [body], [options])
+```
+
+除了 jsonp 以外，另外 6 种的 API 名称是标准的 HTTP 方法。
+
+options 参数说明:
+
+通过如下属性和方法处理一个请求获取到的响应对象：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue.js Ajax(vue-resource)` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,97 @@
-# PHP：PHP E-mail 学习笔记
+# PHP：PHP 发送电子邮件
 
 - 来源：[PHP E-mail](https://www.runoob.com/php/php-mail.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1074
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP E-mail` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+PHP 允许您从脚本直接发送电子邮件。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## PHP mail() 函数
 
-## 笔记模板
+PHP mail() 函数用于从脚本中发送电子邮件。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+语法
 
-## 完成标准
+注释：PHP 运行邮件函数需要一个已安装且正在运行的邮件系统(如：sendmail、postfix、qmail等)。所用的程序通过在 php.ini 文件中的配置设置进行定义。请在我们的 PHP Mail 参考手册 阅读更多内容。
 
-- 能用 3 到 5 句话解释 `PHP E-mail`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## PHP 简易 E-Mail
+
+通过 PHP 发送电子邮件的最简单的方式是发送一封文本 email。
+
+在下面的实例中，我们首先声明变量($to, $subject, $message, $from, $headers)，然后我们在 mail() 函数中使用这些变量来发送了一封 E-mail：
+
+```text
+<?php
+$to = "someone@example.com";         // 邮件接收者
+$subject = "参数邮件";                // 邮件标题
+$message = "Hello! 这是邮件的内容。";  // 邮件正文
+$from = "someonelse@example.com";   // 邮件发送者
+$headers = "From:" . $from;         // 头部信息设置
+mail($to,$subject,$message,$headers);
+echo "邮件已发送";
+?>
+```
+
+
+## PHP Mail 表单
+
+通过 PHP，您能够在自己的站点制作一个反馈表单。下面的实例向指定的 e-mail 地址发送了一条文本消息：
+
+```html
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<?php
+if (isset($_REQUEST['email'])) { // 如果接收到邮箱参数则发送邮件
+    // 发送邮件
+    $email = $_REQUEST['email'] ;
+    $subject = $_REQUEST['subject'] ;
+    $message = $_REQUEST['message'] ;
+    mail("someone@example.com", $subject,
+    $message, "From:" . $email);
+    echo "邮件发送成功";
+} else { // 如果没有邮箱参数则显示表单
+    echo "<form method='post' action='mailform.php'>
+    Email: <input name='email' type='text'><br>
+    Subject: <input name='subject' type='text'><br>
+    Message:<br>
+    <textarea name='message' rows='15' cols='40'>
+    </textarea><br>
+    <input type='submit'>
+    </form>";
+}
+?>
+
+</body>
+</html>
+```
+
+- 首先，检查是否填写了邮件输入框
+- 如果未填写（比如在页面被首次访问时），输出 HTML 表单
+- 如果已填写（在表单被填写后），从表单发送电子邮件
+- 当填写完表单点击提交按钮后，页面重新载入，可以看到邮件输入被重置，同时显示邮件发送成功的消息
+
+注释：这个简易发送 e-mail 不安全，在本教程的下一章中，您将阅读到更多关于电子邮件脚本中的安全隐患，我们将为您讲解如何验证用户输入使它更安全。
+
+
+## PHP Mail 参考手册
+
+如需查看更多关于 PHP mail() 函数的信息，请访问我们的 PHP Mail 参考手册。
+
+
+## 复习重点
+
+- 能说明 `PHP E-mail` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

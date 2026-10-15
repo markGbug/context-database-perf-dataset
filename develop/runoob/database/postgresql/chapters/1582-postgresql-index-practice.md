@@ -1,34 +1,174 @@
-# PostgreSQL：PostgreSQL 索引 练习笔记
+# PostgreSQL：PostgreSQL 索引
 
 - 来源：[PostgreSQL 索引](https://www.runoob.com/postgresql/postgresql-index.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1582
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL 索引` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+索引是加速搜索引擎检索数据的一种特殊表查询。简单地说，索引是一个指向表中数据的指针。一个数据库中的索引与一本书的索引目录是非常相似的。
 
-## 练习步骤
+拿汉语字典的目录页（索引）打比方，我们可以按拼音、笔画、偏旁部首等排序的目录（索引）快速查找到需要的字。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+索引有助于加快 SELECT 查询和 WHERE 子句，但它会减慢使用 UPDATE 和 INSERT 语句时的数据输入。索引可以创建或删除，但不会影响数据。
 
-## 验收清单
+使用 CREATE INDEX 语句创建索引，它允许命名索引，指定表及要索引的一列或多列，并指示索引是升序排列还是降序排列。
 
-- 我能独立说出 `PostgreSQL 索引` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+索引也可以是唯一的，与 UNIQUE 约束类似，在列上或列组合上防止重复条目。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### CREATE INDEX 命令
+
+CREATE INDEX （创建索引）的语法如下：
+
+```text
+CREATE INDEX index_name ON table_name;
+```
+
+
+### 索引类型
+
+单列索引
+
+单列索引是一个只基于表的一个列上创建的索引，基本语法如下：
+
+```text
+CREATE INDEX index_name
+ON table_name (column_name);
+```
+
+组合索引
+
+组合索引是基于表的多列上创建的索引，基本语法如下：
+
+```text
+CREATE INDEX index_name
+ON table_name (column1_name, column2_name);
+```
+
+不管是单列索引还是组合索引，该索引必须是在 WHERE 子句的过滤条件中使用非常频繁的列。
+
+如果只有一列被使用到，就选择单列索引，如果有多列就使用组合索引。
+
+唯一索引
+
+使用唯一索引不仅是为了性能，同时也为了数据的完整性。唯一索引不允许任何重复的值插入到表中。基本语法如下：
+
+```text
+CREATE UNIQUE INDEX index_name
+on table_name (column_name);
+```
+
+局部索引
+
+局部索引 是在表的子集上构建的索引；子集由一个条件表达式上定义。索引只包含满足条件的行。基础语法如下：
+
+```text
+CREATE INDEX index_name
+ON table_name(column_list)
+WHERE condition;
+```
+
+在这里，index_name 是你想要创建的索引的名称，table_name 是包含你想要索引的列的表的名称，column_list 是你想要索引的列的列表，而 condition 是一个布尔表达式，用于定义哪些行将被包含在索引中。
+
+隐式索引
+
+在 PostgreSQL 中，隐式索引是在创建对象时，由数据库服务器自动创建的索引。这类索引通常为主键约束和唯一约束自动创建。当在创建表时声明一个列为主键、唯一约束或外键时，PostgreSQL 会自动为该列创建一个隐式索引。这样做的好处是简化了索引管理，并且提高了数据库的性能。
+
+例如，如果在创建一个名为 "users" 的表时，声明了一个名为 "userid" 的列为主键，PostgreSQL会自动为 "userid" 列创建一个隐式索引，这意味着在插入新记录时，数据库会自动为 "userid" 列生成一个唯一的索引值。
+
+隐式索引的创建和管理是由 PostgreSQL 自动完成的，用户不需要手动干预，这使得数据库管理变得更加简单和高效。
+
+
+### 实例
+
+下面实例将在 COMPANY 表的 SALARY 列上创建索引：
+
+```text
+# CREATE INDEX salary_index ON COMPANY (salary);
+```
+
+现在，用 \d company 命令列出 COMPANY 表的所有索引：
+
+```text
+# \d company
+```
+
+得到的结果如下，company_pkey 是隐式索引 ，是表创建表时创建的：
+
+```text
+runoobdb=# \d company
+                  Table "public.company"
+ Column  |     Type      | Collation | Nullable | Default
+---------+---------------+-----------+----------+---------
+ id      | integer       |           | not null |
+ name    | text          |           | not null |
+ age     | integer       |           | not null |
+ address | character(50) |           |          |
+ salary  | real          |           |          |
+Indexes:
+    "company_pkey" PRIMARY KEY, btree (id)
+    "salary_index" btree (salary)
+```
+
+你可以使用 \di 命令列出数据库中所有索引：
+
+```text
+runoobdb=# \di
+                    List of relations
+ Schema |      Name       | Type  |  Owner   |   Table
+--------+-----------------+-------+----------+------------
+ public | company_pkey    | index | postgres | company
+ public | department_pkey | index | postgres | department
+ public | salary_index    | index | postgres | company
+(3 rows)
+```
+
+
+### DROP INDEX （删除索引）
+
+一个索引可以使用 PostgreSQL 的 DROP 命令删除。
+
+```text
+DROP INDEX index_name;
+```
+
+您可以使用下面的语句来删除之前创建的索引：
+
+```text
+# DROP INDEX salary_index;
+```
+
+删除后，可以看到 salary_index 已经在索引的列表中被删除：
+
+```text
+runoobdb=# \di
+                    List of relations
+ Schema |      Name       | Type  |  Owner   |   Table
+--------+-----------------+-------+----------+------------
+ public | company_pkey    | index | postgres | company
+ public | department_pkey | index | postgres | department
+(2 rows)
+```
+
+
+### 什么情况下要避免使用索引？
+
+虽然索引的目的在于提高数据库的性能，但这里有几个情况需要避免使用索引。
+
+使用索引时，需要考虑下列准则：
+
+- 索引不应该使用在较小的表上。
+- 索引不应该使用在有频繁的大批量的更新或插入操作的表上。
+- 索引不应该使用在含有大量的 NULL 值的列上。
+- 索引不应该使用在频繁操作的列上。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL 索引` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

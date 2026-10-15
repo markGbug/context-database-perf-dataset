@@ -1,35 +1,93 @@
-# MongoDB：MongoDB 高级索引 学习笔记
+# MongoDB：MongoDB 高级索引
 
 - 来源：[MongoDB 高级索引](https://www.runoob.com/mongodb/mongodb-advanced-indexing.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1497
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 高级索引` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+考虑以下文档集合（users ）:
 
-## 阅读抓手
+```text
+{
+   "address": {
+      "city": "Los Angeles",
+      "state": "California",
+      "pincode": "123"
+   },
+   "tags": [
+      "music",
+      "cricket",
+      "blogs"
+   ],
+   "name": "Tom Benzamin"
+}
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+以上文档包含了 address 子文档和 tags 数组。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 索引数组字段
 
-## 完成标准
+假设我们基于标签来检索用户，为此我们需要对集合中的数组 tags 建立索引。
 
-- 能用 3 到 5 句话解释 `MongoDB 高级索引`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+在数组中创建索引，需要对数组中的每个字段依次建立索引。所以在我们为数组 tags 创建索引时，会为 music、cricket、blogs三个值建立单独的索引。
+
+使用以下命令创建数组索引：
+
+```text
+>db.users.ensureIndex({"tags":1})
+```
+
+创建索引后，我们可以这样检索集合的 tags 字段：
+
+```text
+>db.users.find({tags:"cricket"})
+```
+
+为了验证我们使用使用了索引，可以使用 explain 命令：
+
+```text
+>db.users.find({tags:"cricket"}).explain()
+```
+
+以上命令执行结果中会显示 "cursor" : "BtreeCursor tags_1" ，则表示已经使用了索引。
+
+
+## 索引子文档字段
+
+假设我们需要通过city、state、pincode字段来检索文档，由于这些字段是子文档的字段，所以我们需要对子文档建立索引。
+
+为子文档的三个字段创建索引，命令如下：
+
+```text
+>db.users.ensureIndex({"address.city":1,"address.state":1,"address.pincode":1})
+```
+
+一旦创建索引，我们可以使用子文档的字段来检索数据：
+
+```text
+>db.users.find({"address.city":"Los Angeles"})
+```
+
+查询表达不一定遵循指定的索引的顺序，mongodb 会自动优化。所以上面创建的索引将支持以下查询：
+
+```text
+>db.users.find({"address.state":"California","address.city":"Los Angeles"})
+```
+
+同样支持以下查询：
+
+```text
+>db.users.find({"address.city":"Los Angeles","address.state":"California","address.pincode":"123"})
+```
+
+
+## 复习重点
+
+- 能说明 `MongoDB 高级索引` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

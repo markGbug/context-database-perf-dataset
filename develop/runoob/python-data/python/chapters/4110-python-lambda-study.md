@@ -1,35 +1,164 @@
-# Python：Python3 lambda 学习笔记
+# Python：Python lambda（匿名函数）
 
 - 来源：[Python3 lambda](https://www.runoob.com/python3/python-lambda.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4110
 
-## 学习目标
+## 本章内容
 
-Python 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python3 lambda` 建立学习路径，先理解它在 Python 体系中的位置，再做可运行或可复述的验证。
+Python 使用 lambda 来创建匿名函数。
 
-## 阅读抓手
+lambda 函数是一种小型、匿名的、内联函数，它可以具有任意数量的参数，但只能有一个表达式。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+匿名函数不需要使用 def 关键字定义完整函数。
 
-## 笔记模板
+lambda 函数通常用于编写简单的、单行的函数，通常在需要函数作为参数传递的情况下使用，例如在 map()、filter()、reduce() 等函数中。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+lambda 函数特点：
 
-## 完成标准
+- lambda 函数是匿名的，它们没有函数名称，只能通过赋值给变量或作为参数传递给其他函数来使用。
+- lambda 函数通常只包含一行代码，这使得它们适用于编写简单的函数。
 
-- 能用 3 到 5 句话解释 `Python3 lambda`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+lambda 语法格式：
+
+```text
+lambda arguments: expression
+```
+
+- lambda是 Python 的关键字，用于定义 lambda 函数。
+- arguments 是参数列表，可以包含零个或多个参数，但必须在冒号(:)前指定。
+- expression 是一个表达式，用于计算并返回函数的结果。
+
+以下的 lambda 函数没有参数：
+
+
+## 实例
+
+```text
+f = lambda: "Hello, world!"
+print(f())  # 输出: Hello, world!
+```
+
+输出结果为：
+
+```text
+Hello, world!
+```
+
+以下实例使用 lambda 创建匿名函数，设置一个函数参数 a，函数计算参数 a 加 10，并返回结果：
+
+
+## 实例
+
+```text
+x = lambda a : a + 10
+print(x(5))
+```
+
+输出结果为：
+
+```text
+15
+```
+
+lambda 函数也可以设置多个参数，参数使用逗号 , 隔开：
+
+以下实例使用 lambda 创建匿名函数，函数参数 a 与 b 相乘，并返回结果：
+
+
+## 实例
+
+```text
+x = lambda a, b : a * b
+print(x(5, 6))
+```
+
+输出结果为：
+
+```text
+30
+```
+
+以下实例使用 lambda 创建匿名函数，函数参数 a、b 与 c 相加，并返回结果：
+
+
+## 实例
+
+```text
+x = lambda a, b, c : a + b + c
+print(x(5, 6, 2))
+```
+
+输出结果为：
+
+```text
+13
+```
+
+lambda 函数通常与内置函数如 map()、filter() 和 reduce() 一起使用，以便在集合上执行操作。例如：
+
+
+## 实例
+
+```text
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x**2, numbers))
+print(squared)  # 输出: [1, 4, 9, 16, 25]
+```
+
+输出结果为：
+
+```text
+[1, 4, 9, 16, 25]
+```
+
+使用 lambda 函数与 filter() 一起，筛选偶数：
+
+
+## 实例
+
+```text
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+print(even_numbers)  # 输出：[2, 4, 6, 8]
+```
+
+输出结果为：
+
+```text
+[2, 4, 6, 8]
+```
+
+下面是一个使用 reduce() 和 lambda 表达式演示如何计算一个序列的累积乘积：
+
+
+## 实例
+
+```text
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5]
+
+# 使用 reduce() 和 lambda 函数计算乘积
+product = reduce(lambda x, y: x * y, numbers)
+
+print(product)  # 输出：120
+```
+
+输出结果为：
+
+```text
+120
+```
+
+在上面的实例中，reduce() 函数通过遍历 numbers 列表，并使用 lambda 函数将累积的结果不断更新，最终得到了 1 * 2 * 3 * 4 * 5 = 120 的结果。
+
+
+## 复习重点
+
+- 能说明 `Python3 lambda` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

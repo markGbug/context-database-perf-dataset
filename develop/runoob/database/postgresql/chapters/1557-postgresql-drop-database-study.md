@@ -1,35 +1,115 @@
-# PostgreSQL：PostgreSQL 删除数据库 学习笔记
+# PostgreSQL：PostgreSQL 删除数据库
 
 - 来源：[PostgreSQL 删除数据库](https://www.runoob.com/postgresql/postgresql-drop-database.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1557
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PostgreSQL 删除数据库` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+PostgreSQL 删除数据库可以用以下三种方式：
 
-## 阅读抓手
+- 1、使用 DROP DATABASE SQL 语句来删除。
+- 2、使用 dropdb 命令来删除。
+- 3、使用 pgAdmin 工具。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+注意：删除数据库要谨慎操作，一旦删除，所有信息都会消失。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### DROP DATABASE 删除数据库
 
-## 完成标准
+DROP DATABASE 会删除数据库的系统目录项并且删除包含数据的文件目录。
 
-- 能用 3 到 5 句话解释 `PostgreSQL 删除数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+DROP DATABASE 只能由超级管理员或数据库拥有者执行。
+
+DROP DATABASE 命令需要在 PostgreSQL 命令窗口来执行，语法格式如下：
+
+```text
+DROP DATABASE [ IF EXISTS ] name
+```
+
+参数说明：
+
+- IF EXISTS：如果数据库不存在则发出提示信息，而不是错误信息。
+- name：要删除的数据库的名称。
+
+例如，我们删除一个 runoobdb 的数据库：
+
+```text
+postgres=# DROP DATABASE runoobdb;
+```
+
+
+### dropdb 命令删除数据库
+
+dropdb 是 DROP DATABASE 的包装器。
+
+dropdb 用于删除 PostgreSQL 数据库。
+
+dropdb 命令只能由超级管理员或数据库拥有者执行。
+
+dropdb 命令语法格式如下：
+
+```text
+dropdb [connection-option...] [option...] dbname
+```
+
+参数说明：
+
+dbname：要删除的数据库名。
+
+options：参数可选项，可以是以下值：
+
+-e
+
+显示 dropdb 生成的命令并发送到数据库服务器。
+
+-i
+
+在做删除的工作之前发出一个验证提示。
+
+-V
+
+打印 dropdb 版本并退出。
+
+--if-exists
+
+如果数据库不存在则发出提示信息，而不是错误信息。
+
+--help
+
+显示有关 dropdb 命令的帮助信息。
+
+-h host
+
+指定运行服务器的主机名。
+
+-p port
+
+指定服务器监听的端口，或者 socket 文件。
+
+-U username
+
+连接数据库的用户名。
+
+-w
+
+连接时忽略输入密码。
+
+-W
+
+连接时强制要求输入密码。
+
+
+### pgAdmin 工具删除据库
+
+pgAdmin 工具提供了完整操作数据库的功能：
+
+
+## 复习重点
+
+- 能说明 `PostgreSQL 删除数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

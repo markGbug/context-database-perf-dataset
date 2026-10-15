@@ -1,35 +1,95 @@
-# PostgreSQL：PostgreSQL UPDATE 学习笔记
+# PostgreSQL：PostgreSQL UPDATE 语句
 
 - 来源：[PostgreSQL UPDATE](https://www.runoob.com/postgresql/postgresql-update.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1567
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PostgreSQL UPDATE` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+如果我们要更新在 PostgreSQL 数据库中的数据，我们可以用 UPDATE 来操作。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 语法
 
-## 笔记模板
+以下是 UPDATE 语句修改数据的通用 SQL 语法：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+UPDATE table_name
+SET column1 = value1, column2 = value2...., columnN = valueN
+WHERE [condition];
+```
 
-## 完成标准
+- 我们可以同时更新一个或者多个字段。
+- 我们可以在 WHERE 子句中指定任何条件。
 
-- 能用 3 到 5 句话解释 `PostgreSQL UPDATE`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+以下实例将更新 COMPANY 表中 id 为 3 的 salary 字段值：
+
+```text
+runoobdb=# UPDATE COMPANY SET SALARY = 15000 WHERE ID = 3;
+```
+
+得到结果如下：
+
+```text
+id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  2 | Allen |  25 | Texas      |  15000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+  3 | Teddy |  23 | Norway     |  15000
+```
+
+从结果上看，COMPANY 表中的 id 为 3 的 salary 字段值已被修改。
+
+以下实例将同时更新 salary 字段和 address 字段的值：
+
+```text
+runoobdb=# UPDATE COMPANY SET ADDRESS = 'Texas', SALARY=20000;
+```
+
+得到结果如下：
+
+```text
+id | name  | age | address | salary
+----+-------+-----+---------+--------
+  1 | Paul  |  32 | Texas   |  20000
+  2 | Allen |  25 | Texas   |  20000
+  4 | Mark  |  25 | Texas   |  20000
+  5 | David |  27 | Texas   |  20000
+  6 | Kim   |  22 | Texas   |  20000
+  7 | James |  24 | Texas   |  20000
+  3 | Teddy |  23 | Texas   |  20000
+(7 rows)
+```
+
+
+## 复习重点
+
+- 能说明 `PostgreSQL UPDATE` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

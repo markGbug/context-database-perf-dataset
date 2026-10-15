@@ -1,34 +1,141 @@
-# Vue3：Vue3 样式绑定 练习笔记
+# Vue3：Vue3 样式绑定
 
 - 来源：[Vue3 样式绑定](https://www.runoob.com/vue3/vue3-class-bind.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3209
 
-## 练习目标
+## 本章内容
 
-把 `Vue3 样式绑定` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## Vue.js class
 
-## 练习步骤
+class 与 style 是 HTML 元素的属性，用于设置元素的样式，我们可以用 v-bind 来设置样式属性。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+v-bind 在处理 class 和 style 时， 表达式除了可以使用字符串之外，还可以是对象或数组。
 
-## 验收清单
+v-bind:class 可以简写为 :class。
 
-- 我能独立说出 `Vue3 样式绑定` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## class 属性绑定
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+我们可以为 v-bind:class 设置一个对象，从而动态的切换 class:
+
+
+## 实例 1
+
+实例中将 isActive 设置为 true 显示了一个绿色的 div 块，如果设置为 false 则不显示：
+
+```html
+<div :class="{ 'active': isActive }"></div>
+```
+
+以上实例 div class 渲染结果为：
+
+```html
+<div class="active"></div>
+```
+
+我们也可以在对象中传入更多属性用来动态切换多个 class 。
+
+此外，:class 指令也可以与普通的 class 属性共存。
+
+
+## 实例 2
+
+text-danger 类背景颜色覆盖了 active 类的背景色：
+
+```html
+<div class="static" :class="{ 'active' : isActive, 'text-danger' : hasError }">
+</div>
+```
+
+以上实例 div class 渲染结果为：
+
+```html
+<div class="static text-danger"></div>
+```
+
+当 isActive 或者 hasError 变化时，class 属性值也将相应地更新。例如，如果 active 的值为 true，class 列表将变为 "static active text-danger"。
+
+我们也可以直接绑定数据里的一个对象：
+
+
+## 实例 3
+
+text-danger 类背景颜色覆盖了 active 类的背景色：
+
+```html
+<div id="app">
+    <div class="static" :class="classObject"></div>
+</div>
+```
+
+实例 3 与 实例 2 的渲染结果是一样的。
+
+此外，我们也可以在这里绑定一个返回对象的计算属性。这是一个常用且强大的模式：
+
+
+## 实例 4
+
+```text
+data() {
+  return {
+    isActive: true,
+    error: null
+  }
+},
+computed: {
+  classObject() {
+    return {
+      active: this.isActive && !this.error,
+      'text-danger': this.error && this.error.type === 'fatal'
+    }
+  }
+}
+```
+
+
+### 数组语法
+
+我们可以把一个数组传给 v-bind:class ，实例如下：
+
+
+## 实例 5
+
+```html
+<div class="static" :class="[activeClass, errorClass]"></div>
+```
+
+以上实例 div class 渲染结果为：
+
+```html
+<div class="static active text-danger"></div>
+```
+
+我们还可以使用三元表达式来切换列表中的 class ：
+
+
+## 实例 6
+
+errorClass 是始终存在的，isActive 为 true 时添加 activeClass 类：
+
+```html
+<div id="app">
+    <div class="static" :class="[isActive ? activeClass : '', errorClass]"></div>
+</div>
+```
+
+以上实例 div class 渲染结果为：
+
+```html
+<div class="static text-danger"></div>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue3 样式绑定` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,74 @@
-# Web Forms：WebForms 简介 学习笔记
+# Web Forms：ASP.NET Web Forms - 教程
 
 - 来源：[WebForms 简介](https://www.runoob.com/aspnet/aspnet-intro.html)
 - 分类：.NET
 - 技术：Web Forms
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2170
 
-## 学习目标
+## 本章内容
 
-Web Forms 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `WebForms 简介` 建立学习路径，先理解它在 Web Forms 体系中的位置，再做可运行或可复述的验证。
+ASP.NET 是一个使用 HTML、CSS、JavaScript 和服务器脚本创建网页和网站的开发框架。
 
-## 阅读抓手
+ASP.NET 支持三种不同的开发模式： Web Pages（Web 页面）、MVC（Model View Controller 模型-视图-控制器）、Web Forms（Web 窗体）：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+本教程介绍 Web Forms。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 从何入手？
 
-## 完成标准
+多数开发人员学习一个新技术，是从查看运行实例开始的。
 
-- 能用 3 到 5 句话解释 `WebForms 简介`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+如果您想查看一个 Web Forms 运行实例，请查看以下的 ASP.NET Web Forms 演示。
+
+
+## 什么是 Web Forms？
+
+Web Forms 是三种创建 ASP.NET 网站和 Web 应用程序的编程模式中的一种。
+
+其他两种编程模式是 Web Pages 和 MVC（Model View Controller 模型-视图-控制器）。
+
+Web Forms 是最古老的 ASP.NET 编程模式，是整合了 HTML、服务器控件和服务器代码的事件驱动网页。
+
+Web Forms 是在服务器上编译和执行的，再由服务器生成 HTML 显示为网页。
+
+Web Forms 有数以百计的 Web 控件和 Web 组件用来创建带有数据访问的用户驱动网站。
+
+
+## Visual Studio Express 2012/2010
+
+Visual Studio Express 是 Microsoft Visual Studio 的免费版本。
+
+Visual Studio Express 是为 Web Forms（和 MVC）量身定制的开发工具。
+
+Visual Studio Express 包含：
+
+- MVC 和 Web Forms
+- 拖拽 Web 控件和 Web 组件
+- Web 服务器语言（Razor 使用 VB 或者 C#）
+- Web 服务器（IIS Express）
+- 数据库服务器（SQL Server Compact）
+- 完整的 Web 开发框架（ASP.NET）
+
+如果您已经安装了 Visual Studio Express，您将从本教程中学到更多。
+
+如果您想安装 Visual Studio Express，请点击下列链接中的一个：
+
+Visual Web Developer 2012（Windows 7 或者 Windows 8）
+
+Visual Web Developer 2010（Windows Vista 或者 XP）
+
+
+## ASP.NET 参考手册
+
+在本教程的最后，您将看到一套完整的 ASP.NET 参考手册，介绍了对象、组件、属性和方法。
+
+ASP.NET 参考手册
+
+
+## 复习重点
+
+- 能说明 `WebForms 简介` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

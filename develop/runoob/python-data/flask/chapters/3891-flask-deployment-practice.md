@@ -1,34 +1,139 @@
-# Flask：Flask 部署 练习笔记
+# Flask：Flask 部署
 
 - 来源：[Flask 部署](https://www.runoob.com/flask/flask-deployment.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3891
 
-## 练习目标
+## 本章内容
 
-把 `Flask 部署` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+开发完成后，需要将 Flask 应用部署到生产环境，让真实用户能够访问。
 
-## 练习步骤
+本章介绍从开发到生产的关键步骤和注意事项。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 开发服务器 vs 生产服务器
 
-- 我能独立说出 `Flask 部署` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+重要：Flask 内置的开发服务器（flask run）仅适用于开发环境。它不具备生产环境所需的安全性、稳定性和性能。生产环境必须使用专业的 WSGI 服务器。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 部署检查清单
+
+在部署之前，确保以下事项都已完成：
+
+
+## 实例
+
+完整检查清单：
+
+
+## 使用 Waitress 部署（Windows/macOS/Linux）
+
+Waitress 是一个纯 Python WSGI 服务器，跨平台，安装简单：
+
+```text
+(.venv) $ pip install waitress
+```
+
+
+## 实例
+
+启动：
+
+```text
+(.venv) $ python run.py
+Serving on http://0.0.0.0:8000
+```
+
+
+## 使用 Gunicorn 部署（Linux/macOS）
+
+Gunicorn 是 Linux 环境下最流行的 Python WSGI 服务器，性能优秀：
+
+```text
+(.venv) $ pip install gunicorn
+```
+
+启动 Gunicorn（直接在命令行指定应用）：
+
+```text
+# 基本用法：4 个 worker 进程
+$ gunicorn -w 4 -b 0.0.0.0:8000 "app:create_app()"
+
+# 参数说明：
+# -w 4       : 启动 4 个 worker 进程（通常设为 CPU 核心数 × 2 + 1）
+# -b 0.0.0.0:8000 : 监听所有网络接口的 8000 端口
+# "app:create_app()" : 模块名:工厂函数（与 flask --app 语法相同）
+```
+
+Gunicorn worker 类型选择：
+
+Gunicorn 不支持 Windows。如果你在 Windows 上部署，请使用 Waitress。
+
+
+## 使用 Nginx 反向代理
+
+在生产环境中，通常用 Nginx 作为反向代理放在 WSGI 服务器前面：
+
+- Nginx 处理静态文件（CSS、JS、图片），效率远高于 Python
+- Nginx 提供 HTTPS 终端（SSL 终结）
+- Nginx 做负载均衡，分发请求到多个后端 worker
+
+一个最小化的 Nginx 配置示例：
+
+
+## 实例
+
+启用配置并重载 Nginx：
+
+```text
+$ sudo ln -s /etc/nginx/sites-available/runoob /etc/nginx/sites-enabled/
+$ sudo nginx -t          # 检查配置语法
+$ sudo systemctl reload nginx
+```
+
+
+## 使用 systemd 管理服务（Linux）
+
+创建 systemd 服务文件，让 Flask 应用开机自启并在崩溃后自动重启：
+
+
+## 实例
+
+启动和管理服务：
+
+```text
+$ sudo systemctl daemon-reload        # 重载配置文件
+$ sudo systemctl enable runoob        # 设置开机自启
+$ sudo systemctl start runoob         # 启动服务
+$ sudo systemctl status runoob        # 查看服务状态
+$ sudo journalctl -u runoob -f        # 实时查看日志
+```
+
+
+## WSGI 服务器速查
+
+
+## 教程总结
+
+恭喜你完成了 Flask 入门教程的全部内容！
+
+回顾一下你学到的知识：
+
+继续学习的推荐方向：
+
+- Flask-SQLAlchemy：功能更强大的数据库集成
+- Flask-Login：用户认证和权限管理
+- Flask-WTF：表单处理和 CSRF 保护
+- Flask-Migrate：数据库迁移管理
+- Flask-RESTful 或 Flask-RESTX：构建 RESTful API
+- Docker 容器化部署，进一步提升可移植性
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Flask 部署` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,98 @@
-# SQLite：SQLite Having 子句 练习笔记
+# SQLite：SQLite Having 子句
 
 - 来源：[SQLite Having 子句](https://www.runoob.com/sqlite/sqlite-having-clause.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1712
 
-## 练习目标
+## 本章内容
 
-把 `SQLite Having 子句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+HAVING 子句允许指定条件来过滤将出现在最终结果中的分组结果。
 
-## 练习步骤
+WHERE 子句在所选列上设置条件，而 HAVING 子句则在由 GROUP BY 子句创建的分组上设置条件。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 语法
 
-- 我能独立说出 `SQLite Having 子句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+下面是 HAVING 子句在 SELECT 查询中的位置：
 
-## 复盘问题
+```text
+SELECT
+FROM
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在一个查询中，HAVING 子句必须放在 GROUP BY 子句之后，必须放在 ORDER BY 子句之前。下面是包含 HAVING 子句的 SELECT 语句的语法：
+
+```text
+SELECT column1, column2
+FROM table1, table2
+WHERE [ conditions ]
+GROUP BY column1, column2
+HAVING [ conditions ]
+ORDER BY column1, column2
+```
+
+
+## 实例
+
+假设 COMPANY 表有以下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+8           Paul        24          Houston     20000.0
+9           James       44          Norway      5000.0
+10          James       45          Texas       5000.0
+```
+
+下面是一个实例，它将显示名称计数小于 2 的所有记录：
+
+```text
+sqlite > SELECT * FROM COMPANY GROUP BY name HAVING count(name) < 2;
+```
+
+这将产生以下结果：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000
+5           David       27          Texas       85000
+6           Kim         22          South-Hall  45000
+4           Mark        25          Rich-Mond   65000
+3           Teddy       23          Norway      20000
+```
+
+下面是一个实例，它将显示名称计数大于 2 的所有记录：
+
+```text
+sqlite > SELECT * FROM COMPANY GROUP BY name HAVING count(name) > 2;
+```
+
+这将产生以下结果：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+10          James       45          Texas       5000
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite Having 子句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,137 @@
-# Vue.js：Vue.js 起步 学习笔记
+# Vue.js：Vue.js 起步
 
 - 来源：[Vue.js 起步](https://www.runoob.com/vue2/vue-start.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3250
 
-## 学习目标
+## 本章内容
 
-Vue.js 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Vue.js 起步` 建立学习路径，先理解它在 Vue.js 体系中的位置，再做可运行或可复述的验证。
+每个 Vue 应用都需要通过实例化 Vue 来实现。
 
-## 阅读抓手
+语法格式如下：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```javascript
+var vm = new Vue({
+  // 选项
+})
+```
 
-## 笔记模板
+接下来让我们通过实例来看下 Vue 构造器中需要哪些内容：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `Vue.js 起步`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<div id="vue_det">
+    <h1>site : {{site}}</h1>
+    <h1>url : {{url}}</h1>
+    <h1>{{details()}}</h1>
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#vue_det',
+        data: {
+            site: "菜鸟教程",
+            url: "www.runoob.com",
+            alexa: "10000"
+        },
+        methods: {
+            details: function() {
+                return  this.site + " - 学的不仅是技术，更是梦想！";
+            }
+        }
+    })
+</script>
+```
+
+点击 "尝试一下" 按钮查看在线实例
+
+可以看到在 Vue 构造器中有一个el 参数，它是 DOM 元素中的 id。在上面实例中 id 为 vue_det，在 div 元素中：
+
+```html
+<div id = "vue_det"></div>
+```
+
+这意味着我们接下来的改动全部在以上指定的 div 内，div 外部不受影响。
+
+接下来我们看看如何定义数据对象。
+
+data 用于定义属性，实例中有三个属性分别为：site、url、alexa。
+
+methods 用于定义的函数，可以通过 return 来返回函数值。
+
+{{ }} 用于输出对象属性和函数返回值。
+
+```html
+<div id="vue_det">
+    <h1>site : {{site}}</h1>
+    <h1>url : {{url}}</h1>
+    <h1>{{details()}}</h1>
+</div>
+```
+
+当一个 Vue 实例被创建时，它向 Vue 的响应式系统中加入了其 data 对象中能找到的所有的属性。当这些属性的值发生改变时，html 视图将也会产生相应的变化。
+
+
+## 实例
+
+```html
+<div id="vue_det">
+    <h1>site : {{site}}</h1>
+    <h1>url : {{url}}</h1>
+    <h1>Alexa : {{alexa}}</h1>
+</div>
+<script type="text/javascript">
+// 我们的数据对象
+var data = { site: "菜鸟教程", url: "www.runoob.com", alexa: 10000}
+var vm = new Vue({
+    el: '#vue_det',
+    data: data
+})
+// 它们引用相同的对象！
+document.write(vm.site === data.site) // true
+document.write("<br>")
+// 设置属性也会影响到原始数据
+vm.site = "Runoob"
+document.write(data.site + "<br>") // Runoob
+
+// ……反之亦然
+data.alexa = 1234
+document.write(vm.alexa) // 1234
+</script>
+```
+
+除了数据属性，Vue 实例还提供了一些有用的实例属性与方法。它们都有前缀 $，以便与用户定义的属性区分开来。例如：
+
+
+## 实例
+
+```html
+<div id="vue_det">
+    <h1>site : {{site}}</h1>
+    <h1>url : {{url}}</h1>
+    <h1>Alexa : {{alexa}}</h1>
+</div>
+<script type="text/javascript">
+// 我们的数据对象
+var data = { site: "菜鸟教程", url: "www.runoob.com", alexa: 10000}
+var vm = new Vue({
+    el: '#vue_det',
+    data: data
+})
+
+document.write(vm.$data === data) // true
+document.write("<br>")
+document.write(vm.$el === document.getElementById('vue_det')) // true
+</script>
+```
+
+
+## 复习重点
+
+- 能说明 `Vue.js 起步` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

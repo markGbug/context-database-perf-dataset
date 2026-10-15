@@ -1,34 +1,214 @@
-# HTML5：HTML5 语义元素 练习笔记
+# HTML5：HTML5 语义元素
 
 - 来源：[HTML5 语义元素](https://www.runoob.com/html/html5-semantic-elements.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2720
 
-## 练习目标
+## 本章内容
 
-把 `HTML5 语义元素` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+语义= 意义
 
-## 练习步骤
+语义元素 = 有意义的元素
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 什么是语义元素?
 
-- 我能独立说出 `HTML5 语义元素` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+一个语义元素能够清楚的描述其意义给浏览器和开发者。
 
-## 复盘问题
+无语义 元素实例: <div> 和 <span> - 无需考虑内容.
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+语义元素实例: <form>, <table>, and <img> - 清楚的定义了它的内容.
+
+
+## 浏览器支持
+
+Internet Explorer 9+, Firefox, Chrome, Safari 和 Opera 支持语义元素。
+
+注意: Internet Explorer 8 及更早版本不支持该元素。 但是文章底部提供了兼容的解决方法.
+
+
+## HTML5中新的语义元素
+
+许多现有网站都包含以下HTML代码： <div id="nav">, <div class="header">, 或者 <div id="footer">, 来指明导航链接, 头部, 以及尾部.
+
+HTML5 提供了新的语义元素来明确一个Web页面的不同部分:
+
+- <header>
+- <nav>
+- <section>
+- <article>
+- <aside>
+- <figcaption>
+- <figure>
+- <footer>
+
+
+## HTML5 <section> 元素
+
+<section> 标签定义文档中的节（section、区段）。比如章节、页眉、页脚或文档中的其他部分。
+
+根据W3C HTML5文档: section 包含了一组内容及其标题。
+
+
+## 实例
+
+```html
+<section>
+  <h1>WWF</h1>
+  <p>The World Wide Fund for Nature (WWF) is....</p>
+</section>
+```
+
+
+## HTML5 <article> 元素
+
+<article> 标签定义独立的内容。.
+
+<article> 元素使用实例:
+
+- Forum post
+- Blog post
+- News story
+- Comment
+
+
+## 实例
+
+```html
+<article>
+  <h1>Internet Explorer 9</h1>
+  <p>Windows Internet Explorer 9(缩写为 IE9 )在2011年3月14日21:00 发布。</p>
+</article>
+```
+
+
+## HTML5 <nav> 元素
+
+<nav> 标签定义导航链接的部分。
+
+<nav> 元素用于定义页面的导航链接部分区域，但是，不是所有的链接都需要包含在 <nav> 元素中!
+
+
+## 实例
+
+```html
+<nav>
+    <a href="/html/">HTML</a> |
+    <a href="/css/">CSS</a> |
+    <a href="/js/">JavaScript</a> |
+    <a href="/jquery/">jQuery</a>
+</nav>
+```
+
+
+## HTML5 <aside> 元素
+
+<aside> 标签定义页面主区域内容之外的内容（比如侧边栏）。
+
+aside 标签的内容应与主区域的内容相关.
+
+
+## 实例
+
+```html
+<p>My family and I visited The Epcot center this summer.</p>
+
+<aside>
+  <h4>Epcot Center</h4>
+  <p>The Epcot Center is a theme park in Disney World, Florida.</p>
+</aside>
+```
+
+
+## HTML5 <header> 元素
+
+<header>元素描述了文档的头部区域
+
+<header>元素主要用于定义内容的介绍展示区域.
+
+在页面中你可以使用多个<header> 元素.
+
+以下实例定义了文章的头部:
+
+
+## 实例
+
+```html
+<article>
+  <header>
+    <h1>Internet Explorer 9</h1>
+    <p><time pubdate datetime="2011-03-15"></time></p>
+  </header>
+  <p>Windows Internet Explorer 9(缩写为 IE9 )是在2011年3月14日21:00发布的</p>
+</article>
+```
+
+
+## HTML5 <footer> 元素
+
+<footer> 元素描述了文档的底部区域.
+
+<footer> 元素应该包含它的包含元素
+
+一个页脚通常包含文档的作者，著作权信息，链接的使用条款，联系信息等
+
+文档中你可以使用多个 <footer>元素.
+
+
+## 实例
+
+```html
+<footer>
+  <p>Posted by: Hege Refsnes</p>
+  <p><time pubdate datetime="2012-03-01"></time></p>
+</footer>
+```
+
+
+## HTML5 <figure> 和 <figcaption> 元素
+
+<figure>标签规定独立的流内容（图像、图表、照片、代码等等）。
+
+<figure> 元素的内容应该与主内容相关，但如果被删除，则不应对文档流产生影响。
+
+<figcaption> 标签定义 <figure> 元素的标题.
+
+<figcaption>元素应该被置于 "figure" 元素的第一个或最后一个子元素的位置。
+
+
+## 实例
+
+```html
+<figure>
+  <img src="img_pulpit.jpg" alt="The Pulpit Rock" width="304" height="228">
+  <figcaption>Fig1. - The Pulpit Pock, Norway.</figcaption>
+</figure>
+```
+
+
+## 我们可以开始使用这些语义元素吗?
+
+以上的元素都是块元素(除了<figcaption>).
+
+为了让这些块级元素在所有版本的浏览器中生效，你需要在样式表文件中设置一下属性 (以下样式代码可以让旧版本浏览器支持本章介绍的块级元素):
+
+
+## Internet Explorer 8 及更早IE版本中的问题
+
+IE8 及更早IE版本无法在这些元素中渲染CSS效果，以至于你不能使用 <header>, <section>, <footer>, <aside>, <nav>, <article>, <figure>, 或者其他的HTML5 elements.
+
+解决办法: 你可以使用HTML5 Shiv Javascript脚本来解决IE的兼容问题。HTML5 Shiv下载地址：https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/html5shiv/3.7.3/html5shiv.min.js
+
+下载后，将以下代码放入到网页中：
+
+以上代码在浏览器小于IE9版本时会加载html5shiv.js文件. 你必须将其放置于<head> 元素中，因为 IE浏览器需要在头部加载后渲染这些HTML5的新元素
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML5 语义元素` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,170 @@
-# JavaScript：JavaScript 用法 学习笔记
+# JavaScript：JavaScript 用法
 
 - 来源：[JavaScript 用法](https://www.runoob.com/js/js-howto.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2755
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 用法` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+HTML 中的 Javascript 脚本代码必须位于 <script> 与 </script> 标签之间。
 
-## 阅读抓手
+Javascript 脚本代码可被放置在 HTML 页面的 <body> 和 <head> 部分中。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## <script> 标签
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如需在 HTML 页面中插入 JavaScript，请使用 <script> 标签。
 
-## 完成标准
+<script> 和 </script> 会告诉 JavaScript 在何处开始和结束。
 
-- 能用 3 到 5 句话解释 `JavaScript 用法`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+<script> 和 </script> 之间的代码行包含了 JavaScript:
+
+```html
+<script>
+alert("我的第一个 JavaScript");
+</script>
+```
+
+您无需理解上面的代码。只需明白，浏览器会解释并执行位于 <script> 和 </script>之间的 JavaScript 代码
+
+
+## <body> 中的 JavaScript
+
+在本例中，JavaScript 会在页面加载时向 HTML 的 <body> 写文本：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+.
+.
+<script>
+document.write("<h1>这是一个标题</h1>");
+document.write("<p>这是一个段落</p>");
+</script>
+.
+.
+</body>
+</html>
+```
+
+
+## JavaScript 函数和事件
+
+上面例子中的 JavaScript 语句，会在页面加载时执行。
+
+通常，我们需要在某个事件发生时执行代码，比如当用户点击按钮时。
+
+如果我们把 JavaScript 代码放入函数中，就可以在事件发生时调用该函数。
+
+您将在稍后的章节学到更多有关 JavaScript 函数和事件的知识。
+
+
+## 在 <head> 或者 <body> 的JavaScript
+
+您可以在 HTML 文档中放入不限数量的脚本。
+
+脚本可位于 HTML 的 <body> 或 <head> 部分中，或者同时存在于两个部分中。
+
+通常的做法是把函数放入 <head> 部分中，或者放在页面底部。这样就可以把它们安置到同一处位置，不会干扰页面的内容。
+
+
+## <head> 中的 JavaScript 函数
+
+在本例中，我们把一个 JavaScript 函数放置到 HTML 页面的 <head> 部分。
+
+该函数会在点击按钮时被调用：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function myFunction()
+{
+    document.getElementById("demo").innerHTML="我的第一个 JavaScript 函数";
+}
+</script>
+</head>
+<body>
+<h1>我的 Web 页面</h1>
+<p id="demo">一个段落</p>
+<button type="button" onclick="myFunction()">尝试一下</button>
+</body>
+</html>
+```
+
+
+## <body> 中的 JavaScript 函数
+
+在本例中，我们把一个 JavaScript 函数放置到 HTML 页面的 <body> 部分。
+
+该函数会在点击按钮时被调用：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<h1>我的 Web 页面</h1>
+<p id="demo">一个段落</p>
+<button type="button" onclick="myFunction()">尝试一下</button>
+<script>
+function myFunction()
+{
+    document.getElementById("demo").innerHTML="我的第一个 JavaScript 函数";
+}
+</script>
+</body>
+</html>
+```
+
+
+## 外部的 JavaScript
+
+也可以把脚本保存到外部文件中。外部文件通常包含被多个网页使用的代码。
+
+外部 JavaScript 文件的文件扩展名是 .js。
+
+如需使用外部文件，请在 <script> 标签的 "src" 属性中设置该 .js 文件：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+<script src="myScript.js"></script>
+</body>
+</html>
+```
+
+你可以将脚本放置于 <head> 或者 <body>中，放在 <script> 标签中的脚本与外部引用的脚本运行效果完全一致。
+
+myScript.js 文件代码如下：
+
+```javascript
+function myFunction()
+{
+    document.getElementById("demo").innerHTML="我的第一个 JavaScript 函数";
+}
+```
+
+
+## 复习重点
+
+- 能说明 `JavaScript 用法` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,66 @@
-# SQL：SQL NOT NULL 练习笔记
+# SQL：SQL NOT NULL 约束
 
 - 来源：[SQL NOT NULL](https://www.runoob.com/sql/sql-notnull.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1649
 
-## 练习目标
+## 本章内容
 
-把 `SQL NOT NULL` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在默认的情况下，表的列接受 NULL 值。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## SQL NOT NULL 约束
 
-## 验收清单
+NOT NULL 约束强制列不接受 NULL 值。
 
-- 我能独立说出 `SQL NOT NULL` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+NOT NULL 约束强制字段始终包含值。这意味着，如果不向字段添加值，就无法插入新记录或者更新记录。
 
-## 复盘问题
+下面的 SQL 强制 "ID" 列、 "LastName" 列以及 "FirstName" 列不接受 NULL 值：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+```java
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    Age int
+);
+```
+
+
+### 添加 NOT NULL 约束
+
+在一个已创建的表的 "Age" 字段中添加 NOT NULL 约束如下所示：
+
+
+## 实例
+
+```java
+ALTER TABLE Persons
+MODIFY Age int NOT NULL;
+```
+
+
+### 删除 NOT NULL 约束
+
+在一个已创建的表的 "Age" 字段中删除 NOT NULL 约束如下所示：
+
+
+## 实例
+
+```java
+ALTER TABLE Persons
+MODIFY Age int NULL;
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL NOT NULL` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,128 @@
-# jQuery EasyUI：jEasyUI 启用行内编辑 学习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 启用行内编辑
 
 - 来源：[jEasyUI 启用行内编辑](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid12.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2873
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 启用行内编辑` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+可编辑的功能是最近添加到数据网格（datagrid）的。它可以使用户添加一个新行到数据网格（datagrid）。用户也可以更新一个或多个行。
 
-## 阅读抓手
+本教程向您展示如何创建一个数据网格（datagrid）和内联编辑器。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```java
+    $(function(){
+        $('#tt').datagrid({
+            title:'Editable DataGrid',
+            iconCls:'icon-edit',
+            width:660,
+            height:250,
+            singleSelect:true,
+            idField:'itemid',
+            url:'datagrid_data.json',
+            columns:[[
+                {field:'itemid',title:'Item ID',width:60},
+                {field:'productid',title:'Product',width:100,
+                    formatter:function(value){
+                        for(var i=0; i<products.length; i++){
+                            if (products[i].productid == value) return products[i].name;
+                        }
+                        return value;
+                    },
+                    editor:{
+                        type:'combobox',
+                        options:{
+                            valueField:'productid',
+                            textField:'name',
+                            data:products,
+                            required:true
+                        }
+                    }
+                },
+                {field:'listprice',title:'List Price',width:80,align:'right',editor:{type:'numberbox',options:{precision:1}}},
+                {field:'unitcost',title:'Unit Cost',width:80,align:'right',editor:'numberbox'},
+                {field:'attr1',title:'Attribute',width:150,editor:'text'},
+                {field:'status',title:'Status',width:50,align:'center',
+                    editor:{
+                        type:'checkbox',
+                        options:{
+                            on: 'P',
+                            off: ''
+                        }
+                    }
+                },
+                {field:'action',title:'Action',width:70,align:'center',
+                    formatter:function(value,row,index){
+                        if (row.editing){
+                            var s = '<a href="#" onclick="saverow(this)">Save</a> ';
+                            var c = '<a href="#" onclick="cancelrow(this)">Cancel</a>';
+                            return s+c;
+                        } else {
+                            var e = '<a href="#" onclick="editrow(this)">Edit</a> ';
+                            var d = '<a href="#" onclick="deleterow(this)">Delete</a>';
+                            return e+d;
+                        }
+                    }
+                }
+            ]],
+            onBeforeEdit:function(index,row){
+                row.editing = true;
+                updateActions(index);
+            },
+            onAfterEdit:function(index,row){
+                row.editing = false;
+                updateActions(index);
+            },
+            onCancelEdit:function(index,row){
+                row.editing = false;
+                updateActions(index);
+            }
+        });
+    });
+    function updateActions(index){
+        $('#tt').datagrid('updateRow',{
+            index: index,
+            row:{}
+        });
+    }
+```
 
-## 笔记模板
+为了启用数据网格行内编辑，您应该添加一个 editor 属性到列中。编辑器（editor）会告诉数据网格（datagrid）如何编辑字段及如何保存字段值。正如您所看到的，我们定义的三个编辑器（editor）：text、combobox 和 checkbox。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```javascript
+    function getRowIndex(target){
+        var tr = $(target).closest('tr.datagrid-row');
+        return parseInt(tr.attr('datagrid-row-index'));
+    }
+    function editrow(target){
+        $('#tt').datagrid('beginEdit', getRowIndex(target));
+    }
+    function deleterow(target){
+        $.messager.confirm('Confirm','Are you sure?',function(r){
+            if (r){
+                $('#tt').datagrid('deleteRow', getRowIndex(target));
+            }
+        });
+    }
+    function saverow(target){
+        $('#tt').datagrid('endEdit', getRowIndex(target));
+    }
+    function cancelrow(target){
+        $('#tt').datagrid('cancelEdit', getRowIndex(target));
+    }
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jEasyUI 启用行内编辑`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid12.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 启用行内编辑` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

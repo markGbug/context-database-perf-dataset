@@ -1,35 +1,58 @@
-# jQuery EasyUI：jEasyUI 创建折叠面板 学习笔记
+# jQuery EasyUI：jQuery EasyUI 布局 - 创建折叠面板
 
 - 来源：[jEasyUI 创建折叠面板](https://www.runoob.com/jeasyui/jeasyui-layout-accordion.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2855
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 创建折叠面板` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+在本教程中，您将会学习到关于 easyui 折叠面板（Accordion）的知识。 折叠面板（Accordion）包含一系列的面板（panel）。 所有面板（panel）的头部（header）都是可见的，但是一次仅仅显示一个面板（panel）的 body 内容。 当用户点击面板（panel）的头部（header）时，该面板（panel）的 body 内容将可见，同时其他面板（panel）的 body 内容将隐藏不可见。
 
-## 阅读抓手
+我们将创建三个面板（panel），第三个面板（panel）包含一个树形菜单。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+    <div class="easyui-accordion" style="width:300px;height:200px;">
+        <div title="About Accordion" iconCls="icon-ok" style="overflow:auto;padding:10px;">
+            <h3 style="color:#0099FF;">Accordion for jQuery</h3>
+            <p>Accordion is a part of easyui framework for jQuery. It lets you define your accordion component on web page more easily.</p>
+        </div>
+        <div title="About easyui" iconCls="icon-reload" selected="true" style="padding:10px;">
+            easyui help you build your web page easily
+        </div>
+        <div title="Tree Menu">
+            <ul id="tt1" class="easyui-tree">
+                <li>
+                    <span>Folder1</span>
+                    <ul>
+                        <li>
+                            <span>Sub Folder 1</span>
+                            <ul>
+                                <li><span>File 11</span></li>
+                                <li><span>File 12</span></li>
+                                <li><span>File 13</span></li>
+                            </ul>
+                        </li>
+                        <li><span>File 2</span></li>
+                        <li><span>File 3</span></li>
+                    </ul>
+                </li>
+                <li><span>File2</span></li>
+            </ul>
+        </div>
+    </div>
+```
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 下载 jQuery EasyUI 实例
 
-## 完成标准
+jeasyui-layout-accordion.zip
 
-- 能用 3 到 5 句话解释 `jEasyUI 创建折叠面板`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 复习重点
+
+- 能说明 `jEasyUI 创建折叠面板` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

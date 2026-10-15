@@ -1,34 +1,123 @@
-# PostgreSQL：PostgreSQL 权限 练习笔记
+# PostgreSQL：PostgreSQL PRIVILEGES（权限）
 
 - 来源：[PostgreSQL 权限](https://www.runoob.com/postgresql/postgresql-privileges.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1590
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL 权限` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+无论何时创建数据库对象，都会为其分配一个所有者，所有者通常是执行 create 语句的人。
 
-## 练习步骤
+对于大多数类型的对象，初始状态是只有所有者(或超级用户)才能修改或删除对象。要允许其他角色或用户使用它，必须为该用户设置权限。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+在 PostgreSQL 中，权限分为以下几种：
 
-## 验收清单
+- SELECT
+- INSERT
+- UPDATE
+- DELETE
+- TRUNCATE
+- REFERENCES
+- TRIGGER
+- CREATE
+- CONNECT
+- TEMPORARY
+- EXECUTE
+- USAGE
 
-- 我能独立说出 `PostgreSQL 权限` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+根据对象的类型(表、函数等)，将指定权限应用于该对象。
 
-## 复盘问题
+要向用户分配权限，可以使用 GRANT 命令。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### GRANT 语法
+
+GRANT 命令的基本语法如下：
+
+```text
+GRANT privilege [, ...]
+ON object [, ...]
+TO { PUBLIC | GROUP group | username }
+```
+
+- privilege − 值可以为：SELECT，INSERT，UPDATE，DELETE， RULE，ALL。
+- object − 要授予访问权限的对象名称。可能的对象有： table， view，sequence。
+- PUBLIC − 表示所有用户。
+- GROUP group − 为用户组授予权限。
+- username − 要授予权限的用户名。PUBLIC 是代表所有用户的简短形式。
+
+另外，我们可以使用 REVOKE 命令取消权限，REVOKE 语法：
+
+```text
+REVOKE privilege [, ...]
+ON object [, ...]
+FROM { PUBLIC | GROUP groupname | username }
+```
+
+
+### 实例
+
+为了理解权限，创建一个用户：
+
+```text
+runoobdb=# CREATE USER runoob WITH PASSWORD 'password';
+CREATE ROLE
+```
+
+信息 CREATE ROLE 表示创建了一个用户 "runoob"。
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+现在给用户 "runoob" 分配权限：
+
+```text
+runoobdb=# GRANT ALL ON COMPANY TO runoob;
+GRANT
+```
+
+信息 GRANT 表示所有权限已经分配给了 "runoob"。
+
+下面撤销用户 "runoob" 的权限：
+
+```text
+runoobdb=# REVOKE ALL ON COMPANY FROM runoob;
+REVOKE
+```
+
+信息 REVOKE 表示已经将用户的权限撤销。
+
+你也可以删除用户：
+
+```text
+runoobdb=# DROP USER runoob;
+DROP ROLE
+```
+
+信息 DROP ROLE 表示用户 "runoob" 已经从数据库中删除。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL 权限` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

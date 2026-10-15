@@ -1,34 +1,101 @@
-# OpenCV：OpenCV 安装 练习笔记
+# OpenCV：OpenCV 安装
 
 - 来源：[OpenCV 安装](https://www.runoob.com/opencv/opencv-install.html)
 - 分类：AI / 智能开发
 - 技术：OpenCV
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0447
 
-## 练习目标
+## 本章内容
 
-把 `OpenCV 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在使用 OpenCV 之前，首先需要在你的开发环境中安装它。
 
-## 练习步骤
+安装 OpenCV 的方法取决于你使用的操作系统以及开发语言，我们以 Python 环境下的安装为例，因为 Python 是 OpenCV 最常用的编程语言之一。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 1、安装 OpenCV（Python 版）
 
-- 我能独立说出 `OpenCV 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### pip 安装
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+安装 OpenCV（Python 版）前提条件：
+
+- 安装了 Python（建议使用 Python 3.x 版本）。
+- 安装了 pip（Python 包管理工具）。
+
+使用以下命令验证是否安装：
+
+```text
+python3 -V
+pip -V
+```
+
+如果还未安装 Python 参考：Python 环境搭建。
+
+注意：Python 2.7.9 + 或 Python 3.4+ 以上版本都自带 pip 工具。
+
+使用 pip 安装 OpenCV 是最简单和直接的方法，你只需要在命令行中输入以下命令：
+
+```text
+pip install opencv-python
+```
+
+该命令会自动从 PyPI（Python 包索引）下载并安装 OpenCV 的 Python 版本。
+
+如果需要额外的模块（例如 contrib 模块），可以安装 opencv-contrib-python：
+
+```text
+pip install opencv-contrib-python
+```
+
+这个版本包含了更多 OpenCV 的模块和功能，适合需要深度学习、物体识别等复杂任务的开发者。
+
+opencv-python 和 opencv-contrib-python 包是 OpenCV 的不同版本，它们分别包含了核心模块和扩展模块，一般来说，opencv-contrib-python 包含更多功能，适合需要高级应用的用户。
+
+如果安装速度慢，可以切换 pip 源（例如使用清华源）：
+
+```text
+pip install opencv-python -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+安装完成后，可以通过以下代码验证 OpenCV 是否安装成功：
+
+
+## 实例
+
+如果输出了 OpenCV 的版本号（例如 4.8.0），说明安装成功。
+
+
+### 2、通过 Anaconda 安装（推荐用于数据科学和深度学习开发）
+
+如果你使用 Anaconda 来管理 Python 环境，可以通过以下命令轻松安装 OpenCV：
+
+首先，创建一个新的虚拟环境（可选）：
+
+```text
+conda create -n opencv_env python=3.x
+```
+
+激活环境：
+
+```text
+conda activate opencv_env
+```
+
+安装 OpenCV：
+
+```text
+conda install -c conda-forge opencv
+```
+
+使用 Anaconda 安装时，opencv 会自动处理所有的依赖，并且在大多数情况下能够顺利安装。
+
+Anaconda 相关内容：Anaconda 教程。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `OpenCV 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

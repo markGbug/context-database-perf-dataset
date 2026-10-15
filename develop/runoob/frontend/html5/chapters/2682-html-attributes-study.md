@@ -1,35 +1,249 @@
-# HTML5：HTML 属性 学习笔记
+# HTML5：HTML 属性
 
 - 来源：[HTML 属性](https://www.runoob.com/html/html-attributes.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2682
 
-## 学习目标
+## 本章内容
 
-HTML5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `HTML 属性` 建立学习路径，先理解它在 HTML5 体系中的位置，再做可运行或可复述的验证。
+属性是 HTML 元素提供的附加信息。
 
-## 阅读抓手
+属性通常出现在 HTML 标签的开始标签中，用于定义元素的行为、样式、内容或其他特性。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+属性总是以 name="value" 的形式写在标签内，name 是属性的名称，value 是属性的值。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## HTML 属性
 
-## 完成标准
+- HTML 元素可以设置属性
+- 属性可以在元素中添加附加信息
+- 属性一般描述于开始标签
+- 属性总是以名称/值对的形式出现，比如：name="value"。
 
-- 能用 3 到 5 句话解释 `HTML 属性`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 属性实例
+
+HTML 链接由 <a> 标签定义。链接的地址在 href 属性中指定：
+
+
+## 实例
+
+```html
+<a href="http://www.runoob.com">这是一个链接</a>
+```
+
+
+## HTML 属性常用引用属性值
+
+属性值应该始终被包括在引号内。
+
+双引号是最常用的，不过使用单引号也没有问题。
+
+使用双引号：
+
+```html
+<a href="https://www.runoob.com">Link</a>
+```
+
+使用单引号：
+
+```html
+<a href='https://www.runoob.com'>Link</a>
+```
+
+提示: 在某些个别的情况下，比如属性值本身就含有双引号，那么您必须使用单引号，例如：
+
+```text
+name='John "ShotGun" Nelson'
+```
+
+或者：
+
+```html
+<a href="https://www.runoob.com?q='search'">Link</a>
+```
+
+
+## HTML 提示：使用小写属性
+
+属性和属性值对大小写不敏感。
+
+不过，万维网联盟在其 HTML 4 推荐标准中推荐小写的属性/属性值。
+
+而新版本的 (X)HTML 要求使用小写属性。
+
+
+## HTML 属性参考手册
+
+查看完整的HTML属性列表: HTML 标签参考手册。
+
+下面列出了适用于大多数 HTML 元素的属性：
+
+
+### 全局属性
+
+全局属性是所有 HTML 元素都可以使用的属性。
+
+id：为元素指定唯一的标识符。
+
+```html
+<div id="header">This is the header</div>
+```
+
+class：为元素指定一个或多个类名，用于 CSS 或 JavaScript 选择。
+
+```html
+<p class="text highlight">This is a highlighted text.</p>
+```
+
+style：用于直接在元素上应用 CSS 样式。
+
+```html
+<p style="color: blue; font-size: 14px;">This is a styled paragraph.</p>
+```
+
+title：为元素提供额外的提示信息，通常在鼠标悬停时显示。
+
+```html
+<abbr title="HyperText Markup Language">HTML</abbr>
+```
+
+data-*：用于存储自定义数据，通常通过 JavaScript 访问。
+
+```html
+<div data-user-id="12345">User Info</div>
+```
+
+
+### 特定元素的属性
+
+某些属性仅适用于特定的 HTML 元素。
+
+href（用于 <a> 和 <link> 元素）：指定链接的目标 URL。
+
+```html
+<a href="https://www.example.com">Visit Example</a>
+```
+
+src（用于 <img>, <script>, <iframe> 等元素）：指定外部资源的 URL。
+
+```html
+<img src="image.jpg" alt="An example image">
+```
+
+alt（用于 <img> 元素）：为图像提供替代文本，当图像无法显示时显示。
+
+```html
+<img src="image.jpg" alt="An example image">
+```
+
+type（用于 <input> 和 <button> 元素）：指定输入控件的类型。
+
+```html
+<input type="text" placeholder="Enter your name">
+```
+
+value（用于 <input>, <button>, <option> 等元素）：指定元素的初始值。
+
+```html
+<input type="text" value="Default Value">
+```
+
+disabled（用于表单元素）：禁用元素，使其不可交互。
+
+```html
+<input type="text" disabled>
+```
+
+checked（用于 <input type="checkbox"> 和 <input type="radio">）：指定复选框或单选按钮是否被选中。
+
+```html
+<input type="checkbox" checked>
+```
+
+placeholder（用于 <input> 和 <textarea> 元素）：在输入框中显示提示文本。
+
+```html
+<input type="text" placeholder="Enter your email">
+```
+
+target（用于 <a> 和 <form> 元素）：指定链接或表单提交的目标窗口或框架。
+
+```html
+<a href="https://www.example.com" target="_blank">Open in new tab</a>
+```
+
+
+### 布尔属性
+
+布尔属性是指不需要值的属性，它们的存在即表示 true，不存在则表示 false。
+
+disabled：禁用元素。
+
+```html
+<input type="text" disabled>
+```
+
+readonly：使输入框只读。
+
+```html
+<input type="text" readonly>
+```
+
+required：指定输入字段为必填项。
+
+```html
+<input type="text" required>
+```
+
+autoplay（用于 <audio> 和 <video> 元素）：自动播放媒体。
+
+```html
+<video src="video.mp4" autoplay></video>
+```
+
+
+### 自定义属性
+
+HTML5 引入了 data-* 属性，允许开发者自定义属性来存储额外的数据。
+
+data-*：用于存储自定义数据，通常通过 JavaScript 访问。
+
+```html
+<div data-user-id="12345" data-role="admin">User Info</div>
+```
+
+
+### 事件处理属性
+
+HTML 元素可以通过事件处理属性来响应特定的事件，如点击、鼠标悬停等。
+
+onclick：当用户点击元素时触发。
+
+```html
+<button onclick="alert('Button clicked!')">Click Me</button>
+```
+
+onmouseover：当用户将鼠标悬停在元素上时触发。
+
+```html
+<div onmouseover="this.style.backgroundColor='yellow'">Hover over me</div>
+```
+
+onchange：当元素的值发生变化时触发。
+
+```html
+<input type="text" onchange="alert('Value changed!')">
+```
+
+更多标准属性说明： HTML 标准属性参考手册.
+
+
+## 复习重点
+
+- 能说明 `HTML 属性` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

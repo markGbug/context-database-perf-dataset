@@ -1,34 +1,218 @@
-# Vue.js：Vue.js 组件 - 自定义事件 练习笔记
+# Vue.js：Vue.js 组件 - 自定义事件
 
 - 来源：[Vue.js 组件 - 自定义事件](https://www.runoob.com/vue2/vue-component-custom-event.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3260
 
-## 练习目标
+## 本章内容
 
-把 `Vue.js 组件 - 自定义事件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+父组件是使用 props 传递数据给子组件，但如果子组件要把数据传递回去，就需要使用自定义事件！
 
-## 练习步骤
+我们可以使用 v-on 绑定自定义事件, 每个 Vue 实例都实现了事件接口(Events interface)，即：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 使用 $on(eventName) 监听事件
+- 使用 $emit(eventName) 触发事件
 
-## 验收清单
+另外，父组件可以在使用子组件的地方直接用 v-on 来监听子组件触发的事件。
 
-- 我能独立说出 `Vue.js 组件 - 自定义事件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+以下实例中子组件已经和它外部完全解耦了。它所做的只是触发一个父组件关心的内部事件。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 实例
+
+```html
+<div id="app">
+    <div id="counter-event-example">
+      <p>{{ total }}</p>
+      <button-counter v-on:increment="incrementTotal"></button-counter>
+      <button-counter v-on:increment="incrementTotal"></button-counter>
+    </div>
+</div>
+
+<script>
+Vue.component('button-counter', {
+  template: '<button v-on:click="incrementHandler">{{ counter }}</button>',
+  data: function () {
+    return {
+      counter: 0
+    }
+  },
+  methods: {
+    incrementHandler: function () {
+      this.counter += 1
+      this.$emit('increment')
+    }
+  },
+})
+new Vue({
+  el: '#counter-event-example',
+  data: {
+    total: 0
+  },
+  methods: {
+    incrementTotal: function () {
+      this.total += 1
+    }
+  }
+})
+</script>
+```
+
+如果你想在某个组件的根元素上监听一个原生事件。可以使用 .native 修饰 v-on 。例如：
+
+```html
+<my-component v-on:click.native="doTheThing"></my-component>
+```
+
+
+### data 必须是一个函数
+
+上面例子中，可以看到 button-counter 组件中的 data 不是一个对象，而是一个函数：
+
+```javascript
+data: function () {
+  return {
+    count: 0
+  }
+}
+```
+
+这样的好处就是每个实例可以维护一份被返回对象的独立的拷贝，如果 data 是一个对象则会影响到其他实例，如下所示：
+
+
+## 实例
+
+```html
+<div id="components-demo3" class="demo">
+    <button-counter2></button-counter2>
+    <button-counter2></button-counter2>
+    <button-counter2></button-counter2>
+</div>
+
+<script>
+var buttonCounter2Data = {
+  count: 0
+}
+Vue.component('button-counter2', {
+    /*
+    data: function () {
+        // data 选项是一个函数，组件不相互影响
+        return {
+            count: 0
+        }
+    },
+    */
+    data: function () {
+        // data 选项是一个对象，会影响到其他实例
+        return buttonCounter2Data
+    },
+    template: '<button v-on:click="count++">点击了 {{ count }} 次。</button>'
+})
+new Vue({ el: '#components-demo3' })
+</script>
+```
+
+
+## 自定义组件的 v-model
+
+组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件。
+
+```html
+<input v-model="parentData">
+```
+
+等价于：
+
+```html
+<input
+    :value="parentData"
+    @input="parentData = $event.target.value"
+>
+```
+
+以下实例自定义组件 runoob-input，父组件的 num 的初始值是 100，更改子组件的值能实时更新父组件的 num：
+
+
+## 实例
+
+```html
+<div id="app">
+    <runoob-input v-model="num"></runoob-input>
+    <p>输入的数字为:{{num}}</p>
+</div>
+<script>
+Vue.component('runoob-input', {
+    template: `
+    <p>   <!-- 包含了名为 input 的事件 -->
+      <input
+       ref="input"
+       :value="value"
+       @input="$emit('input', $event.target.value)"
+      >
+    </p>
+    `,
+    props: ['value'], // 名为 value 的 prop
+})
+
+new Vue({
+    el: '#app',
+    data: {
+        num: 100,
+    }
+})
+</script>
+```
+
+由于 v-model 默认传的是 value，不是 checked，所以对于复选框或者单选框的组件时，我们需要使用 model 选项，model 选项可以指定当前的事件类型和传入的 props。
+
+
+## 实例
+
+```html
+<div id="app">
+    <base-checkbox v-model="lovingVue"></base-checkbox>
+     <div v-show="lovingVue">
+        如果选择框打勾我就会显示。
+    </div>
+</div>
+<script>
+// 注册
+Vue.component('base-checkbox', {
+
+  model: {
+    prop: 'checked',
+    event: 'change'  // onchange 事件
+  },
+  props: {
+    checked: Boolean
+  },
+
+  template: `
+    <input
+      type="checkbox"
+      v-bind:checked="checked"
+      v-on:change="$emit('change', $event.target.checked)"
+    >
+  `
+})
+// 创建根实例
+new Vue({
+  el: '#app',
+  data: {
+    lovingVue: true
+  }
+})
+</script>
+```
+
+实例中 lovingVue 的值会传给 checked 的 prop，同时当 <base-checkbox> 触发 change 事件时， lovingVue 的值也会更新。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue.js 组件 - 自定义事件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

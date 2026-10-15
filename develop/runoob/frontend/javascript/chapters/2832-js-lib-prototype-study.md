@@ -1,35 +1,141 @@
-# JavaScript：JavaScript 测试 Prototype 学习笔记
+# JavaScript：JavaScript - 测试 Prototype
 
 - 来源：[JavaScript 测试 Prototype](https://www.runoob.com/js/js-lib-prototype.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2832
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 测试 Prototype` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+测试 JavaScript 框架库 - Prototype
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 引用 Prototype
 
-## 笔记模板
+如需测试 JavaScript 库，您需要在网页中引用它。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+为了引用某个库，请使用 <script> 标签，其 src 属性设置为库的 URL：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `JavaScript 测试 Prototype`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 引用 Prototype
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<script
+src="https://cdn.staticfile.org/prototype/1.7.3/prototype.min.js">
+</script>
+</head>
+<body>
+</body>
+</html>
+```
+
+
+## Prototype 描述
+
+Prototype 提供的函数可使 HTML DOM 编程更容易。
+
+与 jQuery 类似，Prototype 也有自己的 $() 函数。
+
+$() 函数接受 HTML DOM 元素的 id 值（或 DOM 元素），并会向 DOM 对象添加新的功能。
+
+与 jQuery 不同，Prototype 没有用以取代 window.onload() 的 ready() 方法。相反，Prototype 会向浏览器及 HTML DOM 添加扩展。
+
+在 JavaScript 中，您可以分配一个函数以处理窗口加载事件：
+
+
+## JavaScript 方式：
+
+```javascript
+function myFunction()
+{
+    var obj=document.getElementById("h01");
+    obj.innerHTML="Hello Prototype";
+}
+onload=myFunction;
+```
+
+等价的 Prototype 是不同的：
+
+
+## Prototype 方式：
+
+```javascript
+function myFunction()
+{
+    $("h01").insert("Hello Prototype!");
+}
+Event.observe(window,"load",myFunction);
+```
+
+Event.observe() 接受三个参数：
+
+- 您希望处理的 HTML DOM 或 BOM（浏览器对象模型）对象
+- 您希望处理的事件
+- 您希望调用的函数
+
+
+## 测试 Prototype
+
+请试一下下面这个例子：
+
+
+## Example
+
+```html
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.staticfile.org/prototype/1.7.3/prototype.min.js">
+</script>
+<script>
+function myFunction()
+{
+    $("h01").insert("Hello Prototype!");
+}
+Event.observe(window,"load",myFunction);
+</script>
+</head>
+<body>
+<h1 id="h01"></h1>
+</body>
+</html>
+```
+
+请再试一下这个例子：
+
+
+## Example
+
+```html
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.staticfile.org/prototype/1.7.3/prototype.min.js">
+</script>
+<script>
+function myFunction()
+{
+    $("h01").writeAttribute("style","color:red").insert("Hello Prototype!");
+}
+Event.observe(window,"load",myFunction);
+</script>
+</head>
+<body>
+<h1 id="h01"></h1>
+</body>
+</html>
+```
+
+正如您在上面的例子中看到的，与 jQuery 相同，Prototype 允许链式语法。
+
+链接（Chaining）是一种在同一对象上执行多个任务的便捷方法。
+
+
+## 复习重点
+
+- 能说明 `JavaScript 测试 Prototype` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

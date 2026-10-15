@@ -1,35 +1,93 @@
-# Flutter：Flutter 进阶 学习笔记
+# Flutter：Flutter 进阶
 
 - 来源：[Flutter 进阶](https://www.runoob.com/flutter/flutter-advanced.html)
 - 分类：移动开发
 - 技术：Flutter
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3293
 
-## 学习目标
+## 本章内容
 
-Flutter 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Flutter 进阶` 建立学习路径，先理解它在 Flutter 体系中的位置，再做可运行或可复述的验证。
+本节将介绍一些 Flutter 进阶概念，帮助你提升开发技能。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 渲染原理
 
-## 笔记模板
+Flutter 使用 Skia（自 3.0 起逐步切换到 Impeller）渲染引擎直接绘制 UI，不使用原生组件。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### Widget 树与 Element 树
 
-- 能用 3 到 5 句话解释 `Flutter 进阶`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- Widget 树: 描述 UI 的配置信息（不可变）
+- Element 树: Widget 的实例化对象（可变）
+- RenderObject 树: 负责实际渲染
+
+理解渲染原理有助于优化 UI 性能，避免不必要的重建。
+
+
+## InheritedWidget - 数据传递
+
+InheritedWidget 允许数据沿着 Widget 树向下传递，子 Widget 可以获取祖先的数据。
+
+
+## 实例：自定义 InheritedWidget
+
+
+## RepaintBoundary - 局部重绘
+
+使用 RepaintBoundary 可以限制重绘区域，提高性能。
+
+
+## 实例：RepaintBoundary 使用
+
+
+## Keys 的深入理解
+
+Keys 帮助 Flutter 识别 Widget，区分新 Widget 和已有 Widget。
+
+
+### ValueKey vs ObjectKey vs UniqueKey
+
+
+## CustomPainter - 自定义绘制
+
+使用 CustomPainter 可以实现完全自定义的图形绘制。
+
+
+## 实例：CustomPainter 使用
+
+
+## Stream 和 Future
+
+
+## 实例：Stream 用法
+
+
+## 总结
+
+本 Flutter 入门教程涵盖了以下内容：
+
+- Flutter 安装和环境配置
+- Widget 基础（StatelessWidget 和 StatefulWidget）
+- 布局系统（Row、Column、Stack）
+- 用户输入处理
+- 状态管理（setState、Provider）
+- 网络请求和数据存储
+- 导航和路由
+- 测试和发布
+
+继续深入学习可以关注：
+
+- BLoC 模式
+- Riverpod 状态管理
+- GetX 路由和状态管理
+- Flutter 性能优化
+- Flutter Web 和桌面开发
+
+
+## 复习重点
+
+- 能说明 `Flutter 进阶` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

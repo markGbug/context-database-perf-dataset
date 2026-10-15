@@ -1,35 +1,144 @@
-# Scikit-learn：Sklearn 安装 学习笔记
+# Scikit-learn：Sklearn 安装
 
 - 来源：[Sklearn 安装](https://www.runoob.com/sklearn/sklearn-install.html)
 - 分类：AI / 智能开发
 - 技术：Scikit-learn
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0591
 
-## 学习目标
+## 本章内容
 
-Scikit-learn 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Sklearn 安装` 建立学习路径，先理解它在 Scikit-learn 体系中的位置，再做可运行或可复述的验证。
+要学习 Sklearn，安装是第一步，由于 Sklearn 依赖于其他几个库（如 NumPy、SciPy 和 matplotlib），所以我们需要确保这些依赖库也已安装。
 
-## 阅读抓手
+系统环境要求：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- Python 版本：scikit-learn 支持 Python 3.7 及以上版本。
+- 操作系统：scikit-learn 可以在 Windows、macOS 和 Linux 等主流操作系统上运行。
+- 包管理工具：你可以使用 pip 或 conda 来安装 scikit-learn。
 
-## 笔记模板
+本章节我们使用 pip 安装 scikit-learn。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+安装前，确保已安装 Python 和 pip。
 
-## 完成标准
+检查 Python 是否安装：
 
-- 能用 3 到 5 句话解释 `Sklearn 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+python --version
+```
+
+检查 pip 是否安装：
+
+```text
+pip --version
+```
+
+如果未安装 python 和 pip，可以参考我们的： Python 安装 与 Pip 安装。
+
+注意：目前最新的 Python 版本已经预装了 pip。
+
+注意：Python 2.7.9 + 或 Python 3.4+ 以上版本都自带 pip 工具。
+
+
+## 安装 Sklearn
+
+Sklearn 全称为 scikit-learn。
+
+使用 pip 安装最新版本的 scikit-learn：
+
+```text
+pip install scikit-learn
+```
+
+如果你希望安装特定版本的 scikit-learn，可以指定版本号：
+
+```text
+pip install scikit-learn==1.2.0
+```
+
+
+### 检查安装是否成功
+
+安装完成后，我们可以通过以下代码检查 scikit-learn 是否安装成功：
+
+
+## 实例
+
+如果成功显示 scikit-learn 的版本号，类似如下，则表示安装成功：
+
+```text
+1.5.2
+```
+
+
+## 使用 conda 安装 scikit-learn
+
+如果你使用的是 Anaconda 环境，推荐使用 conda 来安装 scikit-learn。
+
+Anaconda 是一个用于科学计算的 Python 发行版，内置了许多数据科学和机器学习的库，方便开发者使用。
+
+如果你还不了解 Anaconda，可以参考：Anaconda 教程。
+
+
+### 创建一个新的 conda 环境（可选）
+
+你可以选择为 scikit-learn 创建一个新的虚拟环境，以避免与其他项目发生冲突：
+
+```text
+conda create -n sklearn-env python=3.9
+conda activate sklearn-env
+```
+
+
+### 安装 scikit-learn
+
+使用 conda 安装 scikit-learn：
+
+```text
+conda install scikit-learn
+```
+
+如果你想安装特定版本，可以指定版本号：
+
+```text
+conda install scikit-learn=1.2.0
+```
+
+
+### 验证安装
+
+在 conda 环境中，你可以通过 Python shell 或 Jupyter Notebook 来验证安装：
+
+
+## 实例
+
+如果成功显示 scikit-learn 的版本号，类似如下，则表示安装成功：
+
+```text
+1.5.2
+```
+
+
+## 安装其他依赖
+
+scikit-learn 依赖于一些其他库，特别是：
+
+- NumPy：用于处理数组和数值计算
+- SciPy：提供更高级的数学计算工具
+- matplotlib（可选）：用于数据可视化
+- joblib（可选）：用于模型的持久化（保存和加载）
+
+如果你使用 pip 安装，scikit-learn 会自动安装这些依赖，但如果你想手动安装或更新它们，可以使用以下命令：
+
+```text
+pip install numpy scipy matplotlib joblib
+```
+
+使用 conda 安装，则所有的依赖库会自动安装。
+
+
+## 复习重点
+
+- 能说明 `Sklearn 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

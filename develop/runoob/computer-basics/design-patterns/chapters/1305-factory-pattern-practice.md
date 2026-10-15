@@ -1,34 +1,239 @@
-# 设计模式：工厂模式 练习笔记
+# 设计模式：工厂模式
 
 - 来源：[工厂模式](https://www.runoob.com/design-pattern/factory-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1305
 
-## 练习目标
+## 本章内容
 
-把 `工厂模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一，它提供了一种创建对象的方式，使得创建对象的过程与使用对象的过程分离。
 
-## 练习步骤
+工厂模式提供了一种创建对象的方式，而无需指定要创建的具体类。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+通过使用工厂模式，可以将对象的创建逻辑封装在一个工厂类中，而不是在客户端代码中直接实例化对象，这样可以提高代码的可维护性和可扩展性。
 
-## 验收清单
 
-- 我能独立说出 `工厂模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 工厂模式的类型
 
-## 复盘问题
+1、简单工厂模式（Simple Factory Pattern）：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- 简单工厂模式不是一个正式的设计模式，但它是工厂模式的基础。它使用一个单独的工厂类来创建不同的对象，根据传入的参数决定创建哪种类型的对象。
+
+2、工厂方法模式（Factory Method Pattern）：
+
+- 工厂方法模式定义了一个创建对象的接口，但由子类决定实例化哪个类。工厂方法将对象的创建延迟到子类。
+
+3、抽象工厂模式（Abstract Factory Pattern）：
+
+- 抽象工厂模式提供一个创建一系列相关或互相依赖对象的接口，而无需指定它们具体的类。
+
+
+## 概要
+
+
+### 意图
+
+定义一个创建对象的接口，让其子类决定实例化哪一个具体的类。工厂模式使对象的创建过程延迟到子类。
+
+
+### 主要解决
+
+接口选择的问题。
+
+
+### 何时使用
+
+当我们需要在不同条件下创建不同实例时。
+
+
+### 如何解决
+
+通过让子类实现工厂接口，返回一个抽象的产品。
+
+
+### 关键代码
+
+对象的创建过程在子类中实现。
+
+
+### 应用实例
+
+- 汽车制造：你需要一辆汽车，只需从工厂提货，而不需要关心汽车的制造过程及其内部实现。
+- Hibernate：更换数据库时，只需更改方言（Dialect）和数据库驱动（Driver），即可实现对不同数据库的切换。
+
+
+### 优点
+
+- 调用者只需要知道对象的名称即可创建对象。
+- 扩展性高，如果需要增加新产品，只需扩展一个工厂类即可。
+- 屏蔽了产品的具体实现，调用者只关心产品的接口。
+
+
+### 缺点
+
+每次增加一个产品时，都需要增加一个具体类和对应的工厂，使系统中类的数量成倍增加，增加了系统的复杂度和具体类的依赖。
+
+
+### 使用场景
+
+- 日志记录：日志可能记录到本地硬盘、系统事件、远程服务器等，用户可以选择记录日志的位置。
+- 数据库访问：当用户不知道最终系统使用哪种数据库，或者数据库可能变化时。
+- 连接服务器的框架设计：需要支持 "POP3"、"IMAP"、"HTTP" 三种协议，可以将这三种协议作为产品类，共同实现一个接口。
+
+
+### 注意事项
+
+工厂模式适用于生成复杂对象的场景。如果对象较为简单，通过 new 即可完成创建，则不必使用工厂模式。使用工厂模式会引入一个工厂类，增加系统复杂度。
+
+
+### 结构
+
+工厂模式包含以下几个主要角色：
+
+- 抽象产品（Abstract Product）：定义了产品的共同接口或抽象类。它可以是具体产品类的父类或接口，规定了产品对象的共同方法。
+- 具体产品（Concrete Product）：实现了抽象产品接口，定义了具体产品的特定行为和属性。
+- 抽象工厂（Abstract Factory）：声明了创建产品的抽象方法，可以是接口或抽象类。它可以有多个方法用于创建不同类型的产品。
+- 具体工厂（Concrete Factory）：实现了抽象工厂接口，负责实际创建具体产品的对象。
+
+
+## 实现
+
+我们将创建一个 Shape 接口和实现 Shape 接口的实体类。下一步是定义工厂类 ShapeFactory。
+
+FactoryPatternDemo 类使用 ShapeFactory 来获取 Shape 对象。它将向 ShapeFactory 传递信息（CIRCLE / RECTANGLE / SQUARE），以便获取它所需对象的类型。
+
+
+### 步骤 1
+
+创建一个接口:
+
+
+## Shape.java
+
+```text
+public interface Shape {
+   void draw();
+}
+```
+
+
+### 步骤 2
+
+创建实现接口的实体类。
+
+
+## Rectangle.java
+
+```java
+public class Rectangle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Rectangle::draw() method.");
+   }
+}
+```
+
+
+## Square.java
+
+```java
+public class Square implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Square::draw() method.");
+   }
+}
+```
+
+
+## Circle.java
+
+```java
+public class Circle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Circle::draw() method.");
+   }
+}
+```
+
+
+### 步骤 3
+
+创建一个工厂，生成基于给定信息的实体类的对象。
+
+
+## ShapeFactory.java
+
+```java
+public class ShapeFactory {
+
+   //使用 getShape 方法获取形状类型的对象
+   public Shape getShape(String shapeType){
+      if(shapeType == null){
+         return null;
+      }
+      if(shapeType.equalsIgnoreCase("CIRCLE")){
+         return new Circle();
+      } else if(shapeType.equalsIgnoreCase("RECTANGLE")){
+         return new Rectangle();
+      } else if(shapeType.equalsIgnoreCase("SQUARE")){
+         return new Square();
+      }
+      return null;
+   }
+}
+```
+
+
+### 步骤 4
+
+使用该工厂，通过传递类型信息来获取实体类的对象。
+
+
+## FactoryPatternDemo.java
+
+```java
+public class FactoryPatternDemo {
+
+   public static void main(String[] args) {
+      ShapeFactory shapeFactory = new ShapeFactory();
+
+      //获取 Circle 的对象，并调用它的 draw 方法
+      Shape shape1 = shapeFactory.getShape("CIRCLE");
+
+      //调用 Circle 的 draw 方法
+      shape1.draw();
+
+      //获取 Rectangle 的对象，并调用它的 draw 方法
+      Shape shape2 = shapeFactory.getShape("RECTANGLE");
+
+      //调用 Rectangle 的 draw 方法
+      shape2.draw();
+
+      //获取 Square 的对象，并调用它的 draw 方法
+      Shape shape3 = shapeFactory.getShape("SQUARE");
+
+      //调用 Square 的 draw 方法
+      shape3.draw();
+   }
+}
+```
+
+
+## 后续章节
+
+- 步骤 5
+- 其他相关文章
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `工厂模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

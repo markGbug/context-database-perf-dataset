@@ -1,34 +1,112 @@
-# React：React AJAX 练习笔记
+# React：React AJAX
 
 - 来源：[React AJAX](https://www.runoob.com/react/react-ajax.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3051
 
-## 练习目标
+## 本章内容
 
-把 `React AJAX` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 React 应用中实现 AJAX 请求，通常可以使用 fetch API 或者第三方库如 axios、jquery 等库来进行网络请求。
 
-## 练习步骤
+以下是使用这两种方法的基本说明：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 使用 fetch API 进行 AJAX 请求
 
-- 我能独立说出 `React AJAX` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+fetch 是一个在浏览器中内置的 API，用于发起网络请求。以下是使用 fetch 在 React 组件中发起 AJAX 请求的基本步骤：
 
-## 复盘问题
+- 引入 fetch - 如果你使用的是现代浏览器，通常不需要引入 fetch。但是，如果你需要支持旧浏览器，可以使用 unfetch 这样的 polyfill。
+- 使用 useEffect 钩子 - 利用 useEffect 钩子来处理副作用，比如发起网络请求。
+- 发起请求 - 使用 fetch 发起 GET 或 POST 请求。
+- 处理响应 - 使用 .then() 来处理响应数据。
+- 错误处理 - 使用 .catch() 来捕获并处理错误。
+- 更新状态 - 使用 useState 钩子来存储请求的数据，并在请求成功后更新状态。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+说明：
+
+- useState 和 useEffect：使用 useState 来存储 AJAX 请求返回的数据 (data) 和加载状态 (loading)，并使用 useEffect 在组件加载后执行 AJAX 请求。
+- fetch：使用 fetch 发起 GET 请求，并使用 response.json() 将返回的 JSON 数据解析为 JavaScript 对象。
+- 异步处理：使用 async/await 来处理异步操作，确保在请求完成后更新状态。
+- 错误处理：在 fetch 请求中使用 try/catch 来捕获和处理可能发生的错误。
+
+
+### 使用 axios
+
+axios 是一个基于 Promise 的 HTTP 客户端，适用于浏览器和 Node.js。
+
+以下是使用 axios 的基本步骤：
+
+- 安装 axios - 通过 npm 或 yarn 安装 axios。 npm install axios
+- 引入 axios - 在组件中引入 axios。
+- 发起请求 - 使用 axios 发起 GET 或 POST 请求。
+- 处理响应和错误 - 使用 .then() 和 .catch() 来处理响应和捕获错误。
+- 更新状态 - 与使用 fetch 类似，使用 useState 更新状态。
+
+
+## 实例
+
+
+### 使用 jQuery 在线测试
+
+以下实例演示了获取 Github 用户最新 gist 共享描述:
+
+React 组件的数据可以通过 componentDidMount 方法中的 Ajax 来获取，当从服务端获取数据时可以将数据存储在 state 中，再用 this.setState 方法重新渲染 UI。
+
+当使用异步加载数据时，在组件卸载前使用 componentWillUnmount 来取消未完成的请求。
+
+
+## React 实例
+
+```html
+class UserGist extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = {username: '', lastGistUrl: ''};
+  }
+
+
+  componentDidMount() {
+    this.serverRequest = $.get(this.props.source, function (result) {
+      var lastGist = result[0];
+      this.setState({
+        username: lastGist.owner.login,
+        lastGistUrl: lastGist.html_url
+      });
+    }.bind(this));
+  }
+
+  componentWillUnmount() {
+    this.serverRequest.abort();
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.username} 用户最新的 Gist 共享地址：
+        <a href={this.state.lastGistUrl}>{this.state.lastGistUrl}</a>
+      </div>
+    );
+  }
+}
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <UserGist source="https://api.github.com/users/octocat/gists" />
+);
+```
+
+以上代码使用 jQuery 完成 Ajax 请求。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `React AJAX` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

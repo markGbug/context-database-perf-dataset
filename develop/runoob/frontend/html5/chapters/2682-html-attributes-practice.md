@@ -1,34 +1,249 @@
-# HTML5：HTML 属性 练习笔记
+# HTML5：HTML 属性
 
 - 来源：[HTML 属性](https://www.runoob.com/html/html-attributes.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2682
 
-## 练习目标
+## 本章内容
 
-把 `HTML 属性` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+属性是 HTML 元素提供的附加信息。
 
-## 练习步骤
+属性通常出现在 HTML 标签的开始标签中，用于定义元素的行为、样式、内容或其他特性。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+属性总是以 name="value" 的形式写在标签内，name 是属性的名称，value 是属性的值。
 
-## 验收清单
 
-- 我能独立说出 `HTML 属性` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## HTML 属性
 
-## 复盘问题
+- HTML 元素可以设置属性
+- 属性可以在元素中添加附加信息
+- 属性一般描述于开始标签
+- 属性总是以名称/值对的形式出现，比如：name="value"。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 属性实例
+
+HTML 链接由 <a> 标签定义。链接的地址在 href 属性中指定：
+
+
+## 实例
+
+```html
+<a href="http://www.runoob.com">这是一个链接</a>
+```
+
+
+## HTML 属性常用引用属性值
+
+属性值应该始终被包括在引号内。
+
+双引号是最常用的，不过使用单引号也没有问题。
+
+使用双引号：
+
+```html
+<a href="https://www.runoob.com">Link</a>
+```
+
+使用单引号：
+
+```html
+<a href='https://www.runoob.com'>Link</a>
+```
+
+提示: 在某些个别的情况下，比如属性值本身就含有双引号，那么您必须使用单引号，例如：
+
+```text
+name='John "ShotGun" Nelson'
+```
+
+或者：
+
+```html
+<a href="https://www.runoob.com?q='search'">Link</a>
+```
+
+
+## HTML 提示：使用小写属性
+
+属性和属性值对大小写不敏感。
+
+不过，万维网联盟在其 HTML 4 推荐标准中推荐小写的属性/属性值。
+
+而新版本的 (X)HTML 要求使用小写属性。
+
+
+## HTML 属性参考手册
+
+查看完整的HTML属性列表: HTML 标签参考手册。
+
+下面列出了适用于大多数 HTML 元素的属性：
+
+
+### 全局属性
+
+全局属性是所有 HTML 元素都可以使用的属性。
+
+id：为元素指定唯一的标识符。
+
+```html
+<div id="header">This is the header</div>
+```
+
+class：为元素指定一个或多个类名，用于 CSS 或 JavaScript 选择。
+
+```html
+<p class="text highlight">This is a highlighted text.</p>
+```
+
+style：用于直接在元素上应用 CSS 样式。
+
+```html
+<p style="color: blue; font-size: 14px;">This is a styled paragraph.</p>
+```
+
+title：为元素提供额外的提示信息，通常在鼠标悬停时显示。
+
+```html
+<abbr title="HyperText Markup Language">HTML</abbr>
+```
+
+data-*：用于存储自定义数据，通常通过 JavaScript 访问。
+
+```html
+<div data-user-id="12345">User Info</div>
+```
+
+
+### 特定元素的属性
+
+某些属性仅适用于特定的 HTML 元素。
+
+href（用于 <a> 和 <link> 元素）：指定链接的目标 URL。
+
+```html
+<a href="https://www.example.com">Visit Example</a>
+```
+
+src（用于 <img>, <script>, <iframe> 等元素）：指定外部资源的 URL。
+
+```html
+<img src="image.jpg" alt="An example image">
+```
+
+alt（用于 <img> 元素）：为图像提供替代文本，当图像无法显示时显示。
+
+```html
+<img src="image.jpg" alt="An example image">
+```
+
+type（用于 <input> 和 <button> 元素）：指定输入控件的类型。
+
+```html
+<input type="text" placeholder="Enter your name">
+```
+
+value（用于 <input>, <button>, <option> 等元素）：指定元素的初始值。
+
+```html
+<input type="text" value="Default Value">
+```
+
+disabled（用于表单元素）：禁用元素，使其不可交互。
+
+```html
+<input type="text" disabled>
+```
+
+checked（用于 <input type="checkbox"> 和 <input type="radio">）：指定复选框或单选按钮是否被选中。
+
+```html
+<input type="checkbox" checked>
+```
+
+placeholder（用于 <input> 和 <textarea> 元素）：在输入框中显示提示文本。
+
+```html
+<input type="text" placeholder="Enter your email">
+```
+
+target（用于 <a> 和 <form> 元素）：指定链接或表单提交的目标窗口或框架。
+
+```html
+<a href="https://www.example.com" target="_blank">Open in new tab</a>
+```
+
+
+### 布尔属性
+
+布尔属性是指不需要值的属性，它们的存在即表示 true，不存在则表示 false。
+
+disabled：禁用元素。
+
+```html
+<input type="text" disabled>
+```
+
+readonly：使输入框只读。
+
+```html
+<input type="text" readonly>
+```
+
+required：指定输入字段为必填项。
+
+```html
+<input type="text" required>
+```
+
+autoplay（用于 <audio> 和 <video> 元素）：自动播放媒体。
+
+```html
+<video src="video.mp4" autoplay></video>
+```
+
+
+### 自定义属性
+
+HTML5 引入了 data-* 属性，允许开发者自定义属性来存储额外的数据。
+
+data-*：用于存储自定义数据，通常通过 JavaScript 访问。
+
+```html
+<div data-user-id="12345" data-role="admin">User Info</div>
+```
+
+
+### 事件处理属性
+
+HTML 元素可以通过事件处理属性来响应特定的事件，如点击、鼠标悬停等。
+
+onclick：当用户点击元素时触发。
+
+```html
+<button onclick="alert('Button clicked!')">Click Me</button>
+```
+
+onmouseover：当用户将鼠标悬停在元素上时触发。
+
+```html
+<div onmouseover="this.style.backgroundColor='yellow'">Hover over me</div>
+```
+
+onchange：当元素的值发生变化时触发。
+
+```html
+<input type="text" onchange="alert('Value changed!')">
+```
+
+更多标准属性说明： HTML 标准属性参考手册.
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML 属性` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,73 @@
-# SVN：SVN 创建版本库 学习笔记
+# SVN：SVN 创建版本库
 
 - 来源：[SVN 创建版本库](https://www.runoob.com/svn/svn-create-repo.html)
 - 分类：DevOps / 工程化
 - 技术：SVN
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1886
 
-## 学习目标
+## 本章内容
 
-SVN 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `SVN 创建版本库` 建立学习路径，先理解它在 SVN 体系中的位置，再做可运行或可复述的验证。
+使用 svn 命令创建资源库：
 
-## 阅读抓手
+```text
+[runoob@centos6 ~]# svnadmin create /opt/svn/runoob01
+[runoob@centos6 ~]# ll /opt/svn/runoob01/
+total 24
+drwxr-xr-x 2 root root 4096 2016/08/23 16:31:06 conf
+drwxr-sr-x 6 root root 4096 2016/08/23 16:31:06 db
+-r--r--r-- 1 root root    2 2016/08/23 16:31:06 format
+drwxr-xr-x 2 root root 4096 2016/08/23 16:31:06 hooks
+drwxr-xr-x 2 root root 4096 2016/08/23 16:31:06 locks
+-rw-r--r-- 1 root root  229 2016/08/23 16:31:06 README.txt
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+进入 /opt/svn/runoob01/conf 目录，修改默认配置文件配置，包括 svnserve.conf、passwd、authz 配置相关用户和权限。
 
-## 笔记模板
+1、svn 服务配置文件 svnserve.conf
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+svn 服务配置文件为版本库目录中的文件 conf/svnserve.conf。该文件仅由一个 [general] 配置段组成。
 
-## 完成标准
+```text
+[general]
+anon-access = none
+auth-access = write
+password-db = /home/svn/passwd
+authz-db = /home/svn/authz
+realm = tiku
+```
 
-- 能用 3 到 5 句话解释 `SVN 创建版本库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- anon-access: 控制非鉴权用户访问版本库的权限，取值范围为 "write"、"read" 和 "none"。 即 "write" 为可读可写，"read" 为只读，"none" 表示无访问权限，默认值：read。
+- auth-access: 控制鉴权用户访问版本库的权限。取值范围为 "write"、"read" 和 "none"。 即"write"为可读可写，"read"为只读，"none"表示无访问权限，默认值：write。
+- authz-db: 指定权限配置文件名，通过该文件可以实现以路径为基础的访问控制。 除非指定绝对路径，否则文件位置为相对conf目录的相对路径，默认值：authz。
+- realm: 指定版本库的认证域，即在登录时提示的认证域名称。若两个版本库的认证域相同，建议使用相同的用户名口令数据文件。默认值：一个UUID(Universal Unique IDentifier，全局唯一标示)。
+
+2、用户名口令文件 passwd
+
+用户名口令文件由 svnserve.conf 的配置项 password-db 指定，默认为 conf 目录中的 passwd。该文件仅由一个 [users] 配置段组成。
+
+[users] 配置段的配置行格式如下：
+
+```text
+<用户名> = <口令>
+```
+
+```text
+[users]
+admin = admin
+thinker = 123456
+```
+
+3、权限配置文件
+
+权限配置文件由 svnserve.conf 的配置项 authz-db 指定，默认为 conf 目录中的 authz。该配置文件由一个 [groups] 配置段和若干个版本库路径权限段组成。
+
+[groups]配置段中配置行格式如下：
+
+
+## 复习重点
+
+- 能说明 `SVN 创建版本库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

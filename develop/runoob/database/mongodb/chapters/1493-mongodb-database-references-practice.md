@@ -1,34 +1,83 @@
-# MongoDB：MongoDB 数据库引用 练习笔记
+# MongoDB：MongoDB 数据库引用
 
 - 来源：[MongoDB 数据库引用](https://www.runoob.com/mongodb/mongodb-database-references.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1493
 
-## 练习目标
+## 本章内容
 
-把 `MongoDB 数据库引用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在上一章节MongoDB关系中我们提到了MongoDB的引用来规范数据结构文档。
 
-## 练习步骤
+MongoDB 引用有两种：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 手动引用（Manual References）
+- DBRefs
 
-## 验收清单
 
-- 我能独立说出 `MongoDB 数据库引用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## DBRefs vs 手动引用
 
-## 复盘问题
+考虑这样的一个场景，我们在不同的集合中 (address_home, address_office, address_mailing, 等)存储不同的地址（住址，办公室地址，邮件地址等）。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+这样，我们在调用不同地址时，也需要指定集合，一个文档从多个集合引用文档，我们应该使用 DBRefs。
+
+
+## 使用 DBRefs
+
+DBRef的形式：
+
+```text
+{ $ref : , $id : , $db :  }
+```
+
+三个字段表示的意义为：
+
+- $ref：集合名称
+- $id：引用的id
+- $db:数据库名称，可选参数
+
+以下实例中用户数据文档使用了 DBRef, 字段 address：
+
+```text
+{
+   "_id":ObjectId("53402597d852426020000002"),
+   "address": {
+   "$ref": "address_home",
+   "$id": ObjectId("534009e4d852427820000002"),
+   "$db": "runoob"},
+   "contact": "987654321",
+   "dob": "01-01-1991",
+   "name": "Tom Benzamin"
+}
+```
+
+address DBRef 字段指定了引用的地址文档是在 runoob 数据库下的 address_home 集合，id 为 534009e4d852427820000002。
+
+以下代码中，我们通过指定 $ref 参数（address_home 集合）来查找集合中指定id的用户地址信息：
+
+```javascript
+>var user = db.users.findOne({"name":"Tom Benzamin"})
+>var dbRef = user.address
+>db[dbRef.$ref].findOne({"_id":(dbRef.$id)})
+```
+
+以上实例返回了 address_home 集合中的地址数据：
+
+```text
+{
+   "_id" : ObjectId("534009e4d852427820000002"),
+   "building" : "22 A, Indiana Apt",
+   "pincode" : 123456,
+   "city" : "Los Angeles",
+   "state" : "California"
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MongoDB 数据库引用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

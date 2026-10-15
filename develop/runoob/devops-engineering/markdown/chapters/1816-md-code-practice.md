@@ -1,34 +1,281 @@
-# Markdown：Markdown 代码 练习笔记
+# Markdown：Markdown 代码
 
 - 来源：[Markdown 代码](https://www.runoob.com/markdown/md-code.html)
 - 分类：DevOps / 工程化
 - 技术：Markdown
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1816
 
-## 练习目标
+## 本章内容
 
-把 `Markdown 代码` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Markdown 提供了多种方式来展示代码，从简单的行内代码到复杂的代码块，满足不同场景下的代码展示需求。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 行内代码
 
-## 验收清单
+如果是段落上的一个函数或片段的代码可以用反引号把它包起来（`），例如：
 
-- 我能独立说出 `Markdown 代码` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+`printf()` 函数
+```
 
-## 复盘问题
+显示结果如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+常见用法示例：
+
+- 函数名：使用 console.log() 输出信息
+- 变量名：将值赋给 userName 变量
+- 命令行：运行 npm install 安装依赖
+- 键盘按键：按 Ctrl+C 复制内容
+- 文件名：编辑 index.html 文件
+
+
+### 特殊字符转义
+
+当需要在行内代码中显示反引号或其他特殊字符时，需要进行转义处理。
+
+显示反引号的方法：
+
+使用双反引号包围单反引号：
+
+```text
+``使用 `反引号` 包围代码``
+```
+
+渲染效果：
+
+使用多个反引号包围：
+
+```text
+```包含 `` 双反引号的代码```
+```
+
+渲染效果：
+
+其他特殊字符处理：
+
+- HTML 标签：<div> 元素
+- 数学符号：计算 x + y = z
+- 特殊符号：使用 表示空格
+
+
+## 代码区块
+
+
+### 缩进式代码块
+
+代码区块使用 4 个空格或者一个制表符（Tab 键）。
+
+语法格式：
+
+```text
+正常文本段落
+
+    这是缩进式代码块
+    每行前面有四个空格
+    保持代码的原始格式
+
+继续正常文本
+```
+
+实例如下：
+
+显示结果如下：
+
+
+### 三反引号代码块
+
+你也可以用 ``` 包裹一段代码，并指定一种语言（也可以不指定）：
+
+```text
+```
+多行代码内容
+可以包含空行
+保持原有缩进
+```
+```
+
+三反引号（```）是最常用的代码块语法，支持语法高亮和多行代码展示。
+
+```javascript
+```javascript
+$(document).ready(function () {
+    alert('RUNOOB');
+});
+```
+```
+
+显示结果如下：
+
+注意事项：
+
+- 缩进式代码块前后需要空行分隔
+- 所有代码行必须保持一致的缩进
+- 不支持语法高亮
+- 在列表中使用时需要8个空格缩进
+
+
+### 语言标识和语法高亮
+
+在三反引号后添加语言标识符可以启用语法高亮功能。
+
+常用语言标识符列表：
+
+- javascript / js - JavaScript
+- python / py - Python
+- html - HTML
+- css - CSS
+- sql - SQL
+- json - JSON
+- xml - XML
+- yaml / yml - YAML
+- bash / shell - Shell脚本
+- java - Java
+- cpp / c++ - C++
+- csharp / c# - C#
+- php - PHP
+- ruby / rb - Ruby
+- go - Go语言
+- rust - Rust
+- typescript / ts - TypeScript
+
+JavaScript:
+
+```javascript
+```javascript
+const users = [
+    { name: "Alice", age: 25 },
+    { name: "Bob", age: 30 }
+];
+
+const adults = users.filter(user => user.age >= 18);
+console.log(adults);
+```
+```
+
+Python:
+
+```text
+```python
+def calculate_area(radius):
+    """计算圆的面积"""
+    import math
+    return math.pi * radius ** 2
+
+# 使用函数
+area = calculate_area(5)
+print(f"圆的面积是: {area:.2f}")
+```
+```
+
+SQL:
+
+```text
+```sql
+SELECT u.name, u.email, COUNT(o.id) as order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE u.created_at >= '2024-01-01'
+GROUP BY u.id, u.name, u.email
+ORDER BY order_count DESC
+LIMIT 10;
+```
+```
+
+
+## 代码块的高级特性
+
+
+### 行号显示
+
+某些 Markdown 渲染器支持显示行号，通过特定的语法或配置实现。
+
+语法示例（部分支持）：
+
+```javascript
+```javascript {.line-numbers}
+function fibonacci(n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log(fibonacci(10));
+```
+```
+
+或者使用：
+
+```javascript
+```javascript showLineNumbers
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(x => x * 2);
+const sum = doubled.reduce((a, b) => a + b, 0);
+console.log(`总和: ${sum}`);
+```
+```
+
+
+### 代码差异对比
+
+用于显示代码的添加、删除或修改，常用于展示版本控制中的变更。
+
+Diff 语法：
+
+```java
+```diff
+function calculateTotal(items) {
+-   let total = 0;
++   let total = 0.0;
+
+    for (let item of items) {
+-       total += item.price;
++       total += parseFloat(item.price);
+    }
+
++   // 保留两位小数
++   total = Math.round(total * 100) / 100;
+    return total;
+}
+```
+```
+
+Git 风格的差异显示：
+
+```javascript
+```diff
+@@ -1,5 +1,8 @@
+ function greetUser(name) {
+-    console.log("Hello " + name);
++    if (!name) {
++        throw new Error("Name is required");
++    }
++    console.log(`Hello, ${name}!`);
+ }
+```
+```
+
+语言特定的差异对比：
+
+```javascript
+```javascript
+// 之前的代码
+const oldFunction = () => {
+    var x = 10;  // ❌ 使用 var
+    console.log("Value: " + x);  // ❌ 字符串拼接
+}
+
+// 改进后的代码
+const newFunction = () => {
+    const x = 10;  // ✅ 使用 const
+    console.log(`Value: ${x}`);  // ✅ 模板字符串
+}
+```
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Markdown 代码` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,148 @@
-# RESTful API：RESTful API 请求和响应 学习笔记
+# RESTful API：RESTful API 请求和响应格式
 
 - 来源：[RESTful API 请求和响应](https://www.runoob.com/restfulapi/restful-api-res.html)
 - 分类：后端开发
 - 技术：RESTful API
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1135
 
-## 学习目标
+## 本章内容
 
-RESTful API 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `RESTful API 请求和响应` 建立学习路径，先理解它在 RESTful API 体系中的位置，再做可运行或可复述的验证。
+## JSON 格式
 
-## 阅读抓手
+现代 RESTful API 主要使用 JSON（JavaScript Object Notation）格式来传输数据。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+JSON 就像是数据的"通用语言"，简单易读。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### JSON 基础语法
 
-## 完成标准
+```text
+{
+  "name": "张三",
+  "age": 25,
+  "email": "zhangsan@example.com",
+  "hobbies": ["阅读", "游泳", "编程"],
+  "address": {
+    "city": "北京",
+    "district": "朝阳区"
+  },
+  "isActive": true
+}
+```
 
-- 能用 3 到 5 句话解释 `RESTful API 请求和响应`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 请求格式
+
+GET 请求示例:
+
+```text
+// 请求
+GET /api/users/123
+Accept: application/json
+
+// 响应
+{
+  "id": 123,
+  "name": "张三",
+  "email": "zhangsan@example.com",
+  "createdAt": "2024-01-15T08:30:00Z"
+}
+```
+
+POST 请求示例:
+
+```text
+// 请求
+POST /api/users
+Content-Type: application/json
+
+{
+  "name": "李四",
+  "email": "lisi@example.com",
+  "password": "securePassword123"
+}
+
+// 响应
+{
+  "id": 124,
+  "name": "李四",
+  "email": "lisi@example.com",
+  "createdAt": "2024-01-15T09:00:00Z",
+  "message": "用户创建成功"
+}
+```
+
+
+## 响应结构设计
+
+
+### 统一的响应格式
+
+```text
+{
+  "success": true,
+  "data": {
+    "id": 123,
+    "name": "张三"
+  },
+  "message": "操作成功",
+  "timestamp": "2024-01-15T08:30:00Z"
+}
+```
+
+
+### 错误响应格式
+
+```text
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "输入数据验证失败",
+    "details": [
+      {
+        "field": "email",
+        "message": "邮箱格式不正确"
+      }
+    ]
+  },
+  "timestamp": "2024-01-15T08:30:00Z"
+}
+```
+
+
+### 分页响应
+
+```text
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "用户1"
+    },
+    {
+      "id": 2,
+      "name": "用户2"
+    }
+  ],
+  "pagination": {
+    "currentPage": 1,
+    "totalPages": 10,
+    "totalItems": 100,
+    "itemsPerPage": 10
+  }
+}
+```
+
+
+### 请求头常用字段
+
+
+## 复习重点
+
+- 能说明 `RESTful API 请求和响应` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

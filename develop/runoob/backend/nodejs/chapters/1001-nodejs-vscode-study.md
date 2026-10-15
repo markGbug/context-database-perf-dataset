@@ -1,35 +1,100 @@
-# Node.js：Node.js VS Code 学习笔记
+# Node.js：使用 VS Code 开发 Node.js
 
 - 来源：[Node.js VS Code](https://www.runoob.com/nodejs/nodejs-vscode.html)
 - 分类：后端开发
 - 技术：Node.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1001
 
-## 学习目标
+## 本章内容
 
-Node.js 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Node.js VS Code` 建立学习路径，先理解它在 Node.js 体系中的位置，再做可运行或可复述的验证。
+Visual Studio Code（简称 VS Code）是微软开发的免费开源代码编辑器， 是目前最受欢迎的 Node.js 开发编辑器之一。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 主要优势
 
-## 笔记模板
+- 内置 Node.js 支持：提供智能代码补全、调试等功能
+- 丰富的扩展：可通过扩展市场安装各种 Node.js 开发工具
+- 集成终端：直接在编辑器中运行 Node.js 程序
+- 轻量快速：启动速度快，资源占用低
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 安装 VS Code
 
-- 能用 3 到 5 句话解释 `Node.js VS Code`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 访问 VS Code 官网
+- 下载对应操作系统的版本
+- 按照安装向导完成安装
+- VS Code 完整教程：https://www.runoob.com/vscode/vscode-tutorial.html
+
+另外国内阿里与字节也有基于 VS Code 开发的 AI IDE：
+
+
+### 扩展推荐
+
+- Node.js Extension Pack：包含多个 Node.js 相关插件的集合包
+- JavaScript (ES6) code snippets：提供 ES6+ 代码片段
+- Auto Rename Tag：自动重命名 HTML/XML 标签
+- ESLint：代码质量检查工具
+- Prettier：代码格式化工具
+- npm Intellisense：npm 包自动补全
+- Path Intellisense：文件路径自动补全
+
+
+## 创建第一个 Node.js 项目
+
+
+### 初始化项目
+
+- 打开终端（VS Code 中按 Ctrl+`）
+- 创建项目文件夹并进入： mkdir my-node-app cd my-node-app
+- 初始化 npm 项目： npm init -y 会生产一个 package.json 的文件：
+
+
+### 创建主文件
+
+- 在 VS Code 中创建 app.js 文件
+- 输入以下代码： 实例 const http = require('http'); const server = http.createServer((req, res) => { res.statusCode = 200; res.setHeader('Content-Type', 'text/plain'); res.end(' RUNOOB Node Test ~ Hello, Node.js!\n'); }); const port = 3000; server.listen(port, () => { console.log(`服务器运行地址：http://localhost:${port}/`); });
+
+
+### 运行项目
+
+- 在终端中执行： node app.js
+- 打开浏览器访问 http://localhost:3000
+
+请注意我们在输入 console. 时，VS Code 的智能感知可以提供代码的建议：
+
+
+## 调试 Node.js 应用
+
+VS Code 提供了强大的调试功能：
+
+
+### 配置调试
+
+- 点击左侧活动栏的"运行和调试"图标
+- 点击"创建 launch.json 文件"
+- 选择"Node.js"环境
+
+
+### 设置断点
+
+- 在代码行号左侧点击设置断点
+- 按 F5 启动调试
+- 使用调试工具栏控制执行流程
+
+
+### 调试控制
+
+- 继续(F5)：继续执行到下一个断点
+- 单步跳过(F10)：执行当前行，不进入函数
+- 单步调试(F11)：进入函数内部
+- 重启(Ctrl+Shift+F5)：重新开始调试
+- 停止(Shift+F5)：结束调试
+
+
+## 复习重点
+
+- 能说明 `Node.js VS Code` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

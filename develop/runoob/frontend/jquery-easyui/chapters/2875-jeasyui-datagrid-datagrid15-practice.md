@@ -1,34 +1,80 @@
-# jQuery EasyUI：jEasyUI 列运算 练习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 列运算
 
 - 来源：[jEasyUI 列运算](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid15.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2875
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 列运算` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在本教程中，您将学习如何在可编辑的数据网格（datagrid）中包含一个运算的列。一个运算列通常包含一些从一个或多个其他列运算的值。
 
-## 练习步骤
+首先，创建一个可编辑的数据网格（datagrid）。这里我们创建了一些可编辑列，'listprice'、'amount' 和 'unitcost' 列定义为 numberbox 编辑类型。运算列是 'unitcost' 字段，将是 listprice 乘以 amount 列的结果。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <table id="tt" style="width:600px;height:auto"
+            title="Editable DataGrid with Calculated Column" iconCls="icon-edit" singleSelect="true"
+            idField="itemid" url="data/datagrid_data.json">
+        <thead>
+            <tr>
+                <th field="itemid" width="80">Item ID</th>
+                <th field="listprice" width="80" align="right" editor="{type:'numberbox',options:{precision:1}}">List Price</th>
+                <th field="amount" width="80" align="right" editor="{type:'numberbox',options:{precision:0}}">Amount</th>
+                <th field="unitcost" width="80" align="right" editor="numberbox">Unit Cost</th>
+                <th field="attr1" width="150" editor="text">Attribute</th>
+                <th field="status" width="60" align="center" editor="{type:'checkbox',options:{on:'P',off:''}}">Status</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-## 验收清单
+当用户点击一行的时候，我们开始一个编辑动作。
 
-- 我能独立说出 `jEasyUI 列运算` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```javascript
+    var lastIndex;
+    $('#tt').datagrid({
+        onClickRow:function(rowIndex){
+            if (lastIndex != rowIndex){
+                $('#tt').datagrid('endEdit', lastIndex);
+                $('#tt').datagrid('beginEdit', rowIndex);
+                setEditing(rowIndex);
+            }
+            lastIndex = rowIndex;
+        }
+    });
+```
 
-## 复盘问题
+为了在一些列之间创建运算关系，我们应该得到当前的 editors，并绑定一些事件到它们上面。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```javascript
+    function setEditing(rowIndex){
+        var editors = $('#tt').datagrid('getEditors', rowIndex);
+        var priceEditor = editors[0];
+        var amountEditor = editors[1];
+        var costEditor = editors[2];
+        priceEditor.target.bind('change', function(){
+            calculate();
+        });
+        amountEditor.target.bind('change', function(){
+            calculate();
+        });
+        function calculate(){
+            var cost = priceEditor.target.val() * amountEditor.target.val();
+            $(costEditor.target).numberbox('setValue',cost);
+        }
+    }
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid15.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 列运算` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

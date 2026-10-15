@@ -1,34 +1,112 @@
-# jQuery：jQuery 添加元素 练习笔记
+# jQuery：jQuery - 添加元素
 
 - 来源：[jQuery 添加元素](https://www.runoob.com/jquery/jquery-dom-add.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2977
 
-## 练习目标
+## 本章内容
 
-把 `jQuery 添加元素` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+通过 jQuery，可以很容易地添加新元素/内容。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 添加新的 HTML 内容
 
-## 验收清单
+我们将学习用于添加新内容的四个 jQuery 方法：
 
-- 我能独立说出 `jQuery 添加元素` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- append() - 在被选元素的结尾插入内容
+- prepend() - 在被选元素的开头插入内容
+- after() - 在被选元素之后插入内容
+- before() - 在被选元素之前插入内容
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## jQuery append() 方法
+
+jQuery append() 方法在被选元素的结尾插入内容（仍然在该元素的内部）。
+
+
+## 实例
+
+```text
+$("p").append("追加文本");
+```
+
+
+## jQuery prepend() 方法
+
+jQuery prepend() 方法在被选元素的开头插入内容。
+
+
+## 实例
+
+```text
+$("p").prepend("在开头追加文本");
+```
+
+
+## 通过 append() 和 prepend() 方法添加若干新元素
+
+在上面的例子中，我们只在被选元素的开头/结尾插入文本/HTML。
+
+不过，append() 和 prepend() 方法能够通过参数接收无限数量的新元素。可以通过 jQuery 来生成文本/HTML（就像上面的例子那样），或者通过 JavaScript 代码和 DOM 元素。
+
+在下面的例子中，我们创建若干个新元素。这些元素可以通过 text/HTML、jQuery 或者 JavaScript/DOM 来创建。然后我们通过 append() 方法把这些新元素追加到文本中（对 prepend() 同样有效）：
+
+
+## 实例
+
+```html
+function appendText(){
+    var txt1="<p>文本-1。</p>";              // 使用 HTML 标签创建文本
+    var txt2=$("<p></p>").text("文本-2。");  // 使用 jQuery 创建文本
+    var txt3=document.createElement("p");
+    txt3.innerHTML="文本-3。";               // 使用 DOM 创建文本 text with DOM
+    $("body").append(txt1,txt2,txt3);        // 追加新元素
+}
+```
+
+
+## jQuery after() 和 before() 方法
+
+jQuery after() 方法在被选元素之后插入内容。
+
+jQuery before() 方法在被选元素之前插入内容。
+
+
+## 实例
+
+```text
+$("img").after("在后面添加文本");
+
+$("img").before("在前面添加文本");
+```
+
+
+## 通过 after() 和 before() 方法添加若干新元素
+
+after() 和 before() 方法能够通过参数接收无限数量的新元素。可以通过 text/HTML、jQuery 或者 JavaScript/DOM 来创建新元素。
+
+在下面的例子中，我们创建若干新元素。这些元素可以通过 text/HTML、jQuery 或者 JavaScript/DOM 来创建。然后我们通过 after() 方法把这些新元素插到文本中（对 before() 同样有效）：
+
+
+## 实例
+
+```html
+function afterText()
+{
+    var txt1="<b>I </b>";                    // 使用 HTML 创建元素
+    var txt2=$("<i></i>").text("love ");     // 使用 jQuery 创建元素
+    var txt3=document.createElement("big");  // 使用 DOM 创建元素
+    txt3.innerHTML="jQuery!";
+    $("img").after(txt1,txt2,txt3);          // 在图片后添加文本
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery 添加元素` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

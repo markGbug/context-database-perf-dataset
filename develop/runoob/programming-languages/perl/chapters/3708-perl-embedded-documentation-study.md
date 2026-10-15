@@ -1,35 +1,164 @@
-# Perl：Perl POD 文档 学习笔记
+# Perl：Perl POD 文档
 
 - 来源：[Perl POD 文档](https://www.runoob.com/perl/perl-embedded-documentation.html)
 - 分类：编程语言
 - 技术：Perl
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3708
 
-## 学习目标
+## 本章内容
 
-Perl 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Perl POD 文档` 建立学习路径，先理解它在 Perl 体系中的位置，再做可运行或可复述的验证。
+Perl 中可以在模块或脚本中嵌入 POD（Plain Old Documentation） 文档。
 
-## 阅读抓手
+POD 是一种简单而易用的标记型语言（置标语言）。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+POD 文档使用规则：
 
-## 笔记模板
+POD 文档以 =head1 开始， =cut 结束， =head1 前与 =cut 后添加一空行。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Perl 会忽略 POD 中的文档。实例如下：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Perl POD 文档`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+```java
+#!/usr/bin/perl
+
+print "Hello, World\n";
+
+=head1 Hello, World 实例
+这是一个 Perl 的简单实例。
+=cut
+
+print "Hello, Runoob\n";
+```
+
+执行以上程序，输出结果为：
+
+```text
+Hello, World
+Hello, Runoob
+```
+
+我们还可以使用 "__END__" 或 "__DATA__" 将所在行之后的内容全部"注释"掉：
+
+
+## 实例
+
+```java
+#!/usr/bin/perl
+
+print "Hello, World\n";
+
+while(<DATA>){
+  print $_;
+}
+
+__END__
+
+=head1 Hello, World 实例
+这是一个 Perl 的简单实例。
+print "Hello, Runoob\n";
+```
+
+执行以上程序，输出结果为：
+
+```java
+Hello, World
+
+=head1 Hello, World 实例
+这是一个 Perl 的简单实例。
+print "Hello, Runoob\n";
+```
+
+以下实例不读取 POD 文档：
+
+
+## 实例
+
+```java
+#!/usr/bin/perl
+
+print "Hello, World\n";
+
+__END__
+
+=head1 Hello, World 实例
+这是一个 Perl 的简单实例。
+print "Hello, Runoob\n";
+```
+
+执行以上程序，输出结果为：
+
+```text
+Hello, World
+```
+
+
+## 什么是 POD？
+
+Pod(Plain Old Documentation), 是一种简单而易用的标记型语言（置标语言），它经常用于在perl程序和模块中的文档书写。
+
+Pod 的 转化器可以将 Pod 转换成很多种格式，例如 text, html, man 等很多。
+
+Pod 标记语言包含三种基本基本类型： 普通, 原文, 和 命令。
+
+- 普通段落: 你可以在普通段落中使用格式化代码，如黑体，斜体，或代码风格，下划线等。
+- 原文段落: 原文段落，用于代码块或者其他不需要转换器处理的部分，而且不需要段落重排。
+- 命令段落: 命令段落作用于整个的文档，通常用于标题设置或列表标记。 所有的命令段落（他只有一行的长度）使用 "=" 开始，然后是一个标识符。 随后的文本将被这条命令所影响。现在被广泛使用的命令包括 =pod (开始文档) =head1 标题文本 =head2 标题文本 =head3 标题文本 =head4 标题文本 =over 缩进空格数量 =item 前缀 =back (结束列表) =begin 文档格式 =end 结束文档格式 =for 格式文本 =encoding 编码类型 =cut (文档结束)
+
+在perl中，可以使用 pod2html **.pod >**.html 来生成html格式的pod文档。
+
+考虑以下 POD 实例：
+
+
+## 实例
+
+```text
+=begin html
+=encoding utf-8
+
+=head1 菜鸟教程
+
+=cut
+```
+
+pod2html时会原文拷贝此段代码。
+
+使用 pod2html 命令执行，将其转换为 HTML 代码：
+
+```text
+$ pod2html test.pod > test.html
+```
+
+在浏览器中打开 test.html，链接部分为索引，显示如下:
+
+以下实例在 POD 文档中直接写入 HTML:
+
+```html
+=begin html
+=encoding utf-8
+
+<h1>菜鸟教程</h1>
+<p> www.runoob.com </p>
+
+=end html
+```
+
+pod2html时会原文拷贝此段代码。
+
+使用 pod2html 命令执行，将其转换为 HTML 代码：
+
+```text
+$ pod2html test.pod > test.html
+```
+
+在浏览器中打开 test.html，链接部分为索引，显示如下:
+
+
+## 复习重点
+
+- 能说明 `Perl POD 文档` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

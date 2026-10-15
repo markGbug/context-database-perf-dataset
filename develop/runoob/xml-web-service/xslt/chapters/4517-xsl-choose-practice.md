@@ -1,34 +1,121 @@
-# XSLT：XSLT <choose> 练习笔记
+# XSLT：XSLT <xsl:choose> 元素
 
 - 来源：[XSLT <choose>](https://www.runoob.com/xsl/xsl-choose.html)
 - 分类：XML / Web Service
 - 技术：XSLT
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4517
 
-## 练习目标
+## 本章内容
 
-把 `XSLT <choose>` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+<xsl:choose> 元素用于结合 <xsl:when> 和 <xsl:otherwise> 来表达多重条件测试。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## <xsl:choose> 元素
 
-## 验收清单
 
-- 我能独立说出 `XSLT <choose>` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 在何处放置选择条件
+
+如需插入针对 XML 文件的多重条件测试，请向 XSL 文件添加 <xsl:choose>、<xsl:when> 以及 <xsl:otherwise> 元素：
+
+
+## 实例
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <body>
+  <h2>My CD Collection</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th>Title</th>
+      <th>Artist</th>
+    </tr>
+    <xsl:for-each select="catalog/cd">
+    <tr>
+      <td><xsl:value-of select="title"/></td>
+      <xsl:choose>
+        <xsl:when test="price > 10">
+          <td bgcolor="#ff00ff">
+          <xsl:value-of select="artist"/></td>
+        </xsl:when>
+        <xsl:otherwise>
+          <td><xsl:value-of select="artist"/></td>
+        </xsl:otherwise>
+      </xsl:choose>
+    </tr>
+    </xsl:for-each>
+  </table>
+  </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>
+```
+
+上面的代码会在 CD 的价格高于 10 时向 "Artist" 列添加粉色的背景颜色。
+
+
+## 另一个实例
+
+这是另外一个包含两个 <xsl:when> 元素的实例：
+
+
+## 实例
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <body>
+  <h2>My CD Collection</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th>Title</th>
+      <th>Artist</th>
+    </tr>
+    <xsl:for-each select="catalog/cd">
+    <tr>
+      <td><xsl:value-of select="title"/></td>
+      <xsl:choose>
+        <xsl:when test="price > 10">
+          <td bgcolor="#ff00ff">
+          <xsl:value-of select="artist"/></td>
+        </xsl:when>
+        <xsl:when test="price > 9">
+          <td bgcolor="#cccccc">
+          <xsl:value-of select="artist"/></td>
+        </xsl:when>
+        <xsl:otherwise>
+          <td><xsl:value-of select="artist"/></td>
+        </xsl:otherwise>
+      </xsl:choose>
+    </tr>
+    </xsl:for-each>
+  </table>
+  </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>
+```
+
+上面的代码会在 CD 的价格高于 10 时向 "Artist" 列添加粉色的背景颜色，并在 CD 的价格高于 9 且低于等于 10 时向 "Artist" 列添加灰色的背景颜色。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `XSLT <choose>` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,96 @@
-# HTML DOM：HTML DOM 修改 学习笔记
+# HTML DOM：HTML DOM - 修改
 
 - 来源：[HTML DOM 修改](https://www.runoob.com/htmldom/htmldom-modify.html)
 - 分类：前端开发
 - 技术：HTML DOM
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2593
 
-## 学习目标
+## 本章内容
 
-HTML DOM 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `HTML DOM 修改` 建立学习路径，先理解它在 HTML DOM 体系中的位置，再做可运行或可复述的验证。
+修改 HTML = 改变元素、属性、样式和事件。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 修改 HTML 元素
 
-## 笔记模板
+修改 HTML DOM 意味着许多不同的方面：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 改变 HTML 内容
+- 改变 CSS 样式
+- 改变 HTML 属性
+- 创建新的 HTML 元素
+- 删除已有的 HTML 元素
+- 改变事件（处理程序）
 
-## 完成标准
+在接下来的章节，我们会深入学习修改 HTML DOM 的常用方法。
 
-- 能用 3 到 5 句话解释 `HTML DOM 修改`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 创建 HTML 内容
+
+改变元素内容的最简单的方法是使用 innerHTML 属性。
+
+下面的例子改变一个 <p> 元素的 HTML 内容：
+
+
+## 实例
+
+```html
+<p id="p1">Hello World!</p>
+
+<script>
+document.getElementById("p1").innerHTML="新文本!";
+</script>
+
+<p>段落通过脚本来修改内容。</p>
+```
+
+
+## 改变 HTML 样式
+
+通过 HTML DOM，您能够访问 HTML 元素的样式对象。
+
+下面的例子改变一个段落的 HTML 样式：
+
+
+## 实例
+
+```html
+<p id="p1">Hello world!</p>
+<p id="p2">Hello world!</p>
+
+<script>
+document.getElementById("p2").style.color="blue";
+document.getElementById("p2").style.fontFamily="Arial";
+document.getElementById("p2").style.fontSize="larger";
+</script>
+```
+
+
+## 创建新的 HTML 元素
+
+如需向 HTML DOM 添加新元素，您首先必须创建该元素（元素节点），然后把它追加到已有的元素上。
+
+
+## 实例
+
+```html
+<div id="div1">
+<p id="p1">这是一个段落。</p>
+<p id="p2">这是另一个段落。</p>
+</div>
+<script>
+var para=document.createElement("p");
+var node=document.createTextNode("这是一个新段落。");
+para.appendChild(node);
+var element=document.getElementById("div1");
+element.appendChild(para);
+</script>
+```
+
+
+## 复习重点
+
+- 能说明 `HTML DOM 修改` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

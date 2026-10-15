@@ -1,34 +1,159 @@
-# PHP：AJAX 投票 练习笔记
+# PHP：PHP 实例 - AJAX 投票
 
 - 来源：[AJAX 投票](https://www.runoob.com/php/php-ajax-poll.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1104
 
-## 练习目标
+## 本章内容
 
-把 `AJAX 投票` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## AJAX 投票
 
-## 练习步骤
+在下面的实例中，我们将演示一个投票程序，通过它，投票结果在网页不进行刷新的情况下被显示。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 你喜欢 PHP 和 AJAX 吗?
 
-- 我能独立说出 `AJAX 投票` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例解释 - HTML 页面
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+当用户选择上面的某个选项时，会执行名为 "getVote()" 的函数。该函数由 "onclick" 事件触发。
+
+poll.html 文件代码如下：
+
+```html
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+<script>
+function getVote(int) {
+  if (window.XMLHttpRequest) {
+    // IE7+, Firefox, Chrome, Opera, Safari 执行代码
+    xmlhttp=new XMLHttpRequest();
+  } else {
+    // IE6, IE5 执行代码
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+      document.getElementById("poll").innerHTML=xmlhttp.responseText;
+    }
+  }
+  xmlhttp.open("GET","poll_vote.php?vote="+int,true);
+  xmlhttp.send();
+}
+</script>
+</head>
+<body>
+
+<div id="poll">
+<h3>你喜欢 PHP 和 AJAX 吗?</h3>
+<form>
+是:
+<input type="radio" name="vote" value="0" onclick="getVote(this.value)">
+<br>否:
+<input type="radio" name="vote" value="1" onclick="getVote(this.value)">
+</form>
+</div>
+
+</body>
+</html>
+```
+
+getVote() 函数会执行以下步骤：
+
+- 创建 XMLHttpRequest 对象
+- 创建在服务器响应就绪时执行的函数
+- 向服务器上的文件发送请求
+- 请注意添加到 URL 末端的参数（q）（包含下拉列表的内容）
+
+
+## PHP 文件
+
+上面这段通过 JavaScript 调用的服务器页面是名为 "poll_vote.php" 的 PHP 文件：
+
+```html
+<?php
+$vote = htmlspecialchars($_REQUEST['vote']);
+
+// 获取文件中存储的数据
+$filename = "poll_result.txt";
+$content = file($filename);
+
+// 将数据分割到数组中
+$array = explode("||", $content[0]);
+$yes = $array[0];
+$no = $array[1];
+
+if ($vote == 0)
+{
+  $yes = $yes + 1;
+}
+
+if ($vote == 1)
+{
+  $no = $no + 1;
+}
+
+// 插入投票数据
+$insertvote = $yes."||".$no;
+$fp = fopen($filename,"w");
+fputs($fp,$insertvote);
+fclose($fp);
+?>
+
+<h2>结果:</h2>
+<table>
+  <tr>
+  <td>是:</td>
+  <td>
+  <span style="display: inline-block; background-color:green;
+      width:<?php echo(100*round($yes/($no+$yes),2)); ?>px;
+      height:20px;" ></span>
+  <?php echo(100*round($yes/($no+$yes),2)); ?>%
+  </td>
+  </tr>
+  <tr>
+  <td>否:</td>
+  <td>
+  <span style="display: inline-block; background-color:red;
+      width:<?php echo(100*round($no/($no+$yes),2)); ?>px;
+      height:20px;"></span>
+  <?php echo(100*round($no/($no+$yes),2)); ?>%
+  </td>
+  </tr>
+</table>
+```
+
+当所选的值从 JavaScript 发送到 PHP 文件时，将发生：
+
+- 获取 "poll_result.txt" 文件的内容
+- 把文件内容放入变量，并向被选变量累加 1
+- 把结果写入 "poll_result.txt" 文件
+- 输出图形化的投票结果
+
+
+## 文本文件
+
+文本文件（poll_result.txt）中存储来自投票程序的数据。
+
+它存储的数据如下所示：
+
+```text
+3||4
+```
+
+第一个数字表示 "Yes" 的投票数，第二个数字表示 "No" 的投票数。
+
+注释：请记得只允许您的 Web 服务器来编辑该文本文件。不要让其他人获得访问权，除了 Web 服务器 (PHP)。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `AJAX 投票` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

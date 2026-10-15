@@ -1,34 +1,192 @@
-# Servlet：Servlet 点击计数器 练习笔记
+# Servlet：Servlet 点击计数器
 
 - 来源：[Servlet 点击计数器](https://www.runoob.com/servlet/servlet-hits-counter.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1187
 
-## 练习目标
+## 本章内容
 
-把 `Servlet 点击计数器` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 网页点击计数器
 
-## 练习步骤
+很多时候，您可能有兴趣知道网站的某个特定页面上的总点击量。使用 Servlet 来计算这些点击量是非常简单的，因为一个 Servlet 的生命周期是由它运行所在的容器控制的。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+以下是实现一个简单的基于 Servlet 生命周期的网页点击计数器需要采取的步骤：
 
-## 验收清单
+- 在 init() 方法中初始化一个全局变量。
+- 每次调用 doGet() 或 doPost() 方法时，都增加全局变量。
+- 如果需要，您可以使用一个数据库表来存储全局变量的值在 destroy() 中。在下次初始化 Servlet 时，该值可在 init() 方法内被读取。这一步是可选的。
+- 如果您只想对一个 session 会话计数一次页面点击，那么请使用 isNew() 方法来检查该 session 会话是否已点击过相同页面。这一步是可选的。
+- 您可以通过显示全局计数器的值，来在网站上展示页面的总点击量。这一步是可选的。
 
-- 我能独立说出 `Servlet 点击计数器` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在这里，我们假设 Web 容器将无法重新启动。如果是重新启动或 Servlet 被销毁，计数器将被重置。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 实例
+
+本实例演示了如何实现一个简单的网页点击计数器：
+
+```java
+package com.runoob.test;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class PageHitCounter
+ */
+@WebServlet("/PageHitCounter")
+public class PageHitCounter extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private int hitCount;
+
+    public void init()
+    {
+        // 重置点击计数器
+        hitCount = 0;
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        response.setContentType("text/html;charset=UTF-8");
+        // 增加 hitCount
+        hitCount++;
+        PrintWriter out = response.getWriter();
+        String title = "总点击量";
+        String docType = "<!DOCTYPE html> \n";
+        out.println(docType +
+            "<html>\n" +
+            "<head><title>" + title + "</title></head>\n" +
+            "<body bgcolor=\"#f0f0f0\">\n" +
+            "<h1 align=\"center\">" + title + "</h1>\n" +
+            "<h2 align=\"center\">" + hitCount + "</h2>\n" +
+            "</body></html>");
+    }
+
+    public void destroy()
+    {
+        // 这一步是可选的，但是如果需要，您可以把 hitCount 的值写入到数据库
+    }
+
+}
+```
+
+现在让我们来编译上面的 Servlet，并在 web.xml 文件中创建以下条目：
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+  <servlet>
+    <servlet-name>PageHitCounter</servlet-name>
+    <servlet-class>com.runoob.test.PageHitCounter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PageHitCounter</servlet-name>
+    <url-pattern>/TomcatTest/PageHitCounter</url-pattern>
+  </servlet-mapping>
+</web-app>
+```
+
+现在通过访问 http://localhost:8080/TomcatTest/PageHitCounter 来调用这个 Servlet。这将会在每次页面刷新时，把计数器的值增加 1，结果如下所示：
+
+
+## 6
+
+
+## 网站点击计数器
+
+很多时候，您可能有兴趣知道整个网站的总点击量。在 Servlet 中，这也是非常简单的，我们可以使用过滤器做到这一点。
+
+以下是实现一个简单的基于过滤器生命周期的网站点击计数器需要采取的步骤：
+
+- 在过滤器的 init() 方法中初始化一个全局变量。
+- 每次调用 doFilter 方法时，都增加全局变量。
+- 如果需要，您可以在过滤器的 destroy() 中使用一个数据库表来存储全局变量的值。在下次初始化过滤器时，该值可在 init() 方法内被读取, 这一步是可选的。
+
+在这里，我们假设 Web 容器将无法重新启动。如果是重新启动或 Servlet 被销毁，点击计数器将被重置。
+
+
+## 实例
+
+本实例演示了如何实现一个简单的网站点击计数器：
+
+```java
+// 导入必需的 java 库
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.util.*;
+
+public class SiteHitCounter implements Filter{
+
+  private int hitCount;
+
+  public void  init(FilterConfig config)
+                    throws ServletException{
+     // 重置点击计数器
+     hitCount = 0;
+  }
+
+  public void  doFilter(ServletRequest request,
+              ServletResponse response,
+              FilterChain chain)
+              throws java.io.IOException, ServletException {
+
+      // 把计数器的值增加 1
+      hitCount++;
+
+      // 输出计数器
+      System.out.println("网站访问统计："+ hitCount );
+
+      // 把请求传回到过滤器链
+      chain.doFilter(request,response);
+  }
+  public void destroy()
+  {
+      // 这一步是可选的，但是如果需要，您可以把 hitCount 的值写入到数据库
+  }
+}
+```
+
+现在让我们来编译上面的 Servlet，并在 web.xml 文件中创建以下条目：
+
+```html
+....
+<filter>
+   <filter-name>SiteHitCounter</filter-name>
+   <filter-class>SiteHitCounter</filter-class>
+</filter>
+
+<filter-mapping>
+   <filter-name>SiteHitCounter</filter-name>
+   <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+....
+```
+
+现在访问网站的任意页面，比如 http://localhost:8080/。这将会在每次任意页面被点击时，把计数器的值增加 1，它会在日志中显示以下消息：
+
+```text
+网站访问统计： 1
+网站访问统计： 2
+网站访问统计： 3
+网站访问统计： 4
+网站访问统计： 5
+..................
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Servlet 点击计数器` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

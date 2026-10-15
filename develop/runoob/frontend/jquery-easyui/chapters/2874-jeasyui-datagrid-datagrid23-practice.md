@@ -1,34 +1,66 @@
-# jQuery EasyUI：jEasyUI 扩展编辑器 练习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 扩展编辑器
 
 - 来源：[jEasyUI 扩展编辑器](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid23.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2874
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 扩展编辑器` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+一些常见的编辑器（editor）添加到数据网格（datagrid），以便用户编辑数据。 所有的编辑器（editor）都定义在 $.fn.datagrid.defaults.editors 对象中，这个可以继承扩展以便支持新的编辑器（editor）。 本教程将向您展示如何添加一个新的 numberspinner 编辑器到数据网格（datagrid）。
 
-## 练习步骤
+```html
+    $.extend($.fn.datagrid.defaults.editors, {
+        numberspinner: {
+            init: function(container, options){
+                var input = $('<input type="text">').appendTo(container);
+                return input.numberspinner(options);
+            },
+            destroy: function(target){
+                $(target).numberspinner('destroy');
+            },
+            getValue: function(target){
+                return $(target).numberspinner('getValue');
+            },
+            setValue: function(target, value){
+                $(target).numberspinner('setValue',value);
+            },
+            resize: function(target, width){
+                $(target).numberspinner('resize',width);
+            }
+        }
+    });
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <table id="tt" style="width:600px;height:250px"
+            url="data/datagrid_data.json" title="Editable DataGrid" iconCls="icon-edit"
+            singleSelect="true" idField="itemid" fitColumns="true">
+        <thead>
+            <tr>
+                <th field="itemid" width="60">Item ID</th>
+                <th field="listprice" width="80" align="right" editor="{type:'numberbox',options:{precision:1}}">List Price</th>
+                <th field="unitcost" width="80" align="right" editor="numberspinner">Unit Cost</th>
+                <th field="attr1" width="180" editor="text">Attribute</th>
+                <th field="status" width="60" align="center" editor="{type:'checkbox',options:{on:'P',off:''}}">Status</th>
+                <th field="action" width="80" align="center" formatter="formatAction">Action</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-## 验收清单
+我们分配 numberspinner 编辑器到 'unit cost' 字段。 当开始编辑一行，用户可以通过 numberspinner 编辑器来编辑数据。
 
-- 我能独立说出 `jEasyUI 扩展编辑器` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 下载 jQuery EasyUI 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+jeasyui-datagrid-datagrid23.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 扩展编辑器` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

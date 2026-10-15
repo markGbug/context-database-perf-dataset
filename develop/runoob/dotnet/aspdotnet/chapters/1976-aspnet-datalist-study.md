@@ -1,35 +1,55 @@
-# ASP.NET：WebForms DataList 学习笔记
+# ASP.NET：ASP.NET Web Forms - DataList 控件
 
 - 来源：[WebForms DataList](https://www.runoob.com/aspnet/aspnet-datalist.html)
 - 分类：.NET
 - 技术：ASP.NET
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1976
 
-## 学习目标
+## 本章内容
 
-ASP.NET 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `WebForms DataList` 建立学习路径，先理解它在 ASP.NET 体系中的位置，再做可运行或可复述的验证。
+DataList 控件，类似于 Repeater 控件，用于显示绑定在该控件上的项目的重复列表。不过，DataList 控件会默认地在数据项目上添加表格。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 绑定 DataSet 到 DataList 控件
 
-## 笔记模板
+DataList 控件，类似于 Repeater 控件，用于显示绑定在该控件上的项目的重复列表。不过，DataList 控件会默认地在数据项目上添加表格。DataList 控件可被绑定到数据库表、XML 文件或者其他项目列表。在这里，我们将演示如何绑定 XML 文件到 DataList 控件。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在我们的实例中，我们将使用下面的 XML 文件（"cdcatalog.xml"）：
 
-## 完成标准
+查看这个 XML 文件：cdcatalog.xml
 
-- 能用 3 到 5 句话解释 `WebForms DataList`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+首先，导入 "System.Data" 命名空间。我们需要该命名空间与 DataSet 对象一起工作。 把下面这条指令包含在 .aspx 页面的顶部：
+
+接着，为 XML 文件创建一个 DataSet，并在页面第一次加载时把这个 XML 文件载入 DataSet：
+
+然后我们在 .aspx 页面中创建一个 DataList 控件。<HeaderTemplate> 元素中的内容被首先呈现，并且在输出中仅出现一次，而 <ItemTemplate> 元素中的内容会对应 DataSet 中的每条 "record" 重复出现，最后，<FooterTemplate> 元素中的内容在输出中仅出现一次：
+
+然后我们添加创建 DataSet 的脚本，并且绑定 mycdcatalog DataSet 到 DataList 控件。然后 使用包含表头的 <HeaderTemplate>、包含要显示的数据项的 <ItemTemplate> 和包含文本的 <FooterTemplate> 来填充 DataList 控件。请注意，可设置 DataList 的 gridlines 属性为 "both" 来显示表格边框：
+
+
+## 实例
+
+
+## 使用样式
+
+您也可以向 DataList 控件添加样式，让输出更加花哨：
+
+
+## 实例
+
+
+## 使用 <AlternatingItemTemplate>
+
+您可以在 <ItemTemplate> 元素后添加 <AlternatingItemTemplate> 元素，用来描述输出中交替行的外观。您可以在 DataList 控件内部对 <AlternatingItemTemplate> 区域的数据添加样式：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `WebForms DataList` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

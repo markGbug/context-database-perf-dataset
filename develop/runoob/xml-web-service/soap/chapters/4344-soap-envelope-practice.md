@@ -1,34 +1,73 @@
-# SOAP：SOAP Envelope 元素 练习笔记
+# SOAP：SOAP Envelope 元素
 
 - 来源：[SOAP Envelope 元素](https://www.runoob.com/soap/soap-envelope.html)
 - 分类：XML / Web Service
 - 技术：SOAP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4344
 
-## 练习目标
+## 本章内容
 
-把 `SOAP Envelope 元素` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+强制使用的 SOAP 的 Envelope 元素是 SOAP 消息的根元素。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## SOAP Envelope 元素
 
-## 验收清单
+必需的 SOAP 的 Envelope 元素是 SOAP 消息的根元素。它可把 XML 文档定义为 SOAP 消息。
 
-- 我能独立说出 `SOAP Envelope 元素` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<?xml version="1.0"?>
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+  ...
+  Message information goes here
+  ...
+</soap:Envelope>
+```
+
+
+## xmlns:soap 命名空间
+
+SOAP 消息必须拥有与命名空间 "http://www.w3.org/2001/12/soap-envelope" 相关联的一个 Envelope 元素。
+
+如果使用了不同的命名空间，应用程序会发生错误，并抛弃此消息。
+
+
+## encodingStyle 属性
+
+SOAP 的 encodingStyle 属性用于定义在文档中使用的数据类型。此属性可出现在任何 SOAP 元素中，并会被应用到元素的内容及元素的所有子元素上。
+
+SOAP 消息没有默认的编码方式。
+
+
+### 语法
+
+```text
+soap:encodingStyle="URI"
+```
+
+
+### 实例
+
+```html
+<?xml version="1.0"?>
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+  ...
+  Message information goes here
+  ...
+</soap:Envelope>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SOAP Envelope 元素` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

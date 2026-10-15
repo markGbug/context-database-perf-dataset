@@ -1,35 +1,87 @@
-# Web Forms：MVC 模型 学习笔记
+# Web Forms：ASP.NET MVC - 模型
 
 - 来源：[MVC 模型](https://www.runoob.com/aspnet/mvc-models.html)
 - 分类：.NET
 - 技术：Web Forms
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2165
 
-## 学习目标
+## 本章内容
 
-Web Forms 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `MVC 模型` 建立学习路径，先理解它在 Web Forms 体系中的位置，再做可运行或可复述的验证。
+为了学习 ASP.NET MVC，我们将构建一个 Internet 应用程序。
 
-## 阅读抓手
+第 7 部分：添加数据模型。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## MVC 模型
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+MVC 模型包含了除纯视图和控制器逻辑以外的其他所有应用程序逻辑（业务逻辑、验证逻辑、数据访问逻辑）。
 
-## 完成标准
+通过 MVC，模型可以控制并操作应用程序数据。
 
-- 能用 3 到 5 句话解释 `MVC 模型`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## Models 文件夹
+
+Models 文件夹包含表示应用程序模型的类。
+
+Visual Web Developer 自动创建一个 AccountModels.cs 文件，该文件包含用于应用程序安全的模型。
+
+AccountModels 包含 LogOnModel、ChangePasswordModel 和 RegisterModel。
+
+
+## 添加数据库模型
+
+本教程所需的数据库模型可以通过以下几个简单的步骤来创建：
+
+- 在 Solution Explorer窗口中，右击 Models 文件夹，并选择 Add 和 Class。
+- 将类命名为 MovieDB.cs，然后点击 Add。
+- 编辑这个类：
+
+注释：
+
+我们特意把模型命名为 "MovieDB"。在上一章中，您已经看到用于数据库表的 "MovieDBs"（以 s 结尾）。这看起来有点奇怪，不过这种命名惯例能确保模型连接上数据库表，您必须这么使用。
+
+
+## 添加数据库控制器
+
+本教程所需的数据库控制器可以通过以下几个简单的步骤来创建：
+
+- 重建您的项目：选择 Debug，然后从菜单中选择 Build MvcDemo。
+- 在 Solution Explorer（解决方案资源管理器）中，右击 Controllers 文件夹，选择 Add 和 Controller。
+- 设置控制器名称为 MoviesController。
+- 选择模板：Controller with read/write actions and views, using Entity Framework
+- 选择模型类：MovieDB (MvcDemo.Models)
+- 选择 data context 类：MovieDBContext (MvcDemo.Models)
+- 选择视图 Razor (CSHTML)
+- 点击 Add
+
+Visual Web Developer 将创建以下文件：
+
+- Controllers 文件夹中的 MoviesController.cs 文件
+- Views 文件夹中的 Movies 文件夹
+
+
+## 添加数据库视图
+
+在 Movies 文件夹中，会自动创建以下文件：
+
+- Create.cshtml
+- Delete.cshtml
+- Details.cshtml
+- Edit.cshtml
+- Index.cshtml
+
+
+## 祝贺您
+
+祝贺您。您已经向应用程序添加了您的第一个 MVC 数据模型。
+
+现在您可以点击 "Movies" 标签页了。
+
+
+## 复习重点
+
+- 能说明 `MVC 模型` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

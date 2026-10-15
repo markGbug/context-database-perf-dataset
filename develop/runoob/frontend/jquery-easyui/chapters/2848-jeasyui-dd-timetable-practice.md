@@ -1,34 +1,87 @@
-# jQuery EasyUI：jEasyUI 创建学校课程表 练习笔记
+# jQuery EasyUI：jQuery EasyUI 拖放 - 创建学校课程表
 
 - 来源：[jEasyUI 创建学校课程表](https://www.runoob.com/jeasyui/jeasyui-dd-timetable.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2848
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 创建学校课程表` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本教程将向您展示如何使用 jQuery EasyUI 创建一个学校课程表。 我们将创建两个表格：在左侧显示学校科目，在右侧显示时间表。 您可以拖动学校科目并放置到时间表单元格上。 学校科目是一个 <div class="item"> 元素，时间表单元格是一个 <td class="drop"> 元素。
 
-## 练习步骤
+```html
+    <div class="left">
+        <table>
+            <tr>
+                <td><div class="item">English</div></td>
+            </tr>
+            <tr>
+                <td><div class="item">Science</div></td>
+            </tr>
+            <!-- other subjects -->
+        </table>
+    </div>
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <div class="right">
+        <table>
+            <tr>
+                <td class="blank"></td>
+                <td class="title">Monday</td>
+                <td class="title">Tuesday</td>
+                <td class="title">Wednesday</td>
+                <td class="title">Thursday</td>
+                <td class="title">Friday</td>
+            </tr>
+            <tr>
+                <td class="time">08:00</td>
+                <td class="drop"></td>
+                <td class="drop"></td>
+                <td class="drop"></td>
+                <td class="drop"></td>
+                <td class="drop"></td>
+            </tr>
+            <!-- other cells -->
+        </table>
+    </div>
+```
 
-## 验收清单
+```text
+    $('.left .item').draggable({
+        revert:true,
+        proxy:'clone'
+    });
+```
 
-- 我能独立说出 `jEasyUI 创建学校课程表` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```javascript
+    $('.right td.drop').droppable({
+        onDragEnter:function(){
+            $(this).addClass('over');
+        },
+        onDragLeave:function(){
+            $(this).removeClass('over');
+        },
+        onDrop:function(e,source){
+            $(this).removeClass('over');
+            if ($(source).hasClass('assigned')){
+                $(this).append(source);
+            } else {
+                var c = $(source).clone().addClass('assigned');
+                $(this).empty().append(c);
+                c.draggable({
+                    revert:true
+                });
+            }
+        }
+    });
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 创建学校课程表` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

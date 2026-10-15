@@ -1,35 +1,65 @@
-# ASP：ASP BrowserCap 学习笔记
+# ASP：ASP Browser Capabilities 组件
 
 - 来源：[ASP BrowserCap](https://www.runoob.com/asp/asp-browser.html)
 - 分类：后端开发
 - 技术：ASP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0740
 
-## 学习目标
+## 本章内容
 
-ASP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `ASP BrowserCap` 建立学习路径，先理解它在 ASP 体系中的位置，再做可运行或可复述的验证。
+## ASP Browser Capabilities 组件
 
-## 阅读抓手
+ASP Browser Capabilities 组件会创建一个 BrowserType 对象，这个对象可测定访客浏览器的类型、性能和版本号。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+当浏览器连接到服务器时，就会向服务器发送一个 HTTP User Agent 报头。这个报头包含关于浏览器的信息。
 
-## 笔记模板
+BrowserType 对象会把报头中的信息与服务器上名为 "Browscap.ini" 的文件中的信息作比较。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如果报头中的浏览器类型和版本号与 "Browsercap.ini" 文件中信息匹配，那么我们就可以使用 BrowserType 对象列出这个匹配的浏览器的相关属性。如果上述情况不匹配，这个对象会把每个属性设置为 "UNKNOWN"。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `ASP BrowserCap`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 语法
+
+
+## ASP Browser Capabilities 实例
+
+下面的实例会在 ASP 文件中创建一个 BrowserType 对象，并显示当前浏览器性能的一些信息：
+
+
+## 实例
+
+输出：
+
+
+## Browscap.ini 文件
+
+"Browscap.ini" 文件用于声明属性，并设置各浏览器的默认值。
+
+这部分内容不是关于如何维护 Browscap.ini 文件的教程，我们只提供一些关于 "Browsercap.ini" 的基础知识和概念，让您对该文件有个大概的了解。
+
+"Browscap.ini" 文件可包含下面的信息：
+
+- ActiveXControls - 支持 ActiveX® 控件？
+- Backgroundsounds - 支持背景声音？
+- Cdf - 支持针对网络广播的频道定义格式？
+- Tables - 支持表格？
+- Cookies - 支持 cookies？
+- Frames - 支持框架？
+- Javaapplets - 支持 Java applets？
+- Javascript - 支持 JScript？
+- Vbscript - 支持 VBScript？
+- Browser - 规定浏览器的名称
+- Beta - 浏览器是否为 beta 软件？
+- Platform - 规定浏览器运行的平台
+- Version - 规定浏览器的版本号
+
+"Browscap.ini" 文件可能如下所示：
+
+
+## 复习重点
+
+- 能说明 `ASP BrowserCap` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

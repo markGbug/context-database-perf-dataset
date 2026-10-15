@@ -1,35 +1,73 @@
-# Bootstrap5：Bootstrap5 复选框与单选框 学习笔记
+# Bootstrap5：Bootstrap5 复选框与单选框
 
 - 来源：[Bootstrap5 复选框与单选框](https://www.runoob.com/bootstrap5/bootstrap5-form-check-radio.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2372
 
-## 学习目标
+## 本章内容
 
-Bootstrap5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap5 复选框与单选框` 建立学习路径，先理解它在 Bootstrap5 体系中的位置，再做可运行或可复述的验证。
+如果您希望用户从预设选项列表中选择任意数量的选项，可以使用复选框：
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 实例
 
-## 笔记模板
+```html
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something" checked>
+  <label class="form-check-label">Option 1</label>
+</div>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+复选框通过使用 class="form-check" 来确保标签和复选框有适当边距。
 
-## 完成标准
+.form-check-label 类添加到标签元素，.form-check 容器内添加 .form-check-input 类来设置复选框的样式。
 
-- 能用 3 到 5 句话解释 `Bootstrap5 复选框与单选框`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+checked 属性用于设置默认选中的选项。
+
+
+## 单选框
+
+如果您希望用户从预设选项列表中选择一个选项，可以使用单选框：
+
+
+## 实例
+
+```html
+<div class="form-check">
+  <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>Option 1
+  <label class="form-check-label" for="radio1"></label>
+</div>
+<div class="form-check">
+  <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">Option 2
+  <label class="form-check-label" for="radio2"></label>
+</div>
+<div class="form-check">
+  <input type="radio" class="form-check-input" disabled>Option 3
+  <label class="form-check-label"></label>
+</div>
+```
+
+
+## 切换开关
+
+如果你想把复选框变成一个可切换的开关，可以在 .form-check 容器内使用 .form-switch 类:
+
+
+## 实例
+
+```html
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode" value="yes" checked>
+  <label class="form-check-label" for="mySwitch">Dark Mode</label>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap5 复选框与单选框` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

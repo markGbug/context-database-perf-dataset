@@ -1,35 +1,71 @@
-# Redis：Redis 性能测试 学习笔记
+# Redis：Redis 性能测试
 
 - 来源：[Redis 性能测试](https://www.runoob.com/redis/redis-benchmarks.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1615
 
-## 学习目标
+## 本章内容
 
-Redis 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Redis 性能测试` 建立学习路径，先理解它在 Redis 体系中的位置，再做可运行或可复述的验证。
+Redis 性能测试是通过同时执行多个命令实现的。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 语法
 
-## 笔记模板
+redis 性能测试的基本命令如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+redis-benchmark [option] [option value]
+```
 
-## 完成标准
+注意：该命令是在 redis 的目录下执行的，而不是 redis 客户端的内部指令。
 
-- 能用 3 到 5 句话解释 `Redis 性能测试`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 实例
+
+以下实例同时执行 10000 个请求来检测性能：
+
+```text
+$ redis-benchmark -n 10000  -q
+
+PING_INLINE: 141043.72 requests per second
+PING_BULK: 142857.14 requests per second
+SET: 141442.72 requests per second
+GET: 145348.83 requests per second
+INCR: 137362.64 requests per second
+LPUSH: 145348.83 requests per second
+LPOP: 146198.83 requests per second
+SADD: 146198.83 requests per second
+SPOP: 149253.73 requests per second
+LPUSH (needed to benchmark LRANGE): 148588.42 requests per second
+LRANGE_100 (first 100 elements): 58411.21 requests per second
+LRANGE_300 (first 300 elements): 21195.42 requests per second
+LRANGE_500 (first 450 elements): 14539.11 requests per second
+LRANGE_600 (first 600 elements): 10504.20 requests per second
+MSET (10 keys): 93283.58 requests per second
+```
+
+redis 性能测试工具可选参数如下所示：
+
+
+### 实例
+
+以下实例我们使用了多个参数来测试 redis 性能：
+
+```text
+$ redis-benchmark -h 127.0.0.1 -p 6379 -t set,lpush -n 10000 -q
+
+SET: 146198.83 requests per second
+LPUSH: 145560.41 requests per second
+```
+
+以上实例中主机为 127.0.0.1，端口号为 6379，执行的命令为 set,lpush，请求数为 10000，通过 -q 参数让结果只显示每秒执行的请求数。
+
+
+## 复习重点
+
+- 能说明 `Redis 性能测试` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

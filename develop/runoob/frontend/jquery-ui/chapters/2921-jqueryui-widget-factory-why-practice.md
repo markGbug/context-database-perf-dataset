@@ -1,34 +1,71 @@
-# jQuery UI：jQuery UI 为什么使用部件库 练习笔记
+# jQuery UI：jQuery UI 为什么使用部件库（Widget Factory）
 
 - 来源：[jQuery UI 为什么使用部件库](https://www.runoob.com/jqueryui/jqueryui-widget-factory-why.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2921
 
-## 练习目标
+## 本章内容
 
-把 `jQuery UI 为什么使用部件库` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+编写 jQuery 插件与向 jQuery.prototype（通常显示为 $.fn）添加方法一样简单，且需要遵循一些简单的规则，比如返回 this。所以为什么会存在部件库（Widget Factory）？
 
-## 练习步骤
+在本章节中，我们将讲解部件库（Widget Factory）的好处，并了解何时使用它，以及为什么要使用它。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 无状态 vs. 有状态插件
 
-- 我能独立说出 `jQuery UI 为什么使用部件库` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+大多数 jQuery 插件是无状态的，它们执行一些动作即完成了它们的任务。例如，如果您使用 .text( "hello" ) 设置元素的文本，没有安装阶段，结果都是一样的。对于这种类型的插件，它只是扩展了 jQuery 的原型。
 
-## 复盘问题
+然而，一些插件是有状态的，它们有全生命周期、维持状态以及对变化的反应。这些插件需要大量专门的代码来初始化和状态管理（有时是销毁）。这就导致出现了用于创建有状态插件的模板。更糟糕的是，每个插件的作者按照不同的方式进行管理插件的生命周期和状态，这就导致了不同的插件有不同的 API 样式。部件库（Widget Factory）旨在解决这些问题，它移除了模板，并为插件创建了一个一致的 API。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 一致的 API
+
+部件库（Widget Factory）定义了如何创建和销毁小部件，获取和设置选项，调用方法，以及监听小部件触发的事件。通过使用部件库（Widget Factory）来创建有状态的插件，会自动符合定义的标准，让新用户更容易使用您的插件。另外，部件库（Widget Factory）还能实现定义接口的功能。如果您对部件库（Widget Factory）提供的 API 还不熟悉，请查看 如何使用部件库（Widget Factory）。
+
+
+## 在初始化时设置选项
+
+当您创建一个接受选项的插件时，您应该为尽可能多的选项定义 defaults。然后在初始化时，把用户提供的选项与 defaults 进行合并。您也可以暴露 defaults，这样用户就可以更改默认值。在 jQuery 插件中，一个常用的模式如下所示：
+
+```text
+$.fn.plugin = function( options ) {
+    options = $.extend( {}, $.fn.plugin.defaults, options );
+    // Plugin logic goes here.
+};
+
+$.fn.plugin.defaults = {
+    param1: "foo",
+    param2: "bar",
+    param3: "baz"
+};
+```
+
+部件库（Widget Factory）也提供了这个功能，并在这上面做了改进。使用部件库（Widget Factory）之后，它将如下所示。
+
+```text
+$.widget( "ns.plugin", {
+
+    // Default options.
+    options: {
+        param1: "foo",
+        param2: "bar",
+        param3: "baz"
+    },
+
+    _create: function() {
+        // Options are already merged and stored in this.options
+        // Plugin logic goes here.
+    }
+
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery UI 为什么使用部件库` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

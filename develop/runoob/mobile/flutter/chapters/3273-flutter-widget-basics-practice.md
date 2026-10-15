@@ -1,34 +1,121 @@
-# Flutter：Flutter Widget 基础 练习笔记
+# Flutter：Flutter Widget 基础
 
 - 来源：[Flutter Widget 基础](https://www.runoob.com/flutter/flutter-widget-basics.html)
 - 分类：移动开发
 - 技术：Flutter
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3273
 
-## 练习目标
+## 本章内容
 
-把 `Flutter Widget 基础` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Widget 是 Flutter UI 的基本构建块。
 
-## 练习步骤
+在 Flutter 中，一切皆为 Widget，从简单的文本到复杂的页面布局都是由 Widget 组合而成的。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 什么是 Widget？
 
-- 我能独立说出 `Flutter Widget 基础` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Widget 是描述 UI 外观和行为的 Dart 类。每个 Flutter 应用本质上就是由 Widget 组成的树形结构，称为 Widget 树。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 实例：最简单的 Widget 示例
+
+
+## StatelessWidget - 无状态组件
+
+StatelessWidget 是不可变的 Widget，一旦创建，其属性就不能更改。适用于显示静态内容的场景，如文本、图片、图标等。
+
+
+### 基本结构
+
+
+## 实例：StatelessWidget 示例
+
+
+### 适用场景
+
+- 静态文本展示
+- 图片显示
+- 图标展示
+- 不随时间变化的布局
+
+
+## StatefulWidget - 有状态组件
+
+StatefulWidget 是可变的 Widget，可以随着内部数据变化而更新 UI。适用于需要响应用户交互或数据变化的场景。
+
+
+### 基本结构
+
+
+## 实例：StatefulWidget 示例
+
+
+### setState 方法
+
+在 StatefulWidget 中，如果状态发生变化，必须调用 setState 方法来通知 Flutter 重新构建 UI。
+
+如果修改了状态但没有调用 setState，UI 不会更新。这是因为 Flutter 通过 setState 来判断是否需要重新构建 Widget。
+
+
+### 适用场景
+
+- 计数器、计时器等动态数据
+- 表单输入
+- 列表项的增删改
+- 用户交互响应
+
+
+## build 方法
+
+每个 Widget 都必须实现 build 方法，该方法返回 Widget 树的一部分。
+
+
+### 基本规则
+
+
+## 实例：build 方法示例
+
+
+## 常用基础 Widget
+
+
+### Text - 文本显示
+
+
+## 实例：Text Widget
+
+
+### Icon - 图标
+
+
+## 实例：Icon Widget
+
+
+### Image - 图片
+
+
+## 实例：Image Widget
+
+
+### Button - 按钮
+
+
+## 实例：按钮 Widget
+
+
+## Widget 组合
+
+Flutter 的强大之处在于可以组合 Widget。通过嵌套，一个简单的 Widget 可以构建出复杂的 UI。
+
+
+## 后续章节
+
+- 实例：组合 Widget
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Flutter Widget 基础` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

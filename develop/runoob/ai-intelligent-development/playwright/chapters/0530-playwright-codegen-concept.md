@@ -1,4 +1,4 @@
-# Playwright：Playwright Codegen 概念卡
+# Playwright：Playwright Codegen 测试生成器
 
 - 来源：[Playwright Codegen](https://www.runoob.com/playwright/playwright-codegen.html)
 - 分类：AI / 智能开发
@@ -6,24 +6,100 @@
 - 笔记类型：概念卡
 - 章节序号：0530
 
-## 一句话定义
+## 本章内容
 
-`Playwright Codegen` 是 Playwright 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+本章介绍 Playwright 的命令行测试生成器 Codegen，通过浏览器操作自动生成测试代码。
 
-## 三层理解
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
+## 什么是 Codegen
 
-## 关联知识
+Codegen（Code Generator）是 Playwright 内置的交互式测试生成工具。
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
+你像普通用户一样操作浏览器，Codegen 自动将你的操作转换为 Playwright 测试代码。
 
-## 记忆锚点
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+## 启动 Codegen
+
+```text
+# 基本用法：打开一个 URL 并开始录制
+npx playwright codegen https://www.runoob.com/
+
+# 指定代码生成的语言（默认 TypeScript）
+npx playwright codegen --target=javascript https://www.runoob.com/
+npx playwright codegen --target=python https://www.runoob.com/
+```
+
+启动后会打开两个窗口：
+
+- 浏览器窗口：你在这个窗口中操作页面
+- Playwright Inspector 窗口：实时显示生成的代码
+
+
+## 录制操作
+
+在浏览器窗口中进行任何操作，Codegen 都会自动生成对应的 Playwright 代码：
+
+
+### 导航
+
+在地址栏输入新的 URL 并回车，会生成 page.goto() 语句。
+
+
+### 点击
+
+点击任意元素（按钮、链接、菜单），会生成 page.getByRole(...).click() 或类似的定位+点击代码。
+
+
+### 输入
+
+在输入框中输入文字，会生成 page.getByLabel(...).fill(...) 或 page.getByPlaceholder(...).fill(...)。
+
+
+### 选择
+
+在下拉菜单中选择选项，会生成 page.getByLabel(...).selectOption(...)。
+
+
+### 复选框
+
+勾选或取消勾选复选框，会生成 page.getByLabel(...).check() 或 .uncheck()。
+
+
+## 自动选择最佳 Locator
+
+Codegen 会分析页面元素的属性，按以下优先级生成 Locator：
+
+- getByRole() —— 元素具有明确的 ARIA 角色
+- getByText() —— 元素有明确文本内容
+- getByLabel() —— 表单元素有 label 关联
+- getByPlaceholder() —— 输入框有 placeholder
+- getByAltText() —— 图片有 alt 属性
+- getByTestId() —— 元素有 data-testid
+- getByTitle() —— 元素有 title 属性
+- locator() —— CSS 选择器（最后选择）
+
+如果 Codegen 找到多个匹配元素，它会自动优化 Locator，直到能唯一确定目标元素。
+
+
+## 生成断言
+
+在 Inspector 窗口的工具栏中，可以点击断言按钮来生成断言代码：
+
+- Assert Visibility —— 点击后选中元素，生成 await expect(locator).toBeVisible()
+- Assert Text —— 生成 await expect(locator).toHaveText(...)
+- Assert Value —— 生成 await expect(locator).toHaveValue(...)
+- Assert Snapshot —— 生成 await expect(locator).toHaveScreenshot()
+
+
+## 常用 Codegen 选项
+
+
+## Codegen vs VS Code 录制的选择
+
+
+## 记忆卡片
+
+- 一句话定义：`Playwright Codegen` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

@@ -1,35 +1,120 @@
-# Chart.js：Chart.js 安装 学习笔记
+# Chart.js：Chart.js 安装
 
 - 来源：[Chart.js 安装](https://www.runoob.com/chartjs/chartjs-install.html)
 - 分类：前端开发
 - 技术：Chart.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2378
 
-## 学习目标
+## 本章内容
 
-Chart.js 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Chart.js 安装` 建立学习路径，先理解它在 Chart.js 体系中的位置，再做可运行或可复述的验证。
+Chart.js 提供了多种安装方式，适合不同的开发场景：
 
-## 阅读抓手
+- NPM/Yarn - 适合使用构建工具的项目开发
+- CDN - 适合快速原型开发和学习
+- GitHub - 适合需要最新特性或参与贡献的开发
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 1. 通过 NPM/Yarn 安装
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+NPM (Node Package Manager) 是 JavaScript 的包管理工具，适合现代前端项目开发。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Chart.js 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 安装步骤
+
+```text
+# 使用 npm 安装
+npm install chart.js
+
+# 或者使用 yarn 安装
+yarn add chart.js
+```
+
+
+### 在项目中引入
+
+安装完成后，你可以在 JavaScript 文件中这样引入 Chart.js：
+
+
+## 实例
+
+
+### 版本管理
+
+要安装特定版本的 Chart.js，可以指定版本号：
+
+```text
+npm install chart.js@3.9.1
+```
+
+
+## 2. 通过 CDN 使用
+
+CDN (Content Delivery Network) 是通过网络直接加载库文件的方式，适合快速原型开发。
+
+
+### 推荐 CDN 地址
+
+```html
+<!-- 字节跳动 CDN（国内推荐） -->
+<script src="<script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/Chart.js/3.7.1/chart.min.js"></script>"></script>
+
+<!-- Staticfile CDN（国内备选） -->
+<script src="https://cdn.staticfile.net/Chart.js/3.9.1/chart.min.js"></script>
+
+<!-- cdnjs CDN（海外推荐） -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+```
+
+
+## 实例
+
+本系列会采用国内的 CDN 地址来测试，如下实例：
+
+
+## 实例
+
+
+## 3. 从 GitHub 获取
+
+GitHub 是开源项目的托管平台，适合需要最新特性或参与项目贡献的开发者。
+
+
+### 获取方式
+
+克隆仓库（需要 Git）：
+
+```text
+git clone https://github.com/chartjs/Chart.js.git
+```
+
+
+### 下载 ZIP 文件
+
+- 访问 Chart.js GitHub
+- 点击 "Code" 按钮
+- 选择 "Download ZIP"
+
+
+### 构建项目
+
+下载后，你可以构建自己的 Chart.js 版本：
+
+```text
+cd Chart.js
+npm install
+npm run build
+```
+
+构建完成后，可以在 dist/ 目录找到生成的文件。
+
+
+## 安装方式对比
+
+
+## 复习重点
+
+- 能说明 `Chart.js 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,96 @@
-# Bootstrap4：Bootstrap4 创建一个网页 学习笔记
+# Bootstrap4：Bootstrap4 创建一个网页
 
 - 来源：[Bootstrap4 创建一个网页](https://www.runoob.com/bootstrap4/bootstrap4-makeawebsite.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2338
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 创建一个网页` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+接下来我们通过 Bootstrap4 来创建一个简单的响应式网页。
 
-## 阅读抓手
+在学习之前我们可以先看下效果：https://www.runoob.com/try/demo_source/bootstrap3-makewebsite.htm
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## HTML 代码
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>我的第一个 Bootstrap 4 页面</h1>
+  <p>重置浏览器窗口大小查看效果！</p>
+</div>
 
-## 完成标准
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">导航</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">链接</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">链接</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">链接</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-- 能用 3 到 5 句话解释 `Bootstrap4 创建一个网页`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+<div class="container" style="margin-top:30px">
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>关于我</h2>
+      <h5>我的照片:</h5>
+      <div class="fakeimg">这边插入图像</div>
+      <p>关于我的介绍..</p>
+      <h3>一些链接</h3>
+      <p>说明文本</p>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">激活状态</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">链接</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">链接</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">禁用</a>
+        </li>
+      </ul>
+      <hr class="d-sm-none">
+    </div>
+    <div class="col-sm-8">
+      <h2>标题</h2>
+      <h5>副标题</h5>
+      <div class="fakeimg">图像</div>
+      <p>一些文本..</p>
+      <p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>
+      <br>
+      <h2>标题</h2>
+      <h5>副标题</h5>
+      <div class="fakeimg">图像</div>
+      <p>一些文本..</p>
+      <p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>
+    </div>
+  </div>
+</div>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <p>底部内容</p>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 创建一个网页` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

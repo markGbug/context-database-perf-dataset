@@ -1,34 +1,97 @@
-# RSS：RSS item 元素 练习笔记
+# RSS：RSS <item> 元素
 
 - 来源：[RSS item 元素](https://www.runoob.com/rss/rss-item.html)
 - 分类：XML / Web Service
 - 技术：RSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4336
 
-## 练习目标
+## 本章内容
 
-把 `RSS item 元素` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+每个 <item> 元素可定义 RSS feed 中的一篇文章或 "story"。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## <item> 元素
 
-## 验收清单
+请看下面的 RSS 文档：
 
-- 我能独立说出 `RSS item 元素` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
 
-## 复盘问题
+<channel>
+  <title>菜鸟教程首页</title>
+  <link>http://www.runoob.com</link>
+  <description>免费编程教程</description>
+  <item>
+    <title>RSS 教程</title>
+    <link>http://www.runoob.com/rss</link>
+    <description>菜鸟教程 Rss 教程</description>
+  </item>
+</channel>
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+</rss>
+```
+
+正如前面提到的，每个 <item> 元素可定义 RSS feed 中的一篇文章或 story"。
+
+<item> 元素拥有三个必需的子元素：
+
+- <title> - 定义项目的标题。（比如 RSS 教程）
+- <link> - 定义到达项目的超链接。（比如 http://www.runoob.com/rss）
+- <description> - 描述此项目（比如 菜鸟教程 Rss 教程）
+
+此外，存在若干个 <item> 的可选的子元素，我们会在下面介绍最重要的几个。
+
+
+## <author> 元素
+
+<author> 子元素用于规定一个项目的作者的电子邮件地址。
+
+注释：为了防止垃圾邮件，一些开发者不会使用这个 <author> 元素。
+
+上面的 RSS 文档中项目的作者可能是：
+
+```html
+<author>admin@runoob.com</author>
+```
+
+
+## <comments> 元素
+
+<comments> 子元素允许把一个项目连接到有关此项目的注释。
+
+上面的 RSS 文档中项目的注释可能这样的：
+
+```html
+<comments>http://www.runoob.com/comments</comments>
+```
+
+
+## <enclosure> 元素
+
+<enclosure> 子元素允许将一个媒体文件导入一个项中。
+
+<enclosure> 元素有三个必需的属性：
+
+- url - 定义指向此媒体文件的 URL
+- length - 定义此媒体文件的长度（字节）
+- type - 定义媒体文件的类型
+
+在上面的 RSS 文档中，被包含在项目中的媒体文件可能是这样的：
+
+```html
+<enclosure url="http://www.runoob.com/rss/rss.mp3"
+length="5000" type="audio/mpeg" />
+```
+
+
+## RSS <item> 参考手册
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `RSS item 元素` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

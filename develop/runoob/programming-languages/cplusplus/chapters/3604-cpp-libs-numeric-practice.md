@@ -1,34 +1,155 @@
-# C++：C++ <numeric> 练习笔记
+# C++：C++ 标准库 <numeric>
 
 - 来源：[C++ <numeric>](https://www.runoob.com/cplusplus/cpp-libs-numeric.html)
 - 分类：编程语言
 - 技术：C++
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3604
 
-## 练习目标
+## 本章内容
 
-把 `C++ <numeric>` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在日常 C++ 开发中，我们经常会遇到如下需求：
 
-## 练习步骤
+- 求数组总和 / 连乘
+- 计算前缀和用于区间查询
+- 批量累积生成新序列
+- 做向量之间的内积（点积）
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+如果你还在手写 for 循环，那么 <numeric> 正是你应该掌握的标准库工具。
 
-## 验收清单
+C++ 标准库中的 <numeric> 头文件提供了一组用于数值计算的函数模板，这些函数可以对容器中的元素进行各种数值操作，如求和、乘积、最小值、最大值等。这些函数模板非常强大，可以应用于任何类型的容器，包括数组、向量、列表等。
 
-- 我能独立说出 `C++ <numeric>` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在使用 <numeric> 头文件中的函数之前，需要在你的 C++ 程序中包含这个头文件：
 
-## 复盘问题
+```html
+#include <numeric>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 常用函数
+
+- <numeric> 是 C++ 处理数值序列计算的核心头文件，专注于归约、累积、差分等操作，兼容所有STL容器；
+- 基础函数（accumulate/partial_sum/iota）是C++98/11的核心，满足绝大多数常规数值计算需求；
+- C++17 新增的 reduce/inclusive_scan 等并行函数，可显著提升大数据量下的计算效率，需配合并行执行策略使用。
+
+
+### 1. accumulate
+
+accumulate 函数用于计算容器中所有元素的总和。它接受三个参数：容器的开始迭代器、结束迭代器和初始值。
+
+语法:
+
+```html
+template <InputIterator Iter, class T>
+T accumulate(Iter first, Iter last, T init);
+```
+
+实例:
+
+
+## 实例
+
+
+### 2. inner_product
+
+inner_product 函数用于计算两个容器中对应元素乘积的总和。
+
+语法:
+
+```html
+template <InputIterator1 Iter1, InputIterator2 Iter2, class T>
+T inner_product(Iter1 first1, Iter1 last1, Iter2 first2, T init);
+```
+
+实例:
+
+
+## 实例
+
+
+### 3. partial_sum
+
+partial_sum 函数用于计算容器中元素的部分和，并将结果存储在另一个容器中。
+
+语法:
+
+```html
+template <InputIterator InIter, OutputIterator OutIter>
+OutIter partial_sum(InIter first, InIter last, OutIter result);
+```
+
+实例:
+
+
+## 实例
+
+
+### 4. adjacent_difference
+
+adjacent_difference 函数用于计算容器中相邻元素的差值，并将结果存储在另一个容器中。
+
+语法:
+
+```html
+template <InputIterator InIter, OutputIterator OutIter>
+OutIter adjacent_difference(InIter first, InIter last, OutIter result);
+```
+
+实例:
+
+
+## 实例
+
+
+### 5. std::gcd
+
+使用 std::gcd 计算两个整数的最大公约数：
+
+
+## 实例
+
+
+### 6. std::lcm
+
+使用 std::lcm 计算两个整数的最小公倍数：
+
+
+## 实例
+
+
+### 7. std::iota
+
+
+## 实例
+
+使用 std::iota 填充范围内的序列值。
+
+```html
+template<class ForwardIt, class T>
+void iota(ForwardIt first, ForwardIt last, T value);
+```
+
+
+### 8.查找最大值与最小值
+
+min_element 和 max_element 函数用于找到容器中的最大值和最小值。
+
+
+## 实例
+
+输出结果为：
+
+```text
+Min: 1
+Max: 9
+Sum: 23
+Average: 3.83333
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `C++ <numeric>` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

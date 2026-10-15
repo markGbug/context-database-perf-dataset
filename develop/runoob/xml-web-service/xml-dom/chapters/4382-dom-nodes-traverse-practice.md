@@ -1,34 +1,76 @@
-# XML DOM：DOM 遍历 练习笔记
+# XML DOM：XML DOM 遍历节点树
 
 - 来源：[DOM 遍历](https://www.runoob.com/dom/dom-nodes-traverse.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4382
 
-## 练习目标
+## 本章内容
 
-把 `DOM 遍历` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+遍历（Traverse）意味着在节点树中进行循环或移动。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 遍历节点树
 
-## 验收清单
+通常您想要循环 XML 文档，比如：当您需要提取每个元素的值时。
 
-- 我能独立说出 `DOM 遍历` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+这叫做"遍历节点树"。
 
-## 复盘问题
+下面的实例遍历 <book> 的所有子节点，并显示他们的名称和值：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+<script>
+```
+
+```java
+var x, i ,xmlDoc;
+var txt = "";
+var text = "<book>" +
+"<title>Everyday Italian</title>" +
+"<author>Giada De Laurentiis</author>" +
+"<year>2005</year>" +
+"</book>";
+
+parser = new DOMParser();
+xmlDoc = parser.parseFromString(text,"text/xml");
+
+// documentElement 表示根节点
+x = xmlDoc.documentElement.childNodes;
+for (i = 0; i < x.length ;i++) {
+    txt += x[i].nodeName + ": " + x[i].childNodes[0].nodeValue + "<br>";
+}
+document.getElementById("demo").innerHTML = txt;
+```
+
+```text
+</script>
+
+</body>
+</html>
+```
+
+输出：
+
+实例解释：
+
+- 将 XML 字符串载入 xmlDoc 中
+- 获取根元素的子节点
+- 输出每个子节点的节点名称以及文本节点的节点值
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `DOM 遍历` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

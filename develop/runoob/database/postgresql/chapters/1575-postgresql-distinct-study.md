@@ -1,35 +1,124 @@
-# PostgreSQL：PostgreSQL DISTINCT 学习笔记
+# PostgreSQL：PostgreSQL DISTINCT 关键字
 
 - 来源：[PostgreSQL DISTINCT](https://www.runoob.com/postgresql/postgresql-distinct.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1575
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PostgreSQL DISTINCT` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+在 PostgreSQL 中，DISTINCT 关键字与 SELECT 语句一起使用，用于去除重复记录，只获取唯一的记录。
 
-## 阅读抓手
+我们平时在操作数据时，有可能出现一种情况，在一个表中有多个重复的记录，当提取这样的记录时，DISTINCT 关键字就显得特别有意义，它只获取唯一一次记录，而不是获取重复记录。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+用于去除重复记录的 DISTINCT 关键字的基本语法如下：
 
-## 完成标准
+```text
+SELECT DISTINCT column1, column2,.....columnN
+FROM table_name
+WHERE [condition]
+```
 
-- 能用 3 到 5 句话解释 `PostgreSQL DISTINCT`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+让我们插入两条数据：
+
+```text
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (8, 'Paul', 32, 'California', 20000.00 );
+
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (9, 'Allen', 25, 'Texas', 15000.00 );
+```
+
+现在数据如下：
+
+```text
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  2 | Allen |  25 | Texas      |  15000
+  3 | Teddy |  23 | Norway     |  20000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+  8 | Paul  |  32 | California |  20000
+  9 | Allen |  25 | Texas      |  15000
+(9 rows)
+```
+
+接下来我们找出 COMPANY 表中的所有 NAME：
+
+```text
+runoobdb=# SELECT name FROM COMPANY;
+```
+
+得到结果如下：
+
+```text
+ name
+-------
+ Paul
+ Allen
+ Teddy
+ Mark
+ David
+ Kim
+ James
+ Paul
+ Allen
+(9 rows)
+```
+
+现在我们在 SELECT 语句中使用 DISTINCT 子句：
+
+```text
+runoobdb=# SELECT DISTINCT name FROM COMPANY;
+```
+
+得到结果如下：
+
+```text
+name
+-------
+ Teddy
+ Paul
+ Mark
+ David
+ Allen
+ Kim
+ James
+(7 rows)
+```
+
+从结果可以看到，重复数据已经被过滤。
+
+
+## 复习重点
+
+- 能说明 `PostgreSQL DISTINCT` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,61 @@
-# JavaScript：JavaScript VScode 学习笔记
+# JavaScript：JavaScript VScode
 
 - 来源：[JavaScript VScode](https://www.runoob.com/js/js-vscode.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2756
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript VScode` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+在上一章节中我们已经介绍了 JavaScript 基本概念及实例，本章节我们将介绍 JS 代码的编辑器 -- VScode。
 
-## 阅读抓手
+VSCode（全称：Visual Studio Code）是一款由微软开发且跨平台的免费源代码编辑器，VSCode 开发环境非常简单易用。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Visual Studio Code 已经内置了对 JavaScript 功能的支持，包括 JavaScript 的智能感知、调试、格式化等功能。
 
-## 笔记模板
+感知功能如下所示：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 安装 VS Code
 
-- 能用 3 到 5 句话解释 `JavaScript VScode`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+VSCode 安装也很简单，打开官网 https://code.visualstudio.com/，下载软件包，一步步安装即可，安装过程注意安装路径设置、环境变量默认自动添加到系统中，勾选以下所有选项：
+
+VSCode 完整安装教程参考：https://www.runoob.com/vscode/vscode-tutorial.html
+
+
+## 创建一个 JS 代码文件
+
+打开 VScode，然后点击新建文件：
+
+点击选择语言：
+
+在搜索框输入 js，创建 test.js 文件：
+
+输入代码：
+
+```javascript
+console.log("Hello, World!");
+```
+
+保存 test.js 文件代码，右击文件名，在集成终端执行以下命令：
+
+```text
+# node test.js
+Hello, World!        # 输出结果
+```
+
+node 是可以运行在 JavaScript 的命令，基于 Chrome V8 引擎的 JavaScript 运行时环境。
+
+更多 Node.js 内容可以参考：Node.js 教程
+
+
+## 更多相关工具
+
+
+## 复习重点
+
+- 能说明 `JavaScript VScode` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

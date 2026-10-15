@@ -1,34 +1,121 @@
-# PHP：PHP 类型比较 练习笔记
+# PHP：PHP 类型比较
 
 - 来源：[PHP 类型比较](https://www.runoob.com/php/php-types-comparisons.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1044
 
-## 练习目标
+## 本章内容
 
-把 `PHP 类型比较` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+虽然 PHP 是弱类型语言，但也需要明白变量类型及它们的意义，因为我们经常需要对 PHP 变量进行比较，包含松散和严格比较。
 
-## 练习步骤
+- 松散比较：使用两个等号 == 比较，只比较值，不比较类型。
+- 严格比较：用三个等号 === 比较，除了比较值，也比较类型。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+例如，"42" 是一个字符串而 42 是一个整数。FALSE 是一个布尔值而 "FALSE" 是一个字符串。
 
-## 验收清单
 
-- 我能独立说出 `PHP 类型比较` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
+```text
+<?php
+if(42 == "42") {
+    echo '1、值相等';
+}
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+echo PHP_EOL; // 换行符
+
+if(42 === "42") {
+    echo '2、类型相等';
+} else {
+    echo '3、类型不相等';
+}
+?>
+```
+
+以上实例输出结果为：
+
+```text
+1、值相等
+3、类型不相等
+```
+
+
+### PHP中 比较 0、false、null
+
+测试代码:
+
+
+## 实例
+
+```text
+<?php
+echo '0 == false: ';
+var_dump(0 == false);
+echo '0 === false: ';
+var_dump(0 === false);
+echo PHP_EOL;
+echo '0 == null: ';
+var_dump(0 == null);
+echo '0 === null: ';
+var_dump(0 === null);
+echo PHP_EOL;
+echo 'false == null: ';
+var_dump(false == null);
+echo 'false === null: ';
+var_dump(false === null);
+echo PHP_EOL;
+echo '"0" == false: ';
+var_dump("0" == false);
+echo '"0" === false: ';
+var_dump("0" === false);
+echo PHP_EOL;
+echo '"0" == null: ';
+var_dump("0" == null);
+echo '"0" === null: ';
+var_dump("0" === null);
+echo PHP_EOL;
+echo '"" == false: ';
+var_dump("" == false);
+echo '"" === false: ';
+var_dump("" === false);
+echo PHP_EOL;
+echo '"" == null: ';
+var_dump("" == null);
+echo '"" === null: ';
+var_dump("" === null);
+```
+
+以上实例输出结果为：
+
+```text
+0 == false: bool(true)
+0 === false: bool(false)
+
+0 == null: bool(true)
+0 === null: bool(false)
+
+false == null: bool(true)
+false === null: bool(false)
+
+"0" == false: bool(true)
+"0" === false: bool(false)
+
+"0" == null: bool(false)
+"0" === null: bool(false)
+
+"" == false: bool(true)
+"" === false: bool(false)
+
+"" == null: bool(true)
+"" === null: bool(false)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PHP 类型比较` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,127 @@
-# TCP/IP：TCP/IP 协议 练习笔记
+# TCP/IP：TCP/IP 协议
 
 - 来源：[TCP/IP 协议](https://www.runoob.com/tcpip/tcpip-protocols.html)
 - 分类：计算机基础
 - 技术：TCP/IP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1419
 
-## 练习目标
+## 本章内容
 
-把 `TCP/IP 协议` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+TCP/IP 是不同的通信协议的大集合。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 协议族
 
-## 验收清单
+TCP/IP 是基于 TCP 和 IP 这两个最初的协议之上的不同的通信协议的大集合。
 
-- 我能独立说出 `TCP/IP 协议` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## TCP - 传输控制协议
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+TCP 用于从应用程序到网络的数据传输控制。
+
+TCP 负责在数据传送之前将它们分割为 IP 包，然后在它们到达的时候将它们重组。
+
+
+## IP - 网际协议（Internet Protocol）
+
+IP 负责计算机之间的通信。
+
+IP 负责在因特网上发送和接收数据包。
+
+
+## HTTP - 超文本传输协议(Hyper Text Transfer Protocol)
+
+HTTP 负责 web 服务器与 web 浏览器之间的通信。
+
+HTTP 用于从 web 客户端（浏览器）向 web 服务器发送请求，并从 web 服务器向 web 客户端返回内容（网页）。
+
+
+## HTTPS - 安全的 HTTP（HTTP Secure）
+
+HTTPS 负责在 web 服务器和 web 浏览器之间的安全通信。
+
+作为有代表性的应用，HTTPS 会用于处理信用卡交易和其他的敏感数据。
+
+
+## SSL - 安全套接字层（Secure Sockets Layer）
+
+SSL 协议用于为安全数据传输加密数据。
+
+
+## SMTP - 简易邮件传输协议（Simple Mail Transfer Protocol）
+
+SMTP 用于电子邮件的传输。
+
+
+## MIME - 多用途因特网邮件扩展（Multi-purpose Internet Mail Extensions）
+
+MIME 协议使 SMTP 有能力通过 TCP/IP 网络传输多媒体文件，包括声音、视频和二进制数据。
+
+
+## IMAP - 因特网消息访问协议（Internet Message Access Protocol）
+
+IMAP 用于存储和取回电子邮件。
+
+
+## POP - 邮局协议（Post Office Protocol）
+
+POP 用于从电子邮件服务器向个人电脑下载电子邮件。
+
+
+## FTP - 文件传输协议（File Transfer Protocol）
+
+FTP 负责计算机之间的文件传输。
+
+
+## NTP - 网络时间协议（Network Time Protocol）
+
+NTP 用于在计算机之间同步时间（钟）。
+
+
+## DHCP - 动态主机配置协议（Dynamic Host Configuration Protocol）
+
+DHCP 用于向网络中的计算机分配动态 IP 地址。
+
+
+## SNMP - 简单网络管理协议（Simple Network Management Protocol）
+
+SNMP 用于计算机网络的管理。
+
+
+## LDAP - 轻量级的目录访问协议（Lightweight Directory Access Protocol）
+
+LDAP 用于从因特网搜集关于用户和电子邮件地址的信息。
+
+
+## ICMP - 因特网消息控制协议（Internet Control Message Protocol）
+
+ICMP 负责网络中的错误处理。
+
+
+## ARP - 地址解析协议（Address Resolution Protocol）
+
+ARP - 用于通过 IP 来查找基于 IP 地址的计算机网卡的硬件地址。
+
+
+## RARP - 反向地址转换协议（Reverse Address Resolution Protocol）
+
+RARP 用于通过 IP 查找基于硬件地址的计算机网卡的 IP 地址。
+
+
+## BOOTP - 自举协议（Boot Protocol）
+
+BOOTP 用于从网络启动计算机。
+
+
+## PPTP - 点对点隧道协议（Point to Point Tunneling Protocol）
+
+PPTP 用于私人网络之间的连接（隧道）。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `TCP/IP 协议` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

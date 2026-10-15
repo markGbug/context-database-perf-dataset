@@ -1,34 +1,250 @@
-# CSS：CSS 提示工具 练习笔记
+# CSS：CSS 提示工具(Tooltip)
 
 - 来源：[CSS 提示工具](https://www.runoob.com/css/css-tooltip.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2418
 
-## 练习目标
+## 本章内容
 
-把 `CSS 提示工具` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本文我们为大家介绍如何使用 HTML 与 CSS 来创建提示工具。
 
-## 练习步骤
+提示工具在鼠标移动到指定元素后触发，先看以下四个实例：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 基础提示框(Tooltip)
 
-- 我能独立说出 `CSS 提示工具` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+提示框在鼠标移动到指定元素上显示：
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## HTML 代码：
+
+```html
+<style>
+```
+
+```text
+/* Tooltip 容器 */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* 悬停元素上显示点线 */
+}
+
+/* Tooltip 文本 */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* 定位 */
+    position: absolute;
+    z-index: 1;
+}
+
+/* 鼠标移动上去后显示提示框 */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+```
+
+```html
+</style>
+
+<div class="tooltip">鼠标移动到这
+  <span class="tooltiptext">提示文本</span>
+</div>
+```
+
+
+### 实例解析
+
+HTML) 使用容器元素 (like <div>) 并添加 "tooltip" 类。在鼠标移动到 <div> 上时显示提示信息。
+
+提示文本放在内联元素上(如 <span>) 并使用class="tooltiptext"。
+
+CSS)tooltip 类使用 position:relative, 提示文本需要设置定位值 position:absolute。 注意: 接下来的实例会显示更多的定位效果。
+
+tooltiptext 类用于实际的提示文本。模式是隐藏的，在鼠标移动到元素显示 。设置了一些宽度、背景色、字体色等样式。
+
+CSS3 border-radius 属性用于为提示框添加圆角。
+
+:hover 选择器用于在鼠标移动到到指定元素 <div> 上时显示的提示。
+
+
+## 定位提示工具
+
+以下实例中，提示工具显示在指定元素的右侧(left:105%) 。
+
+注意 top:-5px 同于定位在容器元素的中间。使用数字 5 因为提示文本的顶部和底部的内边距（padding）是 5px。
+
+如果你修改 padding 的值，top 值也要对应修改，这样才可以确保它是居中对齐的。
+
+在提示框显示在左边的情况也是这个原理。
+
+
+## 显示在右侧：
+
+```text
+.tooltip .tooltiptext {
+    top: -5px;
+    left: 105%;
+}
+```
+
+
+## 显示在左侧：
+
+```text
+.tooltip .tooltiptext {
+    top: -5px;
+    right: 105%;
+}
+```
+
+如果你想要提示工具显示在头部和底部。我们需要使用 margin-left 属性，并设置为 -60px。 这个数字计算来源是使用宽度的一半来居中对齐，即： width/2 (120/2 = 60)。
+
+
+## 显示在头部：
+
+```text
+.tooltip .tooltiptext {
+    width: 120px;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px; /* 使用一半宽度 (120/2 = 60) 来居中提示工具 */
+}
+```
+
+
+## 显示在底部：
+
+```text
+.tooltip .tooltiptext {
+    width: 120px;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px; /* 使用一半宽度 (120/2 = 60) 来居中提示工具 */
+}
+```
+
+
+## 添加箭头
+
+我们可以用CSS 伪元素 ::after 及 content 属性为提示工具创建一个小箭头标志，箭头是由边框组成的，但组合起来后提示工具像个语音信息框。
+
+以下实例演示了如何为显示在顶部的提示工具添加底部箭头：
+
+
+## 顶部提示框/底部箭头：
+
+```text
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* 提示工具底部 */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+```
+
+
+### 实例解析
+
+在提示工具内定位箭头: top: 100% , 箭头将显示在提示工具的底部。left: 50% 用于居中对齐箭头。
+
+注意：border-width 属性指定了箭头的大小。如果你修改它，也要修改 margin-left 值。这样箭头才能居中显示。
+
+border-color 用于将内容转换为箭头。设置顶部边框为黑色，其他是透明的。如果设置了其他的也是黑色则会显示为一个黑色的四边形。
+
+以下实例演示了如何在提示工具的头部添加箭头，注意设置边框颜色：
+
+
+## 底部提示框/顶部箭头：
+
+```text
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* 提示工具头部 */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+```
+
+以下两个实例是左右两边的箭头实例：
+
+
+## 右侧提示框/左侧箭头：
+
+```text
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* 提示工具左侧 */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+```
+
+
+## 左侧提示框/右侧箭头：
+
+```text
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%; /* 提示工具右侧 */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+```
+
+
+## 淡入效果
+
+我们可以使用 CSS3 transition 属性及 opacity 属性来实现提示工具的淡入效果:
+
+
+## 淡入效果：
+
+```text
+.tooltip .tooltiptext {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+    opacity: 1;
+}
+```
+
+
+## 更多实例
+
+漂亮的 CSS 提示框
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS 提示工具` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

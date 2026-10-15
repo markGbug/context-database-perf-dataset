@@ -1,35 +1,91 @@
-# Memcached：Window Memcached 安装 学习笔记
+# Memcached：Windows 下安装 Memcached
 
 - 来源：[Window Memcached 安装](https://www.runoob.com/Memcached/window-install-memcached.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1439
 
-## 学习目标
+## 本章内容
 
-Memcached 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Window Memcached 安装` 建立学习路径，先理解它在 Memcached 体系中的位置，再做可运行或可复述的验证。
+官网上并未提供 Memcached 的 Windows 平台安装包，我们可以使用以下链接来下载，你需要根据自己的系统平台及需要的版本号点击对应的链接下载即可：
 
-## 阅读抓手
+- 32位系统 1.2.5版本：http://static.jyshare.com/download/memcached-1.2.5-win32-bin.zip
+- 32位系统 1.2.6版本：http://static.jyshare.com/download/memcached-1.2.6-win32-bin.zip
+- 32位系统 1.4.4版本：http://static.jyshare.com/download/memcached-win32-1.4.4-14.zip
+- 64位系统 1.4.4版本：http://static.jyshare.com/download/memcached-win64-1.4.4-14.zip
+- 32位系统 1.4.5版本：http://static.jyshare.com/download/memcached-1.4.5-x86.zip
+- 64位系统 1.4.5版本：http://static.jyshare.com/download/memcached-1.4.5-amd64.zip
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+在 1.4.5 版本以前 memcached 可以作为一个服务安装，而在 1.4.5 及之后的版本删除了该功能。因此我们以下介绍两个不同版本 1.4.4 及 1.4.5的不同安装方法：
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## memcached <1.4.5 版本安装
 
-## 完成标准
+1、解压下载的安装包到指定目录。
 
-- 能用 3 到 5 句话解释 `Window Memcached 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+2、在 1.4.5 版本以前 memcached 可以作为一个服务安装，使用管理员权限运行以下命令：
+
+```text
+c:\memcached\memcached.exe -d install
+```
+
+注意：你需要使用真实的路径替代 c:\memcached\memcached.exe。
+
+3、然后我们可以使用以下命令来启动和关闭 memcached 服务：
+
+```text
+c:\memcached\memcached.exe -d start
+c:\memcached\memcached.exe -d stop
+```
+
+4、如果要修改 memcached 的配置项, 可以在命令行中执行 regedit.exe 命令打开注册表并找到 "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\memcached" 来进行修改。
+
+如果要提供 memcached 使用的缓存配置 可以修改 ImagePath 为:
+
+```text
+"c:\memcached\memcached.exe" -d runservice -m 512
+```
+
+-m 512 意思是设置 memcached 最大的缓存配置为512M。
+
+此外我们还可以通过使用 "c:\memcached\memcached.exe -h" 命令查看更多的参数配置。
+
+5、如果我们需要卸载 memcached ，可以使用以下命令：
+
+```text
+c:\memcached\memcached.exe -d uninstall
+```
+
+
+## memcached >= 1.4.5 版本安装
+
+1、解压下载的安装包到指定目录。
+
+2、在 memcached1.4.5 版本之后，memcached 不能作为服务来运行，需要使用任务计划中来开启一个普通的进程，在 window 启动时设置 memcached自动执行。
+
+我们使用管理员身份执行以下命令将 memcached 添加来任务计划表中：
+
+```text
+schtasks /create /sc onstart /tn memcached /tr "'c:\memcached\memcached.exe' -m 512"
+```
+
+注意：你需要使用真实的路径替代 c:\memcached\memcached.exe。
+
+注意：-m 512 意思是设置 memcached 最大的缓存配置为512M。
+
+注意：我们可以通过使用 "c:\memcached\memcached.exe -h" 命令查看更多的参数配置。
+
+3、如果需要删除 memcached 的任务计划可以执行以下命令：
+
+```text
+schtasks /delete /tn memcached
+```
+
+
+## 复习重点
+
+- 能说明 `Window Memcached 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

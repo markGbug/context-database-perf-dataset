@@ -1,34 +1,180 @@
-# Git：Git 标签 练习笔记
+# Git：Git 标签
 
 - 来源：[Git 标签](https://www.runoob.com/git/git-tag.html)
 - 分类：DevOps / 工程化
 - 技术：Git
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1789
 
-## 练习目标
+## 本章内容
 
-把 `Git 标签` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+如果你达到一个重要的阶段，并希望永远记住提交的快照，你可以使用 git tag 给它打上标签。 Git 标签（Tag）用于给仓库中的特定提交点加上标记，通常用于发布版本（如 v1.0, v2.0）。
 
-## 练习步骤
+比如说，我们想为我们的 runoob 项目发布一个 "1.0" 版本，我们可以用 git tag -a v1.0 命令给最新一次提交打上（HEAD） "v1.0" 的标签。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+-a 选项意为"创建一个带注解的标签"，不用 -a 选项也可以执行的，但它不会记录这标签是啥时候打的，谁打的，也不会让你添加个标签的注解，我们推荐一直创建带注解的标签。
 
-## 验收清单
+标签语法格式：
 
-- 我能独立说出 `Git 标签` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+git tag <tagname>
+```
 
-## 复盘问题
+例如：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+git tag v1.0
+```
+
+-a 选项可以添加注解：
+
+```text
+$ git tag -a v1.0
+```
+
+当你执行 git tag -a 命令时，Git 会打开你的编辑器，让你写一句标签注解，就像你给提交写注解一样。
+
+现在，注意当我们执行 git log --decorate 时，我们可以看到我们的标签了：
+
+```text
+*   d5e9fc2 (HEAD -> master) Merge branch 'change_site'
+|\
+| * 7774248 (change_site) changed the runoob.php
+* | c68142b 修改代码
+|/
+* c1501a2 removed test.txt、add runoob.php
+* 3e92c19 add test.txt
+* 3b58100 第一次版本提交
+```
+
+如果我们忘了给某个提交打标签，又将它发布了，我们可以给它追加标签。
+
+例如，假设我们发布了提交 85fc7e7(上面实例最后一行)，但是那时候忘了给它打标签。 我们现在也可以：
+
+```text
+$ git tag -a v0.9 85fc7e7
+$ git log --oneline --decorate --graph
+*   d5e9fc2 (HEAD -> master) Merge branch 'change_site'
+|\
+| * 7774248 (change_site) changed the runoob.php
+* | c68142b 修改代码
+|/
+* c1501a2 removed test.txt、add runoob.php
+* 3e92c19 add test.txt
+* 3b58100 (tag: v0.9) 第一次版本提交
+```
+
+如果我们要查看所有标签可以使用以下命令：
+
+```text
+$ git tag
+v0.9
+v1.0
+```
+
+
+### 推送标签到远程仓库
+
+默认情况下，git push 不会推送标签，你需要显式地推送标签。
+
+```html
+git push origin <tagname>
+```
+
+推送所有标签：
+
+```text
+git push origin --tags
+```
+
+
+### 删除轻量标签
+
+本地删除：
+
+```html
+git tag -d <tagname>
+```
+
+远程删除：
+
+```html
+git push origin --delete <tagname>
+```
+
+
+### 附注标签
+
+附注标签存储了创建者的名字、电子邮件、日期，并且可以包含标签信息。附注标签更为正式，适用于需要额外元数据的场景。
+
+创建附注标签语法：
+
+```html
+git tag -a <tagname> -m "message"
+```
+
+```html
+git tag -a <tagname> -m "runoob.com标签"
+```
+
+PGP 签名标签命令：
+
+```html
+git tag -s <tagname> -m "runoob.com标签"
+```
+
+查看标签信息：
+
+```html
+git show <tagname>
+```
+
+
+### 实例
+
+以下是一个综合示例，演示如何创建、查看、推送和删除标签。
+
+创建轻量标签和附注标签：
+
+```text
+git tag v1.0
+git tag -a v1.1 -m "runoob.com标签"
+```
+
+查看标签和标签信息：
+
+```text
+git tag
+git show v1.1
+```
+
+推送标签到远程仓库：
+
+```text
+git push origin v1.0
+git push origin v1.1
+git push origin --tags  # 推送所有标签
+```
+
+
+### 删除标签
+
+本地删除：
+
+```text
+git tag -d v1.0
+```
+
+远程删除：
+
+```text
+git push origin --delete v1.0
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Git 标签` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

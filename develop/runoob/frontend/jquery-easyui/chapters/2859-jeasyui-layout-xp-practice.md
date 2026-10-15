@@ -1,34 +1,78 @@
-# jQuery EasyUI：jEasyUI 创建 XP 风格左侧面板 练习笔记
+# jQuery EasyUI：jQuery EasyUI 布局 - 创建 XP 风格左侧面板
 
 - 来源：[jEasyUI 创建 XP 风格左侧面板](https://www.runoob.com/jeasyui/jeasyui-layout-xp.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2859
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 创建 XP 风格左侧面板` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+通常情况下，在 Windows XP 的资源管理器文件夹中，左侧的面板（panel）包含一些常见任务。 本教程向您展示如何通过 easyui 的面板（panel）插件来创建 XP 左侧面板。
 
-## 练习步骤
+我们定义一些面板（panel），这些面板（panel）用来显示一些任务。每个面板（panel）应该至少有折叠/展开工具按钮。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+代码如下所示：
 
-## 验收清单
+```java
+    <div style="width:200px;height:auto;background:#7190E0;padding:5px;">
+        <div class="easyui-panel" title="Picture Tasks" collapsible="true" style="width:200px;height:auto;padding:10px;">
+            View as a slide show<br/>
+            Order prints online<br/>
+            Print pictures
+        </div>
+        <br/>
+        <div class="easyui-panel" title="File and Folder Tasks" collapsible="true" style="width:200px;height:auto;padding:10px;">
+            Make a new folder<br/>
+            Publish this folder to the Web<br/>
+            Share this folder
+        </div>
+        <br/>
+        <div class="easyui-panel" title="Other Places" collapsible="true" collapsed="true" style="width:200px;height:auto;padding:10px;">
+            New York<br/>
+            My Pictures<br/>
+            My Computer<br/>
+            My Network Places
+        </div>
+        <br/>
+        <div class="easyui-panel" title="Details" collapsible="true" style="width:200px;height:auto;padding:10px;">
+            My documents<br/>
+            File folder<br/><br/>
+            Date modified: Oct.3rd 2010
+        </div>
+    </div>
+```
 
-- 我能独立说出 `jEasyUI 创建 XP 风格左侧面板` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+请注意，这个视图外观效果不是我们想要的，我们必须改变面板（panel）的头部背景图片和折叠/展开按钮的图标。
 
-## 复盘问题
+做到这一点并不难，我们需要做的只是重新定义一些 CSS。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+    .panel-body{
+        background:#f0f0f0;
+    }
+    .panel-header{
+        background:#fff url('images/panel_header_bg.gif') no-repeat top right;
+    }
+    .panel-tool-collapse{
+        background:url('images/arrow_up.gif') no-repeat 0px -3px;
+    }
+    .panel-tool-expand{
+        background:url('images/arrow_down.gif') no-repeat 0px -3px;
+    }
+```
+
+由此可见，使用 easyui 定义用户界面非常简单。
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-layout-xp.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 创建 XP 风格左侧面板` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

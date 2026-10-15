@@ -1,35 +1,176 @@
-# MongoDB：MongoDB PHP 学习笔记
+# MongoDB：MongoDB PHP
 
 - 来源：[MongoDB PHP](https://www.runoob.com/mongodb/mongodb-php.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1489
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB PHP` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+在php中使用mongodb你必须使用 mongodb 的 php驱动。
 
-## 阅读抓手
+MongoDB PHP在各平台上的安装及驱动包下载请查看:PHP安装MongoDB扩展驱动
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+如果你使用的是 PHP7，请参阅：PHP7 MongoDB 安装与使用。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 确保连接及选择一个数据库
 
-## 完成标准
+为了确保正确连接，你需要指定数据库名，如果数据库在mongoDB中不存在，mongoDB会自动创建
 
-- 能用 3 到 5 句话解释 `MongoDB PHP`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+代码片段如下：
+
+```text
+<?php
+$m = new MongoClient(); // 连接默认主机和端口为：mongodb://localhost:27017
+$db = $m->test; // 获取名称为 "test" 的数据库
+?>
+```
+
+
+## 创建集合
+
+创建集合的代码片段如下：
+
+```text
+<?php
+$m = new MongoClient(); // 连接
+$db = $m->test; // 获取名称为 "test" 的数据库
+$collection = $db->createCollection("runoob");
+echo "集合创建成功";
+?>
+```
+
+执行以上程序，输出结果如下：
+
+```text
+集合创建成功
+```
+
+
+## 插入文档
+
+在mongoDB中使用 insert() 方法插入文档：
+
+插入文档代码片段如下：
+
+```text
+<?php
+$m = new MongoClient();    // 连接到mongodb
+$db = $m->test;            // 选择一个数据库
+$collection = $db->runoob; // 选择集合
+$document = array(
+    "title" => "MongoDB",
+    "description" => "database",
+    "likes" => 100,
+    "url" => "http://www.runoob.com/mongodb/",
+    "by", "菜鸟教程"
+);
+$collection->insert($document);
+echo "数据插入成功";
+?>
+```
+
+执行以上程序，输出结果如下：
+
+```text
+数据插入成功
+```
+
+然后我们在 mongo 客户端使用 db.runoob.find().pretty(); 命令查看数据：
+
+
+## 查找文档
+
+使用find() 方法来读取集合中的文档。
+
+读取使用文档的代码片段如下：
+
+```text
+<?php
+$m = new MongoClient();    // 连接到mongodb
+$db = $m->test;            // 选择一个数据库
+$collection = $db->runoob; // 选择集合
+
+$cursor = $collection->find();
+// 迭代显示文档标题
+foreach ($cursor as $document) {
+    echo $document["title"] . "\n";
+}
+?>
+```
+
+执行以上程序，输出结果如下：
+
+```text
+MongoDB
+```
+
+
+## 更新文档
+
+使用 update() 方法来更新文档。
+
+以下实例将更新文档中的标题为' MongoDB 教程'， 代码片段如下：
+
+```html
+<pre>
+<?php
+$m = new MongoClient();    // 连接到mongodb
+$db = $m->test;            // 选择一个数据库
+$collection = $db->runoob; // 选择集合
+// 更新文档
+$collection->update(array("title"=>"MongoDB"), array('$set'=>array("title"=>"MongoDB 教程")));
+// 显示更新后的文档
+$cursor = $collection->find();
+// 循环显示文档标题
+foreach ($cursor as $document) {
+    echo $document["title"] . "\n";
+}
+?>
+```
+
+执行以上程序，输出结果如下：
+
+```text
+MongoDB 教程
+```
+
+然后我们在 mongo 客户端使用 db.runoob.find().pretty(); 命令查看数据：
+
+
+## 删除文档
+
+使用 remove() 方法来删除文档。
+
+以下实例中我们将移除 'title' 为 'MongoDB 教程' 的一条数据记录。， 代码片段如下：
+
+```text
+<?php
+$m = new MongoClient();    // 连接到mongodb
+$db = $m->test;            // 选择一个数据库
+$collection = $db->runoob; // 选择集合
+
+// 移除文档
+$collection->remove(array("title"=>"MongoDB 教程"), array("justOne" => true));
+
+// 显示可用文档数据
+$cursor = $collection->find();
+foreach ($cursor as $document) {
+    echo $document["title"] . "\n";
+}
+?>
+```
+
+除了以上实例外，在php中你还可以使用findOne(), save(), limit(), skip(), sort()等方法来操作Mongodb数据库。
+
+更多的操作方法可以参考 Mongodb 核心类：http://php.net/manual/zh/mongo.core.php。
+
+
+## 复习重点
+
+- 能说明 `MongoDB PHP` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,110 @@
-# Flask：Flask 测试 学习笔记
+# Flask：Flask 测试
 
 - 来源：[Flask 测试](https://www.runoob.com/flask/flask-testing.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3894
 
-## 学习目标
+## 本章内容
 
-Flask 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Flask 测试` 建立学习路径，先理解它在 Flask 体系中的位置，再做可运行或可复述的验证。
+测试是保证代码质量的基础。
 
-## 阅读抓手
+Flask 提供了内置的测试客户端，配合 pytest 可以高效编写和运行测试。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 测试客户端——test_client
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Flask 的 test_client() 方法创建了一个模拟的 HTTP 客户端，可以在不启动服务器的情况下发送请求：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Flask 测试`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+
+## pytest 集成
+
+pytest 是 Python 社区的标准测试框架，配合 Flask 使用非常方便。
+
+
+### 安装 pytest
+
+```text
+(.venv) $ pip install pytest
+```
+
+
+### 编写测试——conftest.py（共享夹具）
+
+使用 conftest.py 文件创建可复用的测试夹具（fixture）：
+
+
+## 实例
+
+
+## 测试路由
+
+
+## 实例
+
+运行测试：
+
+```text
+(.venv) $ pytest tests/test_app.py -v
+====================================
+tests/test_app.py::test_home_page PASSED
+tests/test_app.py::test_404_page PASSED
+====================================
+```
+
+
+## 测试 JSON API
+
+
+## 实例
+
+
+## 测试 Session
+
+测试登录等需要 Session 的功能：
+
+
+## 实例
+
+client.session_transaction() 是一个非常实用的测试工具——它让你可以直接修改 Session 内容，无需通过完整的登录流程。
+
+
+## 测试 CLI 命令
+
+
+## 实例
+
+
+## 测试最佳实践
+
+
+## 运行全部测试
+
+```text
+(.venv) $ pytest tests/ -v
+
+tests/test_app.py::test_home_page PASSED
+tests/test_app.py::test_404_page PASSED
+tests/test_api.py::test_create_post PASSED
+tests/test_api.py::test_create_post_without_title PASSED
+tests/test_api.py::test_get_posts PASSED
+tests/test_api.py::test_delete_post PASSED
+tests/test_auth.py::test_login PASSED
+tests/test_auth.py::test_session_transaction PASSED
+tests/test_cli.py::test_init_db PASSED
+tests/test_cli.py::test_flask_routes PASSED
+
+==================== 10 passed in 0.45s ====================
+```
+
+
+## 复习重点
+
+- 能说明 `Flask 测试` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

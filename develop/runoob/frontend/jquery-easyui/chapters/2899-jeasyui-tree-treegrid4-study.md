@@ -1,35 +1,103 @@
-# jQuery EasyUI：jEasyUI 树形网格添加分页 学习笔记
+# jQuery EasyUI：jQuery EasyUI 树形菜单 - 树形网格添加分页
 
 - 来源：[jEasyUI 树形网格添加分页](https://www.runoob.com/jeasyui/jeasyui-tree-treegrid4.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2899
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 树形网格添加分页` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+本教程展示如何向带有动态加载特性的树形网格（TreeGrid）添加分页。
 
-## 阅读抓手
+启用树形网格（TreeGrid）的分页特性，必须添加 'pagination:true' 属性，这样页面加载时就会向服务器发送 'page' 和 'rows' 参数。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+    <table title="Products" class="easyui-treegrid" style="width:700px;height:300px"
+            data-options="
+                url: 'treegrid4_getdata.php',
+                rownumbers: true,
+                pagination: true,
+                pageSize: 2,
+                pageList: [2,10,20],
+                idField: 'id',
+                treeField: 'name',
+                onBeforeLoad: function(row,param){
+                    if (!row) {    // load top level rows
+                        param.id = 0;    // set id=0, indicate to load new page rows
+                    }
+                }
+            ">
+        <thead>
+            <tr>
+                <th field="name" width="250">Name</th>
+                <th field="quantity" width="100" align="right">Quantity</th>
+                <th field="price" width="150" align="right" formatter="formatDollar">Price</th>
+                <th field="total" width="150" align="right" formatter="formatDollar">Total</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-## 笔记模板
+treegrid4_getdata.php
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```java
+$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+$offset = ($page-1)*$rows;
 
-## 完成标准
+$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 
-- 能用 3 到 5 句话解释 `jEasyUI 树形网格添加分页`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+include 'conn.php';
+
+$result = array();
+if ($id == 0){
+    $rs = mysql_query("select count(*) from products where parentId=0");
+    $row = mysql_fetch_row($rs);
+    $result["total"] = $row[0];
+
+    $rs = mysql_query("select * from products where parentId=0 limit $offset,$rows");
+    $items = array();
+    while($row = mysql_fetch_array($rs)){
+        $row['state'] = has_child($row['id']) ? 'closed' : 'open';
+        array_push($items, $row);
+    }
+    $result["rows"] = $items;
+} else {
+    $rs = mysql_query("select * from products where parentId=$id");
+    while($row = mysql_fetch_array($rs)){
+        $row['state'] = has_child($row['id']) ? 'closed' : 'open';
+        $row['total'] = $row['price']*$row['quantity'];
+        array_push($result, $row);
+    }
+}
+
+echo json_encode($result);
+
+function has_child($id){
+    $rs = mysql_query("select count(*) from products where parentId=$id");
+    $row = mysql_fetch_array($rs);
+    return $row[0] > 0 ? true : false;
+}
+```
+
+发送到服务器的参数包括：
+
+- page：要加载的当前页面。
+- rows：页面尺寸大小。
+- id：父行的 id 值，从服务器返回的行将被添加。
+
+当展开一个行节点时，'id' 值是大于 0 的。 当改变页码时，'id' 值应该被设置为 0 来放置加载子行。
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-tree-treegrid4.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 树形网格添加分页` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

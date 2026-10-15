@@ -1,35 +1,142 @@
-# JavaScript：JavaScript 测试 jQuery 学习笔记
+# JavaScript：JavaScript - 测试 jQuery
 
 - 来源：[JavaScript 测试 jQuery](https://www.runoob.com/js/js-lib-jquery.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2831
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 测试 jQuery` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+测试 JavaScript 框架库 - jQuery
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 引用 jQuery
 
-## 笔记模板
+如需测试 JavaScript 库，您需要在网页中引用它。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+为了引用某个库，请使用 <script> 标签，其 src 属性设置为库的 URL：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `JavaScript 测试 jQuery`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 引用 jQuery
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.staticfile.org/jquery/1.8.3/jquery.min.js">
+</script>
+</head>
+<body>
+</body>
+</html>
+```
+
+
+## jQuery 描述
+
+主要的 jQuery 函数是 $() 函数（jQuery 函数）。如果您向该函数传递 DOM 对象，它会返回 jQuery 对象，带有向其添加的 jQuery 功能。
+
+jQuery 允许您通过 CSS 选择器来选取元素。
+
+在 JavaScript 中，您可以分配一个函数以处理窗口加载事件：
+
+
+## JavaScript 方式：
+
+```javascript
+function myFunction()
+{
+    var obj=document.getElementById("h01");
+    obj.innerHTML="Hello jQuery";
+}
+onload=myFunction;
+```
+
+等价的 jQuery 是不同的：
+
+
+## jQuery 方式：
+
+```javascript
+function myFunction()
+{
+    $("#h01").html("Hello jQuery");
+}
+$(document).ready(myFunction);
+```
+
+上面代码的最后一行，HTML DOM 文档对象被传递到 jQuery ：$(document)。
+
+当您向 jQuery 传递 DOM 对象时，jQuery 会返回以 HTML DOM 对象包装的 jQuery 对象。
+
+jQuery 函数会返回新的 jQuery 对象，其中的 ready() 是一个方法。
+
+由于在 JavaScript 中函数就是变量，因此可以把 myFunction 作为变量传递给 jQuery 的 ready 方法。
+
+
+## 测试 jQuery
+
+请试一下下面这个例子：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.staticfile.org/jquery/1.8.3/jquery.min.js">
+</script>
+<script>
+function myFunction()
+{
+    $("#h01").html("Hello jQuery")
+}
+$(document).ready(myFunction);
+</script>
+</head>
+<body>
+<h1 id="h01"></h1>
+</body>
+</html>
+```
+
+请再试一下这个例子：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.staticfile.org/jquery/1.8.3/jquery.min.js">
+</script>
+<script>
+function myFunction()
+{
+    $("#h01").attr("style","color:red").html("Hello jQuery")
+}
+$(document).ready(myFunction);
+</script>
+</head>
+<body>
+<h1 id="h01"></h1>
+</body>
+</html>
+```
+
+正如您在上面的例子中看到的，jQuery 允许链接（链式语法）。
+
+链接（Chaining）是一种在同一对象上执行多个任务的便捷方法。
+
+需要学习更多内容吗？菜鸟教程为您提供了非常棒的 jQuery 教程。
+
+
+## 复习重点
+
+- 能说明 `JavaScript 测试 jQuery` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

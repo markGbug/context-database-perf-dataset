@@ -1,34 +1,89 @@
-# Vue.js：Vue.js 监听属性 练习笔记
+# Vue.js：Vue.js 监听属性
 
 - 来源：[Vue.js 监听属性](https://www.runoob.com/vue2/vue-watch.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3255
 
-## 练习目标
+## 本章内容
 
-把 `Vue.js 监听属性` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节，我们将为大家介绍 Vue.js 监听属性 watch，我们可以通过 watch 来响应数据的变化。
 
-## 练习步骤
+以下实例通过使用 watch 实现计数器：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 实例
 
-- 我能独立说出 `Vue.js 监听属性` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<div id = "app">
+    <p style = "font-size:25px;">计数器: {{ counter }}</p>
+    <button @click = "counter++" style = "font-size:25px;">点我</button>
+</div>
+<script type = "text/javascript">
+var vm = new Vue({
+    el: '#app',
+    data: {
+        counter: 1
+    }
+});
+vm.$watch('counter', function(nval, oval) {
+    alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+</script>
+```
 
-## 复盘问题
+以下实例进行千米与米之间的换算：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+```html
+<div id = "computed_props">
+    千米 : <input type = "text" v-model = "kilometers">
+    米 : <input type = "text" v-model = "meters">
+</div>
+<p id="info"></p>
+<script type = "text/javascript">
+    var vm = new Vue({
+    el: '#computed_props',
+    data: {
+        kilometers : 0,
+        meters:0
+    },
+    methods: {
+    },
+    computed :{
+    },
+    watch : {
+        kilometers:function(val) {
+            this.kilometers = val;
+            this.meters = this.kilometers * 1000
+        },
+        meters : function (val) {
+            this.kilometers = val/ 1000;
+            this.meters = val;
+        }
+    }
+    });
+    // $watch 是一个实例方法
+    vm.$watch('kilometers', function (newValue, oldValue) {
+    // 这个回调将在 vm.kilometers 改变后调用
+    document.getElementById ("info").innerHTML = "修改前值为: " + oldValue + "，修改后值为: " + newValue;
+})
+</script>
+```
+
+点击 "尝试一下" 按钮查看在线实例
+
+以上代码中我们创建了两个输入框，data 属性中， kilometers 和 meters 初始值都为 0。watch 对象创建了 data 对象的两个监控方法： kilometers 和 meters。
+
+当我们在输入框输入数据时，watch 会实时监听数据变化并改变自身的值。可以看下如下视频演示：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue.js 监听属性` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

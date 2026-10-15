@@ -1,35 +1,57 @@
-# VS Code：VSCode DeepSeek 学习笔记
+# VS Code：VSCode 接入 DeepSeek
 
 - 来源：[VSCode DeepSeek](https://www.runoob.com/vscode/vscode-deepseek.html)
 - 分类：DevOps / 工程化
 - 技术：VS Code
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1916
 
-## 学习目标
+## 本章内容
 
-VS Code 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `VSCode DeepSeek` 建立学习路径，先理解它在 VS Code 体系中的位置，再做可运行或可复述的验证。
+VSCode 拥有一个庞大的扩展市场，用户可以根据自己的需要安装各种扩展来增强编辑器的功能，包括语言支持、代码格式化工具、版本控制集成、主题和图标等。
 
-## 阅读抓手
+VS Code 可以通过扩展很好的接入我们想要大模型，常用的扩展可以参考：VS Code AI 扩展。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+接下来我们来学习下如何在 VS Code 上通过 Roo Code 扩展装上最近很火的 DeepSeek。
 
-## 笔记模板
+本文以 Roo Code 为例演示如何接入 DeepSeek。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+除了官方API接口外，我们也可以通过Coding Plan/Token Plan套餐直接接入DeepSeek、Kimi、GLM、Doubao、MiniMax等主流大模型，无需单独购买各家API。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `VSCode DeepSeek`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 安装 Roo Code 扩展
+
+Roo Code（前身为 Roo Cline）是一款基于 VS Code 的 AI 编程助手插件，通过集成多种 AI 模型和强大的自动化功能，为开发者提供高效、智能的编程体验。
+
+Roo Code 可与 OpenAI、DeepSeek、Anthropic、Google Gemini 等主流 API 无缝对接，还支持通过 Ollama 使用本地模型，开发者能根据需求和预算灵活切换。
+
+Roo Code 提供了多种预设模式，包括 Code（代码模式）、Architect（架构模式）和 Ask（问答模式），并支持用户自定。例如，用户可以创建一个专注于编写测试用例的 QA 工程师角色。
+
+扩展搜索关键词：Roo Code
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline
+
+Github 地址：https://github.com/RooVetGit/Roo-Code
+
+
+### 设置 API Key
+
+安装扩展后在左侧活动栏会有个小火箭的图标，打开就可以看到支持的大模型，我们可以选择 DeepSeek：
+
+填写我们申请的 API Key：
+
+我们可以在 DeepSeek 官网 API 开放平台 https://platform.deepseek.com/usage 申请 API Key：
+
+安装成功后，我们就可以点击扩展右上角的加号 +，开启对话窗口：
+
+我们也可以选择文件中的一小段代码，让大模型帮我们解析或修正：
+
+使用 @ 符号为 AI 提供上下文。输入 @ 即可查看文件夹中所有文件和代码符号的列表。
+
+
+## 复习重点
+
+- 能说明 `VSCode DeepSeek` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

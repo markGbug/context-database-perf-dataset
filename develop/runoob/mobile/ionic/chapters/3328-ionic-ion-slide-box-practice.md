@@ -1,34 +1,124 @@
-# Ionic：ionic 滑动框 练习笔记
+# Ionic：ionic 滑动框
 
 - 来源：[ionic 滑动框](https://www.runoob.com/ionic/ionic-ion-slide-box.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3328
 
-## 练习目标
+## 本章内容
 
-把 `ionic 滑动框` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## ion-slide-box
 
-## 练习步骤
+滑动框是一个包含多页容器的组件，每页滑动或拖动切换：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+效果图如下：
 
-## 验收清单
 
-- 我能独立说出 `ionic 滑动框` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 用法
 
-## 复盘问题
+```html
+<ion-slide-box on-slide-changed="slideHasChanged($index)">
+  <ion-slide>
+    <div class="box blue"><h1>BLUE</h1></div>
+  </ion-slide>
+  <ion-slide>
+    <div class="box yellow"><h1>YELLOW</h1></div>
+  </ion-slide>
+  <ion-slide>
+    <div class="box pink"><h1>PINK</h1></div>
+  </ion-slide>
+</ion-slide-box>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### API
+
+该句柄用$ionicSlideBoxDelegate来标识这个滑动框。
+
+滑动框是否开启循环滚动。
+
+设置滑动框是否循环播放，如果 does-continue 为 true，默认也为 true。
+
+等待多少毫秒开始滑动（如果继续则为true）。默认为4000。
+
+滑动框的页面是否显示。
+
+当点击页面时，触发该表达式（如果shou-pager为true）。传递一个'索引'变量。
+
+当滑动时，触发该表达式。传递一个'索引'变量。
+
+将模型绑定到当前滑动框。
+
+
+## 实例
+
+
+### HTML 代码
+
+```html
+<ion-slide-box active-slide="myActiveSlide">
+    <ion-slide>
+      <div class="box blue"><h1>BLUE</h1></div>
+    </ion-slide>
+    <ion-slide>
+      <div class="box yellow"><h1>YELLOW</h1></div>
+    </ion-slide>
+    <ion-slide>
+      <div class="box pink"><h1>PINK</h1></div>
+    </ion-slide>
+</ion-slide-box>
+```
+
+
+### CSS 代码
+
+```text
+.slider {
+  height: 100%;
+}
+.slider-slide {
+  color: #000;
+  background-color: #fff; text-align: center;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: 300; }
+.blue {
+  background-color: blue;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.pink {
+  background-color: pink;
+}
+.box{
+  height:100%;
+}
+.box h1{
+  position:relative; top:50%; transform:translateY(-50%);
+}
+```
+
+
+### JavaScript 代码
+
+```text
+angular.module('ionicApp', ['ionic'])
+
+.controller('SlideController', function($scope) {
+
+  $scope.myActiveSlide = 1;
+
+})
+```
+
+尝试一下 »
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 滑动框` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

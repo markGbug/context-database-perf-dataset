@@ -1,34 +1,45 @@
-# Docker：Docker 资源汇总 练习笔记
+# Docker：Docker 资源汇总
 
 - 来源：[Docker 资源汇总](https://www.runoob.com/docker/docker-resources.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0822
 
-## 练习目标
+## 本章内容
 
-把 `Docker 资源汇总` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+### Docker 资源
 
-## 练习步骤
+- Docker 官方主页: https://www.docker.com
+- Docker 官方博客: https://blog.docker.com/
+- Docker 官方文档: https://docs.docker.com/
+- Docker Store: https://store.docker.com
+- Docker Cloud: https://cloud.docker.com
+- Docker Hub: https://hub.docker.com
+- Docker 的源代码仓库: https://github.com/moby/moby
+- Docker 发布版本历史: https://docs.docker.com/release-notes/
+- Docker 常见问题: https://docs.docker.com/engine/faq/
+- Docker 远端应用 API: https://docs.docker.com/develop/sdk/
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### Docker 国内镜像
 
-- 我能独立说出 `Docker 资源汇总` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+阿里云的加速器：https://help.aliyun.com/document_detail/60750.html
 
-## 复盘问题
+网易加速器：http://hub-mirror.c.163.com
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+官方中国加速器：https://registry.docker-cn.com
+
+ustc 的镜像：https://docker.mirrors.ustc.edu.cn
+
+daocloud：https://www.daocloud.io/mirror#accelerator-doc（注册后使用）
+
+如果有更好的资源，欢迎通过下面的笔记来分享。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker 资源汇总` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

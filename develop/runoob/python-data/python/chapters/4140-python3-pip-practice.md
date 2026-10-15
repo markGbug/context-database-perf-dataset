@@ -1,34 +1,98 @@
-# Python：Python3 pip 练习笔记
+# Python：Python3 pip
 
 - 来源：[Python3 pip](https://www.runoob.com/python3/python3-pip.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4140
 
-## 练习目标
+## 本章内容
 
-把 `Python3 pip` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+pip 是 Python 包管理工具，该工具提供了对 Python 包的查找、下载、安装、卸载的功能。
 
-## 练习步骤
+软件包也可以在 https://pypi.org/ 中找到。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+目前最新的 Python 版本已经预装了 pip。
 
-## 验收清单
+注意：Python 2.7.9 + 或 Python 3.4+ 以上版本都自带 pip 工具。
 
-- 我能独立说出 `Python3 pip` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+如果没有安装可以参考：Python pip 安装与使用。
 
-## 复盘问题
+查看是否已经安装 pip 可以使用以下命令：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+pip --version
+```
+
+下载安装包使用以下命令：
+
+```text
+pip install some-package-name
+```
+
+例如我们安装 numpy 包：
+
+```text
+pip install numpy
+```
+
+我们也可以轻易地通过以下的命令来移除软件包：
+
+```text
+pip uninstall some-package-name
+```
+
+例如我们移除 numpy 包：
+
+```text
+pip uninstall numpy
+```
+
+如果要查看我们已经安装的软件包，可以使用以下命令：
+
+```text
+pip list
+```
+
+
+### 导出当前 Python 环境的配置
+
+要导出当前 Python 环境的配置，你可以使用 pip freeze 命令。
+
+pip freeze 命令会列出当前环境中已安装的所有 Python 包及其版本信息，你可以将其保存到文件中，例如 requirements.txt，如下所示：
+
+```text
+pip freeze > requirements.txt
+```
+
+以上命令将在当前目录下创建一个名为 requirements.txt 的文件，其中包含当前环境中已安装的所有包及其版本信息。
+
+然后，你可以在其他地方使用该文件来重新创建相同的环境，运行以下命令：
+
+```text
+pip install -r requirements.txt
+```
+
+以上命令会根据 requirements.txt 中列出的包及其版本信息重新安装所有必需的包，从而重建相同的环境。
+
+
+## 扩展内容
+
+
+### Anaconda 介绍
+
+Anaconda 发行版包含了 Python。
+
+Anaconda 是一个集成的数据科学和机器学习环境，其中包括了 Python 解释器以及大量常用的数据科学库和工具。
+
+Anaconda 包及其依赖项和环境的管理工具为 conda 命令，文与传统的 Python pip 工具相比 Anaconda 的 conda 可以更方便地在不同环境之间进行切换，环境管理较为简单。
+
+Anaconda详细安装与介绍参考：Anaconda 教程。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python3 pip` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

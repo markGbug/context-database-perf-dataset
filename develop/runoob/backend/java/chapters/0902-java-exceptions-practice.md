@@ -1,34 +1,420 @@
-# Java：Java 异常处理 练习笔记
+# Java：Java 异常处理
 
 - 来源：[Java 异常处理](https://www.runoob.com/java/java-exceptions.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0902
 
-## 练习目标
+## 本章内容
 
-把 `Java 异常处理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 Java 中，异常处理是一种重要的编程概念，用于处理程序执行过程中可能出现的错误或异常情况。
 
-## 练习步骤
+异常是程序中的一些错误，但并不是所有的错误都是异常，并且错误有时候是可以避免的。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+比如说，你的代码少了一个分号，那么运行出来结果是提示是错误 java.lang.Error，如果你用 System.out.println(11/0)，那么你是因为你用 0 做了除数，会抛出 java.lang.ArithmeticException 的异常。
 
-## 验收清单
+异常发生的原因有很多，通常包含以下几大类：
 
-- 我能独立说出 `Java 异常处理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- 用户输入了非法数据。
+- 要打开的文件不存在。
+- 网络通信时连接中断，或者JVM内存溢出。
 
-## 复盘问题
+这些异常有的是因为用户错误引起，有的是程序错误引起的，还有其它一些是因为物理错误引起的。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+要理解 Java 异常处理是如何工作的，你需要掌握以下三种类型的异常：
+
+- 检查性异常：最具代表的检查性异常是用户错误或问题引起的异常，这些异常在编译时强制要求程序员处理。例如要打开一个不存在文件时，一个异常就发生了，这些异常在编译时不能被简单地忽略。 这类异常通常使用 try-catch 块来捕获并处理异常，或者在方法声明中使用 throws 子句声明方法可能抛出的异常。 try { // 可能会抛出异常的代码 } catch (IOException e) { // 处理异常的代码 }或者： public void readFile() throws IOException { // 可能会抛出IOException的代码 }
+- 运行时异常： 这些异常在编译时不强制要求处理，通常是由程序中的错误引起的，例如 NullPointerException、ArrayIndexOutOfBoundsException 等，这类异常可以选择处理，但并非强制要求。 try { // 可能会抛出异常的代码 } catch (NullPointerException e) { // 处理异常的代码 }
+- 错误： 错误不是异常，而是脱离程序员控制的问题，错误在代码中通常被忽略。例如，当栈溢出时，一个错误就发生了，它们在编译也检查不到的。
+
+Java 提供了以下关键字和类来支持异常处理：
+
+- try：用于包裹可能会抛出异常的代码块。
+- catch：用于捕获异常并处理异常的代码块。
+- finally：用于包含无论是否发生异常都需要执行的代码块。
+- throw：用于手动抛出异常。
+- throws：用于在方法声明中指定方法可能抛出的异常。
+
+
+## Exception 类的层次
+
+所有的异常类是从 java.lang.Exception 类继承的子类。
+
+Exception 类是 Throwable 类的子类。除了Exception类外，Throwable还有一个子类Error 。
+
+Java 程序通常不捕获错误。错误一般发生在严重故障时，它们在Java程序处理的范畴之外。
+
+Error 用来指示运行时环境发生的错误。
+
+例如，JVM 内存溢出。一般地，程序不会从错误中恢复。
+
+异常类有两个主要的子类：IOException 类和 RuntimeException 类。
+
+在 Java 内置类中(接下来会说明)，有大部分常用检查性和非检查性异常。
+
+
+## Java 内置异常类
+
+Java 语言定义了一些异常类在 java.lang 标准包中。
+
+标准运行时异常类的子类是最常见的异常类。由于 java.lang 包是默认加载到所有的 Java 程序的，所以大部分从运行时异常类继承而来的异常都可以直接使用。
+
+Java 根据各个类库也定义了一些其他的异常，下面的表中列出了 Java 的非检查性异常。
+
+下面的表中列出了 Java 定义在 java.lang 包中的检查性异常类。
+
+
+## 异常方法
+
+下面的列表是 Throwable 类的主要方法:
+
+
+## 捕获异常
+
+使用 try 和 catch 关键字可以捕获异常。try/catch 代码块放在异常可能发生的地方。
+
+try/catch代码块中的代码称为保护代码，使用 try/catch 的语法如下：
+
+```text
+try
+{
+   // 程序代码
+}catch(ExceptionName e1)
+{
+   //Catch 块
+}
+```
+
+Catch 语句包含要捕获异常类型的声明。当保护代码块中发生一个异常时，try 后面的 catch 块就会被检查。
+
+如果发生的异常包含在 catch 块中，异常会被传递到该 catch 块，这和传递一个参数的方法是一样。
+
+
+### 实例
+
+下面的例子中声明有两个元素的一个数组，当代码试图访问数组的第四个元素的时候就会抛出一个异常。
+
+
+## ExcepTest.java 文件代码：
+
+```java
+// 文件名 : ExcepTest.java
+import java.io.*;
+public class ExcepTest{
+
+   public static void main(String args[]){
+      try{
+         int a[] = new int[2];
+         System.out.println("Access element three :" + a[3]);
+      }catch(ArrayIndexOutOfBoundsException e){
+         System.out.println("Exception thrown  :" + e);
+      }
+      System.out.println("Out of the block");
+   }
+}
+```
+
+以上代码编译运行输出结果如下：
+
+```text
+Exception thrown  :java.lang.ArrayIndexOutOfBoundsException: 3
+Out of the block
+```
+
+
+## 多重捕获块
+
+一个 try 代码块后面跟随多个 catch 代码块的情况就叫多重捕获。
+
+多重捕获块的语法如下所示：
+
+```text
+try{
+   // 程序代码
+}catch(异常类型1 异常的变量名1){
+  // 程序代码
+}catch(异常类型2 异常的变量名2){
+  // 程序代码
+}catch(异常类型3 异常的变量名3){
+  // 程序代码
+}
+```
+
+上面的代码段包含了 3 个 catch块。
+
+可以在 try 语句后面添加任意数量的 catch 块。
+
+如果保护代码中发生异常，异常被抛给第一个 catch 块。
+
+如果抛出异常的数据类型与 ExceptionType1 匹配，它在这里就会被捕获。
+
+如果不匹配，它会被传递给第二个 catch 块。
+
+如此，直到异常被捕获或者通过所有的 catch 块。
+
+
+### 实例
+
+该实例展示了怎么使用多重 try/catch。
+
+```text
+try {
+    file = new FileInputStream(fileName);
+    x = (byte) file.read();
+} catch(FileNotFoundException f) { // Not valid!
+    f.printStackTrace();
+    return -1;
+} catch(IOException i) {
+    i.printStackTrace();
+    return -1;
+}
+```
+
+
+## 多异常合并捕获
+
+从 Java 7 开始，引入了一个更简洁的写法 —— 多异常合并捕获，可以用一个 catch 块处理多个无继承关系的异常。
+
+```text
+try {
+    // 可能抛出多个不同类型异常的代码
+} catch (异常类型1 | 异常类型2 | 异常类型3 异常变量) {
+    // 统一处理
+}
+```
+
+需要注意：
+
+- 异常类型1、异常类型2 等 不能有继承关系，否则会导致编译错误。
+- 异常变量名 是这三种异常的共同引用变量，因此在 catch 块内你不能调用它们特有的方法。
+- 编译器会推断出这个异常变量的类型为这几个异常的最近公共父类（比如 Exception 或 IOException）。
+
+如下这种互不继承的异常，同时可能抛出 SQLException 和 IOException：
+
+
+## 实例
+
+错误示例（不能合并父子类异常）：
+
+```text
+// 错误写法！
+catch (FileNotFoundException | IOException e) {
+    // 会导致编译错误，因为 FileNotFoundException 是 IOException 的子类
+}
+```
+
+FileNotFoundException 是 IOException 的子类，所以这个写法实际上是不合法的，会报编译错误。
+
+
+## throws/throw 关键字
+
+在Java中， throw 和 throws 关键字是用于处理异常的。
+
+throw 关键字用于在代码中抛出异常，而 throws 关键字用于在方法声明中指定可能会抛出的异常类型。
+
+
+### throw 关键字
+
+throw 关键字用于在当前方法中抛出一个异常。
+
+通常情况下，当代码执行到某个条件下无法继续正常执行时，可以使用 throw 关键字抛出异常，以告知调用者当前代码的执行状态。
+
+例如，下面的代码中，在方法中判断 num 是否小于 0，如果是，则抛出一个 IllegalArgumentException 异常。
+
+
+## 实例
+
+
+### throws 关键字
+
+throws 关键字用于在方法声明中指定该方法可能抛出的异常。当方法内部抛出指定类型的异常时，该异常会被传递给调用该方法的代码，并在该代码中处理异常。
+
+例如，下面的代码中，当 readFile 方法内部发生 IOException 异常时，会将该异常传递给调用该方法的代码。在调用该方法的代码中，必须捕获或声明处理 IOException 异常。
+
+
+## 实例
+
+一个方法可以声明抛出多个异常，多个异常之间用逗号隔开。
+
+例如，下面的方法声明抛出 RemoteException 和 InsufficientFundsException：
+
+```java
+import java.io.*;
+public class className
+{
+   public void withdraw(double amount) throws RemoteException,
+                              InsufficientFundsException
+   {
+       // Method implementation
+   }
+   //Remainder of class definition
+}
+```
+
+
+## finally关键字
+
+finally 关键字用来创建在 try 代码块后面执行的代码块。
+
+无论是否发生异常，finally 代码块中的代码总会被执行。
+
+在 finally 代码块中，可以运行清理类型等收尾善后性质的语句。
+
+finally 代码块出现在 catch 代码块最后，语法如下：
+
+```text
+try{
+  // 程序代码
+}catch(异常类型1 异常的变量名1){
+  // 程序代码
+}catch(异常类型2 异常的变量名2){
+  // 程序代码
+}finally{
+  // 程序代码
+}
+```
+
+
+### 实例
+
+
+## ExcepTest.java 文件代码：
+
+```java
+public class ExcepTest{
+  public static void main(String args[]){
+    int a[] = new int[2];
+    try{
+       System.out.println("Access element three :" + a[3]);
+    }catch(ArrayIndexOutOfBoundsException e){
+       System.out.println("Exception thrown  :" + e);
+    }
+    finally{
+       a[0] = 6;
+       System.out.println("First element value: " +a[0]);
+       System.out.println("The finally statement is executed");
+    }
+  }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+Exception thrown  :java.lang.ArrayIndexOutOfBoundsException: 3
+First element value: 6
+The finally statement is executed
+```
+
+注意下面事项：
+
+- catch 不能独立于 try 存在。
+- 在 try/catch 后面添加 finally 块并非强制性要求的。
+- try 代码后不能既没 catch 块也没 finally 块。
+- try, catch, finally 块之间不能添加任何代码。
+
+
+## try-with-resources
+
+JDK7 之后，Java 新增的 try-with-resource 语法结构，旨在自动管理资源，确保资源在使用后能够及时关闭，避免资源泄露 。
+
+try-with-resources 是一种异常处理机制，它能够自动关闭在 try 块中声明的资源，无需显式地在 finally 块中关闭。
+
+在 try-with-resources 语句中，你只需要在 try 关键字后面声明资源，然后跟随一个代码块。无论代码块中的操作是否成功，资源都会在 try 代码块执行完毕后自动关闭。。
+
+```text
+try (resource declaration) {
+  // 使用的资源
+} catch (ExceptionType e1) {
+  // 异常块
+}
+```
+
+以上的语法中 try 用于声明和实例化资源，catch 用于处理关闭资源时可能引发的所有异常。
+
+注意：try-with-resources 语句关闭所有实现 AutoCloseable 接口的资源。
+
+
+## 实例
+
+以上实例输出结果为：
+
+```text
+IOException in try block =>test.txt (No such file or directory)
+```
+
+以上实例中，我们实例一个 BufferedReader 对象从 test.txt 文件中读取数据。
+
+在 try-with-resources 语句中声明和实例化 BufferedReader 对象，执行完毕后实例资源，不需要考虑 try 语句是正常执行还是抛出异常。
+
+如果发生异常，可以使用 catch 来处理异常。
+
+再看下不使用 try-with-resources 而改成 finally 来关闭资源，整体代码量多了很多，而且更复杂繁琐了：
+
+
+## 实例
+
+以上实例输出结果为：
+
+```text
+Entering try block
+IOException in try block =>test.txt (No such file or directory)
+Entering finally block
+```
+
+
+### try-with-resources 处理多个资源
+
+try-with-resources 语句中可以声明多个资源，方法是使用分号 ; 分隔各个资源：
+
+
+## 实例
+
+以上实例使用 Scanner 对象从 testRead.txt 文件中读取一行并将其写入新的 testWrite.txt 文件中。
+
+多个声明资源时，try-with-resources 语句以相反的顺序关闭这些资源。 在本例中，PrintWriter 对象先关闭，然后 Scanner 对象关闭。
+
+更多内容参考：
+
+- try-with-resources：Java try-with-resources 语句
+- 资源管理：Java Cleaner 类
+
+
+## 声明自定义异常
+
+在 Java 中你可以自定义异常。编写自己的异常类时需要记住下面的几点。
+
+- 所有异常都必须是 Throwable 的子类。
+- 如果希望写一个检查性异常类，则需要继承 Exception 类。
+- 如果你想写一个运行时异常类，那么需要继承 RuntimeException 类。
+
+可以像下面这样定义自己的异常类：
+
+```text
+class MyException extends Exception{
+}
+```
+
+只继承Exception 类来创建的异常类是检查性异常类。
+
+下面的 InsufficientFundsException 类是用户定义的异常类，它继承自 Exception。
+
+一个异常类和其它任何类一样，包含有变量和方法。
+
+
+## 后续章节
+
+- 实例
+- InsufficientFundsException.java 文件代码：
+- CheckingAccount.java 文件代码：
+- BankDemo.java 文件代码：
+- 通用异常
+- 异常处理的最佳实践
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java 异常处理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

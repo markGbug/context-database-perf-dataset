@@ -1,35 +1,159 @@
-# C++：C++ 修饰符类型 学习笔记
+# C++：C++ 修饰符类型
 
 - 来源：[C++ 修饰符类型](https://www.runoob.com/cplusplus/cpp-modifier-types.html)
 - 分类：编程语言
 - 技术：C++
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3546
 
-## 学习目标
+## 本章内容
 
-C++ 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `C++ 修饰符类型` 建立学习路径，先理解它在 C++ 体系中的位置，再做可运行或可复述的验证。
+C++ 允许在 char、int 和 double 数据类型前放置修饰符。
 
-## 阅读抓手
+修饰符是用于改变变量类型的行为的关键字，它更能满足各种情境的需求。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+下面列出了数据类型修饰符：
 
-## 笔记模板
+- signed：表示变量可以存储负数。对于整型变量来说，signed 可以省略，因为整型变量默认为有符号类型。
+- unsigned：表示变量不能存储负数。对于整型变量来说，unsigned 可以将变量范围扩大一倍。
+- short：表示变量的范围比 int 更小。short int 可以缩写为 short。
+- long：表示变量的范围比 int 更大。long int 可以缩写为 long。
+- long long：表示变量的范围比 long 更大。C++11 中新增的数据类型修饰符。
+- float：表示单精度浮点数。
+- double：表示双精度浮点数。
+- bool：表示布尔类型，只有 true 和 false 两个值。
+- char：表示字符类型。
+- wchar_t：表示宽字符类型，可以存储 Unicode 字符。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+修饰符 signed、unsigned、long 和 short 可应用于整型，signed 和 unsigned 可应用于字符型，long 可应用于双精度型。
 
-## 完成标准
+这些修饰符也可以组合使用，修饰符 signed 和 unsigned 也可以作为 long 或 short 修饰符的前缀。例如：unsigned long int。
 
-- 能用 3 到 5 句话解释 `C++ 修饰符类型`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+C++ 允许使用速记符号来声明无符号短整数或无符号长整数。您可以不写 int，只写单词 unsigned、short 或 long，int 是隐含的。例如，下面的两个语句都声明了无符号整型变量。
+
+```java
+signed int num1 = -10; // 定义有符号整型变量 num1，初始值为 -10
+unsigned int num2 = 20; // 定义无符号整型变量 num2，初始值为 20
+
+short int num1 = 10; // 定义短整型变量 num1，初始值为 10
+long int num2 = 100000; // 定义长整型变量 num2，初始值为 100000
+
+long long int num1 = 10000000000; // 定义长长整型变量 num1，初始值为 10000000000
+
+float num1 = 3.14f; // 定义单精度浮点数变量 num1，初始值为 3.14
+double num2 = 2.71828; // 定义双精度浮点数变量 num2，初始值为 2.71828
+
+bool flag = true; // 定义布尔类型变量 flag，初始值为 true
+
+char ch1 = 'a'; // 定义字符类型变量 ch1，初始值为 'a'
+wchar_t ch2 = L'你'; // 定义宽字符类型变量 ch2，初始值为 '你'
+```
+
+为了理解 C++ 解释有符号整数和无符号整数修饰符之间的差别，我们来运行一下下面这个短程序：
+
+
+## 实例
+
+```java
+#include <iostream>
+using namespace std;
+
+/*
+ * 这个程序演示了有符号整数和无符号整数之间的差别
+*/
+int main()
+{
+   short int i;           // 有符号短整数
+   short unsigned int j;  // 无符号短整数
+
+   j = 50000;
+
+   i = j;
+   cout << i << " " << j;
+
+   return 0;
+}
+```
+
+当上面的程序运行时，会输出下列结果：
+
+```text
+-15536 50000
+```
+
+上述结果中，无符号短整数 50,000 的位模式被解释为有符号短整数 -15,536。
+
+
+## C++ 中的类型限定符
+
+类型限定符提供了变量的额外信息，用于在定义变量或函数时改变它们的默认行为的关键字。
+
+在 C++11 中被标记为弃用(deprecated) 在 C++17 中被正式移除。
+
+
+### const 实例
+
+```java
+const int NUM = 10; // 定义常量 NUM，其值不可修改
+const int* ptr = &NUM; // 定义指向常量的指针，指针所指的值不可修改
+int const* ptr2 = &NUM; // 和上面一行等价
+```
+
+
+### volatile 实例
+
+```java
+volatile int num = 20; // 定义变量 num，其值可能会在未知的时间被改变
+```
+
+
+### mutable 实例
+
+```java
+class Example {
+public:
+    int get_value() const {
+        return value_; // const 关键字表示该成员函数不会修改对象中的数据成员
+    }
+    void set_value(int value) const {
+        value_ = value; // mutable 关键字允许在 const 成员函数中修改成员变量
+    }
+private:
+    mutable int value_;
+};
+```
+
+
+### static 实例
+
+```java
+void example_function() {
+    static int count = 0; // static 关键字使变量 count 存储在程序生命周期内都存在
+    count++;
+}
+```
+
+
+### register 实例
+
+```java
+void example_function(register int num) {
+    // register 关键字建议编译器将变量 num 存储在寄存器中
+    // 以提高程序执行速度
+    // 但是实际上是否会存储在寄存器中由编译器决定
+}
+```
+
+C++11 后 register 的变化：
+
+- 在 C++11 中被标记为弃用(deprecated)
+- 在 C++17 中被正式移除
+- 保留为关键字（可能用于兼容或未来用途）
+
+
+## 复习重点
+
+- 能说明 `C++ 修饰符类型` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

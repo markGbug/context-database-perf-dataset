@@ -1,35 +1,158 @@
-# MySQL：MySQL 临时表 学习笔记
+# MySQL：MySQL 临时表
 
 - 来源：[MySQL 临时表](https://www.runoob.com/mysql/mysql-temporary-tables.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1532
 
-## 学习目标
+## 本章内容
 
-MySQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MySQL 临时表` 建立学习路径，先理解它在 MySQL 体系中的位置，再做可运行或可复述的验证。
+MySQL 临时表在我们需要保存一些临时数据时是非常有用的。
 
-## 阅读抓手
+临时表只在当前连接可见，当关闭连接时，MySQL 会自动删除表并释放所有空间。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+在 MySQL 中，临时表是一种在当前会话中存在的表，它在会话结束时会自动被销毁。
 
-## 笔记模板
+MySQL 临时表只在当前连接可见，如果你使用PHP脚本来创建 MySQL 临时表，那每当 PHP 脚本执行完成后，该临时表也会自动销毁。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如果你使用了其他 MySQL 客户端程序连接 MySQL 数据库服务器来创建临时表，那么只有在关闭客户端程序时才会销毁临时表，当然你也可以手动销毁。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `MySQL 临时表`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 创建临时表
+
+```text
+CREATE TEMPORARY TABLE temp_table_name (
+  column1 datatype,
+  column2 datatype,
+  ...
+);
+```
+
+或者简写为：
+
+```text
+CREATE TEMPORARY TABLE temp_table_name AS
+SELECT column1, column2, ...
+FROM source_table
+WHERE condition;
+```
+
+
+### 插入数据到临时表
+
+```text
+INSERT INTO temp_table_name (column1, column2, ...)
+VALUES (value1, value2, ...);
+```
+
+
+### 查询临时表
+
+```text
+SELECT * FROM temp_table_name;
+```
+
+
+### 修改临时表
+
+临时表的修改操作与普通表类似，可以使用 ALTER TABLE 命令。
+
+```text
+ALTER TABLE temp_table_name
+ADD COLUMN new_column datatype;
+```
+
+
+### 删除临时表
+
+临时表在会话结束时会自动被销毁，但你也可以使用 DROP TABLE 明确删除它。
+
+```text
+DROP TEMPORARY TABLE IF EXISTS temp_table_name;
+```
+
+
+### 实例
+
+
+## 实例
+
+临时表对于需要在某个会话中存储中间结果集或进行复杂查询时非常有用。
+
+临时表的作用范围仅限于创建它的会话。其他会话无法直接访问或引用该临时表。在多个会话之间共享数据时，可以考虑使用普通表而不是临时表。
+
+请注意，临时表在会话结束时会被自动删除，但也可以使用 DROP TEMPORARY TABLE 明确删除它，这样可以更早地释放资源。
+
+
+### 实例
+
+以下展示了使用 MySQL 临时表的简单实例，以下的 SQL 代码可以适用于PHP脚本的 mysql_query() 函数。
+
+```text
+mysql> CREATE TEMPORARY TABLE SalesSummary (
+    -> product_name VARCHAR(50) NOT NULL
+    -> , total_sales DECIMAL(12,2) NOT NULL DEFAULT 0.00
+    -> , avg_unit_price DECIMAL(7,2) NOT NULL DEFAULT 0.00
+    -> , total_units_sold INT UNSIGNED NOT NULL DEFAULT 0
+);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO SalesSummary
+    -> (product_name, total_sales, avg_unit_price, total_units_sold)
+    -> VALUES
+    -> ('cucumber', 100.25, 90, 2);
+
+mysql> SELECT * FROM SalesSummary;
++--------------+-------------+----------------+------------------+
+| product_name | total_sales | avg_unit_price | total_units_sold |
++--------------+-------------+----------------+------------------+
+| cucumber     |      100.25 |          90.00 |                2 |
++--------------+-------------+----------------+------------------+
+1 row in set (0.00 sec)
+```
+
+当你使用 SHOW TABLES命令显示数据表列表时，你将无法看到 SalesSummary表。
+
+如果你退出当前MySQL会话，再使用 SELECT命令来读取原先创建的临时表数据，那你会发现数据库中没有该表的存在，因为在你退出时该临时表已经被销毁了。
+
+
+## 删除MySQL 临时表
+
+默认情况下，当你断开与数据库的连接后，临时表就会自动被销毁。当然你也可以在当前MySQL会话使用 DROP TABLE 命令来手动删除临时表。
+
+以下是手动删除临时表的实例：
+
+```text
+mysql> CREATE TEMPORARY TABLE SalesSummary (
+    -> product_name VARCHAR(50) NOT NULL
+    -> , total_sales DECIMAL(12,2) NOT NULL DEFAULT 0.00
+    -> , avg_unit_price DECIMAL(7,2) NOT NULL DEFAULT 0.00
+    -> , total_units_sold INT UNSIGNED NOT NULL DEFAULT 0
+);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO SalesSummary
+    -> (product_name, total_sales, avg_unit_price, total_units_sold)
+    -> VALUES
+    -> ('cucumber', 100.25, 90, 2);
+
+mysql> SELECT * FROM SalesSummary;
++--------------+-------------+----------------+------------------+
+| product_name | total_sales | avg_unit_price | total_units_sold |
++--------------+-------------+----------------+------------------+
+| cucumber     |      100.25 |          90.00 |                2 |
++--------------+-------------+----------------+------------------+
+1 row in set (0.00 sec)
+mysql> DROP TABLE SalesSummary;
+mysql>  SELECT * FROM SalesSummary;
+ERROR 1146: Table 'RUNOOB.SalesSummary' doesn't exist
+```
+
+
+## 复习重点
+
+- 能说明 `MySQL 临时表` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

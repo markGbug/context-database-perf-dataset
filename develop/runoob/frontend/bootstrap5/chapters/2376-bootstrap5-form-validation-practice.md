@@ -1,34 +1,104 @@
-# Bootstrap5：Bootstrap5 表单验证 练习笔记
+# Bootstrap5：Bootstrap5 表单验证
 
 - 来源：[Bootstrap5 表单验证](https://www.runoob.com/bootstrap5/bootstrap5-form-validation.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2376
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap5 表单验证` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们可以使用不同的验证类来设置表单的验证功能。
 
-## 练习步骤
+.was-validated 或 .needs-validation 添加到 <form> 元素中，input 输入字段将具有绿色（有效）或红色（无效）边框效果，用于说明表单是否需要输入内容。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+.valid-feedback 或 .invalid-feedback 类用来告诉用户缺少什么信息，或者在提交表单之前需要完成什么。
 
-## 验收清单
 
-- 我能独立说出 `Bootstrap5 表单验证` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
+使用 .was-validated 类显示表单在提交之前需要填写的内容：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<form action="" class="was-validated">
+  <div class="form-group">
+    <label for="uname">Username:</label>
+    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+    <div class="valid-feedback">验证成功！</div>
+    <div class="invalid-feedback">请输入用户名！</div>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+    <div class="valid-feedback">验证成功！</div>
+    <div class="invalid-feedback">请输入密码！</div>
+  </div>
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" name="remember" required> 同意协议
+      <div class="valid-feedback">验证成功！</div>
+      <div class="invalid-feedback">同意协议才能提交。</div>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">提交</button>
+</form>
+```
+
+
+## 实例
+
+使用 .needs-validation，它将在表单提交之后验证缺少的内容。这里需要添加一些 JavaScript 代码才能使代码正常工作：
+
+```html
+<form action="" class="needs-validation" novalidate>
+  <div class="form-group">
+    <label for="uname">Username:</label>
+    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+    <div class="valid-feedback">验证成功！</div>
+    <div class="invalid-feedback">请输入用户名！</div>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+    <div class="valid-feedback">验证成功！</div>
+    <div class="invalid-feedback">请输入密码！</div>
+  </div>
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" name="remember" required> 同意协议
+      <div class="valid-feedback">验证成功！</div>
+      <div class="invalid-feedback">同意协议才能提交。</div>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">提交</button>
+</form>
+
+<script>
+// 如果验证不通过禁止提交表单
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // 获取表单验证样式
+    var forms = document.getElementsByClassName('needs-validation');
+    // 循环并禁止提交
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap5 表单验证` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

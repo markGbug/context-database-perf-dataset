@@ -1,4 +1,4 @@
-# ASP：ASP BrowserCap 概念卡
+# ASP：ASP Browser Capabilities 组件
 
 - 来源：[ASP BrowserCap](https://www.runoob.com/asp/asp-browser.html)
 - 分类：后端开发
@@ -6,24 +6,60 @@
 - 笔记类型：概念卡
 - 章节序号：0740
 
-## 一句话定义
+## 本章内容
 
-`ASP BrowserCap` 是 ASP 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+## ASP Browser Capabilities 组件
 
-## 三层理解
+ASP Browser Capabilities 组件会创建一个 BrowserType 对象，这个对象可测定访客浏览器的类型、性能和版本号。
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
+当浏览器连接到服务器时，就会向服务器发送一个 HTTP User Agent 报头。这个报头包含关于浏览器的信息。
 
-## 关联知识
+BrowserType 对象会把报头中的信息与服务器上名为 "Browscap.ini" 的文件中的信息作比较。
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
+如果报头中的浏览器类型和版本号与 "Browsercap.ini" 文件中信息匹配，那么我们就可以使用 BrowserType 对象列出这个匹配的浏览器的相关属性。如果上述情况不匹配，这个对象会把每个属性设置为 "UNKNOWN"。
 
-## 记忆锚点
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+### 语法
+
+
+## ASP Browser Capabilities 实例
+
+下面的实例会在 ASP 文件中创建一个 BrowserType 对象，并显示当前浏览器性能的一些信息：
+
+
+## 实例
+
+输出：
+
+
+## Browscap.ini 文件
+
+"Browscap.ini" 文件用于声明属性，并设置各浏览器的默认值。
+
+这部分内容不是关于如何维护 Browscap.ini 文件的教程，我们只提供一些关于 "Browsercap.ini" 的基础知识和概念，让您对该文件有个大概的了解。
+
+"Browscap.ini" 文件可包含下面的信息：
+
+- ActiveXControls - 支持 ActiveX® 控件？
+- Backgroundsounds - 支持背景声音？
+- Cdf - 支持针对网络广播的频道定义格式？
+- Tables - 支持表格？
+- Cookies - 支持 cookies？
+- Frames - 支持框架？
+- Javaapplets - 支持 Java applets？
+- Javascript - 支持 JScript？
+- Vbscript - 支持 VBScript？
+- Browser - 规定浏览器的名称
+- Beta - 浏览器是否为 beta 软件？
+- Platform - 规定浏览器运行的平台
+- Version - 规定浏览器的版本号
+
+"Browscap.ini" 文件可能如下所示：
+
+
+## 记忆卡片
+
+- 一句话定义：`ASP BrowserCap` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

@@ -1,35 +1,61 @@
-# Bootstrap5：Bootstrap5 提示框 学习笔记
+# Bootstrap5：Bootstrap5 提示框
 
 - 来源：[Bootstrap5 提示框](https://www.runoob.com/bootstrap5/bootstrap5-tooltip.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2363
 
-## 学习目标
+## 本章内容
 
-Bootstrap5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap5 提示框` 建立学习路径，先理解它在 Bootstrap5 体系中的位置，再做可运行或可复述的验证。
+提示框是一个小小的弹窗，在鼠标移动到元素上显示，鼠标移到元素外就消失。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 如何创建提示框
 
-## 笔记模板
+通过向元素添加 data-bs-toggle="tooltip" 来来创建提示框。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+title 属性的内容为提示框显示的内容：
 
-## 完成标准
+```html
+<button type="button" class="btn btn-primary" data-bs-toggle="tooltip" title="我是提示内容!">鼠标移动到我这</button>
+```
 
-- 能用 3 到 5 句话解释 `Bootstrap5 提示框`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+注意: 提示框要写在 JavaScript 的初始化代码里: 然后在指定的元素上调用 tooltip() 方法。
+
+以下实例可以在文档的任何地方使用提示框：
+
+
+## 实例
+
+```javascript
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+```
+
+
+## 指定提示框的位置
+
+默认情况下提示框显示在元素上方。
+
+可以使用 data-bs-placement 属性来设定提示框显示的方向: top, bottom, left 或 right:
+
+
+## 实例
+
+```html
+<a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="我是提示内容!">鼠标移动到我这</a>
+<a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="我是提示内容!">鼠标移动到我这</a>
+<a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="我是提示内容!">鼠标移动到我这</a>
+<a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="我是提示内容!">鼠标移动到我这</a>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap5 提示框` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

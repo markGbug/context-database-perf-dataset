@@ -1,34 +1,85 @@
-# PHP：PHP MySQL Order By 练习笔记
+# PHP：PHP MySQL Order By 关键词
 
 - 来源：[PHP MySQL Order By](https://www.runoob.com/php/php-mysql-order-by.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1091
 
-## 练习目标
+## 本章内容
 
-把 `PHP MySQL Order By` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+ORDER BY 关键词用于对记录集中的数据进行排序。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## ORDER BY 关键词
 
-## 验收清单
+ORDER BY 关键词用于对记录集中的数据进行排序。
 
-- 我能独立说出 `PHP MySQL Order By` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+ORDER BY 关键词默认对记录进行升序排序。
 
-## 复盘问题
+如果你想降序排序，请使用 DESC 关键字。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 语法
+
+```text
+SELECT column_name(s)
+FROM table_name
+ORDER BY column_name(s) ASC|DESC
+```
+
+如需学习更多关于 SQL 的知识，请访问我们的 SQL 教程。
+
+
+### 实例
+
+下面的实例选取 "Persons" 表中存储的所有数据，并根据 "Age" 列对结果进行排序：
+
+```java
+<?php
+$con=mysqli_connect("localhost","username","password","database");
+// 检测连接
+if (mysqli_connect_errno())
+{
+    echo "连接失败: " . mysqli_connect_error();
+}
+
+$result = mysqli_query($con,"SELECT * FROM Persons ORDER BY age");
+
+while($row = mysqli_fetch_array($result))
+{
+    echo $row['FirstName'];
+    echo " " . $row['LastName'];
+    echo " " . $row['Age'];
+    echo "<br>";
+}
+
+mysqli_close($con);
+?>
+```
+
+以上结果将输出：
+
+```text
+Glenn Quagmire 33
+Peter Griffin 35
+```
+
+
+## 根据两列进行排序
+
+可以根据多个列进行排序。当按照多个列进行排序时，只有第一列的值相同时才使用第二列：
+
+```text
+SELECT column_name(s)
+FROM table_name
+ORDER BY column1, column2
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PHP MySQL Order By` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

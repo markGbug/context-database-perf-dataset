@@ -1,34 +1,180 @@
-# Django：Django Nginx+uwsgi 练习笔记
+# Django：Django Nginx+uwsgi 安装配置
 
 - 来源：[Django Nginx+uwsgi](https://www.runoob.com/django/django-nginx-uwsgi.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3825
 
-## 练习目标
+## 本章内容
 
-把 `Django Nginx+uwsgi` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在前面的章节中我们使用 python manage.py runserver 来运行服务器。这只适用测试环境中使用。
 
-## 练习步骤
+正式发布的服务，我们需要一个可以稳定而持续的服务器，比如apache, Nginx, lighttpd等，本文将以 Nginx 为例。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+你也可以直接参考：Python uwsgi 安装配置
 
-## 验收清单
 
-- 我能独立说出 `Django Nginx+uwsgi` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 安装基础开发包
 
-## 复盘问题
+Centos 下安装步骤如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+yum groupinstall "Development tools"
+yum install zlib-devel bzip2-devel pcre-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel
+```
+
+CentOS 自带 Python 2.4.3，但我们可以再安装Python2.7.5：
+
+```text
+cd ~
+wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tar.bz2
+tar xvf Python-2.7.5.tar.bz2
+cd Python-2.7.5
+./configure --prefix=/usr/local
+make && make altinstall
+```
+
+
+### 安装Python包管理
+
+easy_install 包 https://pypi.python.org/pypi/distribute
+
+安装步骤:
+
+```text
+cd ~
+wget https://pypi.python.org/packages/source/d/distribute/distribute-0.6.49.tar.gz
+tar xf distribute-0.6.49.tar.gz
+cd distribute-0.6.49
+python2.7 setup.py install
+easy_install --version
+```
+
+pip 包: https://pypi.python.org/pypi/pip
+
+安装 pip 的好处是可以用 pip list、pip uninstall 管理 Python 包， easy_install 没有这个功能，只有 uninstall。
+
+
+## 安装 uwsgi
+
+uwsgi:https://pypi.python.org/pypi/uWSGI
+
+uwsgi 参数详解：http://uwsgi-docs.readthedocs.org/en/latest/Options.html
+
+```text
+pip install uwsgi
+uwsgi --version    # 查看 uwsgi 版本
+```
+
+测试 uwsgi 是否正常：
+
+新建 test.py 文件，内容如下：
+
+```text
+def application(env, start_response):
+    start_response('200 OK', [('Content-Type','text/html')])
+    return "Hello World"
+```
+
+然后在终端运行：
+
+```text
+uwsgi --http :8001 --wsgi-file test.py
+```
+
+在浏览器内输入：http://127.0.0.1:8001，查看是否有"Hello World"输出，若没有输出，请检查你的安装过程。
+
+
+## 安装 Django
+
+```text
+pip install django
+```
+
+测试 django 是否正常，运行：
+
+```text
+django-admin.py startproject demosite
+cd demosite
+python2.7 manage.py runserver 0.0.0.0:8002
+```
+
+在浏览器内输入：http://127.0.0.1:8002，检查django是否运行正常。
+
+
+## 安装 Nginx
+
+安装命令如下：
+
+```text
+cd ~
+wget http://nginx.org/download/nginx-1.5.6.tar.gz
+tar xf nginx-1.5.6.tar.gz
+cd nginx-1.5.6
+./configure --prefix=/usr/local/nginx-1.5.6 \
+--with-http_stub_status_module \
+--with-http_gzip_static_module
+make && make install
+```
+
+你可以阅读 Nginx 安装配置 了解更多内容。
+
+
+## uwsgi 配置
+
+uwsgi支持ini、xml等多种配置方式，本文以 ini 为例， 在/etc/目录下新建uwsgi9090.ini，添加如下配置：
+
+```text
+[uwsgi]
+socket = 127.0.0.1:9090
+master = true         //主进程
+vhost = true          //多站模式
+no-site = true        //多站模式时不设置入口模块和文件
+workers = 2           //子进程数
+reload-mercy = 10
+vacuum = true         //退出、重启时清理文件
+max-requests = 1000
+limit-as = 512
+buffer-size = 30000
+pidfile = /var/run/uwsgi9090.pid    //pid文件，用于下面的脚本启动、停止该进程
+daemonize = /website/uwsgi9090.log
+```
+
+
+## Nginx 配置
+
+找到nginx的安装目录（如：/usr/local/nginx/），打开conf/nginx.conf文件，修改server配置：
+
+```text
+server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            include  uwsgi_params;
+            uwsgi_pass  127.0.0.1:9090;              //必须和uwsgi中的设置一致
+            uwsgi_param UWSGI_SCRIPT demosite.wsgi;  //入口文件，即wsgi.py相对于项目根目录的位置，“.”相当于一层目录
+            uwsgi_param UWSGI_CHDIR /demosite;       //项目根目录
+            index  index.html index.htm;
+            client_max_body_size 35m;
+        }
+    }
+```
+
+你可以阅读 Nginx 安装配置 了解更多内容。
+
+设置完成后，在终端运行：
+
+```text
+uwsgi --ini /etc/uwsgi9090.ini &
+/usr/local/nginx/sbin/nginx
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Django Nginx+uwsgi` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

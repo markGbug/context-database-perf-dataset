@@ -1,4 +1,4 @@
-# Claude Code：Claude Agent SDK 概念卡
+# Claude Code：Claude Agent SDK 使用说明
 
 - 来源：[Claude Agent SDK](https://www.runoob.com/claude-code/claude-agent-sdk.html)
 - 分类：AI / 智能开发
@@ -6,24 +6,172 @@
 - 笔记类型：概念卡
 - 章节序号：0171
 
-## 一句话定义
+## 本章内容
 
-`Claude Agent SDK` 是 Claude Code 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+Claude Agent SDK 让你能够构建可以自主读取文件、运行命令、搜索网络、编辑代码等的 AI Agent。
 
-## 三层理解
+Claude Agent SDK 将驱动 Claude Code 的工具、Agent 循环和上下文管理能力开放为可编程的 Python 和 TypeScript 库。
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
+简单来说，这是一个把 Claude Code 作为库来使用的 SDK，你可以把它嵌入到自己的应用、CI 流水线或自动化脚本中，构建能自主完成复杂任务的 AI Agent。
 
-## 关联知识
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
+## 核心能力
 
-## 记忆锚点
+SDK 内置了读取文件、运行命令和编辑代码的工具，你的 Agent 无需自己实现工具执行逻辑，可以立即开始工作。主要能力包括：
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+
+## 前提条件
+
+- Node.js 18+（TypeScript）或 Python 3.10+
+- 一个 Anthropic 账号，并获取 API Key（在此注册）
+
+
+## 第一步：安装 SDK
+
+
+### TypeScript
+
+```text
+npm install @anthropic-ai/claude-agent-sdk
+```
+
+TypeScript SDK 会将适用于你当前平台的 Claude Code 二进制文件作为可选依赖一起打包，无需单独安装 Claude Code。
+
+
+### Python
+
+```text
+# 使用 pip
+pip install claude-agent-sdk
+
+# 或使用 uv（推荐）
+uv add claude-agent-sdk
+```
+
+注意：Claude Code CLI 会自动随包一起安装，无需单独安装！SDK 默认使用打包的 CLI。
+
+如果你希望使用系统级安装或指定版本，可以通过 ClaudeAgentOptions(cli_path="/path/to/claude") 指定路径。
+
+
+## 第二步：配置 API Key
+
+从 Claude Console 获取 API Key，然后在项目目录创建 .env 文件：
+
+```text
+ANTHROPIC_API_KEY=your-api-key-here
+```
+
+或直接设置为环境变量：
+
+```text
+export ANTHROPIC_API_KEY=your-api-key-here
+```
+
+
+### 支持第三方云平台
+
+SDK 也支持通过第三方 API 提供商进行认证：Amazon Bedrock（设置 CLAUDE_CODE_USE_BEDROCK=1 环境变量并配置 AWS 凭证）、Google Vertex AI（设置 CLAUDE_CODE_USE_VERTEX=1）以及 Microsoft Azure（设置 CLAUDE_CODE_USE_FOUNDRY=1）。
+
+⚠️ 重要：除非事先获得 Anthropic 批准，否则不允许第三方开发者在基于 Claude Agent SDK 构建的产品中提供 claude.ai 登录或速率限制。请使用文档中描述的 API Key 认证方式。
+
+
+## 第三步：运行你的第一个 Agent
+
+以下示例创建一个 Agent，列出当前目录中的文件：
+
+
+### Python
+
+
+## 实例
+
+
+### TypeScript
+
+
+## 实例
+
+
+## 实战：构建一个自动修复 Bug 的 Agent
+
+下面通过一个完整示例，演示 Agent SDK 的核心用法。
+
+
+### 准备一个有 Bug 的文件
+
+创建 utils.py，包含两处有意为之的 Bug：
+
+
+## 实例
+
+
+### 编写 Agent
+
+创建 agent.py：
+
+
+## 实例
+
+
+### 运行
+
+```text
+python agent.py
+```
+
+运行后查看 utils.py，你会看到 Agent 自主完成了以下操作：
+
+- 读取了 utils.py 文件
+- 分析了代码逻辑，识别出可能导致崩溃的边界情况
+- 编辑了文件，添加了完善的错误处理
+
+
+## 核心概念解析
+
+
+### 函数 —— Agent 循环的入口
+
+query 是创建 Agent 循环的主要入口点，返回一个异步迭代器，因此你使用 async for 来实时流式获取 Claude 工作时产生的消息。循环在 Claude 完成任务或遇到错误时结束。SDK 负责编排（工具执行、上下文管理、重试），你只需消费这个消息流。
+
+每次迭代会产生一条消息，可能是：
+
+- Claude 的推理过程
+- 一次工具调用
+- 工具调用结果
+- 最终结果
+
+
+### 工具（Tools）—— 控制 Agent 能做什么
+
+
+### 权限模式（Permission Modes）—— 控制人工监督程度
+
+
+## 自定义 Agent 行为
+
+
+### 添加 Web 搜索
+
+```text
+options = ClaudeAgentOptions(
+    allowed_tools=["Read", "Edit", "Glob", "WebSearch"],
+    permission_mode="acceptEdits"
+)
+```
+
+
+## 后续章节
+
+- 添加自定义系统提示
+- 允许执行终端命令
+- 加载项目配置（CLAUDE.md 等）
+- 错误处理
+- Agent SDK vs. 其他 Claude 工具
+- SDK 功能对照表
+
+## 记忆卡片
+
+- 一句话定义：`Claude Agent SDK` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

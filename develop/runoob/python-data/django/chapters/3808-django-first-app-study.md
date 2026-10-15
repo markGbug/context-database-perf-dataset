@@ -1,35 +1,184 @@
-# Django：Django 创建第一个项目 学习笔记
+# Django：Django 创建第一个项目
 
 - 来源：[Django 创建第一个项目](https://www.runoob.com/django/django-first-app.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3808
 
-## 学习目标
+## 本章内容
 
-Django 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Django 创建第一个项目` 建立学习路径，先理解它在 Django 体系中的位置，再做可运行或可复述的验证。
+本章我们将介绍 Django 管理工具及如何使用 Django 来创建项目，第一个项目我们以 HelloWorld 来命令项目。
 
-## 阅读抓手
+测试版本说明：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- Python 3.9.7
+- Django 4.2.7
 
-## 笔记模板
+通过以下命令可以查看版本号：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+# python3 -V
+Python 3.9.7
+# python3 -m django --version
+4.2.7
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Django 创建第一个项目`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## Django 管理工具
+
+安装 Django 之后，您现在应该已经有了可用的管理工具 django-admin，Windows 如果没有配置环境变量可以用 django-admin。
+
+我们可以来看下django-admin 的命令介绍:
+
+```html
+$ django-admin
+
+Type 'django-admin help <subcommand>' for help on a specific subcommand.
+
+Available subcommands:
+
+[django]
+    check
+    compilemessages
+    createcachetable
+    dbshell
+    diffsettings
+    dumpdata
+    flush
+    inspectdb
+    loaddata
+    makemessages
+    makemigrations
+    migrate
+    runserver
+    sendtestemail
+    shell
+    showmigrations
+    sqlflush
+    sqlmigrate
+    sqlsequencereset
+    squashmigrations
+    startapp
+    startproject
+    test
+    testserver
+……省略部分……
+```
+
+
+## 创建第一个项目
+
+使用 django-admin 来创建 HelloWorld 项目：
+
+```text
+django-admin startproject HelloWorld
+```
+
+创建完成后我们可以查看下项目的目录结构：
+
+```text
+$ cd HelloWorld/
+$ tree
+HelloWorld/                  # 项目根目录
+├── manage.py                # 项目管理脚本
+├── db.sqlite3               # SQLite 数据库文件
+├── __pycache__/             # Python 字节码缓存
+└── HelloWorld/              # 项目配置目录（与项目同名）
+    ├── __init__.py          # 包标识文件
+    ├── settings.py          # 项目设置
+    ├── urls.py             # 主路由配置
+    ├── asgi.py             # ASGI 配置
+    └── wsgi.py             # WSGI 配置
+```
+
+项目根目录 (HelloWorld/)：
+
+主项目配置目录 (HelloWorld/HelloWorld/) ：
+
+接下来我们进入 HelloWorld 目录输入以下命令，启动服务器：
+
+```text
+python3 manage.py runserver 0.0.0.0:8000
+```
+
+0.0.0.0 让其它电脑可连接到开发服务器，8000 为端口号。如果不说明，那么端口号默认为 8000。
+
+在浏览器输入你服务器的 ip（这里我们输入本机 IP 地址： 127.0.0.1:8000） 及端口号，如果正常启动，输出结果如下：
+
+
+### 关键文件详解
+
+1. settings.py（核心配置）
+
+
+## 实例
+
+2. urls.py（路由配置）
+
+
+## 实例
+
+3. manage.py（项目管理脚本）
+
+
+## 实例
+
+
+## 视图和 URL 配置
+
+在先前创建的 HelloWorld 目录下的 HelloWorld 目录新建一个 views.py 文件，并输入代码：
+
+
+## HelloWorld/HelloWorld/views.py 文件代码：
+
+```text
+from django.http import HttpResponse
+
+def hello(request):
+    return HttpResponse("Hello world ! ")
+```
+
+接着，绑定 URL 与视图函数。打开 urls.py 文件，删除原来代码，将以下代码复制粘贴到 urls.py 文件中：
+
+
+## HelloWorld/HelloWorld/urls.py 文件代码：
+
+```text
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path("", views.hello, name="hello"),
+]
+```
+
+整个目录结构如下：
+
+```text
+$ tree
+.
+|-- HelloWorld
+|   |-- __init__.py
+|   |-- __init__.pyc
+|   |-- settings.py
+|   |-- settings.pyc
+|   |-- urls.py              # url 配置
+|   |-- urls.pyc
+|   |-- views.py              # 添加的视图文件
+|   |-- views.pyc             # 编译后的视图文件
+|   |-- wsgi.py
+|   `-- wsgi.pyc
+`-- manage.py
+```
+
+完成后，启动 Django 开发服务器，并在浏览器访问打开浏览器并访问：
+
+
+## 复习重点
+
+- 能说明 `Django 创建第一个项目` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

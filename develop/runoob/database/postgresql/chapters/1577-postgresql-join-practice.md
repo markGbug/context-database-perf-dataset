@@ -1,34 +1,269 @@
-# PostgreSQL：PostgreSQL JOIN 练习笔记
+# PostgreSQL：PostgreSQL 连接(JOIN)
 
 - 来源：[PostgreSQL JOIN](https://www.runoob.com/postgresql/postgresql-join.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1577
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL JOIN` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PostgreSQL JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。
 
-## 练习步骤
+在 PostgreSQL 中，JOIN 有五种连接类型：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- CROSS JOIN ：交叉连接
+- INNER JOIN：内连接
+- LEFT OUTER JOIN：左外连接
+- RIGHT OUTER JOIN：右外连接
+- FULL OUTER JOIN：全外连接
 
-## 验收清单
+接下来让我们创建两张表 COMPANY 和 DEPARTMENT。
 
-- 我能独立说出 `PostgreSQL JOIN` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+我们往表里添加几条数据：
+
+```text
+INSERT INTO COMPANY VALUES (8, 'Paul', 24, 'Houston', 20000.00);
+INSERT INTO COMPANY VALUES (9, 'James', 44, 'Norway', 5000.00);
+INSERT INTO COMPANY VALUES (10, 'James', 45, 'Texas', 5000.00);
+```
+
+此时，COMPANY 表的记录如下：
+
+```text
+ id | name  | age | address      | salary
+ ----+-------+-----+--------------+--------
+   1 | Paul  |  32 | California   |  20000
+   2 | Allen |  25 | Texas        |  15000
+   3 | Teddy |  23 | Norway       |  20000
+   4 | Mark  |  25 | Rich-Mond    |  65000
+   5 | David |  27 | Texas        |  85000
+   6 | Kim   |  22 | South-Hall   |  45000
+   7 | James |  24 | Houston      |  10000
+   8 | Paul  |  24 | Houston      |  20000
+   9 | James |  44 | Norway       |   5000
+  10 | James |  45 | Texas        |   5000
+(10 rows)
+```
+
+创建一张 DEPARTMENT 表，添加三个字段：
+
+```text
+CREATE TABLE DEPARTMENT(
+   ID INT PRIMARY KEY      NOT NULL,
+   DEPT           CHAR(50) NOT NULL,
+   EMP_ID         INT      NOT NULL
+);
+```
+
+向 DEPARTMENT 表插入三条记录：
+
+```text
+INSERT INTO DEPARTMENT (ID, DEPT, EMP_ID) VALUES (1, 'IT Billing', 1 );
+
+INSERT INTO DEPARTMENT (ID, DEPT, EMP_ID) VALUES (2, 'Engineering', 2 );
+
+INSERT INTO DEPARTMENT (ID, DEPT, EMP_ID) VALUES (3, 'Finance', 7 );
+```
+
+此时，DEPARTMENT 表的记录如下：
+
+```text
+ id | dept        | emp_id
+----+-------------+--------
+  1 | IT Billing  |  1
+  2 | Engineering |  2
+  3 | Finance     |  7
+```
+
+
+## 交叉连接
+
+交叉连接（CROSS JOIN）把第一个表的每一行与第二个表的每一行进行匹配。如果两个输入表分别有 x 和 y 行，则结果表有 x*y 行。
+
+由于交叉连接（CROSS JOIN）有可能产生非常大的表，使用时必须谨慎，只在适当的时候使用它们。
+
+下面是 CROSS JOIN 的基础语法：
+
+```text
+SELECT ... FROM table1 CROSS JOIN table2 ...
+```
+
+基于上面的表，我们可以写一个交叉连接（CROSS JOIN），如下所示：
+
+```text
+runoobdb=# SELECT EMP_ID, NAME, DEPT FROM COMPANY CROSS JOIN DEPARTMENT;
+```
+
+得到结果如下：
+
+```text
+runoobdb=# SELECT EMP_ID, NAME, DEPT FROM COMPANY CROSS JOIN DEPARTMENT;
+ emp_id | name  |       dept
+--------+-------+--------------------
+      1 | Paul  | IT Billing
+      1 | Allen | IT Billing
+      1 | Teddy | IT Billing
+      1 | Mark  | IT Billing
+      1 | David | IT Billing
+      1 | Kim   | IT Billing
+      1 | James | IT Billing
+      1 | Paul  | IT Billing
+      1 | James | IT Billing
+      1 | James | IT Billing
+      2 | Paul  | Engineering
+      2 | Allen | Engineering
+      2 | Teddy | Engineering
+      2 | Mark  | Engineering
+      2 | David | Engineering
+      2 | Kim   | Engineering
+      2 | James | Engineering
+      2 | Paul  | Engineering
+      2 | James | Engineering
+      2 | James | Engineering
+      7 | Paul  | Finance
+```
+
+
+## 内连接
+
+内连接（INNER JOIN）根据连接谓词结合两个表（table1 和 table2）的列值来创建一个新的结果表。查询会把 table1 中的每一行与 table2 中的每一行进行比较，找到所有满足连接谓词的行的匹配对。
+
+当满足连接谓词时，A 和 B 行的每个匹配对的列值会合并成一个结果行。
+
+内连接（INNER JOIN）是最常见的连接类型，是默认的连接类型。
+
+INNER 关键字是可选的。
+
+下面是内连接（INNER JOIN）的语法：
+
+```text
+SELECT table1.column1, table2.column2...
+FROM table1
+INNER JOIN table2
+ON table1.common_filed = table2.common_field;
+```
+
+基于上面的表，我们可以写一个内连接，如下所示：
+
+```text
+runoobdb=# SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT ON COMPANY.ID = DEPARTMENT.EMP_ID;
+ emp_id | name  |        dept
+--------+-------+--------------
+      1 | Paul  | IT Billing
+      2 | Allen | Engineering
+      7 | James | Finance
+(3 rows)
+```
+
+
+## 左外连接
+
+外部连接是内部连接的扩展。SQL 标准定义了三种类型的外部连接: LEFT、RIGHT 和 FULL, PostgreSQL 支持所有这些。
+
+对于左外连接，首先执行一个内连接。然后，对于表 T1 中不满足表 T2 中连接条件的每一行，其中 T2 的列中有 null 值也会添加一个连接行。因此，连接的表在 T1 中每一行至少有一行。
+
+下面是左外连接（ LEFT OUTER JOIN ）的基础语法：
+
+```text
+SELECT ... FROM table1 LEFT OUTER JOIN table2 ON conditional_expression ...
+```
+
+基于上面两张表，我们可以写个左外连接，如下：
+
+```text
+runoobdb=# SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT ON COMPANY.ID = DEPARTMENT.EMP_ID;
+ emp_id | name  |      dept
+--------+-------+----------------
+      1 | Paul  | IT Billing
+      2 | Allen | Engineering
+      7 | James | Finance
+        | James |
+        | David |
+        | Paul  |
+        | Kim   |
+        | Mark  |
+        | Teddy |
+        | James |
+(10 rows)
+```
+
+
+## 右外连接
+
+首先，执行内部连接。然后，对于表T2中不满足表T1中连接条件的每一行，其中T1列中的值为空也会添加一个连接行。这与左联接相反;对于T2中的每一行，结果表总是有一行。
+
+下面是右外连接（ RIGHT OUT JOIN）的基本语法：
+
+```text
+SELECT ... FROM table1 RIGHT OUTER JOIN table2 ON conditional_expression ...
+```
+
+基于上面两张表，我们建立一个右外连接：
+
+```text
+runoobdb=# SELECT EMP_ID, NAME, DEPT FROM COMPANY RIGHT OUTER JOIN DEPARTMENT ON COMPANY.ID = DEPARTMENT.EMP_ID;
+ emp_id | name  |    dept
+--------+-------+-----------------
+      1 | Paul  | IT Billing
+      2 | Allen | Engineering
+      7 | James | Finance
+(3 rows)
+```
+
+
+## 外连接
+
+首先，执行内部连接。然后，对于表 T1 中不满足表 T2 中任何行连接条件的每一行，如果 T2 的列中有 null 值也会添加一个到结果中。此外，对于 T2 中不满足与 T1 中的任何行连接条件的每一行，将会添加 T1 列中包含 null 值的到结果中。
+
+下面是外连接的基本语法：
+
+```text
+SELECT ... FROM table1 FULL OUTER JOIN table2 ON conditional_expression ...
+```
+
+基于上面两张表，可以建立一个外连接：
+
+```text
+runoobdb=# SELECT EMP_ID, NAME, DEPT FROM COMPANY FULL OUTER JOIN DEPARTMENT ON COMPANY.ID = DEPARTMENT.EMP_ID;
+ emp_id | name  |      dept
+--------+-------+-----------------
+      1 | Paul  | IT Billing
+      2 | Allen | Engineering
+      7 | James | Finance
+        | James |
+        | David |
+        | Paul  |
+        | Kim   |
+        | Mark  |
+        | Teddy |
+        | James |
+(10 rows)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL JOIN` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

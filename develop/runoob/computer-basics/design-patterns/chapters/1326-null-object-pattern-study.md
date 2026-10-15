@@ -1,35 +1,224 @@
-# 设计模式：空对象模式 学习笔记
+# 设计模式：空对象模式
 
 - 来源：[空对象模式](https://www.runoob.com/design-pattern/null-object-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1326
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `空对象模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+在空对象模式（Null Object Pattern）中，一个空对象取代 NULL 对象实例的检查。Null 对象不是检查空值，而是反应一个不做任何动作的关系。这样的 Null 对象也可以在数据不可用的时候提供默认的行为。
 
-## 阅读抓手
+在空对象模式中，我们创建一个指定各种要执行的操作的抽象类和扩展该类的实体类，还创建一个未对该类做任何实现的空对象类，该空对象类将无缝地使用在需要检查空值的地方。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 概要
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 意图
 
-- 能用 3 到 5 句话解释 `空对象模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+使用一个空对象代替 null 值，这个空对象实现了相同的接口，但对请求不做任何操作或提供默认操作。
+
+
+### 主要解决的问题
+
+- 空对象模式解决的是在系统中使用null值可能导致的问题，如NullPointerException异常。
+- 它允许系统在没有合适对象时，使用一个"安全"的空对象继续运行，而不是失败。
+
+
+### 使用场景
+
+- 当系统中需要处理null对象，但又希望避免null检查或处理null值时。
+
+
+### 实现方式
+
+- 定义协议：定义一个协议或接口，规定需要实现的行为。
+- 创建具体对象：实现协议的具体对象，提供实际的行为。
+- 创建空对象：也实现相同的协议，但提供"空"的实现，即不执行任何有意义的操作。
+
+
+### 关键代码
+
+- 协议或接口：规定对象需要实现的方法。
+- 具体对象：实现了协议，包含实际的业务逻辑。
+- 空对象：实现了协议，但方法实现为空或默认行为。
+
+
+### 应用实例
+
+- 日志系统：在日志系统中，空对象可能代表一个不执行任何操作的日志器。
+- 默认用户：在一个系统中，如果当前没有用户，可以使用一个空用户对象代替null。
+
+
+### 优点
+
+- 避免空值检查：消除了代码中的null值检查。
+- 简化客户端代码：客户端可以无视对象是否为空，直接调用方法。
+- 扩展性：添加新的具体对象对客户端透明，无需修改现有代码。
+
+
+### 缺点
+
+- 可能隐藏错误：使用空对象可能隐藏了错误或异常情况，导致难以调试。
+- 增加设计复杂性：需要为每个可能返回null的接口实现一个空对象。
+
+
+### 使用建议
+
+- 在系统中需要处理null值，但又希望简化错误处理和避免null检查时，考虑使用空对象模式。
+
+
+### 注意事项
+
+- 空对象模式应该谨慎使用，确保它不会掩盖错误或隐藏系统的真实状态。
+- 空对象应该提供和具体对象相同的接口，使得客户端代码无需改变即可使用。
+
+
+### 结构
+
+空对象模式包含以下几个主要角色：
+
+- 抽象对象（Abstract Object）：定义了客户端所期望的接口。这个接口可以是一个抽象类或接口。
+- 具体对象（Concrete Object）：实现了抽象对象接口的具体类。这些类提供了真实的行为。
+- 空对象（Null Object）：实现了抽象对象接口的空对象类。这个类提供了默认的无效行为，以便在对象不可用或不可用时使用。它可以作为具体对象的替代者，在客户端代码中代替空值检查。
+
+
+## 实现
+
+我们将创建一个定义操作（在这里，是客户的名称）的 AbstractCustomer 抽象类，和扩展了 AbstractCustomer 类的实体类。工厂类 CustomerFactory 基于客户传递的名字来返回 RealCustomer 或 NullCustomer 对象。
+
+NullPatternDemo，我们的演示类使用 CustomerFactory 来演示空对象模式的用法。
+
+
+### 步骤 1
+
+创建一个抽象类。
+
+
+## AbstractCustomer.java
+
+```java
+public abstract class AbstractCustomer {
+   protected String name;
+   public abstract boolean isNil();
+   public abstract String getName();
+}
+```
+
+
+### 步骤 2
+
+创建扩展了上述类的实体类。
+
+
+## RealCustomer.java
+
+```java
+public class RealCustomer extends AbstractCustomer {
+
+   public RealCustomer(String name) {
+      this.name = name;
+   }
+
+   @Override
+   public String getName() {
+      return name;
+   }
+
+   @Override
+   public boolean isNil() {
+      return false;
+   }
+}
+```
+
+
+## NullCustomer.java
+
+```java
+public class NullCustomer extends AbstractCustomer {
+
+   @Override
+   public String getName() {
+      return "Not Available in Customer Database";
+   }
+
+   @Override
+   public boolean isNil() {
+      return true;
+   }
+}
+```
+
+
+### 步骤 3
+
+创建 CustomerFactory 类。
+
+
+## CustomerFactory.java
+
+```java
+public class CustomerFactory {
+
+   public static final String[] names = {"Rob", "Joe", "Julie"};
+
+   public static AbstractCustomer getCustomer(String name){
+      for (int i = 0; i < names.length; i++) {
+         if (names[i].equalsIgnoreCase(name)){
+            return new RealCustomer(name);
+         }
+      }
+      return new NullCustomer();
+   }
+}
+```
+
+
+### 步骤 4
+
+使用 CustomerFactory，基于客户传递的名字，来获取 RealCustomer 或 NullCustomer 对象。
+
+
+## NullPatternDemo.java
+
+```java
+public class NullPatternDemo {
+   public static void main(String[] args) {
+
+      AbstractCustomer customer1 = CustomerFactory.getCustomer("Rob");
+      AbstractCustomer customer2 = CustomerFactory.getCustomer("Bob");
+      AbstractCustomer customer3 = CustomerFactory.getCustomer("Julie");
+      AbstractCustomer customer4 = CustomerFactory.getCustomer("Laura");
+
+      System.out.println("Customers");
+      System.out.println(customer1.getName());
+      System.out.println(customer2.getName());
+      System.out.println(customer3.getName());
+      System.out.println(customer4.getName());
+   }
+}
+```
+
+
+### 步骤 5
+
+执行程序，输出结果：
+
+```text
+Customers
+Rob
+Not Available in Customer Database
+Julie
+Not Available in Customer Database
+```
+
+
+## 复习重点
+
+- 能说明 `空对象模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

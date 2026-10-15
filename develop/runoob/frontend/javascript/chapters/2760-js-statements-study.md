@@ -1,35 +1,138 @@
-# JavaScript：JavaScript 语句 学习笔记
+# JavaScript：JavaScript 语句
 
 - 来源：[JavaScript 语句](https://www.runoob.com/js/js-statements.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2760
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 语句` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+JavaScript 语句向浏览器发出的命令。语句的作用是告诉浏览器该做什么。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## JavaScript 语句
 
-## 笔记模板
+JavaScript 语句是发给浏览器的命令。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+这些命令的作用是告诉浏览器要做的事情。
 
-## 完成标准
+下面的 JavaScript 语句向 id="demo" 的 HTML 元素输出文本 "你好 Dolly" ：
 
-- 能用 3 到 5 句话解释 `JavaScript 语句`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+```text
+document.getElementById("demo").innerHTML = "你好 Dolly";
+```
+
+
+## 分号 ;
+
+分号用于分隔 JavaScript 语句。
+
+通常我们在每条可执行的语句结尾添加分号。
+
+使用分号的另一用处是在一行中编写多条语句。
+
+```text
+a = 5;
+b = 6;
+c = a + b;
+```
+
+以上实例也可以这么写:
+
+```text
+a = 5; b = 6; c = a + b;
+```
+
+
+## JavaScript 代码
+
+JavaScript 代码是 JavaScript 语句的序列。
+
+浏览器按照编写顺序依次执行每条语句。
+
+本例向网页输出一个标题和两个段落：
+
+
+## 实例
+
+```text
+document.getElementById("demo").innerHTML="你好 Dolly";
+document.getElementById("myDIV").innerHTML="你最近怎么样?";
+```
+
+
+## JavaScript 代码块
+
+JavaScript 可以分批地组合起来。
+
+代码块以左花括号开始，以右花括号结束。
+
+代码块的作用是一并地执行语句序列。
+
+本例向网页输出一个标题和两个段落：
+
+
+## 实例
+
+```javascript
+function myFunction()
+{
+    document.getElementById("demo").innerHTML="你好Dolly";
+    document.getElementById("myDIV").innerHTML="你最近怎么样?";
+}
+```
+
+您将在稍后的章节学到更多有关函数的知识。
+
+
+## JavaScript 语句标识符
+
+JavaScript 语句通常以一个 语句标识符 为开始，并执行该语句。
+
+语句标识符是保留关键字不能作为变量名使用。
+
+下表列出了 JavaScript 语句标识符 (关键字) ：
+
+
+## 空格
+
+JavaScript 会忽略多余的空格。您可以向脚本添加空格，来提高其可读性。下面的两行代码是等效的：
+
+```javascript
+var person="runoob";
+var person = "runoob";
+```
+
+
+## 对代码行进行折行
+
+您可以在文本字符串中使用反斜杠对代码行进行换行。下面的例子会正确地显示：
+
+
+## 实例
+
+```text
+document.write("你好 \
+世界!");
+```
+
+不过，您不能像这样执行：
+
+```text
+document.write \
+("你好世界!");
+```
+
+知识点：JavaScript 是脚本语言，浏览器会在读取代码时，逐行地执行脚本代码。而对于传统编程来说，会在执行前对所有代码进行编译。
+
+
+## 复习重点
+
+- 能说明 `JavaScript 语句` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

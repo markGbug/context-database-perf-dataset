@@ -1,34 +1,108 @@
-# Bootstrap5：Bootstrap5 容器 练习笔记
+# Bootstrap5：Bootstrap5 容器
 
 - 来源：[Bootstrap5 容器](https://www.runoob.com/bootstrap5/bootstrap5-container.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2341
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap5 容器` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在上一章节中我们了解到 Bootstrap 需要一个容器元素来包裹网站的内容。
 
-## 练习步骤
+我们可以使用以下两个容器类：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- .container 类是默认的容器，提供一个固定宽度的布局，宽度会随着屏幕大小的不同而调整。。
+- .container-fluid 类用于 100% 宽度，占据全部视口（viewport）的容器，使用这个容器类会始终充满整个屏幕的宽度，适用于全屏布局。。
 
-## 验收清单
 
-- 我能独立说出 `Bootstrap5 容器` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 固定宽度
 
-## 复盘问题
+.container 类用于创建固定宽度的响应式页面。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+注意：宽度 (max-width) 会根据屏幕宽度同比例放大或缩小。
+
+以下实例中，我们可以尝试调整浏览器窗口的大小来查看容器宽度在不同屏幕中等变化：
+
+
+## Bootstrap5 .container 实例
+
+```html
+<div class="container">
+  <h1>我的第一个 Bootstrap 页面</h1>
+  <p>这是一些文本。</p>
+</div>
+```
+
+注意：超级大屏幕 (≥1400px) 是 Bootstrap 5 新增加的， Bootstrap 4 最大的是特大屏幕 (≥1200px)。
+
+
+## 100% 宽度
+
+.container-fluid 类用于创建一个全屏幕尺寸的容器，容器始终跨越整个屏幕宽度（width 始终为 100%）：
+
+
+## Bootstrap5 .container-fluid 实例
+
+```html
+<div class="container-fluid">
+  <h1>我的第一个 Bootstrap 页面</h1>
+  <p>使用了 .container-fluid，100% 宽度，占据全部视口（viewport）的容器。</p>
+</div>
+```
+
+
+## 容器内边距
+
+默认情况下，容器都有填充左右内边距，顶部和底部没有填充内边距。 Bootstrap 提供了一些间距类用于填充边距。 比如 .pt-5 就是用于填充顶部内边距：
+
+
+## Bootstrap5 实例
+
+```html
+<div class="container pt-5"></div>
+```
+
+
+## 容器的边框和颜色
+
+Bootstrap 也提供了一些边框（border）和颜色（bg-dark、bg-primary等）类用于设置容器的样式：
+
+
+## Bootstrap5 实例
+
+```html
+<div class="container p-5 my-5 border"></div>
+
+<div class="container p-5 my-5 bg-dark text-white"></div>
+
+<div class="container p-5 my-5 bg-primary text-white"></div>
+```
+
+后面章节我们会详细说明这些样式。
+
+
+## 响应式容器
+
+你可以使用 .container-sm|md|lg|xl 类来创建响应式容器。
+
+容器的 max-width 属性值会根据屏幕的大小来改变。
+
+
+## Bootstrap5 实例
+
+```html
+<div class="container-sm">.container-sm</div>
+<div class="container-md">.container-md</div>
+<div class="container-lg">.container-lg</div>
+<div class="container-xl">.container-xl</div>
+<div class="container-xxl">.container-xxl</div>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap5 容器` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

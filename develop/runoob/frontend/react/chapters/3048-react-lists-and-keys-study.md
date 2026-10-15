@@ -1,35 +1,275 @@
-# React：React 列表 & Keys 学习笔记
+# React：React 列表 & Keys
 
 - 来源：[React 列表 & Keys](https://www.runoob.com/react/react-lists-and-keys.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3048
 
-## 学习目标
+## 本章内容
 
-React 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `React 列表 & Keys` 建立学习路径，先理解它在 React 体系中的位置，再做可运行或可复述的验证。
+我们可以使用 JavaScript 的 map() 方法来创建列表。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## React 实例
 
-## 笔记模板
+使用 map() 方法遍历数组生成了一个 1 到 5 的数字列表:
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((numbers) =>
+  <li>{numbers}</li>
+);
 
-## 完成标准
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <ul>{listItems}</ul>
+);
+```
 
-- 能用 3 到 5 句话解释 `React 列表 & Keys`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+我们可以将以上实例重构成一个组件，组件接收数组参数，每个列表元素分配一个 key，不然会出现警告 a key should be provided for list items，意思就是需要包含 key：
+
+
+## React 实例
+
+```html
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    <li key={number.toString()}>
+      {number}
+    </li>
+  );
+  return (
+    <ul>{listItems}</ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <NumberList numbers={numbers} />
+);
+```
+
+
+## Keys
+
+Keys 可以在 DOM 中的某些元素被增加或删除的时候帮助 React 识别哪些元素发生了变化。因此你应当给数组中的每一个元素赋予一个确定的标识。
+
+```html
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li key={number.toString()}>
+    {number}
+  </li>
+);
+```
+
+一个元素的 key 最好是这个元素在列表中拥有的一个独一无二的字符串。通常，我们使用来自数据的 id 作为元素的 key:
+
+```html
+const todoItems = todos.map((todo) =>
+  <li key={todo.id}>
+    {todo.text}
+  </li>
+);
+```
+
+当元素没有确定的 id 时，你可以使用他的序列号索引 index 作为 key：
+
+```html
+const todoItems = todos.map((todo, index) =>
+  // 只有在没有确定的 id 时使用
+  <li key={index}>
+    {todo.text}
+  </li>
+);
+```
+
+如果列表可以重新排序，我们不建议使用索引来进行排序，因为这会导致渲染变得很慢。
+
+
+## 用keys提取组件
+
+元素的 key 只有在它和它的兄弟节点对比时才有意义。
+
+比方说，如果你提取出一个 ListItem 组件，你应该把 key 保存在数组中的这个 <ListItem /> 元素上，而不是放在 ListItem 组件中的 <li> 元素上。
+
+
+### 错误的示范
+
+```html
+function ListItem(props) {
+  const value = props.value;
+  return (
+    // 错啦！你不需要在这里指定key:
+    <li key={value.toString()}>
+      {value}
+    </li>
+  );
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    //错啦！元素的key应该在这里指定：
+    <ListItem value={number} />
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <NumberList numbers={numbers} />
+);
+```
+
+
+### key的正确使用方式
+
+
+## React 实例
+
+```html
+function ListItem(props) {
+  // 对啦！这里不需要指定key:
+  return <li>{props.value}</li>;
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    // 又对啦！key应该在数组的上下文中被指定
+    <ListItem key={number.toString()}
+              value={number} />
+
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <NumberList numbers={numbers} />
+);
+```
+
+当你在 map() 方法的内部调用元素时，你最好随时记得为每一个元素加上一个独一无二的 key。
+
+
+## 元素的 key 在他的兄弟元素之间应该唯一
+
+数组元素中使用的 key 在其兄弟之间应该是独一无二的。然而，它们不需要是全局唯一的。当我们生成两个不同的数组时，我们可以使用相同的键。
+
+
+## React 实例
+
+```html
+function Blog(props) {
+  const sidebar = (
+    <ul>
+      {props.posts.map((post) =>
+        <li key={post.id}>
+          {post.title}
+        </li>
+      )}
+    </ul>
+  );
+  const content = props.posts.map((post) =>
+    <div key={post.id}>
+      <h3>{post.title}</h3>
+      <p>{post.content}</p>
+    </div>
+  );
+  return (
+    <div>
+      {sidebar}
+      <hr />
+      {content}
+    </div>
+  );
+}
+
+const posts = [
+  {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+  {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+];
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Blog posts={posts} />
+);
+```
+
+key 会作为给 React 的提示，但不会传递给你的组件。如果您的组件中需要使用和 key 相同的值，请将其作为属性传递：
+
+```html
+const content = posts.map((post) =>
+  <Post
+    key={post.id}
+    id={post.id}
+    title={post.title} />
+);
+```
+
+上面例子中，Post 组件可以读出 props.id，但是不能读出 props.key。
+
+
+## 在 jsx 中嵌入 map()
+
+在上面的例子中，我们声明了一个单独的 listItems 变量并将其包含在 JSX 中:
+
+```html
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    <ListItem key={number.toString()}
+              value={number} />
+
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+```
+
+JSX 允许在大括号中嵌入任何表达式，所以我们可以在 map() 中这样使用：
+
+
+## React 实例
+
+```html
+function NumberList(props) {
+  const numbers = props.numbers;
+  return (
+    <ul>
+      {numbers.map((number) =>
+        <ListItem key={number.toString()}
+                  value={number} />
+
+      )}
+    </ul>
+  );
+}
+```
+
+这么做有时可以使你的代码更清晰，但有时这种风格也会被滥用。就像在 JavaScript 中一样，何时需要为了可读性提取出一个变量，这完全取决于你。但请记住，如果一个 map() 嵌套了太多层级，那你就可以提取出组件。
+
+
+## 复习重点
+
+- 能说明 `React 列表 & Keys` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

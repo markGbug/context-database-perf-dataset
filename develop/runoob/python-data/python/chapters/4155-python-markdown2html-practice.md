@@ -1,34 +1,112 @@
-# Python：Python Markdown 练习笔记
+# Python：Python Markdown 生成 HTML
 
 - 来源：[Python Markdown](https://www.runoob.com/python3/python-markdown2html.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4155
 
-## 练习目标
+## 本章内容
 
-把 `Python Markdown` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Markdown 是一种轻量级的标记语言，它允许你使用易读易写的纯文本格式来编写文档，然后将其转换为结构化的 HTML 文档。
 
-## 练习步骤
+Markdown 的语法简单直观，常用于编写博客、文档、README 文件等。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Python 可以使用 markdown 模块将 Markdown 文本转换为 HTML。
 
-## 验收清单
 
-- 我能独立说出 `Python Markdown` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 将 Markdown 转换为 HTML 的步骤
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 1. 安装 markdown 库
+
+首先，我们需要安装 Python 的 markdown 库，可以使用 pip 来安装它：
+
+```text
+pip install markdown
+```
+
+
+### 2. 编写 Python 脚本
+
+以下是一个简单的实例，将 Markdown 文本转换为 HTML：
+
+
+## 实例
+
+输出结果为：
+
+```html
+<h1>这是标题</h1>
+<p>这是 <strong>加粗</strong> 的文本。
+这是 <em>斜体</em> 的文本。</p>
+<ul>
+<li>列表项 1</li>
+<li>列表项 2</li>
+</ul>
+<p><a href="https://www.runoob.com">点击这里</a> 访问网站。</p>
+```
+
+接下来，我们可以编写一个简单的 Python 脚本来将 Markdown 文件（可以把上面实例的 markdown 文本放到文件中）转换为 HTML 文件：
+
+
+## convert_markdown_to_html.py 文件代码：
+
+
+### 3. 运行脚本
+
+将上述代码保存为 convert_markdown_to_html.py，然后在终端中运行它：
+
+```text
+python convert_markdown_to_html.py
+```
+
+运行后，example.md 文件将被转换为 example.html 文件。
+
+代码说明：
+
+import markdown：这行代码导入了 markdown 库，它提供了将 Markdown 文本转换为 HTML 的功能。
+
+```text
+with open('example.md', 'r', encoding='utf-8') as file:
+    markdown_text = file.read()
+```
+
+这段代码使用 open 函数打开 example.md 文件，并读取其内容到 markdown_text 变量中。
+
+html = markdown.markdown(markdown_text) ：这行代码使用 markdown.markdown() 函数将 Markdown 文本转换为 HTML 文本。
+
+```text
+with open('example.html', 'w', encoding='utf-8') as file:
+    file.write(html)
+```
+
+这段代码将转换后的 HTML 文本写入 example.html 文件中。
+
+
+## 扩展功能
+
+markdown 库支持多种扩展，例如表格、代码高亮等。你可以通过以下方式启用扩展：
+
+```text
+html = markdown.markdown(markdown_text, extensions=['tables', 'fenced_code'])
+```
+
+你可以根据需要自定义 HTML 输出的样式和结构。
+
+通过 Python 将 Markdown 转换为 HTML 是一个简单而强大的工具，可以帮助你自动化文档生成过程。无论是编写博客、文档还是项目说明，这种方法都能大大提高你的工作效率。希望这篇文章能帮助你快速上手 Python 中的 Markdown 转换功能！
+
+
+## 参考资源
+
+- Python Markdown 库官方文档
+- Markdown 教程
+- Markdown 语法指南
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python Markdown` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

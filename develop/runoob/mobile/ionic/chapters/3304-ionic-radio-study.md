@@ -1,35 +1,92 @@
-# Ionic：ionic 单选框 学习笔记
+# Ionic：ionic 单选框
 
 - 来源：[ionic 单选框](https://www.runoob.com/ionic/ionic-radio.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3304
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic 单选框` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+ionic 单选按钮与标准 type="radio" 的 input元素类似。以下展示了现代app类型的单选按钮。
 
-## 阅读抓手
+每个 item-radio 中的 type="radio" 的 input 元素的 name 属性都相同。radio-icon 类用于是否显示图标。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+ionic 在单选项中使用了 <label> 元素，使其更易点击。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 实例
 
-## 完成标准
+```html
+<div class="list">
+<label class="item item-radio">
+  <input type="radio" name="group" value="go" checked="checked">
+   <div class="radio-content">
+   <div class="item-content">
+    Go
+   </div>
+   <i class="radio-icon ion-checkmark"></i>
+  </div>
+</label>
 
-- 能用 3 到 5 句话解释 `ionic 单选框`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+<label class="item item-radio">
+  <input type="radio" name="group" value="python">
+  <div class="radio-content">
+   <div class="item-content">
+    Python
+   </div>
+   <i class="radio-icon ion-checkmark"></i>
+  </div>
+</label>
+
+<label class="item item-radio">
+  <input type="radio" name="group" value="ruby">
+  <div class="radio-content">
+   <div class="item-content">
+    Ruby
+   </div>
+   <i class="radio-icon ion-checkmark"></i>
+  </div>
+</label>
+
+<label class="item item-radio">
+  <input type="radio" name="group" value=".net">
+  <div class="radio-content">
+   <div class="item-content">
+    .Net
+   </div>
+   <i class="radio-icon ion-checkmark"></i>
+  </div>
+</label>
+
+<label class="item item-radio">
+  <input type="radio" name="group" value="java">
+  <div class="radio-content">
+   <div class="item-content">
+    Java
+   </div>
+   <i class="radio-icon ion-checkmark"></i>
+  </div>
+</label>
+
+<label class="item item-radio">
+  <input type="radio" name="group" value="php">
+  <div class="radio-content">
+   <div class="item-content">
+    PHP
+   </div>
+   <i class="radio-icon ion-checkmark"></i>
+  </div>
+</label>
+</div>
+```
+
+运行效果如下：
+
+
+## 复习重点
+
+- 能说明 `ionic 单选框` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

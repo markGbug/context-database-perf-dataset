@@ -1,34 +1,122 @@
-# XML DOM：DOM 节点信息 练习笔记
+# XML DOM：XML DOM 节点信息
 
 - 来源：[DOM 节点信息](https://www.runoob.com/dom/dom-nodes-info.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4380
 
-## 练习目标
+## 本章内容
 
-把 `DOM 节点信息` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+nodeName、nodeValue 和 nodeType 属性包含有关节点的信息。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 尝试一下 - 实例
 
-## 验收清单
+下面的实例使用 XML 文件 books.xml。 函数 loadXMLDoc()，位于外部 JavaScript 中，用于加载 XML 文件。
 
-- 我能独立说出 `DOM 节点信息` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+获取元素节点的节点名称 本例使用 nodeName 属性来获取 "books.xml" 中根元素的节点名称。
 
-## 复盘问题
+从文本节点获取文本 本例使用 nodeValue 属性来获取 "books.xml" 中第一个 <title> 元素的文本。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+更改文本节点中的文本 本例使用 nodeValue 属性来更改 "books.xml" 中第一个 <title> 元素的文本。
+
+获取元素节点的节点名称和类型 本例使用 nodeName 和 nodeType 属性来获取 "books.xml" 中根元素的节点名称和类型。
+
+
+## 节点的属性
+
+在 XML DOM 中，每个节点都是一个对象。
+
+对象拥有方法和属性，并可通过 JavaScript 进行访问和操作。
+
+三个重要的节点属性是：
+
+- nodeName
+- nodeValue
+- nodeType
+
+
+## nodeName 属性
+
+nodeName 属性规定节点的名称。
+
+- nodeName 是只读的
+- 元素节点的 nodeName 与标签名相同
+- 属性节点的 nodeName 是属性的名称
+- 文本节点的 nodeName 永远是 #text
+- 文档节点的 nodeName 永远是 #document
+
+尝试一下.
+
+
+## nodeValue 属性
+
+nodeValue 属性规定节点的值。
+
+- 元素节点的 nodeValue 是 undefined
+- 文本节点的 nodeValue 是文本本身
+- 属性节点的 nodeValue 是属性的值
+
+
+## 获取元素的值
+
+下面的代码检索第一个 <title> 元素的文本节点的值：
+
+
+## 实例
+
+```text
+xmlDoc=loadXMLDoc("books.xml");
+
+x=xmlDoc.getElementsByTagName("title")[0].childNodes[0];
+txt=x.nodeValue;
+```
+
+结果：txt = "Everyday Italian"
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 获取第一个 <title> 元素节点的文本节点
+- 把 txt 变量设置为文本节点的值
+
+
+## 更改元素的值
+
+下面的代码更改第一个 <title> 元素的文本节点的值：
+
+
+## 实例
+
+```text
+xmlDoc=loadXMLDoc("books.xml");
+
+x=xmlDoc.getElementsByTagName("title")[0].childNodes[0];
+x.nodeValue="Easy Cooking";
+```
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 获取第一个 <title> 元素节点的文本节点
+- 更改文本节点的值为 "Easy Cooking"
+
+
+## nodeType 属性
+
+nodeType 属性规定节点的类型。
+
+nodeType 是只读的。
+
+最重要的节点类型是：
+
+尝试一下。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `DOM 节点信息` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

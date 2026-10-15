@@ -1,35 +1,140 @@
-# HTML：HTML 布局 学习笔记
+# HTML：HTML 布局
 
 - 来源：[HTML 布局](https://www.runoob.com/html/html-layouts.html)
 - 分类：前端开发
 - 技术：HTML
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2617
 
-## 学习目标
+## 本章内容
 
-HTML 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `HTML 布局` 建立学习路径，先理解它在 HTML 体系中的位置，再做可运行或可复述的验证。
+网页布局对改善网站的外观非常重要。
 
-## 阅读抓手
+请慎重设计您的网页布局。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 在线实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+使用 <div> 元素的网页布局 如何使用 <div> 元素添加布局。
 
-## 完成标准
+使用 <table> 元素的网页布局 如何使用 <table> 元素添加布局。
 
-- 能用 3 到 5 句话解释 `HTML 布局`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 网站布局
+
+大多数网站会把内容安排到多个列中（就像杂志或报纸那样）。
+
+大多数网站可以使用 <div> 或者 <table> 元素来创建多列。CSS 用于对元素进行定位，或者为页面创建背景以及色彩丰富的外观。
+
+
+## HTML 布局 - 使用<div> 元素
+
+div 元素是用于分组 HTML 元素的块级元素。
+
+下面的例子使用五个 div 元素来创建多列布局：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<div id="container" style="width:500px">
+
+<div id="header" style="background-color:#FFA500;">
+<h1 style="margin-bottom:0;">主要的网页标题</h1></div>
+
+<div id="menu" style="background-color:#FFD700;height:200px;width:100px;float:left;">
+<b>菜单</b><br>
+HTML<br>
+CSS<br>
+JavaScript</div>
+
+<div id="content" style="background-color:#EEEEEE;height:200px;width:400px;float:left;">
+内容在这里</div>
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+版权 © runoob.com</div>
+
+</div>
+
+</body>
+</html>
+```
+
+上面的 HTML 代码会产生如下结果：
+
+
+## HTML 布局 - 使用表格
+
+使用 HTML <table> 标签是创建布局的一种简单的方式。
+
+大多数站点可以使用 <div> 或者 <table> 元素来创建多列。CSS 用于对元素进行定位，或者为页面创建背景以及色彩丰富的外观。
+
+下面的例子使用三行两列的表格 - 第一和最后一行使用 colspan 属性来横跨两列：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<table width="500" border="0">
+<tr>
+<td colspan="2" style="background-color:#FFA500;">
+<h1>主要的网页标题</h1>
+</td>
+</tr>
+
+<tr>
+<td style="background-color:#FFD700;width:100px;">
+<b>菜单</b><br>
+HTML<br>
+CSS<br>
+JavaScript
+</td>
+<td style="background-color:#eeeeee;height:200px;width:400px;">
+内容在这里</td>
+</tr>
+
+<tr>
+<td colspan="2" style="background-color:#FFA500;text-align:center;">
+版权 © runoob.com</td>
+</tr>
+</table>
+
+</body>
+</html>
+```
+
+上面的 HTML 代码会产生以下结果：
+
+
+## HTML 布局 - 有用的提示
+
+Tip: 使用 CSS 最大的好处是，如果把 CSS 代码存放到外部样式表中，那么站点会更易于维护。通过编辑单一的文件，就可以改变所有页面的布局。如需学习更多有关 CSS 的知识，请访问我们的CSS 教程。
+
+Tip: 由于创建高级的布局非常耗时，使用模板是一个快速的选项。通过搜索引擎可以找到很多免费的网站模板（您可以使用这些预先构建好的网站布局，并优化它们）。
+
+
+## HTML 布局标签
+
+
+## 复习重点
+
+- 能说明 `HTML 布局` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

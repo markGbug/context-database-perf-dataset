@@ -1,34 +1,161 @@
-# PostgreSQL：PostgreSQL UNION 练习笔记
+# PostgreSQL：PostgreSQL UNION 操作符
 
 - 来源：[PostgreSQL UNION](https://www.runoob.com/postgresql/postgresql-union.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1578
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL UNION` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PostgreSQL UNION 操作符合并两个或多个 SELECT 语句的结果。
 
-## 练习步骤
+UNION 操作符用于合并两个或多个 SELECT 语句的结果集。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+请注意，UNION 内部的每个 SELECT 语句必须拥有相同数量的列。列也必须拥有相似的数据类型。同时，每个 SELECT 语句中的列的顺序必须相同。
 
-## 验收清单
 
-- 我能独立说出 `PostgreSQL UNION` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法
 
-## 复盘问题
+UNIONS 基础语法如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+
+UNION
+
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+```
+
+这里的条件语句可以根据您的需要设置任何表达式。
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+创建 DEPARTMENT 表（下载 DEPARTMENT SQL 文件 ），数据内容如下：
+
+```text
+runoobdb=# SELECT * from DEPARTMENT;
+ id | dept        | emp_id
+----+-------------+--------
+  1 | IT Billing  |      1
+  2 | Engineering |      2
+  3 | Finance     |      7
+  4 | Engineering |      3
+  5 | Finance     |      4
+  6 | Engineering |      5
+  7 | Finance     |      6
+(7 rows)
+```
+
+现在，我们在 SELECT 语句中使用 UNION 子句将两张表连接起来，如下所示：
+
+```text
+SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
+   ON COMPANY.ID = DEPARTMENT.EMP_ID
+   UNION
+SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT
+    ON COMPANY.ID = DEPARTMENT.EMP_ID;
+```
+
+得到结果如下：
+
+```text
+ emp_id | name  |  dept
+--------+-------+--------------
+      5 | David | Engineering
+      6 | Kim   | Finance
+      2 | Allen | Engineering
+      3 | Teddy | Engineering
+      4 | Mark  | Finance
+      1 | Paul  | IT Billing
+      7 | James | Finance
+(7 rows)
+```
+
+
+## UNION ALL 子句
+
+UNION ALL 操作符可以连接两个有重复行的 SELECT 语句，默认地，UNION 操作符选取不同的值。如果允许重复的值，请使用 UNION ALL。
+
+
+### 语法
+
+UINON ALL 子句基础语法如下：
+
+```text
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+
+UNION ALL
+
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+```
+
+这里的条件语句可以根据您的需要设置任何表达式。
+
+
+### 实例
+
+现在，让我们把上面提到的两张表用 SELECT 语句结合 UNION ALL 子句连接起来：
+
+```text
+SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
+   ON COMPANY.ID = DEPARTMENT.EMP_ID
+   UNION ALL
+SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT
+    ON COMPANY.ID = DEPARTMENT.EMP_ID;
+```
+
+得到结果如下：
+
+```text
+ emp_id | name  | dept
+--------+-------+--------------
+      1 | Paul  | IT Billing
+      2 | Allen | Engineering
+      7 | James | Finance
+      3 | Teddy | Engineering
+      4 | Mark  | Finance
+      5 | David | Engineering
+      6 | Kim   | Finance
+      1 | Paul  | IT Billing
+      2 | Allen | Engineering
+      7 | James | Finance
+      3 | Teddy | Engineering
+      4 | Mark  | Finance
+      5 | David | Engineering
+      6 | Kim   | Finance
+(14 rows)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL UNION` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

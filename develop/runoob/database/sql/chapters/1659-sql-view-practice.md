@@ -1,34 +1,142 @@
-# SQL：SQL 视图 练习笔记
+# SQL：SQL 视图（Views）
 
 - 来源：[SQL 视图](https://www.runoob.com/sql/sql-view.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1659
 
-## 练习目标
+## 本章内容
 
-把 `SQL 视图` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+视图是可视化的表。
 
-## 练习步骤
+本章讲解如何创建、更新和删除视图。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## SQL CREATE VIEW 语句
 
-- 我能独立说出 `SQL 视图` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+在 SQL 中，视图是基于 SQL 语句的结果集的可视化的表。
 
-## 复盘问题
+视图包含行和列，就像一个真实的表。视图中的字段就是来自一个或多个数据库中的真实的表中的字段。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+您可以向视图添加 SQL 函数、WHERE 以及 JOIN 语句，也可以呈现数据，就像这些数据来自于某个单一的表一样。
+
+
+### SQL CREATE VIEW 语法
+
+```text
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+```
+
+参数说明：
+
+- CREATE VIEW: 声明你要创建一个视图。
+- view_name: 指定视图的名称。
+- AS: 指定关键字，表示视图的定义开始。
+- SELECT column1, column2, ...: 指定视图中包含的列，可以是表中的列或计算列。
+- FROM table_name: 指定视图从哪个表中获取数据。
+- WHERE condition: 可选部分，用于指定筛选条件，限制视图中的行。
+
+注释：视图总是显示最新的数据！每当用户查询视图时，数据库引擎通过使用视图的 SQL 语句重建数据。
+
+
+## SQL CREATE VIEW 实例
+
+假设你有一个包含员工信息的表 employees，包括以下列：employee_id、first_name、last_name、salary 和 department_id，现在，我们将创建一个视图，显示工资高于某个阈值的员工信息。
+
+实例如下：
+
+```text
+-- 创建包含高工资员工信息的视图
+CREATE VIEW high_salary_employees AS
+SELECT employee_id, first_name, last_name, salary
+FROM employees
+WHERE salary > 50000;
+```
+
+在这个例子中，我们创建了一个名为 high_salary_employees 的视图，该视图包含了那些工资高于 50000 的员工的信息。
+
+现在，你可以像查询普通表一样使用这个视图：
+
+```text
+-- 查询高工资员工视图
+SELECT *
+FROM high_salary_employees;
+```
+
+这将返回所有工资高于 50000 的员工的详细信息，而不需要每次都编写相同的筛选条件。
+
+值得注意的是，视图本质上是一个虚拟的表，它并不存储数据，而是基于基础表的查询结果生成。因此，如果基础表的数据发生变化，视图的内容也会相应地更新。
+
+
+## SQL 更新视图
+
+在 SQL 中，你不能直接使用 UPDATE 语句来更新视图，因为视图是基于查询结果生成的虚拟表，而不是实际存储数据的表。
+
+更新视图的实质是通过更新视图所基于的表中的数据，然后视图会反映这些变化。
+
+```text
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+```
+
+其中，table_name 是基础表的名称，column1, column2, ... 是要更新的列，value1, value2, ... 是新的值，condition 是更新的条件。
+
+现在，我们希望向 "Current Product List" 视图添加 "Category" 列。我们将通过下列 SQL 更新视图：
+
+举例来说，如果你有一个名为 high_salary_employees 的视图，显示工资高于 50000 的员工信息，而这个视图基于 employees 表的查询结果，你可以通过以下步骤来更新数据：
+
+```text
+-- 步骤 1: 更新 employees 表中的数据
+UPDATE employees
+SET salary = 60000
+WHERE employee_id = 1001;
+
+-- 步骤 2: 查询更新后的高工资员工视图
+SELECT *
+FROM high_salary_employees;
+```
+
+这样，你更新了 employees 表中的数据，而视图 high_salary_employees 将反映出这些变化。
+
+
+## SQL 撤销视图
+
+在 SQL 中，撤销（或删除）视图是通过使用 DROP VIEW 语句来实现的。
+
+DROP VIEW 语句用于从数据库中删除一个已存在的视图。语法如下：
+
+```text
+DROP VIEW [IF EXISTS] view_name;
+```
+
+参数说明：
+
+- DROP VIEW: 表示你要删除一个视图。
+- IF EXISTS: 可选部分，用于检查视图是否存在。如果存在，则执行删除操作；如果不存在，不会发生错误。在某些数据库系统中，这是可选的。
+- view_name: 指定要删除的视图的名称。
+
+在执行以下语句后，视图 high_salary_employees 将被从数据库中删除。
+
+```text
+-- 删除名为 high_salary_employees 的视图
+DROP VIEW IF EXISTS high_salary_employees;
+```
+
+请注意，这并不影响基础表中的数据，只是删除了视图的定义。
+
+如果你需要撤销或删除某个表中的数据，应该使用 DROP TABLE 语句。
+
+在使用 DROP VIEW 语句时，请确保你真的想要删除该视图，因为一旦删除，将无法恢复视图的定义。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQL 视图` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

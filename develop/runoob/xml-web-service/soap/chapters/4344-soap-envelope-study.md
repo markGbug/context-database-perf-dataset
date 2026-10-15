@@ -1,35 +1,73 @@
-# SOAP：SOAP Envelope 元素 学习笔记
+# SOAP：SOAP Envelope 元素
 
 - 来源：[SOAP Envelope 元素](https://www.runoob.com/soap/soap-envelope.html)
 - 分类：XML / Web Service
 - 技术：SOAP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4344
 
-## 学习目标
+## 本章内容
 
-SOAP 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `SOAP Envelope 元素` 建立学习路径，先理解它在 SOAP 体系中的位置，再做可运行或可复述的验证。
+强制使用的 SOAP 的 Envelope 元素是 SOAP 消息的根元素。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## SOAP Envelope 元素
 
-## 笔记模板
+必需的 SOAP 的 Envelope 元素是 SOAP 消息的根元素。它可把 XML 文档定义为 SOAP 消息。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 实例
 
-- 能用 3 到 5 句话解释 `SOAP Envelope 元素`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<?xml version="1.0"?>
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+  ...
+  Message information goes here
+  ...
+</soap:Envelope>
+```
+
+
+## xmlns:soap 命名空间
+
+SOAP 消息必须拥有与命名空间 "http://www.w3.org/2001/12/soap-envelope" 相关联的一个 Envelope 元素。
+
+如果使用了不同的命名空间，应用程序会发生错误，并抛弃此消息。
+
+
+## encodingStyle 属性
+
+SOAP 的 encodingStyle 属性用于定义在文档中使用的数据类型。此属性可出现在任何 SOAP 元素中，并会被应用到元素的内容及元素的所有子元素上。
+
+SOAP 消息没有默认的编码方式。
+
+
+### 语法
+
+```text
+soap:encodingStyle="URI"
+```
+
+
+### 实例
+
+```html
+<?xml version="1.0"?>
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2001/12/soap-envelope"
+soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
+  ...
+  Message information goes here
+  ...
+</soap:Envelope>
+```
+
+
+## 复习重点
+
+- 能说明 `SOAP Envelope 元素` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

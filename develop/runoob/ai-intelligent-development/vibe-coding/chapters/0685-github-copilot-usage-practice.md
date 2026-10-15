@@ -1,34 +1,90 @@
-# Vibe Coding：GitHub Copilot 入门教程 练习笔记
+# Vibe Coding：GitHub Copilot 入门教程
 
 - 来源：[GitHub Copilot 入门教程](https://www.runoob.com/vibe-coding/github-copilot-usage.html)
 - 分类：AI / 智能开发
 - 技术：Vibe Coding
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0685
 
-## 练习目标
+## 本章内容
 
-把 `GitHub Copilot 入门教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+GitHub Copilot 已经不是 2021 年那个 代码补全工具 了。
 
-## 练习步骤
+GitHub Copilot 现在是一个覆盖 IDE、CLI、Github 的 AI 编程平台：在 IDE 里自主编辑多个文件，在云端把 Issue 变成 PR，在终端运行并行子 Agent，在 PR 页面做智能代码审查。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### GitHub Copilot 发展
 
-- 我能独立说出 `GitHub Copilot 入门教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+今天的 Copilot 是一个跨 IDE、CLI、GitHub.com、手机的统一 AI 编程平台，而不只是一个补全插件。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 核心能力全图
+
+
+## VS Code 使用
+
+VS Code 凭借丰富的 AI 插件，成为落地 Vibe Coding 最主流的编辑器，既可以用 Copilot 实现轻量开发，也可以安装专用 VIBE 智能体插件实现全自动多文件开发。
+
+VS Code 教程：https://www.runoob.com/vscode/vscode-tutorial.html
+
+新版 VS Code（1.116+ 最新正式版）原生内置 Copilot，不用手动装插件，点击左上角图标调出：
+
+打开编辑器就能看到 Copilot 入口，只需要登录 GitHub 账号即可，无需去扩展市场安装插件。
+
+登录后查看：
+
+旧版 VS Code（1.115 及更早版本）必须手动安装两个扩展：
+
+- GitHub Copilot：行内代码自动补全
+- GitHub Copilot Chat：对话式 AI 编码助手
+
+
+### 开始 Vibe Coding
+
+接下来我们创建一个目录文件夹：
+
+```text
+mkdir runoob-vibe-coding
+```
+
+进入目录：
+
+```text
+cd runoob-vibe-coding
+```
+
+使用 VS Code 打开：
+
+```text
+code .
+```
+
+在编辑器里添加一个文件 vibe-coding-runoob.html ：
+
+左侧文件菜单我们选中创建的文件，点击右上角面板切换按钮，切换出 AI 工具，然后在对话框输入提示词：
+
+```text
+帮我写一个 JavaScript 小游戏：程序随机生成 1 到 100 的数字，让我猜，猜大了提示「太大了」，猜小了提示「太小了」，猜中了就结束。
+```
+
+AI 就会开始工作，看看最终效果：
+
+全程我们不需要参与编码，HTML 代码、CSS 样式代码、 JavaScript 代码都帮我们自动生成。
+
+
+### 官方资源
+
+- GitHub Copilot 功能总览：docs.github.com/copilot/get-started/features
+- 套餐与价格：github.com/features/copilot/plans
+- Cloud Agent 文档：docs.github.com/copilot/concepts/agents
+- 自定义指令指南：docs.github.com/copilot/customizing-copilot
+- 学生免费申请：education.github.com/pack
+- Copilot Changelog：github.blog/changelog
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `GitHub Copilot 入门教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

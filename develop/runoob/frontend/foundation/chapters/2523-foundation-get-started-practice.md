@@ -1,34 +1,107 @@
-# Foundation：Foundation 起步 练习笔记
+# Foundation：Foundation 起步
 
 - 来源：[Foundation 起步](https://www.runoob.com/foundation/foundation-get-started.html)
 - 分类：前端开发
 - 技术：Foundation
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2523
 
-## 练习目标
+## 本章内容
 
-把 `Foundation 起步` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 什么是 Foundation？
 
-## 练习步骤
+- Foundation 是一个免费的前端框架，用于快速开发。
+- Foundation 包含了 HTML 和 CSS 的设计模板，提供多种 Web 上的 UI 组件，如表单、按钮、Tabs 等等。同时也提供了多种 JavaScript 插件。
+- Foundation 移动优先，可创建响应式网页。
+- Foundation 适用于初学者和专业人士。
+- Foundation 已使用在 Facebook, eBay, Samsung, Amazon, Disney等。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 从哪里下载 Foundation?
 
-- 我能独立说出 `Foundation 起步` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+你可以通过以下两种方式来获取 Foundation：
 
-## 复盘问题
+1、从官网下载最新版本：http://foundation.zurb.com/。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+2、使用 Staticfile 提供的CDN（推荐）：
+
+```html
+<!-- css 文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.net/foundation/5.5.3/css/foundation.min.css">
+
+<!-- jQuery 库 -->
+<script src="https://cdn.staticfile.net/foundation/5.5.3/js/vendor/jquery.js"></script>
+
+<!-- JavaScript 文件 -->
+<script src="https://cdn.staticfile.net/foundation/5.5.3/js/foundation.min.js"></script>
+
+<!-- modernizr.js 文件 -->
+<script src="https://cdn.staticfile.net/foundation/5.5.3/js/vendor/modernizr.js"></script>
+```
+
+本站静态 CDN 基于阿里云服务。
+
+
+## 使用 Foundation 创建页面
+
+1. 添加 HTML5 doctype
+
+Foundation 使用 HTML 元素和 CSS 属性，所以需要添加 HTML5 doctype 文档类型声明。
+
+同时我们可以设置文档的语言属性 lang 及字符编码：
+
+2. Foundation 5 移动优先
+
+Foundation 5 为移动设备的响应式设计。框架的核心是移动优先。
+
+为了确保页面可自由缩放可以在 <head> 元素中添加以下 <meta> 标签:
+
+- width：控制 viewport 的大小，可以指定的一个值，如果 600，或者特殊的值，如 device-width 为设备的宽度（单位为缩放为 100% 时的 CSS 的像素）。
+- initial-scale：初始缩放比例，也即是当页面第一次 load 的时候缩放比例。
+
+3. 初始化组件
+
+一些 Foundation 组件是基于 jQuery 开发的，如：模态框、下拉菜单等。你可以使用以下脚本来初始化组件：
+
+
+## 基本 Foundation 页面
+
+如何创建一个基本的 foundation 页面:
+
+
+### Foundation 实例
+
+```html
+<div class="row">
+  <div class="medium-12 columns">
+    <div class="panel">
+      <h1>Foundation 页面</h1>
+      <p>重置窗口大小，查看效果！</p>
+      <button type="button" class="button small">我是按钮!</button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="medium-4 columns">
+    <h3>菜鸟教程</h3>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+  <div class="medium-4 columns">
+    <h3>菜鸟教程</h3>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+  <div class="medium-4 columns">
+    <h3>菜鸟教程</h3>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Foundation 起步` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

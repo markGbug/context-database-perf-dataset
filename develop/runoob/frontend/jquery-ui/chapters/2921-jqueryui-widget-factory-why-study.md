@@ -1,35 +1,71 @@
-# jQuery UI：jQuery UI 为什么使用部件库 学习笔记
+# jQuery UI：jQuery UI 为什么使用部件库（Widget Factory）
 
 - 来源：[jQuery UI 为什么使用部件库](https://www.runoob.com/jqueryui/jqueryui-widget-factory-why.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2921
 
-## 学习目标
+## 本章内容
 
-jQuery UI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery UI 为什么使用部件库` 建立学习路径，先理解它在 jQuery UI 体系中的位置，再做可运行或可复述的验证。
+编写 jQuery 插件与向 jQuery.prototype（通常显示为 $.fn）添加方法一样简单，且需要遵循一些简单的规则，比如返回 this。所以为什么会存在部件库（Widget Factory）？
 
-## 阅读抓手
+在本章节中，我们将讲解部件库（Widget Factory）的好处，并了解何时使用它，以及为什么要使用它。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 无状态 vs. 有状态插件
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+大多数 jQuery 插件是无状态的，它们执行一些动作即完成了它们的任务。例如，如果您使用 .text( "hello" ) 设置元素的文本，没有安装阶段，结果都是一样的。对于这种类型的插件，它只是扩展了 jQuery 的原型。
 
-## 完成标准
+然而，一些插件是有状态的，它们有全生命周期、维持状态以及对变化的反应。这些插件需要大量专门的代码来初始化和状态管理（有时是销毁）。这就导致出现了用于创建有状态插件的模板。更糟糕的是，每个插件的作者按照不同的方式进行管理插件的生命周期和状态，这就导致了不同的插件有不同的 API 样式。部件库（Widget Factory）旨在解决这些问题，它移除了模板，并为插件创建了一个一致的 API。
 
-- 能用 3 到 5 句话解释 `jQuery UI 为什么使用部件库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 一致的 API
+
+部件库（Widget Factory）定义了如何创建和销毁小部件，获取和设置选项，调用方法，以及监听小部件触发的事件。通过使用部件库（Widget Factory）来创建有状态的插件，会自动符合定义的标准，让新用户更容易使用您的插件。另外，部件库（Widget Factory）还能实现定义接口的功能。如果您对部件库（Widget Factory）提供的 API 还不熟悉，请查看 如何使用部件库（Widget Factory）。
+
+
+## 在初始化时设置选项
+
+当您创建一个接受选项的插件时，您应该为尽可能多的选项定义 defaults。然后在初始化时，把用户提供的选项与 defaults 进行合并。您也可以暴露 defaults，这样用户就可以更改默认值。在 jQuery 插件中，一个常用的模式如下所示：
+
+```text
+$.fn.plugin = function( options ) {
+    options = $.extend( {}, $.fn.plugin.defaults, options );
+    // Plugin logic goes here.
+};
+
+$.fn.plugin.defaults = {
+    param1: "foo",
+    param2: "bar",
+    param3: "baz"
+};
+```
+
+部件库（Widget Factory）也提供了这个功能，并在这上面做了改进。使用部件库（Widget Factory）之后，它将如下所示。
+
+```text
+$.widget( "ns.plugin", {
+
+    // Default options.
+    options: {
+        param1: "foo",
+        param2: "bar",
+        param3: "baz"
+    },
+
+    _create: function() {
+        // Options are already merged and stored in this.options
+        // Plugin logic goes here.
+    }
+
+});
+```
+
+
+## 复习重点
+
+- 能说明 `jQuery UI 为什么使用部件库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

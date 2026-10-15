@@ -1,34 +1,74 @@
-# Node.js：Node.js JXcore 打包 练习笔记
+# Node.js：Node.js JXcore 打包
 
 - 来源：[Node.js JXcore 打包](https://www.runoob.com/nodejs/nodejs-jxcore-packaging.html)
 - 分类：后端开发
 - 技术：Node.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1032
 
-## 练习目标
+## 本章内容
 
-把 `Node.js JXcore 打包` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Node.js 是一个开放源代码、跨平台的、用于服务器端和网络应用的运行环境。
 
-## 练习步骤
+JXcore 是一个支持多线程的 Node.js 发行版本，基本不需要对你现有的代码做任何改动就可以直接线程安全地以多线程运行。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+这篇文章主要是要向大家介绍 JXcore 的打包功能。
 
-## 验收清单
 
-- 我能独立说出 `Node.js JXcore 打包` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## JXcore 安装
 
-## 复盘问题
+下载 JXcore 安装包，并解压，在解压的的目录下提供了 jx 二进制文件命令，接下来我们主要使用这个命令。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 步骤1、下载
+
+下载 JXcore 安装包 https://github.com/jxcore/jxcore-release，你需要根据你自己的系统环境来下载安装包。
+
+1、Window 平台下载：Download(Windows x64 (V8))。
+
+2、Linux/OSX 安装命令：
+
+```text
+$ curl https://raw.githubusercontent.com/jxcore/jxcore/master/tools/jx_install.sh | bash
+```
+
+如果权限不足，可以使用以下命令：
+
+```text
+$ curl https://raw.githubusercontent.com/jxcore/jxcore/master/tools/jx_install.sh | sudo bash
+```
+
+以上步骤如果操作正确，使用以下命令，会输出版本号信息：
+
+```text
+$ jx --version
+v0.10.32
+```
+
+
+## 包代码
+
+例如，我们的 Node.js 项目包含以下几个文件，其中 index.js 是主文件：
+
+```text
+drwxr-xr-x  2 root root  4096 Nov 13 12:42 images
+-rwxr-xr-x  1 root root 30457 Mar  6 12:19 index.htm
+-rwxr-xr-x  1 root root 30452 Mar  1 12:54 index.js
+drwxr-xr-x 23 root root  4096 Jan 15 03:48 node_modules
+drwxr-xr-x  2 root root  4096 Mar 21 06:10 scripts
+drwxr-xr-x  2 root root  4096 Feb 15 11:56 style
+```
+
+接下来我们使用 jx 命令打包以上项目，并指定 index.js 为 Node.js 项目的主文件：
+
+```text
+$ jx package index.js index
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Node.js JXcore 打包` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

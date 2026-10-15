@@ -1,35 +1,105 @@
-# SQLite：SQLite 视图 学习笔记
+# SQLite：SQLite 视图（View）
 
 - 来源：[SQLite 视图](https://www.runoob.com/sqlite/sqlite-view.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1725
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite 视图` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+视图（View）只不过是通过相关的名称存储在数据库中的一个 SQLite 语句。视图（View）实际上是一个以预定义的 SQLite 查询形式存在的表的组合。
 
-## 阅读抓手
+视图（View）可以包含一个表的所有行或从一个或多个表选定行。视图（View）可以从一个或多个表创建，这取决于要创建视图的 SQLite 查询。、
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+视图（View）是一种虚表，允许用户实现以下几点：
 
-## 笔记模板
+- 用户或用户组查找结构数据的方式更自然或直观。
+- 限制数据访问，用户只能看到有限的数据，而不是完整的表。
+- 汇总各种表中的数据，用于生成报告。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+SQLite 视图是只读的，因此可能无法在视图上执行 DELETE、INSERT 或 UPDATE 语句。但是可以在视图上创建一个触发器，当尝试 DELETE、INSERT 或 UPDATE 视图时触发，需要做的动作在触发器内容中定义。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `SQLite 视图`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 创建视图
+
+SQLite 的视图是使用 CREATE VIEW 语句创建的。SQLite 视图可以从一个单一的表、多个表或其他视图创建。
+
+CREATE VIEW 的基本语法如下：
+
+```text
+CREATE [TEMP | TEMPORARY] VIEW view_name AS
+SELECT column1, column2.....
+FROM table_name
+WHERE [condition];
+```
+
+您可以在 SELECT 语句中包含多个表，这与在正常的 SQL SELECT 查询中的方式非常相似。如果使用了可选的 TEMP 或 TEMPORARY 关键字，则将在临时数据库中创建视图。
+
+
+## 实例
+
+假设 COMPANY 表有以下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+现在，下面是一个从 COMPANY 表创建视图的实例。视图只从 COMPANY 表中选取几列：
+
+```text
+sqlite> CREATE VIEW COMPANY_VIEW AS
+SELECT ID, NAME, AGE
+FROM  COMPANY;
+```
+
+现在，可以查询 COMPANY_VIEW，与查询实际表的方式类似。下面是实例：
+
+```text
+sqlite> SELECT * FROM COMPANY_VIEW;
+```
+
+这将产生以下结果:
+
+```text
+ID          NAME        AGE
+----------  ----------  ----------
+1           Paul        32
+2           Allen       25
+3           Teddy       23
+4           Mark        25
+5           David       27
+6           Kim         22
+7           James       24
+```
+
+
+## 删除视图
+
+要删除视图，只需使用带有 view_name 的 DROP VIEW 语句。DROP VIEW 的基本语法如下：
+
+```text
+sqlite> DROP VIEW view_name;
+```
+
+下面的命令将删除我们在前面创建的 COMPANY_VIEW 视图：
+
+```text
+sqlite> DROP VIEW COMPANY_VIEW;
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite 视图` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,234 @@
-# Vue3：Vue3 事件处理 练习笔记
+# Vue3：Vue3 事件处理
 
 - 来源：[Vue3 事件处理](https://www.runoob.com/vue3/vue3-events.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3210
 
-## 练习目标
+## 本章内容
 
-把 `Vue3 事件处理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们可以使用 v-on 指令来监听 DOM 事件，从而执行 JavaScript 代码。
 
-## 练习步骤
+v-on 指令可以缩写为 @ 符号。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+语法格式：
 
-## 验收清单
+```text
+v-on:click="methodName"
+或
+@click="methodName"
+```
 
-- 我能独立说出 `Vue3 事件处理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## v-on
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<div id="app">
+  <button @click="counter += 1">增加 1</button>
+  <p>这个按钮被点击了 {{ counter }} 次。</p>
+</div>
+
+<script>
+const app = {
+  data() {
+    return {
+      counter: 0
+    }
+  }
+}
+
+Vue.createApp(app).mount('#app')
+</script>
+```
+
+通常情况下，我们需要使用一个方法来调用 JavaScript 方法。
+
+v-on 可以接收一个定义的方法来调用。
+
+
+## v-on
+
+```html
+<div id="app">
+  <!-- `greet` 是在下面定义的方法名 -->
+  <button @click="greet">点我</button>
+</div>
+
+<script>
+const app = {
+  data() {
+    return {
+      name: 'Runoob'
+    }
+  },
+  methods: {
+    greet(event) {
+      // `methods` 内部的 `this` 指向当前活动实例
+      alert('Hello ' + this.name + '!')
+      // `event` 是原生 DOM event
+      if (event) {
+        alert(event.target.tagName)
+      }
+    }
+  }
+}
+
+Vue.createApp(app).mount('#app')
+</script>
+```
+
+除了直接绑定到一个方法，也可以用内联 JavaScript 语句：
+
+
+## v-on
+
+```html
+<div id="app">
+  <button @click="say('hi')">Say hi</button>
+  <button @click="say('what')">Say what</button>
+</div>
+
+<script>
+const app = {
+  data() {
+
+  },
+  methods: {
+    say(message) {
+      alert(message)
+    }
+  }
+}
+
+Vue.createApp(app).mount('#app')
+</script>
+```
+
+事件处理程序中可以有多个方法，这些方法由逗号运算符分隔：
+
+
+## v-on
+
+```html
+<div id="app">
+  <!-- 这两个 one() 和 two() 将执行按钮点击事件 -->
+  <button @click="one($event), two($event)">
+  点我
+  </button>
+</div>
+
+<script>
+const app = {
+  data() {
+  },
+  methods: {
+    one(event) {
+      alert("第一个事件处理器逻辑...")
+    },
+    two(event) {
+      alert("第二个事件处理器逻辑...")
+    }
+  }
+}
+
+Vue.createApp(app).mount('#app')
+</script>
+```
+
+
+### 事件修饰符
+
+Vue.js 为 v-on 提供了事件修饰符来处理 DOM 事件细节，如：event.preventDefault() 或 event.stopPropagation()。
+
+Vue.js 通过由点 . 表示的指令后缀来调用修饰符。
+
+- .stop - 阻止冒泡
+- .prevent - 阻止默认事件
+- .capture - 阻止捕获
+- .self - 只监听触发该元素的事件
+- .once - 只触发一次
+- .left - 左键事件
+- .right - 右键事件
+- .middle - 中间滚轮事件
+
+```html
+<!-- 阻止单击事件冒泡 -->
+<a v-on:click.stop="doThis"></a>
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
+<!-- 修饰符可以串联  -->
+<a v-on:click.stop.prevent="doThat"></a>
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+<!-- 添加事件侦听器时使用事件捕获模式 -->
+<div v-on:click.capture="doThis">...</div>
+<!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+<div v-on:click.self="doThat">...</div>
+
+<!-- click 事件只能点击一次，2.1.4版本新增 -->
+<a v-on:click.once="doThis"></a>
+```
+
+
+### 按键修饰符
+
+Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：
+
+```html
+<!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+<input v-on:keyup.13="submit">
+```
+
+记住所有的 keyCode 比较困难，所以 Vue 为最常用的按键提供了别名：
+
+```html
+<!-- 同上 -->
+<input v-on:keyup.enter="submit">
+<!-- 缩写语法 -->
+<input @keyup.enter="submit">
+```
+
+全部的按键别名：
+
+- .enter
+- .tab
+- .delete (捕获 "删除" 和 "退格" 键)
+- .esc
+- .space
+- .up
+- .down
+- .left
+- .right
+
+系统修饰键：
+
+- .ctrl
+- .alt
+- .shift
+- .meta
+
+鼠标按钮修饰符:
+
+- .left
+- .right
+- .middle
+
+
+## 实例
+
+
+### .exact 修饰符
+
+.exact 修饰符允许你控制由精确的系统修饰符组合触发的事件。
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue3 事件处理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,48 @@
-# Matplotlib：Matplotlib 绘制多图 练习笔记
+# Matplotlib：Matplotlib 绘制多图
 
 - 来源：[Matplotlib 绘制多图](https://www.runoob.com/matplotlib/matplotlib-subplots.html)
 - 分类：Python / 数据科学
 - 技术：Matplotlib
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3966
 
-## 练习目标
+## 本章内容
 
-把 `Matplotlib 绘制多图` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们可以使用 pyplot 中的 subplot() 和 subplots() 方法来绘制多个子图。
 
-## 练习步骤
+subplot() 方法在绘图时需要指定位置，subplots() 方法可以一次生成多个，在调用时只需要调用生成对象的 ax 即可。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### subplot
 
-- 我能独立说出 `Matplotlib 绘制多图` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+subplot(nrows, ncols, index, **kwargs)
+subplot(pos, **kwargs)
+subplot(**kwargs)
+subplot(ax)
+```
 
-## 复盘问题
+以上函数将整个绘图区域分成 nrows 行和 ncols 列，然后从左到右，从上到下的顺序对每个子区域进行编号 1...N ，左上的子区域的编号为 1、右下的区域编号为 N，编号可以通过参数 index 来设置。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+设置 numRows ＝ 1，numCols ＝ 2，就是将图表绘制成 1x2 的图片区域, 对应的坐标为：
+
+```text
+(1, 1), (1, 2)
+```
+
+plotNum ＝ 1, 表示的坐标为(1, 1), 即第一行第一列的子图。
+
+plotNum ＝ 2, 表示的坐标为(1, 2), 即第一行第二列的子图。
+
+实例 import matplotlib.pyplot as plt import numpy as np #plot 1: xpoints = np.array([0, 6]) ypoints = np.array([0, 100]) plt.subplot(1, 2, 1) plt.plot(xpoints,ypoints) plt.title("plot 1") #plot 2: x = np.array([1, 2, 3, 4]) y = np.array([1, 4, 9, 16]) plt.subplot(1, 2, 2) plt.plot(x,y) plt.title("plot 2") plt.suptitle("RUNOOB subplot Test") plt.show() 显示结果如下： 设置 numRows ＝ 2，numCols ＝ 2，就是将图表绘制成 2x2 的图片区域, 对应的坐标为： (1, 1), (1, 2) (2, 1), (2, 2) plotNum ＝ 1, 表示的坐标为(1, 1), 即第一行第一列的子图。 plotNum ＝ 2, 表示的坐标为(1, 2), 即第一行第二列的子图。 plotNum ＝ 3, 表示的坐标为(2, 1), 即第二行第一列的子图。 plotNum ＝ 4, 表示的坐标为(2, 2), 即第二行第二列的子图。 实例 import matplotlib.pyplot as plt import numpy as np #plot 1: x = np.array([0, 6]) y = np.array([0, 100]) plt.subplot(2, 2, 1) plt.plot(x,y) plt.title("plot 1") #plot 2: x = np.array([1, 2, 3, 4]) y = np.array([1, 4, 9, 16]) plt.subplot(2, 2, 2) plt.plot(x,y) plt.title("plot 2") #plot 3: x = np.array([1, 2, 3, 4]) y = np.array([3, 5, 7, 9]) plt.subplot(2, 2, 3) plt.plot(x,y) plt.title("plot 3") #plot 4: x = np.array([1, 2, 3, 4]) y = np.array([4, 5, 6, 7]) plt.subplot(2, 2, 4) plt.plot(x,y) plt.title("plot 4") plt.suptitle("RUNOOB subplot Test") plt.show() 显示结果如下： subplots() subplots() 方法语法格式如下： matplotlib.pyplot.subplots(nrows=1, ncols=1, *, sharex=False, sharey=False, squeeze=True, subplot_kw=None, gridspec_kw=None, **fig_kw) 参数说明：
+
+- nrows：默认为 1，设置图表的行数。
+- ncols：默认为 1，设置图表的列数。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Matplotlib 绘制多图` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

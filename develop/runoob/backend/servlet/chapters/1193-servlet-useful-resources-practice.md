@@ -1,34 +1,33 @@
-# Servlet：Servlet 有用的资源 练习笔记
+# Servlet：Servlet 有用的资源
 
 - 来源：[Servlet 有用的资源](https://www.runoob.com/servlet/servlet-useful-resources.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1193
 
-## 练习目标
+## 本章内容
 
-把 `Servlet 有用的资源` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章列出了 Servlet 网站、书籍和文章。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## Java Servlet 有用的网站
 
-## 验收清单
+- Sun's Site on Servlets - Sun 的官方网站上关于 Servlet 的相关资料。
+- JSP Engine - Tomcat - Apache Tomcat 是一个开源软件，实现了对 Java Servlet 和 JSP（JavaServer Pages）技术的支持。
+- MySQL Connector/J - MySQL Connector/J 是 MySQL 官方 JDBC 驱动程序。
+- The JavaTM Tutorials - 该 Java 教程是为那些想用 Java 编程语言创建应用程序的编程人员提供的实用指南。
+- JavaTM 2 SDK, Standard Edition - JavaTM 2 SDK, Standard Edition 的官网。
+- Free Java Download - 为您的桌面计算机下载 Java！
+- Sun Developer Network - Sun Microsystem 的官方网站，上面列出了所有的 API 文档，最新的 Java 技术、书籍和其他资源。
 
-- 我能独立说出 `Servlet 有用的资源` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## Java Servlet 有用的书籍
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Servlet 有用的资源` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

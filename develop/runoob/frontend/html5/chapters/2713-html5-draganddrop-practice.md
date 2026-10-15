@@ -1,34 +1,129 @@
-# HTML5：HTML5 拖放 练习笔记
+# HTML5：HTML5 拖放（Drag 和 Drop）
 
 - 来源：[HTML5 拖放](https://www.runoob.com/html/html5-draganddrop.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2713
 
-## 练习目标
+## 本章内容
 
-把 `HTML5 拖放` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+拖放（Drag 和 drop）是 HTML5 标准的组成部分。
 
-## 练习步骤
+将 RUNOOB.COM 图标拖动到矩形框中。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 拖放
 
-- 我能独立说出 `HTML5 拖放` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+拖放是一种常见的特性，即抓取对象以后拖到另一个位置。
 
-## 复盘问题
+在 HTML5 中，拖放是标准的一部分，任何元素都能够拖放。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 浏览器支持
+
+Internet Explorer 9+, Firefox, Opera, Chrome, 和 Safari 支持拖动。
+
+注意:Safari 5.1.2不支持拖动.
+
+
+## HTML5 拖放实例
+
+下面的例子是一个简单的拖放实例：
+
+
+## 实例
+
+```html
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+<style type="text/css">
+#div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+</style>
+<script>
+function allowDrop(ev)
+{
+    ev.preventDefault();
+}
+
+function drag(ev)
+{
+    ev.dataTransfer.setData("Text",ev.target.id);
+}
+
+function drop(ev)
+{
+    ev.preventDefault();
+    var data=ev.dataTransfer.getData("Text");
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
+</head>
+<body>
+
+<p>拖动 RUNOOB.COM 图片到矩形框中:</p>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+<img id="drag1" src="/images/logo.png" draggable="true" ondragstart="drag(event)" width="336" height="69">
+
+</body>
+</html>
+```
+
+它看上去也许有些复杂，不过我们可以分别研究拖放事件的不同部分。
+
+
+## 设置元素为可拖放
+
+首先，为了使元素可拖动，把 draggable 属性设置为 true ：
+
+
+## 拖动什么 - ondragstart 和 setData()
+
+然后，规定当元素被拖动时，会发生什么。
+
+在上面的例子中，ondragstart 属性调用了一个函数，drag(event)，它规定了被拖动的数据。
+
+dataTransfer.setData() 方法设置被拖数据的数据类型和值：
+
+Text 是一个 DOMString 表示要添加到 drag object 的拖动数据的类型。值是可拖动元素的 id ("drag1")。
+
+
+## 放到何处 - ondragover
+
+ondragover 事件规定在何处放置被拖动的数据。
+
+默认地，无法将数据/元素放置到其他元素中。如果需要设置允许放置，我们必须阻止对元素的默认处理方式。
+
+这要通过调用 ondragover 事件的 event.preventDefault() 方法：
+
+
+## 进行放置 - ondrop
+
+当放置被拖数据时，会发生 drop 事件。
+
+在上面的例子中，ondrop 属性调用了一个函数，drop(event)：
+
+代码解释：
+
+- 调用 preventDefault() 来避免浏览器对数据的默认处理（drop 事件的默认行为是以链接形式打开）
+- 通过 dataTransfer.getData("Text") 方法获得被拖的数据。该方法将返回在 setData() 方法中设置为相同类型的任何数据。
+- 被拖数据是被拖元素的 id ("drag1")
+- 把被拖元素追加到放置元素（目标元素）中
+
+
+## 更多实例
+
+来回拖放图片 如何在两个 <div> 元素之间拖放图像。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML5 拖放` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

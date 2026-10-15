@@ -1,35 +1,168 @@
-# PyCharm：PyCharm Django 学习笔记
+# PyCharm：PyCharm 创建 Django 项目
 
 - 来源：[PyCharm Django](https://www.runoob.com/pycharm/pycharm-django.html)
 - 分类：DevOps / 工程化
 - 技术：PyCharm
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1880
 
-## 学习目标
+## 本章内容
 
-PyCharm 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `PyCharm Django` 建立学习路径，先理解它在 PyCharm 体系中的位置，再做可运行或可复述的验证。
+PyCharm 是一款强大的 Python IDE，提供了对 Django 框架的出色支持，尤其是在其专业版（PyCharm Pro）中。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 启动 PyCharm 并新建项目
 
-## 笔记模板
+- 打开 PyCharm，点击 "新建项目"
+- 在左侧选择 "Django"
+- 设置项目位置（Location）
+- 配置 Python 解释器（建议新建虚拟环境）
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 配置项目参数
 
-- 能用 3 到 5 句话解释 `PyCharm Django`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 项目名称：使用小写字母和下划线组合（如 DjangoProject）
+- 模板语言：默认选择 Django
+- 前端框架：可根据需要选择（初学者可不选）
+- 启用 Django admin：可勾选
+
+
+### 等待项目初始化
+
+PyCharm 会自动：
+
+- 创建虚拟环境
+- 安装 Django 最新稳定版
+- 生成基础项目结构
+
+
+## 项目结构解析
+
+创建完成后，您会看到以下主要文件和目录：
+
+
+### 项目根目录
+
+- manage.py：Django 命令行工具
+- 项目同名目录（如 DjangoProject/）：包含项目主要配置
+
+
+### 项目配置目录
+
+- init.py：标识这是一个 Python 包
+- settings.py：项目配置文件
+- urls.py：URL 路由配置
+- wsgi.py：WSGI 服务器配置
+
+
+### 其他重要文件
+
+- requirements.txt：项目依赖文件（PyCharm 可能自动生成）
+- venv/：虚拟环境目录（如果选择创建虚拟环境）
+
+
+## 运行 Django 开发服务器
+
+
+### 通过 PyCharm 运行
+
+- 点击 PyCharm 右上角的运行配置下拉菜单
+- 选择 "配置 -> 编辑"
+- 确保配置了 Django 服务器
+- 点击绿色运行按钮
+
+
+### 通过命令行运行
+
+- 打开 PyCharm 的终端
+- 输入命令：python3 manage.py runserver 启动成功后，终端信息显示如下：
+- 访问 http://127.0.0.1:8000 查看默认页面:
+
+
+### 常见问题解决
+
+- 端口冲突：使用 python manage.py runserver 8080 指定其他端口
+- 数据库未迁移：首次运行需执行 python manage.py migrate
+
+
+## 创建 Django 应用
+
+
+### 创建新应用
+
+在 PyCharm 的终端中输入：
+
+```text
+python3 manage.py startapp myapp
+```
+
+将应用添加到 settings.py 的 INSTALLED_APPS 中:
+
+```text
+INSTALLED_APPS = [
+    ...
+    'myapp',
+]
+```
+
+在项目 urls.py 中包含应用路由：
+
+
+## 实例
+
+
+### 应用目录结构
+
+- migrations/：数据库迁移文件
+- admin.py：管理后台配置
+- apps.py：应用配置
+- models.py：数据模型定义
+- tests.py：测试代码
+- views.py：视图函数
+
+
+### myapp 目录下配置 URL 路由
+
+打开 myapp/models.py，定义模型。例如：
+
+
+## 实例
+
+保存后，运行 python manage.py makemigrations 和 python manage.py migrate 以更新数据库。
+
+创建视图和 URL：
+
+在 myapp/views.py 中定义视图：
+
+
+## 实例
+
+在 myapp/urls.py（需要手动创建）中配置 URL：
+
+
+## 实例
+
+在项目根目录创建 DjangoProject/templates/myapp/ 文件夹，然后在改文件夹下创建 post_list.html：
+
+
+## 实例
+
+确保 settings.py 中的 TEMPLATES 设置包含正确的模板目录：
+
+```text
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        ...
+    }
+]
+```
+
+
+## 复习重点
+
+- 能说明 `PyCharm Django` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

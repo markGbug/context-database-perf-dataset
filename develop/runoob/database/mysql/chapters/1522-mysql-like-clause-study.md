@@ -1,35 +1,181 @@
-# MySQL：MySQL LIKE 子句 学习笔记
+# MySQL：MySQL LIKE 子句
 
 - 来源：[MySQL LIKE 子句](https://www.runoob.com/mysql/mysql-like-clause.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1522
 
-## 学习目标
+## 本章内容
 
-MySQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MySQL LIKE 子句` 建立学习路径，先理解它在 MySQL 体系中的位置，再做可运行或可复述的验证。
+我们知道在 MySQL 中使用 SELECT 命令来读取数据， 同时我们可以在 SELECT 语句中使用 WHERE 子句来获取指定的记录。
 
-## 阅读抓手
+WHERE 子句中可以使用等号 = 来设定获取数据的条件，如 "runoob_author = 'RUNOOB.COM'"。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+但是有时候我们需要获取 runoob_author 字段含有 "COM" 字符的所有记录，这时我们就需要在 WHERE 子句中使用 LIKE 子句。
 
-## 笔记模板
+LIKE 子句中使用百分号 %字符来表示任意字符，类似于UNIX或正则表达式中的星号 *。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如果没有使用百分号 %, LIKE 子句与等号 = 的效果是一样的。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `MySQL LIKE 子句`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 语法
+
+以下是 SQL SELECT 语句使用 LIKE 子句从数据表中读取数据的通用语法：
+
+```text
+SELECT column1, column2, ...
+FROM table_name
+WHERE column_name LIKE pattern;
+```
+
+参数说明：
+
+- column1, column2, ... 是你要选择的列的名称，如果使用 * 表示选择所有列。
+- table_name 是你要从中查询数据的表的名称。
+- column_name 是你要应用 LIKE 子句的列的名称。
+- pattern 是用于匹配的模式，可以包含通配符。
+
+更多说明：
+
+- 你可以在 WHERE 子句中指定任何条件。
+- 你可以在 WHERE 子句中使用LIKE子句。
+- 你可以使用LIKE子句代替等号 =。
+- LIKE 通常与 % 一同使用，类似于一个元字符的搜索。
+- 你可以使用 AND 或者 OR 指定一个或多个条件。
+- 你可以在 DELETE 或 UPDATE 命令中使用 WHERE...LIKE 子句来指定条件。
+
+
+### 实例
+
+以下是一些 LIKE 子句的使用实例。
+
+1. 百分号通配符 %：
+
+% 通配符表示零个或多个字符。例如，'a%' 匹配以字母 'a' 开头的任何字符串。
+
+```text
+SELECT * FROM customers WHERE last_name LIKE 'S%';
+```
+
+以上 SQL 语句将选择所有姓氏以 'S' 开头的客户。
+
+2. 下划线通配符 _：
+
+_ 通配符表示一个字符。例如，'_r%' 匹配第二个字母为 'r' 的任何字符串。
+
+```text
+SELECT * FROM products WHERE product_name LIKE '_a%';
+```
+
+以上 SQL 语句将选择产品名称的第二个字符为 'a' 的所有产品。
+
+3. 组合使用 % 和 _：
+
+```text
+SELECT * FROM users WHERE username LIKE 'a%o_';
+```
+
+以上 SQL 语句将匹配以字母 'a' 开头，然后是零个或多个字符，接着是 'o'，最后是一个任意字符的字符串，如 'aaron'、'apol'。
+
+4. 不区分大小写的匹配：
+
+```text
+SELECT * FROM employees WHERE last_name LIKE 'smi%' COLLATE utf8mb4_general_ci;
+```
+
+以上 SQL 语句将选择姓氏以 'smi' 开头的所有员工，不区分大小写。
+
+LIKE 子句提供了强大的模糊搜索能力，可以根据不同的模式和需求进行定制。在使用时，请确保理解通配符的含义，并根据实际情况进行匹配。
+
+
+## 在命令提示符中使用 LIKE 子句
+
+以下我们将在 SELECT 命令中使用 WHERE...LIKE 子句来从 MySQL 数据表 runoob_tbl 中读取数据。
+
+
+### 实例
+
+以下是我们将 runoob_tbl 表中获取 runoob_author 字段中以 COM 为结尾的的所有记录：
+
+
+## SQL LIKE 语句：
+
+```text
+mysql> use RUNOOB;
+Database changed
+mysql> SELECT * from runoob_tbl  WHERE runoob_author LIKE '%COM';
++-----------+---------------+---------------+-----------------+
+| runoob_id | runoob_title  | runoob_author | submission_date |
++-----------+---------------+---------------+-----------------+
+| 3         | 学习 Java   | RUNOOB.COM    | 2015-05-01      |
+| 4         | 学习 Python | RUNOOB.COM    | 2016-03-06      |
++-----------+---------------+---------------+-----------------+
+2 rows in set (0.01 sec)
+```
+
+
+## 在 PHP 脚本中使用 LIKE 子句
+
+你可以使用 PHP 函数的 mysqli_query() 及相同的 SELECT 带上 WHERE...LIKE 子句的命令来获取数据。
+
+该函数用于执行 SQL 命令，然后通过 PHP 函数 mysqli_fetch_array() 来输出所有查询的数据。
+
+但是如果是 DELETE 或者 UPDATE 中使用 WHERE...LIKE 子句的S QL 语句，则无需使用 mysqli_fetch_array() 函数。
+
+
+### 实例
+
+以下是我们使用PHP脚本在 runoob_tbl 表中读取 runoob_author 字段中以 COM 为结尾的的所有记录：
+
+
+## MySQL LIKE 子句测试：
+
+```java
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+    die('连接失败: ' . mysqli_error($conn));
+}
+// 设置编码，防止中文乱码
+mysqli_query($conn , "set names utf8");
+
+$sql = 'SELECT runoob_id, runoob_title,
+        runoob_author, submission_date
+        FROM runoob_tbl
+        WHERE runoob_author LIKE "%COM"';
+
+mysqli_select_db( $conn, 'RUNOOB' );
+$retval = mysqli_query( $conn, $sql );
+if(! $retval )
+{
+    die('无法读取数据: ' . mysqli_error($conn));
+}
+echo '<h2>菜鸟教程 mysqli_fetch_array 测试<h2>';
+echo '<table border="1"><tr><td>教程 ID</td><td>标题</td><td>作者</td><td>提交日期</td></tr>';
+while($row = mysqli_fetch_array($retval, MYSQLI_ASSOC))
+{
+    echo "<tr><td> {$row['runoob_id']}</td> ".
+         "<td>{$row['runoob_title']} </td> ".
+         "<td>{$row['runoob_author']} </td> ".
+         "<td>{$row['submission_date']} </td> ".
+         "</tr>";
+}
+echo '</table>';
+mysqli_close($conn);
+?>
+```
+
+输出结果如下图所示：
+
+
+## 复习重点
+
+- 能说明 `MySQL LIKE 子句` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,143 @@
-# Vue3：VSCode Vue 练习笔记
+# Vue3：使用 VSCode 开发 Vue
 
 - 来源：[VSCode Vue](https://www.runoob.com/vue3/vue3-vscode.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3193
 
-## 练习目标
+## 本章内容
 
-把 `VSCode Vue` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Visual Studio Code（简称 VS Code）是一个由微软开发的免费、开源的代码编辑器，支持多种编程语言，并提供了代码高亮、智能代码补全、代码重构、调试等功能。
 
-## 练习步骤
+Visual Studio Code 内置支持 Vue.js 的核心构建块：HTML、CSS 和 JavaScript。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+VS Code 内置终端，可以直接在编辑器中运行命令行工具，如 npm、yarn 等，方便项目构建和管理。
 
-## 验收清单
+如果你希望拥有更丰富的 Vue.js 开发环境，可以安装 Volar 和 Volar for TypeScript 扩展，这些扩展提供了 Vue.js 的智能提示
 
-- 我能独立说出 `VSCode Vue` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+如果你还不了解 VS Code 或者还未安装，可以参考：VSCode 教程。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 创建 Vue 项目
+
+打开终端或命令提示符，输入以下命令：
+
+```text
+npm create vue@latest
+```
+
+系统会提示输入项目名称，我这边输入 runoob-vue3-app：
+
+```text
+Vue.js - The Progressive JavaScript Framework
+
+? 请输入项目名称： › runoob-vue3-app
+```
+
+之后会有一些选项，可以根据自己的需求选择，或者一路回车：
+
+```java
+Vue.js - The Progressive JavaScript Framework
+
+> 请输入项目名称： … runoob-vue3-app
+> 是否使用 TypeScript 语法？ … 否 / 是
+> 是否启用 JSX 支持？ … 否 / 是
+> 是否引入 Vue Router 进行单页面应用开发？ … 否 / 是
+> 是否引入 Pinia 用于状态管理？ … 否 / 是
+> 是否引入 Vitest 用于单元测试？ … 否 / 是
+> 是否要引入一款端到端（End to End）测试工具？ › 不需要
+> 是否引入 ESLint 用于代码质量检测？ › 否
+
+正在初始化项目 /Users/tianqixin/runoob-vue3-app...
+
+项目初始化完成，可执行以下命令：
+
+  cd runoob-vue3-app
+  npm install
+  npm run dev
+```
+
+项目创建完成后，进入项目文件夹并安装依赖：
+
+```text
+cd runoob-vue3-app
+npm install
+```
+
+安装依赖可能也需要几分钟。
+
+输入以下命令快速启动你的 Vue 应用：
+
+```text
+npm run dev
+```
+
+在浏览器中打开 http://localhost:5173，显示如下：
+
+按下 Ctrl+C 可以停止 vue-cli-service 服务器。
+
+
+## 在 VS Code 中打开 Vue 项目
+
+从终端或命令提示符中进入我们创建的 Vue 项目文件夹 runoob-vue3-app，然后使用 code 命令让项目在 VS Code 中打开：
+
+```text
+cd runoob-vue3-app
+code .
+```
+
+VS Code 将启动并在文件资源管理器中显示你的 Vue 项目，显示如下：
+
+选择安装它即可。
+
+安装完成后，.vue 文件被识别为 Vue.js 文件类型，并支持以下语言特性：
+
+- 语法高亮
+- 括号匹配
+- 悬停描述
+
+
+### 智能提示 (IntelliSense)
+
+在 App.vue 中输入代码时，你会看到 HTML、CSS 和 Vue.js 特有语法（如 v-bind、v-for）的智能提示。
+
+在脚本部分，还可以看到 Vue.js 相关的 JavaScript 特性提示，比如 computed 属性。
+
+
+### 跳转到定义、查看定义
+
+通过安装的 Volar 扩展，VS Code 支持 Vue.js 语言服务。
+
+放置光标在 App 上，右键选择 Peek Definition 查看定义信息，或者按下快捷键 ⌥F12。
+
+你会看到一个弹出的窗口展示 App 的定义信息。
+
+按下 Esc 按键关闭查看窗口。
+
+
+### 修改并运行 "Hello World"
+
+在 App.vue 中，将 HelloWorld 组件的 msg 自定义属性文本替换为 "Hello World!"：
+
+
+## 实例
+
+保存 App.vue 文件（快捷键 ⌘S 或 Ctrl+S），然后通过以下命令重启服务器：
+
+```text
+npm run dev
+```
+
+在浏览器中你将看到页面显示 "Hello World!"。
+
+
+## 更多相关工具
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `VSCode Vue` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

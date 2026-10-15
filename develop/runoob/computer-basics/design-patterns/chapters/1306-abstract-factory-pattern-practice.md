@@ -1,34 +1,259 @@
-# 设计模式：抽象工厂模式 练习笔记
+# 设计模式：抽象工厂模式
 
 - 来源：[抽象工厂模式](https://www.runoob.com/design-pattern/abstract-factory-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1306
 
-## 练习目标
+## 本章内容
 
-把 `抽象工厂模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+抽象工厂模式（Abstract Factory Pattern）是围绕一个超级工厂创建其他工厂。该超级工厂又称为其他工厂的工厂。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。
 
-## 练习步骤
+在抽象工厂模式中，接口是负责创建一个相关对象的工厂，不需要显式指定它们的类。每个生成的工厂都能按照工厂模式提供对象。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+抽象工厂模式提供了一种创建一系列相关或相互依赖对象的接口，而无需指定具体实现类。通过使用抽象工厂模式，可以将客户端与具体产品的创建过程解耦，使得客户端可以通过工厂接口来创建一族产品。
 
-## 验收清单
+## 概要
 
-- 我能独立说出 `抽象工厂模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 意图
 
-## 复盘问题
+提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们的具体类。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 主要解决
+
+接口选择的问题。
+
+### 适用场景
+
+当系统需要创建多个相关或依赖的对象，而不需要指定具体类时。
+
+### 解决方案
+
+在一个产品族中定义多个产品，由具体工厂实现创建这些产品的方法。
+
+### 关键代码
+
+在一个工厂中聚合多个同类产品的创建方法。
+
+### 应用实例
+
+假设有不同类型的衣柜，每个衣柜（具体工厂）只能存放一类衣服（成套的具体产品），如商务装、时尚装等。每套衣服包括具体的上衣和裤子（具体产品）。所有衣柜都是衣柜类（抽象工厂）的具体实现，所有上衣和裤子分别实现上衣接口和裤子接口（抽象产品）。
+
+### 优点
+
+- 确保同一产品族的对象一起工作。
+- 客户端不需要知道每个对象的具体类，简化了代码。
+
+### 缺点
+
+扩展产品族非常困难。增加一个新的产品族需要修改抽象工厂和所有具体工厂的代码。
+
+### 使用场景
+
+- QQ 换皮肤时，整套皮肤一起更换。
+- 创建跨平台应用时，生成不同操作系统的程序。
+
+### 注意事项
+
+增加新的产品族相对容易，而增加新的产品等级结构比较困难。
+
+### 结构
+
+抽象工厂模式包含以下几个主要角色：
+
+- 抽象工厂（Abstract Factory）：声明了一组用于创建产品对象的方法，每个方法对应一种产品类型。抽象工厂可以是接口或抽象类。
+- 具体工厂（Concrete Factory）：实现了抽象工厂接口，负责创建具体产品对象的实例。
+- 抽象产品（Abstract Product）：定义了一组产品对象的共同接口或抽象类，描述了产品对象的公共方法。
+- 具体产品（Concrete Product）：实现了抽象产品接口，定义了具体产品的特定行为和属性。
+
+抽象工厂模式通常涉及一族相关的产品，每个具体工厂类负责创建该族中的具体产品。客户端通过使用抽象工厂接口来创建产品对象，而不需要直接使用具体产品的实现类。
+
+## 实现
+
+我们将创建 Shape 和 Color 接口和实现这些接口的实体类。下一步是创建抽象工厂类 AbstractFactory。接着定义工厂类 ShapeFactory 和 ColorFactory，这两个工厂类都是扩展了 AbstractFactory。然后创建一个工厂创造器/生成器类 FactoryProducer。
+
+AbstractFactoryPatternDemo 类使用 FactoryProducer 来获取 AbstractFactory 对象。它将向 AbstractFactory 传递形状信息 Shape（CIRCLE / RECTANGLE / SQUARE），以便获取它所需对象的类型。同时它还向 AbstractFactory 传递颜色信息 Color（RED / GREEN / BLUE），以便获取它所需对象的类型。
+
+### 步骤 1
+
+为形状创建一个接口。
+
+## Shape.java
+
+```text
+public interface Shape {
+   void draw();
+}
+```
+
+### 步骤 2
+
+创建实现接口的实体类。
+
+Rectangle.java
+
+## Rectangle.java
+
+```java
+public class Rectangle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Rectangle::draw() method.");
+   }
+}
+```
+
+## Square.java
+
+```java
+public class Square implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Square::draw() method.");
+   }
+}
+```
+
+## Circle.java
+
+```java
+public class Circle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Circle::draw() method.");
+   }
+}
+```
+
+### 步骤 3
+
+为颜色创建一个接口。
+
+## Color.java
+
+```text
+public interface Color {
+   void fill();
+}
+```
+
+### 步骤4
+
+创建实现接口的实体类。
+
+## Red.java
+
+```java
+public class Red implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Red::fill() method.");
+   }
+}
+```
+
+## Green.java
+
+```java
+public class Green implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Green::fill() method.");
+   }
+}
+```
+
+## Blue.java
+
+```java
+public class Blue implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Blue::fill() method.");
+   }
+}
+```
+
+### 步骤 5
+
+为 Color 和 Shape 对象创建抽象类来获取工厂。
+
+## AbstractFactory.java
+
+```text
+public abstract class AbstractFactory {
+   public abstract Color getColor(String color);
+   public abstract Shape getShape(String shape);
+}
+```
+
+### 步骤 6
+
+创建扩展了 AbstractFactory 的工厂类，基于给定的信息生成实体类的对象。
+
+## ShapeFactory.java
+
+```java
+public class ShapeFactory extends AbstractFactory {
+
+   @Override
+   public Shape getShape(String shapeType){
+      if(shapeType == null){
+         return null;
+      }
+      if(shapeType.equalsIgnoreCase("CIRCLE")){
+         return new Circle();
+      } else if(shapeType.equalsIgnoreCase("RECTANGLE")){
+         return new Rectangle();
+      } else if(shapeType.equalsIgnoreCase("SQUARE")){
+         return new Square();
+      }
+      return null;
+   }
+
+   @Override
+   public Color getColor(String color) {
+      return null;
+   }
+}
+```
+
+## ColorFactory.java
+
+```java
+public class ColorFactory extends AbstractFactory {
+
+   @Override
+   public Shape getShape(String shapeType){
+      return null;
+   }
+
+   @Override
+   public Color getColor(String color) {
+      if(color == null){
+         return null;
+      }
+      if(color.equalsIgnoreCase("RED")){
+         return new Red();
+      } else if(color.equalsIgnoreCase("GREEN")){
+         return new Green();
+      } else if(color.equalsIgnoreCase("BLUE")){
+         return new Blue();
+      }
+      return null;
+   }
+}
+```
+
+## 动手验证
+
+- 复现 `抽象工厂模式` 中的关键示例或命令。
+- 修改一个输入、参数或条件，观察结果变化。
+- 记录报错信息、定位过程和修复方式。

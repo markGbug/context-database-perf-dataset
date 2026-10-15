@@ -1,35 +1,88 @@
-# Matplotlib：Matplotlib imshow() 学习笔记
+# Matplotlib：Matplotlib imshow() 方法
 
 - 来源：[Matplotlib imshow()](https://www.runoob.com/matplotlib/matplotlib-imshow.html)
 - 分类：Python / 数据科学
 - 技术：Matplotlib
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3971
 
-## 学习目标
+## 本章内容
 
-Matplotlib 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Matplotlib imshow()` 建立学习路径，先理解它在 Matplotlib 体系中的位置，再做可运行或可复述的验证。
+imshow() 函数是 Matplotlib 库中的一个函数，用于显示图像。
 
-## 阅读抓手
+imshow() 函数常用于绘制二维的灰度图像或彩色图像。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+imshow() 函数可用于绘制矩阵、热力图、地图等。
 
-## 笔记模板
+imshow() 方法语法格式如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+imshow(X, cmap=None, norm=None, aspect=None, interpolation=None, alpha=None, vmin=None, vmax=None, origin=None, extent=None, shape=None, filternorm=1, filterrad=4.0, imlim=None, resample=None, url=None, *, data=None, **kwargs)
+```
 
-## 完成标准
+参数说明：
 
-- 能用 3 到 5 句话解释 `Matplotlib imshow()`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- X：输入数据。可以是二维数组、三维数组、PIL图像对象、matplotlib路径对象等。
+- cmap：颜色映射。用于控制图像中不同数值所对应的颜色。可以选择内置的颜色映射，如gray、hot、jet等，也可以自定义颜色映射。
+- norm：用于控制数值的归一化方式。可以选择Normalize、LogNorm等归一化方法。
+- aspect：控制图像纵横比（aspect ratio）。可以设置为auto或一个数字。
+- interpolation：插值方法。用于控制图像的平滑程度和细节程度。可以选择nearest、bilinear、bicubic等插值方法。
+- alpha：图像透明度。取值范围为0~1。
+- origin：坐标轴原点的位置。可以设置为upper或lower。
+- extent：控制显示的数据范围。可以设置为[xmin, xmax, ymin, ymax]。
+- vmin、vmax：控制颜色映射的值域范围。
+- filternorm 和 filterrad：用于图像滤波的对象。可以设置为None、antigrain、freetype等。
+- imlim： 用于指定图像显示范围。
+- resample：用于指定图像重采样方式。
+
+
+### 显示灰度图像
+
+
+## 实例
+
+以上实例中我们生成了一个 10x10 的随机数组，并使用 imshow() 函数将其显示为一张灰度图像。
+
+我们设置了 cmap 参数为 gray，这意味着将使用灰度颜色映射显示图像。
+
+显示结果如下：
+
+
+### 显示彩色图像
+
+
+## 实例
+
+以上实例中我们生成了一个 10x10 的随机彩色图像，并使用 imshow() 函数将其显示出来。
+
+由于彩色图像是三维数组，因此不需要设置 cmap 参数。
+
+显示结果如下：
+
+
+### 显示热力图
+
+
+## 实例
+
+以上实例中我们生成了一个 10x10 的随机数组，并使用 imshow() 函数将其显示为热力图。
+
+我们设置了 cmap 参数为 hot，这意味着将使用热度颜色映射显示图像。
+
+此外，我们还添加了一个颜色条（colorbar），以便查看数据的值与颜色之间的关系。
+
+显示结果如下：
+
+
+### 显示地图
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Matplotlib imshow()` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,143 @@
-# PHP：PHP MySQL 连接 学习笔记
+# PHP：PHP 连接 MySQL
 
 - 来源：[PHP MySQL 连接](https://www.runoob.com/php/php-mysql-connect.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1083
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP MySQL 连接` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+PHP 5 及以上版本建议使用以下方式连接 MySQL :
 
-## 阅读抓手
+- MySQLi extension ("i" 意为 improved)
+- PDO (PHP Data Objects)
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+在 PHP 早期版本中我们使用 MySQL 扩展。但该扩展在 2012 年开始不建议使用。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 我是该用 MySQLi ，还是 PDO?
 
-## 完成标准
+如果你需要一个简短的回答，即 "你习惯哪个就用哪个"。
 
-- 能用 3 到 5 句话解释 `PHP MySQL 连接`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+MySQLi 和 PDO 有它们自己的优势：
+
+PDO 应用在 12 种不同数据库中， MySQLi 只针对 MySQL 数据库。
+
+所以，如果你的项目需要在多种数据库中切换，建议使用 PDO ，这样你只需要修改连接字符串和部分查询语句即可。 使用 MySQLi, 如果不同数据库，你需要重新编写所有代码，包括查询。
+
+两者都是面向对象, 但 MySQLi 还提供了 API 接口。
+
+两者都支持预处理语句。 预处理语句可以防止 SQL 注入，对于 web 项目的安全性是非常重要的。
+
+
+## MySQLi 和 PDO 连接 MySQL 实例
+
+在本章节及接下来的章节中，我们会使用以下三种方式来演示 PHP 操作 MySQL:
+
+- MySQLi (面向对象)
+- MySQLi (面向过程)
+- PDO
+
+
+## MySQLi 安装
+
+Linux 和 Windows: 在 php5 mysql 包安装时 MySQLi 扩展多数情况下是自动安装的。
+
+安装详细信息，请查看： http://php.net/manual/en/mysqli.installation.php
+
+可以通过 phpinfo() 查看是否安装成功：
+
+
+## PDO 安装
+
+For 安装详细信息，请查看： http://php.net/manual/en/pdo.installation.php
+
+可以通过 phpinfo() 查看是否安装成功：
+
+
+## 连接 MySQL
+
+在我们访问 MySQL 数据库前，我们需要先连接到数据库服务器：
+
+
+## 实例 (MySQLi - 面向对象)
+
+```text
+<?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+
+// 创建连接
+$conn = new mysqli($servername, $username, $password);
+
+// 检测连接
+if ($conn->connect_error) {
+    die("连接失败: " . $conn->connect_error);
+}
+echo "连接成功";
+?>
+```
+
+
+## 实例 (MySQLi - 面向过程)
+
+```text
+<?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+
+// 创建连接
+$conn = mysqli_connect($servername, $username, $password);
+
+// 检测连接
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+echo "连接成功";
+?>
+```
+
+
+## 实例 (PDO)
+
+```text
+<?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+
+try {
+    $conn = new PDO("mysql:host=$servername;", $username, $password);
+    echo "连接成功";
+}
+catch(PDOException $e)
+{
+    echo $e->getMessage();
+}
+?>
+```
+
+
+## 关闭连接
+
+连接在脚本执行完后会自动关闭。你也可以使用以下代码来关闭连接：
+
+
+## 实例 (MySQLi - 面向对象)
+
+
+## 实例 (MySQLi - 面向过程)
+
+
+## 实例 (PDO)
+
+
+## 复习重点
+
+- 能说明 `PHP MySQL 连接` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

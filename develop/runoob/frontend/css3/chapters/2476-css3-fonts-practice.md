@@ -1,34 +1,121 @@
-# CSS3：CSS3 字体 练习笔记
+# CSS3：CSS3 字体
 
 - 来源：[CSS3 字体](https://www.runoob.com/css3/css3-fonts.html)
 - 分类：前端开发
 - 技术：CSS3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2476
 
-## 练习目标
+## 本章内容
 
-把 `CSS3 字体` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## CSS3 @font-face 规则
 
-## 练习步骤
+使用以前 CSS 的版本，网页设计师不得不使用用户计算机上已经安装的字体。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+使用 CSS3，网页设计师可以使用他/她喜欢的任何字体。
 
-## 验收清单
+当你发现您要使用的字体文件时，只需简单的将字体文件包含在网站中，它会自动下载给需要的用户。
 
-- 我能独立说出 `CSS3 字体` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+您所选择的字体在新的 CSS3 版本有关于 @font-face 规则描述。
 
-## 复盘问题
+您"自己的"的字体是在 CSS3 @font-face 规则中定义的。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 浏览器支持
+
+表格中的数字表示支持该属性的第一个浏览器版本号。
+
+Internet Explorer 9+, Firefox, Chrome, Safari, 和 Opera 支持 WOFF (Web Open Font Format) 字体.
+
+Firefox, Chrome, Safari, 和 Opera 支持 .ttf(True Type字体)和.otf(OpenType)字体字体类型）。
+
+Chrome, Safari 和 Opera 也支持 SVG 字体/折叠.
+
+Internet Explorer 同样支持 EOT (Embedded OpenType) 字体.
+
+注意： Internet Explorer 8 以及更早的版本不支持新的 @font-face 规则。
+
+
+## 使用您需要的字体
+
+在新的 @font-face 规则中，您必须首先定义字体的名称（比如 myFirstFont），然后指向该字体文件。
+
+如需为 HTML 元素使用字体，请通过 font-family 属性来引用字体的名称 (myFirstFont)：
+
+
+## 实例
+
+```html
+<style>
+@font-face
+{
+    font-family: myFirstFont;
+    src: url(sansation_light.woff);
+}
+
+div
+{
+    font-family:myFirstFont;
+}
+</style>
+```
+
+
+## 使用粗体文本
+
+您必须添加另一个包含粗体文字的@font-face规则：
+
+
+## 实例
+
+```text
+@font-face
+{
+    font-family: myFirstFont;
+    src: url(sansation_bold.woff);
+    font-weight:bold;
+}
+```
+
+该文件"Sansation_Bold.ttf"是另一种字体文件，包含Sansation字体的粗体字。
+
+浏览器使用这一文本的字体系列"myFirstFont"时应该呈现为粗体。
+
+这样你就可以有许多相同的字体@font-face的规则。
+
+
+## CSS3 字体描述
+
+下表列出了所有的字体描述和里面的@font-face规则定义：
+
+- normal
+- condensed
+- ultra-condensed
+- extra-condensed
+- semi-condensed
+- expanded
+- semi-expanded
+- extra-expanded
+- ultra-expanded
+- normal
+- italic
+- oblique
+- normal
+- bold
+- 100
+- 200
+- 300
+- 400
+- 500
+- 600
+- 700
+- 800
+- 900
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS3 字体` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

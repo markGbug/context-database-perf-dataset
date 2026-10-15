@@ -1,34 +1,79 @@
-# jQuery：jQuery noConflict() 方法 练习笔记
+# jQuery：jQuery - noConflict() 方法
 
 - 来源：[jQuery noConflict() 方法](https://www.runoob.com/jquery/jquery-noconflict.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2990
 
-## 练习目标
+## 本章内容
 
-把 `jQuery noConflict() 方法` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+如何在页面上同时使用 jQuery 和其他框架？
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## jQuery 和其他 JavaScript 框架
 
-## 验收清单
+正如您已经了解到的，jQuery 使用 $ 符号作为 jQuery 的简写。
 
-- 我能独立说出 `jQuery noConflict() 方法` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+如果其他 JavaScript 框架也使用 $ 符号作为简写怎么办？
 
-## 复盘问题
+其他一些 JavaScript 框架包括：MooTools、Backbone、Sammy、Cappuccino、Knockout、JavaScript MVC、Google Web Toolkit、Google Closure、Ember、Batman 以及 Ext JS。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+其中某些框架也使用 $ 符号作为简写（就像 jQuery），如果您在用的两种不同的框架正在使用相同的简写符号，有可能导致脚本停止运行。
+
+jQuery 的团队考虑到了这个问题，并实现了 noConflict() 方法。
+
+
+## jQuery noConflict() 方法
+
+noConflict() 方法会释放对 $ 标识符的控制，这样其他脚本就可以使用它了。
+
+当然，您仍然可以通过全名替代简写的方式来使用 jQuery：
+
+
+## 实例
+
+```text
+$.noConflict();
+jQuery(document).ready(function(){
+  jQuery("button").click(function(){
+    jQuery("p").text("jQuery 仍然在工作!");
+  });
+});
+```
+
+您也可以创建自己的简写。noConflict() 可返回对 jQuery 的引用，您可以把它存入变量，以供稍后使用。请看这个例子：
+
+
+## 实例
+
+```javascript
+var jq = $.noConflict();
+jq(document).ready(function(){
+  jq("button").click(function(){
+    jq("p").text("jQuery 仍然在工作!");
+  });
+});
+```
+
+如果你的 jQuery 代码块使用 $ 简写，并且您不愿意改变这个快捷方式，那么您可以把 $ 符号作为变量传递给 ready 方法。这样就可以在函数内使用 $ 符号了 - 而在函数外，依旧不得不使用 "jQuery"：
+
+
+## 实例
+
+```text
+$.noConflict();
+jQuery(document).ready(function($){
+  $("button").click(function(){
+    $("p").text("jQuery 仍然在工作!");
+  });
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery noConflict() 方法` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

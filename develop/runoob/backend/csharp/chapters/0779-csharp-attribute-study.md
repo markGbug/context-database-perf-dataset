@@ -1,35 +1,201 @@
-# C#：C# 特性（Attribute） 学习笔记
+# C#：C# 特性（Attribute）
 
 - 来源：[C# 特性（Attribute）](https://www.runoob.com/csharp/csharp-attribute.html)
 - 分类：后端开发
 - 技术：C#
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0779
 
-## 学习目标
+## 本章内容
 
-C# 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `C# 特性（Attribute）` 建立学习路径，先理解它在 C# 体系中的位置，再做可运行或可复述的验证。
+特性（Attribute）是用于在运行时传递程序中各种元素（比如类、方法、结构、枚举、组件等）的行为信息的声明性标签。您可以通过使用特性向程序添加声明性信息。一个声明性标签是通过放置在它所应用的元素前面的方括号（[ ]）来描述的。
 
-## 阅读抓手
+特性（Attribute）用于添加元数据，如编译器指令和注释、描述、方法、类等其他信息。.Net 框架提供了两种类型的特性：预定义特性和自定义特性。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 规定特性（Attribute）
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+规定特性（Attribute）的语法如下：
 
-## 完成标准
+```text
+[attribute(positional_parameters, name_parameter = value, ...)]
+element
+```
 
-- 能用 3 到 5 句话解释 `C# 特性（Attribute）`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+特性（Attribute）的名称和值是在方括号内规定的，放置在它所应用的元素之前。positional_parameters 规定必需的信息，name_parameter 规定可选的信息。
+
+
+## 预定义特性（Attribute）
+
+.Net 框架提供了三种预定义特性：
+
+- AttributeUsage
+- Conditional
+- Obsolete
+
+
+### AttributeUsage
+
+预定义特性 AttributeUsage 描述了如何使用一个自定义特性类。它规定了特性可应用到的项目的类型。
+
+规定该特性的语法如下：
+
+```text
+[AttributeUsage(
+   validon,
+   AllowMultiple=allowmultiple,
+   Inherited=inherited
+)]
+```
+
+其中：
+
+- 参数 validon 规定特性可被放置的语言元素。它是枚举器 AttributeTargets 的值的组合。默认值是 AttributeTargets.All。
+- 参数 allowmultiple（可选的）为该特性的 AllowMultiple 属性（property）提供一个布尔值。如果为 true，则该特性是多用的。默认值是 false（单用的）。
+- 参数 inherited（可选的）为该特性的 Inherited 属性（property）提供一个布尔值。如果为 true，则该特性可被派生类继承。默认值是 false（不被继承）。
+
+例如：
+
+```text
+[AttributeUsage(AttributeTargets.Class |
+AttributeTargets.Constructor |
+AttributeTargets.Field |
+AttributeTargets.Method |
+AttributeTargets.Property,
+AllowMultiple = true)]
+```
+
+
+### Conditional
+
+这个预定义特性标记了一个条件方法，其执行依赖于指定的预处理标识符。
+
+它会引起方法调用的条件编译，取决于指定的值，比如 Debug 或 Trace。例如，当调试代码时显示变量的值。
+
+规定该特性的语法如下：
+
+```text
+[Conditional(
+   conditionalSymbol
+)]
+```
+
+例如：
+
+```text
+[Conditional("DEBUG")]
+```
+
+下面的实例演示了该特性：
+
+
+## 实例
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+In Main function.
+In Function 1.
+In Function 2.
+```
+
+
+### Obsolete
+
+这个预定义特性标记了不应被使用的程序实体。它可以让您通知编译器丢弃某个特定的目标元素。例如，当一个新方法被用在一个类中，但是您仍然想要保持类中的旧方法，您可以通过显示一个应该使用新方法，而不是旧方法的消息，来把它标记为 obsolete（过时的）。
+
+规定该特性的语法如下：
+
+```text
+[Obsolete(
+   message
+)]
+[Obsolete(
+   message,
+   iserror
+)]
+```
+
+其中：
+
+- 参数 message，是一个字符串，描述项目为什么过时以及该替代使用什么。
+- 参数 iserror，是一个布尔值。如果该值为 true，编译器应把该项目的使用当作一个错误。默认值是 false（编译器生成一个警告）。
+
+下面的实例演示了该特性：
+
+
+## 实例
+
+当您尝试编译该程序时，编译器会给出一个错误消息说明：
+
+```text
+ Don't use OldMethod, use NewMethod instead
+```
+
+
+## 创建自定义特性（Attribute）
+
+.Net 框架允许创建自定义特性，用于存储声明性的信息，且可在运行时被检索。该信息根据设计标准和应用程序需要，可与任何目标元素相关。
+
+创建并使用自定义特性包含四个步骤：
+
+- 声明自定义特性
+- 构建自定义特性
+- 在目标程序元素上应用自定义特性
+- 通过反射访问特性
+
+最后一个步骤包含编写一个简单的程序来读取元数据以便查找各种符号。元数据是用于描述其他数据的数据和信息。该程序应使用反射来在运行时访问特性。我们将在下一章详细讨论这点。
+
+
+### 声明自定义特性
+
+一个新的自定义特性应派生自 System.Attribute 类。例如：
+
+```java
+// 一个自定义特性 BugFix 被赋给类及其成员
+[AttributeUsage(AttributeTargets.Class |
+AttributeTargets.Constructor |
+AttributeTargets.Field |
+AttributeTargets.Method |
+AttributeTargets.Property,
+AllowMultiple = true)]
+
+public class DeBugInfo : System.Attribute
+```
+
+在上面的代码中，我们已经声明了一个名为 DeBugInfo 的自定义特性。
+
+
+### 构建自定义特性
+
+让我们构建一个名为 DeBugInfo 的自定义特性，该特性将存储调试程序获得的信息。它存储下面的信息：
+
+- bug 的代码编号
+- 辨认该 bug 的开发人员名字
+- 最后一次审查该代码的日期
+- 一个存储了开发人员标记的字符串消息
+
+我们的 DeBugInfo 类将带有三个用于存储前三个信息的私有属性（property）和一个用于存储消息的公有属性（property）。所以 bug 编号、开发人员名字和审查日期将是 DeBugInfo 类的必需的定位（ positional）参数，消息将是一个可选的命名（named）参数。
+
+每个特性必须至少有一个构造函数。必需的定位（ positional）参数应通过构造函数传递。下面的代码演示了 DeBugInfo 类：
+
+
+## 实例
+
+
+### 应用自定义特性
+
+通过把特性放置在紧接着它的目标之前，来应用该特性：
+
+
+## 实例
+
+在下一章中，我们将使用 Reflection 类对象来检索这些信息。
+
+
+## 复习重点
+
+- 能说明 `C# 特性（Attribute）` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

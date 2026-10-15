@@ -1,35 +1,89 @@
-# MongoDB：MongoDB 删除数据库 学习笔记
+# MongoDB：MongoDB 删除数据库
 
 - 来源：[MongoDB 删除数据库](https://www.runoob.com/mongodb/mongodb-dropdatabase.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1469
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 删除数据库` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+### 语法
 
-## 阅读抓手
+MongoDB 删除数据库的语法格式如下：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+db.dropDatabase()
+```
 
-## 笔记模板
+删除当前数据库，默认为 test，你可以使用 db 命令查看当前数据库名。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 实例
 
-- 能用 3 到 5 句话解释 `MongoDB 删除数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下实例我们删除了数据库 runoob。
+
+首先，查看所有数据库：
+
+```text
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+runoob  0.000GB
+```
+
+接下来我们切换到数据库 runoob：
+
+```text
+> use runoob
+switched to db runoob
+>
+```
+
+执行删除命令：
+
+```text
+> db.dropDatabase()
+{ "dropped" : "runoob", "ok" : 1 }
+```
+
+最后，我们再通过 show dbs 命令数据库是否删除成功：
+
+```text
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+```
+
+
+### 删除集合
+
+集合删除语法格式如下：
+
+```text
+db.collection.drop()
+```
+
+以下实例删除了 runoob 数据库中的集合 site：
+
+```text
+> use runoob
+switched to db runoob
+> db.createCollection("runoob")     # 先创建集合，类似数据库中的表
+> show tables             # show collections 命令会更加准确点
+runoob
+> db.runoob.drop()
+true
+> show tables
+>
+```
+
+
+## 复习重点
+
+- 能说明 `MongoDB 删除数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

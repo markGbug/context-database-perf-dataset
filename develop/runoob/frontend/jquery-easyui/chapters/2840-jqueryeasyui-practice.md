@@ -1,34 +1,63 @@
-# jQuery EasyUI：jQuery EasyUI 教程 练习笔记
+# jQuery EasyUI：jQuery EasyUI 教程
 
 - 来源：[jQuery EasyUI 教程](https://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2840
 
-## 练习目标
+## 本章内容
 
-把 `jQuery EasyUI 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+jQuery EasyUI 是一个基于 jQuery 的框架，集成了各种用户界面插件。
 
-## 练习步骤
+jQuery EasyUI 框架提供了创建网页所需的一切，帮助您轻松建立站点。本教程将告诉您如何使用 jQuery EasyUI 框架创建应用。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+现在开始学习 jQuery EasyUI！
 
-## 验收清单
+jQuery EasyUI 离线版CHM下载！
 
-- 我能独立说出 `jQuery EasyUI 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 内容列表
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- jQuery EasyUI 应用 - 创建 CRUD 应用
+- jQuery EasyUI 应用 - 创建 CRUD 数据网格
+- jQuery EasyUI 应用 - 创建展开行明细编辑表单的 CRUD 应用
+- jQuery EasyUI 应用 - 创建 RSS Feed 阅读器
+- jQuery EasyUI 拖放 - 基本的拖动和放置
+- jQuery EasyUI 拖放 - 创建拖放的购物车
+- jQuery EasyUI 拖放 - 创建学校课程表
+- jQuery EasyUI 菜单与按钮 - 创建简单的菜单
+- jQuery EasyUI 菜单与按钮 - 创建链接按钮（Link Button）
+- jQuery EasyUI 菜单与按钮 - 创建菜单按钮（Menu Button）
+- jQuery EasyUI 菜单与按钮 - 创建分割按钮（Split Button）
+- jQuery EasyUI 布局 - 为网页创建边框布局
+- jQuery EasyUI 布局 - 在面板中创建复杂布局
+- jQuery EasyUI 布局 - 创建折叠面板（Accordion）
+- jQuery EasyUI 布局 - 创建 Tabs 标签
+- jQuery EasyUI 布局 - 动态添加 Tabs
+- jQuery EasyUI 布局 - 添加自动播放 Tabs
+- jQuery EasyUI 布局 - 创建 XP 风格左侧面板
+- jQuery EasyUI 数据网格 - 转换 HTML 表格为数据网格
+- jQuery EasyUI 数据网格 - 添加分页组件
+- jQuery EasyUI 数据网格 - 添加查询功能
+- jQuery EasyUI 数据网格 - 取得选中行数据
+- jQuery EasyUI 数据网格 - 添加工具栏
+- jQuery EasyUI 数据网格 - 创建复杂工具栏
+- jQuery EasyUI 数据网格 - 设置冻结列
+- jQuery EasyUI 数据网格 - 动态改变列
+- jQuery EasyUI 数据网格 - 格式化列
+- jQuery EasyUI 数据网格 - 设置排序
+
+
+## 参考手册
+
+- jQuery EasyUI 插件
+- jQuery EasyUI 扩展
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery EasyUI 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

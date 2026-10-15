@@ -1,35 +1,129 @@
-# JavaScript：JavaScript break 和 continue 语句 学习笔记
+# JavaScript：JavaScript break 和 continue 语句
 
 - 来源：[JavaScript break 和 continue 语句](https://www.runoob.com/js/js-break.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2776
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript break 和 continue 语句` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+break 语句用于跳出循环。
 
-## 阅读抓手
+continue 用于跳过循环中的一个迭代。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## break 语句
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+我们已经在本教程之前的章节中见到过 break 语句。它用于跳出 switch() 语句。
 
-## 完成标准
+break 语句可用于跳出循环。
 
-- 能用 3 到 5 句话解释 `JavaScript break 和 continue 语句`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+break 语句跳出循环后，会继续执行该循环之后的代码（如果有的话）：
+
+
+## 实例
+
+```java
+for (i=0;i<10;i++)
+{
+    if (i==3)
+    {
+        break;
+    }
+    x=x + "The number is " + i + "<br>";
+}
+```
+
+由于这个 if 语句只有一行代码，所以可以省略花括号：
+
+```java
+for (i=0;i<10;i++)
+{
+    if (i==3) break;
+    x=x + "The number is " + i + "<br>";
+}
+```
+
+
+## continue 语句
+
+continue 语句中断当前的循环中的迭代，然后继续循环下一个迭代。 以下例子在值为 3 时，直接跳过：
+
+
+## for 实例
+
+```java
+for (i=0;i<=10;i++)
+{
+    if (i==3) continue;
+    x=x + "The number is " + i + "<br>";
+}
+```
+
+
+## while 实例
+
+```java
+while (i < 10){
+  if (i == 3){
+    i++;    //加入i++不会进入死循环
+    continue;
+  }
+  x= x + "该数字为 " + i + "<br>";
+  i++;
+}
+```
+
+
+## JavaScript 标签
+
+正如您在 switch 语句那一章中看到的，可以对 JavaScript 语句进行标记。
+
+如需标记 JavaScript 语句，请在语句之前加上冒号：
+
+```text
+label:
+statements
+```
+
+break 和 continue 语句仅仅是能够跳出代码块的语句。
+
+语法:
+
+```text
+break labelname;
+
+continue labelname;
+```
+
+continue 语句（带有或不带标签引用）只能用在循环中。
+
+break 语句（不带标签引用），只能用在循环或 switch 中。
+
+通过标签引用，break 语句可用于跳出任何 JavaScript 代码块：
+
+
+## 实例
+
+```html
+cars=["BMW","Volvo","Saab","Ford"];
+list:
+{
+    document.write(cars[0] + "<br>");
+    document.write(cars[1] + "<br>");
+    document.write(cars[2] + "<br>");
+    break list;
+    document.write(cars[3] + "<br>");
+    document.write(cars[4] + "<br>");
+    document.write(cars[5] + "<br>");
+}
+```
+
+
+## 复习重点
+
+- 能说明 `JavaScript break 和 continue 语句` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

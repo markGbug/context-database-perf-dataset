@@ -1,35 +1,75 @@
-# DeepSeek Harness：DeepSeek Harness 加载插件 学习笔记
+# DeepSeek Harness：DeepSeek Harness 加载本地插件
 
 - 来源：[DeepSeek Harness 加载插件](https://www.runoob.com/deepseek-harness/deepseek-harness-load-plugin.html)
 - 分类：AI / 智能开发
 - 技术：DeepSeek Harness
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0224
 
-## 学习目标
+## 本章内容
 
-DeepSeek Harness 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `DeepSeek Harness 加载插件` 建立学习路径，先理解它在 DeepSeek Harness 体系中的位置，再做可运行或可复述的验证。
+上一篇 DeepSeek Harness 第一个插件 写好了 hello-plugin 的源码，接下来我们把它加载进 Web UI。
 
-## 阅读抓手
+这里我们会用到两个东西：patch 覆盖层 cordis.yml 和 --patch 启动参数。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## scratch-plugin 目录结构
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+之前我们创建了 scratch-plugin/src，现在再加一个 cordis.yml。
 
-## 完成标准
+整个临时项目的结构如下：
 
-- 能用 3 到 5 句话解释 `DeepSeek Harness 加载插件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+scratch-plugin/
+├── src/
+│   └── my-plugin.ts    # 插件源码（上一篇写的 hello-plugin）
+└── cordis.yml          # patch 覆盖层：告诉框架插入哪个插件
+```
+
+
+## cordis.yml 的 insert
+
+在仓库根目录运行 pwd，拿到绝对路径。
+
+然后创建 scratch-plugin/cordis.yml，内容如下：
+
+
+## 实例
+
+把 /absolute/path/to/deepseek-harness 替换成 pwd 打印的真实路径。
+
+插件路径必须是绝对路径。
+
+patch 文件只贡献配置，不会改变 loader 解析模块路径时使用的 profile 目录。
+
+
+## 用 --patch 启动
+
+用这个覆盖层启动 Web UI：
+
+```text
+pnpm dsh web --patch ./scratch-plugin/cordis.yml
+```
+
+启动期间，终端会打印 [hello-plugin] plugin loaded!。
+
+打开 http://127.0.0.1:3080，在设置插件列表中搜索 hello，可以看到我们安装的插件。
+
+
+## 工作原理
+
+dsh 把多个配置来源按顺序叠加成一个最终配置。
+
+--patch 传入的 cordis.yml 是一个覆盖层，在启动时叠加进 profile。
+
+提示：--patch 适合本地开发调试。
+
+要把插件交付给其他人时，用组合包（bundle）的方式，见第 21 篇。
+
+
+## 复习重点
+
+- 能说明 `DeepSeek Harness 加载插件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

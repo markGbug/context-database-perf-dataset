@@ -1,34 +1,73 @@
-# Ionic：ionic 背景层 练习笔记
+# Ionic：ionic 背景层
 
 - 来源：[ionic 背景层](https://www.runoob.com/ionic/ionic-ionicbackdrop.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3312
 
-## 练习目标
+## 本章内容
 
-把 `ionic 背景层` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们经常需要在 UI 上，例如在弹出框、加载框、其他弹出层中显示或隐藏背景层。
 
-## 练习步骤
+在组件中可以使用$ionicBackdrop.retain()来显示背景层，使用$ionicBackdrop.release()隐藏背景层。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+每次调用retain后，背景会一直显示，直到调用release消除背景层。
 
-## 验收清单
 
-- 我能独立说出 `ionic 背景层` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### HTML 代码
+
+```html
+<body ng-app="starter" ng-controller="actionsheetCtl" >
+    <ion-pane>
+        <ion-content >
+            <h2 ng-click="action()">$ionicBackdrop</h2>
+        </ion-content>
+    </ion-pane>
+</body>
+```
+
+
+### JavaScript 代码
+
+```text
+angular.module('starter', ['ionic'])
+
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }
+    if(window.StatusBar) {
+      StatusBar.styleDefault();
+    }
+  });
+})
+
+.controller( 'actionsheetCtl',['$scope','$timeout' ,'$ionicBackdrop',function($scope,$timeout,$ionicBackdrop){
+
+    $scope.action = function() {
+       $ionicBackdrop.retain();
+       $timeout(function() {    //默认让它1秒后消失
+         $ionicBackdrop.release();
+       }, 1000);
+    };
+}])
+```
+
+尝试一下 »
+
+显示效果如下图所示：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 背景层` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

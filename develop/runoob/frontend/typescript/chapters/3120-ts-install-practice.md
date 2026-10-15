@@ -1,34 +1,111 @@
-# TypeScript：TypeScript 安装 练习笔记
+# TypeScript：TypeScript 安装
 
 - 来源：[TypeScript 安装](https://www.runoob.com/typescript/ts-install.html)
 - 分类：前端开发
 - 技术：TypeScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3120
 
-## 练习目标
+## 本章内容
 
-把 `TypeScript 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本文介绍 TypeScript 环境的安装。
 
-## 练习步骤
+我们需要使用到 npm 工具安装，如果你还不了解 npm，可以参考我们的NPM 使用介绍。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### NPM 安装 TypeScript
 
-- 我能独立说出 `TypeScript 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+如果你的本地环境已经安装了 npm 工具，可以使用以下命令来安装。
 
-## 复盘问题
+使用国内镜像：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+npm config set registry https://registry.npmmirror.com
+```
+
+安装 typescript：
+
+```text
+npm install -g typescript
+```
+
+安装完成后我们可以使用 tsc 命令来执行 TypeScript 的相关代码，以下是查看版本号：
+
+```text
+$ tsc -v
+Version 3.2.2
+```
+
+然后我们新建一个 app.ts 的文件，代码如下：
+
+```javascript
+var message:string = "Hello World"
+console.log(message)
+```
+
+通常我们使用 .ts 作为 TypeScript 代码文件的扩展名。
+
+然后执行以下命令将 TypeScript 转换为 JavaScript 代码：
+
+```text
+tsc app.ts
+```
+
+这时候在当前目录下（与 app.ts 同一目录）就会生成一个 app.js 文件，代码如下：
+
+```javascript
+var message = "Hello World";
+console.log(message);
+```
+
+使用 node 命令来执行 app.js 文件：
+
+```text
+$ node app.js
+Hello World
+```
+
+TypeScript 转换为 JavaScript 过程如下图：
+
+
+## VS Code 介绍
+
+很多 IDE 都有支持 TypeScript 插件，如：VS Code，Sublime Text 2，WebStorm / PHPStorm，Eclipse 等。
+
+本章节主要介绍 VS Code，VS Code 是一个可以运行于 Mac OS X、Windows 和 Linux 之上的，针对于编写现代 Web 和云应用的跨平台源代码编辑器，由 Microsoft 公司开发。
+
+VS Code 教程：https://www.runoob.com/vscode/vscode-tutorial.html
+
+另外国内阿里与字节也有基于 VS Code 开发的 AI IDE：
+
+- 阿里 Qoder：https://qoder.com/
+- 字节 Trae：https://www.trae.cn/
+
+
+### Windows 上安装 Visual Studio Code
+
+1、下载 Visual Studio Code。
+
+2、双击 VSCodeSetup.exe 图标 安装。
+
+3、安装完成后，打开 Visual Studio Code 界面类似如下：
+
+4、 我们可以在左侧窗口中点击当前编辑的代码文件，选择 open in command prompt（在终端中打开），这时候我们就可以在屏幕的右侧下半部分使用 tsc 命令来执行 TypeScript 文件代码了。
+
+
+### Mac OS X 安装 Visual Studio Code
+
+Mac OS X 安装配置 Visual Studio Code 可以查看： https://code.visualstudio.com/Docs/editor/setup
+
+
+### Linux 安装 Visual Studio Code
+
+Linux 安装配置 Visual Studio Code 可以查看： https://code.visualstudio.com/Docs/editor/setup
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `TypeScript 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

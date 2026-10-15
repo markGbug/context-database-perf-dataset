@@ -1,34 +1,170 @@
-# Maven：Maven Web 应用 练习笔记
+# Maven：Maven Web 应用
 
 - 来源：[Maven Web 应用](https://www.runoob.com/maven/maven-web-application.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1848
 
-## 练习目标
+## 本章内容
 
-把 `Maven Web 应用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们将学习如何使用版本控制系统 Maven 来管理一个基于 web 的项目，如何创建、构建、部署以及运行一个 web 应用。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 创建 Web 应用
 
-## 验收清单
+我们可以使用 maven-archetype-webapp 插件来创建一个简单的 Java web 应用。
 
-- 我能独立说出 `Maven Web 应用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+打开命令控制台，进入到 C:\MVN 文件夹，然后执行以下的 mvn 命令：
 
-## 复盘问题
+```text
+C:\MVN>mvn archetype:generate -DgroupId=com.companyname.automobile -DartifactId=trucks -DarchetypeArtifactId=maven-archetype-webapp  -DinteractiveMode=false
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+执行完后 Maven 将开始处理，并且创建完整的于Java Web 项目的目录结构。
+
+```text
+[INFO] Scanning for projects...
+[INFO] Searching repository for plugin with prefix: 'archetype'.
+[INFO] -------------------------------------------------------------------
+[INFO] Building Maven Default Project
+[INFO]    task-segment: [archetype:generate] (aggregator-style)
+[INFO] -------------------------------------------------------------------
+[INFO] Preparing archetype:generate
+[INFO] No goals needed for project - skipping
+[INFO] [archetype:generate {execution: default-cli}]
+[INFO] Generating project in Batch mode
+[INFO] --------------------------------------------------------------------
+[INFO] Using following parameters for creating project
+from Old (1.x) Archetype: maven-archetype-webapp:1.0
+[INFO] --------------------------------------------------------------------
+[INFO] Parameter: groupId, Value: com.companyname.automobile
+[INFO] Parameter: packageName, Value: com.companyname.automobile
+[INFO] Parameter: package, Value: com.companyname.automobile
+[INFO] Parameter: artifactId, Value: trucks
+[INFO] Parameter: basedir, Value: C:\MVN
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] project created from Old (1.x) Archetype in dir: C:\MVN\trucks
+[INFO] -------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] -------------------------------------------------------------------
+[INFO] Total time: 16 seconds
+[INFO] Finished at: Tue Jul 17 11:00:00 IST 2012
+[INFO] Final Memory: 20M/89M
+[INFO] -------------------------------------------------------------------
+```
+
+执行完后，我们可以在 C:/MVN 文件夹下看到 trucks 项目，查看项目的目录结构：
+
+Maven 目录结构是标准的，各个目录作用如下表所示:
+
+pom.xml 文件代码如下：
+
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>com.companyname.automobile</groupId>
+   <artifactId>trucks</artifactId>
+   <packaging>war</packaging>
+   <version>1.0-SNAPSHOT</version>
+   <name>trucks Maven Webapp</name>
+   <url>http://maven.apache.org</url>
+   <dependencies>
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>3.8.1</version>
+         <scope>test</scope>
+      </dependency>
+   </dependencies>
+   <build>
+      <finalName>trucks</finalName>
+   </build>
+</project>
+```
+
+接下来我们打开 C:\ > MVN > trucks > src > main > webapp > 文件夹，可以看到一个已经创建好的 index.jsp 文件，代码如下：
+
+```html
+<html>
+   <body>
+      <h2>Hello World!</h2>
+   </body>
+</html>
+```
+
+
+## 构建 Web 应用
+
+打开命令控制台，进入 C:\MVN\trucks 目录，然后执行下面的以下 mvn 命令：
+
+```text
+C:\MVN\trucks>mvn clean package
+```
+
+Maven 将开始构建项目:
+
+```text
+[INFO] Scanning for projects...
+[INFO] -------------------------------------------------------------------
+[INFO] Building trucks Maven Webapp
+[INFO]    task-segment: [clean, package]
+[INFO] -------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (Cp1252 actually) to
+copy filtered resources,i.e. build is platform dependent!
+[INFO] Copying 0 resource
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] No sources to compile
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (Cp1252 actually) to
+copy filtered resources,i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory
+C:\MVN\trucks\src\test\resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] [war:war {execution: default-war}]
+[INFO] Packaging webapp
+[INFO] Assembling webapp[trucks] in [C:\MVN\trucks\target\trucks]
+[INFO] Processing war project
+[INFO] Copying webapp resources[C:\MVN\trucks\src\main\webapp]
+[INFO] Webapp assembled in[77 msecs]
+[INFO] Building war: C:\MVN\trucks\target\trucks.war
+[INFO] -------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] -------------------------------------------------------------------
+[INFO] Total time: 3 seconds
+[INFO] Finished at: Tue Jul 17 11:22:45 IST 2012
+[INFO] Final Memory: 11M/85M
+[INFO] -------------------------------------------------------------------
+```
+
+
+### 部署 Web 应用
+
+打开 C:\ < MVN < trucks < target < 文件夹，找到 trucks.war 文件，并复制到你的 web 服务器的 web 应用目录，然后重启 web 服务器。
+
+
+### 测试 Web 应用
+
+访问以下 URL 运行 web 应用：
+
+```text
+http://:/trucks/index.jsp
+```
+
+验证结果：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Maven Web 应用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

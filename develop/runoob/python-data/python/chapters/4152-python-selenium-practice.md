@@ -1,34 +1,37 @@
-# Python：Python selenium 库 练习笔记
+# Python：Python selenium 库
 
 - 来源：[Python selenium 库](https://www.runoob.com/python3/python-selenium.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4152
 
-## 练习目标
+## 本章内容
 
-把 `Python selenium 库` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Selenium 是一个用于自动化 Web 浏览器操作的强大工具，广泛应用于 Web 应用程序测试、网页数据抓取和任务自动化等场景。
 
-## 练习步骤
+Selenium 为各种编程语言提供了 API，用作测试。 目前的官方 API 文档有 C#、JavaScript、Java、Python、Ruby。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Selenium 教程：https://www.runoob.com/selenium/
 
-## 验收清单
 
-- 我能独立说出 `Python selenium 库` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 安装 Selenium 和 WebDriver
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 安装 Selenium
+
+要开始使用 Selenium，首先需要安装 selenium 库，并下载适用于你浏览器的 WebDriver。
+
+使用 pip 安装 Selenium：
+
+```text
+pip install selenium
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python selenium 库` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

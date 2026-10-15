@@ -1,35 +1,60 @@
-# Skills（技能）：使用现有 Skills 学习笔记
+# Skills（技能）：使用现有 Skills
 
 - 来源：[使用现有 Skills](https://www.runoob.com/skills/use-existing-skills.html)
 - 分类：AI / 智能开发
 - 技术：Skills（技能）
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0623
 
-## 学习目标
+## 本章内容
 
-Skills（技能） 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `使用现有 Skills` 建立学习路径，先理解它在 Skills（技能） 体系中的位置，再做可运行或可复述的验证。
+现在市场上其实已经有了很多大家编写好的 Skills。
 
-## 阅读抓手
+比如 Anthropic 官方提供的 Claude Skills： https://github.com/anthropics/skills 。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+该仓库是 Anthropic 官方 Claude 技能合集，配套 Agent Skills 开放标准，支持动态加载拓展 AI 专项能力，技能覆盖设计、开发、企业办公、全品类文档编辑，多数开源，文档底层能力仅供源码参考。
 
-## 笔记模板
+我们可以将本仓库注册为 Claude Code 的插件市场，只需在 Claude Code 中执行以下命令：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+/plugin marketplace add anthropics/skills
+```
 
-## 完成标准
+然后就可以使用 /plugin 查看：
 
-- 能用 3 到 5 句话解释 `使用现有 Skills`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+安装指定技能集的步骤：
+
+- 浏览并安装插件（Browse and install plugins）
+- 选择 anthropic-agent-skills 插件源
+- 选择 document-skills（文档技能） 或 example-skills（示例技能）
+- 点击立即安装（Install now）
+
+我们也可直接通过命令安装上述两类插件：
+
+```text
+/plugin install document-skills@anthropic-agent-skills
+/plugin install example-skills@anthropic-agent-skills
+```
+
+注意：使用插件安装的 skills 目录在 ～/claude/plugins/marketplaces/ 下。
+
+插件安装完成后，需要重启一下 Claude Code。
+
+使用的时候只需在指令中提及技能名称即可调用，例如安装 document-skills 插件后，可向 Claude Code 下达指令：
+
+```text
+使用 PDF 技能提取 path/to/some-file.pdf 文件中的表单字段
+```
+
+或者创建一个 PPT：
+
+
+## Agent Skills 相关资源整理
+
+
+## 复习重点
+
+- 能说明 `使用现有 Skills` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,84 @@
-# Highcharts：Highcharts 环境配置 学习笔记
+# Highcharts：Highcharts 环境配置
 
 - 来源：[Highcharts 环境配置](https://www.runoob.com/highcharts/highcharts-setup.html)
 - 分类：前端开发
 - 技术：Highcharts
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2572
 
-## 学习目标
+## 本章内容
 
-Highcharts 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Highcharts 环境配置` 建立学习路径，先理解它在 Highcharts 体系中的位置，再做可运行或可复述的验证。
+本章节我们将为大家介绍如何在网页中使用 Highcharts。
 
-## 阅读抓手
+本教程将 Highcharts 与 jQuery 结合使用，所以在加载 Highcharts 前必须先加载 jQuery 库。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+如果你对 jQuery 不熟悉，可以参阅本站的jQuery 教程。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 安装 jQuery
 
-## 完成标准
+jQuery 安装可以使用以下两种方式：
 
-- 能用 3 到 5 句话解释 `Highcharts 环境配置`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 1、访问 jquery.com 下载jQuery包。
+- 2、使用 Staticfile CDN 静态资源库的jQuery资源：https://cdn.staticfile.net/jquery/2.1.4/jquery.min.js
+- 3、使用百度静态资源库的jQuery资源：https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js
+
+
+### 使用下载的方式
+
+使用下载的方式，在 HTML 页面引入 jQuery 代码:
+
+```html
+<head>
+   <script src="/jquery/jquery.min.js"></script>
+</head>
+```
+
+
+### 使用 CDN（推荐）
+
+使用 Staticfile CDN 静态资源库来加载jQuery库：
+
+```html
+<head>
+   <script src="https://cdn.staticfile.net/jquery/2.1.4/jquery.min.js"></script>
+</head>
+```
+
+
+## 安装 Highcharts
+
+Highcharts 安装可以使用以下两种方式：
+
+- 1、访问 highcharts.com 下载 Highcharts 包。
+- 2、使用官方提供的 CDN 地址：https://code.highcharts.com/highcharts.js
+
+
+### 使用下载的方式（推荐）
+
+使用下载的方式，在 HTML 页面引入 Highcharts 代码:
+
+```html
+<head>
+   <script src="/highcharts/highcharts.js"></script>
+</head>
+```
+
+
+### 使用 CDN
+
+使用官方提供的 CDN 地址：
+
+```html
+<head>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+```
+
+
+## 复习重点
+
+- 能说明 `Highcharts 环境配置` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

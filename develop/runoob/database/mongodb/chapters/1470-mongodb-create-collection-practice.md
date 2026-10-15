@@ -1,34 +1,98 @@
-# MongoDB：MongoDB 创建集合 练习笔记
+# MongoDB：MongoDB 创建集合
 
 - 来源：[MongoDB 创建集合](https://www.runoob.com/mongodb/mongodb-create-collection.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1470
 
-## 练习目标
+## 本章内容
 
-把 `MongoDB 创建集合` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们为大家介绍如何使用 MongoDB 来创建集合。
 
-## 练习步骤
+MongoDB 中使用 createCollection() 方法来创建集合。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+语法格式：
 
-## 验收清单
+```text
+db.createCollection(name, options)
+```
 
-- 我能独立说出 `MongoDB 创建集合` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+参数说明：
 
-## 复盘问题
+- name: 要创建的集合名称。
+- options: 可选参数, 指定有关内存大小及索引的选项。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+options 可以是如下参数：
+
+在插入文档时，MongoDB 首先检查固定集合的 size 字段，然后检查 max 字段。
+
+使用这些选项创建一个集合的实例：
+
+
+## 实例
+
+这个例子创建了一个集合，具有以下特性：
+
+- 固定大小，最大 10MB，最多存储 5000 个文档。
+- 文档必须包含 name 和 email 字段，其中 name 必须是字符串，email 必须是有效的电子邮件格式。
+- 验证级别为严格，验证失败将阻止插入或更新。
+- 使用 WiredTiger 存储引擎，指定块压缩器为 zstd。
+- 默认使用英语排序规则。
+
+
+### 实例
+
+在 test 数据库中创建 runoob 集合：
+
+```text
+> use test
+switched to db test
+> db.createCollection("runoob")
+{ "ok" : 1 }
+>
+```
+
+如果要查看已有集合，可以使用 show collections 或 show tables 命令：
+
+```text
+> show collections
+runoob
+system.indexes
+```
+
+下面是带有几个关键参数的 createCollection() 的用法：
+
+创建了一个固定大小的集合，最大大小为 5MB（5242880 字节），最多存储 5000 个文档。
+
+```text
+db.createCollection("myCappedCollection", { capped: true, size: 5242880, max: 5000 });
+```
+
+在 MongoDB 中，你不需要创建集合，当你插入一些文档时，MongoDB 会自动创建集合。
+
+```text
+> db.mycol2.insert({"name" : "菜鸟教程"})
+> show collections
+mycol2
+...
+```
+
+创建了一个最大大小为 1MB（1048576 字节）的固定大小集合：
+
+```text
+db.createCollection("myCappedCollection", { capped: true, size: 1048576 });
+```
+
+以下例子为 myCollection 集合创建了一个验证器，要求文档中必须有 name 和 age 字段，且 name 必须是字符串，age 必须是非负整数。
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MongoDB 创建集合` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

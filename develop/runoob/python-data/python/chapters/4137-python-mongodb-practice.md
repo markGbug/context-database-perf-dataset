@@ -1,34 +1,183 @@
-# Python：Python3 MongoDB 练习笔记
+# Python：Python MongoDB
 
 - 来源：[Python3 MongoDB](https://www.runoob.com/python3/python-mongodb.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4137
 
-## 练习目标
+## 本章内容
 
-把 `Python3 MongoDB` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MongoDB 是目前最流行的 NoSQL 数据库之一，使用的数据类型 BSON（类似 JSON）。
 
-## 练习步骤
+MongoDB 数据库安装与介绍可以查看我们的 MongoDB 教程。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## PyMongo
 
-- 我能独立说出 `Python3 MongoDB` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Python 要连接 MongoDB 需要 MongoDB 驱动，这里我们使用 PyMongo 驱动来连接。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### pip 安装
+
+pip 是一个通用的 Python 包管理工具，提供了对 Python 包的查找、下载、安装、卸载的功能。
+
+安装 pymongo:
+
+```text
+$ python3 -m pip3 install pymongo
+```
+
+也可以指定安装的版本:
+
+```text
+$ python3 -m pip3 install pymongo==3.5.1
+```
+
+更新 pymongo 命令：
+
+```text
+$ python3 -m pip3 install --upgrade pymongo
+```
+
+
+### easy_install 安装
+
+旧版的 Python 可以使用 easy_install 来安装，easy_install 也是 Python 包管理工具。
+
+```text
+$ python -m easy_install pymongo
+```
+
+更新 pymongo 命令：
+
+```text
+$ python -m easy_install -U pymongo
+```
+
+
+### 测试 PyMongo
+
+接下来我们可以创建一个测试文件 demo_test_mongodb.py，代码如下：
+
+
+## demo_test_mongodb.py 文件代码：
+
+```text
+#!/usr/bin/python3
+
+import pymongo
+```
+
+执行以上代码文件，如果没有出现错误，表示安装成功。
+
+
+## 创建数据库
+
+
+### 创建一个数据库
+
+创建数据库需要使用 MongoClient 对象，并且指定连接的 URL 地址和要创建的数据库名。
+
+如下实例中，我们创建的数据库 runoobdb :
+
+
+## 实例
+
+```text
+#!/usr/bin/python3
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["runoobdb"]
+```
+
+注意: 在 MongoDB 中，数据库只有在内容插入后才会创建! 就是说，数据库创建后要创建集合(数据表)并插入一个文档(记录)，数据库才会真正创建。
+
+
+### 判断数据库是否已存在
+
+我们可以读取 MongoDB 中的所有数据库，并判断指定的数据库是否存在：
+
+
+## 实例
+
+```text
+#!/usr/bin/python3
+
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+
+dblist = myclient.list_database_names()
+# dblist = myclient.database_names()
+if "runoobdb" in dblist:
+  print("数据库已存在！")
+```
+
+注意：database_names 在最新版本的 Python 中已废弃，Python3.7+ 之后的版本改为了 list_database_names()。
+
+
+## 创建集合
+
+MongoDB 中的集合类似 SQL 的表。
+
+
+### 创建一个集合
+
+MongoDB 使用数据库对象来创建集合，实例如下：
+
+
+## 实例
+
+```text
+#!/usr/bin/python3
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["runoobdb"]
+
+mycol = mydb["sites"]
+```
+
+注意: 在 MongoDB 中，集合只有在内容插入后才会创建! 就是说，创建集合(数据表)后要再插入一个文档(记录)，集合才会真正创建。
+
+
+### 判断集合是否已存在
+
+我们可以读取 MongoDB 数据库中的所有集合，并判断指定的集合是否存在：
+
+
+## 实例
+
+```text
+#!/usr/bin/python3
+
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+
+mydb = myclient['runoobdb']
+
+collist = mydb. list_collection_names()
+# collist = mydb.collection_names()
+if "sites" in collist:   # 判断 sites 集合是否存在
+  print("集合已存在！")
+```
+
+注意：collection_names 在最新版本的 Python 中已废弃，Python3.7+ 之后的版本改为了 list_collection_names()。
+
+
+## 增、删、改、查等操作
+
+下表列出了 MongoDB 的更多操作，详情可点击具体链接：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python3 MongoDB` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

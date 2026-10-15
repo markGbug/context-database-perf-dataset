@@ -1,34 +1,207 @@
-# MySQL：MySQL ORDER BY 语句 练习笔记
+# MySQL：MySQL ORDER BY(排序) 语句
 
 - 来源：[MySQL ORDER BY 语句](https://www.runoob.com/mysql/mysql-order-by.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1524
 
-## 练习目标
+## 本章内容
 
-把 `MySQL ORDER BY 语句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们知道从 MySQL 表中使用 SELECT 语句来读取数据。
 
-## 练习步骤
+如果我们需要对读取的数据进行排序，我们就可以使用 MySQL 的 ORDER BY 子句来设定你想按哪个字段哪种方式来进行排序，再返回搜索结果。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+MySQL ORDER BY(排序) 语句可以按照一个或多个列的值进行升序（ASC）或降序（DESC）排序。
 
-## 验收清单
 
-- 我能独立说出 `MySQL ORDER BY 语句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法
 
-## 复盘问题
+以下是 SELECT 语句使用 ORDER BY 子句将查询数据排序后再返回数据：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+SELECT column1, column2, ...
+FROM table_name
+ORDER BY column1 [ASC | DESC], column2 [ASC | DESC], ...;
+```
+
+参数说明：
+
+- column1, column2, ... 是你要选择的列的名称，如果使用 * 表示选择所有列。
+- table_name 是你要从中查询数据的表的名称。
+- ORDER BY column1 [ASC | DESC], column2 [ASC | DESC], ... 是用于指定排序顺序的子句。ASC 表示升序（默认），DESC 表示降序。
+
+更多说明：
+
+- 你可以使用任何字段来作为排序的条件，从而返回排序后的查询结果。
+- 你可以设定多个字段来排序。
+- 你可以使用 ASC 或 DESC 关键字来设置查询结果是按升序或降序排列。 默认情况下，它是按升序排列。
+- 你可以添加 WHERE...LIKE 子句来设置条件。
+
+
+### 实例
+
+以下是一些 ORDER BY 子句的使用实例。
+
+1. 单列排序：
+
+```text
+SELECT * FROM products
+ORDER BY product_name ASC;
+```
+
+以上 SQL 语句将选择产品表 products 中的所有产品，并按产品名称升序 ASC 排序。
+
+2. 多列排序：
+
+```text
+SELECT * FROM employees
+ORDER BY department_id ASC, hire_date DESC;
+```
+
+以上 SQL 语句将选择员工表 employees 中的所有员工，并先按部门 ID 升序 ASC 排序，然后在相同部门中按雇佣日期降序 DESC 排序。
+
+3. 使用数字表示列的位置：
+
+```text
+SELECT first_name, last_name, salary
+FROM employees
+ORDER BY 3 DESC, 1 ASC;
+```
+
+以上 SQL 语句将选择员工表 employees 中的名字和工资列，并按第三列（salary）降序 DESC 排序，然后按第一列（first_name）升序 ASC 排序。
+
+4. 使用表达式排序：
+
+```text
+SELECT product_name, price * discount_rate AS discounted_price
+FROM products
+ORDER BY discounted_price DESC;
+```
+
+以上 SQL 语句将选择产品表 products 中的产品名称和根据折扣率计算的折扣后价格，并按折扣后价格降序 DESC 排序。
+
+5.从 MySQL 8.0.16 版本开始，可以使用 NULLS FIRST 或 NULLS LAST 处理 NULL 值：
+
+```text
+SELECT product_name, price
+FROM products
+ORDER BY price DESC NULLS LAST;
+```
+
+以上 SQL 语句将选择产品表 products 中的产品名称和价格，并按价格降序 DESC 排序，将 NULL 值排在最后。
+
+相反，如果你想让 NULL 值排在前面，可以这样写：
+
+```text
+SELECT product_name, price
+FROM products
+ORDER BY price DESC NULLS FIRST;
+```
+
+ORDER BY 子句是一个强大的工具，可以根据不同的业务需求对查询结果进行排序。在实际应用中，注意选择适当的列和排序顺序，以获得符合期望的排序效果。
+
+
+## 在命令提示符中使用 ORDER BY 子句
+
+以下将在 SELECT 语句中使用 ORDER BY 子句来读取 MySQL 数据表 runoob_tbl 中的数据：
+
+
+### 实例
+
+尝试以下实例，结果将按升序及降序排列。
+
+
+## SQL 排序
+
+```text
+mysql> use RUNOOB;
+Database changed
+mysql> SELECT * from runoob_tbl ORDER BY submission_date ASC;
++-----------+---------------+---------------+-----------------+
+| runoob_id | runoob_title  | runoob_author | submission_date |
++-----------+---------------+---------------+-----------------+
+| 3         | 学习 Java   | RUNOOB.COM    | 2015-05-01      |
+| 4         | 学习 Python | RUNOOB.COM    | 2016-03-06      |
+| 1         | 学习 PHP    | 菜鸟教程  | 2017-04-12      |
+| 2         | 学习 MySQL  | 菜鸟教程  | 2017-04-12      |
++-----------+---------------+---------------+-----------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT * from runoob_tbl ORDER BY submission_date DESC;
++-----------+---------------+---------------+-----------------+
+| runoob_id | runoob_title  | runoob_author | submission_date |
++-----------+---------------+---------------+-----------------+
+| 1         | 学习 PHP    | 菜鸟教程  | 2017-04-12      |
+| 2         | 学习 MySQL  | 菜鸟教程  | 2017-04-12      |
+| 4         | 学习 Python | RUNOOB.COM    | 2016-03-06      |
+| 3         | 学习 Java   | RUNOOB.COM    | 2015-05-01      |
++-----------+---------------+---------------+-----------------+
+4 rows in set (0.01 sec)
+```
+
+读取 runoob_tbl 表中所有数据并按 submission_date 字段的升序排列。
+
+
+## 在 PHP 脚本中使用 ORDER BY 子句
+
+你可以使用 PHP 函数的 mysqli_query() 及相同的 SELECT 带上 ORDER BY 子句的命令来获取数据。
+
+该函数用于执行 SQL 命令，然后通过 PHP 函数 mysqli_fetch_array() 来输出所有查询的数据。
+
+
+### 实例
+
+尝试以下实例，查询后的数据按 submission_date 字段的降序排列后返回。
+
+
+## MySQL ORDER BY 测试：
+
+```java
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+    die('连接失败: ' . mysqli_error($conn));
+}
+// 设置编码，防止中文乱码
+mysqli_query($conn , "set names utf8");
+
+$sql = 'SELECT runoob_id, runoob_title,
+        runoob_author, submission_date
+        FROM runoob_tbl
+        ORDER BY  submission_date ASC';
+
+mysqli_select_db( $conn, 'RUNOOB' );
+$retval = mysqli_query( $conn, $sql );
+if(! $retval )
+{
+    die('无法读取数据: ' . mysqli_error($conn));
+}
+echo '<h2>菜鸟教程 MySQL ORDER BY 测试<h2>';
+echo '<table border="1"><tr><td>教程 ID</td><td>标题</td><td>作者</td><td>提交日期</td></tr>';
+while($row = mysqli_fetch_array($retval, MYSQLI_ASSOC))
+{
+    echo "<tr><td> {$row['runoob_id']}</td> ".
+         "<td>{$row['runoob_title']} </td> ".
+         "<td>{$row['runoob_author']} </td> ".
+         "<td>{$row['submission_date']} </td> ".
+         "</tr>";
+}
+echo '</table>';
+mysqli_close($conn);
+?>
+```
+
+输出结果如下图所示：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL ORDER BY 语句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

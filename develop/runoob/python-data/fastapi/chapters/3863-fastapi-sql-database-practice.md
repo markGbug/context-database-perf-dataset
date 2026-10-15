@@ -1,34 +1,112 @@
-# FastAPI：FastAPI 数据库集成 练习笔记
+# FastAPI：FastAPI 数据库集成
 
 - 来源：[FastAPI 数据库集成](https://www.runoob.com/fastapi/fastapi-sql-database.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3863
 
-## 练习目标
+## 本章内容
 
-把 `FastAPI 数据库集成` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+FastAPI 可以与各种数据库集成，最常用的方式是使用 SQLAlchemy 作为 ORM。本节介绍如何使用 FastAPI + SQLAlchemy 构建具有 CRUD（创建、读取、更新、删除）功能的 API。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 安装依赖
 
-## 验收清单
+```text
+pip install sqlalchemy
+```
 
-- 我能独立说出 `FastAPI 数据库集成` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 项目结构
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+project/
+├── main.py          # FastAPI 应用入口
+├── database.py      # 数据库连接配置
+├── models.py        # SQLAlchemy 模型
+├── schemas.py       # Pydantic 数据模型
+└── crud.py          # 数据库操作函数
+```
+
+
+## 1. 数据库配置
+
+在 database.py 中配置数据库连接：
+
+
+## 实例
+
+开发环境使用 SQLite 即可，它是一个文件数据库，无需安装额外的数据库服务。生产环境建议使用 PostgreSQL 或 MySQL，只需修改 SQLALCHEMY_DATABASE_URL 即可。
+
+
+## 2. SQLAlchemy 模型
+
+在 models.py 中定义数据库表结构：
+
+
+## 实例
+
+
+## 3. Pydantic 数据模型
+
+在 schemas.py 中定义 API 的输入/输出数据结构：
+
+
+## 实例
+
+Pydantic 模型与 SQLAlchemy 模型是分离的。Pydantic 负责 API 层的数据校验，SQLAlchemy 负责数据库层的表结构。from_attributes=True 让 Pydantic 能够从 SQLAlchemy 对象中读取数据。
+
+
+## 4. 数据库操作函数
+
+在 crud.py 中封装数据库操作：
+
+
+## 实例
+
+
+## 5. FastAPI 应用入口
+
+在 main.py 中整合所有组件：
+
+
+## 实例
+
+
+## 数据库会话的依赖注入
+
+核心模式是使用依赖注入管理数据库会话：
+
+```text
+def get_db():
+    db = SessionLocal()   # 创建会话
+    try:
+        yield db          # 提供会话给路由函数
+    finally:
+        db.close()        # 请求完成后关闭会话
+```
+
+每个请求获取独立的数据库会话，请求完成后自动关闭，避免资源泄露。
+
+
+## 不同数据库的连接字符串
+
+切换数据库只需修改连接字符串，其余代码无需改动。这也是使用 ORM 的优势之一。
+
+
+## 小结
+
+- 使用 SQLAlchemy 作为 ORM，FastAPI 通过依赖注入管理数据库会话
+- Pydantic 模型（schemas.py）负责 API 数据校验，SQLAlchemy 模型（models.py）负责数据库表结构
+- CRUD 操作封装在 crud.py 中，保持代码清晰
+- 开发使用 SQLite，生产切换到 PostgreSQL/MySQL 只需改连接字符串
+- from_attributes=True 让 Pydantic 能从 ORM 对象读取数据
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `FastAPI 数据库集成` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

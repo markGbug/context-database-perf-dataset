@@ -1,35 +1,166 @@
-# RESTful API：RESTful API 调试 学习笔记
+# RESTful API：RESTful API 测试和调试
 
 - 来源：[RESTful API 调试](https://www.runoob.com/restfulapi/restful-api-debug.html)
 - 分类：后端开发
 - 技术：RESTful API
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1138
 
-## 学习目标
+## 本章内容
 
-RESTful API 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `RESTful API 调试` 建立学习路径，先理解它在 RESTful API 体系中的位置，再做可运行或可复述的验证。
+## 使用工具测试 API
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 1. Postman 测试
 
-## 笔记模板
+Postman 是最流行的 API 测试工具，就像是 API 的"试验场"。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Postman 官网地址：https://www.postman.com/。
 
-## 完成标准
+基本测试步骤：
 
-- 能用 3 到 5 句话解释 `RESTful API 调试`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 创建新请求
+- 设置 HTTP 方法（GET、POST 等）
+- 输入 API 地址
+- 添加请求头和请求体
+- 发送请求查看响应
+
+Postman 集合示例：
+
+```text
+{
+  "info": {
+    "name": "用户管理 API 测试",
+    "description": "测试用户相关的所有 API 端点"
+  },
+  "item": [
+    {
+      "name": "获取用户列表",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/users?page=1&limit=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users"],
+          "query": [
+            {"key": "page", "value": "1"},
+            {"key": "limit", "value": "10"}
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+
+### 2. curl 命令行测试
+
+```text
+# 获取用户列表
+curl -X GET "https://api.example.com/users" \
+     -H "Content-Type: application/json"
+
+# 创建新用户
+curl -X POST "https://api.example.com/users" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "name": "张三",
+       "email": "zhangsan@example.com"
+     }'
+
+# 更新用户信息
+curl -X PUT "https://api.example.com/users/123" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "name": "李四",
+       "email": "lisi@example.com"
+     }'
+
+# 删除用户
+curl -X DELETE "https://api.example.com/users/123" \
+     -H "Content-Type: application/json"
+```
+
+
+### 3. 浏览器开发者工具
+
+```javascript
+// 在浏览器控制台中测试
+fetch('/api/users', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+
+## 常见问题调试
+
+
+### 1. CORS 跨域问题
+
+报错信息：
+
+```text
+Access to fetch at 'https://api.example.com/users' from origin 'http://localhost:3000'
+has been blocked by CORS policy
+```
+
+解决方案：
+
+```text
+// 服务器端需要设置 CORS 头
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+```
+
+
+### 2. 状态码错误
+
+常见错误及原因：
+
+
+### 3. 数据格式问题
+
+```text
+// 错误的请求格式
+{
+  name: "张三",  // ❌ 缺少引号
+  'email': "test@example.com",  // ❌ 单引号
+  age: "25"  // ❌ 数字用了字符串
+}
+
+// 正确的请求格式
+{
+  "name": "张三",  // ✅ 双引号
+  "email": "test@example.com",  // ✅ 双引号
+  "age": 25  // ✅ 数字类型
+}
+```
+
+
+## 自动化测试
+
+
+### 单元测试示例
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `RESTful API 调试` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

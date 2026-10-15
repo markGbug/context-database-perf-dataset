@@ -1,35 +1,82 @@
-# jQuery EasyUI：jEasyUI 树形网格惰性加载节点 学习笔记
+# jQuery EasyUI：jQuery EasyUI 树形菜单 - 树形网格惰性加载节点
 
 - 来源：[jEasyUI 树形网格惰性加载节点](https://www.runoob.com/jeasyui/jeasyui-tree-treegrid5.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2900
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 树形网格惰性加载节点` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+有时我们已经得到充分的分层树形网格（TreeGrid）的数据。 我们还想让树形网格（TreeGrid）按层次惰性加载节点。 首先，只加载顶层节点。 然后点击节点的展开图标来加载它的子节点。 本教程展示如何创建带有惰性加载特性的树形网格（TreeGrid）。
 
-## 阅读抓手
+```html
+    <table id="test" title="Folder Browser" class="easyui-treegrid" style="width:700px;height:300px"
+            data-options="
+                url: 'data/treegrid_data.json',
+                method: 'get',
+                rownumbers: true,
+                idField: 'id',
+                treeField: 'name',
+                loadFilter: myLoadFilter
+            ">
+        <thead>
+            <tr>
+                <th field="name" width="220">Name</th>
+                <th field="size" width="100" align="right">Size</th>
+                <th field="date" width="150">Modified Date</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+为了放置加载子节点，我们需要为每个节点重命名 'children' 属性。 正如下面的代码所示，'children' 属性重命名为 'children1'。 当展开一个节点时，我们调用 'append' 方法来加载它的子节点数据。
 
-## 笔记模板
+```java
+    function myLoadFilter(data,parentId){
+        function setData(){
+            var todo = [];
+            for(var i=0; i<data.length; i++){
+                todo.push(data[i]);
+            }
+            while(todo.length){
+                var node = todo.shift();
+                if (node.children){
+                    node.state = 'closed';
+                    node.children1 = node.children;
+                    node.children = undefined;
+                    todo = todo.concat(node.children1);
+                }
+            }
+        }
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+        setData(data);
+        var tg = $(this);
+        var opts = tg.treegrid('options');
+        opts.onBeforeExpand = function(row){
+            if (row.children1){
+                tg.treegrid('append',{
+                    parent: row[opts.idField],
+                    data: row.children1
+                });
+                row.children1 = undefined;
+                tg.treegrid('expand', row[opts.idField]);
+            }
+            return row.children1 == undefined;
+        };
+        return data;
+    }
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jEasyUI 树形网格惰性加载节点`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 下载 jQuery EasyUI 实例
+
+jeasyui-tree-treegrid5.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 树形网格惰性加载节点` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

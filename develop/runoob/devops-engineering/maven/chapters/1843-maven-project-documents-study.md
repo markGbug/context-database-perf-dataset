@@ -1,35 +1,92 @@
-# Maven：Maven 项目文档 学习笔记
+# Maven：Maven 项目文档
 
 - 来源：[Maven 项目文档](https://www.runoob.com/maven/maven-project-documents.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1843
 
-## 学习目标
+## 本章内容
 
-Maven 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Maven 项目文档` 建立学习路径，先理解它在 Maven 体系中的位置，再做可运行或可复述的验证。
+本章节我们主要学习如何创建 Maven 项目文档。
 
-## 阅读抓手
+比如我们在 C:/MVN 目录下，创建了 consumerBanking 项目，Maven 使用下面的命令来快速创建 java 项目：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+mvn archetype:generate -DgroupId=com.companyname.bank -DartifactId=consumerBanking -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+```
 
-## 笔记模板
+修改 pom.xml，添加以下配置（如果没有的话）：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<project>
+  ...
+<build>
+<pluginManagement>
+    <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+    </plugins>
+    </pluginManagement>
+</build>
+ ...
+</project>
+```
 
-## 完成标准
+不然运行 mvn site 命令时出现 java.lang.NoClassDefFoundError: org/apache/maven/doxia/siterenderer/DocumentContent 的问题， 这是由于 maven-site-plugin 版本过低，升级到 3.3+ 即可。
 
-- 能用 3 到 5 句话解释 `Maven 项目文档`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+打开 consumerBanking 文件夹并执行以下 mvn 命令。
+
+```text
+C:\MVN\consumerBanking> mvn site
+```
+
+Maven 开始生成文档：
+
+```text
+[INFO] Scanning for projects...
+[INFO] -------------------------------------------------------------------
+[INFO] Building consumerBanking
+[INFO]task-segment: [site]
+[INFO] -------------------------------------------------------------------
+[INFO] [site:site {execution: default-site}]
+[INFO] artifact org.apache.maven.skins:maven-default-skin:
+checking for updates from central
+[INFO] Generating "About" report.
+[INFO] Generating "Issue Tracking" report.
+[INFO] Generating "Project Team" report.
+[INFO] Generating "Dependencies" report.
+[INFO] Generating "Continuous Integration" report.
+[INFO] Generating "Source Repository" report.
+[INFO] Generating "Project License" report.
+[INFO] Generating "Mailing Lists" report.
+[INFO] Generating "Plugin Management" report.
+[INFO] Generating "Project Summary" report.
+[INFO] -------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] -------------------------------------------------------------------
+[INFO] Total time: 16 seconds
+[INFO] Finished at: Wed Jul 11 18:11:18 IST 2012
+[INFO] Final Memory: 23M/148M
+[INFO] -------------------------------------------------------------------
+```
+
+打开 C:\MVN\consumerBanking\target\site 文件夹。点击 index.html 就可以看到文档了。
+
+Maven 使用一个名为 Doxia的文档处理引擎来创建文档，它能将多种格式的源码读取成一种通用的文档模型。要为你的项目撰写文档，你可以将内容写成下面几种常用的，可被 Doxia 转化的格式。
+
+
+## 复习重点
+
+- 能说明 `Maven 项目文档` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,94 @@
-# DeepSeek Harness：DeepSeek Harness 第一个工具 学习笔记
+# DeepSeek Harness：DeepSeek Harness 开发第一个工具：defineTool
 
 - 来源：[DeepSeek Harness 第一个工具](https://www.runoob.com/deepseek-harness/deepseek-harness-define-tool.html)
 - 分类：AI / 智能开发
 - 技术：DeepSeek Harness
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0227
 
-## 学习目标
+## 本章内容
 
-DeepSeek Harness 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `DeepSeek Harness 第一个工具` 建立学习路径，先理解它在 DeepSeek Harness 体系中的位置，再做可运行或可复述的验证。
+工具是 Agent 用来干活的函数，模型看到工具定义后决定调用。
 
-## 阅读抓手
+本章节我们将用 defineTool 写出第一个工具 greet，并让模型真的调用它。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 工具是什么
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+工具（tool）是一个描述清晰的函数，包含名称、说明、参数和输出格式。
 
-## 完成标准
+模型在生成回复时，可以根据这些信息发起调用。
 
-- 能用 3 到 5 句话解释 `DeepSeek Harness 第一个工具`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+在 dsh 里，工具通过 ctx.tools.register 注册到工具注册表。
+
+
+## defineTool 的完整结构
+
+defineTool 是定义工具的 DSL，它接收一个对象，描述工具的全部信息。
+
+
+## 创建 greet 工具
+
+把 scratch-plugin/src/my-plugin.ts 替换为以下内容。
+
+
+## 实例
+
+inject 让 Cordis 等待工具注册表就绪。
+
+defineTool 根据 parameters 推导并校验 args。
+
+execute 返回 output.schema 声明的规范值。
+
+output.render 再把规范值转换为面向模型的内容。
+
+
+## 运行并调用
+
+如果开发命令没在运行，重新启动：
+
+```text
+pnpm dsh web --patch ./scratch-plugin/cordis.yml
+```
+
+打开 http://127.0.0.1:3080，输入：
+
+```text
+Use the greet tool to greet RUNOOB.
+```
+
+模型可以调用 greet，并收到 Hello, RUNOOB! 这一工具结果。
+
+
+## 关键点：schema 自动流入提示词
+
+工具的 name、description、parameters、output 会自动组装进模型提示词。
+
+模型"知道"有这样一个工具，就会在合适的时候调用。
+
+你不需要手写函数签名给模型，schema 就是模型看到的接口。
+
+规范值（canonical value）是 execute 返回、output.schema 声明的值。
+
+它与"面向模型的内容"解耦：同一个规范值可以通过不同 render 变成不同格式。
+
+提示：想查看更复杂的工具写法（嵌套 schema、后台工作、策略钩子），见官方工具编写参考。
+
+
+## 小结与自测
+
+defineTool 用 schema 描述工具，ctx.tools.register 注册它，模型看到 schema 后直接调用。
+
+1. defineTool 的 execute 返回的是什么？
+
+2. output.render 的作用是什么？
+
+3. 模型是怎么知道要调用 greet 的？
+
+
+## 复习重点
+
+- 能说明 `DeepSeek Harness 第一个工具` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

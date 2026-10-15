@@ -1,34 +1,62 @@
-# jQuery EasyUI：jEasyUI 过滤下拉数据网格 练习笔记
+# jQuery EasyUI：jQuery EasyUI 表单 - 过滤下拉数据网格
 
 - 来源：[jEasyUI 过滤下拉数据网格](https://www.runoob.com/jeasyui/jeasyui-form-form5.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2905
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 过滤下拉数据网格` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+下拉数据网格（Combogrid）组件和下拉框（Combobox）组件的共同点是，除了都具有下拉面板以外，它们都是基于数据网格（Datagrid）的。 下拉数据网格（Combogrid）组件可以过滤、分页，并具有其他一些数据网格（Datagrid）的功能。 本教程向您展示如何在一个下拉数据网格（Combogrid）组件中过滤数据记录。
 
-## 练习步骤
+```html
+<input id="cg" style="width:150px">
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```text
+$('#cg').combogrid({
+    panelWidth:500,
+    url: 'form5_getdata.php',
+    idField:'itemid',
+    textField:'productid',
+    mode:'remote',
+    fitColumns:true,
+    columns:[[
+        {field:'itemid',title:'Item ID',width:60},
+        {field:'productid',title:'Product ID',align:'right',width:80},
+        {field:'listprice',title:'List Price',align:'right',width:60},
+        {field:'unitcost',title:'Unit Cost',align:'right',width:60},
+        {field:'attr1',title:'Attribute',width:150},
+        {field:'status',title:'Stauts',align:'center',width:60}
+    ]]
+});
+```
 
-## 验收清单
+下拉数据网格（Combogrid）组件应该定义 'idField' 和 'textField' 属性。 'idField' 属性存储组件值，'textField' 属性在 input 文本框中显示文本消息。 下拉数据网格（Combogrid）组件可以以 'local' 或 'remote' 模式过滤记录。 在远程（remote）模式中，当用户输入字符到 input 文本框中，下拉数据网格（Combogrid）将发送 'q' 参数到远程服务器。
 
-- 我能独立说出 `jEasyUI 过滤下拉数据网格` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```java
+$q = isset($_POST['q']) ? strval($_POST['q']) : '';
 
-## 复盘问题
+include 'conn.php';
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+$rs = mysql_query("select * from item where itemid like '%$q%' or productid like '%$q%'");
+$rows = array();
+while($row = mysql_fetch_assoc($rs)){
+    $rows[] = $row;
+}
+echo json_encode($rows);
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-form-form5.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 过滤下拉数据网格` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

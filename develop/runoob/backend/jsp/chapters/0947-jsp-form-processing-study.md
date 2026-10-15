@@ -1,35 +1,307 @@
-# JSP：JSP 表单处理 学习笔记
+# JSP：JSP 表单处理
 
 - 来源：[JSP 表单处理](https://www.runoob.com/jsp/jsp-form-processing.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0947
 
-## 学习目标
+## 本章内容
 
-JSP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `JSP 表单处理` 建立学习路径，先理解它在 JSP 体系中的位置，再做可运行或可复述的验证。
+我们在浏览网页的时候，经常需要向服务器提交信息，并让后台程序处理。浏览器中使用 GET 和 POST 方法向服务器提交数据。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## GET 方法
 
-## 笔记模板
+GET方法将请求的编码信息添加在网址后面，网址与编码信息通过"?"号分隔。如下所示：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+http://www.runoob.com/hello?key1=value1&key2=value2
+```
 
-## 完成标准
+GET方法是浏览器默认传递参数的方法，一些敏感信息，如密码等建议不使用GET方法。
 
-- 能用 3 到 5 句话解释 `JSP 表单处理`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+用get时，传输数据的大小有限制 （注意不是参数的个数有限制），最大为1024字节。
+
+
+## POST 方法
+
+一些敏感信息，如密码等我们可以通过POST方法传递，POST提交数据是隐式的。
+
+POST提交数据是不可见的，GET是通过在url里面传递的（可以看一下你浏览器的地址栏）。
+
+JSP使用getParameter()来获得传递的参数，getInputStream()方法用来处理客户端的二进制数据流的请求。
+
+
+## JSP 读取表单数据
+
+- getParameter(): 使用 request.getParameter() 方法来获取表单参数的值。
+- getParameterValues(): 获得如checkbox类（名字相同，但值有多个）的数据。 接收数组变量 ，如checkbox类型
+- getParameterNames():该方法可以取得所有变量的名称，该方法返回一个 Enumeration。
+- getInputStream():调用此方法来读取来自客户端的二进制数据流。
+
+
+## 使用URL的 GET 方法实例
+
+以下是一个简单的URL,并使用GET方法来传递URL中的参数：
+
+```text
+http://localhost:8080/testjsp/main.jsp?name=菜鸟教程&url=http://ww.runoob.com
+```
+
+testjsp 为项目地址。
+
+以下是 main.jsp 文件的JSP程序用于处理客户端提交的表单数据，我们使用getParameter()方法来获取提交的数据：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+<h1>使用 GET 方法读取数据</h1>
+<ul>
+<li><p><b>站点名:</b>
+   <%= request.getParameter("name")%>
+</p></li>
+<li><p><b>网址:</b>
+   <%= request.getParameter("url")%>
+</p></li>
+</ul>
+</body>
+</html>
+```
+
+接下来我们通过浏览器访问 http://localhost:8080/testjsp/main.jsp?name=菜鸟教程&url=http://ww.runoob.com 输出结果如下所示：
+
+
+## 使用表单的 GET 方法实例
+
+以下是一个简单的 HTML 表单，该表单通过GET方法将客户端数据提交 到 main.jsp 文件中：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<form action="main.jsp" method="GET">
+站点名: <input type="text" name="name">
+<br />
+网址: <input type="text" name="url" />
+<input type="submit" value="提交" />
+</form>
+
+</body>
+</html>
+```
+
+将以上HTML代码保存到test.htm文件中。 将该文件放置于当前jsp项目的 WebContent 目录下（与 main.jsp 同一个目录）。
+
+通过访问 http://localhost:8080/testjsp/test.html 提交表单数据到 main.jsp 文件，演示 Gif 图如下所示：
+
+在 "站点名" 与 "网址" 两个表单中填入信息，并点击 "提交" 按钮，它将输出结果。
+
+
+## 使用表单的 POST 方法实例
+
+接下来让我们使用POST方法来传递表单数据，修改main.jsp与Hello.htm文件代码，如下所示：
+
+main.jsp文件代码：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+<h1>使用 POST 方法读取数据</h1>
+<ul>
+<li><p><b>站点名:</b>
+<%
+// 解决中文乱码的问题
+String name = new String((request.getParameter("name")).getBytes("ISO-8859-1"),"UTF-8");
+%>
+   <%=name%>
+</p></li>
+<li><p><b>网址:</b>
+   <%= request.getParameter("url")%>
+</p></li>
+</ul>
+</body>
+</html>
+```
+
+代码中我们使用 new String((request.getParameter("name")).getBytes("ISO-8859-1"),"UTF-8")来转换编码，防止中文乱码的发生。
+
+以下是test.htm修改后的代码：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<form action="main.jsp" method="POST">
+站点名: <input type="text" name="name">
+<br />
+网址: <input type="text" name="url" />
+<input type="submit" value="提交" />
+</form>
+
+</body>
+</html>
+```
+
+通过访问 http://localhost:8080/testjsp/test.html 提交表单数据到 main.jsp 文件，演示 Gif 图如下所示：
+
+
+## 传递 Checkbox 数据到JSP程序
+
+复选框 checkbox 可以传递一个甚至多个数据。
+
+以下是一个简单的HTML代码，并将代码保存在test.htm文件中：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<form action="main.jsp" method="POST" target="_blank">
+<input type="checkbox" name="google" checked="checked" /> Google
+<input type="checkbox" name="runoob"  /> 菜鸟教程
+<input type="checkbox" name="taobao" checked="checked" /> 淘宝
+<input type="submit" value="选择网站" />
+</form>
+
+</body>
+</html>
+```
+
+以上代码在浏览器访问如下所示：
+
+以下为main.jsp文件代码，用于处理复选框数据：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+<h1>从复选框中读取数据</h1>
+<ul>
+<li><p><b>Google 是否选中:</b>
+   <%= request.getParameter("google")%>
+</p></li>
+<li><p><b>菜鸟教程是否选中:</b>
+   <%= request.getParameter("runoob")%>
+</p></li>
+<li><p><b>淘宝是否选中:</b>
+   <%= request.getParameter("taobao")%>
+</p></li>
+</ul>
+</body>
+</html>
+```
+
+通过访问 http://localhost:8080/testjsp/test.html 提交表单数据到 main.jsp 文件，演示 Gif 图如下所示：
+
+
+## 读取所有表单参数
+
+以下我们将使用 HttpServletRequest 的 getParameterNames() 来读取所有表单参数,该方法可以取得所有变量的名称，该方法返回一个枚举。
+
+一旦我们有了一个 Enumeration（枚举），我们就可以调用 hasMoreElements() 方法来确定是否还有元素，以及使用nextElement（）方法来获得每个参数的名称。
+
+```java
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+<h1>读取所有表单参数</h1>
+<table width="100%" border="1" align="center">
+<tr bgcolor="#949494">
+<th>参数名</th><th>参数值</th>
+</tr>
+<%
+   Enumeration paramNames = request.getParameterNames();
+
+   while(paramNames.hasMoreElements()) {
+      String paramName = (String)paramNames.nextElement();
+      out.print("<tr><td>" + paramName + "</td>\n");
+      String paramValue = request.getParameter(paramName);
+      out.println("<td> " + paramValue + "</td></tr>\n");
+   }
+%>
+</table>
+</body>
+</html>
+```
+
+以下是test.htm文件的内容:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<form action="main.jsp" method="POST" target="_blank">
+<input type="checkbox" name="google" checked="checked" /> Google
+<input type="checkbox" name="runoob"  /> 菜鸟教程
+<input type="checkbox" name="taobao" checked="checked" />
+                                                淘宝
+<input type="submit" value="选择网站" />
+</form>
+
+</body>
+</html>
+```
+
+现在我们通过浏览器访问 test.htm 文件提交数据，输出结果如下：
+
+通过访问 http://localhost:8080/testjsp/test.html 提交表单数据到 main.jsp 文件，演示 Gif 图如下所示：
+
+你可以尝试使用以上的JSP代码读取其它对象，如文本框，单选按钮或下拉框等等其他形式的数据。
+
+
+## 复习重点
+
+- 能说明 `JSP 表单处理` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

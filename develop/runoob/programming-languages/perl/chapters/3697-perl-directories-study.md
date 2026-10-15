@@ -1,35 +1,161 @@
-# Perl：Perl 目录操作 学习笔记
+# Perl：Perl 目录操作
 
 - 来源：[Perl 目录操作](https://www.runoob.com/perl/perl-directories.html)
 - 分类：编程语言
 - 技术：Perl
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3697
 
-## 学习目标
+## 本章内容
 
-Perl 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Perl 目录操作` 建立学习路径，先理解它在 Perl 体系中的位置，再做可运行或可复述的验证。
+以下列出了一些操作目录的标准函数：
 
-## 阅读抓手
+```text
+opendir DIRHANDLE, EXPR  # 打开目录
+readdir DIRHANDLE        # 读取目录
+rewinddir DIRHANDLE      # 定位指针到开头
+telldir DIRHANDLE        # 返回目录的当前位置
+seekdir DIRHANDLE, POS   # 定位指定到目录的 POS 位置
+closedir DIRHANDLE       # 关闭目录
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 显示所有的文件
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+显示目录下的所有文件，以下实例使用了 glob 操作符，演示如下：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Perl 目录操作`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+```java
+#!/usr/bin/perl
+
+# 显示 /tmp 目录下的所有文件
+$dir = "/tmp/*";
+my @files = glob( $dir );
+
+foreach (@files ){
+   print $_ . "\n";
+}
+
+# 显示 /tmp 目录下所有以 .c 结尾的文件
+$dir = "/tmp/*.c";
+@files = glob( $dir );
+
+foreach (@files ){
+   print $_ . "\n";
+}
+
+# 显示所有隐藏文件
+$dir = "/tmp/.*";
+@files = glob( $dir );
+foreach (@files ){
+   print $_ . "\n";
+}
+
+# 显示 /tmp 和 /home 目录下的所有文件
+$dir = "/tmp/* /home/*";
+@files = glob( $dir );
+
+foreach (@files ){
+   print $_ . "\n";
+}
+```
+
+以下实例可以列出当前目录下的所有文件：
+
+
+## 实例
+
+```java
+#!/usr/bin/perl
+
+opendir (DIR, '.') or die "无法打开目录, $!";
+while ($file = readdir DIR) {
+  print "$file\n";
+}
+closedir DIR;
+```
+
+如果你要显示 /tmp 目录下所有以 .c 结尾的文件，可以使用以下代码：
+
+
+## 实例
+
+```java
+#!/usr/bin/perl
+
+opendir(DIR, '.') or die "无法打开目录, $!";
+foreach (sort grep(/^.*\.c$/,readdir(DIR))){
+   print "$_\n";
+}
+closedir DIR;
+```
+
+
+## 创建一个新目录
+
+我们可以使用 mkdir 函数来创建一个新目录，执行前你需要有足够的权限来创建目录：
+
+
+## 实例
+
+```java
+#!/usr/bin/perl
+
+$dir = "/tmp/perl";
+
+# 在 /tmp 目录下创建 perl 目录
+mkdir( $dir ) or die "无法创建 $dir 目录, $!";
+print "目录创建成功\n";
+```
+
+
+## 删除目录
+
+我们可以使用 rmdir 函数来删除目录，执行该操作需要有足够权限。另外要删除的目录必须的空目录：
+
+
+## 实例
+
+```java
+#!/usr/bin/perl
+
+$dir = "/tmp/perl";
+
+# 删除 /tmp 目录下的 perl 目录
+rmdir( $dir ) or die "无法删除 $dir 目录, $!";
+print "目录删除成功\n";
+```
+
+
+## 切换目录
+
+我们可以使用chdir 函数来切换当期目录，执行该操作需要有足够权限。实例如下：
+
+
+## 实例
+
+```java
+#!/usr/bin/perl
+
+$dir = "/home";
+
+# 将当期目录移动到 /home 目录下
+chdir( $dir ) or die "无法切换目录到 $dir , $!";
+print "你现在所在的目录为 $dir\n";
+```
+
+执行以上程序，输出结果为：
+
+```text
+你现在所在的目录为 /home
+```
+
+
+## 复习重点
+
+- 能说明 `Perl 目录操作` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,80 @@
-# Playwright：Playwright 多项目配置 学习笔记
+# Playwright：Playwright 多项目配置（Projects）
 
 - 来源：[Playwright 多项目配置](https://www.runoob.com/playwright/playwright-projects.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0527
 
-## 学习目标
+## 本章内容
 
-Playwright 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Playwright 多项目配置` 建立学习路径，先理解它在 Playwright 体系中的位置，再做可运行或可复述的验证。
+本章介绍如何通过 Projects 配置在多个浏览器和设备上运行测试，以及项目依赖的用法。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 什么是 Project
 
-## 笔记模板
+在 Playwright 中，一个 Project 代表一组在特定浏览器和设备配置下运行的测试。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+通过配置多个 Project，你可以用同一套测试代码在 Chromium、Firefox、WebKit 以及移动端设备上运行。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Playwright 多项目配置`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 基础多浏览器配置
+
+
+## 实例
+
+运行特定浏览器的测试：
+
+```text
+# 仅在 Chromium 上运行
+npx playwright test --project=chromium
+
+# 在 Chromium 和 Firefox 上运行
+npx playwright test --project=chromium --project=firefox
+```
+
+
+## devices 设备预设
+
+Playwright 内置了大量设备预设（来自 @playwright/test 的 devices），模拟真实设备的视口、User-Agent、像素比等。
+
+
+## 实例
+
+常用的设备预设：
+
+
+## 自定义项目配置
+
+你可以在 Project 的 use 中覆盖全局配置：
+
+
+## 实例
+
+
+## 项目依赖（dependencies）
+
+一个项目可以依赖另一个项目，确保依赖的项目先运行。
+
+最常见的用法是 Setup 项目（认证）先运行，其他项目依赖它。
+
+
+## 实例
+
+setup 项目只会运行一次，所有依赖它的项目会等待它完成后才启动。
+
+
+## 通过 testProject 共享配置
+
+如果要让多个项目共享配置而不重复，可以提取一个基础项目：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Playwright 多项目配置` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

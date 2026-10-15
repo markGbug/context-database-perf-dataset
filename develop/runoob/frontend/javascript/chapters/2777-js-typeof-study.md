@@ -1,35 +1,99 @@
-# JavaScript：JavaScript typeof 学习笔记
+# JavaScript：JavaScript typeof, null, 和 undefined
 
 - 来源：[JavaScript typeof](https://www.runoob.com/js/js-typeof.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2777
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript typeof` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+## typeof 操作符
 
-## 阅读抓手
+你可以使用 typeof 操作符来检测变量的数据类型。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在JavaScript中，数组是一种特殊的对象类型。 因此 typeof [1,2,3,4] 返回 object。
 
-## 完成标准
+正确检测数组的方法：
 
-- 能用 3 到 5 句话解释 `JavaScript typeof`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+Array.isArray([1,2,3]); // true
+[1,2,3] instanceof Array; // true
+```
+
+typeof 是 JavaScript 中的一个操作符，用于返回给定变量的数据类型。
+
+完整类型检测表:
+
+检测未定义变量：
+
+```text
+if (typeof variable === "undefined") {...}
+```
+
+检测函数是否存在：
+
+```text
+if (typeof myFunction === "function") {...}
+```
+
+注意数组和null的特殊情况：
+
+```text
+// 正确检测数组
+if (Array.isArray(myVar)) {...}
+
+// 正确检测null
+if (myVar === null) {...}
+```
+
+
+## null
+
+在 JavaScript 中 null 表示 "什么都没有"。
+
+null是一个只有一个值的特殊类型。表示一个空对象引用。
+
+你可以设置为 null 来清空对象:
+
+
+## 实例
+
+你可以设置为 undefined 来清空对象:
+
+
+## 实例
+
+
+## undefined
+
+在 JavaScript 中, undefined 是一个没有设置值的变量。
+
+typeof 一个没有值的变量会返回 undefined。
+
+
+## 实例
+
+任何变量都可以通过设置值为 undefined 来清空。 类型为 undefined.
+
+
+## 实例
+
+
+## undefined 和 null 的区别
+
+
+## 实例
+
+null 和 undefined 的值相等，但类型不等：
+
+
+## 复习重点
+
+- 能说明 `JavaScript typeof` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

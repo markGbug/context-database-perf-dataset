@@ -1,35 +1,93 @@
-# AngularJS：AngularJS 控制器 学习笔记
+# AngularJS：AngularJS 控制器
 
 - 来源：[AngularJS 控制器](https://www.runoob.com/angularjs/angularjs-controllers.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2283
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS 控制器` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+AngularJS 控制器 控制 AngularJS 应用程序的数据。
 
-## 阅读抓手
+AngularJS 控制器是常规的 JavaScript 对象。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## AngularJS 控制器
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+AngularJS 应用程序被控制器控制。
 
-## 完成标准
+ng-controller 指令定义了应用程序控制器。
 
-- 能用 3 到 5 句话解释 `AngularJS 控制器`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+控制器是 JavaScript 对象，由标准的 JavaScript 对象的构造函数 创建。
+
+
+## AngularJS 实例
+
+应用解析：
+
+AngularJS 应用程序由 ng-app 定义。应用程序在 <div> 内运行。
+
+ng-controller="myCtrl" 属性是一个 AngularJS 指令。用于定义一个控制器。
+
+myCtrl 函数是一个 JavaScript 函数。
+
+AngularJS 使用$scope 对象来调用控制器。
+
+在 AngularJS 中， $scope 是一个应用对象(属于应用变量和函数)。
+
+控制器的 $scope （相当于作用域、控制范围）用来保存AngularJS Model(模型)的对象。
+
+控制器在作用域中创建了两个属性 (firstName 和 lastName)。
+
+ng-model 指令绑定输入域到控制器的属性（firstName 和 lastName）。
+
+
+## 控制器方法
+
+上面的实例演示了一个带有 lastName 和 firstName 这两个属性的控制器对象。
+
+控制器也可以有方法（变量和函数）：
+
+
+## AngularJS 实例
+
+
+## 外部文件中的控制器
+
+在大型的应用程序中，通常是把控制器存储在外部文件中。
+
+只需要把 <script> 标签中的代码复制到名为 personController.js 的外部文件中即可：
+
+
+## AngularJS 实例
+
+
+## 其他实例
+
+以下实例创建一个新的控制器文件:
+
+```text
+angular.module('myApp', []).controller('namesCtrl', function($scope) {
+    $scope.names = [
+        {name:'Jani',country:'Norway'},
+        {name:'Hege',country:'Sweden'},
+        {name:'Kai',country:'Denmark'}
+    ];
+});
+```
+
+保存文件为 namesController.js:
+
+然后，在应用中使用控制器文件:
+
+
+## AngularJS 实例
+
+
+## 复习重点
+
+- 能说明 `AngularJS 控制器` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

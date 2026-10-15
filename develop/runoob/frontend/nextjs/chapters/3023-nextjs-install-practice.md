@@ -1,34 +1,176 @@
-# Next.js：Next.js 安装 练习笔记
+# Next.js：Next.js 安装
 
 - 来源：[Next.js 安装](https://www.runoob.com/nextjs/nextjs-install.html)
 - 分类：前端开发
 - 技术：Next.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3023
 
-## 练习目标
+## 本章内容
 
-把 `Next.js 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在开始之前，确保你已经安装了 Node.js 和 npm，你可以通过以下命令检查它们是否已经安装：
 
-## 练习步骤
+```text
+node -v
+npm -v
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+如果你的系统还不支持 Node.js 及 NPM 可以参考我们的 Node.js 教程。
 
-## 验收清单
+国内使用 npm 速度很慢，你可以使用淘宝定制的 cnpm (gzip 压缩支持) 命令行工具代替默认的 npm:
 
-- 我能独立说出 `Next.js 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+$ npm install -g cnpm --registry=https://registry.npmmirror.com
+$ npm config set registry https://registry.npmmirror.com
+```
 
-## 复盘问题
+这样就可以使用 cnpm 命令来安装模块了：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+$ cnpm install [name]
+```
+
+更多信息可以查阅：http://npm.taobao.org/。
+
+
+## 使用 create-react-app 快速构建 Next.js 开发环境
+
+Next.js 提供了一个官方的脚手架工具 create-next-app，用于快速搭建项目。
+
+create-react-app 是来自于 Facebook，通过该命令我们无需配置就能快速构建 Next.js 开发环境。
+
+create-react-app 自动创建的项目是基于 Webpack + ES6 。
+
+执行以下命令创建项目：
+
+```text
+npx create-next-app@latest my-next-app
+```
+
+安装时，您将看到以下提示，一路回车即可：
+
+```text
+Would you like to use TypeScript? No / Yes
+Would you like to use ESLint? No / Yes
+Would you like to use Tailwind CSS? No / Yes
+Would you like your code inside a `src/` directory? No / Yes
+Would you like to use App Router? (recommended) No / Yes
+Would you like to use Turbopack for `next dev`?  No / Yes
+Would you like to customize the import alias (`@/*` by default)? No / Yes
+What import alias would you like configured? @/*
+```
+
+npx 是一个 Node.js 工具，用于运行包中的二进制文件，而无需全局安装。
+
+- 使用 create-next-app 脚手架工具创建一个新的 Next.js 项目。
+- my-next-app 是项目的名字，你可以根据需要修改为任何名称。
+- 它会自动安装项目所需的依赖。
+
+运行该命令后，create-next-app 会自动完成以下操作：
+
+- 创建一个名为 my-next-app 的文件夹。
+- 初始化项目，安装必要的依赖。
+- 创建基本的项目结构，包括 app 文件夹、public 文件夹、package.json 文件等。
+
+创建完成后，进入项目目录：
+
+```text
+cd my-next-app
+```
+
+在项目目录中，运行以下命令启动开发服务器：
+
+```text
+npm run dev
+```
+
+或者如果你使用 yarn：
+
+```text
+yarn dev
+```
+
+开发服务器默认运行在 http://localhost:3000，打开浏览器，访问 http://localhost:3000，你应该会看到 Next.js 的默认欢迎页面。
+
+我们可以修改 app 目录下的 page.tsx 文件，修改后的代码为：
+
+
+## app/page.tsx
+
+访问 http://localhost:3000，显示如下：
+
+```text
+Hello, World!
+```
+
+
+## 手动安装 Next.js
+
+要手动创建一个新的 Next.js 应用，首先安装所需的包：
+
+```text
+npm install next@latest react@latest react-dom@latest
+```
+
+接下来，打开你的 package.json 文件并添加以下脚本：
+
+
+## package.json 文件：
+
+这些脚本代表了开发应用程序的不同阶段：
+
+- dev：运行 next dev，以开发模式启动 Next.js。
+- build：运行 next build，为生产环境构建应用。
+- start：运行 next start，启动 Next.js 生产服务器。
+- lint：运行 next lint，设置 Next.js 的内置 ESLint 配置。
+
+
+### 创建应用目录
+
+Next.js 使用文件系统路由，这意味着应用程序的路由由文件结构决定。
+
+创建一个 app 文件夹，然后添加一个 layout.tsx 和一个 page.tsx 文件。当用户访问应用根路径 / 时，这些文件会被渲染。
+
+在 app/layout.tsx 中创建根布局文件，包含所需的 <html> 和 <body> 标签：
+
+
+## 实例
+
+最后，在 app/page.tsx 中创建一个主页文件，加入初始内容：
+
+
+## 实例
+
+
+### 注意事项
+
+- 如果你忘记创建 layout.tsx，Next.js 会在运行开发服务器（next dev）时自动创建这个文件。
+- 你可以选择性地在项目根目录中使用 src 目录，将应用代码与配置文件分开。
+
+
+### 创建 public 文件夹（可选）
+
+你可以选择在项目根目录创建一个 public 文件夹，用于存储静态资源，如图片、字体等。public 文件夹中的文件可以通过 / 路径来引用。
+
+这样，你就完成了手动安装并初始化一个基本的 Next.js 项目结构。
+
+
+### 运行开发服务器
+
+运行以下命令启动开发服务器：
+
+```text
+npm run dev
+```
+
+访问 http://localhost:3000 查看应用。
+
+编辑 app/page.tsx 文件并保存，之后可以在浏览器中看到更新后的结果。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Next.js 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

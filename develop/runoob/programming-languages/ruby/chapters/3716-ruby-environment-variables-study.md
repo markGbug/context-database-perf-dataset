@@ -1,35 +1,50 @@
-# Ruby：Ruby 环境变量 学习笔记
+# Ruby：Ruby 环境变量
 
 - 来源：[Ruby 环境变量](https://www.runoob.com/ruby/ruby-environment-variables.html)
 - 分类：编程语言
 - 技术：Ruby
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3716
 
-## 学习目标
+## 本章内容
 
-Ruby 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Ruby 环境变量` 建立学习路径，先理解它在 Ruby 体系中的位置，再做可运行或可复述的验证。
+Ruby 解释器使用下列环境变量来控制它的行为。ENV 对象包含了所有当前设置的环境变量列表。
 
-## 阅读抓手
+对于 Unix，使用 env 命令来查看所有环境变量的列表。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+HOSTNAME=ip-72-167-112-17.ip.secureserver.net
+RUBYPATH=/usr/bin
+SHELL=/bin/bash
+TERM=xterm
+HISTSIZE=1000
+SSH_CLIENT=122.169.131.179 1742 22
+SSH_TTY=/dev/pts/1
+USER=amrood
+JRE_HOME=/usr/java/jdk/jre
+J2RE_HOME=/usr/java/jdk/jre
+PATH=/usr/local/bin:/bin:/usr/bin:/home/guest/bin
+MAIL=/var/spool/mail/guest
+PWD=/home/amrood
+INPUTRC=/etc/inputrc
+JAVA_HOME=/usr/java/jdk
+LANG=C
+HOME=/root
+SHLVL=2
+JDK_HOME=/usr/java/jdk
+LOGDIR=/usr/log/ruby
+LOGNAME=amrood
+SSH_CONNECTION=122.169.131.179 1742 72.167.112.17 22
+LESSOPEN=|/usr/bin/lesspipe.sh %s
+RUBYLIB=/usr/lib/ruby
+G_BROKEN_FILENAMES=1
+_=/bin/env
+```
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 复习重点
 
-## 完成标准
-
-- 能用 3 到 5 句话解释 `Ruby 环境变量`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 能说明 `Ruby 环境变量` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

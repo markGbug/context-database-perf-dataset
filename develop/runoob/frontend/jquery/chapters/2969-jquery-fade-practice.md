@@ -1,34 +1,150 @@
-# jQuery：jQuery 淡入淡出 练习笔记
+# jQuery：jQuery 效果 - 淡入淡出
 
 - 来源：[jQuery 淡入淡出](https://www.runoob.com/jquery/jquery-fade.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2969
 
-## 练习目标
+## 本章内容
 
-把 `jQuery 淡入淡出` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+通过 jQuery，您可以实现元素的淡入淡出效果。
 
-## 练习步骤
+点击展示 淡入/淡出 面板
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+因为时间是宝贵的，我们提供快捷方便的学习方法。
 
-## 验收清单
+在菜鸟教程,你可以学习需要的知识。
 
-- 我能独立说出 `jQuery 淡入淡出` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+jQuery fadeIn() 演示 jQuery fadeIn() 方法。
+
+jQuery fadeOut() 演示 jQuery fadeOut() 方法。
+
+jQuery fadeToggle() 演示 jQuery fadeToggle() 方法。
+
+jQuery fadeTo() 演示 jQuery fadeTo() 方法。
+
+
+## jQuery Fading 方法
+
+通过 jQuery，您可以实现元素的淡入淡出效果。
+
+jQuery 拥有下面四种 fade 方法：
+
+- fadeIn()
+- fadeOut()
+- fadeToggle()
+- fadeTo()
+
+
+## jQuery fadeIn() 方法
+
+jQuery fadeIn() 用于淡入已隐藏的元素。
+
+语法:
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。.
+
+可选的 callback 参数是 fading 完成后所执行的函数名称。
+
+下面的例子演示了带有不同参数的 fadeIn() 方法：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("#div1").fadeIn();
+  $("#div2").fadeIn("slow");
+  $("#div3").fadeIn(3000);
+});
+```
+
+
+## jQuery fadeOut() 方法
+
+jQuery fadeOut() 方法用于淡出可见元素。
+
+语法:
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是 fading 完成后所执行的函数名称。
+
+下面的例子演示了带有不同参数的 fadeOut() 方法：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("#div1").fadeOut();
+  $("#div2").fadeOut("slow");
+  $("#div3").fadeOut(3000);
+});
+```
+
+
+## jQuery fadeToggle() 方法
+
+jQuery fadeToggle() 方法可以在 fadeIn() 与 fadeOut() 方法之间进行切换。
+
+如果元素已淡出，则 fadeToggle() 会向元素添加淡入效果。
+
+如果元素已淡入，则 fadeToggle() 会向元素添加淡出效果。
+
+语法:
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是 fading 完成后所执行的函数名称。
+
+下面的例子演示了带有不同参数的 fadeToggle() 方法：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("#div1").fadeToggle();
+  $("#div2").fadeToggle("slow");
+  $("#div3").fadeToggle(3000);
+});
+```
+
+
+## jQuery fadeTo() 方法
+
+jQuery fadeTo() 方法允许渐变为给定的不透明度（值介于 0 与 1 之间）。
+
+语法:
+
+必需的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+fadeTo() 方法中必需的 opacity 参数将淡入淡出效果设置为给定的不透明度（值介于 0 与 1 之间）。
+
+可选的 callback 参数是该函数完成后所执行的函数名称。
+
+下面的例子演示了带有不同参数的 fadeTo() 方法：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("#div1").fadeTo("slow",0.15);
+  $("#div2").fadeTo("slow",0.4);
+  $("#div3").fadeTo("slow",0.7);
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery 淡入淡出` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

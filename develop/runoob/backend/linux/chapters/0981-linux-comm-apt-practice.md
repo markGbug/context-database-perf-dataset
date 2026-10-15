@@ -1,34 +1,132 @@
-# Linux：Linux apt 命令 练习笔记
+# Linux：Linux apt 命令
 
 - 来源：[Linux apt 命令](https://www.runoob.com/linux/linux-comm-apt.html)
 - 分类：后端开发
 - 技术：Linux
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0981
 
-## 练习目标
+## 本章内容
 
-把 `Linux apt 命令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+apt（Advanced Packaging Tool）是一个在 Debian 和 Ubuntu 中的 Shell 前端软件包管理器。
 
-## 练习步骤
+apt 命令提供了查找、安装、升级、删除某一个、一组甚至全部软件包的命令，而且命令简洁而又好记。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+apt 命令执行需要超级管理员权限(root)。
 
-## 验收清单
 
-- 我能独立说出 `Linux apt 命令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### apt 语法
 
-## 复盘问题
+```text
+  apt [options] [command] [package ...]
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- options：可选，选项包括 -h（帮助），-y（当安装过程提示选择全部为"yes"），-q（不显示安装的过程）等等。
+- command：要进行的操作。
+- package：安装的包名。
+
+
+## apt 常用命令
+
+- 列出所有可更新的软件清单命令：sudo apt update
+- 升级软件包：sudo apt upgrade 列出可更新的软件包及版本信息：apt list --upgradable 升级软件包，升级前先删除需要更新软件包：sudo apt full-upgrade
+- 安装指定的软件命令：sudo apt install <package_name> 安装多个软件包：sudo apt install <package_1> <package_2> <package_3>
+- 更新指定的软件命令：sudo apt update <package_name>
+- 显示软件包具体信息,例如：版本号，安装大小，依赖关系等等：sudo apt show <package_name>
+- 删除软件包命令：sudo apt remove <package_name>
+- 清理不再使用的依赖和库文件: sudo apt autoremove
+- 移除软件包及配置文件: sudo apt purge <package_name>
+- 查找软件包命令： sudo apt search <keyword>
+- 列出所有已安装的包：apt list --installed
+- 列出所有已安装的包的版本信息：apt list --all-versions
+
+
+### 实例
+
+查看一些可更新的包：
+
+```text
+sudo apt update
+```
+
+升级安装包：
+
+```text
+sudo apt upgrade
+```
+
+在以上交互式输入字母 Y 即可开始升级。
+
+可以将以下两个命令组合起来，一键升级：
+
+```text
+sudo apt update && sudo apt upgrade -y
+```
+
+安装 mplayer 包：
+
+```text
+sudo apt install mplayer
+```
+
+如过不太记得完整的包名，我们可以只输入前半部分的包名，然后按下 Tab 键，会列出相关的包名：
+
+以上实例我们输入来 reds，然后按下 Tab 键，输出来四个相关的包。
+
+如果我们想安装一个软件包，但如果软件包已经存在，则不要升级它，可以使用 –no-upgrade 选项:
+
+```html
+sudo apt install <package_name> --no-upgrade
+```
+
+安装 mplayer 如果存在则不要升级：
+
+```text
+sudo apt install mplayer --no-upgrade
+```
+
+如果只想升级，不要安装可以使用 --only-upgrade 参数：
+
+```html
+sudo apt install <package_name> --only-upgrade
+```
+
+只升级 mplayer，如果不存在就不要安装它：
+
+```text
+sudo apt install mplayer --only-upgrade
+```
+
+如果需要设置指定版本，语法格式如下：
+
+```html
+sudo apt install <package_name>=<version_number>
+```
+
+package_name 为包名，version_number 为版本号。
+
+移除包可以使用 remove 命令：
+
+```text
+sudo apt remove mplayer
+```
+
+查找名为 libimobile 的相关包：
+
+```text
+apt search libimobile
+```
+
+查看 pinta 包的相关信息：
+
+```text
+apt show pinta
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Linux apt 命令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

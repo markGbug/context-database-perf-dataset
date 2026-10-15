@@ -1,35 +1,198 @@
-# 设计模式：迭代器模式 学习笔记
+# 设计模式：迭代器模式
 
 - 来源：[迭代器模式](https://www.runoob.com/design-pattern/iterator-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1321
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `迭代器模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+迭代器模式（Iterator Pattern）是 Java 和 .Net 编程环境中非常常用的设计模式。
 
-## 阅读抓手
+迭代器模式提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露其内部的表示。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+迭代器模式属于行为型模式。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 介绍
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `迭代器模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 意图
+
+允许顺序访问一个聚合对象中的元素，同时不暴露对象的内部表示。
+
+
+### 主要解决的问题
+
+- 提供一种统一的方法来遍历不同的聚合对象。
+
+
+### 使用场景
+
+- 当需要遍历一个聚合对象，而又不希望暴露其内部结构时。
+
+
+### 实现方式
+
+- 定义迭代器接口：包含hasNext()和next()等方法，用于遍历元素。
+- 创建具体迭代器：实现迭代器接口，定义如何遍历特定的聚合对象。
+- 聚合类：定义一个接口用于返回一个迭代器对象。
+
+
+### 关键代码
+
+- 迭代器接口：规定了遍历元素的方法。
+- 具体迭代器：实现了迭代器接口，包含遍历逻辑。
+
+
+### 应用实例
+
+- Java中的Iterator：Java集合框架中的迭代器用于遍历集合元素。
+
+
+### 优点
+
+- 支持多种遍历方式：不同的迭代器可以定义不同的遍历方式。
+- 简化聚合类：聚合类不需要关心遍历逻辑。
+- 多遍历支持：可以同时对同一个聚合对象进行多次遍历。
+- 扩展性：增加新的聚合类和迭代器类都很方便，无需修改现有代码。
+
+
+### 缺点
+
+- 系统复杂性：每增加一个聚合类，就需要增加一个对应的迭代器类，增加了类的数量。
+
+
+### 使用建议
+
+- 当需要访问聚合对象内容而不暴露其内部表示时，使用迭代器模式。
+- 当需要为聚合对象提供多种遍历方式时，考虑使用迭代器模式。
+
+
+### 注意事项
+
+- 迭代器模式通过分离集合对象的遍历行为，使得外部代码可以透明地访问集合内部数据，同时不暴露集合的内部结构。
+
+
+### 结构
+
+迭代器模式包含以下几个主要角色：
+
+- 迭代器接口（Iterator）：定义了访问和遍历聚合对象中各个元素的方法，通常包括获取下一个元素、判断是否还有元素、获取当前位置等方法。
+- 具体迭代器（Concrete Iterator）：实现了迭代器接口，负责对聚合对象进行遍历和访问，同时记录遍历的当前位置。
+- 聚合对象接口（Aggregate）：定义了创建迭代器对象的接口，通常包括一个工厂方法用于创建迭代器对象。
+- 具体聚合对象（Concrete Aggregate）：实现了聚合对象接口，负责创建具体的迭代器对象，并提供需要遍历的数据。
+
+
+## 实现
+
+我们将创建一个叙述导航方法的 Iterator 接口和一个返回迭代器的 Container 接口。实现了 Container 接口的实体类将负责实现 Iterator 接口。
+
+IteratorPatternDemo，我们的演示类使用实体类 NamesRepository 来打印 NamesRepository 中存储为集合的 Names。
+
+
+### 步骤 1
+
+创建接口:
+
+
+## Iterator.java
+
+```java
+public interface Iterator {
+   public boolean hasNext();
+   public Object next();
+}
+```
+
+
+## Container.java
+
+```text
+public interface Container {
+   public Iterator getIterator();
+}
+```
+
+
+### 步骤 2
+
+创建实现了 Container 接口的实体类。该类有实现了 Iterator 接口的内部类 NameIterator。
+
+
+## NameRepository.java
+
+```java
+public class NameRepository implements Container {
+   public String[] names = {"Robert" , "John" ,"Julie" , "Lora"};
+
+   @Override
+   public Iterator getIterator() {
+      return new NameIterator();
+   }
+
+   private class NameIterator implements Iterator {
+
+      int index;
+
+      @Override
+      public boolean hasNext() {
+         if(index < names.length){
+            return true;
+         }
+         return false;
+      }
+
+      @Override
+      public Object next() {
+         if(this.hasNext()){
+            return names[index++];
+         }
+         return null;
+      }
+   }
+}
+```
+
+
+### 步骤 3
+
+使用 NameRepository 来获取迭代器，并打印名字。
+
+
+## IteratorPatternDemo.java
+
+```java
+public class IteratorPatternDemo {
+
+   public static void main(String[] args) {
+      NameRepository namesRepository = new NameRepository();
+
+      for(Iterator iter = namesRepository.getIterator(); iter.hasNext();){
+         String name = (String)iter.next();
+         System.out.println("Name : " + name);
+      }
+   }
+}
+```
+
+
+### 步骤 4
+
+执行程序，输出结果：
+
+```text
+Name : Robert
+Name : John
+Name : Julie
+Name : Lora
+```
+
+
+## 复习重点
+
+- 能说明 `迭代器模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

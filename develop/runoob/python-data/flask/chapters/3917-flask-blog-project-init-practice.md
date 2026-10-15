@@ -1,34 +1,127 @@
-# Flask：Flask Web 应用 练习笔记
+# Flask：Flask Web 应用
 
 - 来源：[Flask Web 应用](https://www.runoob.com/flask/flask-blog-project-init.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3917
 
-## 练习目标
+## 本章内容
 
-把 `Flask Web 应用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章带你从零开始，用 Flask 创建第一个 Web 应用，理解微框架的设计哲学。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## Flask 与 Django 的定位差异
 
-## 验收清单
+Django 是「大而全」的全栈框架，自带 ORM、模板引擎、管理后台、用户认证、表单处理等。
 
-- 我能独立说出 `Flask Web 应用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Flask 是微框架——核心极简，只提供路由和模板渲染，其他功能通过扩展按需添加。
 
-## 复盘问题
+选择建议：新手快速出成果用 Django，喜欢自己掌控、按需组装的用 Flask。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 环境准备
+
+确认 Python 版本（需要 3.8 以上）：
+
+```text
+$ python3 --version
+Python 3.12.0
+```
+
+
+### 创建虚拟环境并安装 Flask
+
+```text
+$ python3 -m venv venv
+$ source venv/bin/activate           # Windows：venv\Scripts\activate
+(venv) $ pip install flask
+```
+
+验证安装：
+
+```text
+(venv) $ python -c "import flask; print(flask.__version__)"
+3.1.0
+```
+
+
+## Flask 最小应用
+
+一个 Flask 应用只需要一个 Python 文件。
+
+
+## 实例
+
+
+### 启动开发服务器
+
+```text
+(venv) $ flask run
+ * Running on http://127.0.0.1:5000
+```
+
+浏览器访问 http://127.0.0.1:5000/，看到页面内容。
+
+开启热重载（修改代码后自动重启服务器）：
+
+```text
+(venv) $ flask run --debug
+```
+
+flask run 默认查找 app.py 中的 app 实例。如果文件名或实例名不同，需要设置环境变量：FLASK_APP=myapp.py（文件名）、FLASK_APP=myapp:create_app()（工厂函数）。
+
+
+## Flask 命令行工具
+
+除了 flask run，Flask 还提供了其他有用的命令。
+
+
+## 项目目录结构规划
+
+虽然 Flask 支持单文件应用，但真实项目需要清晰的目录组织。
+
+```text
+blog_project/
+├── app/
+│   ├── __init__.py          # 应用工厂 create_app()（第十章引入）
+│   ├── blueprints/          # 路由 Blueprint（第四章分离）
+│   ├── templates/           # Jinja2 模板（第二章创建）
+│   ├── static/              # 静态文件 CSS/JS/图片
+│   ├── models.py            # SQLAlchemy 模型（第三章创建）
+│   └── forms.py             # Flask-WTF 表单（第八章创建）
+├── config.py                # 配置文件
+├── app.py                   # 应用入口（第一章从这里开始）
+└── .env                     # 环境变量
+```
+
+
+## 动手：博客首页路由
+
+创建项目骨架，配置首页路由，让浏览器显示欢迎信息。
+
+
+## 实例
+
+运行：
+
+```text
+flask run
+```
+
+访问首页和关于页面，确认路由正常工作。
+
+
+## 本章小结
+
+本章你完成了三件事：创建虚拟环境并安装 Flask、理解了 Flask 微框架与 Django 大而全的定位差异、编写了第一个路由页面。
+
+核心收获：Flask 最小应用只需要 Flask(__name__) + @app.route() 装饰器，用 flask run 启动。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Flask Web 应用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,190 @@
-# Servlet：Servlet 数据库访问 练习笔记
+# Servlet：Servlet 数据库访问
 
 - 来源：[Servlet 数据库访问](https://www.runoob.com/servlet/servlet-database-access.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1183
 
-## 练习目标
+## 本章内容
 
-把 `Servlet 数据库访问` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本教程假定您已经了解了 JDBC 应用程序的工作方式。在您开始学习 Servlet 数据库访问之前，请访问 Java MySQL 连接 来设置相关驱动及配置。
 
-## 练习步骤
+注意：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+你可以下载本站提供的 jar 包：mysql-connector-java-5.1.39-bin.jar
 
-## 验收清单
+在 java 项目中，只需要在 Eclipse 中引入 mysql-connector-java-5.1.39-bin.jar 就可以运行java项目。
 
-- 我能独立说出 `Servlet 数据库访问` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+但是在 Eclipse web 项目中，当执行 Class.forName("com.mysql.jdbc.Driver");时 不会去查找驱动的。所以本实例中我们需要把 mysql-connector-java-5.1.39-bin.jar 拷贝到 tomcat 下 lib 目录。
 
-## 复盘问题
+从基本概念下手，让我们来创建一个简单的表，并在表中创建几条记录。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 创建测试数据
+
+接下来我们在 MySQL 中创建 RUNOOB 数据库，并创建 websites 数据表，表结构如下：
+
+```text
+CREATE TABLE `websites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(20) NOT NULL DEFAULT '' COMMENT '站点名称',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `alexa` int(11) NOT NULL DEFAULT '0' COMMENT 'Alexa 排名',
+  `country` char(10) NOT NULL DEFAULT '' COMMENT '国家',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+```
+
+插入一些数据：
+
+```text
+INSERT INTO `websites` VALUES ('1', 'Google', 'https://www.google.cm/', '1', 'USA'), ('2', '淘宝', 'https://www.taobao.com/', '13', 'CN'), ('3', '菜鸟教程', 'http://www.runoob.com', '5892', ''), ('4', '微博', 'http://weibo.com/', '20', 'CN'), ('5', 'Facebook', 'https://www.facebook.com/', '3', 'USA');
+```
+
+数据表显示如下：
+
+
+## 访问数据库
+
+下面的实例演示了如何使用 Servlet 访问 RUNOOB 数据库。
+
+```java
+package com.runoob.test;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class DatabaseAccess
+ */
+@WebServlet("/DatabaseAccess")
+public class DatabaseAccess extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    // JDBC 驱动名及数据库 URL
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/RUNOOB";
+
+    // 数据库的用户名与密码，需要根据自己的设置
+    static final String USER = "root";
+    static final String PASS = "123456";
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DatabaseAccess() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Connection conn = null;
+        Statement stmt = null;
+        // 设置响应内容类型
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String title = "Servlet Mysql 测试 - 菜鸟教程";
+        String docType = "<!DOCTYPE html>\n";
+        out.println(docType +
+        "<html>\n" +
+        "<head><title>" + title + "</title></head>\n" +
+        "<body bgcolor=\"#f0f0f0\">\n" +
+        "<h1 align=\"center\">" + title + "</h1>\n");
+        try{
+            // 注册 JDBC 驱动器
+            Class.forName("com.mysql.jdbc.Driver");
+
+            // 打开一个连接
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+            // 执行 SQL 查询
+            stmt = conn.createStatement();
+            String sql;
+            sql = "SELECT id, name, url FROM websites";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // 展开结果集数据库
+            while(rs.next()){
+                // 通过字段检索
+                int id  = rs.getInt("id");
+                String name = rs.getString("name");
+                String url = rs.getString("url");
+
+                // 输出数据
+                out.println("ID: " + id);
+                out.println(", 站点名称: " + name);
+                out.println(", 站点 URL: " + url);
+                out.println("<br />");
+            }
+            out.println("</body></html>");
+
+            // 完成后关闭
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch(SQLException se) {
+            // 处理 JDBC 错误
+            se.printStackTrace();
+        } catch(Exception e) {
+            // 处理 Class.forName 错误
+            e.printStackTrace();
+        }finally{
+            // 最后是用于关闭资源的块
+            try{
+                if(stmt!=null)
+                stmt.close();
+            }catch(SQLException se2){
+            }
+            try{
+                if(conn!=null)
+                conn.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
+    }
+}
+```
+
+现在让我们来编译上面的 Servlet，并在 web.xml 文件中创建以下条目：
+
+```html
+....
+    <servlet>
+        <servlet-name>DatabaseAccess</servlet-name>
+        <servlet-class>com.runoob.test.DatabaseAccess</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DatabaseAccess</servlet-name>
+        <url-pattern>/TomcatTest/DatabaseAccess</url-pattern>
+    </servlet-mapping>
+....
+```
+
+现在调用这个 Servlet，输入链接：http://localhost:8080/TomcatTest/DatabaseAccess，将显示以下响应结果：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Servlet 数据库访问` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

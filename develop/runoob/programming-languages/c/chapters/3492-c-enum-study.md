@@ -1,35 +1,258 @@
-# C：C enum(枚举) 学习笔记
+# C：C enum(枚举)
 
 - 来源：[C enum(枚举)](https://www.runoob.com/cprogramming/c-enum.html)
 - 分类：编程语言
 - 技术：C
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3492
 
-## 学习目标
+## 本章内容
 
-C 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `C enum(枚举)` 建立学习路径，先理解它在 C 体系中的位置，再做可运行或可复述的验证。
+枚举是 C 语言中的一种基本数据类型，用于定义一组具有离散值的常量，它可以让数据更简洁，更易读。
 
-## 阅读抓手
+枚举类型通常用于为程序中的一组相关的常量取名字，以便于程序的可读性和维护性。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+定义一个枚举类型，需要使用 enum 关键字，后面跟着枚举类型的名称，以及用大括号 {} 括起来的一组枚举常量。每个枚举常量可以用一个标识符来表示，也可以为它们指定一个整数值，如果没有指定，那么默认从 0 开始递增。
 
-## 笔记模板
+枚举语法定义格式为：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+enum　枚举名　{枚举元素1,枚举元素2,……};
+```
 
-## 完成标准
+接下来我们举个例子，比如：一星期有 7 天，如果不用枚举，我们需要使用 #define 来为每个整数定义一个别名：
 
-- 能用 3 到 5 句话解释 `C enum(枚举)`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+#define MON  1
+#define TUE  2
+#define WED  3
+#define THU  4
+#define FRI  5
+#define SAT  6
+#define SUN  7
+```
+
+这个看起来代码量就比较多，接下来我们看看使用枚举的方式：
+
+```text
+enum DAY
+{
+      MON=1, TUE, WED, THU, FRI, SAT, SUN
+};
+```
+
+这样看起来是不是更简洁了。
+
+注意：第一个枚举成员的默认值为整型的 0，后续枚举成员的值在前一个成员上加 1。我们在这个实例中把第一个枚举成员的值定义为 1，第二个就为 2，以此类推。
+
+可以在定义枚举类型时改变枚举元素的值：
+
+```text
+enum season {spring, summer=3, autumn, winter};
+```
+
+没有指定值的枚举元素，其值为前一元素加 1。也就说 spring 的值为 0，summer 的值为 3，autumn 的值为 4，winter 的值为 5
+
+
+### 枚举变量的定义
+
+前面我们只是声明了枚举类型，接下来我们看看如何定义枚举变量。
+
+我们可以通过以下三种方式来定义枚举变量
+
+1、先定义枚举类型，再定义枚举变量
+
+```text
+enum DAY
+{
+      MON=1, TUE, WED, THU, FRI, SAT, SUN
+};
+enum DAY day;
+```
+
+2、定义枚举类型的同时定义枚举变量
+
+```text
+enum DAY
+{
+      MON=1, TUE, WED, THU, FRI, SAT, SUN
+} day;
+```
+
+3、省略枚举名称，直接定义枚举变量
+
+```text
+enum
+{
+      MON=1, TUE, WED, THU, FRI, SAT, SUN
+} day;
+```
+
+
+## 实例
+
+```java
+#include <stdio.h>
+
+enum DAY
+{
+      MON=1, TUE, WED, THU, FRI, SAT, SUN
+};
+
+int main()
+{
+    enum DAY day;
+    day = WED;
+    printf("%d",day);
+    return 0;
+}
+```
+
+以上实例输出结果为：
+
+```text
+3
+```
+
+在C 语言中，枚举类型是被当做 int 或者 unsigned int 类型来处理的，所以按照 C 语言规范是没有办法遍历枚举类型的。
+
+不过在一些特殊的情况下，枚举类型必须连续是可以实现有条件的遍历。
+
+以下实例使用 for 来遍历枚举的元素：
+
+
+## 实例
+
+```java
+#include <stdio.h>
+
+enum DAY
+{
+      MON=1, TUE, WED, THU, FRI, SAT, SUN
+} day;
+int main()
+{
+    // 遍历枚举元素
+    for (day = MON; day <= SUN; day++) {
+        printf("枚举元素：%d \n", day);
+    }
+}
+```
+
+以上实例输出结果为：
+
+```text
+枚举元素：1
+枚举元素：2
+枚举元素：3
+枚举元素：4
+枚举元素：5
+枚举元素：6
+枚举元素：7
+```
+
+以下枚举类型不连续，这种枚举无法遍历。
+
+```text
+enum
+{
+    ENUM_0,
+    ENUM_10 = 10,
+    ENUM_11
+};
+```
+
+枚举在 switch 中的使用：
+
+
+## 实例
+
+```java
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+
+    enum color { red=1, green, blue };
+
+    enum  color favorite_color;
+
+    /* 用户输入数字来选择颜色 */
+    printf("请输入你喜欢的颜色: (1. red, 2. green, 3. blue): ");
+    scanf("%u", &favorite_color);
+
+    /* 输出结果 */
+    switch (favorite_color)
+    {
+    case red:
+        printf("你喜欢的颜色是红色");
+        break;
+    case green:
+        printf("你喜欢的颜色是绿色");
+        break;
+    case blue:
+        printf("你喜欢的颜色是蓝色");
+        break;
+    default:
+        printf("你没有选择你喜欢的颜色");
+    }
+
+    return 0;
+}
+```
+
+以上实例输出结果为：
+
+```text
+请输入你喜欢的颜色: (1. red, 2. green, 3. blue): 1
+你喜欢的颜色是红色
+```
+
+
+### 将整数转换为枚举
+
+以下实例将整数转换为枚举：
+
+
+## 实例
+
+```java
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+
+    enum day
+    {
+        saturday,
+        sunday,
+        monday,
+        tuesday,
+        wednesday,
+        thursday,
+        friday
+    } workday;
+
+    int a = 1;
+    enum day weekend;
+    weekend = ( enum day ) a;  //类型转换
+    //weekend = a; //错误
+    printf("weekend:%d",weekend);
+    return 0;
+}
+```
+
+以上实例输出结果为：
+
+```text
+weekend:1
+```
+
+
+## 复习重点
+
+- 能说明 `C enum(枚举)` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

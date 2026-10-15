@@ -1,34 +1,89 @@
-# jQuery UI：jQuery UI 小部件方法调用 练习笔记
+# jQuery UI：jQuery UI 小部件（Widget）方法调用
 
 - 来源：[jQuery UI 小部件方法调用](https://www.runoob.com/jqueryui/jqueryui-widget-method.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2920
 
-## 练习目标
+## 本章内容
 
-把 `jQuery UI 小部件方法调用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+小部件（Widget）是通过 部件库（Widget Factory） 使用方法来改变他们初始化后的状态和执行动作而被创建的。有两种调用小部件方法的方式 - 通过部件库（Widget Factory）创建的插件，或者通过调用元素实例对象上的方法。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 插件调用
 
-## 验收清单
+使用小部件的插件调用方法，把方法名称以字符串形式进行传递。例如，点击这里查看，如何调用 dialog（对话框）小部件的 close() 方法。
 
-- 我能独立说出 `jQuery UI 小部件方法调用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+$( ".selector" ).dialog( "close" );
+```
 
-## 复盘问题
+如果方法要求参数 ，请作为额外的参数传递给插件。点击这里查看，如何调用 dialog（对话框）的 option() 方法。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+$( ".selector" ).dialog( "option", "height" );
+```
+
+这会返回 dialog（对话框）的 height 选项 的值。
+
+
+### 实例调用
+
+每个小部件的每个实例都是使用 jQuery.data() 存储在元素上。为了检索实例对象，请使用小部件的全称作为键名调用 jQuery.data()。具体如下面实例所示。
+
+```javascript
+var dialog = $( ".selector" ).data( "ui-dialog" );
+```
+
+在您引用实例对象之后，可以直接在上面调用方法。
+
+```javascript
+var dialog = $( ".selector" ).data( "ui-dialog" );
+dialog.close();
+```
+
+在 jQuery UI 1.11 中，新的 instance() 方法会使得这个过程变得更简单。
+
+```text
+$( ".selector" ).dialog( "instance" ).close();
+```
+
+
+### 返回类型
+
+大多数通过小部件的插件调用的方法将返回一个 jQuery 对象，所以方法调用可以通过额外的 jQuery 方法链接。当在实例上进行调用时，则会返回 undefined。具体如下面实例所示。
+
+```javascript
+var dialog = $( ".selector" ).dialog();
+
+// Instance invocation - returns undefined
+dialog.data( "ui-dialog" ).close();
+
+// Plugin invocation - returns a jQuery object
+dialog.dialog( "close" );
+
+// Therefore, plugin method invocation makes it possible to
+// chain method calls with other jQuery functions
+dialog.dialog( "close" )
+    .css( "color", "red" );
+```
+
+例外的是，返回小部件相关信息的那些方法。例如 dialog（对话框）的 isOpen() 方法。
+
+```text
+$( ".selector" )
+    .dialog( "isOpen" )
+    // This will throw a TypeError
+    .css( "color", "red" );
+```
+
+这会产生一个 TypeError 错误，因为 isOpen() 返回的是一个布尔值，而不是一个 jQuery 对象。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery UI 小部件方法调用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

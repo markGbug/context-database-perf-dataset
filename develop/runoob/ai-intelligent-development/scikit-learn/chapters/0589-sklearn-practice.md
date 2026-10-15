@@ -1,34 +1,60 @@
-# Scikit-learn：Sklearn 教程 练习笔记
+# Scikit-learn：Sklearn 教程
 
 - 来源：[Sklearn 教程](https://www.runoob.com/sklearn/sklearn-tutorial.html)
 - 分类：AI / 智能开发
 - 技术：Scikit-learn
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0589
 
-## 练习目标
+## 本章内容
 
-把 `Sklearn 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Sklearn（全称 scikit-learn）是一个开源的机器学习库。
 
-## 练习步骤
+Sklearn 是一个基于 Python 编程语言的开源机器学习库，致力于提供简单而高效的工具。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Sklearn 建立在 NumPy、SciPy 和 matplotlib 这些科学计算库之上，提供了简单而高效的数据挖掘和数据分析工具。
 
-## 验收清单
+Sklearn 是许多机器学习项目的核心工具之一，并且在学术界、工业界和个人项目中广泛应用。
 
-- 我能独立说出 `Sklearn 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Sklearn 适用于各类机器学习任务，如分类、回归、聚类、降维等。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 学习本教程前你需要了解
+
+在开学习 scikit-learn 教程之前，我们需要具备基本的 Python 基础，如果你对 Python 还不了解，可以阅读我们的教程：
+
+- Python 3.x 教程
+- Numpy 教程
+- SciPy 教程
+
+
+## Sklearn 应用
+
+Sklearn 构建在 NumPy 和 SciPy 基础之上，因此它能够高效地处理数值计算和数组操作。
+
+Sklearn 广泛应用于数据科学和机器学习领域，帮助进行数据分析、模型训练和预测。
+
+Sklearn 也常用于教育，以教授机器学习算法。
+
+Sklearn 在自然语言处理和图像识别等特定领域也有应用。
+
+
+## 相关链接
+
+- Sklearn 官网 https://scikit-learn.org/
+- Sklearn 源代码：https://github.com/scikit-learn/scikit-learn
+- NumPy 官网 http://www.numpy.org/
+- NumPy 源代码：https://github.com/numpy/numpy
+- SciPy 官网：https://www.scipy.org/
+- SciPy 源代码：https://github.com/scipy/scipy
+- Matplotlib 官网：https://matplotlib.org/
+- Matplotlib 源代码：https://github.com/matplotlib/matplotlib
+- pandas visualization官方文档：https://pandas.pydata.org/docs/user_guide/visualization.html
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Sklearn 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

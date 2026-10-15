@@ -1,34 +1,49 @@
-# Docker：Docker 镜像使用 练习笔记
+# Docker：Docker 镜像使用
 
 - 来源：[Docker 镜像使用](https://www.runoob.com/docker/docker-image-usage.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0803
 
-## 练习目标
+## 本章内容
 
-把 `Docker 镜像使用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+当运行容器时，使用的镜像如果在本地中不存在，docker 就会自动从 docker 镜像仓库中下载，默认是从 Docker Hub 公共镜像源下载。
 
-## 练习步骤
+下面我们来学习：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 1、管理和使用本地 Docker 主机镜像
+- 2、创建镜像
 
-## 验收清单
 
-- 我能独立说出 `Docker 镜像使用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 列出镜像列表
 
-## 复盘问题
+我们可以使用 docker images 来列出本地主机上的镜像。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+runoob@runoob:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              14.04               90d5884b1ee0        5 days ago          188 MB
+php                 5.6                 f40e9e0f10c8        9 days ago          444.8 MB
+nginx               latest              6f8d099c3adc        12 days ago         182.7 MB
+mysql               5.6                 f2e8d6c772c0        3 weeks ago         324.6 MB
+httpd               latest              02ef73cf1bc0        3 weeks ago         194.4 MB
+ubuntu              15.10               4e3b13c8a266        4 weeks ago         136.3 MB
+hello-world         latest              690ed74de00f        6 months ago        960 B
+training/webapp     latest              6fae60ef3446        11 months ago       348.8 MB
+```
+
+各个选项说明:
+
+- REPOSITORY：表示镜像的仓库源
+- TAG：镜像的标签
+- IMAGE ID：镜像ID
+- CREATED：镜像创建时间
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker 镜像使用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

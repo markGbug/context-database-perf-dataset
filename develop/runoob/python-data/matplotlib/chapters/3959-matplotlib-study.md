@@ -1,35 +1,53 @@
-# Matplotlib：Matplotlib 教程 学习笔记
+# Matplotlib：Matplotlib 教程
 
 - 来源：[Matplotlib 教程](https://www.runoob.com/matplotlib/matplotlib-tutorial.html)
 - 分类：Python / 数据科学
 - 技术：Matplotlib
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3959
 
-## 学习目标
+## 本章内容
 
-Matplotlib 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Matplotlib 教程` 建立学习路径，先理解它在 Matplotlib 体系中的位置，再做可运行或可复述的验证。
+Matplotlib 是 Python 的绘图库，它能让使用者很轻松地将数据图形化，并且提供多样化的输出格式。
 
-## 阅读抓手
+Matplotlib 可以用来绘制各种静态，动态，交互式的图表。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Matplotlib 是一个非常强大的 Python 画图工具，我们可以使用该工具将很多数据通过图表的形式更直观的呈现出来。
 
-## 笔记模板
+Matplotlib 可以绘制线图、散点图、等高线图、条形图、柱状图、3D 图形、甚至是图形动画等等。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 学习本教程前你需要了解
 
-- 能用 3 到 5 句话解释 `Matplotlib 教程`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+在开学习 Matplotlib 教程之前，我们需要具备基本的 Python 基础，如果你对 Python 还不了解，可以阅读我们的教程：
+
+- Python 3.x 教程
+- Numpy 教程
+
+
+## Matplotlib 应用
+
+Matplotlib 通常与 NumPy 和 SciPy（Scientific Python）一起使用， 这种组合广泛用于替代 MatLab，是一个强大的科学计算环境，有助于我们通过 Python 学习数据科学或者机器学习。
+
+SciPy 是一个开源的 Python 算法库和数学工具包。
+
+SciPy 包含的模块有最优化、线性代数、积分、插值、特殊函数、快速傅里叶变换、信号处理和图像处理、常微分方程求解和其他科学与工程中常用的计算。
+
+
+## 相关链接
+
+- NumPy 官网 http://www.numpy.org/
+- NumPy 源代码：https://github.com/numpy/numpy
+- SciPy 官网：https://www.scipy.org/
+- SciPy 源代码：https://github.com/scipy/scipy
+- Matplotlib 官网：https://matplotlib.org/
+- Matplotlib 源代码：https://github.com/matplotlib/matplotlib
+- pandas visualization官方文档：https://pandas.pydata.org/docs/user_guide/visualization.html
+
+
+## 复习重点
+
+- 能说明 `Matplotlib 教程` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,65 @@
-# jQuery EasyUI：jQuery EasyUI 简介 练习笔记
+# jQuery EasyUI：jQuery EasyUI 简介
 
 - 来源：[jQuery EasyUI 简介](https://www.runoob.com/jeasyui/jqueryeasyui-intro.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2841
 
-## 练习目标
+## 本章内容
 
-把 `jQuery EasyUI 简介` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+jQuery EasyUI 是一个基于 jQuery 的框架，集成了各种用户界面插件。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 什么是 jQuery EasyUI
 
-## 验收清单
+jQuery EasyUI 框架提供了创建网页所需的一切，帮助您轻松建立站点。
 
-- 我能独立说出 `jQuery EasyUI 简介` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- easyui 是一个基于 jQuery 的框架，集成了各种用户界面插件。
+- easyui 提供建立现代化的具有交互性的 javascript 应用的必要的功能。
+- 使用 easyui，您不需要写太多 javascript 代码，一般情况下您只需要使用一些 html 标记来定义用户界面。
+- HTML 网页的完整框架。
+- easyui 节省了开发产品的时间和规模。
+- easyui 非常简单，但是功能非常强大。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## jQuery EasyUI 下载
+
+您可以从 http://www.jeasyui.com/download/index.php 上下载您需要的 jQuery EasyUI 版本。
+
+
+## 轻松使用 jQuery 和 HTML5
+
+jQuery EasyUI 提供易于使用的组件，它使 Web 开发人员快速地在流行的 jQuery 核心和 HTML5 上建立程序页面。 这些功能使您的应用适合今天的网络。 有两个方法声明的 UI 组件:
+
+1. 直接在 HTML 声明组件。
+
+```html
+<div class="easyui-dialog" style="width:400px;height:200px"
+    data-options="title:'My Dialog',collapsible:true,iconCls:'icon-ok',onOpen:function(){}">
+        dialog content.
+</div>
+```
+
+2. 编写 JavaScript 代码来创建组件。
+
+```html
+<input id="cc" style="width:200px" />
+```
+
+```text
+$('#cc').combobox({
+    url: ...,
+    required: true,
+    valueField: 'id',
+    textField: 'text'
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery EasyUI 简介` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

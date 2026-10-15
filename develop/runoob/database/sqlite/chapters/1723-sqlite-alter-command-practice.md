@@ -1,34 +1,81 @@
-# SQLite：SQLite Alter 命令 练习笔记
+# SQLite：SQLite Alter 命令
 
 - 来源：[SQLite Alter 命令](https://www.runoob.com/sqlite/sqlite-alter-command.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1723
 
-## 练习目标
+## 本章内容
 
-把 `SQLite Alter 命令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQLite 的 ALTER TABLE 命令不通过执行一个完整的转储和数据的重载来修改已有的表。您可以使用 ALTER TABLE 语句重命名表，使用 ALTER TABLE 语句还可以在已有的表中添加额外的列。
 
-## 练习步骤
+在 SQLite 中，除了重命名表和在已有的表中添加列，ALTER TABLE 命令不支持其他操作。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 语法
 
-- 我能独立说出 `SQLite Alter 命令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+用来重命名已有的表的 ALTER TABLE 的基本语法如下：
 
-## 复盘问题
+```text
+ALTER TABLE database_name.table_name RENAME TO new_table_name;
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+用来在已有的表中添加一个新的列的 ALTER TABLE 的基本语法如下：
+
+```text
+ALTER TABLE database_name.table_name ADD COLUMN column_def...;
+```
+
+
+## 实例
+
+假设我们的 COMPANY 表有如下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+现在，让我们尝试使用 ALTER TABLE 语句重命名该表，如下所示：
+
+```text
+sqlite> ALTER TABLE COMPANY RENAME TO OLD_COMPANY;
+```
+
+上面的 SQLite 语句将重命名 COMPANY 表为 OLD_COMPANY。现在，让我们尝试在 OLD_COMPANY 表中添加一个新的列，如下所示：
+
+```text
+sqlite> ALTER TABLE OLD_COMPANY ADD COLUMN SEX char(1);
+```
+
+现在，COMPANY 表已经改变，使用 SELECT 语句输出如下：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY      SEX
+----------  ----------  ----------  ----------  ----------  ---
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+请注意，新添加的列是以 NULL 值来填充的。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite Alter 命令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

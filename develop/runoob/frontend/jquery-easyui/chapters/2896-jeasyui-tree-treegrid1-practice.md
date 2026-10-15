@@ -1,34 +1,41 @@
-# jQuery EasyUI：jEasyUI 创建基础树形网格 练习笔记
+# jQuery EasyUI：jQuery EasyUI 树形菜单 - 创建基础树形网格
 
 - 来源：[jEasyUI 创建基础树形网格](https://www.runoob.com/jeasyui/jeasyui-tree-treegrid1.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2896
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 创建基础树形网格` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+树形网格（TreeGrid）组件从数据网格（DataGrid）继承，但是允许在行之间存在父/子节点关系。许多属性继承至数据网格（DataGrid），可以用在树形网格（TreeGrid）中。为了使用树形网格（TreeGrid），用户必须定义 'treeField' 属性，指明哪个字段作为树节点。
 
-## 练习步骤
+本教程将向您展示如何使用树形网格（TreeGrid）组件设置一个文件夹浏览。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <table id="test" title="Folder Browser" class="easyui-treegrid" style="width:400px;height:300px"
+            url="data/treegrid_data.json"
+            rownumbers="true"
+            idField="id" treeField="name">
+        <thead>
+            <tr>
+                <th field="name" width="160">Name</th>
+                <th field="size" width="60" align="right">Size</th>
+                <th field="date" width="100">Modified Date</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-## 验收清单
 
-- 我能独立说出 `jEasyUI 创建基础树形网格` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 下载 jQuery EasyUI 实例
 
-## 复盘问题
+jeasyui-tree-treegrid1.zip
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 创建基础树形网格` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,88 @@
-# Web Service：Web Service 实例 学习笔记
+# Web Service：Web Service 实例
 
 - 来源：[Web Service 实例](https://www.runoob.com/webservices/ws-example.html)
 - 分类：XML / Web Service
 - 技术：Web Service
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4355
 
-## 学习目标
+## 本章内容
 
-Web Service 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Web Service 实例` 建立学习路径，先理解它在 Web Service 体系中的位置，再做可运行或可复述的验证。
+任何应用程序都可拥有 Web Service 组件。
 
-## 阅读抓手
+Web Service 的创建与编程语言的种类无关。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+本章节我们将为大家介绍使用 PHP 的 SOAP 扩展来创建 Web Service。
 
-## 笔记模板
+SOAP有两种操作方式，NO-WSDL 与 WSDL。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- NO-WSDL模式：使用参数来传递要使用的信息。
+- WSDL模式： 使用WSDL文件名作为参数，并从WSDL中提取服务所需的信息。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Web Service 实例`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 一个实例：PHP Web Service
+
+在开始实例前，我们需要确定PHP是否安装了 SOAP 扩展。查看 phpinfo，出现以下信息表明已经安装了 SOAP 扩展：
+
+在这个例子中，我们会使用 PHP SOAP 来创建一个简单的 Web Service。
+
+服务端 Server.php 文件代码如下：
+
+```javascript
+<?php
+// SiteInfo 类用于处理请求
+Class SiteInfo
+{
+    /**
+     *    返回网站名称
+     *    @return string
+     *
+     */
+    public function getName(){
+        return "菜鸟教程";
+    }
+
+    public function getUrl(){
+        return "www.runoob.com";
+    }
+}
+
+// 创建 SoapServer 对象
+$s = new SoapServer(null,array("location"=>"http://localhost/soap/Server.php","uri"=>"Server.php"));
+
+// 导出 SiteInfo 类中的全部函数
+$s->setClass("SiteInfo");
+// 处理一个SOAP请求，调用必要的功能，并发送回一个响应。
+$s->handle();
+?>
+```
+
+客户端 Client.php 文件代码如下：
+
+```html
+<?php
+try{
+  // non-wsdl方式调用web service
+  // 创建 SoapClient 对象
+  $soap = new SoapClient(null,array('location'=>"http://localhost/soap/Server.php",'uri'=>'Server.php'));
+  // 调用函数
+  $result1 = $soap->getName();
+  $result2 = $soap->__soapCall("getUrl",array());
+  echo $result1."<br/>";
+  echo $result2;
+} catch(SoapFault $e){
+  echo $e->getMessage();
+}catch(Exception $e){
+  echo $e->getMessage();
+}
+```
+
+这时我们访问 http://localhost/soap/Client.php，输出结果如下所示：
+
+
+## 复习重点
+
+- 能说明 `Web Service 实例` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

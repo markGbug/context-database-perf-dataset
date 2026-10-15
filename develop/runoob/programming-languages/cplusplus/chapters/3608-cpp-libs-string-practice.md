@@ -1,34 +1,97 @@
-# C++：C++ <string> 练习笔记
+# C++：C++ 标准库 <string>
 
 - 来源：[C++ <string>](https://www.runoob.com/cplusplus/cpp-libs-string.html)
 - 分类：编程语言
 - 技术：C++
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3608
 
-## 练习目标
+## 本章内容
 
-把 `C++ <string>` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+C++ 标准库（Standard Template Library, STL）是 C++ 的核心组成部分之一，提供了丰富的数据结构和算法。
 
-## 练习步骤
+<string> 是 C++ 标准库中用于处理字符串的头文件。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+在 C++ 中，字符串是由字符组成的序列。<string> 头文件提供了 std::string 类，它是对 C 风格字符串的封装，提供了更安全、更易用的字符串操作功能。
 
-## 验收清单
+要在 C++ 程序中使用 <string> 库，首先需要包含这个头文件：
 
-- 我能独立说出 `C++ <string>` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+#include <iostream>
+#include <string>
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 基本语法
+
+std::string 类的基本语法如下：
+
+- 声明字符串变量： std::string str;
+- 初始化字符串： std::string str = "Hello, World!";
+- 使用 + 连接字符串： std::string str1 = "Hello, "; std::string str2 = "World!"; std::string result = str1 + str2;
+
+
+## 常用成员函数
+
+std::string 类提供了许多成员函数来操作字符串，以下是一些常用的成员函数：
+
+- size()：返回字符串的长度。
+- empty()：检查字符串是否为空。
+- operator[]：通过索引访问字符串中的字符。
+- substr()：获取子字符串。
+- find()：查找子字符串在主字符串中的位置。
+- replace()：替换字符串中的某些字符。
+
+
+## 实例
+
+下面是一个使用 <string> 库的简单实例，包括输出结果：
+
+
+## 实例
+
+输出结果:
+
+```text
+Length of the greeting: 13
+Is the greeting empty? No
+Character at position 7: W
+Substring from position 7 with length 5: World
+Position of 'World' in the greeting: 7
+Modified greeting: Hello, C++!
+```
+
+std::string 成员函数汇总表 下面是一个常见的 std::string 成员函数的汇总:
+
+
+## 实例
+
+输出结果:
+
+```text
+Length: 13
+Is empty? No
+First character: H
+Character at position 7: W
+Substring from position 7 with length 5: World
+Position of 'World': 7
+Modified string: Hello, C++!
+Appended string: Hello, C++! How are you?
+String after insert: Hello,  BeautifulC++! How are you?
+String after erase: Hello, C++! How are you?
+String after clear: Empty
+C-style string: Hello, C++!
+Comparison result: 0
+First vowel at position: 1
+Last vowel at position: 4
+First non-vowel at position: 0
+Last non-vowel at position: 10
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `C++ <string>` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,117 @@
-# 浏览器信息：Mozilla 项目 学习笔记
+# 浏览器信息：Mozilla 项目
 
 - 来源：[Mozilla 项目](https://www.runoob.com/browsers/browsers-mozilla.html)
 - 分类：网站建设
 - 技术：浏览器信息
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4273
 
-## 学习目标
+## 本章内容
 
-浏览器信息 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Mozilla 项目` 建立学习路径，先理解它在 浏览器信息 体系中的位置，再做可运行或可复述的验证。
+## 什么是 Mozilla？
 
-## 阅读抓手
+Mozilla 不是一款 web 浏览器！
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Mozilla 是一个使用诸如 CSS、XML、RDF 等 web 标准来构建 web 应用程序的框架。
 
-## 笔记模板
+Mozilla 是一项开发用在 Mozilla 应用套件中的程序代码的非营利性的开源 web 开发项目。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Mozilla 应用程序套件是一套完整的 web 应用程序（浏览器、聊天客户端、新闻客户端、邮件客户端等等）。
 
-## 完成标准
+Mozilla 认为，互联网是一个需要改善和保护的公共资源。
 
-- 能用 3 到 5 句话解释 `Mozilla 项目`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## Mozilla 的产品
+
+- Firefox - 当今最流行的互联网浏览器之一
+- Thunderbird - 一个电子邮件和新闻组客户端，具有安全、快速、易用的特点
+- SeaMonkey - - 集浏览、收发电子邮件、聊天和编辑于一体
+- Bugzilla - bug 跟踪工具
+- Camino - 一款用于 Mac 的 web 浏览器
+- Lightning & Sunbird - 日历的扩展和应用
+- Composer - 网页编辑器
+
+产品可通过下面的地址来下载： http://www.mozilla.org
+
+
+## Mozilla 项目的历史
+
+1998 年，随着 Netscape 浏览器源代码的发布，Mozilla 项目作为一个开源社区被创建。
+
+一年内，来自世界各地的新的社区成员已经为 Netscape 的下一个浏览器增加了许多新的功能，并增强了它现有的功能，同时 Mozilla 项目也逐渐发展壮大。成员们不再只是致力于 Netscape 的下一个浏览器，而是开始创建各种浏览器、开发工具和其他项目。
+
+2002 年，第一个主要版本 Mozilla 1.0 发布了。这个套件对浏览器、电子邮件客户端和其他应用程序做了很多改进。但并没有很多人使用它（超过 90% 的互联网用户使用 Internet Explorer）。同年，Mozilla 发布了 Phoenix（后来重命名为 Firefox）的第一个版本。
+
+2003 年，Mozilla 项目创建 Mozilla 基金会，这是一个独立的非营利组织。Mozilla 基金会持续管理 Mozilla 项目的日常运作。
+
+2004 年，发布了 Firefox 1.0，这是一个重大的成功。在不超过一年的时间内，Firefox 下载量超过 100 百万次。Firefox 的受欢迎度有助于把选择器交还给用户。
+
+2008 年，Firefox 达到 20% 的全球市场份额。
+
+2008 年，Mozilla 庆祝它成立十周年。十年来，社区已经表明，商业公司可以通过开源项目的合作来获取利益。
+
+
+## Mozilla 基金会
+
+Mozilla 基金会创建于 2003 年 7 月，位于美国加利福尼亚州的芒廷维尤。
+
+Mozilla 基金会简称 Mozilla（缩写 MF 或 MoFo），是为支持和领导开源的 Mozilla 项目而设立的一个非营利组织。该组织制定管理开发政策，经营关键基础组织并管理商标及其他知识产权。它拥有一个称作 Mozilla 公司的子公司，雇佣了一些 Mozilla 开发人员并协调 Mozilla Firefox 网页浏览器以及 Mozilla Thunderbird 电子邮件客户端的发行版。
+
+Mozilla 基金会把自己描述为"一个致力于在互联网领域提供多样化选择和创新的公益组织"。
+
+在最初阶段，Mozilla 基金会开始涉足比 mozilla org 更广的领域，把以前推给 Netscape 和 Mozilla 合作伙伴的事情都拿来做了。
+
+在向"面向最终用户"的转型举动中，Mozilla 基金会和一些商业公司签约来售卖包含 Mozilla 软件的光盘并且提供电话支持服务。在这些举动中，Mozilla 基金会选择了以前 Netscape 的供应商。
+
+Mozilla 基金会变得对自己的知识产权更加的自信，他们推出了自己商标使用的新政策。
+
+Mozilla 基金会也开始了市场拓展等的新项目。
+
+随着 Mozilla 公司的成立，Mozilla 基金会把所有的软件开发和商业相关的活动都转移给了这个新的下属机构。
+
+Mozilla 基金会现在只专注于监管和战略等事宜，它也继续管理一些没有产品化的项目，比如 Camino 和 SeaMonkey。
+
+Mozilla 基金会现在拥有 Mozilla 商标和其他知识产权，并且全部授权 Mozilla 公司使用。
+
+Mozilla 基金会还控制着 Mozilla 的程序源代码库并决定着谁可以提交代码入库。
+
+
+### Mozilla 基金会的路线图
+
+Mozilla 决定制定一个新的开发路线图。下面列出了新路线图中的一些要点：
+
+- 专注于独立的应用程序（FireFox 浏览器、Thunderbird 邮件/新闻应用程序以及独立的设计器）
+- 使 Firefox 和 Thunderbird 成为 Mozilla 的首要产品
+- 用大型的 Mozilla 部署来维护针对企业和组织的SeaMonkey（现在的 Mozilla 浏览器）应用程序套件
+- 使用一年的研发周期把 Mozilla 1.4 分支作为由组织使用的 "distributor/vendor" 分支来进行维护
+- 修复至关重要的 Gecko layout architecture 的漏洞。所有的 Mozilla 应用程序都得益于这些 Gecko 的改进。
+- 精益求精。做得更少，但要做得更好！
+
+
+## 令人混淆的 Mozilla 名称
+
+第一款 Netscape 浏览器使用了名为 Mozilla 的代码引擎。Netscape 1.0 是依靠名为 Mozilla 1.0 的代码引擎来驱动的。Netscape 2.0 使用 Mozilla 2.0，Netscape 3.0 使用 Mozilla 3.0，而 Netscape 4.0 使用了 Mozilla 4.0。
+
+在 1998 年，Netscape 4 将其源代码公开 - 同时把 Netscape 5 的开发确立为一个开源项目。
+
+这个创建 Netscape 5 的开源项目被称为 "The Mozilla Project"。奇怪的是，这个 Mozilla 项目的代码引擎被称为 Gecko。
+
+不幸的是，在 4.0 发布之后，对下一代浏览器的研发耗费了 Netscape 超过三年半的时间。这次延迟破坏了 Netscape 作为微软 IE 浏览器的可靠的备选方案的可能性。就在 Mozilla 项目启动不久，微软就发布了它的 IE 5.0，而在 Netscape 设法发布一款可工作的浏览器之前，微软的 IE 6.0 也就绪了。
+
+基于 Gecko M18 (Milestone 18) 的 Netscape 6.0 于 2000 年 11 月发布。
+
+在 Netscape 6.0 发布之后，Mozilla 项目开始研发基于名为 Gecko 1.0 引擎的 Netscape 7。
+
+Netscape 6 和 7 均构建于 Mozilla 之上，Netscape 和 Mozilla 是几乎相同的应用程序套件。
+
+Netscape 7 声称其使用了名为 Gecko 1.0 的代码引擎。
+
+此刻，Mozilla 项目正在开发一款名为 Firefox 的新浏览器。在过去，Firefox 被称为 Mozilla Firebird（而 Mozilla Firebird 过去被称为 Phoenix，它声称是 Mozilla 的一个新版本）。
+
+
+## 复习重点
+
+- 能说明 `Mozilla 项目` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,96 @@
-# Playwright：Playwright Frame 与新窗口 学习笔记
+# Playwright：Playwright Frame 与新窗口
 
 - 来源：[Playwright Frame 与新窗口](https://www.runoob.com/playwright/playwright-frame.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0537
 
-## 学习目标
+## 本章内容
 
-Playwright 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Playwright Frame 与新窗口` 建立学习路径，先理解它在 Playwright 体系中的位置，再做可运行或可复述的验证。
+本章介绍如何处理 iframe、弹窗对话框、新标签页以及 Playwright 的事件系统。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## iframe 操作
 
-## 笔记模板
+Playwright 通过 frameLocator() 来定位和操作 iframe 内的元素。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### page.frameLocator() 定位 iframe
 
-- 能用 3 到 5 句话解释 `Playwright Frame 与新窗口`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+
+### 获取所有 Frame
+
+
+## 实例
+
+
+### 嵌套 iframe
+
+Playwright 的 frameLocator() 支持链式调用，可以深入嵌套的 iframe。
+
+
+## 实例
+
+
+## 弹窗处理（Dialogs）
+
+Playwright 对浏览器原生弹窗（alert、confirm、prompt）有默认处理策略。
+
+
+### 默认行为
+
+Playwright 默认自动关闭所有弹窗：
+
+
+### 自定义弹窗处理
+
+通过 page.on('dialog') 可以拦截并自定义处理弹窗。
+
+
+## 实例
+
+
+### Dialog 对象方法
+
+
+## 新窗口与新标签页
+
+当点击链接或按钮打开新标签页时，Playwright 提供了多种方式来获取新页面。
+
+
+### page.waitForEvent('popup') 等待弹窗
+
+
+## 实例
+
+
+### context.on('page') 监听新页面
+
+
+## 实例
+
+
+## Playwright 事件系统
+
+Playwright 的 Page 和 Context 对象都是事件发射器，你可以监听各种事件。
+
+
+### 常用页面事件
+
+
+### 事件监听方法
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Playwright Frame 与新窗口` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

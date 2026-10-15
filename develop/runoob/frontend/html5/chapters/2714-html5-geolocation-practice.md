@@ -1,34 +1,179 @@
-# HTML5：HTML5 地理定位 练习笔记
+# HTML5：HTML5 Geolocation（地理定位）
 
 - 来源：[HTML5 地理定位](https://www.runoob.com/html/html5-geolocation.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2714
 
-## 练习目标
+## 本章内容
 
-把 `HTML5 地理定位` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+HTML5 Geolocation（地理定位）用于定位用户的位置。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 定位用户的位置
 
-## 验收清单
+HTML5 Geolocation API 用于获得用户的地理位置。
 
-- 我能独立说出 `HTML5 地理定位` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+鉴于该特性可能侵犯用户的隐私，除非用户同意，否则用户位置信息是不可用的。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 浏览器支持
+
+Internet Explorer 9+, Firefox, Chrome, Safari 和 Opera 支持Geolocation（地理定位）.
+
+注意: Geolocation（地理定位）对于拥有 GPS 的设备，比如 iPhone，地理定位更加精确。
+
+
+## HTML5 - 使用地理定位
+
+请使用 getCurrentPosition() 方法来获得用户的位置。
+
+下例是一个简单的地理定位实例，可返回用户位置的经度和纬度:
+
+
+## 实例
+
+```html
+var x=document.getElementById("demo");
+function getLocation()
+{
+    if (navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    else
+    {
+        x.innerHTML="该浏览器不支持获取地理位置。";
+    }
+}
+
+function showPosition(position)
+{
+    x.innerHTML="纬度: " + position.coords.latitude +
+    "<br>经度: " + position.coords.longitude;
+}
+```
+
+实例解析:
+
+- 检测是否支持地理定位
+- 如果支持，则运行 getCurrentPosition() 方法。如果不支持，则向用户显示一段消息。
+- 如果 getCurrentPosition() 运行成功，则向参数showPosition中规定的函数返回一个 coordinates 对象
+- showPosition() 函数获得并显示经度和纬度
+
+上面的例子是一个非常基础的地理定位脚本，不含错误处理。
+
+
+## 处理错误和拒绝
+
+getCurrentPosition() 方法的第二个参数用于处理错误。它规定当获取用户位置失败时运行的函数：
+
+
+## 实例
+
+```java
+function showError(error)
+{
+    switch(error.code)
+    {
+        case error.PERMISSION_DENIED:
+            x.innerHTML="用户拒绝对获取地理位置的请求。"
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML="位置信息是不可用的。"
+            break;
+        case error.TIMEOUT:
+            x.innerHTML="请求用户地理位置超时。"
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML="未知错误。"
+            break;
+    }
+}
+```
+
+错误代码：
+
+- Permission denied - 用户不允许地理定位
+- Position unavailable - 无法获取当前位置
+- Timeout - 操作超时
+
+
+## 在地图中显示结果
+
+如需在地图中显示结果，您需要访问可使用经纬度的地图服务，比如谷歌地图或百度地图：
+
+
+## 实例
+
+```html
+function showPosition(position)
+{
+    var latlon=position.coords.latitude+","+position.coords.longitude;
+
+    var img_url="http://maps.googleapis.com/maps/api/staticmap?center="
+    +latlon+"&zoom=14&size=400x300&sensor=false";
+    document.getElementById("mapholder").innerHTML="<img src='"+img_url+"'>";
+}
+```
+
+在上例中，我们使用返回的经纬度数据在谷歌地图中显示位置（使用静态图像）。
+
+Google地图脚本 上面的链接向您演示如何使用脚本来显示带有标记、缩放和拖曳选项的交互式地图。
+
+
+## 给定位置的信息
+
+本页演示的是如何在地图上显示用户的位置。不过，地理定位对于给定位置的信息同样很有用处。
+
+可用于:
+
+- 更新本地信息
+- 显示用户周围的兴趣点
+- 交互式车载导航系统 (GPS)
+
+
+## getCurrentPosition() 方法 - 返回数据
+
+T若成功，则 getCurrentPosition() 方法返回对象。始终会返回 latitude、longitude 以及 accuracy 属性。如果可用，则会返回其他下面的属性。
+
+
+## Geolocation 对象 - 其他有趣的方法
+
+watchPosition() - 返回用户的当前位置，并继续返回用户移动时的更新位置（就像汽车上的 GPS）。
+
+clearWatch() - 停止 watchPosition() 方法
+
+下面的例子展示 watchPosition() 方法。您需要一台精确的 GPS 设备来测试该例（比如 iPhone）：
+
+
+## 实例
+
+```html
+var x=document.getElementById("demo");
+function getLocation()
+{
+    if (navigator.geolocation)
+    {
+        navigator.geolocation.watchPosition(showPosition);
+    }
+    else
+    {
+        x.innerHTML="该浏览器不支持获取地理位置。";
+    }
+}
+function showPosition(position)
+{
+    x.innerHTML="纬度: " + position.coords.latitude +
+    "<br>经度: " + position.coords.longitude;
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML5 地理定位` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

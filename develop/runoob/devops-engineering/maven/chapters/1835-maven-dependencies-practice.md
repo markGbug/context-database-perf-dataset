@@ -1,34 +1,227 @@
-# Maven：Maven 依赖机制 练习笔记
+# Maven：Maven 依赖机制
 
 - 来源：[Maven 依赖机制](https://www.runoob.com/maven/maven-dependencies.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1835
 
-## 练习目标
+## 本章内容
 
-把 `Maven 依赖机制` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Maven 依赖机制是 Apache Maven 构建工具的核心功能之一，它能够自动下载和管理项目所需的外部库（JAR 文件）及其依赖关系。
 
-## 练习步骤
+Maven 依赖机制极大地简化了 Java 项目的构建过程，使开发者无需手动下载和管理各种第三方库。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Maven 通过中央仓库（Maven Central Repository）存储了数百万个开源库，当你在项目中声明某个依赖时，Maven 会自动从仓库中下载该库及其所有依赖项。
 
-## 验收清单
 
-- 我能独立说出 `Maven 依赖机制` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 依赖声明方式
 
-## 复盘问题
+在 pom.xml 中通过 <dependency> 标签声明：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<dependencies>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+    </dependency>
+</dependencies>
+```
+
+
+## Maven 依赖的基本概念
+
+
+### 1. 坐标系统 (Coordinates)
+
+Maven 使用三个基本坐标来唯一标识一个依赖项：
+
+- groupId：定义项目所属的组织或公司（如 org.apache）
+- artifactId：定义项目的名称（如 commons-lang3）
+- version：定义项目的版本（如 3.12.0）
+
+这三个元素组合起来形成了 Maven 依赖的唯一标识符。
+
+
+### 2. 依赖范围 (Scope)
+
+Maven 定义了不同的依赖范围，决定了依赖在哪些阶段可用：
+
+- compile（默认）：编译、测试和运行时都可用
+- provided：编译和测试时可用，但运行时由 JDK 或容器提供
+- runtime：只在测试和运行时需要
+- test：仅在测试编译和执行阶段需要
+- system：类似于 provided，但需要显式指定 JAR 路径
+
+
+### 3. 传递性依赖 (Transitive Dependencies)
+
+当项目 A 依赖项目 B，而项目 B 又依赖项目 C 时，Maven 会自动将项目 C 也作为项目 A 的依赖引入。这种自动处理依赖关系的特性称为传递性依赖。
+
+传递规则取决于 Scope：
+
+
+## 如何在项目中使用 Maven 依赖
+
+
+### 1. 在 pom.xml 中添加依赖
+
+在 Maven 项目的 pom.xml 文件中，<dependencies> 部分用于声明项目依赖：
+
+
+## 实例
+
+
+### 2. 依赖排除 (Exclusions)
+
+有时你可能需要排除某个传递性依赖，可以使用 <exclusions> 标签：
+
+
+## 实例
+
+
+### 3. 依赖管理 (Dependency Management)
+
+在多模块项目中，可以在父 POM 中使用 <dependencyManagement> 统一管理依赖版本：
+
+
+## 实例
+
+子模块引用时只需声明 groupId 和 artifactId，无需指定版本。
+
+
+## 依赖管理高级特性
+
+
+### 依赖版本管理
+
+使用 dependencyManagement 统一管理版本：
+
+```html
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.18</version>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
+<!-- 子模块使用时无需指定版本 -->
+<dependencies>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+    </dependency>
+</dependencies>
+```
+
+
+### BOM 导入
+
+管理一组相关依赖的版本：
+
+```html
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>2.6.4</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
+
+### 可选依赖（Optional）
+
+标记依赖为可选，不传递：
+
+```html
+<dependency>
+    <groupId>com.example</groupId>
+    <artifactId>optional-lib</artifactId>
+    <version>1.0</version>
+    <optional>true</optional>
+</dependency>
+```
+
+
+## Maven 依赖解析机制
+
+
+### 1. 依赖调解 (Dependency Mediation)
+
+当出现版本冲突时，Maven 使用以下规则解决：
+
+- 最近定义优先（在依赖树中路径最短的版本被选中）
+- 如果路径长度相同，则先声明的依赖优先
+
+
+### 2. 依赖范围影响
+
+不同范围的依赖会影响传递性：
+
+- compile 范围的依赖会传递
+- provided 和 test 范围的依赖不会传递
+- runtime 范围的依赖会以 runtime 范围传递
+
+不同 Scope 的依赖最终打包结果：
+
+
+### 3. 可选依赖 (Optional Dependencies)
+
+标记为 optional 的依赖不会传递：
+
+
+## 实例
+
+
+## 依赖相关命令
+
+查看依赖树:
+
+```text
+mvn dependency:tree
+```
+
+分析依赖问题:
+
+```text
+mvn dependency:analyze
+```
+
+下载依赖到目录:
+
+```text
+mvn dependency:copy-dependencies
+```
+
+
+## Maven 仓库 (Repository)
+
+
+### 1. 仓库类型
+
+- 本地仓库：位于用户主目录下的 .m2/repository 目录
+- 中央仓库：Maven 默认的公共仓库
+- 远程仓库：公司或组织搭建的私有仓库
+
+
+## 后续章节
+
+- 2. 仓库配置
+- 实例
+- 最佳实践
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Maven 依赖机制` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

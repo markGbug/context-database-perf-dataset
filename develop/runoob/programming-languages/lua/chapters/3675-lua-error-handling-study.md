@@ -1,35 +1,164 @@
-# Lua：Lua 错误处理 学习笔记
+# Lua：Lua 错误处理
 
 - 来源：[Lua 错误处理](https://www.runoob.com/lua/lua-error-handling.html)
 - 分类：编程语言
 - 技术：Lua
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3675
 
-## 学习目标
+## 本章内容
 
-Lua 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Lua 错误处理` 建立学习路径，先理解它在 Lua 体系中的位置，再做可运行或可复述的验证。
+程序运行中错误处理是必要的，在我们进行文件操作，数据转移及web service 调用过程中都会出现不可预期的错误。如果不注重错误信息的处理，就会造成信息泄露，程序无法运行等情况。
 
-## 阅读抓手
+任何程序语言中，都需要错误处理。错误类型有：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 语法错误
+- 运行错误
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 语法错误
 
-## 完成标准
+语法错误通常是由于对程序的组件（如运算符、表达式）使用不当引起的。一个简单的实例如下：
 
-- 能用 3 到 5 句话解释 `Lua 错误处理`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+-- test.lua 文件
+a == 2
+```
+
+以上代码执行结果为：
+
+```text
+lua: test.lua:2: syntax error near '=='
+```
+
+正如你所看到的，以上出现了语法错误，一个 "=" 号跟两个 "=" 号是有区别的。一个 "=" 是赋值表达式两个 "=" 是比较运算。
+
+另外一个实例:
+
+
+## 实例
+
+执行以上程序会出现如下错误：
+
+```text
+lua: test2.lua:2: 'do' expected near 'print'
+```
+
+语法错误比程序运行错误更简单，运行错误无法定位具体错误，而语法错误我们可以很快的解决，如以上实例我们只要在for语句下添加 do 即可：
+
+
+## 实例
+
+
+## 运行错误
+
+运行错误是程序可以正常执行，但是会输出报错信息。如下实例由于参数输入错误，程序执行时报错：
+
+```javascript
+function add(a,b)
+   return a+b
+end
+
+add(10)
+```
+
+当我们编译运行以下代码时，编译是可以成功的，但在运行的时候会产生如下错误：
+
+```javascript
+lua: test2.lua:2: attempt to perform arithmetic on local 'b' (a nil value)
+stack traceback:
+    test2.lua:2: in function 'add'
+    test2.lua:5: in main chunk
+    [C]: ?
+```
+
+lua 里调用函数时，即使实参列表和形参列表不一致也能成功调用，多余的参数会被舍弃，缺少的参数会被补为 nil。
+
+以上报错信息是由于参数 b 被补为 nil 后，nil 参与了 + 运算。
+
+假如 add 函数内不是 "return a+b" 而是 "print(a,b)" 的话，结果会变成 "10 nil" 不会报错。
+
+
+## 错误处理
+
+我们可以使用两个函数：assert 和 error 来处理错误。实例如下：
+
+
+## 实例
+
+执行以上程序会出现如下错误：
+
+```javascript
+lua: test.lua:3: b 不是一个数字
+stack traceback:
+    [C]: in function 'assert'
+    test.lua:3: in local 'add'
+    test.lua:6: in main chunk
+    [C]: in ?
+```
+
+实例中assert首先检查第一个参数，若没问题，assert不做任何事情；否则，assert以第二个参数作为错误信息抛出。
+
+
+### error函数
+
+语法格式：
+
+```text
+error (message [, level])
+```
+
+功能：终止正在执行的函数，并返回message的内容作为错误信息(error函数永远都不会返回)
+
+通常情况下，error会附加一些错误位置的信息到message头部。
+
+Level参数指示获得错误的位置:
+
+- Level=1[默认]：为调用error位置(文件+行号)
+- Level=2：指出哪个调用error的函数的函数
+- Level=0:不添加错误位置信息
+
+
+## pcall 和 xpcall、debug
+
+Lua中处理错误，可以使用函数pcall（protected call）来包装需要执行的代码。
+
+pcall接收一个函数和要传递给后者的参数，并执行，执行结果：有错误、无错误；返回值true或者或false, errorinfo。
+
+语法格式如下 if pcall(function_name, ….) then -- 没有错误 else -- 一些错误 end 简单实例： 实例 > =pcall(function(i) print(i) end, 33) 33 true > =pcall(function(i) print(i) error('error..') end, 33) 33 false stdin:1: error.. > function f() return false,2 end > if f() then print '1' else print '0' end 0 pcall以一种"保护模式"来调用第一个参数，因此pcall可以捕获函数执行中的任何错误。 通常在错误发生时，希望落得更多的调试信息，而不只是发生错误的位置。但pcall返回时，它已经销毁了调用桟的部分内容。Lua提供了xpcall函数，xpcall接收第二个参数——一个错误处理函数，当错误发生时，Lua会在调用桟展开（unwind）前调用错误处理函数，于是就可以在这个函数中使用debug库来获取关于错误的额外信息了。 debug库提供了两个通用的错误处理函数:
+
+- debug.debug：提供一个Lua提示符，让用户来检查错误的原因
+- debug.traceback：根据调用桟来构建一个扩展的错误消息
+
+```html
+>=xpcall(function(i) print(i) error('error..') end, function() print(debug.traceback()) end, 33)
+33
+stack traceback:
+stdin:1: in function <stdin:1>
+[C]: in function 'error'
+stdin:1: in function <stdin:1>
+[C]: in function 'xpcall'
+stdin:1: in main chunk
+[C]: in ?
+false        nil
+```
+
+xpcall 使用实例 2:
+
+
+## 实例
+
+执行以上程序会出现如下错误：
+
+```text
+ERROR:    test2.lua:2: attempt to perform arithmetic on global 'n' (a nil value)
+false
+```
+
+
+## 复习重点
+
+- 能说明 `Lua 错误处理` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

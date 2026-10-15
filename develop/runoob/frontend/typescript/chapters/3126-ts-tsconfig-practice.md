@@ -1,34 +1,105 @@
-# TypeScript：TypeScript tsconfig.json 练习笔记
+# TypeScript：TypeScript tsconfig.json 配置
 
 - 来源：[TypeScript tsconfig.json](https://www.runoob.com/typescript/ts-tsconfig.html)
 - 分类：前端开发
 - 技术：TypeScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3126
 
-## 练习目标
+## 本章内容
 
-把 `TypeScript tsconfig.json` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+tsconfig.json 是 TypeScript 项目的配置文件，用于指定编译选项和项目设置。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 基本配置
 
-## 验收清单
+最基础的 tsconfig.json 文件。
 
-- 我能独立说出 `TypeScript tsconfig.json` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+配置说明：
+
+- target：编译目标 JavaScript 版本
+- module：使用的模块系统
+- strict：启用所有严格类型检查
+- outDir：输出目录
+
+
+## 编译目标版本
+
+使用 target 指定编译到的 JavaScript 版本。
+
+
+## 实例
+
+不同目标的输出差异：
+
+```javascript
+// target: ES5 - 使用 var
+var greeting = "Hello";
+
+// target: ES2020 - 使用 let/const
+let greeting = "Hello";
+```
+
+
+## 模块系统
+
+配置模块化方案。
+
+
+## 实例
+
+
+## 严格模式
+
+strict 选项启用所有严格类型检查。
+
+
+## 实例
+
+建议：始终启用 strict: true，这是最佳实践。
+
+
+## 路径别名
+
+配置路径别名简化导入。
+
+
+## 实例
+
+使用方式：
+
+```text
+import Button from "@components/Button";
+import { Header } from "@/components";
+```
+
+
+## 文件包含与排除
+
+控制哪些文件包含在编译中。
+
+
+## 实例
+
+
+## 常用编译选项一览
+
+
+## 总结
+
+- tsconfig.json：TypeScript 项目配置文件
+- compilerOptions：编译选项核心配置
+- include/exclude：控制文件范围
+- 路径别名：简化导入路径
+- strict: true：始终启用严格模式
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `TypeScript tsconfig.json` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

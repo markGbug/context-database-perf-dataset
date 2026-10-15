@@ -1,35 +1,113 @@
-# jQuery：jQuery 滑动 学习笔记
+# jQuery：jQuery 效果 - 滑动
 
 - 来源：[jQuery 滑动](https://www.runoob.com/jquery/jquery-slide.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2970
 
-## 学习目标
+## 本章内容
 
-jQuery 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery 滑动` 建立学习路径，先理解它在 jQuery 体系中的位置，再做可运行或可复述的验证。
+jQuery 滑动方法可使元素上下滑动。
 
-## 阅读抓手
+点击这里，隐藏/显示面板
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+一寸光阴一寸金，因此，我们为您提供快捷易懂的学习内容。
 
-## 笔记模板
+在这里，您可以通过一种易懂的便利的模式获得您需要的任何知识。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `jQuery 滑动`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+jQuery slideDown() 演示 jQuery slideDown() 方法。
+
+jQuery slideUp() 演示 jQuery slideUp() 方法。
+
+jQuery slideToggle() 演示 jQuery slideToggle() 方法。
+
+
+## jQuery 滑动方法
+
+通过 jQuery，您可以在元素上创建滑动效果。
+
+jQuery 拥有以下滑动方法：
+
+- slideDown()
+- slideUp()
+- slideToggle()
+
+
+## jQuery slideDown() 方法
+
+jQuery slideDown() 方法用于向下滑动元素。
+
+语法:
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是滑动完成后所执行的函数名称。
+
+下面的例子演示了 slideDown() 方法：
+
+
+## 实例
+
+```text
+$("#flip").click(function(){
+  $("#panel").slideDown();
+});
+```
+
+
+## jQuery slideUp() 方法
+
+jQuery slideUp() 方法用于向上滑动元素。
+
+语法:
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是滑动完成后所执行的函数名称。
+
+下面的例子演示了 slideUp() 方法：
+
+
+## 实例
+
+```text
+$("#flip").click(function(){
+  $("#panel").slideUp();
+});
+```
+
+
+## jQuery slideToggle() 方法
+
+jQuery slideToggle() 方法可以在 slideDown() 与 slideUp() 方法之间进行切换。
+
+如果元素向下滑动，则 slideToggle() 可向上滑动它们。
+
+如果元素向上滑动，则 slideToggle() 可向下滑动它们。
+
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是滑动完成后所执行的函数名称。
+
+下面的例子演示了 slideToggle() 方法：
+
+
+## 实例
+
+```text
+$("#flip").click(function(){
+  $("#panel").slideToggle();
+});
+```
+
+
+## 复习重点
+
+- 能说明 `jQuery 滑动` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

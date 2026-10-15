@@ -1,34 +1,104 @@
-# MongoDB：MongoDB 原子操作 练习笔记
+# MongoDB：MongoDB 原子操作
 
 - 来源：[MongoDB 原子操作](https://www.runoob.com/mongodb/mongodb-atomic-operations.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1496
 
-## 练习目标
+## 本章内容
 
-把 `MongoDB 原子操作` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+mongodb不支持事务，所以，在你的项目中应用时，要注意这点。无论什么设计，都不要要求mongodb保证数据的完整性。
 
-## 练习步骤
+但是mongodb提供了许多原子操作，比如文档的保存，修改，删除等，都是原子操作。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+所谓原子操作就是要么这个文档保存到Mongodb，要么没有保存到Mongodb，不会出现查询到的文档没有保存完整的情况。
 
-## 验收清单
 
-- 我能独立说出 `MongoDB 原子操作` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 原子操作数据模型
 
-## 复盘问题
+考虑下面的例子，图书馆的书籍及结账信息。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+实例说明了在一个相同的文档中如何确保嵌入字段关联原子操作（update：更新）的字段是同步的。
+
+```text
+book = {
+          _id: 123456789,
+          title: "MongoDB: The Definitive Guide",
+          author: [ "Kristina Chodorow", "Mike Dirolf" ],
+          published_date: ISODate("2010-09-24"),
+          pages: 216,
+          language: "English",
+          publisher_id: "oreilly",
+          available: 3,
+          checkout: [ { by: "joe", date: ISODate("2012-10-15") } ]
+        }
+```
+
+你可以使用 db.collection.findAndModify() 方法来判断书籍是否可结算并更新新的结算信息。
+
+在同一个文档中嵌入的 available 和 checkout 字段来确保这些字段是同步更新的:
+
+```text
+db.books.findAndModify ( {
+   query: {
+            _id: 123456789,
+            available: { $gt: 0 }
+          },
+   update: {
+             $inc: { available: -1 },
+             $push: { checkout: { by: "abc", date: new Date() } }
+           }
+} )
+```
+
+
+## 原子操作常用命令
+
+用来指定一个键并更新键值，若键不存在并创建。
+
+```text
+{ $set : { field : value } }
+```
+
+用来删除一个键。
+
+```text
+{ $unset : { field : 1} }
+```
+
+$inc可以对文档的某个值为数字型（只能为满足要求的数字）的键进行增减的操作。
+
+```text
+{ $inc : { field : value } }
+```
+
+用法：
+
+```text
+{ $push : { field : value } }
+```
+
+把value追加到field里面去，field一定要是数组类型才行，如果field不存在，会新增一个数组类型加进去。
+
+同$push,只是一次可以追加多个值到一个数组字段内。
+
+```text
+{ $pushAll : { field : value_array } }
+```
+
+从数组field内删除一个等于value值。
+
+```text
+{ $pull : { field : _value } }
+```
+
+增加一个值到数组内，而且只有当这个值不在数组内才增加。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MongoDB 原子操作` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

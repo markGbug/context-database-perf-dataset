@@ -1,34 +1,82 @@
-# Playwright：Playwright 文件操作 练习笔记
+# Playwright：Playwright 文件操作
 
 - 来源：[Playwright 文件操作](https://www.runoob.com/playwright/playwright-file-operations.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0517
 
-## 练习目标
+## 本章内容
 
-把 `Playwright 文件操作` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+虽然 Playwright 主要是做浏览器自动化的，但它在文件上传和下载方面也很强大，可以轻松应对前端常见的文件交互场景。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 文件上传
 
-## 验收清单
+在 Web 表单中，文件上传通常通过 <input type="file"> 完成。Playwright 提供了专门的 API 来处理：
 
-- 我能独立说出 `Playwright 文件操作` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 方法一：setInputFiles()
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+await page.setInputFiles('input[type="file"]', 'tests/fixtures/avatar.png');
+```
+
+- 参数说明： 选择器：文件选择框的定位方式。 文件路径：相对/绝对路径，支持单文件或多文件数组。
+- 如果传入 []，表示清空已选择的文件。
+
+
+### 方法二：直接通过 Locator
+
+```javascript
+const upload = page.locator('input[type=file]');
+await upload.setInputFiles(['tests/fixtures/1.png', 'tests/fixtures/2.png']);
+```
+
+
+### 方法三：模拟拖拽上传（部分应用支持）
+
+```javascript
+const fileChooserPromise = page.waitForEvent('filechooser');
+await page.click('button#upload'); // 触发选择文件
+const fileChooser = await fileChooserPromise;
+await fileChooser.setFiles('tests/fixtures/test.pdf');
+```
+
+
+## 文件下载
+
+Playwright 可以捕获浏览器下载事件，并获取文件保存路径。
+
+
+### 基本用法：监听下载
+
+
+## 实例
+
+
+## 截图与录屏文件
+
+Playwright 本身也会生成文件（截图、视频、trace 等）：
+
+```text
+await page.screenshot({ path: 'screenshots/home.png', fullPage: true });
+await page.video()?.saveAs('videos/test.mp4');  // 在配置中开启 video 记录才可用
+```
+
+
+## 文件操作完整示例
+
+
+## 实例
+
+
+## 文件操作 API
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Playwright 文件操作` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

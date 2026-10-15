@@ -1,35 +1,89 @@
-# AngularJS：AngularJS API 学习笔记
+# AngularJS：AngularJS API
 
 - 来源：[AngularJS API](https://www.runoob.com/angularjs/angularjs-api.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2295
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS API` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+API 意为 Application Programming Interface（应用程序编程接口）。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## AngularJS 全局 API
 
-## 笔记模板
+AngularJS 全局 API 用于执行常见任务的 JavaScript 函数集合，如：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 比较对象
+- 迭代对象
+- 转换对象
 
-## 完成标准
+全局 API 函数使用 angular 对象进行访问。
 
-- 能用 3 到 5 句话解释 `AngularJS API`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下列出了一些通用的 API 函数：
+
+注意：自 AngularJS 1.7 之后移除 angular.lowercase 和 angular.uppercase 方法, 改为 angular.$$lowercase 和 angular.$$uppercase
+
+
+### angular.lowercase()
+
+
+## 实例
+
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>{{ x1 }}</p>
+<p>{{ x2 }}</p>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.x1 = "RUNOOB";
+    $scope.x2 = angular.$$lowercase($scope.x1);
+});
+</script>
+```
+
+
+### angular.uppercase()
+
+
+## 实例
+
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>{{ x1 }}</p>
+<p>{{ x2 }}</p>
+</div>
+​
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.x1 = "runoob";
+    $scope.x2 = angular.$$uppercase($scope.x1);
+});
+</script>
+​
+```
+
+
+### angular.isString()
+
+
+## 实例
+
+
+### angular.isNumber()
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `AngularJS API` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

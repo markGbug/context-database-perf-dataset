@@ -1,35 +1,142 @@
-# Electron：Electron 性能优化 学习笔记
+# Electron：Electron 性能优化
 
 - 来源：[Electron 性能优化](https://www.runoob.com/electron/electron-performance-optimization.html)
 - 分类：后端开发
 - 技术：Electron
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0835
 
-## 学习目标
+## 本章内容
 
-Electron 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Electron 性能优化` 建立学习路径，先理解它在 Electron 体系中的位置，再做可运行或可复述的验证。
+Electron 应用功能强大，但同时可能存在启动慢、内存占用高、包体积大等性能问题。
 
-## 阅读抓手
+通过合理优化，可以显著提升用户体验和应用效率。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 启动性能优化
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 延迟加载
 
-- 能用 3 到 5 句话解释 `Electron 性能优化`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 将非必要模块或组件延迟加载，避免启动时一次性加载过多内容。
+- 示例：在用户第一次操作时才加载特定功能模块。
+
+```javascript
+document.getElementById('loadFeature').addEventListener('click', async () => {
+  const module = await import('./featureModule.js')
+  module.initFeature()
+})
+```
+
+
+### 代码分割
+
+- 将主进程与渲染进程逻辑拆分，或者使用 ES 模块动态加载。
+- 有助于减少首次加载文件大小。
+
+
+### 减少启动时的操作
+
+- 避免在 app.whenReady() 中执行复杂计算或网络请求
+- 将初始化操作异步化或在后台进程中处理
+
+
+## 运行时性能优化
+
+
+### 内存管理
+
+- 避免渲染进程加载大量 DOM 元素或未释放对象
+- 使用 Chrome DevTools 监控内存泄漏
+- 主进程对象也应及时释放引用
+
+```javascript
+// 清理定时器
+const interval = setInterval(() => { /* ... */ }, 1000)
+clearInterval(interval)
+```
+
+
+### 渲染优化
+
+- 使用虚拟列表或懒加载减少渲染压力
+- 避免频繁操作 DOM，尽量批量更新
+
+
+### 避免内存泄漏
+
+- 避免在渲染进程全局绑定大量事件
+- 关闭窗口时解除事件绑定、释放引用
+
+```text
+window.onbeforeunload = () => {
+  someElement.removeEventListener('click', handler)
+}
+```
+
+
+## 打包体积优化
+
+
+### 依赖分析
+
+- 使用工具分析打包体积，找到大模块或未使用依赖
+- 示例工具：webpack-bundle-analyzer
+
+
+### 移除不必要的依赖
+
+- 检查 package.json 中未使用的模块
+- 优化第三方库，避免引入整个库只为一个函数
+
+
+### 使用 asar 打包
+
+- Electron 提供 .asar 格式打包资源，提高加载速度并减少文件散乱
+- 命令示例：electron-packager . myApp --asar
+
+
+## 多进程优化
+
+
+### Web Workers 使用
+
+- 对 CPU 密集型任务使用 Web Worker，避免阻塞渲染进程
+
+```javascript
+const worker = new Worker('./worker.js')
+worker.postMessage({ data: largeData })
+worker.onmessage = (e) => console.log('Worker 处理结果', e.data)
+```
+
+
+### 后台任务处理
+
+- 将耗时操作放入主进程或后台进程，通过 IPC 通信返回结果
+- 避免渲染进程直接执行复杂逻辑
+
+
+### 进程池管理
+
+- 对频繁启动的子进程可使用进程池复用，降低系统资源消耗
+- 适合图像处理、视频转码等高耗 CPU 的操作
+
+
+## 小结
+
+Electron 性能优化核心思想：
+
+- 启动快：延迟加载、代码分割、减少启动操作
+- 运行顺畅：内存管理、渲染优化、避免泄漏
+- 体积小：依赖分析、移除冗余、asar 打包
+- 多任务高效：Web Workers、后台处理、进程池管理
+
+通过以上优化手段，Electron 应用可以在桌面端运行得更轻快、稳定和高效。
+
+
+## 复习重点
+
+- 能说明 `Electron 性能优化` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

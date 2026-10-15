@@ -1,35 +1,41 @@
-# Docker：Windows Docker 安装 学习笔记
+# Docker：Windows Docker 安装
 
 - 来源：[Windows Docker 安装](https://www.runoob.com/docker/windows-docker-install.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0798
 
-## 学习目标
+## 本章内容
 
-Docker 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Windows Docker 安装` 建立学习路径，先理解它在 Docker 体系中的位置，再做可运行或可复述的验证。
+Docker 并非是一个通用的容器工具，它依赖于已存在并运行的 Linux 内核环境。
 
-## 阅读抓手
+Docker 实质上是在已经运行的 Linux 下制造了一个隔离的文件环境，因此它执行的效率几乎等同于所部署的 Linux 主机。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+因此，Docker 必须部署在 Linux 内核的系统上。如果其他系统想部署 Docker 就必须安装一个虚拟 Linux 环境。
 
-## 笔记模板
+在 Windows 上部署 Docker 的方法都是先安装一个虚拟机，并在安装 Linux 系统的的虚拟机中运行 Docker。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## Win10 系统
 
-- 能用 3 到 5 句话解释 `Windows Docker 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Docker Desktop 是 Docker 在 Windows 10 和 macOS 操作系统上的官方安装方式，这个方法依然属于先在虚拟机中安装 Linux 然后再安装 Docker 的方法。
+
+Docker Desktop 官方下载地址： https://docs.docker.com/desktop/install/windows-install/
+
+注意：此方法仅适用于 Windows 10 操作系统专业版、企业版、教育版和部分家庭版！
+
+
+### 安装 Hyper-V
+
+Hyper-V 是微软开发的虚拟机，类似于 VMWare 或 VirtualBox，仅适用于 Windows 10。这是 Docker Desktop for Windows 所使用的虚拟机。
+
+但是，这个虚拟机一旦启用，QEMU、VirtualBox 或 VMWare Workstation 15 及以下版本将无法使用！如果你必须在电脑上使用其他虚拟机（例如开发 Android 应用必须使用的模拟器），请不要使用 Hyper-V！
+
+
+## 复习重点
+
+- 能说明 `Windows Docker 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

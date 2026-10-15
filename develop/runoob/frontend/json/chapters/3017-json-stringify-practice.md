@@ -1,34 +1,152 @@
-# JSON：JSON.stringify() 练习笔记
+# JSON：JSON.stringify()
 
 - 来源：[JSON.stringify()](https://www.runoob.com/json/json-stringify.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3017
 
-## 练习目标
+## 本章内容
 
-把 `JSON.stringify()` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+JSON 通常用于与服务端交换数据。
 
-## 练习步骤
+在向服务器发送数据时一般是字符串。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+我们可以使用 JSON.stringify() 方法将 JavaScript 对象转换为字符串。
 
-## 验收清单
 
-- 我能独立说出 `JSON.stringify()` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法
 
-## 复盘问题
+```text
+JSON.stringify(value[, replacer[, space]])
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+参数说明：
+
+- value:必需， 要转换的 JavaScript 值（通常为对象或数组）。
+- replacer: 可选。用于转换结果的函数或数组。 如果 replacer 为函数，则 JSON.stringify 将调用该函数，并传入每个成员的键和值。使用返回值而不是原始值。如果此函数返回 undefined，则排除成员。根对象的键是一个空字符串：""。 如果 replacer 是一个数组，则仅转换该数组中具有键值的成员。成员的转换顺序与键在数组中的顺序一样。当 value 参数也为数组时，将忽略 replacer 数组。
+- space: 可选，文本添加缩进、空格和换行符，如果 space 是一个数字，则返回值文本在每个级别缩进指定数目的空格，如果 space 大于 10，则文本缩进 10 个空格。space 也可以使用非数字，如：\t。
+
+
+## JavaScript 对象转换
+
+例如我们向服务器发送以下数据：
+
+```javascript
+var obj = { "name":"runoob", "alexa":10000, "site":"www.runoob.com"};
+```
+
+我们使用 JSON.stringify() 方法处理以上数据，将其转换为字符串：
+
+```javascript
+var myJSON = JSON.stringify(obj);
+```
+
+myJSON 为字符串。
+
+我们可以将 myJSON 发送到服务器：
+
+
+## 实例
+
+```javascript
+var obj = { "name":"runoob", "alexa":10000, "site":"www.runoob.com"};
+var myJSON = JSON.stringify(obj);
+document.getElementById("demo").innerHTML = myJSON;
+```
+
+
+## JavaScript 数组转换
+
+我们也可以将 JavaScript 数组转换为 JSON 字符串：
+
+
+## 实例
+
+```javascript
+var arr = [ "Google", "Runoob", "Taobao", "Facebook" ];
+var myJSON = JSON.stringify(arr);
+```
+
+myJSON 为字符串。
+
+我们可以将 myJSON 发送到服务器：
+
+
+## 实例
+
+```javascript
+var arr = [ "Google", "Runoob", "Taobao", "Facebook" ];
+var myJSON = JSON.stringify(arr);
+document.getElementById("demo").innerHTML = myJSON;
+```
+
+
+## 异常
+
+
+### 解析数据
+
+JSON 不能存储 Date 对象。
+
+JSON.stringify() 会将所有日期转换为字符串。
+
+
+## 实例
+
+```javascript
+var obj = { "name":"Runoob", "initDate":new Date(), "site":"www.runoob.com"};
+var myJSON = JSON.stringify(obj);
+document.getElementById("demo").innerHTML = myJSON;
+```
+
+之后你可以再将字符串转换为 Date 对象。
+
+
+## 解析函数
+
+JSON 不允许包含函数，JSON.stringify() 会删除 JavaScript 对象的函数，包括 key 和 value。
+
+
+## 实例
+
+```javascript
+var obj = { "name":"Runoob", "alexa":function () {return 10000;}, "site":"www.runoob.com"};
+var myJSON = JSON.stringify(obj);
+
+document.getElementById("demo").innerHTML = myJSON;
+```
+
+我们可以在执行 JSON.stringify() 函数前将函数转换为字符串来避免以上问题的发生：
+
+
+## 实例
+
+```javascript
+var obj = { "name":"Runoob", "alexa":function () {return 10000;}, "site":"www.runoob.com"};
+obj.alexa = obj.alexa.toString();
+var myJSON = JSON.stringify(obj);
+
+document.getElementById("demo").innerHTML = myJSON;
+```
+
+不建议在 JSON 中使用函数。
+
+
+## 浏览器支持
+
+主流浏览器都支持 JSON.stringify() 函数：
+
+- Firefox 3.5
+- Internet Explorer 8
+- Chrome
+- Opera 10
+- Safari 4
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JSON.stringify()` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

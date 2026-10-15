@@ -1,34 +1,100 @@
-# JavaScript：JavaScript Window History 练习笔记
+# JavaScript：JavaScript Window History
 
 - 来源：[JavaScript Window History](https://www.runoob.com/js/js-window-history.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2825
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript Window History` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+window.history 对象包含浏览器的历史。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## Window History
 
-## 验收清单
+window.history对象在编写时可不使用 window 这个前缀。
 
-- 我能独立说出 `JavaScript Window History` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+为了保护用户隐私，对 JavaScript 访问该对象的方法做出了限制。
 
-## 复盘问题
+一些方法：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- history.back() - 与在浏览器点击后退按钮相同
+- history.forward() - 与在浏览器中点击向前按钮相同
+
+
+## Window history.back()
+
+history.back() 方法加载历史列表中的前一个 URL。
+
+这与在浏览器中点击后退按钮是相同的：
+
+
+## 实例
+
+在页面上创建后退按钮：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<head>
+<script>
+function goBack()
+{
+    window.history.back()
+}
+</script>
+</head>
+<body>
+
+<input type="button" value="Back" onclick="goBack()">
+
+</body>
+</html>
+```
+
+以上代码输出为：
+
+
+## Window history.forward()
+
+history forward() 方法加载历史列表中的下一个 URL。
+
+这与在浏览器中点击前进按钮是相同的：
+
+
+## 实例
+
+在页面上创建一个向前的按钮：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+function goForward()
+{
+    window.history.forward()
+}
+</script>
+</head>
+<body>
+
+<input type="button" value="Forward" onclick="goForward()">
+
+</body>
+</html>
+```
+
+以上代码输出为：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript Window History` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

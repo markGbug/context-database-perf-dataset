@@ -1,34 +1,193 @@
-# Vue3：Vue3 安装 练习笔记
+# Vue3：Vue3 安装
 
 - 来源：[Vue3 安装](https://www.runoob.com/vue3/vue3-install.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3192
 
-## 练习目标
+## 本章内容
 
-把 `Vue3 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 1、独立版本
 
-## 练习步骤
+我们可以在 Vue.js 的官网上直接下载最新版本, 并用 <script> 标签引入。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+下载 Vue.js
 
-## 验收清单
 
-- 我能独立说出 `Vue3 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 2、使用 CDN 方法
 
-## 复盘问题
+以下推荐国外比较稳定的两个 CDN，国内还没发现哪一家比较好，目前还是建议下载到本地。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- cdnjs : https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.5/vue.global.js
+- Staticfile CDN（国内） : https://cdn.staticfile.net/vue/3.0.5/vue.global.js
+- unpkg：https://unpkg.com/vue@3/dist/vue.global.js, 会保持和 npm 发布的最新的版本一致。
+
+
+## Staticfile CDN（国内）
+
+```html
+<div id="app">
+  <p>{{ message }}</p>
+</div>
+```
+
+
+## 字节跳动 CDN（国内）
+
+```html
+<div id="app">
+  <p>{{ message }}</p>
+</div>
+```
+
+
+## unpkg（国内不稳定）
+
+```html
+<div id="app">
+  <p>{{ message }}</p>
+</div>
+```
+
+
+## cdnjs
+
+```html
+<div id="app">
+  <p>{{ message }}</p>
+</div>
+```
+
+我们可以使用 ES 模块构建版本来创建一个更现代化和模块化的开发环境：
+
+
+## 实例
+
+
+## 3、NPM 方法
+
+由于 npm 安装速度慢，本教程使用了淘宝的镜像及其命令 cnpm，安装使用介绍参照：使用淘宝 NPM 镜像。
+
+npm 版本需要大于 3.0，如果低于此版本需要升级它：
+
+```text
+# 查看版本
+$ npm -v
+2.3.0
+
+#升级 npm
+cnpm install npm -g
+
+
+# 升级或安装 cnpm
+npm install cnpm -g
+```
+
+在用 Vue.js 构建大型应用时推荐使用 cnpm 安装，cnpm 能很好地和 Webpack 或 Browserify 模块打包器配合使用，然后在命令行中运行以下命令：
+
+```text
+# 最新稳定版
+$ npm init vue@latest
+```
+
+这一指令将会安装并执行 create-vue，它是 Vue 官方的项目脚手架工具。
+
+```java
+$ npm init vue@latest
+Need to install the following packages:
+  create-vue@3.6.1
+Ok to proceed? (y) y
+
+Vue.js - The Progressive JavaScript Framework
+# 这里需要进行一些配置，项目名输入 runoob-vue3-test，其他默认回车即可
+-> Project name: … runoob-vue3-test
+-> Add TypeScript? … No / Yes
+-> Add JSX Support? … No / Yes
+-> Add Vue Router for Single Page Application development? … No / Yes
+-> Add Pinia for state management? … No / Yes
+-> Add Vitest for Unit Testing? … No / Yes
+-> Add an End-to-End Testing Solution? › No
+-> Add ESLint for code quality? … No / Yes
+
+Scaffolding project in /Users/runoob/runoob-test/runoob-vue3/runoob-vue3-test...
+
+Done. Now run:
+
+  cd runoob-vue3-test
+  npm install
+  npm run dev
+```
+
+如果不确定是否要开启某个功能，你可以直接按下回车键选择 No。
+
+在项目被创建后，通过以下步骤安装依赖并启动开发服务器：
+
+```text
+$ cd runoob-vue3-test
+$ npm install
+$ npm run dev
+  VITE v4.3.4  ready in 543 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
+```
+
+成功执行以上命令后访问 http://localhost:5173/，输出结果如下所示：
+
+注意：Vue.js 不支持 IE8 及其以下 IE 版本。
+
+
+## 使用图形化界面
+
+我们可以通过 vue ui 命令来打开图形化界面创建和管理项目：
+
+```text
+vue ui
+```
+
+执行以上命令会在浏览器中打开一个图形化界面来引导项目创建：
+
+
+## Vite
+
+Vite 是一个 web 开发构建工具，由于其原生 ES 模块导入方式，可以实现闪电般的冷服务器启动。
+
+通过在终端中运行以下命令，可以使用 Vite 快速构建 Vue 项目，语法格式如下：
+
+```html
+npm init vite-app <project-name>
+```
+
+创建项目 runoob-vue3-test2：
+
+```text
+$  npm init vite-app runoob-vue3-test2
+```
+
+运行项目:
+
+```text
+$ cd runoob-vue3-test2
+$ cnpm install
+$ cnpm run dev
+> runoob-vue3-test2@0.0.0 dev /Users/runoob/runoob-test/vue3/runoob-vue3-test2
+> vite
+
+[vite] Optimizable dependencies detected:
+vue
+
+  Dev server running at:
+  > Local:    http://localhost:3000/
+```
+
+打开 http://localhost:3000/，显示如下：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue3 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

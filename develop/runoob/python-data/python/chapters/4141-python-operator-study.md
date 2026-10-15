@@ -1,35 +1,135 @@
-# Python：Python3 operator 学习笔记
+# Python：Python3 operator 模块
 
 - 来源：[Python3 operator](https://www.runoob.com/python3/python-operator.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4141
 
-## 学习目标
+## 本章内容
 
-Python 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python3 operator` 建立学习路径，先理解它在 Python 体系中的位置，再做可运行或可复述的验证。
+Python2.x 版本中，使用 cmp() 函数来比较两个列表、数字或字符串等的大小关系。
 
-## 阅读抓手
+Python 3.X 的版本中已经没有 cmp() 函数，如果你需要实现比较功能，需要引入 operator 模块，适合任何对象，包含的方法有：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## operator 模块包含的方法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+operator.lt(a, b) 与 a < b 相同， operator.le(a, b) 与 a <= b 相同，operator.eq(a, b) 与 a == b 相同，operator.ne(a, b) 与 a != b 相同，operator.gt(a, b) 与 a > b 相同，operator.ge(a, b) 与 a >= b 相同。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Python3 operator`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+以上代码输出结果为：
+
+```text
+x: 10 , y: 20
+operator.lt(x,y):  True
+operator.gt(y,x):  True
+operator.eq(x,x):  True
+operator.ne(y,y):  False
+operator.le(x,y):  True
+operator.ge(y,x):  True
+
+x: Google , y: Runoob
+operator.lt(x,y):  True
+operator.gt(y,x):  True
+operator.eq(x,x):  True
+operator.ne(y,y):  False
+operator.le(x,y):  True
+operator.ge(y,x):  True
+```
+
+比较两个列表：
+
+
+## 实例
+
+以上代码输出结果为：
+
+```text
+operator.eq(a,b):  False
+operator.eq(c,b):  True
+```
+
+
+### 运算符函数
+
+operator 模块提供了一套与 Python 的内置运算符对应的高效率函数。例如，operator.add(x, y) 与表达式 x+y 相同。
+
+函数包含的种类有：对象的比较运算、逻辑运算、数学运算以及序列运算。
+
+对象比较函数适用于所有的对象，函数名根据它们对应的比较运算符命名。
+
+许多函数名与特殊方法名相同，只是没有双下划线。为了向后兼容性，也保留了许多包含双下划线的函数，为了表述清楚，建议使用没有双下划线的函数。
+
+
+## 实例
+
+以上代码输出结果为：
+
+```text
+add() 运算结果 :7
+sub() 运算结果 :1
+mul() 运算结果 :12
+```
+
+运算
+
+语法
+
+函数
+
+加法
+
+a + b
+
+add(a, b)
+
+字符串拼接
+
+seq1 + seq2
+
+concat(seq1, seq2)
+
+包含测试
+
+obj in seq
+
+contains(seq, obj)
+
+除法
+
+a / b
+
+truediv(a, b)
+
+除法
+
+a // b
+
+floordiv(a, b)
+
+按位与
+
+a & b
+
+and_(a, b)
+
+按位异或
+
+a ^ b
+
+xor(a, b)
+
+按位取反
+
+~ a
+
+
+## 复习重点
+
+- 能说明 `Python3 operator` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

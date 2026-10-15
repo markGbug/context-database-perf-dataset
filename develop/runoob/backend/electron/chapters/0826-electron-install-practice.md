@@ -1,34 +1,109 @@
-# Electron：Electron 安装 练习笔记
+# Electron：Electron 安装
 
 - 来源：[Electron 安装](https://www.runoob.com/electron/electron-install.html)
 - 分类：后端开发
 - 技术：Electron
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0826
 
-## 练习目标
+## 本章内容
 
-把 `Electron 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在安装 Electron 之前，需要准备两个基础环境：
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 1、Node.js
 
-## 验收清单
+Electron 是基于 Node.js 的框架，因此必须先安装 Node.js。
 
-- 我能独立说出 `Electron 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+检查是否已安装：
 
-## 复盘问题
+```text
+node -v
+npm -v
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+如果输出版本号，说明已安装。 若没有，请前往 Node.js 官网 下载 LTS（长期支持版）。
+
+安装完成后，系统会自动附带 npm（Node 包管理器）。
+
+如果不熟悉 Node.js，可以参考： Node.js
+
+
+### 2、npm 或 yarn
+
+Electron 的安装依赖 npm 或 yarn 管理包。
+
+可以选择：
+
+```text
+# 使用 npm
+npm install electron --save-dev
+
+# 或使用 yarn
+yarn add electron --dev
+```
+
+
+## 安装 Electron
+
+Electron 的安装方式有两种：全局安装 和 项目内安装。 推荐使用 项目内安装（更安全、更易维护）。
+
+
+### 1、项目内安装
+
+```text
+# 创建一个项目文件夹
+mkdir my-electron-app
+cd my-electron-app
+
+# 初始化 Node 项目
+npm init -y
+
+# 安装 Electron
+npm install electron --save-dev
+```
+
+安装成功后，会在项目目录中出现：
+
+```text
+node_modules/
+package.json
+package-lock.json
+```
+
+
+## 验证是否安装成功
+
+创建一个简单的 Electron 启动文件：
+
+main.js
+
+
+## 实例
+
+index.html
+
+
+## 实例
+
+然后在 package.json 里添加启动命令：
+
+```text
+"scripts": {
+  "start": "electron ."
+}
+```
+
+运行：
+
+```text
+npm start
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Electron 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

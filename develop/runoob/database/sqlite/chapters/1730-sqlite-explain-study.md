@@ -1,35 +1,105 @@
-# SQLite：SQLite Explain 学习笔记
+# SQLite：SQLite Explain（解释）
 
 - 来源：[SQLite Explain](https://www.runoob.com/sqlite/sqlite-explain.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1730
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite Explain` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+在 SQLite 语句之前，可以使用 "EXPLAIN" 关键字或 "EXPLAIN QUERY PLAN" 短语，用于描述表的细节。
 
-## 阅读抓手
+如果省略了 EXPLAIN 关键字或短语，任何的修改都会引起 SQLite 语句的查询行为，并返回有关 SQLite 语句如何操作的信息。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 来自 EXPLAIN 和 EXPLAIN QUERY PLAN 的输出只用于交互式分析和排除故障。
+- 输出格式的细节可能会随着 SQLite 版本的不同而有所变化。
+- 应用程序不应该使用 EXPLAIN 或 EXPLAIN QUERY PLAN，因为其确切的行为是可变的且只有部分会被记录。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 语法
 
-## 完成标准
+EXPLAIN 的语法如下：
 
-- 能用 3 到 5 句话解释 `SQLite Explain`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+EXPLAIN [SQLite Query]
+```
+
+EXPLAIN QUERY PLAN 的语法如下：
+
+```text
+EXPLAIN  QUERY PLAN [SQLite Query]
+```
+
+
+## 实例
+
+假设 COMPANY 表有以下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+现在，让我们检查 SELECT 语句中的 Explain 使用：
+
+```text
+sqlite> EXPLAIN SELECT *  FROM COMPANY  WHERE Salary >= 20000;
+```
+
+这将产生以下结果：
+
+```text
+addr        opcode      p1          p2          p3
+----------  ----------  ----------  ----------  ----------
+0           Goto        0           19
+1           Integer     0           0
+2           OpenRead    0           8
+3           SetNumColu  0           5
+4           Rewind      0           17
+5           Column      0           4
+6           RealAffini  0           0
+7           Integer     20000       0
+8           Lt          357         16          collseq(BI
+9           Rowid       0           0
+10          Column      0           1
+11          Column      0           2
+12          Column      0           3
+13          Column      0           4
+14          RealAffini  0           0
+15          Callback    5           0
+16          Next        0           5
+17          Close       0           0
+18          Halt        0           0
+19          Transactio  0           0
+20          VerifyCook  0           38
+21          Goto        0           1
+22          Noop        0           0
+```
+
+现在，让我们检查 SELECT 语句中的 Explain Query Plan 使用：
+
+```text
+SQLite> EXPLAIN QUERY PLAN SELECT * FROM COMPANY WHERE Salary >= 20000;
+```
+
+```text
+order       from        detail
+----------  ----------  -------------
+0           0           TABLE COMPANY
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite Explain` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,60 @@
-# Kotlin：Kotlin Android 环境搭建 学习笔记
+# Kotlin：Kotlin Android 环境搭建
 
 - 来源：[Kotlin Android 环境搭建](https://www.runoob.com/kotlin/otlin-android-setup.html)
 - 分类：移动开发
 - 技术：Kotlin
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3368
 
-## 学习目标
+## 本章内容
 
-Kotlin 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Kotlin Android 环境搭建` 建立学习路径，先理解它在 Kotlin 体系中的位置，再做可运行或可复述的验证。
+## 安装 Kotlin 插件
 
-## 阅读抓手
+Android Studio 从 3.0（preview）版本开始将内置安装 Kotlin 插件。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+打开 Settings ( Mac 为 Preferences) 面板，在右侧找到 Plugins 选项 (快捷键 Ctrl+, Mac 下为 command+)，搜索框输入 "Kotlin" 查找，点击 Search in repositories(仓库中搜索)，然后安装即可，安装完成之后需要重启 Android Studio。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 创建新工程
 
-## 完成标准
+选择 Start a new Android Studio project 或者 File | New project，大多数选项均有默认值 ，只需要按几次"回车"键即可。
 
-- 能用 3 到 5 句话解释 `Kotlin Android 环境搭建`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Android Studio 3.0 在当前对话框中提供启用 Kotlin 支持的选项，勾选后可以跳过 "配置 Kotlin 工程（Configuring Kotlin in the project）"的步骤。
+
+选择 Android 版本:
+
+选择需要创建的 Activity 样式:
+
+命名该 Activity:
+
+在 Android Studio 3.0 中，可以选择使用 Kotlin 创建 activity，因此也不需要"将Java 代码转换为 Kotlin（Converting Java code to Kotlin）"这一步骤。
+
+早期版本中则会先使用 Java 创建 activity，然后再使用自动转换工具 进行转换。
+
+
+## 将 Java 代码转换为 Kotlin
+
+重新打开Android Studio，新建一个Android项目吧，添加一个默认的MainActivity
+
+打开 MainActivity.java 文件，通过菜单栏依次调出 Code | Convert Java File to Kotlin File：
+
+转换完成后即可看到使用 Kotlin 编写的 activity。
+
+
+### 工程中配置 Kotlin
+
+在开始编辑此文件时，Android Studio 会提示当前工程还未配置 Kotlin，根据提示完成操作即可，或者可以在菜单栏中选择 Tools
+
+选择配置时有如下对话框，选择已安装的最新版本即可。
+
+Kotlin 配置完成后，应用程序的 build.gradle 文件会更新。 你能看到新增了 apply plugin: 'kotlin-android' 及其依赖。
+
+同步工程，在提示框中点击"立即同步（Sync Now）"或者使用 Sync Project with Gradle Files命令。
+
+
+## 复习重点
+
+- 能说明 `Kotlin Android 环境搭建` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

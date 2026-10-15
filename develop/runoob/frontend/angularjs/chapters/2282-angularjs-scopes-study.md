@@ -1,35 +1,105 @@
-# AngularJS：AngularJS Scope(作用域) 学习笔记
+# AngularJS：AngularJS Scope(作用域)
 
 - 来源：[AngularJS Scope(作用域)](https://www.runoob.com/angularjs/angularjs-scopes.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2282
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS Scope(作用域)` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+Scope(作用域) 是应用在 HTML (视图) 和 JavaScript (控制器)之间的纽带。
 
-## 阅读抓手
+Scope 是一个对象，有可用的方法和属性。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Scope 可应用在视图和控制器上。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 如何使用 Scope
 
-## 完成标准
+当你在 AngularJS 创建控制器时，你可以将 $scope 对象当作一个参数传递:
 
-- 能用 3 到 5 句话解释 `AngularJS Scope(作用域)`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## AngularJS 实例
+
+控制器中的属性对应了视图上的属性：
+
+当在控制器中添加 $scope 对象时，视图 (HTML) 可以获取了这些属性。
+
+视图中，你不需要添加 $scope 前缀, 只需要添加属性名即可，如： {{carname}}。
+
+
+## Scope 概述
+
+AngularJS 应用组成如下：
+
+- View(视图), 即 HTML。
+- Model(模型), 当前视图中可用的数据。
+- Controller(控制器), 即 JavaScript 函数，可以添加或修改属性。
+
+scope 是模型。
+
+scope 是一个 JavaScript 对象，带有属性和方法，这些属性和方法可以在视图和控制器中使用。
+
+
+## AngularJS 实例
+
+如果你修改了视图，模型和控制器也会相应更新：
+
+```html
+<div ng-app="myApp" ng-controller="myCtrl">
+    <input ng-model="name">
+    <h1>{{greeting}}</h1>
+    <button ng-click='sayHello()'>点我</button>
+</div>
+
+<script>
+```
+
+```javascript
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.name = "Runoob";
+    $scope.sayHello = function() {
+        $scope.greeting = 'Hello ' + $scope.name + '!';
+    };
+});
+```
+
+```text
+</script>
+```
+
+
+## Scope 作用范围
+
+了解你当前使用的 scope 是非常重要的。
+
+在以上两个实例中，只有一个作用域 scope，所以处理起来比较简单，但在大型项目中， HTML DOM 中有多个作用域，这时你就需要知道你使用的 scope 对应的作用域是哪一个。
+
+
+## AngularJS 实例
+
+当我们使用 ng-repeat 指令时，每个重复项都访问了当前的重复对象:
+
+每个 <li> 元素可以访问当前的重复对象，这里对应的是一个字符串， 并使用变量 x 表示。
+
+
+## 根作用域
+
+所有的应用都有一个 $rootScope，它可以作用在 ng-app 指令包含的所有 HTML 元素中。
+
+$rootScope 可作用于整个应用中。是各个 controller 中 scope 的桥梁。用 rootscope 定义的值，可以在各个 controller 中使用。
+
+
+## AngularJS 实例
+
+创建控制器时，将 $rootScope 作为参数传递，可在应用中使用：
+
+
+## 复习重点
+
+- 能说明 `AngularJS Scope(作用域)` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

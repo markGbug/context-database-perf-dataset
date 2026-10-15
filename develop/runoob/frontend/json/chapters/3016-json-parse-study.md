@@ -1,35 +1,90 @@
-# JSON：JSON.parse() 学习笔记
+# JSON：JSON.parse()
 
 - 来源：[JSON.parse()](https://www.runoob.com/json/json-parse.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3016
 
-## 学习目标
+## 本章内容
 
-JSON 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JSON.parse()` 建立学习路径，先理解它在 JSON 体系中的位置，再做可运行或可复述的验证。
+JSON 通常用于与服务端交换数据。
 
-## 阅读抓手
+在接收服务器数据时一般是字符串。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+我们可以使用 JSON.parse() 方法将数据转换为 JavaScript 对象。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### 语法
 
-## 完成标准
+```text
+JSON.parse(text[, reviver])
+```
 
-- 能用 3 到 5 句话解释 `JSON.parse()`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+参数说明：
+
+- text:必需， 一个有效的 JSON 字符串。
+- reviver: 可选，一个转换结果的函数， 将为对象的每个成员调用此函数。
+
+
+## JSON 解析实例
+
+例如我们从服务器接收了以下数据：
+
+```text
+{ "name":"runoob", "alexa":10000, "site":"www.runoob.com" }
+```
+
+我们使用 JSON.parse() 方法处理以上数据，将其转换为 JavaScript 对象：
+
+```javascript
+var obj = JSON.parse('{ "name":"runoob", "alexa":10000, "site":"www.runoob.com" }');
+```
+
+解析前要确保你的数据是标准的 JSON 格式，否则会解析出错。
+
+你可以使用我们的在线工具检测：https://www.jyshare.com/front-end/53。
+
+解析完成后，我们就可以在网页上使用 JSON 数据了：
+
+
+## 实例
+
+```html
+<p id="demo"></p>
+
+<script>
+var obj = JSON.parse('{ "name":"runoob", "alexa":10000, "site":"www.runoob.com" }');
+document.getElementById("demo").innerHTML = obj.name + "：" + obj.site;
+</script>
+```
+
+
+## 从服务端接收 JSON 数据
+
+我们可以使用 AJAX 从服务器请求 JSON 数据，并解析为 JavaScript 对象。
+
+
+## 实例
+
+```javascript
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        document.getElementById("demo").innerHTML = myObj.name;
+    }
+};
+xmlhttp.open("GET", "/try/ajax/json_demo.txt", true);
+xmlhttp.send();
+```
+
+查看服务端数据： json_demo.txt
+
+
+## 复习重点
+
+- 能说明 `JSON.parse()` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

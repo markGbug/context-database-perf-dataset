@@ -1,34 +1,152 @@
-# SQLite：SQLite 触发器 练习笔记
+# SQLite：SQLite 触发器（Trigger）
 
 - 来源：[SQLite 触发器](https://www.runoob.com/sqlite/sqlite-trigger.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1720
 
-## 练习目标
+## 本章内容
 
-把 `SQLite 触发器` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQLite 触发器（Trigger）是数据库的回调函数，它会在指定的数据库事件发生时自动执行/调用。以下是关于 SQLite 的触发器（Trigger）的要点：
 
-## 练习步骤
+- SQLite 的触发器（Trigger）可以指定在特定的数据库表发生 DELETE、INSERT 或 UPDATE 时触发，或在一个或多个指定表的列发生更新时触发。
+- SQLite 只支持 FOR EACH ROW 触发器（Trigger），没有 FOR EACH STATEMENT 触发器（Trigger）。因此，明确指定 FOR EACH ROW 是可选的。
+- WHEN 子句和触发器（Trigger）动作可能访问使用表单 NEW.column-name 和 OLD.column-name 的引用插入、删除或更新的行元素，其中 column-name 是从与触发器关联的表的列的名称。
+- 如果提供 WHEN 子句，则只针对 WHEN 子句为真的指定行执行 SQL 语句。如果没有提供 WHEN 子句，则针对所有行执行 SQL 语句。
+- BEFORE 或 AFTER 关键字决定何时执行触发器动作，决定是在关联行的插入、修改或删除之前或者之后执行触发器动作。
+- 当触发器相关联的表删除时，自动删除触发器（Trigger）。
+- 要修改的表必须存在于同一数据库中，作为触发器被附加的表或视图，且必须只使用 tablename，而不是 database.tablename。
+- 一个特殊的 SQL 函数 RAISE() 可用于触发器程序内抛出异常。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 语法
 
-- 我能独立说出 `SQLite 触发器` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+创建 触发器（Trigger） 的基本语法如下：
 
-## 复盘问题
+```text
+CREATE  TRIGGER trigger_name [BEFORE|AFTER] event_name
+ON table_name
+BEGIN
+ -- 触发器逻辑....
+END;
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在这里，event_name 可以是在所提到的表 table_name 上的 INSERT、DELETE 和 UPDATE 数据库操作。您可以在表名后选择指定 FOR EACH ROW。
+
+以下是在 UPDATE 操作上在表的一个或多个指定列上创建触发器（Trigger）的语法：
+
+```text
+CREATE  TRIGGER trigger_name [BEFORE|AFTER] UPDATE OF column_name
+ON table_name
+BEGIN
+ -- 触发器逻辑....
+END;
+```
+
+
+## 实例
+
+让我们假设一个情况，我们要为被插入到新创建的 COMPANY 表（如果已经存在，则删除重新创建）中的每一个记录保持审计试验：
+
+```text
+sqlite> CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+为了保持审计试验，我们将创建一个名为 AUDIT 的新表。每当 COMPANY 表中有一个新的记录项时，日志消息将被插入其中：
+
+```text
+sqlite> CREATE TABLE AUDIT(
+    EMP_ID INT NOT NULL,
+    ENTRY_DATE TEXT NOT NULL
+);
+```
+
+在这里，ID 是 AUDIT 记录的 ID，EMP_ID 是来自 COMPANY 表的 ID，DATE 将保持 COMPANY 中记录被创建时的时间戳。所以，现在让我们在 COMPANY 表上创建一个触发器，如下所示：
+
+```text
+sqlite> CREATE TRIGGER audit_log AFTER INSERT
+ON COMPANY
+BEGIN
+   INSERT INTO AUDIT(EMP_ID, ENTRY_DATE) VALUES (new.ID, datetime('now'));
+END;
+```
+
+现在，我们将开始在 COMPANY 表中插入记录，这将导致在 AUDIT 表中创建一个审计日志记录。因此，让我们在 COMPANY 表中创建一个记录，如下所示：
+
+```text
+sqlite> INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (1, 'Paul', 32, 'California', 20000.00 );
+```
+
+这将在 COMPANY 表中创建如下一个记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+```
+
+同时，将在 AUDIT 表中创建一个记录。这个纪录是触发器的结果，这是我们在 COMPANY 表上的 INSERT 操作上创建的触发器（Trigger）。类似的，可以根据需要在 UPDATE 和 DELETE 操作上创建触发器（Trigger）。
+
+```text
+EMP_ID      ENTRY_DATE
+----------  -------------------
+1           2013-04-05 06:26:00
+```
+
+
+## 列出触发器（TRIGGERS）
+
+您可以从 sqlite_master 表中列出所有触发器，如下所示：
+
+```text
+sqlite> SELECT name FROM sqlite_master
+WHERE type = 'trigger';
+```
+
+上面的 SQLite 语句只会列出一个条目，如下：
+
+```text
+name
+----------
+audit_log
+```
+
+如果您想要列出特定表上的触发器，则使用 AND 子句连接表名，如下所示：
+
+```text
+sqlite> SELECT name FROM sqlite_master
+WHERE type = 'trigger' AND tbl_name = 'COMPANY';
+```
+
+上面的 SQLite 语句只会列出一个条目，如下：
+
+```text
+name
+----------
+audit_log
+```
+
+
+## 删除触发器（TRIGGERS）
+
+下面是 DROP 命令，可用于删除已有的触发器：
+
+```text
+sqlite> DROP TRIGGER trigger_name;
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite 触发器` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

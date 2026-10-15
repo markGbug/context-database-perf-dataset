@@ -1,34 +1,156 @@
-# SQLite：SQLite Unions 子句 练习笔记
+# SQLite：SQLite Unions 子句
 
 - 来源：[SQLite Unions 子句](https://www.runoob.com/sqlite/sqlite-unions-clause.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1717
 
-## 练习目标
+## 本章内容
 
-把 `SQLite Unions 子句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQLite的 UNION 子句/运算符用于合并两个或多个 SELECT 语句的结果，不返回任何重复的行。
 
-## 练习步骤
+为了使用 UNION，每个 SELECT 被选择的列数必须是相同的，相同数目的列表达式，相同的数据类型，并确保它们有相同的顺序，但它们不必具有相同的长度。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 语法
 
-- 我能独立说出 `SQLite Unions 子句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+UNION 的基本语法如下：
 
-## 复盘问题
+```text
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+UNION
+
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+```
+
+这里给定的条件根据需要可以是任何表达式。
+
+
+## 实例
+
+假设有下面两个表，（1）COMPANY 表如下所示：
+
+```text
+sqlite> select * from COMPANY;
+ID          NAME                  AGE         ADDRESS     SALARY
+----------  --------------------  ----------  ----------  ----------
+1           Paul                  32          California  20000.0
+2           Allen                 25          Texas       15000.0
+3           Teddy                 23          Norway      20000.0
+4           Mark                  25          Rich-Mond   65000.0
+5           David                 27          Texas       85000.0
+6           Kim                   22          South-Hall  45000.0
+7           James                 24          Houston     10000.0
+```
+
+（2）另一个表是 DEPARTMENT，如下所示：
+
+```text
+ID          DEPT                  EMP_ID
+----------  --------------------  ----------
+1           IT Billing            1
+2           Engineering           2
+3           Finance               7
+4           Engineering           3
+5           Finance               4
+6           Engineering           5
+7           Finance               6
+```
+
+现在，让我们使用 SELECT 语句及 UNION 子句来连接两个表，如下所示：
+
+```text
+sqlite> SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
+        ON COMPANY.ID = DEPARTMENT.EMP_ID
+   UNION
+     SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT
+        ON COMPANY.ID = DEPARTMENT.EMP_ID;
+```
+
+这将产生以下结果：
+
+```text
+EMP_ID      NAME                  DEPT
+----------  --------------------  ----------
+1           Paul                  IT Billing
+2           Allen                 Engineerin
+3           Teddy                 Engineerin
+4           Mark                  Finance
+5           David                 Engineerin
+6           Kim                   Finance
+7           James                 Finance
+```
+
+
+## UNION ALL 子句
+
+UNION ALL 运算符用于结合两个 SELECT 语句的结果，包括重复行。
+
+适用于 UNION 的规则同样适用于 UNION ALL 运算符。
+
+
+## 语法
+
+UNION ALL 的基本语法如下：
+
+```text
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+
+UNION ALL
+
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+```
+
+这里给定的条件根据需要可以是任何表达式。
+
+
+## 实例
+
+现在，让我们使用 SELECT 语句及 UNION ALL 子句来连接两个表，如下所示：
+
+```text
+sqlite> SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
+        ON COMPANY.ID = DEPARTMENT.EMP_ID
+   UNION ALL
+     SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT
+        ON COMPANY.ID = DEPARTMENT.EMP_ID;
+```
+
+这将产生以下结果：
+
+```text
+EMP_ID      NAME                  DEPT
+----------  --------------------  ----------
+1           Paul                  IT Billing
+2           Allen                 Engineerin
+3           Teddy                 Engineerin
+4           Mark                  Finance
+5           David                 Engineerin
+6           Kim                   Finance
+7           James                 Finance
+1           Paul                  IT Billing
+2           Allen                 Engineerin
+3           Teddy                 Engineerin
+4           Mark                  Finance
+5           David                 Engineerin
+6           Kim                   Finance
+7           James                 Finance
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite Unions 子句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

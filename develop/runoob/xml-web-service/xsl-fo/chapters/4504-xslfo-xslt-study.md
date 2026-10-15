@@ -1,35 +1,43 @@
-# XSL-FO：XSLFO & XSLT 学习笔记
+# XSL-FO：XSL-FO 与 XSLT
 
 - 来源：[XSLFO & XSLT](https://www.runoob.com/xslfo/xslfo-xslt.html)
 - 分类：XML / Web Service
 - 技术：XSL-FO
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4504
 
-## 学习目标
+## 本章内容
 
-XSL-FO 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XSLFO & XSLT` 建立学习路径，先理解它在 XSL-FO 体系中的位置，再做可运行或可复述的验证。
+XSL-FO 与 XSLT 可彼此互助。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 还记得这个实例吗？
 
-## 笔记模板
+结果：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+RUNOOB
 
-## 完成标准
+At RUNOOB you will find all the Web-building tutorials you need, from basic HTML and XHTML to advanced XML, XSL, Multimedia and WAP.
 
-- 能用 3 到 5 句话解释 `XSLFO & XSLT`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+上面的实例来自于有关 XSL-FO 块区域的那一章节。
+
+
+## 来自 XSLT 的帮助
+
+从文档移除 XSL-FO 信息：
+
+添加 XSLT 转换：
+
+产生的结果是相同的：
+
+RUNOOB
+
+At RUNOOB you will find all the Web-building tutorials you need, from basic HTML and XHTML to advanced XML, XSL, Multimedia and WAP.
+
+
+## 复习重点
+
+- 能说明 `XSLFO & XSLT` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,277 @@
-# React：React Props 学习笔记
+# React：React Props
 
 - 来源：[React Props](https://www.runoob.com/react/react-props.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3045
 
-## 学习目标
+## 本章内容
 
-React 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `React Props` 建立学习路径，先理解它在 React 体系中的位置，再做可运行或可复述的验证。
+在 React 中，Props（属性）是用于将数据从父组件传递到子组件的机制，Props 是只读的，子组件不能直接修改它们，而是应该由父组件来管理和更新。
 
-## 阅读抓手
+state 和 props 主要的区别在于 props 是不可变的，而 state 可以根据与用户交互来改变。这就是为什么有些容器组件需要定义 state 来更新和修改数据。 而子组件只能通过 props 来传递数据。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 使用 Props
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+传递 Props 语法：
 
-## 完成标准
+```html
+<ComponentName propName={propValue} />
+```
 
-- 能用 3 到 5 句话解释 `React Props`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下实例演示了如何在组件中使用 props：
+
+
+## React 实例
+
+```html
+function HelloMessage(props) {
+    return <h1>Hello {props.name}!</h1>;
+}
+
+const element = <HelloMessage name="Runoob"/>;
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    element
+);
+```
+
+实例中 name 属性通过 props.name 来获取。
+
+
+## 默认 Props
+
+你可以通过组件类的 defaultProps 属性为 props 设置默认值，实例如下：
+
+
+## React 实例
+
+```html
+class HelloMessage extends React.Component {
+  render() {
+    return (
+      <h1>Hello, {this.props.name}</h1>
+    );
+  }
+}
+
+HelloMessage.defaultProps = {
+  name: 'Runoob'
+};
+
+const element = <HelloMessage/>;
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  element
+);
+```
+
+
+### 多个 Props
+
+可以传递多个属性给子组件。
+
+
+## 实例
+
+
+### propTypes 验证
+
+propTypes 是 React 提供的一种工具，用于对组件的 props 进行类型检查。
+
+可以使用 prop-types 库对组件的 props 进行类型检查。
+
+在 React 中，propTypes 作为组件的一个静态属性来定义。首先，你需要安装 prop-types 包：
+
+```text
+npm install prop-types
+```
+
+然后，在你的组件文件中引入 prop-types，并定义 propTypes 属性。下面是一个示例
+
+
+## 实例
+
+
+### 传递回调函数作为 Props
+
+可以将函数作为 props 传递给子组件，子组件可以调用这些函数来与父组件进行通信。
+
+
+## 实例
+
+
+### 解构 Props
+
+在函数组件中，可以通过解构 props 来简化代码。
+
+
+## 实例
+
+
+### 小结
+
+- 传递和使用 Props：父组件传递数据给子组件，子组件通过 props 接收。
+- 默认 Props：使用 defaultProps 设置组件的默认属性值。
+- PropTypes 验证：使用 prop-types 库对 props 进行类型检查。
+- 传递回调函数：父组件可以将函数作为 props 传递给子组件，以实现组件间通信。
+- 解构 Props：在函数组件中解构 props 以简化代码。
+
+
+## State 和 Props
+
+以下实例演示了如何在应用中组合使用 state 和 props 。我们可以在父组件中设置 state， 并通过在子组件上使用 props 将其传递到子组件上。在 render 函数中, 我们设置 name 和 site 来获取父组件传递过来的数据。
+
+
+## React 实例
+
+```html
+class WebSite extends React.Component {
+  constructor() {
+      super();
+
+      this.state = {
+        name: "菜鸟教程",
+        site: "https://www.runoob.com"
+      }
+    }
+  render() {
+    return (
+      <div>
+        <Name name={this.state.name} />
+        <Link site={this.state.site} />
+      </div>
+    );
+  }
+}
+
+
+
+class Name extends React.Component {
+  render() {
+    return (
+      <h1>{this.props.name}</h1>
+    );
+  }
+}
+
+class Link extends React.Component {
+  render() {
+    return (
+      <a href={this.props.site}>
+        {this.props.site}
+      </a>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <WebSite />
+);
+```
+
+
+## Props 验证
+
+React.PropTypes 在 React v15.5 版本后已经移到了 prop-types 库。
+
+```html
+<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/prop-types/15.8.1/prop-types.min.js" type="application/javascript"></script>
+```
+
+Props 验证使用 propTypes，它可以保证我们的应用组件被正确使用，React.PropTypes 提供很多验证器 (validator) 来验证传入数据是否有效。当向 props 传入无效数据时，JavaScript 控制台会抛出警告。
+
+以下实例创建一个 Mytitle 组件，属性 title 是必须的且是字符串，非字符串类型会自动转换为字符串 ：
+
+
+## React 16.4 实例
+
+```html
+var title = "菜鸟教程";
+// var title = 123;
+class MyTitle extends React.Component {
+  render() {
+    return (
+      <h1>Hello, {this.props.title}</h1>
+    );
+  }
+}
+
+MyTitle.propTypes = {
+  title: PropTypes.string
+};
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <MyTitle title={title} />
+);
+```
+
+
+## React 15.4 实例
+
+```html
+var title = "菜鸟教程";
+// var title = 123;
+var MyTitle = React.createClass({
+  propTypes: {
+    title: React.PropTypes.string.isRequired,
+  },
+
+  render: function() {
+     return <h1> {this.props.title} </h1>;
+   }
+});
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <MyTitle title={title} />
+);
+```
+
+当然，可以为你介绍更多的 PropTypes 验证器以及如何使用它们。以下是一些常用的 PropTypes 验证器说明：
+
+基本数据类型
+
+- PropTypes.string：字符串
+- PropTypes.number：数字
+- PropTypes.boolean：布尔值
+- PropTypes.object：对象
+- PropTypes.array：数组
+- PropTypes.func：函数
+- PropTypes.symbol：Symbol
+
+特殊类型
+
+- PropTypes.node：任何可以被渲染的内容：数字、字符串、元素或数组（包括这些类型）
+- PropTypes.element：React元素
+- PropTypes.instanceOf(Class)：某个类的实例
+
+组合类型
+
+- PropTypes.oneOf(['option1', 'option2'])：枚举类型，值必须是所提供选项之一
+- PropTypes.oneOfType([PropTypes.string, PropTypes.number])：多个类型中的一个
+- PropTypes.arrayOf(PropTypes.number)：某种类型组成的数组
+- PropTypes.objectOf(PropTypes.number)：某种类型组成的对象
+- PropTypes.shape({ key: PropTypes.string, value: PropTypes.number })：具有特定形状的对象
+
+其他
+
+- PropTypes.any：任何类型
+- PropTypes.exact({ key: PropTypes.string })：具有特定键的对象，且不能有其他多余的键
+
+以下是一些示例代码，展示了如何使用不同的 PropTypes 验证器：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `React Props` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,172 @@
-# HTML5：HTML5 Web Workers 练习笔记
+# HTML5：HTML5 Web Workers
 
 - 来源：[HTML5 Web Workers](https://www.runoob.com/html/html5-webworkers.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2725
 
-## 练习目标
+## 本章内容
 
-把 `HTML5 Web Workers` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+web worker 是运行在后台的 JavaScript，不会影响页面的性能。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 什么是 Web Worker？
 
-## 验收清单
+当在 HTML 页面中执行脚本时，页面的状态是不可响应的，直到脚本已完成。
 
-- 我能独立说出 `HTML5 Web Workers` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+web worker 是运行在后台的 JavaScript，独立于其他脚本，不会影响页面的性能。您可以继续做任何愿意做的事情：点击、选取内容等等，而此时 web worker 在后台运行。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 浏览器支持
+
+Internet Explorer 10, Firefox, Chrome, Safari 和 Opera 都支持Web workers.
+
+
+## HTML5 Web Workers 实例
+
+下面的例子创建了一个简单的 web worker，在后台计数：
+
+
+## 实例
+
+开始 Worker 停止 Worker var w; function startWorker() { if(typeof(Worker)!=="undefined") { if(typeof(w)=="undefined") { w=new Worker("/try/demo_source/demo_workers.js"); } w.onmessage = function (event) { document.getElementById("result").innerHTML=event.data; }; } else { document.getElementById("result").innerHTML="抱歉，你的浏览器不支持 Web Workers..."; } } function stopWorker() { w.terminate(); w = undefined; }
+
+
+## demo_workers.js 文件代码
+
+
+## 检测浏览器是否支持 Web Worker
+
+在创建 web worker 之前，请检测用户的浏览器是否支持它：
+
+```text
+if(typeof(Worker)!=="undefined")
+{
+    // 是的! Web worker 支持!
+    // 一些代码.....
+}
+else
+{
+    //抱歉! Web Worker 不支持
+}
+```
+
+
+## 创建 web worker 文件
+
+现在，让我们在一个外部 JavaScript 中创建我们的 web worker。
+
+在这里，我们创建了计数脚本。该脚本存储于 "demo_workers.js" 文件中：
+
+以上代码中重要的部分是 postMessage() 方法 - 它用于向 HTML 页面传回一段消息。
+
+注意: web worker 通常不用于如此简单的脚本，而是用于更耗费 CPU 资源的任务。
+
+
+## 创建 Web Worker 对象
+
+我们已经有了 web worker 文件，现在我们需要从 HTML 页面调用它。
+
+下面的代码检测是否存在 worker，如果不存在，- 它会创建一个新的 web worker 对象，然后运行 "demo_workers.js" 中的代码：
+
+```text
+if(typeof(w)=="undefined")
+{
+    w=new Worker("demo_workers.js");
+}
+```
+
+然后我们就可以从 web worker 发送和接收消息了。
+
+向 web worker 添加一个 "onmessage" 事件监听器：
+
+```text
+w.onmessage=function(event){
+    document.getElementById("result").innerHTML=event.data;
+};
+```
+
+
+## 终止 Web Worker
+
+当我们创建 web worker 对象后，它会继续监听消息（即使在外部脚本完成之后）直到其被终止为止。
+
+如需终止 web worker，并释放浏览器/计算机资源，请使用 terminate() 方法：
+
+```text
+w.terminate();
+```
+
+
+## 完整的 Web Worker 实例代码
+
+我们已经看到了 .js 文件中的 Worker 代码。下面是 HTML 页面的代码：
+
+
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<p>计数： <output id="result"></output></p>
+<button onclick="startWorker()">开始工作</button>
+<button onclick="stopWorker()">停止工作</button>
+
+<p><strong>注意：</strong> Internet Explorer 9 及更早 IE 版本浏览器不支持 Web Workers.</p>
+
+<script>
+```
+
+```javascript
+var w;
+
+function startWorker() {
+    if(typeof(Worker) !== "undefined") {
+        if(typeof(w) == "undefined") {
+            w = new Worker("demo_workers.js");
+        }
+        w.onmessage = function(event) {
+            document.getElementById("result").innerHTML = event.data;
+        };
+    } else {
+        document.getElementById("result").innerHTML = "抱歉，你的浏览器不支持 Web Workers...";
+    }
+}
+
+function stopWorker()
+{
+    w.terminate();
+    w = undefined;
+}
+```
+
+```text
+</script>
+
+</body>
+</html>
+```
+
+
+## Web Workers 和 DOM
+
+由于 web worker 位于外部文件中，它们无法访问下列 JavaScript 对象：
+
+- window 对象
+- document 对象
+- parent 对象
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML5 Web Workers` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

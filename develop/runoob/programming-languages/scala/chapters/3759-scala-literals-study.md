@@ -1,35 +1,162 @@
-# Scala：Scala 字面量 学习笔记
+# Scala：Scala 字面量
 
 - 来源：[Scala 字面量](https://www.runoob.com/scala/scala-literals.html)
 - 分类：编程语言
 - 技术：Scala
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3759
 
-## 学习目标
+## 本章内容
 
-Scala 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Scala 字面量` 建立学习路径，先理解它在 Scala 体系中的位置，再做可运行或可复述的验证。
+在 Scala 中，字面量（Literals）是直接表示固定值的表达式。
 
-## 阅读抓手
+Scala支持各种类型的字面量，涵盖了数值、字符、字符串、布尔值等。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 整型字面量
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+整型字面量用于 Int 类型，如果表示 Long，可以在数字后面添加 L 或者小写 l 作为后缀。
 
-## 完成标准
+整型字面量可以是十进制、十六进制和八进制。
 
-- 能用 3 到 5 句话解释 `Scala 字面量`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 十进制：42, 0, -99
+- 十六进制：以0x或0X开头，如0x2A, 0x0, 0XFF
+- 八进制：Scala 2.10 之前支持八进制字面量，以 0 开头，但在 Scala 2.10 及之后的版本中，八进制字面量被移除。
+
+```text
+val decimal = 42
+val hex = 0x2A
+```
+
+
+### 浮点型字面量
+
+如果浮点数后面有 f 或者 F 后缀时，表示这是一个 Float 类型，否则就是一个 Double 类型的。
+
+- 双精度：3.14, -0.001, 1.0e-10
+- 单精度：3.14f, -0.001F
+
+```text
+val doubleValue = 3.14
+val floatValue = 3.14f
+```
+
+
+### 布尔型字面量
+
+布尔型字面量有 true 和 false。
+
+```text
+val isScalaFun = true
+val isSkyGreen = false
+```
+
+
+### 符号字面量
+
+符号字面量被写成： '<标识符> ，这里 <标识符> 可以是任何字母或数字的标识（注意：不能以数字开头）。这种字面量被映射成预定义类 scala.Symbol 的实例。
+
+如：符号字面量 'x 是表达式 scala.Symbol("x") 的简写，符号字面量定义如下：
+
+```text
+package scala
+final case class Symbol private (name: String) {
+   override def toString: String = "'" + name
+}
+```
+
+
+### 字符字面量
+
+在 Scala 字符变量使用单引号 ' 来定义，如下：
+
+```text
+'a'
+'\u0041'
+'\n'
+'\t'
+```
+
+其中 \ 表示转义字符，其后可以跟 u0041 数字或者 \r\n 等固定的转义字符。
+
+
+### 字符串字面量
+
+在 Scala 字符串字面量使用双引号 " 来定义，如下：
+
+```text
+"Hello,\nWorld!"
+"菜鸟教程官网：www.runoob.com"
+```
+
+- 普通字符串："Hello, World!"
+- 多行字符串：使用三重引号 """ 括起来，可以包含换行符和引号。
+
+
+### 多行字符串的表示方法
+
+多行字符串用三个双引号来表示分隔符，格式为：""" ... """。
+
+实例如下：
+
+```text
+val foo = """菜鸟教程
+www.runoob.com
+www.runnoob.com
+以上三个地址都能访问"""
+```
+
+
+### Null 值
+
+Null是一个特殊的字面量，表示所有引用类型的空值。
+
+空值是 scala.Null 类型。
+
+Scala.Null 和 scala.Nothing 是用统一的方式处理 Scala 面向对象类型系统的某些"边界情况"的特殊类型。
+
+Null 类是 null 引用对象的类型，它是每个引用类（继承自AnyRef的类）的子类。Null不兼容值类型。
+
+```text
+val nullValue: String = null
+```
+
+
+### Unit
+
+Unit 类型只有一个实例值，用字面量 () 表示，类似于 Java 中的 void。
+
+```text
+val unitValue: Unit = ()
+```
+
+
+### 实例
+
+以下是使用不同类型字面量的示例代码：
+
+
+## 实例
+
+以上代码编译执行结果为：
+
+```text
+Decimal: 42, Hex: 42
+Double: 3.14, Float: 3.14
+Char: A, New Line:
+
+Greeting: Hello, World!
+Multiline String: This is
+a multi-line
+string
+Is Scala Fun: true, Is Sky Green: false
+Null Value: null, Unit Value: ()
+```
+
+
+## 复习重点
+
+- 能说明 `Scala 字面量` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

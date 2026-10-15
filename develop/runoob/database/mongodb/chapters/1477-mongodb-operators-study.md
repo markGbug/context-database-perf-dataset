@@ -1,35 +1,335 @@
-# MongoDB：MongoDB 条件操作符 学习笔记
+# MongoDB：MongoDB 条件操作符
 
 - 来源：[MongoDB 条件操作符](https://www.runoob.com/mongodb/mongodb-operators.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1477
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 条件操作符` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+在本章节中，我们将讨论如何在 MongoDB 中使用条件操作符。
 
-## 阅读抓手
+在 MongoDB 中，条件操作符用于在查询文档时进行过滤、比较和逻辑操作。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+这些操作符可以分为以下几类：比较操作符、逻辑操作符、元素操作符、数组操作符、以及其他常用操作符。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 比较操作符
 
-## 完成标准
+比较操作符有：
 
-- 能用 3 到 5 句话解释 `MongoDB 条件操作符`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### $eq (等于)
+
+语法格式：
+
+```text
+{ field: { $eq: value } }
+```
+
+查找年龄等于 25 的人：
+
+```text
+db.collection.find({ age: { $eq: 25 } })
+```
+
+
+### $ne (不等于)
+
+语法格式：
+
+```text
+{ field: { $ne: value } }
+```
+
+查找年龄不等于 25 的人：
+
+```text
+db.collection.find({ age: { $ne: 25 } })
+```
+
+
+### $gt (大于)
+
+语法格式：
+
+```text
+{ field: { $gt: value } }
+```
+
+查找年龄大于 25 的人：
+
+```text
+db.collection.find({ age: { $gt: 25 } })
+```
+
+
+### $gte (大于等于)
+
+语法格式：
+
+```text
+{ field: { $gte: value } }
+```
+
+查找年龄大于或等于 25 的人：
+
+```text
+db.collection.find({ age: { $gte: 25 } })
+```
+
+
+### $lt (小于)
+
+查找年龄小于 25 的人：
+
+```text
+db.collection.find({ age: { $lt: 25 } })
+```
+
+
+### $lte (小于等于)
+
+语法格式：
+
+```text
+{ field: { $lte: value } }
+```
+
+查找年龄小于或等于25的人：
+
+```text
+db.collection.find({ age: { $lte: 25 } })
+```
+
+
+### $in (值在数组中)
+
+语法格式：
+
+```text
+{ field: { $in: [value1, value2, ...] } }
+```
+
+查找年龄在 20、25 和 30 岁之间的人：
+
+```text
+db.collection.find({ age: { $in: [20, 25, 30] } })
+```
+
+
+### $nin (值不在数组中)
+
+语法格式：
+
+```text
+{ field: { $nin: [value1, value2, ...] } }
+```
+
+查找年龄不在 20、25 和 30 岁之间的人：
+
+```text
+db.collection.find({ age: { $nin: [20, 25, 30] } })
+```
+
+
+## 逻辑操作符
+
+逻辑操作符有：
+
+
+### $and (多个条件都成立)
+
+语法格式：
+
+```text
+{ $and: [ { condition1 }, { condition2 } ] }
+```
+
+查找年龄大于 25 且小于 35 的人:
+
+```text
+db.collection.find({ $and: [{ age: { $gt: 25 } }, { age: { $lt: 35 } }] })
+```
+
+
+### $or (至少一个条件成立)
+
+语法格式：
+
+```text
+{ $or: [ { condition1 }, { condition2 } ] }
+```
+
+查找年龄大于 25 或小于 18 的人:
+
+```text
+db.collection.find({ $or: [{ age: { $gt: 25 } }, { age: { $lt: 18 } }] })
+```
+
+
+### $not (取反条件)
+
+语法格式：
+
+```text
+{ field: { $not: { condition } } }
+```
+
+查找年龄不大于 25 的人:
+
+```text
+db.collection.find({ age: { $not: { $gt: 25 } } })
+```
+
+
+### $nor (没有任何条件成立)
+
+语法格式：
+
+```text
+{ $nor: [ { condition1 }, { condition2 } ] }
+```
+
+查找年龄不大于 25 且不小于 18 的人:
+
+```text
+db.collection.find({ $nor: [{ age: { $gt: 25 } }, { age: { $lt: 18 } }] })
+```
+
+
+## 元素操作符
+
+元素操作符有：
+
+
+### $exists (字段是否存在)
+
+语法格式：
+
+```java
+{ field: { $exists: boolean } }
+```
+
+查找包含 age 字段的文档:
+
+```text
+db.collection.find({ age: { $exists: true } })
+```
+
+
+### $type (字段类型)
+
+语法格式：
+
+```text
+{ field: { $type: "type" } }
+```
+
+查找 age 字段为整数类型的文档:
+
+```text
+db.collection.find({ age: { $type: "int" } })
+```
+
+
+## 数组操作符
+
+数组操作符有：
+
+查找数组 tags 中包含 "red" 和 "blue" 的文档：
+
+```text
+db.myCollection.find({ tags: { $all: ["red", "blue"] } });
+```
+
+
+### $all (数组包含指定的所有元素)
+
+语法格式：
+
+```text
+{ field: { $all: [value1, value2, ...] } }
+```
+
+查找 tags 数组中包含 "mongodb" 和 "database" 的文档:
+
+```text
+db.collection.find({ tags: { $all: ["mongodb", "database"] } })
+```
+
+
+### $elemMatch (数组中至少有一个元素符合条件)
+
+```text
+{ field: { $elemMatch: { condition } } }
+```
+
+查找 items 数组中 quantity 大于 10 的元素:
+
+```text
+db.collection.find({ items: { $elemMatch: { quantity: { $gt: 10 } } } })
+```
+
+
+### $size (数组的大小)
+
+语法格式：
+
+```text
+{ field: { $size: value } }
+```
+
+查找 tags 数组大小为 3 的文档:
+
+```text
+db.collection.find({ tags: { $size: 3 } })
+```
+
+
+## 其他操作符
+
+还有一些其他操作符如下：
+
+
+### $regex (正则表达式匹配)
+
+语法格式：
+
+```text
+{ field: { $regex: "pattern" } }
+```
+
+查找 name 以 "John" 开头的文档:
+
+```text
+db.collection.find({ name: { $regex: /^John/ } })
+```
+
+
+### $near (接近指定点的文档)
+
+语法格式：
+
+```text
+{ field: { $near: [longitude, latitude], $maxDistance: distance } }
+```
+
+查找距离某个位置近的文档:
+
+```text
+db.collection.find({ location: { $near: [10, 20], $maxDistance: 1000 } })
+```
+
+
+## 后续章节
+
+- $geoWithin (查找指定区域内的文档)
+
+## 复习重点
+
+- 能说明 `MongoDB 条件操作符` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

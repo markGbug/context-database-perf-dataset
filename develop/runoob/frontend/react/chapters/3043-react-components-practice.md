@@ -1,34 +1,470 @@
-# React：React 组件 练习笔记
+# React：React 组件
 
 - 来源：[React 组件](https://www.runoob.com/react/react-components.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3043
 
-## 练习目标
+## 本章内容
 
-把 `React 组件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+React 组件是构建 React 应用的基本单元，可以把组件理解为可复用的、独立的 UI 单元，每个组件封装了自己的结构、样式、逻辑和状态。
 
-## 练习步骤
+React 组件是构建应用的基石，组件可以小到一个按钮，也可以大到整个页面。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+组件可以分为：函数组件和类组件。
 
-## 验收清单
+从技术角度讲，React 组件就是一个返回 React 元素（通常是 JSX）的 JavaScript 函数或类。
 
-- 我能独立说出 `React 组件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+// 最简单的组件
+function Hello() {
+  return <h1>Hello, World!</h1>;
+}
+```
 
-## 复盘问题
+将复杂的 UI 拆分成组件树：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+App
+├── Header
+│   ├── Logo
+│   └── Navigation
+│       ├── NavItem
+│       └── NavItem
+├── Main
+│   ├── Sidebar
+│   └── Content
+│       ├── Article
+│       └── Article
+└── Footer
+```
+
+
+## 函数组件
+
+函数组件是定义组件的一种简洁方法。
+
+函数组件是一个接受 props 并返回 React 元素的 JavaScript 函数。
+
+基础语法：
+
+```html
+// 方式 1：函数声明
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+// 方式 2：箭头函数
+const Welcome = (props) => {
+  return <h1>Hello, {props.name}</h1>;
+};
+
+// 方式 3：简化写法（单行返回）
+const Welcome = (props) => <h1>Hello, {props.name}</h1>;
+```
+
+创建一个简单的函数组件：
+
+
+## src/Welcome.js 文件：
+
+在 src/index.js 中渲染该组件：
+
+
+## src/index.js 文件：
+
+这个例子展示了一个接受 name 属性并在页面上显示 "Hello, World!" 的简单组件。
+
+
+## 类组件
+
+类组件使用 ES6 类语法定义，通常用于需要管理状态或使用生命周期方法的情况。
+
+基础语法:
+
+```html
+import React, { Component } from 'react';
+class Welcome extends Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+```
+
+创建一个类组件：
+
+
+## 实例
+
+在 src/index.js 中渲染该组件：
+
+
+## 实例
+
+
+## 测试实例
+
+接下来我们封装一个输出 "Hello World！" 的组件，组件名为 HelloMessage：
+
+
+## React 实例
+
+```html
+function HelloMessage(props) {
+    return <h1>Hello World!</h1>;
+}
+
+const element = <HelloMessage />;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    element
+);
+```
+
+
+### 实例解析：
+
+1、我们可以使用函数定义了一个组件：
+
+```html
+function HelloMessage(props) {
+    return <h1>Hello World!</h1>;
+}
+```
+
+你也可以使用 ES6 class 来定义一个组件:
+
+```html
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello World!</h1>;
+  }
+}
+```
+
+2、const element = <HelloMessage /> 为用户自定义的组件。
+
+注意，原生 HTML 元素名以小写字母开头，而自定义的 React 类名以大写字母开头，比如 HelloMessage 不能写成 helloMessage。除此之外还需要注意组件类只能包含一个顶层标签，否则也会报错。
+
+如果我们需要向组件传递参数，可以使用 this.props 对象,实例如下：
+
+
+## React 实例
+
+```html
+function HelloMessage(props) {
+    return <h1>Hello {props.name}!</h1>;
+}
+
+const element = <HelloMessage name="Runoob"/>;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    element
+);
+```
+
+以上实例中 name 属性通过 props.name 来获取。
+
+注意，在添加属性时， class 属性需要写成 className ，for 属性需要写成 htmlFor ，这是因为 class 和 for 是 JavaScript 的保留字。
+
+
+## 复合组件
+
+我们可以通过创建多个组件来合成一个组件，即把组件的不同功能点进行分离。
+
+以下实例我们实现了输出网站名字和网址的组件：
+
+
+## React 实例
+
+```html
+function Name(props) {
+    return <h1>网站名称：{props.name}</h1>;
+}
+function Url(props) {
+    return <h1>网站地址：{props.url}</h1>;
+}
+function Nickname(props) {
+    return <h1>网站小名：{props.nickname}</h1>;
+}
+function App() {
+    return (
+    <div>
+        <Name name="菜鸟教程" />
+        <Url url="http://www.runoob.com" />
+        <Nickname nickname="Runoob" />
+    </div>
+    );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+     <App />
+);
+```
+
+实例中 App 组件使用了 Name、Url 和 Nickname 组件来输出对应的信息。
+
+
+## Props（属性）
+
+Props 是组件之间传递数据的方式，类似于函数的参数。
+
+
+### 基础用法
+
+```html
+// 父组件传递 props
+function App() {
+  return (
+    <div>
+      <Greeting name="Alice" age={25} />
+      <Greeting name="Bob" age={30} />
+    </div>
+  );
+}
+// 子组件接收 props
+function Greeting(props) {
+  return (
+    <div>
+      <h1>Hello, {props.name}!</h1>
+      <p>Age: {props.age}</p>
+    </div>
+  );
+}
+```
+
+
+### Props 解构
+
+```html
+// 推荐：直接解构
+function Greeting({ name, age }) {
+  return (
+    <div>
+      <h1>Hello, {name}!</h1>
+      <p>Age: {age}</p>
+    </div>
+  );
+}
+// 带默认值的解构
+function Button({ text = "Submit", variant = "primary", disabled = false }) {
+  return (
+    <button className={variant} disabled={disabled}>
+      {text}
+    </button>
+  );
+}
+```
+
+
+### Props 的类型
+
+Props 可以是任何 JavaScript 值：
+
+```html
+function Demo() {
+  const user = { name: "Alice", age: 25 };
+  const numbers = [1, 2, 3, 4, 5];
+  const handleClick = () => alert("Clicked!");
+  return (
+    <MyComponent
+      // 字符串
+      title="Hello"
+      // 数字
+      count={42}
+      // 布尔值
+      isActive={true}
+      // 数组
+      items={numbers}
+      // 对象
+      user={user}
+      // 函数
+      onClick={handleClick}
+      // JSX
+      children={<p>This is content</p>}
+    />
+  );
+}
+```
+
+
+### Children Props
+
+特殊的 props，用于传递组件的子内容：
+
+```html
+// 方式 1：使用 props.children
+function Card(props) {
+  return (
+    <div className="card">
+      <div className="card-body">
+        {props.children}
+      </div>
+    </div>
+  );
+}
+// 方式 2：解构 children
+function Card({ children, title }) {
+  return (
+    <div className="card">
+      {title && <h2>{title}</h2>}
+      <div className="card-body">{children}</div>
+    </div>
+  );
+}
+// 使用
+function App() {
+  return (
+    <Card title="My Card">
+      <p>This is the card content</p>
+      <button>Click me</button>
+    </Card>
+  );
+}
+```
+
+
+### Props 的不可变性
+
+重要原则：永远不要修改 props！
+
+```html
+// 错误：修改 props
+function BadComponent(props) {
+  props.name = "Changed"; // 绝对不要这样做！
+  return <h1>{props.name}</h1>;
+}
+// 正确：将 props 视为只读
+function GoodComponent({ name }) {
+  const displayName = name.toUpperCase(); // 创建新值
+  return <h1>{displayName}</h1>;
+}
+```
+
+
+## 组件的组合与复用
+
+
+### 组合模式
+
+```html
+// 基础组件
+function Avatar({ src, alt }) {
+  return <img src={src} alt={alt} className="avatar" />;
+}
+function UserInfo({ name, email }) {
+  return (
+    <div>
+      <h3>{name}</h3>
+      <p>{email}</p>
+    </div>
+  );
+}
+// 组合成复杂组件
+function UserCard({ user }) {
+  return (
+    <div className="user-card">
+      <Avatar src={user.avatar} alt={user.name} />
+      <UserInfo name={user.name} email={user.email} />
+    </div>
+  );
+}
+```
+
+
+### 容器组件模式
+
+```html
+// 容器组件：处理逻辑和状态
+function Panel({ title, children, collapsible = false }) {
+  const [isOpen, setIsOpen] = useState(true);
+  return (
+    <div className="panel">
+      <div className="panel-header">
+        <h2>{title}</h2>
+        {collapsible && (
+          <button onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? "Collapse" : "Expand"}
+          </button>
+        )}
+      </div>
+      {isOpen && (
+        <div className="panel-content">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+// 使用
+function App() {
+  return (
+    <Panel title="Settings" collapsible>
+      <p>Your settings here...</p>
+    </Panel>
+  );
+}
+```
+
+
+### 高阶组件思想（通过组合实现）
+
+```html
+// 通用的加载状态包装
+function WithLoading({ isLoading, children }) {
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  return children;
+}
+// 使用
+function UserList({ users, isLoading }) {
+  return (
+    <WithLoading isLoading={isLoading}>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </WithLoading>
+  );
+}
+```
+
+
+## 组件命名规范
+
+
+### 命名规则
+
+```javascript
+// 正确：大写字母开头（PascalCase）
+function UserProfile() { }
+function BlogPost() { }
+function NavBar() { }
+// 错误：小写字母开头
+function userProfile() { } // React 会将其视为 HTML 标签
+```
+
+
+## 后续章节
+
+- 文件命名
+- 组件的导出与导入
+- 默认导出
+- 命名导出
+- 混合导出
+- 组件设计原则
+- 1. 单一职责原则
+- 2. 保持组件简洁
+- 3. 合理使用 Props
+- 4. 避免深层嵌套
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `React 组件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

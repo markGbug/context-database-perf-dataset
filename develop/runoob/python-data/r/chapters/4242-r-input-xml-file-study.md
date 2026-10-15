@@ -1,35 +1,105 @@
-# R：R XML 文件 学习笔记
+# R：R XML 文件
 
 - 来源：[R XML 文件](https://www.runoob.com/r/r-input-xml-file.html)
 - 分类：Python / 数据科学
 - 技术：R
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4242
 
-## 学习目标
+## 本章内容
 
-R 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `R XML 文件` 建立学习路径，先理解它在 R 体系中的位置，再做可运行或可复述的验证。
+XML 指的是可扩展标记语言（eXtensible Markup Language），XML 被设计用来传输和存储数据。
 
-## 阅读抓手
+如果你对 XML 还不了解，可以先查阅：XML 教程
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+R 语言读写 XML 文件需要安装扩展包，我们可以在 R 到控制台输入以下命令来安装：
 
-## 笔记模板
+```text
+install.packages("XML", repos = "https://mirrors.ustc.edu.cn/CRAN/")
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+查看是否安装成功：
 
-## 完成标准
+```text
+> any(grepl("XML",installed.packages()))
+[1] TRUE
+```
 
-- 能用 3 到 5 句话解释 `R XML 文件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+创建 sites.xml 文件，xml 文件与测试脚本同一目录下，代码如下：
+
+
+## 实例
+
+```html
+<sites>
+    <site>
+        <id>1</id>
+        <name>Google</name>
+        <url>www.google.com</url>
+        <likes>111</likes>
+    </site>
+
+    <site>
+        <id>2</id>
+        <name>Runoob</name>
+        <url>www.runoob.com</url>
+        <likes>222</likes>
+    </site>
+
+    <site>
+        <id>3</id>
+        <name>Taobao</name>
+        <url>www.taobao.com</url>
+        <likes>333</likes>
+    </site>
+</sites>
+```
+
+接下来我们可以使用 XML 包来载入 xml 文件的数据：
+
+
+## 实例
+
+统计 xml 数据量：
+
+
+## 实例
+
+执行以上代码输出结果为：
+
+```text
+[1] 3
+```
+
+查看节点数据，某一行使用 [ ], 指定的行和列使用 [[ ]]:
+
+
+## 实例
+
+执行以上代码输出结果为：
+
+```html
+$site
+<site>
+  <id>2</id>
+  <name>Runoob</name>
+  <url>www.runoob.com</url>
+  <likes>222</likes>
+</site>
+
+attr(,"class")
+[1] "XMLInternalNodeList" "XMLNodeList"
+<id>2</id>
+<url>www.runoob.com</url>
+```
+
+
+### XML 转为数据列表
+
+
+## 复习重点
+
+- 能说明 `R XML 文件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

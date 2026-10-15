@@ -1,35 +1,152 @@
-# MongoDB：MongoDB 用户管理 学习笔记
+# MongoDB：MongoDB 用户管理
 
 - 来源：[MongoDB 用户管理](https://www.runoob.com/mongodb/mongodb-user.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1466
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 用户管理` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+在 MongoDB 中进行用户管理涉及用户的创建、分配角色、认证和登录等操作。
 
-## 阅读抓手
+下面是一个详细的说明，包含如何使用 MongoDB Shell (mongo) 或 MongoDB Compass 来管理用户。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 使用 MongoDB Shell (mongo) 管理用户
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+以下是使用 MongoDB Shell (mongosh) 进行用户管理的详细说明，包括创建用户、分配角色、认证和登录的具体步骤。
 
-## 完成标准
+1. 连接到 MongoDB
 
-- 能用 3 到 5 句话解释 `MongoDB 用户管理`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+首先，打开你的终端并使用 mongosh 命令连接到 MongoDB 服务器：
+
+```html
+mongosh --host <hostname> --port <port>
+```
+
+说明：
+
+- mongosh：启动 MongoDB Shell 命令行工具。
+- --host <hostname>：指定 MongoDB 服务器的主机名或 IP 地址。<hostname>：MongoDB 服务器的主机名（如 localhost）或 IP 地址（如 127.0.0.1）。
+- --port <port>：指定 MongoDB 服务器的端口号。<port>：MongoDB 服务器监听的端口号，默认端口是 27017。
+
+2. 切换到目标数据库
+
+在 MongoDB 中，用户是针对特定数据库创建的，使用 use 命令切换到你要创建用户的数据库：
+
+```html
+use <database_name>
+```
+
+- database_name - 为要切换的数据库。
+
+3. 创建用户
+
+使用 db.createUser 命令创建用户并分配角色。
+
+例如，创建一个名为 testuser 的用户，密码为 password123，并赋予 readWrite 和 dbAdmin 角色：
+
+```html
+db.createUser({
+  user: "testuser",
+  pwd: "password123",
+  roles: [
+    { role: "readWrite", db: "<database_name>" },
+    { role: "dbAdmin", db: "<database_name>" }
+  ]
+})
+```
+
+4. 验证用户
+
+创建用户后，你可以使用 db.auth 命令验证用户身份：
+
+```text
+db.auth("testuser", "password123")
+```
+
+5. 启用身份验证
+
+为了确保只有经过身份验证的用户才能访问 MongoDB，需要启用身份验证。
+
+编辑 MongoDB 配置文件 mongod.conf，并在其中添加以下内容：
+
+```text
+security:
+  authorization: "enabled"
+```
+
+然后重启 MongoDB 服务以应用更改。
+
+6. 使用用户身份登录
+
+启用身份验证后，你需要使用创建的用户身份连接到 MongoDB：
+
+```html
+mongosh --host <hostname> --port <port> -u "testuser" -p "password123" --authenticationDatabase "<database_name>"
+```
+
+7. 删除用户
+
+
+### 实例操作
+
+以下是一个完整的示例操作流程：
+
+启动 MongoDB Shell 并连接到服务器：
+
+```text
+mongosh --host localhost --port 27017
+```
+
+切换到 testdb 数据库：
+
+```text
+use testdb
+```
+
+创建 testuser 用户：
+
+```text
+db.createUser({
+  user: "testuser",
+  pwd: "password123",
+  roles: [{ role: "readWrite", db: "testdb" }]
+})
+```
+
+启用身份验证并重启 MongoDB 实例
+
+编辑 mongod.conf 文件，添加以下内容：
+
+```text
+security:
+  authorization: "enabled"
+```
+
+重启 MongoDB 服务：
+
+```text
+sudo systemctl restart mongod
+```
+
+使用 testuser 用户进行身份验证连接：
+
+```text
+mongosh --host localhost --port 27017 -u "testuser" -p "password123" --authenticationDatabase "testdb"
+```
+
+删除 testuser 用户：
+
+```text
+db.dropUser("testuser")
+```
+
+
+## 复习重点
+
+- 能说明 `MongoDB 用户管理` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

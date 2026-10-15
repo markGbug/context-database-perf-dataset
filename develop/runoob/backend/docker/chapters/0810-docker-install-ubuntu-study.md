@@ -1,35 +1,62 @@
-# Docker：Docker 安装 Ubuntu 学习笔记
+# Docker：Docker 安装 Ubuntu
 
 - 来源：[Docker 安装 Ubuntu](https://www.runoob.com/docker/docker-install-ubuntu.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0810
 
-## 学习目标
+## 本章内容
 
-Docker 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Docker 安装 Ubuntu` 建立学习路径，先理解它在 Docker 体系中的位置，再做可运行或可复述的验证。
+Ubuntu 是基于 Debian 的 Linux 操作系统。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 1、查看可用的 Ubuntu 版本
 
-## 笔记模板
+访问 Ubuntu 镜像库地址： https://hub.docker.com/_/ubuntu?tab=tags&page=1。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+可以通过 Sort by 查看其他版本的 Ubuntu。默认是最新版本 ubuntu:latest 。
 
-## 完成标准
+你也可以在下拉列表中找到其他你想要的版本：
 
-- 能用 3 到 5 句话解释 `Docker 安装 Ubuntu`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 2、拉取最新版的 Ubuntu 镜像
+
+```text
+$ docker pull ubuntu
+```
+
+或者：
+
+```text
+$ docker pull ubuntu:latest
+```
+
+
+### 3、查看本地镜像
+
+```text
+$ docker images
+```
+
+在上图中可以看到我们已经安装了最新版本的 ubuntu。
+
+
+### 4、运行容器，并且可以通过 exec 命令进入 ubuntu 容器
+
+```text
+$ docker run -itd --name ubuntu-test ubuntu
+```
+
+
+### 5、安装成功
+
+最后我们可以通过 docker ps 命令查看容器的运行信息：
+
+
+## 复习重点
+
+- 能说明 `Docker 安装 Ubuntu` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,301 @@
-# SQL：SQL 注入 学习笔记
+# SQL：SQL 注入
 
 - 来源：[SQL 注入](https://www.runoob.com/sql/sql-injection.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1684
 
-## 学习目标
+## 本章内容
 
-SQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQL 注入` 建立学习路径，先理解它在 SQL 体系中的位置，再做可运行或可复述的验证。
+SQL 注入（SQL Injection）是一种常见的网络攻击手段，攻击者通过在输入字段或请求中注入恶意的 SQL 语句，操控数据库执行意图之外的操作。
 
-## 阅读抓手
+其目标通常是：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 窃取敏感数据
+- 绕过身份验证
+- 修改、删除数据库内容
+- 执行系统命令等
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## SQL 注入的工作原理
 
-## 完成标准
+- 输入验证不足：当Web应用程序没有正确验证用户输入时，攻击者可以在输入字段中插入SQL代码。
+- 拼接SQL语句：应用程序后端通常将用户输入与SQL查询拼接在一起，形成完整的数据库查询语句。
+- 执行恶意SQL：如果应用程序没有对输入进行适当的清理或转义，恶意SQL代码将被数据库服务器执行。
+- 数据泄露或破坏：攻击者可以利用SQL注入来查询、修改或删除数据库中的数据，或者执行数据库管理系统的系统命令。
 
-- 能用 3 到 5 句话解释 `SQL 注入`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 正常查询
+
+当用户登录网站时，通常会输入用户名和密码。
+
+以下是一段正常的 SQL 查询代码：
+
+```text
+SELECT * FROM users WHERE username = 'user1' AND password = 'password1';
+```
+
+
+### 注入攻击
+
+如果攻击者输入：
+
+```text
+用户名： admin' --
+密码： anything
+```
+
+SQL 查询变成：
+
+```text
+SELECT * FROM users WHERE username = 'admin' --' AND password = 'anything';
+```
+
+其中 -- 是 SQL 的注释符号，忽略了密码条件，直接绕过了身份验证。
+
+
+## 常见 SQL 注入
+
+
+### 1、基础型 SQL 注入
+
+直接将恶意 SQL 代码嵌入用户输入中，并影响查询逻辑。
+
+```text
+输入用户名：admin' OR '1'='1
+输入密码：anything
+```
+
+执行的 SQL 查询：
+
+```text
+SELECT * FROM users WHERE username = 'admin' OR '1'='1' AND password = 'anything';
+```
+
+结果：
+
+OR '1'='1' 总为 true，可以绕过验证。
+
+
+### 2、UNION 查询注入
+
+通过 UNION 将攻击者构造的查询结果与合法查询结果合并，从而获取敏感数据。
+
+输入：
+
+```text
+' UNION SELECT null, username, password FROM users --
+```
+
+执行的 SQL 查询：
+
+```text
+SELECT id, name FROM products WHERE id = '' UNION SELECT null, username, password FROM users --';
+```
+
+结果：
+
+将 users 表的 username 和 password 数据作为结果返回。
+
+
+### 3、错误型 SQL 注入
+
+通过故意触发数据库错误，利用错误信息推测表名、列名或数据。
+
+输入：
+
+```text
+' AND 1=CONVERT(int, (SELECT @@version)) --
+```
+
+执行的 SQL 查询：
+
+```text
+SELECT * FROM users WHERE username = '' AND 1=CONVERT(int, (SELECT @@version)) --';
+```
+
+结果：
+
+错误信息可能暴露数据库版本或其他信息。
+
+
+### 4、盲注
+
+无法直接获取查询结果，攻击者通过判断返回页面的响应（如布尔值或时间延迟）来逐步推测数据。
+
+布尔型盲注，输入：
+
+```text
+' AND (SELECT 1 WHERE SUBSTRING((SELECT database()), 1, 1)='t') --
+```
+
+执行的 SQL 查询：
+
+```text
+SELECT * FROM users WHERE username = '' AND (SELECT 1 WHERE SUBSTRING((SELECT database()), 1, 1)='t') --';
+```
+
+结果：
+
+根据返回结果判断数据库名首字母是否为 t。
+
+时间盲注，输入：
+
+```text
+' AND IF(1=1, SLEEP(5), 0) --
+```
+
+执行的 SQL 查询：
+
+```text
+SELECT * FROM users WHERE username = '' AND IF(1=1, SLEEP(5), 0) --';
+```
+
+结果：
+
+如果条件成立，服务器会延迟 5 秒响应，从而泄露信息。
+
+
+### 5、堆叠查询注入
+
+允许多条 SQL 语句同时执行。
+
+输入：
+
+```text
+'; DROP TABLE users; --
+```
+
+执行的 SQL 查询：
+
+```text
+SELECT * FROM users WHERE username = ''; DROP TABLE users; --';
+```
+
+结果：
+
+users 表被删除。
+
+某些数据库（如 MySQL）默认不支持多语句执行。
+
+
+### 6、存储过程注入
+
+利用存储过程的输入参数注入恶意 SQL。
+
+输入：
+
+```text
+'; EXEC xp_cmdshell('dir'); --
+```
+
+执行的 SQL：
+
+```text
+EXEC LoginProcedure 'username', ''; EXEC xp_cmdshell('dir'); --'
+```
+
+结果：
+
+执行系统命令（如列出目录）。
+
+
+### 7、Cookie 注入
+
+利用修改浏览器存储的 Cookie 值进行注入。
+
+```text
+Cookie: session_id=' OR '1'='1;
+```
+
+服务器在解析 Cookie 时执行了恶意 SQL。
+
+
+## SQL 注入的危害
+
+- 数据泄露： 攻击者获取数据库中的用户名、密码、银行卡号等敏感信息。
+- 权限提升： 攻击者可能通过注入命令获得更高的访问权限。
+- 数据篡改： 数据库内容被修改或删除。
+- 服务中断： 恶意 SQL 代码可能导致数据库崩溃，影响系统可用性。
+- 执行系统命令： 通过数据库扩展功能，攻击者可能直接操作操作系统。
+
+
+## 防范措施
+
+
+### 1、参数化查询和预编译语句
+
+使用参数化查询或预编译语句，将用户输入与 SQL 语句分离，避免用户输入被直接解析为 SQL 代码。
+
+Java 代码：
+
+
+## 实例
+
+Node.js (MySQL 模块)：
+
+
+## 实例
+
+
+### 2、使用 ORM 框架
+
+核心思路 ORM（如 Hibernate、Sequelize 等）通过自动生成 SQL 查询，大幅减少手动拼接 SQL 的机会，从而避免注入。
+
+```javascript
+// 使用 Sequelize
+const user = await User.findOne({
+    where: { username: 'admin', password: 'password123' }
+});
+```
+
+
+### 3、输入验证
+
+严格检查用户输入是否符合预期，拒绝不符合规则的输入。
+
+对用户名、邮箱等使用正则表达式，数值类型字段只允许数字输入。
+
+对特殊字符进行转义（如 " 转为 \"）。
+
+```javascript
+const username = req.body.username.replace(/[^a-zA-Z0-9]/g, ''); // 清理特殊字符
+```
+
+
+### 4、限制数据库权限
+
+为数据库用户分配最小权限，只允许执行必要的操作。
+
+- 限制写入权限：只允许插入、更新的用户操作对应的表，不允许 DROP、ALTER 等高危操作。
+- 分离读写权限：使用只读账号访问数据库。
+
+创建一个只读用户：
+
+```text
+CREATE USER 'readonly_user'@'%' IDENTIFIED BY 'secure_password';
+GRANT SELECT ON database_name.* TO 'readonly_user'@'%';
+```
+
+
+### 5、定期安全测试
+
+通过安全扫描工具或手动测试，定期检查代码中的潜在 SQL 注入漏洞。
+
+我们可以使用开源工具 SQLMap 来测试。
+
+SQLMap 是一个专门用于自动化进行 SQL 注入检测和利用的渗透测试工具。
+
+SQLMap 广泛应用于网络安全评估和渗透测试中，帮助发现和修复SQL注入漏洞。
+
+- SQL 官方地址：https://sqlmap.org/
+- SQLMap 开源地址：https://github.com/sqlmapproject/sqlmap
+
+
+## 复习重点
+
+- 能说明 `SQL 注入` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

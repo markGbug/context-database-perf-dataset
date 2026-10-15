@@ -1,35 +1,64 @@
-# JavaScript：JavaScript 静态方法 学习笔记
+# JavaScript：JavaScript 静态方法
 
 - 来源：[JavaScript 静态方法](https://www.runoob.com/js/js-class-static.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2804
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 静态方法` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+静态方法是使用 static 关键字修饰的方法，又叫类方法，属于类的，但不属于对象，在实例化对象之前可以通过 类名.方法名 调用静态方法。
 
-## 阅读抓手
+静态方法不能在对象上调用，只能在类中调用。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```javascript
+class Runoob {
+  constructor(name) {
+    this.name = name;
+  }
+  static hello() {
+    return "Hello!!";
+  }
+}
 
-## 完成标准
+let noob = new Runoob("菜鸟教程");
 
-- 能用 3 到 5 句话解释 `JavaScript 静态方法`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+// 可以在类中调用 'hello()' 方法
+document.getElementById("demo").innerHTML = Runoob.hello();
+
+// 不能通过实例化后的对象调用静态方法
+// document.getElementById("demo").innerHTML = noob.hello();
+// 以上代码会报错
+```
+
+实例对象调用静态方法会报错：
+
+如果你想在对象 noob 中使用静态方法，可以作为一个参数传递给它：
+
+
+## 实例
+
+```javascript
+class Runoob {
+  constructor(name) {
+    this.name = name;
+  }
+  static hello(x) {
+    return "Hello " + x.name;
+  }
+}
+let noob = new Runoob("菜鸟教程");
+document.getElementById("demo").innerHTML = Runoob.hello(noob);
+```
+
+
+## 复习重点
+
+- 能说明 `JavaScript 静态方法` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

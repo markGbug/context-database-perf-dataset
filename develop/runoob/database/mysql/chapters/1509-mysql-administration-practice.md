@@ -1,34 +1,168 @@
-# MySQL：MySQL 管理 练习笔记
+# MySQL：MySQL 管理
 
 - 来源：[MySQL 管理](https://www.runoob.com/mysql/mysql-administration.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1509
 
-## 练习目标
+## 本章内容
 
-把 `MySQL 管理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 启动及关闭 MySQL 服务器
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### Windows 系统下
 
-## 验收清单
+启动 MySQL 服务器:
 
-- 我能独立说出 `MySQL 管理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+1、通过 "服务" 管理工具： 打开"运行"对话框（Win + R），输入 services.msc，找到"MySQL"服务，右击选择"启动"。
 
-## 复盘问题
+2、通过命令提示符： 打开命令提示符（以管理员身份），输入以下命令：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+net start mysql
+```
+
+关闭MySQL服务器:
+
+1、通过 "服务" 管理工具：同样打开"运行"对话框，输入 services.msc，找到 "MySQL" 服务，右击选择"停止"。
+
+2、通过命令提示符： 打开命令提示符（以管理员身份），输入以下命令：
+
+```text
+net stop mysql
+```
+
+
+### Linux 系统下
+
+1、启动 MySQL 服务：
+
+使用 systemd命令（适用于大多数现代 Linux 发行版，如 Ubuntu、CentOS 等）：
+
+```text
+sudo systemctl start mysql
+```
+
+使用 service 命令（在一些较旧的发行版中）：
+
+```text
+sudo service mysql start
+```
+
+2、关闭 MySQL 服务：
+
+使用 systemd：
+
+```text
+sudo systemctl stop mysql
+```
+
+使用 service 命令：
+
+```text
+sudo service mysql stop
+```
+
+3、重启 MySQL 服务：
+
+```text
+sudo systemctl restart mysql
+```
+
+使用 service 命令：
+
+```text
+sudo service mysql restart
+```
+
+4、检查 MySQL 服务状态：
+
+使用 systemd命令：
+
+```text
+sudo systemctl status mysql
+```
+
+使用 service 命令：
+
+```text
+sudo service mysql status
+```
+
+
+### Mac OS 系统
+
+启动 MySQL 服务：
+
+使用命令行：
+
+```text
+sudo /usr/local/mysql/support-files/mysql.server start
+```
+
+关闭 MySQL 服务：
+
+使用命令行：
+
+```text
+sudo /usr/local/mysql/support-files/mysql.server stop
+```
+
+重启 MySQL 服务：
+
+使用命令行：
+
+```text
+sudo /usr/local/mysql/support-files/mysql.server restart
+```
+
+检查 MySQL 服务状态：
+
+使用命令行：
+
+```text
+sudo /usr/local/mysql/support-files/mysql.server status
+```
+
+以上命令中，mysql 可能会因为安装路径或版本的不同而有所变化。
+
+在 Mac OS 中，MySQL 的安装路径通常是 /usr/local/mysql/，因此启动和关闭 MySQL 服务需要使用这个路径下的 mysql.server 脚本。
+
+
+## MySQL 用户设置
+
+在 MySQL 中，用户设置包括创建用户、设置权限、管理用户等操作。以下是一些常用的 MySQL 用户设置操作，包括创建用户、设置权限、查看和删除用户等。
+
+
+### 创建用户
+
+要创建一个新用户，你可以使用以下 SQL 命令：
+
+```text
+CREATE USER 'username'@'host' IDENTIFIED BY 'password';
+```
+
+- username：用户名。
+- host：指定用户可以从哪些主机连接。例如，localhost 仅允许本地连接，% 允许从任何主机连接。
+- password：用户的密码。
+
+
+## 实例
+
+
+### 授权权限
+
+创建用户后，你需要授予他们访问权限，使用 GRANT 命令来授予权限：
+
+```text
+GRANT privileges ON database_name.* TO 'username'@'host';
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL 管理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

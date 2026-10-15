@@ -1,34 +1,97 @@
-# jQuery：jQuery 尺寸 练习笔记
+# jQuery：jQuery 尺寸
 
 - 来源：[jQuery 尺寸](https://www.runoob.com/jquery/jquery-dimensions.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2981
 
-## 练习目标
+## 本章内容
 
-把 `jQuery 尺寸` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+通过 jQuery，很容易处理元素和浏览器窗口的尺寸。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## jQuery 尺寸方法
 
-## 验收清单
+jQuery 提供多个处理尺寸的重要方法：
 
-- 我能独立说出 `jQuery 尺寸` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- width()
+- height()
+- innerWidth()
+- innerHeight()
+- outerWidth()
+- outerHeight()
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## jQuery 尺寸
+
+
+## jQuery width() 和 height() 方法
+
+width() 方法设置或返回元素的宽度（不包括内边距、边框或外边距）。
+
+height() 方法设置或返回元素的高度（不包括内边距、边框或外边距）。
+
+下面的例子返回指定的 <div> 元素的宽度和高度：
+
+
+## 实例
+
+```javascript
+$("button").click(function(){
+  var txt="";
+  txt+="div 的宽度是: " + $("#div1").width() + "</br>";
+  txt+="div 的高度是: " + $("#div1").height();
+  $("#div1").html(txt);
+});
+```
+
+
+## jQuery innerWidth() 和 innerHeight() 方法
+
+innerWidth() 方法返回元素的宽度（包括内边距）。
+
+innerHeight() 方法返回元素的高度（包括内边距）。
+
+下面的例子返回指定的 <div> 元素的 inner-width/height：
+
+
+## 实例
+
+```javascript
+$("button").click(function(){
+  var txt="";
+  txt+="div 宽度，包含内边距: " + $("#div1").innerWidth() + "</br>";
+    txt+="div 高度，包含内边距: " + $("#div1").innerHeight();
+  $("#div1").html(txt);
+});
+```
+
+
+## jQuery outerWidth() 和 outerHeight() 方法
+
+outerWidth() 方法返回元素的宽度（包括内边距和边框）。
+
+outerHeight() 方法返回元素的高度（包括内边距和边框）。
+
+下面的例子返回指定的 <div> 元素的 outer-width/height：
+
+
+## 实例
+
+```javascript
+$("button").click(function(){
+  var txt="";
+  txt+="div 宽度，包含内边距和边框: " + $("#div1").outerWidth() + "</br>";
+  txt+="div 高度，包含内边距和边框: " + $("#div1").outerHeight();
+  $("#div1").html(txt);
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery 尺寸` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

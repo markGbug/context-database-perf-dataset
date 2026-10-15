@@ -1,35 +1,70 @@
-# PyCharm：PyCharm 教程 学习笔记
+# PyCharm：PyCharm 教程
 
 - 来源：[PyCharm 教程](https://www.runoob.com/pycharm/pycharm-tutorial.html)
 - 分类：DevOps / 工程化
 - 技术：PyCharm
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1864
 
-## 学习目标
+## 本章内容
 
-PyCharm 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `PyCharm 教程` 建立学习路径，先理解它在 PyCharm 体系中的位置，再做可运行或可复述的验证。
+PyCharm 是由 JetBrains 公司开发的一款专门用于 Python 编程的集成开发环境（IDE）。
 
-## 阅读抓手
+PyCharm 拥有 Microsoft Windows、macOS 和 Linux 版本。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+PyCharm 社区版在 Apache 许可证下发布，提供代码分析、图形化调试器，集成测试器、集成版本控制系统。
 
-## 笔记模板
+目前，PyCharm IDE 的社区版和专业版将合并为统一版本。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Pycharm 的目标市场是 Python IDE，主要竞争者包括 PyDev，Komodo IDE。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `PyCharm 教程`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 发行版
+
+- 2010 年，Pycharm 测试版发布。
+- 2010 年 3 月，发布 1.0 版。
+- 2011 年 12 月 13 日，发布 2.0 版本。
+- 2013 年 9 月 24 日，发布 3.0 版本。
+- 2013 年 10 月 22 日，发布 PyCharm 的开放源码版本，即 PyCharm 社区版（Community Edition），同时商业版本（ Professional Edition）则含有闭源模块。
+- 2014 年 11 月 19 日，发布 4.0 版本。
+- ...
+
+
+## PyCharm 的主要功能
+
+- 1. 代码编辑与自动补全：PyCharm 提供了智能的代码编辑功能，包括语法高亮、代码自动补全、代码片段生成等。这些功能可以帮助开发者更快地编写代码，并减少拼写错误。
+- 2. 调试与测试：PyCharm 内置了强大的调试工具，允许开发者逐步执行代码，查看变量的值，并设置断点。此外，它还支持单元测试和集成测试，帮助开发者确保代码的质量。
+- 3. 版本控制集成：PyCharm 支持多种版本控制系统，如 Git、SVN 和 Mercurial。开发者可以直接在 IDE 中进行代码的版本管理，包括提交、拉取、合并等操作。
+- 4. 数据库工具：PyCharm 提供了数据库工具，允许开发者直接在 IDE 中连接和管理数据库。支持多种数据库系统，如 MySQL、PostgreSQL、SQLite 等。
+- 5. 插件与扩展：PyCharm 支持丰富的插件和扩展，开发者可以根据自己的需求安装各种插件，如 Django 支持、Docker 集成、Markdown 编辑器等。
+
+
+## PyCharm 的版本
+
+PyCharm 有两个主要版本：
+
+
+### 1. PyCharm Community Edition
+
+这是 PyCharm 的免费版本，适合 Python 初学者和小型项目。它提供了基本的 Python 开发功能，但不包括一些高级功能，如数据库工具和 Web 开发框架支持。
+
+
+### 2. PyCharm Professional Edition
+
+这是 PyCharm 的付费版本，适合专业开发者和大型项目。它包含了所有 Community Edition 的功能，并增加了对 Web 开发框架（如 Django、Flask）、数据库工具、科学计算工具等的支持。
+
+目前，PyCharm IDE 的社区版和专业版将合并为统一版本。
+
+
+## 相关链接
+
+- PyCharm 官网：https://www.jetbrains.com/zh-cn/pycharm/
+- 下载地址：https://www.jetbrains.com/zh-cn/pycharm/download/
+
+
+## 复习重点
+
+- 能说明 `PyCharm 教程` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

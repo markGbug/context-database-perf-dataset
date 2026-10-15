@@ -1,34 +1,63 @@
-# jQuery EasyUI：jEasyUI 树形菜单添加节点 练习笔记
+# jQuery EasyUI：jQuery EasyUI 树形菜单 - 树形菜单添加节点
 
 - 来源：[jEasyUI 树形菜单添加节点](https://www.runoob.com/jeasyui/jeasyui-tree-tree3.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2892
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 树形菜单添加节点` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本教程向您展示如何附加节点到树形菜单（Tree）。我们将创建一个包含水果和蔬菜节点的食品树，然后添加一些其他水果到已存在的水果节点。
 
-## 练习步骤
+首先，我们创建食品树，代码如下所示：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <div style="width:200px;height:auto;border:1px solid #ccc;">
+        <ul id="tt" class="easyui-tree" url="tree_data.json"></ul>
+    </div>
+```
 
-## 验收清单
+请注意，树（Tree)组件是定义在 <ul> 标记中，树节点数据从 URL "tree_data.json" 加载。
 
-- 我能独立说出 `jEasyUI 树形菜单添加节点` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+然后我们通过点击节点选择水果节点，我们将添加一些其他的水果数据。执行 getSelected 方法得到处理节点：
 
-## 复盘问题
+```javascript
+    var node = $('#tt').tree('getSelected');
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+getSelected 方法的返回结果是一个 javascript 对象，它有一个 id、text、target 属性。target 属性是一个 DOM 对象，引用选中节点，它的 append 方法将用于附加子节点。
+
+```javascript
+    var node = $('#tt').tree('getSelected');
+    if (node){
+        var nodes = [{
+            "id":13,
+            "text":"Raspberry"
+        },{
+            "id":14,
+            "text":"Cantaloupe"
+        }];
+        $('#tt').tree('append', {
+            parent:node.target,
+            data:nodes
+        });
+    }
+```
+
+当添加一些水果，您将看见：
+
+正如您所看到的，使用 easyui 的树（Tree）插件去附加节点不是那么的难。
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-tree-tree3.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 树形菜单添加节点` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

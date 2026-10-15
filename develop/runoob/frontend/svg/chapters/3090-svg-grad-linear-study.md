@@ -1,35 +1,155 @@
-# SVG：SVG 渐变 - 线性 学习笔记
+# SVG：SVG 渐变 - 线性
 
 - 来源：[SVG 渐变 - 线性](https://www.runoob.com/svg/svg-grad-linear.html)
 - 分类：前端开发
 - 技术：SVG
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3090
 
-## 学习目标
+## 本章内容
 
-SVG 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `SVG 渐变 - 线性` 建立学习路径，先理解它在 SVG 体系中的位置，再做可运行或可复述的验证。
+## SVG 渐变
 
-## 阅读抓手
+渐变是一种从一种颜色到另一种颜色的平滑过渡。另外，可以把多个颜色的过渡应用到同一个元素上。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+SVG 渐变主要有两种类型：
 
-## 笔记模板
+- 线性渐变 - <linearGradient>
+- 放射性渐变 - <radialGradient>
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## SVG 线性渐变 - <linearGradient>
 
-- 能用 3 到 5 句话解释 `SVG 渐变 - 线性`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+SVG 中的 <linearGradient> 元素用于创建线性渐变，它可以沿着一条直线从一个颜色过渡到另一个颜色，从而创建平滑的渐变效果。
+
+线性渐变可用于填充或描边 SVG 图形元素，使其呈现出丰富的颜色变化。
+
+
+### 基本语法
+
+```html
+<linearGradient id="gradient_id" x1="x1" y1="y1" x2="x2" y2="y2">
+  <stop offset="offset1" stop-color="color1" />
+  <stop offset="offset2" stop-color="color2" />
+  <!-- 更多的 <stop> 元素 -->
+</linearGradient>
+```
+
+参数说明：
+
+- id 属性定义了线性渐变的唯一标识符，用于在SVG图像中引用该渐变。
+- x1 和 y1 属性定义了渐变的起始点坐标。
+- x2 和 y2 属性定义了渐变的结束点坐标。
+- <stop> 元素用于指定渐变中的颜色和颜色的位置。
+
+线性渐变可以定义为水平，垂直或角渐变：
+
+- 当 y1 和 y2 相等，而 x1 和 x2 不同时，可创建水平渐变
+- 当 x1 和 x2 相等，而 y1 和 y2 不同时，可创建垂直渐变
+- 当 x1 和 x2 不同，且 y1 和 y2 不同时，可创建角形渐变
+
+以下代码定义了一个从红色到蓝色的水平线性渐变，然后将其应用于一个填充矩形，使矩形呈现出渐变的填充效果。
+
+
+## 实例
+
+
+### 实例 1
+
+定义水平线性渐变从黄色到红色的椭圆形：
+
+下面是 SVG 代码：
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+</svg>
+```
+
+点击查看：查看 SVG 文件。
+
+代码解析：
+
+- <linearGradient>标签的id属性可为渐变定义一个唯一的名称
+- <linearGradient>标签的X1，X2，Y1，Y2属性定义渐变开始和结束位置
+- 渐变的颜色范围可由两种或多种颜色组成。每种颜色通过一个<stop>标签来规定。offset属性用来定义渐变的开始和结束位置。
+- 填充属性把 ellipse 元素链接到此渐变
+
+
+### 实例 2
+
+定义一个垂直线性渐变从黄色到红色的椭圆形：
+
+下面是SVG代码：
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+</svg>
+```
+
+点击查看：查看 SVG 文件。
+
+
+### 实例 3
+
+定义一个椭圆形，水平线性渐变从黄色到红色并添加一个椭圆内文本：
+
+下面是 SVG 代码：
+
+
+## 实例
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+  <text fill="#ffffff" font-size="45" font-family="Verdana" x="150" y="86">
+  SVG</text>
+</svg>
+```
+
+点击查看：查看 SVG 文件。
+
+代码解析：
+
+- <text> 元素是用来添加一个文本
+
+
+### 注意事项
+
+- 渐变中可以包含多个 <stop> 元素，每个 <stop> 元素表示渐变中的一个颜色和位置。
+- 渐变的起始点和结束点可以位于任意位置，渐变会沿着定义的起始点和结束点之间的直线进行插值。
+- 渐变的坐标值可以使用百分比或具体的长度值，百分比值相对于图形元素的大小。
+- 可以将线性渐变应用于填充或描边 SVG 图形元素。
+
+
+## 复习重点
+
+- 能说明 `SVG 渐变 - 线性` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

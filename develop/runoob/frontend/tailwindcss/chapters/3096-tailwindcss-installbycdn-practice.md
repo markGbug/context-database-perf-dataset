@@ -1,34 +1,98 @@
-# Tailwind CSS：Tailwind CSS 安装(CDN) 练习笔记
+# Tailwind CSS：Tailwind CSS 安装(CDN)
 
 - 来源：[Tailwind CSS 安装(CDN)](https://www.runoob.com/tailwindcss/tailwindcss-installbycdn.html)
 - 分类：前端开发
 - 技术：Tailwind CSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3096
 
-## 练习目标
+## 本章内容
 
-把 `Tailwind CSS 安装(CDN)` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+如果只想简单体验，可以直接引入 CDN 链接：
 
-## 练习步骤
+使用官网提供的 CDN 库，地址如下：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+使用 jsDelivr 的 CDN 库，地址如下：
 
-## 验收清单
+```html
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
+```
 
-- 我能独立说出 `Tailwind CSS 安装(CDN)` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+使用这种方式使用：
 
-## 复盘问题
+- 优点：无需配置，适合快速开发和演示。
+- 缺点：不能自定义样式，文件体积较大。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 使用实例
+
+以下实例输出了 Hello, world!
+
+
+## 实例
+
+```html
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <h1 class="text-3xl font-bold underline">
+    Hello world!
+  </h1>
+</body>
+</html>
+```
+
+编辑 tailwind.config 对象可以定义自己的配置信息：
+
+
+## 实例
+
+```html
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1 class="text-3xl font-bold underline text-clifford">
+    Hello world!
+  </h1>
+</body>
+</html>
+```
+
+使用 type="text/tailwindcss" 添加自定义 CSS：
+
+
+## 实例
+
+使用 plugins 参数可以设置使用的插件，如 forms（表单） 和 typography（排版）：
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Tailwind CSS 安装(CDN)` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

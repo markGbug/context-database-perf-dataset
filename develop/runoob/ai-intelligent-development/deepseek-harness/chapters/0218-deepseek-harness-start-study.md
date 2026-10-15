@@ -1,35 +1,58 @@
-# DeepSeek Harness：DeepSeek Harness 使用 学习笔记
+# DeepSeek Harness：DeepSeek Harness 第一次使用
 
 - 来源：[DeepSeek Harness 使用](https://www.runoob.com/deepseek-harness/deepseek-harness-start.html)
 - 分类：AI / 智能开发
 - 技术：DeepSeek Harness
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0218
 
-## 学习目标
+## 本章内容
 
-DeepSeek Harness 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `DeepSeek Harness 使用` 建立学习路径，先理解它在 DeepSeek Harness 体系中的位置，再做可运行或可复述的验证。
+上一节我们介绍了 DeepSeek Harness 安装，一键安装命令：
 
-## 阅读抓手
+```text
+npm install -g @deepseek-ai/dsh     # 后期方便使用 dsh 命令
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+或：
 
-## 笔记模板
+```text
+npx @deepseek-ai/dsh web
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+注意，安装前先确保已经安装了 Node.js:
 
-## 完成标准
+```text
+node -v
+```
 
-- 能用 3 到 5 句话解释 `DeepSeek Harness 使用`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+输出版本号类似 v22.23.1，说明安装成功～
+
+目前在内测，打开 http://127.0.0.1:3080/ 会看到内测声明，点击继续就好了：
+
+整个界面如下，我们可以先点击设置配置 API key（申请地址：https://platform.deepseek.com/api_keys）：
+
+创建一个目录 DeepSeekProjects 作为工作区：
+
+```text
+mkdir DeepSeekProjects
+```
+
+DeepSeek Harness 提供四种运行模式：标准模式、PTC模式、极简模式、创造模式。
+
+- 标准模式：新手首选，内置完整代码 Agent 能力，文件操作、Shell、检索、任务规划、子 Agent 等插件预装，开箱即用。
+- PTC 模式：能力同标准模式。支持用 TypeScript 批量编排工具调用，合并多轮交互，减少对话次数、节约 Token。依赖较强代码规划能力，调试难度更高；建议大量重复调用场景再切换。
+- 极简模式：仅保留持久 Bash 与文件编辑器，移除附加功能。用于模型基准性能测试，不适合日常开发。
+- 创造模式：具备标准模式全部能力，可探查 Cordis 运行环境，在线调试插件、创建新 Agent，实现功能自主扩展。
+
+我们选定模式，点击新会话，输入需求即可开启对话：
+
+使用过程还会帮我们分析需求：
+
+
+## 复习重点
+
+- 能说明 `DeepSeek Harness 使用` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

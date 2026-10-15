@@ -1,35 +1,45 @@
-# jQuery EasyUI：jEasyUI 创建页脚摘要 学习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 创建页脚摘要
 
 - 来源：[jEasyUI 创建页脚摘要](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid17.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2878
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 创建页脚摘要` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+在本教程中，我们将向您展示如何在数据网格（datagrid）页脚显示摘要信息行。
 
-## 阅读抓手
+为了显示页脚行，您应该设置 showFooter 属性为 true，然后准备定义在数据网格（datagrid）数据中的页脚行。以下是示例数据：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+    {"total":1,"rows":[{"id":1,"name":"Chai","price":18.00}],"footer":[{"name":"Total","price":18.00}]}
+```
 
-## 笔记模板
+```html
+    <table id="tt" title="DataGrid" class="easyui-datagrid" style="width:400px;height:250px"
+            url="data/datagrid17_data.json"
+            fitColumns="true" rownumbers="true" showFooter="true">
+        <thead>
+            <tr>
+                <th field="name" width="80">Product Name</th>
+                <th field="price" width="40" align="right">Unit Price</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+页脚行和显示数据行一样，所以您可以在页脚显示不止一个摘要信息。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jEasyUI 创建页脚摘要`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid17.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 创建页脚摘要` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

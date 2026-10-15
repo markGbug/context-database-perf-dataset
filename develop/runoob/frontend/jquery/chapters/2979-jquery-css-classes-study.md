@@ -1,35 +1,104 @@
-# jQuery：jQuery CSS 类 学习笔记
+# jQuery：jQuery - 获取并设置 CSS 类
 
 - 来源：[jQuery CSS 类](https://www.runoob.com/jquery/jquery-css-classes.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2979
 
-## 学习目标
+## 本章内容
 
-jQuery 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery CSS 类` 建立学习路径，先理解它在 jQuery 体系中的位置，再做可运行或可复述的验证。
+通过 jQuery，可以很容易地对 CSS 元素进行操作。 切换 CSS 类
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## jQuery 操作 CSS
 
-## 笔记模板
+jQuery 拥有若干进行 CSS 操作的方法。我们将学习下面这些：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- addClass() - 向被选元素添加一个或多个类
+- removeClass() - 从被选元素删除一个或多个类
+- toggleClass() - 对被选元素进行添加/删除类的切换操作
+- css() - 设置或返回样式属性
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jQuery CSS 类`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例样式表
+
+下面的样式表将用于本页的所有例子：
+
+```text
+.important {
+    font-weight:bold;
+    font-size:xx-large;
+}
+
+.blue {
+    color:blue;
+}
+```
+
+
+## jQuery addClass() 方法
+
+下面的例子展示如何向不同的元素添加 class 属性。当然，在添加类时，您也可以选取多个元素：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("h1,h2,p").addClass("blue");
+  $("div").addClass("important");
+});
+```
+
+您也可以在 addClass() 方法中规定多个类：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("body div:first").addClass("important blue");
+});
+```
+
+
+## jQuery removeClass() 方法
+
+下面的例子演示如何在不同的元素中删除指定的 class 属性：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("h1,h2,p").removeClass("blue");
+});
+```
+
+
+## jQuery toggleClass() 方法
+
+下面的例子将展示如何使用 jQuery toggleClass() 方法。该方法对被选元素进行添加/删除类的切换操作：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("h1,h2,p").toggleClass("blue");
+});
+```
+
+
+## jQuery css() 方法
+
+我们将在下一章讲解 jQuery css() 方法。
+
+
+## 复习重点
+
+- 能说明 `jQuery CSS 类` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

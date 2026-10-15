@@ -1,34 +1,114 @@
-# SQLite：SQLite Like 子句 练习笔记
+# SQLite：SQLite Like 子句
 
 - 来源：[SQLite Like 子句](https://www.runoob.com/sqlite/sqlite-like-clause.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1707
 
-## 练习目标
+## 本章内容
 
-把 `SQLite Like 子句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQLite 的 LIKE 运算符是用来匹配通配符指定模式的文本值。如果搜索表达式与模式表达式匹配，LIKE 运算符将返回真（true），也就是 1。这里有两个通配符与 LIKE 运算符一起使用：
 
-## 练习步骤
+- 百分号 （%）
+- 下划线 （_）
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+百分号（%）代表零个、一个或多个数字或字符。下划线（_）代表一个单一的数字或字符。这些符号可以被组合使用。
 
-## 验收清单
 
-- 我能独立说出 `SQLite Like 子句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 语法
 
-## 复盘问题
+% 和 _ 的基本语法如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+SELECT column_list
+FROM table_name
+WHERE column LIKE 'XXXX%'
+
+or
+
+SELECT column_list
+FROM table_name
+WHERE column LIKE '%XXXX%'
+
+or
+
+SELECT column_list
+FROM table_name
+WHERE column LIKE 'XXXX_'
+
+or
+
+SELECT column_list
+FROM table_name
+WHERE column LIKE '_XXXX'
+
+or
+
+SELECT column_list
+FROM table_name
+WHERE column LIKE '_XXXX_'
+```
+
+您可以使用 AND 或 OR 运算符来结合 N 个数量的条件。在这里，XXXX 可以是任何数字或字符串值。
+
+
+## 实例
+
+下面一些实例演示了 带有 '%' 和 '_' 运算符的 LIKE 子句不同的地方：
+
+让我们举一个实际的例子，假设 COMPANY 表有以下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+下面是一个实例，它显示 COMPANY 表中 AGE 以 2 开头的所有记录：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE AGE  LIKE '2%';
+```
+
+这将产生以下结果：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+下面是一个实例，它显示 COMPANY 表中 ADDRESS 文本里包含一个连字符（-）的所有记录：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE ADDRESS  LIKE '%-%';
+```
+
+这将产生以下结果：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+4           Mark        25          Rich-Mond   65000.0
+6           Kim         22          South-Hall  45000.0
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite Like 子句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

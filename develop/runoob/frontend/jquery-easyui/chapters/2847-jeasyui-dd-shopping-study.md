@@ -1,35 +1,128 @@
-# jQuery EasyUI：jEasyUI 创建拖放的购物车 学习笔记
+# jQuery EasyUI：jQuery EasyUI 拖放 - 创建拖放的购物车
 
 - 来源：[jEasyUI 创建拖放的购物车](https://www.runoob.com/jeasyui/jeasyui-dd-shopping.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2847
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 创建拖放的购物车` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+如果您能够通过您的 Web 应用简单地实现拖动和放置，您就会知道一些特别的东西。通过 jQuery EasyUI，我们在 Web 应用中可以简单地实现拖放功能。
 
-## 阅读抓手
+在本教程中，我们将向您展示如何创建一个启用用户拖动和放置用户想买的商品的购物车页面。购物篮中的物品和价格将更新。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+    <ul class="products">
+        <li>
+            <a href="#" class="item">
+                <img src="images/shirt1.gif"/>
+                <div>
+                    <p>Balloon</p>
+                    <p>Price:$25</p>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="item">
+                <img src="images/shirt2.gif"/>
+                <div>
+                    <p>Feeling</p>
+                    <p>Price:$25</p>
+                </div>
+            </a>
+        </li>
+        <!-- other products -->
+    </ul>
+```
 
-## 笔记模板
+正如您所看到的上面的代码，我们添加一个包含一些 <li> 元素的 <ul> 元素来显示商品。所有商品都有名字和价格属性，它们包含在 <p> 元素中。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+    <div class="cart">
+        <h1>Shopping Cart</h1>
+        <table id="cartcontent" style="width:300px;height:auto;">
+            <thead>
+                <tr>
+                    <th field="name" width=140>Name</th>
+                    <th field="quantity" width=60 align="right">Quantity</th>
+                    <th field="price" width=60 align="right">Price</th>
+                </tr>
+            </thead>
+        </table>
+        <p class="total">Total: $0</p>
+        <h2>Drop here to add to cart</h2>
+    </div>
+```
 
-## 完成标准
+我们使用数据网格（datagrid）来显示购物篮中的物品。
 
-- 能用 3 到 5 句话解释 `jEasyUI 创建拖放的购物车`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+    $('.item').draggable({
+        revert:true,
+        proxy:'clone',
+        onStartDrag:function(){
+            $(this).draggable('options').cursor = 'not-allowed';
+            $(this).draggable('proxy').css('z-index',10);
+        },
+        onStopDrag:function(){
+            $(this).draggable('options').cursor='move';
+        }
+    });
+```
+
+请注意，我们把 draggable 属性的值从 'proxy' 设置为 'clone'，所以拖动元素将由克隆产生。
+
+```java
+    $('.cart').droppable({
+        onDragEnter:function(e,source){
+            $(source).draggable('options').cursor='auto';
+        },
+        onDragLeave:function(e,source){
+            $(source).draggable('options').cursor='not-allowed';
+        },
+        onDrop:function(e,source){
+            var name = $(source).find('p:eq(0)').html();
+            var price = $(source).find('p:eq(1)').html();
+            addProduct(name, parseFloat(price.split('$')[1]));
+        }
+    });
+    var data = {"total":0,"rows":[]};
+    var totalCost = 0;
+    function addProduct(name,price){
+        function add(){
+            for(var i=0; i<data.total; i++){
+                var row = data.rows[i];
+                if (row.name == name){
+                    row.quantity += 1;
+                    return;
+                }
+            }
+            data.total += 1;
+            data.rows.push({
+                name:name,
+                quantity:1,
+                price:price
+            });
+        }
+        add();
+        totalCost += price;
+        $('#cartcontent').datagrid('loadData', data);
+        $('div.cart .total').html('Total: $'+totalCost);
+    }
+```
+
+每当放置商品的时候，我们首先得到商品名称和价格，然后调用 'addProduct' 函数来更新购物篮。
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-dd-shopping.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 创建拖放的购物车` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

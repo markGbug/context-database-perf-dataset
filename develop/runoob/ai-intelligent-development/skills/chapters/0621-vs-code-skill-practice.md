@@ -1,34 +1,126 @@
-# Skills（技能）：VS Code Skills 练习笔记
+# Skills（技能）：VS Code 创建与使用 Skill
 
 - 来源：[VS Code Skills](https://www.runoob.com/skills/vs-code-skill.html)
 - 分类：AI / 智能开发
 - 技术：Skills（技能）
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0621
 
-## 练习目标
+## 本章内容
 
-把 `VS Code Skills` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本教程将带你从头开始创建一个 Agent Skill，并在 VS Code + GitHub Copilot 中实际运行它。
 
-## 练习步骤
+我们将创建一个掷骰子 Skill，让 Agent 学会通过终端命令生成随机数。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 准备工作
 
-- 我能独立说出 `VS Code Skills` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 环境要求
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- 安装 VS Code
+
+安装 GitHub Copilot 扩展
+
+本教程使用 VS Code，但 Agent Skills 是开放格式。相同的 Skill 也可以在 Claude Code、OpenCode、OpenAI Codex 等兼容工具中使用。
+
+更多 VS Code 内容可以参考：VS Code 教程。
+
+
+## 创建 Skill 目录和文件
+
+VS Code 默认在项目的 .agents/skills/ 目录下查找 Skill。
+
+首先在你的项目中创建以下目录结构：
+
+
+## 创建目录结构
+
+然后在 .agents/skills/roll-dice/SKILL.md 中创建以下文件：
+
+
+## 实例：SKILL.md 完整内容
+
+一个文件、不到 20 行，就完成了一个完整的 Skill。
+
+
+## 文件结构解析
+
+让我们逐部分理解这个文件的作用。
+
+
+### YAML 头部（Frontmatter）
+
+
+### 正文（Markdown Body）
+
+正文是 Agent 激活 Skill 后实际遵循的指令。
+
+这里我们告诉 Agent：当用户要求掷骰子时，使用操作系统的随机数命令，并把骰子面数传入命令中。
+
+我们同时提供了 macOS/Linux 和 Windows 两种平台的命令，Agent 会根据当前环境自动选择。
+
+
+## 测试你的 Skill
+
+创建好文件后，按以下步骤验证：
+
+- 用 VS Code 打开你的项目
+- 打开 Copilot Chat 面板（快捷键 Ctrl+Shift+I 或 Cmd+Shift+I），或者点击右上角的按钮：
+- 在聊天面板底部选择 Agent 模式
+- 输入 /skills 命令，确认 roll-dice 出现在 Skill 列表中
+- 可以看到技能列表有 roll-dice：
+
+如果在 /skills 列表中看不到 roll-dice，请检查文件路径是否正确：.agents/skills/roll-dice/SKILL.md，注意 SKILL.md 必须大写。
+
+确认 Skill 已加载后，在聊天中输入：
+
+```text
+Roll a d20
+```
+
+Agent 应该会自动激活 roll-dice Skill，运行终端命令并返回 1 到 20 之间的随机数。
+
+
+## 背后的工作过程
+
+当你在 Copilot Chat 中使用这个 Skill 时，底层经历了三个步骤：
+
+
+### 步骤一：发现
+
+聊天会话开始时，Agent 扫描默认 Skill 目录（.agents/skills/），找到了 roll-dice。
+
+它只读取了 name 和 description，知道了"这个 Skill 是用来掷骰子的"。
+
+
+### 步骤二：激活
+
+当你输入 "Roll a d20" 时，Agent 将你的问题与 roll-dice 的 description 进行了匹配。
+
+匹配成功后，Agent 将完整的 SKILL.md 正文加载到了上下文中。
+
+
+### 步骤三：执行
+
+Agent 按照正文中的指令，识别出你用的是 macOS（或 Linux），选择了 bash 命令。
+
+它将 d20 对应的 20 替换到命令中，执行 echo $((RANDOM % 20 + 1))，然后把结果返回给你。
+
+
+## 常见问题排查
+
+
+## 跨工具使用提示
+
+虽然本教程使用 VS Code，但 Skill 同样可以用于其他工具：
+
+不同的工具可能使用不同的默认目录，但 Skill 本身的格式和文件结构是通用的。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `VS Code Skills` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

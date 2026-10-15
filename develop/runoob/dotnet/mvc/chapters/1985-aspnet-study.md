@@ -1,35 +1,85 @@
-# MVC：ASP.NET 简介 学习笔记
+# MVC：ASP.NET
 
 - 来源：[ASP.NET 简介](https://www.runoob.com/aspnet/aspnet.html)
 - 分类：.NET
 - 技术：MVC
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1985
 
-## 学习目标
+## 本章内容
 
-MVC 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ASP.NET 简介` 建立学习路径，先理解它在 MVC 体系中的位置，再做可运行或可复述的验证。
+## 经典 ASP - Active Server Pages（动态服务器页面）
 
-## 阅读抓手
+ASP ，全称 Active Server Pages（动态服务器页面），也被称为经典 ASP ，是在1998年作为微软的第一个服务器端脚本引擎推出的。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+ASP 是一种使得网页中的脚本在因特网服务器上被执行的技术。
 
-## 笔记模板
+ASP 页面的文件扩展名是 .asp ，通常是用 VBScript 编写的。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如果您想学习经典 ASP ，请访问我们的 经典 ASP 教程。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `ASP.NET 简介`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## ASP.NET
+
+ASP.NET 是新一代 ASP 。它与经典 ASP 是不兼容的，但 ASP.NET 可能包括经典 ASP。
+
+ASP.NET 页面是经过编译的，这使得它们的运行速度比经典 ASP 快。
+
+ASP.NET 具有更好的语言支持，有一大套的用户控件和基于 XML 的组件，并集成了用户身份验证。
+
+ASP.NET 页面的扩展名是 .aspx ，通常是用 VB (Visual Basic) 或者 C# (C sharp) 编写。
+
+在 ASP.NET 中的控件可以用不同的语言（包括 C++ 和 Java）编写。
+
+当浏览器请求 ASP.NET 文件时，ASP.NET 引擎读取文件，编译和执行脚本文件，并将结果以普通的 HTML 页面返回给浏览器。
+
+
+## ASP.NET Razor
+
+Razor 是一种将服务器代码嵌入到 ASP.NET 网页中的新的、简单的标记语法，很像经典 ASP 。
+
+Razor 具有传统的 ASP.NET 的功能，但更容易使用并且更容易学习。
+
+
+## ASP.NET 编程语言
+
+本教程介绍了以下编程语言：
+
+- Visual Basic (VB.NET)
+- C# (发音：C sharp)
+
+
+## ASP.NET 服务器技术
+
+本教程介绍了以下服务器技术
+
+- Web Pages（Razor 语法)
+- MVC（模型-视图-控制器）
+- Web Forms（传统的 ASP.NET）
+
+
+## ASP.NET 开发工具
+
+ASP.NET 支持以下开发工具：
+
+- WebMatrix
+- Visual Web Developer
+- Visual Studio
+
+在本教程中，Web Pages 教程使用了 WebMatrix ，MVC 教程和 Web Forms 教程使用了 Visual Web Developer。
+
+
+## ASP.NET 文件扩展名
+
+- 经典 ASP 文件的文件扩展名为 .asp
+- ASP.NET 文件的文件扩展名为 .aspx
+- Razor C# 语法的 ASP.NET 文件的文件扩展名为 .cshtml
+- Razor VB 语法的 ASP.NET 文件的文件扩展名为 .vbhtml
+
+
+## 复习重点
+
+- 能说明 `ASP.NET 简介` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

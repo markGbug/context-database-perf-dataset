@@ -1,34 +1,553 @@
-# Memcached：Java 连接 Memcached 服务 练习笔记
+# Memcached：Java 连接 Memcached 服务
 
 - 来源：[Java 连接 Memcached 服务](https://www.runoob.com/memcached/java-memcached.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1456
 
-## 练习目标
+## 本章内容
 
-把 `Java 连接 Memcached 服务` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+使用 Java 程序连接 Memcached，需要在你的 classpath 中添加 Memcached jar 包。
 
-## 练习步骤
+本站 jar 包下载地址：spymemcached-2.10.3.jar。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Google Code jar 包下载地址：spymemcached-2.10.3.jar（需要科学上网）。
 
-## 验收清单
+以下程序假定 Memcached 服务的主机为 127.0.0.1，端口为 11211。
 
-- 我能独立说出 `Java 连接 Memcached 服务` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 连接实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Java 连接 Memcached
+
+
+## MemcachedJava.java 文件：
+
+```java
+import net.spy.memcached.MemcachedClient;
+import java.net.*;
+
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+      try{
+         // 本地连接 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex){
+         System.out.println( ex.getMessage() );
+      }
+   }
+}
+```
+
+该程序中我们使用 InetSocketAddress 连接 IP 为 127.0.0.1 端口 为 11211 的 memcached 服务。
+
+执行以上代码，如果连接成功会输出以下信息：
+
+```text
+Connection to server successful.
+```
+
+
+### set 操作实例
+
+以下使用 java.util.concurrent.Future 来存储数据
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 存储数据
+         Future fo = mcc.set("runoob", 900, "Free Education");
+
+         // 查看存储状态
+         System.out.println("set status:" + fo.get());
+
+         // 输出值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex){
+         System.out.println( ex.getMessage() );
+      }
+   }
+}
+```
+
+执行程序，输出结果为：
+
+```text
+Connection to server successful.
+set status:true
+runoob value in cache - Free Education
+```
+
+
+### add 操作实例
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加数据
+         Future fo = mcc.set("runoob", 900, "Free Education");
+
+         // 打印状态
+         System.out.println("set status:" + fo.get());
+
+         // 输出
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 添加
+         fo = mcc.add("runoob", 900, "memcached");
+
+         // 打印状态
+         System.out.println("add status:" + fo.get());
+
+         // 添加新key
+         fo = mcc.add("runoob", 900, "All Free Compilers");
+
+         // 打印状态
+         System.out.println("add status:" + fo.get());
+
+         // 输出
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex){
+         System.out.println(ex.getMessage());
+      }
+   }
+}
+```
+
+
+### replace 操作实例
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try {
+         //连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加第一个 key=》value 对
+         Future fo = mcc.set("runoob", 900, "Free Education");
+
+         // 输出执行 add 方法后的状态
+         System.out.println("add status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 添加新的 key
+         fo = mcc.replace("runoob", 900, "Largest Tutorials' Library");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("replace status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex){
+         System.out.println( ex.getMessage() );
+      }
+   }
+}
+```
+
+
+### append 操作实例
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加数据
+         Future fo = mcc.set("runoob", 900, "Free Education");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("set status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 对存在的key进行数据添加操作
+         fo = mcc.append("runoob", 900, " for All");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("append status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex) {
+         System.out.println(ex.getMessage());
+      ]
+   }
+}
+```
+
+
+### prepend 操作实例
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加数据
+         Future fo = mcc.set("runoob", 900, "Education for All");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("set status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 对存在的key进行数据添加操作
+         fo = mcc.prepend("runoob", 900, "Free ");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("prepend status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex) {
+         System.out.println(ex.getMessage());
+      }
+   }
+}
+```
+
+
+### CAS 操作实例
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.CASValue;
+import net.spy.memcached.CASResponse;
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加数据
+         Future fo = mcc.set("runoob", 900, "Free Education");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("set status:" + fo.get());
+
+         // 使用 get 方法获取数据
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 通过 gets 方法获取 CAS token（令牌）
+         CASValue casValue = mcc.gets("runoob");
+
+         // 输出 CAS token（令牌） 值
+         System.out.println("CAS token - " + casValue);
+
+         // 尝试使用cas方法来更新数据
+         CASResponse casresp = mcc.cas("runoob", casValue.getCas(), 900, "Largest Tutorials-Library");
+
+         // 输出 CAS 响应信息
+         System.out.println("CAS Response - " + casresp);
+
+         // 输出值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex) {
+         System.out.println(ex.getMessage());
+      }
+   }
+}
+```
+
+
+### get 操作实例
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加数据
+         Future fo = mcc.set("runoob", 900, "Free Education");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("set status:" + fo.get());
+
+         // 使用 get 方法获取数据
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex) {
+         System.out.println(ex.getMessage());
+      }
+   }
+}
+```
+
+
+### gets 操作实例、CAS
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.CASValue;
+import net.spy.memcached.CASResponse;
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加数据
+         Future fo = mcc.set("runoob", 900, "Free Education");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("set status:" + fo.get());
+
+         // 从缓存中获取键为 runoob 的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 通过 gets 方法获取 CAS token（令牌）
+         CASValue casValue = mcc.gets("runoob");
+
+         // 输出 CAS token（令牌） 值
+         System.out.println("CAS value in cache - " + casValue);
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex) {
+         System.out.println(ex.getMessage());
+      }
+   }
+}
+```
+
+
+### delete 操作实例
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加数据
+         Future fo = mcc.set("runoob", 900, "World's largest online tutorials library");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("set status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 对存在的key进行数据添加操作
+        fo = mcc.delete("runoob");
+
+         // 输出执行 delete 方法后的状态
+         System.out.println("delete status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("runoob value in cache - " + mcc.get("runoob"));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex) {
+         System.out.println(ex.getMessage());
+      }
+   }
+}
+```
+
+
+### Incr/Decr 操作实例
+
+
+## MemcachedJava.java 文件：
+
+```java
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+
+      try{
+
+         // 连接本地的 Memcached 服务
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server successful.");
+
+         // 添加数字值
+         Future fo = mcc.set("number", 900, "1000");
+
+         // 输出执行 set 方法后的状态
+         System.out.println("set status:" + fo.get());
+
+         // 获取键对应的值
+         System.out.println("value in cache - " + mcc.get("number"));
+
+         // 自增并输出
+         System.out.println("value in cache after increment - " + mcc.incr("number", 111));
+
+         // 自减并输出
+         System.out.println("value in cache after decrement - " + mcc.decr("number", 112));
+
+         // 关闭连接
+         mcc.shutdown();
+
+      }catch(Exception ex) {
+         System.out.println(ex.getMessage());
+      }
+   }
+}
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java 连接 Memcached 服务` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,60 @@
-# XSLT：XSLT <value-of> 练习笔记
+# XSLT：XSLT <xsl:value-of> 元素
 
 - 来源：[XSLT <value-of>](https://www.runoob.com/xsl/xsl-value-of.html)
 - 分类：XML / Web Service
 - 技术：XSLT
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4513
 
-## 练习目标
+## 本章内容
 
-把 `XSLT <value-of>` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+<xsl:value-of> 元素用于提取某个选定节点的值。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## <xsl:value-of> 元素
 
-## 验收清单
+<xsl:value-of> 元素用于提取某个 XML 元素的值，并把值添加到转换的输出流中：
 
-- 我能独立说出 `XSLT <value-of>` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <body>
+  <h2>My CD Collection</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th>Title</th>
+      <th>Artist</th>
+    </tr>
+    <tr>
+      <td><xsl:value-of select="catalog/cd/title"/></td>
+      <td><xsl:value-of select="catalog/cd/artist"/></td>
+    </tr>
+  </table>
+  </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>
+```
+
+
+## 实例解释
+
+注意：在上面的实例中，select 属性的值是一个 XPath 表达式。这个 XPath 表达式的工作方式类似于定位某个文件系统，在其中正斜杠（/）可选择子目录。
+
+上面实例的结果有一点小缺陷，仅有一行数据从 XML 文档被复制到输出。在下一章中，您将学习到如何使用 <xsl:for-each> 元素来循环遍历 XML 元素，并显示所有的记录。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `XSLT <value-of>` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,98 @@
-# Python：Python3 pip 学习笔记
+# Python：Python3 pip
 
 - 来源：[Python3 pip](https://www.runoob.com/python3/python3-pip.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4140
 
-## 学习目标
+## 本章内容
 
-Python 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python3 pip` 建立学习路径，先理解它在 Python 体系中的位置，再做可运行或可复述的验证。
+pip 是 Python 包管理工具，该工具提供了对 Python 包的查找、下载、安装、卸载的功能。
 
-## 阅读抓手
+软件包也可以在 https://pypi.org/ 中找到。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+目前最新的 Python 版本已经预装了 pip。
 
-## 笔记模板
+注意：Python 2.7.9 + 或 Python 3.4+ 以上版本都自带 pip 工具。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如果没有安装可以参考：Python pip 安装与使用。
 
-## 完成标准
+查看是否已经安装 pip 可以使用以下命令：
 
-- 能用 3 到 5 句话解释 `Python3 pip`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+pip --version
+```
+
+下载安装包使用以下命令：
+
+```text
+pip install some-package-name
+```
+
+例如我们安装 numpy 包：
+
+```text
+pip install numpy
+```
+
+我们也可以轻易地通过以下的命令来移除软件包：
+
+```text
+pip uninstall some-package-name
+```
+
+例如我们移除 numpy 包：
+
+```text
+pip uninstall numpy
+```
+
+如果要查看我们已经安装的软件包，可以使用以下命令：
+
+```text
+pip list
+```
+
+
+### 导出当前 Python 环境的配置
+
+要导出当前 Python 环境的配置，你可以使用 pip freeze 命令。
+
+pip freeze 命令会列出当前环境中已安装的所有 Python 包及其版本信息，你可以将其保存到文件中，例如 requirements.txt，如下所示：
+
+```text
+pip freeze > requirements.txt
+```
+
+以上命令将在当前目录下创建一个名为 requirements.txt 的文件，其中包含当前环境中已安装的所有包及其版本信息。
+
+然后，你可以在其他地方使用该文件来重新创建相同的环境，运行以下命令：
+
+```text
+pip install -r requirements.txt
+```
+
+以上命令会根据 requirements.txt 中列出的包及其版本信息重新安装所有必需的包，从而重建相同的环境。
+
+
+## 扩展内容
+
+
+### Anaconda 介绍
+
+Anaconda 发行版包含了 Python。
+
+Anaconda 是一个集成的数据科学和机器学习环境，其中包括了 Python 解释器以及大量常用的数据科学库和工具。
+
+Anaconda 包及其依赖项和环境的管理工具为 conda 命令，文与传统的 Python pip 工具相比 Anaconda 的 conda 可以更方便地在不同环境之间进行切换，环境管理较为简单。
+
+Anaconda详细安装与介绍参考：Anaconda 教程。
+
+
+## 复习重点
+
+- 能说明 `Python3 pip` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

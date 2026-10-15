@@ -1,35 +1,175 @@
-# Docker：Swarm 集群管理 学习笔记
+# Docker：Swarm 集群管理
 
 - 来源：[Swarm 集群管理](https://www.runoob.com/docker/docker-swarm.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0809
 
-## 学习目标
+## 本章内容
 
-Docker 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Swarm 集群管理` 建立学习路径，先理解它在 Docker 体系中的位置，再做可运行或可复述的验证。
+### 简介
 
-## 阅读抓手
+Docker Swarm 是 Docker 的集群管理工具。它将 Docker 主机池转变为单个虚拟 Docker 主机。 Docker Swarm 提供了标准的 Docker API，所有任何已经与 Docker 守护程序通信的工具都可以使用 Swarm 轻松地扩展到多个主机。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+支持的工具包括但不限于以下各项：
 
-## 笔记模板
+- Dokku
+- Docker Compose
+- Docker Machine
+- Jenkins
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 原理
 
-- 能用 3 到 5 句话解释 `Swarm 集群管理`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+如下图所示，swarm 集群由管理节点（manager）和工作节点（work node）构成。
+
+- swarm mananger：负责整个集群的管理工作包括集群配置、服务管理等所有跟集群有关的工作。
+- work node：即图中的 available node，主要负责运行相应的服务来执行任务（task）。
+
+
+## 使用
+
+以下示例，均以 Docker Machine 和 virtualbox 进行介绍，确保你的主机已安装 virtualbox。
+
+
+### 1、创建 swarm 集群管理节点（manager）
+
+创建 docker 机器：
+
+```text
+$ docker-machine create -d virtualbox swarm-manager
+```
+
+初始化 swarm 集群，进行初始化的这台机器，就是集群的管理节点。
+
+```text
+$ docker-machine ssh swarm-manager
+$ docker swarm init --advertise-addr 192.168.99.107 #这里的 IP 为创建机器时分配的 ip。
+```
+
+以上输出，证明已经初始化成功。需要把以下这行复制出来，在增加工作节点时会用到：
+
+```text
+docker swarm join --token SWMTKN-1-4oogo9qziq768dma0uh3j0z0m5twlm10iynvz7ixza96k6jh9p-ajkb6w7qd06y1e33yrgko64sk 192.168.99.107:2377
+```
+
+
+### 2、创建 swarm 集群工作节点（worker）
+
+这里直接创建好俩台机器，swarm-worker1 和 swarm-worker2 。
+
+分别进入两个机器里，指定添加至上一步中创建的集群，这里会用到上一步复制的内容。
+
+以上数据输出说明已经添加成功。
+
+上图中，由于上一步复制的内容比较长，会被自动截断，实际上在图运行的命令如下：
+
+```text
+docker@swarm-worker1:~$ docker swarm join --token SWMTKN-1-4oogo9qziq768dma0uh3j0z0m5twlm10iynvz7ixza96k6jh9p-ajkb6w7qd06y1e33yrgko64sk 192.168.99.107:2377
+```
+
+
+### 3、查看集群信息
+
+进入管理节点，执行：docker info 可以查看当前集群的信息。
+
+```text
+$ docker info
+```
+
+通过画红圈的地方，可以知道当前运行的集群中，有三个节点，其中有一个是管理节点。
+
+
+### 4、部署服务到集群中
+
+注意：跟集群管理有关的任何操作，都是在管理节点上操作的。
+
+以下例子，在一个工作节点上创建一个名为 helloworld 的服务，这里是随机指派给一个工作节点：
+
+```text
+docker@swarm-manager:~$ docker service create --replicas 1 --name helloworld alpine ping docker.com
+```
+
+
+### 5、查看服务部署情况
+
+查看 helloworld 服务运行在哪个节点上，可以看到目前是在 swarm-worker1 节点：
+
+```text
+docker@swarm-manager:~$ docker service ps helloworld
+```
+
+查看 helloworld 部署的具体信息：
+
+```text
+docker@swarm-manager:~$ docker service inspect --pretty helloworld
+```
+
+
+### 6、扩展集群服务
+
+我们将上述的 helloworld 服务扩展到俩个节点。
+
+```text
+docker@swarm-manager:~$ docker service scale helloworld=2
+```
+
+可以看到已经从一个节点，扩展到两个节点。
+
+
+### 7、删除服务
+
+```text
+docker@swarm-manager:~$ docker service rm helloworld
+```
+
+查看是否已删除：
+
+
+### 8、滚动升级服务
+
+以下实例，我们将介绍 redis 版本如何滚动升级至更高版本。
+
+创建一个 3.0.6 版本的 redis。
+
+```text
+docker@swarm-manager:~$ docker service create --replicas 1 --name redis --update-delay 10s redis:3.0.6
+```
+
+滚动升级 redis 。
+
+```text
+docker@swarm-manager:~$ docker service update --image redis:3.0.7 redis
+```
+
+看图可以知道 redis 的版本已经从 3.0.6 升级到了 3.0.7，说明服务已经升级成功。
+
+
+### 9、停止某个节点接收新的任务
+
+查看所有的节点：
+
+```text
+docker@swarm-manager:~$ docker node ls
+```
+
+可以看到目前所有的节点都是 Active, 可以接收新的任务分配。
+
+停止节点 swarm-worker1：
+
+注意：swarm-worker1 状态变为 Drain。不会影响到集群的服务，只是 swarm-worker1 节点不再接收新的任务，集群的负载能力有所下降。
+
+可以通过以下命令重新激活节点：
+
+```text
+docker@swarm-manager:~$  docker node update --availability active swarm-worker1
+```
+
+
+## 复习重点
+
+- 能说明 `Swarm 集群管理` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

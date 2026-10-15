@@ -1,35 +1,60 @@
-# XML DOM：DOM 克隆节点 学习笔记
+# XML DOM：XML DOM 克隆节点
 
 - 来源：[DOM 克隆节点](https://www.runoob.com/dom/dom-nodes-clone.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4391
 
-## 学习目标
+## 本章内容
 
-XML DOM 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `DOM 克隆节点` 建立学习路径，先理解它在 XML DOM 体系中的位置，再做可运行或可复述的验证。
+## 尝试一下 - 实例
 
-## 阅读抓手
+下面的实例使用 XML 文件 books.xml。 函数 loadXMLDoc()，位于外部 JavaScript 中，用于加载 XML 文件。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+复制一个节点，并把它追加到已有的节点 本例使用 cloneNode() 来复制一个节点，并把它追加到 XML 文档的根节点。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 复制节点
 
-## 完成标准
+cloneNode() 方法创建指定节点的副本。
 
-- 能用 3 到 5 句话解释 `DOM 克隆节点`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+cloneNode() 方法有一个参数（true 或 false）。该参数指示被克隆的节点是否包括原节点的所有属性和子节点。
+
+下面的代码片段复制第一个 <book> 节点，并把它追加到文档的根节点：
+
+
+## 实例
+
+```java
+xmlDoc=loadXMLDoc("books.xml");
+x=xmlDoc.getElementsByTagName('book')[0];
+cloneNode=x.cloneNode(true);
+xmlDoc.documentElement.appendChild(cloneNode);
+
+// 输出所有 title 节点文本值
+y=xmlDoc.getElementsByTagName("title");
+for (i=0;i<y.length;i++)
+{
+  document.write(y[i].childNodes[0].nodeValue);
+  document.write("<br>");
+}
+```
+
+输出：
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 获取要复制的节点
+- 使用 cloneNode 方法把节点复制到 "newNode" 中
+- 向 XML 文档的根节点追加新的节点
+- 输出文档中所有 book 的所有 title
+
+
+## 复习重点
+
+- 能说明 `DOM 克隆节点` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

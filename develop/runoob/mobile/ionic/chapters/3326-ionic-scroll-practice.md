@@ -1,34 +1,194 @@
-# Ionic：ionic 滚动条 练习笔记
+# Ionic：ionic 滚动条
 
 - 来源：[ionic 滚动条](https://www.runoob.com/ionic/ionic-scroll.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3326
 
-## 练习目标
+## 本章内容
 
-把 `ionic 滚动条` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## ion-scroll
 
-## 练习步骤
+ion-scroll 用于创建一个可滚动的容器。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 用法
 
-- 我能独立说出 `ionic 滚动条` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<ion-scroll
+    [delegate-handle=""]
+    [direction=""]
+    [paging=""]
+    [on-refresh=""]
+    [on-scroll=""]
+    [scrollbar-x=""]
+    [scrollbar-y=""]
+    [zooming=""]
+    [min-zoom=""]
+    [max-zoom=""]>
+    ...
+</ion-scroll>
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### API
+
+该句柄利用$ionicScrollDelegate指定滚动视图。
+
+滚动的方向。 'x' 或 'y'。 默认 'y'。
+
+分页是否滚动。
+
+调用下拉刷新， 由ionRefresher触发。
+
+当用户滚动时触发。
+
+是否显示水平滚动条。默认为false。
+
+是否显示垂直滚动条。默认为true。
+
+是否支持双指缩放。
+
+允许的最小缩放量（默认为0.5）
+
+允许的最大缩放量（默认为3）
+
+
+### 实例
+
+
+### HTML 代码
+
+```html
+<ion-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
+    <div style="width: 5000px; height: 5000px; background: url('http://www.runoob.com/try/demo_source/Europe_geological_map-en.jpg') repeat"></div>
+</ion-scroll>
+```
+
+
+### CSS 代码
+
+```text
+body {
+  cursor: url('http://www.runoob.com/try/demo_source/finger.png'), auto;
+}
+```
+
+
+### JavaScript 代码
+
+```text
+angular.module('ionicApp', ['ionic']);
+```
+
+尝试一下 »
+
+
+## ion-infinite-scroll
+
+当用户到达页脚或页脚附近时，ionInfiniteScroll指令允许你调用一个函数 。
+
+当用户滚动的距离超出底部的内容时，就会触发你指定的on-infinite。
+
+
+### 用法
+
+```html
+<ion-content ng-controller="MyController">
+  <ion-infinite-scroll
+    on-infinite="loadMore()"
+    distance="1%">
+  </ion-infinite-scroll>
+</ion-content>
+```
+
+```javascript
+function MyController($scope, $http) {
+  $scope.items = [];
+  $scope.loadMore = function() {
+    $http.get('/more-items').success(function(items) {
+      useItems(items);
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    });
+  };
+
+  $scope.$on('stateChangeSuccess', function() {
+    $scope.loadMore();
+  });
+}
+```
+
+当没有更多数据加载时，就可以用一个简单的方法阻止无限滚动，那就是angular的ng-if 指令:
+
+```html
+<ion-infinite-scroll
+  ng-if="moreDataCanBeLoaded()"
+  icon="ion-loading-c"
+  on-infinite="loadMoreData()">
+</ion-infinite-scroll>
+```
+
+
+### API
+
+当滚动到底部时触发的事件。
+
+从底部滚动到触发on-infinite表达式的距离。默认: 1%。
+
+当加载时显示的图标。默认: 'ion-loading-d'。
+
+
+## $ionicScrollDelegate
+
+授权控制滚动视图（通过ion-content 和 ion-scroll指令创建）。
+
+该方法直接被$ionicScrollDelegate服务触发，来控制所有滚动视图。用 $getByHandle方法控制特定的滚动视图。
+
+
+### 用法
+
+```html
+<body ng-controller="MainCtrl">
+  <ion-content>
+    <button ng-click="scrollTop()">滚动到顶部!</button>
+  </ion-content>
+</body>
+```
+
+```javascript
+function MainCtrl($scope, $ionicScrollDelegate) {
+  $scope.scrollTop = function() {
+    $ionicScrollDelegate.scrollTop();
+  };
+}
+```
+
+
+### 方法
+
+```text
+resize()
+```
+
+告诉滚动视图重新计算它的容器大小。
+
+```text
+scrollTop([shouldAnimate])
+```
+
+是否应用滚动动画。
+
+```text
+scrollBottom([shouldAnimate])
+```
+
+是否应用滚动动画。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `ionic 滚动条` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

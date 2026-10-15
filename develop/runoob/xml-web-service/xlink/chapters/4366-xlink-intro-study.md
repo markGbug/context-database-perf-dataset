@@ -1,35 +1,67 @@
-# XLink：XLink 和 XPointer 简介 学习笔记
+# XLink：XLink 和 XPointer 简介
 
 - 来源：[XLink 和 XPointer 简介](https://www.runoob.com/xlink/xlink-intro.html)
 - 分类：XML / Web Service
 - 技术：XLink
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4366
 
-## 学习目标
+## 本章内容
 
-XLink 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XLink 和 XPointer 简介` 建立学习路径，先理解它在 XLink 体系中的位置，再做可运行或可复述的验证。
+XLink 定义了一套标准的在 XML 文档中创建超级链接的方法。
 
-## 阅读抓手
+XPointer 使超级链接可以指向 XML 文档中更多具体的部分（片断）。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 您应当具备的基础知识
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+学习本教程前您应当具备的基础知识:
 
-## 完成标准
+- HTML / XHTML
+- XML / XML 命名空间
+- XPath
 
-- 能用 3 到 5 句话解释 `XLink 和 XPointer 简介`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+如果您希望首先学习这些项目，请在我们对 首页 访问这些教程。首页.
+
+
+## 什么是 XLink？
+
+- XLink 是 XML 链接语言（XML Linking Language）的缩写
+- XLink 是用于在 XML 文档中创建超级链接的语言
+- XLink 类似于 HTML 链接 - 但是更为强大
+- XML 文档中的任何元素均可成为 XLink
+- XLink 支持简易链接，也支持可将多重资源链接在一起的扩展链接
+- 通过 XLink，链接可在被链接文件外进行定义
+- XLink 是 W3C 推荐标准
+
+
+## 什么是 XPointer？
+
+- XPointer 是 XML 指针文件（XML Pointer Language）的缩写
+- XPointer 使超级链接可以指向 XML 文档中更多具体的部分（片断）
+- XPointer 使用 XPath 表达式在 XML 文档中进行定位
+- XPointer 是 W3C 推荐标准
+
+
+## XLink 和 XPointer 是 W3C 标准
+
+在2001年6月27日，XLink 被确立为 W3C 推荐标准。
+
+XPointer 于2003年3月25日成为 W3C 推荐标准。
+
+您可以在我们的《W3C 教程》中阅读更多有关 XML 标准的内容。
+
+
+## XLink 和 XPointer 的浏览器支持
+
+浏览器只在最小限度内支持 XLink 和 XPointer。
+
+在 Mozilla 0.98+、Netscape 6.02+ 以及 Internet Explorer 6.0 中，均具有对 XLink 某种程度的支持。更早版本的浏览器根本不支持 XLink。
+
+
+## 复习重点
+
+- 能说明 `XLink 和 XPointer 简介` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

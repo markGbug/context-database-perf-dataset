@@ -1,35 +1,133 @@
-# SQL：SQL LIKE 学习笔记
+# SQL：SQL LIKE 操作符
 
 - 来源：[SQL LIKE](https://www.runoob.com/sql/sql-like.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1633
 
-## 学习目标
+## 本章内容
 
-SQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQL LIKE` 建立学习路径，先理解它在 SQL 体系中的位置，再做可运行或可复述的验证。
+LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式。
 
-## 阅读抓手
+LIKE 操作符是 SQL 中用于在 WHERE 子句中进行模糊查询的关键字，它允许我们根据模式匹配来选择数据，通常与 % 和 _ 通配符一起使用。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### SQL LIKE 语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+SELECT column1, column2, ...
+FROM table_name
+WHERE column_name LIKE pattern;
+```
 
-## 完成标准
+参数说明：
 
-- 能用 3 到 5 句话解释 `SQL LIKE`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- column1, column2, ...：要选择的字段名称，可以为多个字段。如果不指定字段名称，则会选择所有字段。
+- table_name：要查询的表名称。
+- column：要搜索的字段名称。
+- pattern：搜索模式。
+
+通配符
+
+- %：匹配任意字符（包括零个字符）。
+- _：匹配单个字符。
+
+
+### 实例
+
+假设我们有一个名为 Products 的表，包含以下数据：
+
+使用 % 通配符找出所有以 "iPhone" 开头的产品：
+
+```text
+SELECT ProductName, Category
+FROM Products
+WHERE ProductName LIKE 'iPhone%';
+```
+
+返回以下数据：
+
+使用 _ 通配符找出所有产品名称第二个字符为 "e" 的产品：
+
+```text
+SELECT ProductName, Category
+FROM Products
+WHERE ProductName LIKE '_e%';
+```
+
+返回以下数据：
+
+结合 % 和 _ 通配符找出所有产品名称包含 "Zoom" 的产品：
+
+```text
+SELECT ProductName, Category
+FROM Products
+WHERE ProductName LIKE '%Zoom%';
+```
+
+返回以下数据：
+
+
+## 演示数据库
+
+在本教程中，我们将使用 RUNOOB 样本数据库。
+
+下面是选自 "Websites" 表的数据：
+
+```text
+mysql> SELECT * FROM Websites;
++----+---------------+---------------------------+-------+---------+
+| id | name          | url                       | alexa | country |
++----+---------------+---------------------------+-------+---------+
+|  1 | Google        | https://www.google.cm/    |     1 | USA     |
+|  2 | 淘宝          | https://www.taobao.com/   |    13 | CN      |
+|  3 | 菜鸟教程       | http://www.runoob.com/    |  5000 | USA     |
+|  4 | 微博           | http://weibo.com/         |    20 | CN      |
+|  5 | Facebook      | https://www.facebook.com/ |     3 | USA     |
+|  7 | stackoverflow | http://stackoverflow.com/ |     0 | IND     |
++----+---------------+---------------------------+-------+---------+
+```
+
+
+## SQL LIKE 操作符实例
+
+下面的 SQL 语句选取 name 以字母 "G" 开始的所有客户：
+
+
+## 实例
+
+执行输出结果：
+
+提示："%" 符号用于在模式的前后定义通配符（默认字母）。您将在下一章中学习更多有关通配符的知识。
+
+下面的 SQL 语句选取 name 以字母 "k" 结尾的所有客户：
+
+
+## 实例
+
+执行输出结果：
+
+下面的 SQL 语句选取 name 包含模式 "oo" 的所有客户：
+
+
+## 实例
+
+执行输出结果：
+
+通过使用 NOT 关键字，您可以选取不匹配模式的记录。
+
+下面的 SQL 语句选取 name 不包含模式 "oo" 的所有客户：
+
+
+## 实例
+
+执行输出结果：
+
+
+## 复习重点
+
+- 能说明 `SQL LIKE` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

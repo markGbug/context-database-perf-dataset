@@ -1,35 +1,133 @@
-# Python2.x：Python for 循环语句 学习笔记
+# Python2.x：Python for 循环语句
 
 - 来源：[Python for 循环语句](https://www.runoob.com/python/python-for-loop.html)
 - 分类：Python / 数据科学
 - 技术：Python2.x
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4181
 
-## 学习目标
+## 本章内容
 
-Python2.x 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python for 循环语句` 建立学习路径，先理解它在 Python2.x 体系中的位置，再做可运行或可复述的验证。
+Python for循环可以遍历任何序列的项目，如一个列表或者一个字符串。
 
-## 阅读抓手
+语法：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+for循环的语法格式如下：
 
-## 笔记模板
+```javascript
+for iterating_var in sequence:
+   statements(s)
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+流程图：
 
-## 完成标准
+实例：
 
-- 能用 3 到 5 句话解释 `Python for 循环语句`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+```java
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+for letter in 'Python':     # 第一个实例
+   print("当前字母: %s" % letter)
+
+fruits = ['banana', 'apple',  'mango']
+for fruit in fruits:        # 第二个实例
+   print ('当前水果: %s'% fruit)
+
+print ("Good bye!")
+```
+
+以上实例输出结果:
+
+```text
+当前字母: P
+当前字母: y
+当前字母: t
+当前字母: h
+当前字母: o
+当前字母: n
+当前水果: banana
+当前水果: apple
+当前水果: mango
+Good bye!
+```
+
+
+## 通过序列索引迭代
+
+另外一种执行循环的遍历方式是通过索引，如下实例：
+
+
+## 实例
+
+```java
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+fruits = ['banana', 'apple',  'mango']
+for index in range(len(fruits)):
+   print ('当前水果 : %s' % fruits[index])
+
+print ("Good bye!")
+```
+
+以上实例输出结果：
+
+```text
+当前水果 : banana
+当前水果 : apple
+当前水果 : mango
+Good bye!
+```
+
+以上实例我们使用了内置函数 len() 和 range(),函数 len() 返回列表的长度，即元素的个数。 range返回一个序列的数。
+
+
+## 循环使用 else 语句
+
+在 python 中，for … else 表示这样的意思，for 中的语句和普通的没有区别，else 中的语句会在循环正常执行完（即 for 不是通过 break 跳出而中断的）的情况下执行，while … else 也是一样。
+
+
+## 实例
+
+```java
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+for num in range(10,20):  # 迭代 10 到 20 (不包含) 之间的数字
+   for i in range(2,num): # 根据因子迭代
+      if num%i == 0:      # 确定第一个因子
+         j=num/i          # 计算第二个因子
+         print ('%d 等于 %d * %d' % (num,i,j))
+         break            # 跳出当前循环
+   else:                  # 循环的 else 部分
+      print ('%d 是一个质数' % num)
+```
+
+以上实例输出结果：
+
+```text
+10 等于 2 * 5
+11 是一个质数
+12 等于 2 * 6
+13 是一个质数
+14 等于 2 * 7
+15 等于 3 * 5
+16 等于 2 * 8
+17 是一个质数
+18 等于 2 * 9
+19 是一个质数
+```
+
+更多实例：python 打印菱形、三角形、矩形
+
+
+## 复习重点
+
+- 能说明 `Python for 循环语句` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

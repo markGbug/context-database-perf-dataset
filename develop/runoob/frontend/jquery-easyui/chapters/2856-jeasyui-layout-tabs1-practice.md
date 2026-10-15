@@ -1,34 +1,44 @@
-# jQuery EasyUI：jEasyUI 创建标签页 练习笔记
+# jQuery EasyUI：jQuery EasyUI 布局 - 创建标签页（Tabs）
 
 - 来源：[jEasyUI 创建标签页](https://www.runoob.com/jeasyui/jeasyui-layout-tabs1.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2856
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 创建标签页` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本教程将向您演示如何使用 easyui 创建一个 Tabs 组件。 Tabs 有多个可以动态地添加或移除的面板（panel）。 您可以使用 Tabs 来在相同的页面上显示不同的实体。
 
-## 练习步骤
+Tabs 一次仅仅显示一个面板（panel），每个面板（panel）都有标题、图标和关闭按钮。 当 Tabs 被选中时，将显示对应的面板（panel）的内容。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+从 HTML 标记创建 Tabs，包含一个 DIV 容器和一些 DIV 面板（panel）。
 
-## 验收清单
+```html
+    <div class="easyui-tabs" style="width:400px;height:100px;">
+        <div title="First Tab" style="padding:10px;">
+            First Tab
+        </div>
+        <div title="Second Tab" closable="true" style="padding:10px;">
+            Second Tab
+        </div>
+        <div title="Third Tab" iconCls="icon-reload" closable="true" style="padding:10px;">
+            Third Tab
+        </div>
+    </div>
+```
 
-- 我能独立说出 `jEasyUI 创建标签页` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+我们创建一个带有三个面板（panel）的 Tabs 组件，第二个和第三个面板（panel）可以通过点击关闭按钮进行关闭。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 下载 jQuery EasyUI 实例
+
+jeasyui-layout-tabs1.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 创建标签页` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

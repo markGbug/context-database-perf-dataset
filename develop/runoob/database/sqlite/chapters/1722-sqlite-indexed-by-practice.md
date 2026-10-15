@@ -1,34 +1,53 @@
-# SQLite：SQLite Indexed By 练习笔记
+# SQLite：SQLite Indexed By
 
 - 来源：[SQLite Indexed By](https://www.runoob.com/sqlite/sqlite-indexed-by.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1722
 
-## 练习目标
+## 本章内容
 
-把 `SQLite Indexed By` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+"INDEXED BY index-name" 子句规定必须需要命名的索引来查找前面表中值。
 
-## 练习步骤
+如果索引名 index-name 不存在或不能用于查询，然后 SQLite 语句的准备失败。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+"NOT INDEXED" 子句规定当访问前面的表（包括由 UNIQUE 和 PRIMARY KEY 约束创建的隐式索引）时，没有使用索引。
 
-## 验收清单
+然而，即使指定了 "NOT INDEXED"，INTEGER PRIMARY KEY 仍然可以被用于查找条目。
 
-- 我能独立说出 `SQLite Indexed By` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 语法
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+下面是 INDEXED BY 子句的语法，它可以与 DELETE、UPDATE 或 SELECT 语句一起使用：
+
+```text
+SELECT|DELETE|UPDATE column1, column2...
+INDEXED BY (index_name)
+table_name
+WHERE (CONDITION);
+```
+
+
+## 实例
+
+假设有表 COMPANY，我们将创建一个索引，并用它进行 INDEXED BY 操作。
+
+```text
+sqlite> CREATE INDEX salary_index ON COMPANY(salary);
+sqlite>
+```
+
+现在使用 INDEXED BY 子句从表 COMPANY 中选择数据，如下所示：
+
+```text
+sqlite> SELECT * FROM COMPANY INDEXED BY salary_index WHERE salary > 5000;
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite Indexed By` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

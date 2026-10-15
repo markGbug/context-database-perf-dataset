@@ -1,34 +1,142 @@
-# Bootstrap4：Bootstrap4 分页 练习笔记
+# Bootstrap4：Bootstrap4 分页
 
 - 来源：[Bootstrap4 分页](https://www.runoob.com/bootstrap4/bootstrap4-pagination.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2318
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap4 分页` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+网页开发过程，如果碰到内容过多，一般都会做分页处理。
 
-## 练习步骤
+Bootstrap 4 可以很简单的实现分页效果。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+要创建一个基本的分页可以在 <ul> 元素上添加 .pagination 类。然后在 <li> 元素上添加 .page-item 类，<li> 元素的 <a> 标签上添加 .page-link 类:
 
-## 验收清单
 
-- 我能独立说出 `Bootstrap4 分页` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
+```html
+<ul class="pagination">
+  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">1</a></li>
+  <li class="page-item"><a class="page-link" href="#">2</a></li>
+  <li class="page-item"><a class="page-link" href="#">3</a></li>
+  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 当前页页码状态
+
+当前页可以使用 .active 类来高亮显示：
+
+
+## 实例
+
+```html
+<ul class="pagination">
+  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">1</a></li>
+  <li class="page-item active"><a class="page-link" href="#">2</a></li>
+  <li class="page-item"><a class="page-link" href="#">3</a></li>
+  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+```
+
+
+## 不可点击的分页链接
+
+.disabled 类可以设置分页链接不可点击:
+
+
+## 实例
+
+```html
+<ul class="pagination">
+  <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">1</a></li>
+  <li class="page-item"><a class="page-link" href="#">2</a></li>
+  <li class="page-item"><a class="page-link" href="#">3</a></li>
+  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+```
+
+
+## 分页显示大小
+
+可以将分页条目设置为不同的大小。
+
+.pagination-lg 类设置大字体的分页条目，.pagination-sm 类设置小字体的分页条目:
+
+
+## 实例
+
+```html
+<ul class="pagination pagination-lg">
+  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">1</a></li>
+  <li class="page-item"><a class="page-link" href="#">2</a></li>
+  <li class="page-item"><a class="page-link" href="#">3</a></li>
+  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+
+<ul class="pagination pagination-sm">
+  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+  <li class="page-item"><a class="page-link" href="#">1</a></li>
+  <li class="page-item"><a class="page-link" href="#">2</a></li>
+  <li class="page-item"><a class="page-link" href="#">3</a></li>
+  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+```
+
+
+## 面包屑导航
+
+.breadcrumb 和 .breadcrumb-item 类用于设置面包屑导航：
+
+
+## 实例
+
+```html
+<ul class="breadcrumb">
+  <li class="breadcrumb-item"><a href="#">Photos</a></li>
+  <li class="breadcrumb-item"><a href="#">Summer 2017</a></li>
+  <li class="breadcrumb-item"><a href="#">Italy</a></li>
+  <li class="breadcrumb-item active">Rome</li>
+</ul>
+```
+
+
+## 分页的对齐方式
+
+可以使用工具类来设置分页的对齐方式：
+
+
+## 实例
+
+```html
+<!-- 默认 (左对齐) -->
+<ul class="pagination" style="margin:20px 0">
+  <li class="page-item">...</li>
+</ul>
+
+<!-- 居中 -->
+<ul class="pagination justify-content-center" style="margin:20px 0">
+  <li class="page-item">...</li>
+</ul>
+
+<!-- 右对齐 -->
+<ul class="pagination justify-content-end" style="margin:20px 0">
+  <li class="page-item">...</li>
+</ul>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap4 分页` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

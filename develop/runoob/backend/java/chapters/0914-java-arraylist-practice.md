@@ -1,34 +1,214 @@
-# Java：Java ArrayList 练习笔记
+# Java：Java ArrayList
 
 - 来源：[Java ArrayList](https://www.runoob.com/java/java-arraylist.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0914
 
-## 练习目标
+## 本章内容
 
-把 `Java ArrayList` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Java 集合框架
 
-## 练习步骤
+ArrayList 类是一个可以动态修改的数组，与普通数组的区别就是它是没有固定大小的限制，我们可以添加或删除元素。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+ArrayList 继承了 AbstractList ，并实现了 List 接口。
 
-## 验收清单
+ArrayList 类位于 java.util 包中，使用前需要引入它，语法格式如下：
 
-- 我能独立说出 `Java ArrayList` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+import java.util.ArrayList; // 引入 ArrayList 类
 
-## 复盘问题
+ArrayList<E> objectName =new ArrayList<>();　 // 初始化
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- E: 泛型数据类型，用于设置 objectName 的数据类型，只能为引用数据类型。
+- objectName: 对象名。
+
+ArrayList 是一个数组队列，提供了相关的添加、删除、修改、遍历等功能。
+
+
+### 添加元素
+
+ArrayList 类提供了很多有用的方法，添加元素到 ArrayList 可以使用 add() 方法:
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+[Google, Runoob, Taobao, Weibo]
+```
+
+
+### 访问元素
+
+访问 ArrayList 中的元素可以使用 get() 方法：
+
+
+## 实例
+
+注意：数组的索引值从 0 开始。
+
+以上实例，执行输出结果为：
+
+```text
+Runoob
+```
+
+
+### 修改元素
+
+如果要修改 ArrayList 中的元素可以使用 set() 方法， set(int index, E element) 方法的第一个参数是索引（index），表示要替换的元素的位置，第二个参数是新元素（element），表示要设置的新值：
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+[Google, Runoob, Wiki, Weibo]
+```
+
+
+### 删除元素
+
+如果要删除 ArrayList 中的元素可以使用 remove() 方法：
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+[Google, Runoob, Taobao]
+```
+
+
+### 计算大小
+
+如果要计算 ArrayList 中的元素数量可以使用 size() 方法：
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+4
+```
+
+
+### 迭代数组列表
+
+我们可以使用 for 来迭代数组列表中的元素：
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+Google
+Runoob
+Taobao
+Weibo
+```
+
+也可以使用 for-each 来迭代元素：
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+Google
+Runoob
+Taobao
+Weibo
+```
+
+
+### 其他的引用类型
+
+ArrayList 中的元素实际上是对象，在以上实例中，数组列表元素都是字符串 String 类型。
+
+如果我们要存储其他类型，而 <E> 只能为引用数据类型，这时我们就需要使用到基本类型的包装类。
+
+基本类型对应的包装类表如下：
+
+此外，BigInteger、BigDecimal 用于高精度的运算，BigInteger 支持任意精度的整数，也是引用类型，但它们没有相对应的基本类型。
+
+```html
+ArrayList<Integer> li=new ArrayList<>();     // 存放整数元素
+ArrayList<Character> li=new ArrayList<>();   // 存放字符元素
+```
+
+以下实例使用 ArrayList 存储数字(使用 Integer 类型):
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+10
+15
+20
+25
+```
+
+
+### ArrayList 排序
+
+Collections 类也是一个非常有用的类，位于 java.util 包中，提供的 sort() 方法可以对字符或数字列表进行排序。
+
+以下实例对字母进行排序：
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+Google
+Runoob
+Taobao
+Weibo
+Wiki
+```
+
+以下实例对数字进行排序：
+
+
+## 实例
+
+以上实例，执行输出结果为：
+
+```text
+8
+12
+15
+20
+33
+34
+```
+
+
+## Java ArrayList 方法
+
+Java ArrayList 常用方法列表如下：
+
+更多 API 方法可以查看：https://www.runoob.com/manual/jdk11api/java.base/java/util/ArrayList.html
+
+Java 集合框架
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java ArrayList` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,115 @@
-# Playwright：Playwright CI/CD 集成 练习笔记
+# Playwright：Playwright CI/CD 集成
 
 - 来源：[Playwright CI/CD 集成](https://www.runoob.com/playwright/playwright-ci-cd.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0541
 
-## 练习目标
+## 本章内容
 
-把 `Playwright CI/CD 集成` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章介绍如何将 Playwright 测试集成到 CI/CD 流水线中，包括 GitHub Actions 和其他常见 CI 平台。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## GitHub Actions 集成
 
-## 验收清单
+当你在 npm init playwright@latest 时选择添加 GitHub Actions，Playwright 会自动生成工作流配置。
 
-- 我能独立说出 `Playwright CI/CD 集成` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 自动生成的工作流
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+
+## 查看 CI 测试结果
+
+
+### 查看测试日志
+
+在 GitHub 仓库的 Actions 页面中，点击每次运行可以查看详细的测试日志。
+
+每个 Worker 的输出都会独立显示，方便定位特定失败的测试。
+
+
+### 查看 HTML 报告
+
+如果配置了 reporter: 'html'，可以从 Artifacts 下载 playwright-report/ 来本地查看完整的 HTML 报告。
+
+
+### 发布报告到 Web
+
+
+## 实例
+
+
+## 其他 CI 平台
+
+
+### Jenkins
+
+```text
+pipeline {
+  agent any
+  stages {
+    stage('Install') {
+      steps {
+        sh 'npm ci'
+        sh 'npx playwright install --with-deps'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'npx playwright test'
+      }
+    }
+  }
+  post {
+    always {
+      archiveArtifacts artifacts: 'playwright-report/**'
+      junit 'test-results/junit.xml'
+    }
+  }
+}
+```
+
+
+### GitLab CI
+
+
+## 实例
+
+
+## Docker 运行 Playwright
+
+微软提供了预装所有系统依赖的官方 Docker 镜像，开箱即用。
+
+
+### 使用官方镜像
+
+```text
+# 拉取镜像
+docker pull mcr.microsoft.com/playwright:v1.52.0-jammy
+
+# 在容器中运行测试
+docker run --rm -v $(pwd):/work -w /work \
+  mcr.microsoft.com/playwright:v1.52.0-jammy \
+  npx playwright test
+```
+
+
+### Dockerfile 示例
+
+
+## 实例
+
+
+## CI 环境最佳实践
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Playwright CI/CD 集成` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

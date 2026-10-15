@@ -1,34 +1,183 @@
-# C++：C++ 模板 练习笔记
+# C++：C++ 模板
 
 - 来源：[C++ 模板](https://www.runoob.com/cplusplus/cpp-templates.html)
 - 分类：编程语言
 - 技术：C++
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3573
 
-## 练习目标
+## 本章内容
 
-把 `C++ 模板` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+模板是泛型编程的基础，泛型编程即以一种独立于任何特定类型的方式编写代码。
 
-## 练习步骤
+模板是创建泛型类或函数的蓝图或公式。库容器，比如迭代器和算法，都是泛型编程的例子，它们都使用了模板的概念。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+每个容器都有一个单一的定义，比如 向量，我们可以定义许多不同类型的向量，比如 vector <int> 或 vector <string>。
 
-## 验收清单
+您可以使用模板来定义函数和类，接下来让我们一起来看看如何使用。
 
-- 我能独立说出 `C++ 模板` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 函数模板
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+模板函数定义的一般形式如下所示：
+
+```html
+template <typename type> ret-type func-name(parameter list)
+{
+   // 函数的主体
+}
+```
+
+在这里，type 是函数所使用的数据类型的占位符名称。这个名称可以在函数定义中使用。
+
+下面是函数模板的实例，返回两个数中的最大值：
+
+
+## 实例
+
+```java
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+template <typename T>
+inline T const& Max (T const& a, T const& b)
+{
+    return a < b ? b:a;
+}
+int main ()
+{
+
+    int i = 39;
+    int j = 20;
+    cout << "Max(i, j): " << Max(i, j) << endl;
+
+    double f1 = 13.5;
+    double f2 = 20.7;
+    cout << "Max(f1, f2): " << Max(f1, f2) << endl;
+
+    string s1 = "Hello";
+    string s2 = "World";
+    cout << "Max(s1, s2): " << Max(s1, s2) << endl;
+
+    return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+Max(i, j): 39
+Max(f1, f2): 20.7
+Max(s1, s2): World
+```
+
+
+## 类模板
+
+正如我们定义函数模板一样，我们也可以定义类模板。泛型类声明的一般形式如下所示：
+
+```html
+template <class type> class class-name {
+.
+.
+.
+}
+```
+
+在这里，type 是占位符类型名称，可以在类被实例化的时候进行指定。您可以使用一个逗号分隔的列表来定义多个泛型数据类型。
+
+下面的实例定义了类 Stack<>，并实现了泛型方法来对元素进行入栈出栈操作：
+
+
+## 实例
+
+```java
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <string>
+#include <stdexcept>
+
+using namespace std;
+
+template <class T>
+class Stack {
+  private:
+    vector<T> elems;     // 元素
+
+  public:
+    void push(T const&);  // 入栈
+    void pop();               // 出栈
+    T top() const;            // 返回栈顶元素
+    bool empty() const{       // 如果为空则返回真。
+        return elems.empty();
+    }
+};
+
+template <class T>
+void Stack<T>::push (T const& elem)
+{
+    // 追加传入元素的副本
+    elems.push_back(elem);
+}
+
+template <class T>
+void Stack<T>::pop ()
+{
+    if (elems.empty()) {
+        throw out_of_range("Stack<>::pop(): empty stack");
+    }
+    // 删除最后一个元素
+    elems.pop_back();
+}
+
+template <class T>
+T Stack<T>::top () const
+{
+    if (elems.empty()) {
+        throw out_of_range("Stack<>::top(): empty stack");
+    }
+    // 返回最后一个元素的副本
+    return elems.back();
+}
+
+int main()
+{
+    try {
+        Stack<int>         intStack;  // int 类型的栈
+        Stack<string> stringStack;    // string 类型的栈
+
+        // 操作 int 类型的栈
+        intStack.push(7);
+        cout << intStack.top() <<endl;
+
+        // 操作 string 类型的栈
+        stringStack.push("hello");
+        cout << stringStack.top() << std::endl;
+        stringStack.pop();
+        stringStack.pop();
+    }
+    catch (exception const& ex) {
+        cerr << "Exception: " << ex.what() <<endl;
+        return -1;
+    }
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+7
+hello
+Exception: Stack<>::pop(): empty stack
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `C++ 模板` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

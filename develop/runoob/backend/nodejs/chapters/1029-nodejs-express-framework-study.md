@@ -1,35 +1,101 @@
-# Node.js：Node.js Express 框架 学习笔记
+# Node.js：Node.js Express 框架
 
 - 来源：[Node.js Express 框架](https://www.runoob.com/nodejs/nodejs-express-framework.html)
 - 分类：后端开发
 - 技术：Node.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1029
 
-## 学习目标
+## 本章内容
 
-Node.js 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Node.js Express 框架` 建立学习路径，先理解它在 Node.js 体系中的位置，再做可运行或可复述的验证。
+## Express 简介
 
-## 阅读抓手
+Express 是一个简洁而灵活的 node.js Web应用框架, 提供了一系列强大特性帮助你创建各种 Web 应用，和丰富的 HTTP 工具。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+使用 Express 可以快速地搭建一个完整功能的网站。
 
-## 笔记模板
+Express 框架核心特性：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 可以设置中间件来响应 HTTP 请求。
+- 定义了路由表用于执行不同的 HTTP 请求动作。
+- 可以通过向模板传递参数来动态渲染 HTML 页面。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Node.js Express 框架`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 安装 Express
+
+安装 Express 并将其保存到依赖列表中：
+
+```text
+$ cnpm install express --save
+```
+
+以上命令会将 Express 框架安装在当前目录的 node_modules 目录中， node_modules 目录下会自动创建 express 目录。以下几个重要的模块是需要与 express 框架一起安装的：
+
+- body-parser - node.js 中间件，用于处理 JSON, Raw, Text 和 URL 编码的数据。
+- cookie-parser - 这就是一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。
+- multer - node.js 中间件，用于处理 enctype="multipart/form-data"（设置表单的MIME编码）的表单数据。
+
+```text
+$ cnpm install body-parser --save
+$ cnpm install cookie-parser --save
+$ cnpm install multer --save
+```
+
+安装完后，我们可以查看下 express 使用的版本号：
+
+```text
+$ cnpm list express
+/data/www/node
+└── express@4.15.2  -> /Users/tianqixin/www/node/node_modules/.4.15.2@express
+```
+
+
+## 第一个 Express 框架实例
+
+接下来我们使用 Express 框架来输出 "Hello World"。
+
+以下实例中我们引入了 express 模块，并在客户端发起请求后，响应 "Hello World" 字符串。
+
+创建 express_demo.js 文件，代码如下所示：
+
+
+## express_demo.js 文件代码：
+
+```javascript
+//express_demo.js 文件
+var express = require('express');
+var app = express();
+
+app.get('/', function (req, res) {
+   res.send('Hello World');
+})
+
+var server = app.listen(8081, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+
+  console.log("应用实例，访问地址为 http://%s:%s", host, port)
+
+})
+```
+
+执行以上代码：
+
+```text
+$ node express_demo.js
+应用实例，访问地址为 http://0.0.0.0:8081
+```
+
+在浏览器中访问 http://127.0.0.1:8081，结果如下图所示：
+
+
+## 请求和响应
+
+
+## 复习重点
+
+- 能说明 `Node.js Express 框架` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

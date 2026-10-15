@@ -1,34 +1,141 @@
-# Ruby：Ruby 类案例 练习笔记
+# Ruby：Ruby 类案例
 
 - 来源：[Ruby 类案例](https://www.runoob.com/ruby/ruby-class-case-study.html)
 - 分类：编程语言
 - 技术：Ruby
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3720
 
-## 练习目标
+## 本章内容
 
-把 `Ruby 类案例` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+下面将创建一个名为 Customer 的 Ruby 类，声明两个方法：
 
-## 练习步骤
+- display_details：该方法用于显示客户的详细信息。
+- total_no_of_customers：该方法用于显示在系统中创建的客户总数量。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 实例
 
-- 我能独立说出 `Ruby 类案例` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+#!/usr/bin/ruby
 
-## 复盘问题
+class Customer
+   @@no_of_customers=0
+   def initialize(id, name, addr)
+      @cust_id=id
+      @cust_name=name
+      @cust_addr=addr
+   end
+   def display_details()
+      puts "Customer id #@cust_id"
+      puts "Customer name #@cust_name"
+      puts "Customer address #@cust_addr"
+    end
+    def total_no_of_customers()
+       @@no_of_customers += 1
+       puts "Total number of customers: #@@no_of_customers"
+    end
+end
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+display_details 方法包含了三个 puts 语句，显示了客户 ID、客户名字和客户地址。其中，puts 语句：
+
+```text
+puts "Customer id #@cust_id"
+```
+
+将在一个单行上显示文本 Customer id 和变量 @cust_id 的值。
+
+当您想要在一个单行上显示实例变量的文本和值时，您需要在 puts 语句的变量名前面放置符号（#）。文本和带有符号（#）的实例变量应使用双引号标记。
+
+第二个方法，total_no_of_customers，包含了类变量 @@no_of_customers。表达式 @@no_of_ customers+=1 在每次调用方法 total_no_of_customers 时，把变量 no_of_customers 加 1。通过这种方式，您将得到类变量中的客户总数量。
+
+现在创建两个客户，如下所示：
+
+```text
+cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
+cust2=Customer.new("2", "Poul", "New Empire road, Khandala")
+```
+
+在这里，我们创建了 Customer 类的两个对象，cust1 和 cust2，并向 new 方法传递必要的参数。当 initialize 方法被调用时，对象的必要属性被初始化。
+
+一旦对象被创建，您需要使用两个对象来调用类的方法。如果您想要调用方法或任何数据成员，您可以编写代码，如下所示：
+
+```text
+cust1.display_details()
+cust1.total_no_of_customers()
+```
+
+对象名称后总是跟着一个点号，接着是方法名称或数据成员。我们已经看到如何使用 cust1 对象调用两个方法。使用 cust2 对象，您也可以调用两个方法，如下所示：
+
+```text
+cust2.display_details()
+cust2.total_no_of_customers()
+```
+
+
+## 保存并执行代码
+
+现在，把所有的源代码放在 main.rb 文件中，如下所示：
+
+
+## 实例
+
+```text
+#!/usr/bin/ruby
+
+class Customer
+   @@no_of_customers=0
+   def initialize(id, name, addr)
+      @cust_id=id
+      @cust_name=name
+      @cust_addr=addr
+   end
+   def display_details()
+      puts "Customer id #@cust_id"
+      puts "Customer name #@cust_name"
+      puts "Customer address #@cust_addr"
+   end
+   def total_no_of_customers()
+      @@no_of_customers += 1
+      puts "Total number of customers: #@@no_of_customers"
+   end
+end
+
+# 创建对象
+cust1=Customer.new("1", "John", "Wisdom Apartments, Ludhiya")
+cust2=Customer.new("2", "Poul", "New Empire road, Khandala")
+
+# 调用方法
+cust1.display_details()
+cust1.total_no_of_customers()
+cust2.display_details()
+cust2.total_no_of_customers()
+```
+
+接着，运行程序，如下所示：
+
+```text
+$ ruby main.rb
+```
+
+这将产生以下结果：
+
+```text
+Customer id 1
+Customer name John
+Customer address Wisdom Apartments, Ludhiya
+Total number of customers: 1
+Customer id 2
+Customer name Poul
+Customer address New Empire road, Khandala
+Total number of customers: 2
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Ruby 类案例` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

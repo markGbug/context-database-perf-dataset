@@ -1,35 +1,132 @@
-# PowerShell：PowerShell 安装 学习笔记
+# PowerShell：PowerShell 安装
 
 - 来源：[PowerShell 安装](https://www.runoob.com/powershell/powershell-install.html)
 - 分类：.NET
 - 技术：PowerShell
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2050
 
-## 学习目标
+## 本章内容
 
-PowerShell 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `PowerShell 安装` 建立学习路径，先理解它在 PowerShell 体系中的位置，再做可运行或可复述的验证。
+PowerShell 自从 6.0 起实现了完全开源和跨平台（PowerShell Core / PowerShell 7+），可运行于 Windows、Linux 和 macOS。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 一、Windows 上安装 PowerShell 7+
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### 方法一：使用 MSI 安装包（推荐）
 
-## 完成标准
+- 打开 PowerShell 官方 GitHub 发布页： 👉 https://github.com/PowerShell/PowerShell/releases
+- 找到最新版本，下载适用于 Windows 的 .msi 安装包
+- 双击安装，默认路径安装即可
+- 安装完成后，搜索 "PowerShell 7" 打开即可（不会覆盖 Windows PowerShell）
 
-- 能用 3 到 5 句话解释 `PowerShell 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 方法二：使用命令行（Winget）
+
+适用于 Windows 10/11 且安装了 Windows 包管理器：
+
+```text
+winget install --id Microsoft.Powershell --source winget
+```
+
+可选参数：--silent 表示静默安装，--version 7.4.1 可指定版本
+
+
+## 二、Linux 上安装 PowerShell
+
+
+### Ubuntu / Debian
+
+```text
+# 安装依赖
+sudo apt update
+sudo apt install -y wget apt-transport-https software-properties-common
+
+# 导入微软 GPG 密钥
+wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+
+# 安装 PowerShell
+sudo apt update
+sudo apt install -y powershell
+```
+
+启动 PowerShell：
+
+```text
+pwsh
+```
+
+
+### CentOS / RHEL / Fedora
+
+```text
+# 添加 Microsoft YUM 源
+sudo dnf install -y https://packages.microsoft.com/config/rhel/8/packages-microsoft-prod.rpm
+
+# 安装 PowerShell
+sudo dnf install -y powershell
+```
+
+或 CentOS 7 使用 yum：
+
+```text
+sudo yum install -y powershell
+```
+
+
+### Arch Linux / Manjaro
+
+```text
+sudo pacman -S powershell
+```
+
+如果找不到，可使用 AUR 包管理器（如 yay）
+
+
+## 三、macOS 上安装 PowerShell
+
+
+### 方法一：使用 Homebrew（推荐）
+
+```text
+brew install --cask powershell
+```
+
+启动 PowerShell：
+
+```text
+pwsh
+```
+
+
+### 方法二：手动下载 PKG 安装包
+
+- 前往 GitHub 发布页 👉 https://github.com/PowerShell/PowerShell/releases
+- 下载 .pkg 安装文件（如 powershell-7.4.1-osx-x64.pkg）
+- 双击安装并根据引导完成
+
+
+## 四、安装验证与卸载
+
+
+### 验证是否安装成功
+
+```text
+pwsh --version
+```
+
+
+### 卸载 PowerShell
+
+
+## 不同平台启动命令
+
+
+## 复习重点
+
+- 能说明 `PowerShell 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

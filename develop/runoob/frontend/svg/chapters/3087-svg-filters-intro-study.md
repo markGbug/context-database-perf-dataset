@@ -1,35 +1,87 @@
-# SVG：SVG 滤镜 学习笔记
+# SVG：SVG 滤镜
 
 - 来源：[SVG 滤镜](https://www.runoob.com/svg/svg-filters-intro.html)
 - 分类：前端开发
 - 技术：SVG
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3087
 
-## 学习目标
+## 本章内容
 
-SVG 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `SVG 滤镜` 建立学习路径，先理解它在 SVG 体系中的位置，再做可运行或可复述的验证。
+SVG 滤镜是一种强大的图形效果技术，可以用来实现各种视觉效果，例如模糊、阴影、光照等。
 
-## 阅读抓手
+滤镜可以应用于 SVG 图形元素，例如矩形、圆形、路径等，以及 SVG 文本元素，使它们呈现出不同的外观和效果。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 基本语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+SVG 滤镜通常使用 <filter> 元素定义，并通过 filter 属性将其应用于目标元素。
 
-## 完成标准
+```html
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义滤镜 -->
+  <filter id="filter_id">
+    <!-- 滤镜效果 -->
+  </filter>
 
-- 能用 3 到 5 句话解释 `SVG 滤镜`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+  <!-- 应用滤镜的目标元素 -->
+  <rect x="50" y="50" width="100" height="80" filter="url(#filter_id)" />
+</svg>
+```
+
+
+### 滤镜效果
+
+SVG 滤镜可以实现多种效果，常见的滤镜效果包括：
+
+- 模糊（Blur）：使图像产生模糊效果，通过 <feGaussianBlur> 元素实现。
+- 阴影（Shadow）：为图像添加阴影效果，通过 <feDropShadow> 元素实现。
+- 亮度、对比度调整（Brightness, Contrast）：调整图像的亮度和对比度，通过 <feComponentTransfer> 元素实现。
+- 颜色矩阵（Color Matrix）：通过颜色矩阵操作修改图像的颜色，通过 <feColorMatrix> 元素实现。
+- 混合模式（Blend Mode）：将两个图像混合在一起，通过 <feBlend> 元素实现。
+
+以下代码定义了一个模糊滤镜，然后将其应用于一个红色填充的矩形，使矩形呈现出模糊的效果。
+
+
+## 实例
+
+SVG 可用的滤镜是：
+
+- feBlend - 与图像相结合的滤镜
+- feColorMatrix - 用于彩色滤光片转换
+- feComponentTransfer
+- feComposite
+- feConvolveMatrix
+- feDiffuseLighting
+- feDisplacementMap
+- feFlood
+- feGaussianBlur
+- feImage
+- feMerge
+- feMorphology
+- feOffset - 过滤阴影
+- feSpecularLighting
+- feTile
+- feTurbulence
+- feDistantLight - 用于照明过滤
+- fePointLight - 用于照明过滤
+- feSpotLight - 用于照明过滤
+
+除此之外，您可以在每个 SVG 元素上使用多个滤镜！
+
+
+### 注意事项
+
+- SVG 滤镜可以组合使用，可以在一个 <filter> 元素中定义多个滤镜效果。
+- 每种滤镜效果都有不同的参数可以调整，例如模糊滤镜的标准差参数、阴影滤镜的偏移量和模糊半径等。
+- SVG 滤镜可以与 CSS 样式表一起使用，也可以直接在SVG元素上使用 style 属性进行定义。
+
+通过使用 SVG 滤镜，你可以为 SVG 图形元素添加各种视觉效果，使其呈现出更加生动、多样化的外观。
+
+
+## 复习重点
+
+- 能说明 `SVG 滤镜` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

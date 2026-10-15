@@ -1,34 +1,61 @@
-# jQuery EasyUI：jEasyUI 自定义窗口工具栏 练习笔记
+# jQuery EasyUI：jQuery EasyUI 窗口 - 自定义窗口工具栏
 
 - 来源：[jEasyUI 自定义窗口工具栏](https://www.runoob.com/jeasyui/jeasyui-win-win2.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2886
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 自定义窗口工具栏` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+默认情况下，窗口（window）有四个工具：collapsible、minimizable、maximizable 和 closable。比如我们定义以下窗口（window）：
 
-## 练习步骤
+```html
+    <div id="win" class="easyui-window" title="My Window" style="padding:10px;width:200px;height:100px;">
+        window content
+    </div>
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+如需自定义工具，设置该工具为 true 或者 false。比如我们希望定义一个窗口（window），仅仅拥有一个可关闭的工具。您应该设置任何其他工具为 false。我们可以在标记中或者通过 jQuery 代码定义 tools 属性。现在我们使用 jQuery 代码来定义窗口（window）：
 
-## 验收清单
+```text
+    $('#win').window({
+        collapsible:false,
+        minimizable:false,
+        maximizable:false
+    });
+```
 
-- 我能独立说出 `jEasyUI 自定义窗口工具栏` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+如果我们希望添加自定义的工具到窗口（window），我们可以使用 tools 属性。作为实例演示，我们添加两个工具到窗口（window）：
 
-## 复盘问题
+```text
+    $('#win').window({
+        collapsible:false,
+        minimizable:false,
+        maximizable:false,
+        tools:[{
+            iconCls:'icon-add',
+            handler:function(){
+                alert('add');
+            }
+        },{
+            iconCls:'icon-remove',
+            handler:function(){
+                alert('remove');
+            }
+        }]
+    });
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-win-win2.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 自定义窗口工具栏` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

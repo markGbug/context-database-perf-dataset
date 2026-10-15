@@ -1,34 +1,139 @@
-# JSP：JSP 生命周期 练习笔记
+# JSP：JSP 生命周期
 
 - 来源：[JSP 生命周期](https://www.runoob.com/jsp/jsp-life-cycle.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0939
 
-## 练习目标
+## 本章内容
 
-把 `JSP 生命周期` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+理解JSP底层功能的关键就是去理解它们所遵守的生命周期。
 
-## 练习步骤
+JSP生命周期就是从创建到销毁的整个过程，类似于servlet生命周期，区别在于JSP生命周期还包括将JSP文件编译成servlet。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+以下是JSP生命周期中所走过的几个阶段：
 
-## 验收清单
+- 编译阶段：servlet容器编译servlet源文件，生成servlet类
+- 初始化阶段：加载与JSP对应的servlet类，创建其实例，并调用它的初始化方法
+- 执行阶段：调用与JSP对应的servlet实例的服务方法
+- 销毁阶段：调用与JSP对应的servlet实例的销毁方法，然后销毁servlet实例
 
-- 我能独立说出 `JSP 生命周期` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+很明显，JSP生命周期的四个主要阶段和servlet生命周期非常相似，下面给出图示：
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## JSP编译
+
+当浏览器请求JSP页面时，JSP引擎会首先去检查是否需要编译这个文件。如果这个文件没有被编译过，或者在上次编译后被更改过，则编译这个JSP文件。
+
+编译的过程包括三个步骤：
+
+- 解析JSP文件。
+- 将JSP文件转为servlet。
+- 编译servlet。
+
+
+## JSP初始化
+
+容器载入JSP文件后，它会在为请求提供任何服务前调用jspInit()方法。如果您需要执行自定义的JSP初始化任务，复写jspInit()方法就行了，就像下面这样：
+
+```text
+public void jspInit(){
+  // 初始化代码
+}
+```
+
+一般来讲程序只初始化一次，servlet也是如此。通常情况下您可以在jspInit()方法中初始化数据库连接、打开文件和创建查询表。
+
+
+## JSP执行
+
+这一阶段描述了JSP生命周期中一切与请求相关的交互行为，直到被销毁。
+
+当JSP网页完成初始化后，JSP引擎将会调用_jspService()方法。
+
+_jspService()方法需要一个HttpServletRequest对象和一个HttpServletResponse对象作为它的参数，就像下面这样：
+
+```text
+void _jspService(HttpServletRequest request,
+                 HttpServletResponse response)
+{
+   // 服务端处理代码
+}
+```
+
+_jspService()方法在每个request中被调用一次并且负责产生与之相对应的response，并且它还负责产生所有7个HTTP方法的回应，比如GET、POST、DELETE等等。
+
+
+## JSP清理
+
+JSP生命周期的销毁阶段描述了当一个JSP网页从容器中被移除时所发生的一切。
+
+jspDestroy()方法在JSP中等价于servlet中的销毁方法。当您需要执行任何清理工作时复写jspDestroy()方法，比如释放数据库连接或者关闭文件夹等等。
+
+jspDestroy()方法的格式如下：
+
+```text
+public void jspDestroy()
+{
+   // 清理代码
+}
+```
+
+
+### 实例
+
+JSP生命周期代码实例如下所示：
+
+```java
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<html>
+<head>
+<title>life.jsp</title>
+</head>
+<body>
+
+<%!
+  private int initVar=0;
+  private int serviceVar=0;
+  private int destroyVar=0;
+%>
+
+<%!
+  public void jspInit(){
+    initVar++;
+    System.out.println("jspInit(): JSP被初始化了"+initVar+"次");
+  }
+  public void jspDestroy(){
+    destroyVar++;
+    System.out.println("jspDestroy(): JSP被销毁了"+destroyVar+"次");
+  }
+%>
+
+<%
+  serviceVar++;
+  System.out.println("_jspService(): JSP共响应了"+serviceVar+"次请求");
+
+  String content1="初始化次数 : "+initVar;
+  String content2="响应客户请求次数 : "+serviceVar;
+  String content3="销毁次数 : "+destroyVar;
+%>
+<h1>菜鸟教程 JSP 测试实例</h1>
+<p><%=content1 %></p>
+<p><%=content2 %></p>
+<p><%=content3 %></p>
+
+</body>
+</html>
+```
+
+浏览器打开该页面，输出结果为：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JSP 生命周期` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

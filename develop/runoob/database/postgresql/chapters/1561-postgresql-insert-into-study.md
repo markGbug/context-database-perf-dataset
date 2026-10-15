@@ -1,35 +1,110 @@
-# PostgreSQL：PostgreSQL INSERT INTO 学习笔记
+# PostgreSQL：PostgreSQL INSERT INTO 语句
 
 - 来源：[PostgreSQL INSERT INTO](https://www.runoob.com/postgresql/postgresql-insert-into.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1561
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PostgreSQL INSERT INTO` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+PostgreSQL INSERT INTO 语句用于向表中插入新记录。
 
-## 阅读抓手
+我们可以插入一行也可以同时插入多行。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 语法
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+INSERT INTO 语句语法格式如下：
 
-## 完成标准
+```text
+INSERT INTO TABLE_NAME (column1, column2, column3,...columnN)
+VALUES (value1, value2, value3,...valueN);
+```
 
-- 能用 3 到 5 句话解释 `PostgreSQL INSERT INTO`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- column1, column2,...columnN 为表中字段名。
+- value1, value2, value3,...valueN 为字段对应的值。
+
+在使用 INSERT INTO 语句时，字段列必须和数据值数量相同，且顺序也要对应。
+
+如果我们向表中的所有字段插入值，则可以不需要指定字段，只需要指定插入的值即可：
+
+```text
+INSERT INTO TABLE_NAME VALUES (value1,value2,value3,...valueN);
+```
+
+下表列出执行插入后返回结果的说明：
+
+INSERT oid 1
+
+只插入一行并且目标表具有 OID的返回信息， 那么 oid 是分配给被插入行的 OID。
+
+INSERT 0 #
+
+插入多行返回的信息， # 为插入的行数。
+
+
+### 实例
+
+在 runoobdb 数据库中创建 COMPANY 表：
+
+```text
+runoobdb=# CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL,
+   JOIN_DATE      DATE
+);
+```
+
+在 COMPANY 表中插入以下数据：
+
+```text
+runoobdb=# INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (1, 'Paul', 32, 'California', 20000.00,'2001-07-13');
+INSERT 0 1
+```
+
+以下插入语句忽略 SALARY 字段：
+
+```text
+runoobdb=# INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,JOIN_DATE) VALUES (2, 'Allen', 25, 'Texas', '2007-12-13');
+INSERT 0 1
+```
+
+以下插入语句 JOIN_DATE 字段使用 DEFAULT 子句来设置默认值，而不是指定值：
+
+```text
+runoobdb=# INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (3, 'Teddy', 23, 'Norway', 20000.00, DEFAULT );
+INSERT 0 1
+```
+
+以下实例插入多行：
+
+```text
+runoobdb=# INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00, '2007-12-13' ), (5, 'David', 27, 'Texas', 85000.00, '2007-12-13');
+INSERT 0 2
+```
+
+使用 SELECT 语句查询表格数据：
+
+```text
+runoobdb=# SELECT * FROM company;
+
+ID        NAME        AGE        ADDRESS     SALARY   JOIN_DATE
+----      ----------  -----      ----------  -------      --------
+1         Paul        32         California  20000.0      2001-07-13
+2         Allen       25         Texas                    2007-12-13
+3         Teddy       23         Norway      20000.0
+4         Mark        25         Rich-Mond   65000.0      2007-12-13
+5         David       27         Texas       85000.0      2007-12-13
+```
+
+
+## 复习重点
+
+- 能说明 `PostgreSQL INSERT INTO` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

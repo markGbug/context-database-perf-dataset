@@ -1,34 +1,811 @@
-# jQuery：jQuery Validate 练习笔记
+# jQuery：jQuery Validate
 
 - 来源：[jQuery Validate](https://www.runoob.com/jquery/jquery-plugin-validate.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3001
 
-## 练习目标
+## 本章内容
 
-把 `jQuery Validate` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+jQuery Validate 插件为表单提供了强大的验证功能，让客户端表单验证变得更简单，同时提供了大量的定制选项，满足应用程序各种需求。该插件捆绑了一套有用的验证方法，包括 URL 和电子邮件验证，同时提供了一个用来编写用户自定义方法的 API。所有的捆绑方法默认使用英语作为错误信息，且已翻译成其他 37 种语言。
 
-## 练习步骤
+该插件是由 Jörn Zaefferer 编写和维护的，他是 jQuery 团队的一名成员，是 jQuery UI 团队的主要开发人员，是 QUnit 的维护人员。该插件在 2006 年 jQuery 早期的时候就已经开始出现，并一直更新至今。目前版本是 1.14.0。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+访问 jQuery Validate 官网，下载最新版的 jQuery Validate 插件。
 
-## 验收清单
 
-- 我能独立说出 `jQuery Validate` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 导入 js 库（使用字节跳动提供的CDN）
 
-## 复盘问题
+```html
+<script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/1.12.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/localization/messages_zh.min.js"></script>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 默认校验规则
+
+
+## 默认提示
+
+```text
+messages: {
+    required: "This field is required.",
+    remote: "Please fix this field.",
+    email: "Please enter a valid email address.",
+    url: "Please enter a valid URL.",
+    date: "Please enter a valid date.",
+    dateISO: "Please enter a valid date ( ISO ).",
+    number: "Please enter a valid number.",
+    digits: "Please enter only digits.",
+    creditcard: "Please enter a valid credit card number.",
+    equalTo: "Please enter the same value again.",
+    maxlength: $.validator.format( "Please enter no more than {0} characters." ),
+    minlength: $.validator.format( "Please enter at least {0} characters." ),
+    rangelength: $.validator.format( "Please enter a value between {0} and {1} characters long." ),
+    range: $.validator.format( "Please enter a value between {0} and {1}." ),
+    max: $.validator.format( "Please enter a value less than or equal to {0}." ),
+    min: $.validator.format( "Please enter a value greater than or equal to {0}." )
+}
+```
+
+jQuery Validate提供了中文信息提示包，位于下载包的 dist/localization/messages_zh.js，内容如下：
+
+```text
+(function( factory ) {
+    if ( typeof define === "function" && define.amd ) {
+        define( ["jquery", "../jquery.validate"], factory );
+    } else {
+        factory( jQuery );
+    }
+}(function( $ ) {
+
+/*
+ * Translated default messages for the jQuery validation plugin.
+ * Locale: ZH (Chinese, 中文 (Zhōngwén), 汉语, 漢語)
+ */
+$.extend($.validator.messages, {
+    required: "这是必填字段",
+    remote: "请修正此字段",
+    email: "请输入有效的电子邮件地址",
+    url: "请输入有效的网址",
+    date: "请输入有效的日期",
+    dateISO: "请输入有效的日期 (YYYY-MM-DD)",
+    number: "请输入有效的数字",
+    digits: "只能输入数字",
+    creditcard: "请输入有效的信用卡号码",
+    equalTo: "你的输入不相同",
+    extension: "请输入有效的后缀",
+    maxlength: $.validator.format("最多可以输入 {0} 个字符"),
+    minlength: $.validator.format("最少要输入 {0} 个字符"),
+    rangelength: $.validator.format("请输入长度在 {0} 到 {1} 之间的字符串"),
+    range: $.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),
+    max: $.validator.format("请输入不大于 {0} 的数值"),
+    min: $.validator.format("请输入不小于 {0} 的数值")
+});
+
+}));
+```
+
+你可以将该本地化信息文件 dist/localization/messages_zh.js 引入到页面：
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/localization/messages_zh.min.js"></script>
+```
+
+
+## 使用方式
+
+
+### 1、将校验规则写到控件中
+
+```html
+<script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/1.12.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/localization/messages_zh.min.js"></script>
+
+<script>
+$.validator.setDefaults({
+    submitHandler: function() {
+      alert("提交事件!");
+    }
+});
+$().ready(function() {
+    $("#commentForm").validate();
+});
+</script>
+
+<form class="cmxform" id="commentForm" method="get" action="">
+  <fieldset>
+    <legend>输入您的名字，邮箱，URL，备注。</legend>
+    <p>
+      <label for="cname">Name (必需, 最小两个字母)</label>
+      <input id="cname" name="name" minlength="2" type="text" required>
+    </p>
+    <p>
+      <label for="cemail">E-Mail (必需)</label>
+      <input id="cemail" type="email" name="email" required>
+    </p>
+    <p>
+      <label for="curl">URL (可选)</label>
+      <input id="curl" type="url" name="url">
+    </p>
+    <p>
+      <label for="ccomment">备注 (必需)</label>
+      <textarea id="ccomment" name="comment" required></textarea>
+    </p>
+    <p>
+      <input class="submit" type="submit" value="Submit">
+    </p>
+  </fieldset>
+</form>
+```
+
+尝试一下 »
+
+
+### 2、将校验规则写到 js 代码中
+
+```text
+$().ready(function() {
+// 在键盘按下并释放及提交后验证提交表单
+  $("#signupForm").validate({
+    rules: {
+      firstname: "required",
+      lastname: "required",
+      username: {
+        required: true,
+        minlength: 2
+      },
+      password: {
+        required: true,
+        minlength: 5
+      },
+      confirm_password: {
+        required: true,
+        minlength: 5,
+        equalTo: "#password"
+      },
+      email: {
+        required: true,
+        email: true
+      },
+      topic: {
+        required: "#newsletter:checked",
+        minlength: 2
+      },
+      agree: "required"
+    },
+    messages: {
+      firstname: "请输入您的名字",
+      lastname: "请输入您的姓氏",
+      username: {
+        required: "请输入用户名",
+        minlength: "用户名必需由两个字符组成"
+      },
+      password: {
+        required: "请输入密码",
+        minlength: "密码长度不能小于 5 个字符"
+      },
+      confirm_password: {
+        required: "请输入密码",
+        minlength: "密码长度不能小于 5 个字符",
+        equalTo: "两次密码输入不一致"
+      },
+      email: "请输入一个正确的邮箱",
+      agree: "请接受我们的声明",
+      topic: "请选择两个主题"
+     }
+    })
+});
+```
+
+messages 处，如果某个控件没有 message，将调用默认的信息
+
+```html
+<form class="cmxform" id="signupForm" method="get" action="">
+  <fieldset>
+    <legend>验证完整的表单</legend>
+    <p>
+      <label for="firstname">名字</label>
+      <input id="firstname" name="firstname" type="text">
+    </p>
+    <p>
+      <label for="lastname">姓氏</label>
+      <input id="lastname" name="lastname" type="text">
+    </p>
+    <p>
+      <label for="username">用户名</label>
+      <input id="username" name="username" type="text">
+    </p>
+    <p>
+      <label for="password">密码</label>
+      <input id="password" name="password" type="password">
+    </p>
+    <p>
+      <label for="confirm_password">验证密码</label>
+      <input id="confirm_password" name="confirm_password" type="password">
+    </p>
+    <p>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email">
+    </p>
+    <p>
+      <label for="agree">请同意我们的声明</label>
+      <input type="checkbox" class="checkbox" id="agree" name="agree">
+    </p>
+    <p>
+      <label for="newsletter">我乐意接收新信息</label>
+      <input type="checkbox" class="checkbox" id="newsletter" name="newsletter">
+    </p>
+    <fieldset id="newsletter_topics">
+      <legend>主题 (至少选择两个) - 注意：如果没有勾选“我乐意接收新信息”以下选项会隐藏，但我们这里作为演示让它可见</legend>
+      <label for="topic_marketflash">
+        <input type="checkbox" id="topic_marketflash" value="marketflash" name="topic">Marketflash
+      </label>
+      <label for="topic_fuzz">
+        <input type="checkbox" id="topic_fuzz" value="fuzz" name="topic">Latest fuzz
+      </label>
+      <label for="topic_digester">
+        <input type="checkbox" id="topic_digester" value="digester" name="topic">Mailing list digester
+      </label>
+      <label for="topic" class="error">Please select at least two topics you'd like to receive.</label>
+    </fieldset>
+    <p>
+      <input class="submit" type="submit" value="提交">
+    </p>
+  </fieldset>
+</form>
+```
+
+尝试一下 »
+
+required: true 值是必须的。 required: "#aa:checked" 表达式的值为真，则需要验证。 required: function(){} 返回为真，表示需要验证。
+
+后边两种常用于，表单中需要同时填或不填的元素。
+
+
+## 常用方法及注意问题
+
+
+### 1、用其他方式替代默认的 SUBMIT
+
+```text
+$().ready(function() {
+ $("#signupForm").validate({
+        submitHandler:function(form){
+            alert("提交事件!");
+            form.submit();
+        }
+    });
+});
+```
+
+使用 ajax 方式
+
+```text
+ $(".selector").validate({
+ submitHandler: function(form)
+   {
+      $(form).ajaxSubmit();
+   }
+ })
+```
+
+可以设置 validate 的默认值，写法如下：
+
+```text
+$.validator.setDefaults({
+  submitHandler: function(form) { alert("提交事件!");form.submit(); }
+});
+```
+
+如果想提交表单, 需要使用 form.submit()，而不要使用 $(form).submit()。
+
+
+### 2、debug，只验证不提交表单
+
+如果这个参数为true，那么表单不会提交，只进行检查，调试时十分方便。
+
+```text
+$().ready(function() {
+ $("#signupForm").validate({
+        debug:true
+    });
+});
+```
+
+如果一个页面中有多个表单都想设置成为 debug，则使用：
+
+```text
+$.validator.setDefaults({
+   debug: true
+})
+```
+
+
+### 3、ignore：忽略某些元素不验证
+
+```text
+ignore: ".ignore"
+```
+
+
+### 4、更改错误信息显示的位置
+
+```text
+errorPlacement：Callback
+```
+
+指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+
+```text
+errorPlacement: function(error, element) {
+    error.appendTo(element.parent());
+}
+```
+
+实例
+
+```html
+<p>将错误信息放在 label 元素后并使用 span 元素包裹它</p>
+
+<form method="get" class="cmxform" id="form1" action="">
+  <fieldset>
+    <legend>Login Form</legend>
+    <p>
+      <label for="user">Username</label>
+      <input id="user" name="user" required minlength="3">
+    </p>
+    <p>
+      <label for="password">Password</label>
+      <input id="password" type="password" maxlength="12" name="password" required minlength="5">
+    </p>
+    <p>
+      <input class="submit" type="submit" value="Login">
+    </p>
+  </fieldset>
+</form>
+```
+
+尝试一下 »
+
+代码的作用是：一般情况下把错误信息显示在 <td class="status"></td> 中，如果是 radio 则显示在 <td></td> 中，如果是 checkbox 则显示在内容的后面。
+
+一般这三个属性同时使用，实现在一个容器内显示所有错误提示的功能，并且没有信息时自动隐藏。
+
+```text
+errorContainer: "div.error",
+errorLabelContainer: $("#signupForm div.error"),
+wrapper: "li"
+```
+
+
+### 5、更改错误信息显示的样式
+
+设置错误提示的样式，可以增加图标显示，在该系统中已经建立了一个 validation.css，专门用于维护校验文件的样式。
+
+```text
+input.error { border: 1px solid red; }
+label.error {
+  background:url("./demo/images/unchecked.gif") no-repeat 0px 0px;
+
+  padding-left: 16px;
+
+  padding-bottom: 2px;
+
+  font-weight: bold;
+
+  color: #EA5200;
+}
+label.checked {
+  background:url("./demo/images/checked.gif") no-repeat 0px 0px;
+}
+```
+
+
+### 6、每个字段验证通过执行函数
+
+```text
+success：String,Callback
+```
+
+要验证的元素通过验证后的动作，如果跟一个字符串，会当作一个 css 类，也可跟一个函数。
+
+```text
+success: function(label) {
+    // set   as text for IE
+    label.html(" ").addClass("checked");
+    //label.addClass("valid").text("Ok!")
+}
+```
+
+添加 "valid" 到验证元素，在 CSS 中定义的样式 <style>label.valid {}</style>。
+
+```text
+success: "valid"
+```
+
+
+### 7、验证的触发方式修改
+
+下面的虽然是 boolean 型的，但建议除非要改为 false，否则别乱添加。
+
+```javascript
+// 重置表单
+$().ready(function() {
+ var validator = $("#signupForm").validate({
+        submitHandler:function(form){
+            alert("submitted");
+            form.submit();
+        }
+    });
+    $("#reset").click(function() {
+        validator.resetForm();
+    });
+
+});
+```
+
+
+### 8、异步验证
+
+```text
+remote：URL
+```
+
+使用 ajax 方式进行验证，默认会提交当前验证的值到远程地址，如果需要提交其他的值，可以使用 data 选项。
+
+```text
+remote: "check-email.php"
+```
+
+```text
+remote: {
+    url: "check-email.php",     //后台处理程序
+    type: "post",               //数据发送方式
+    dataType: "json",           //接受数据格式
+    data: {                     //要传递的数据
+        username: function() {
+            return $("#username").val();
+        }
+    }
+}
+```
+
+远程地址只能输出 "true" 或 "false"，不能有其他输出。
+
+
+### 9、添加自定义校验
+
+```text
+addMethod：name, method, message
+```
+
+自定义验证方法
+
+```java
+// 中文字两个字节
+jQuery.validator.addMethod("byteRangeLength", function(value, element, param) {
+    var length = value.length;
+    for(var i = 0; i < value.length; i++){
+        if(value.charCodeAt(i) > 127){
+            length++;
+        }
+    }
+  return this.optional(element) || ( length >= param[0] && length <= param[1] );
+}, $.validator.format("请确保输入的值在{0}-{1}个字节之间(一个中文字算2个字节)"));
+
+// 邮政编码验证
+jQuery.validator.addMethod("isZipCode", function(value, element) {
+    var tel = /^[0-9]{6}$/;
+    return this.optional(element) || (tel.test(value));
+}, "请正确填写您的邮政编码");
+```
+
+注意：要在 additional-methods.js 文件中添加或者在 jquery.validate.js 文件中添加。建议一般写在 additional-methods.js 文件中。
+
+注意：在 messages_cn.js 文件中添加：isZipCode: "只能包括中文字、英文字母、数字和下划线"。调用前要添加对 additional-methods.js 文件的引用。
+
+
+### 10、radio 和 checkbox、select 的验证
+
+radio 的 required 表示必须选中一个。
+
+```html
+<input  type="radio" id="gender_male" value="m" name="gender" required />
+<input  type="radio" id="gender_female" value="f" name="gender"/>
+```
+
+checkbox 的 required 表示必须选中。
+
+```html
+<input type="checkbox" class="checkbox" id="agree" name="agree" required />
+```
+
+checkbox 的 minlength 表示必须选中的最小个数，maxlength 表示最大的选中个数，rangelength:[2,3] 表示选中个数区间。
+
+```html
+<input type="checkbox" class="checkbox" id="spam_email" value="email" name="spam[]" required minlength="2" />
+<input type="checkbox" class="checkbox" id="spam_phone" value="phone" name="spam[]" />
+<input type="checkbox" class="checkbox" id="spam_mail" value="mail" name="spam[]" />
+```
+
+select 的 required 表示选中的 value 不能为空。
+
+```html
+<select id="jungle" name="jungle" title="Please select something!" required>
+    <option value=""></option>
+    <option value="1">Buga</option>
+    <option value="2">Baga</option>
+    <option value="3">Oi</option>
+</select>
+```
+
+select 的 minlength 表示选中的最小个数（可多选的 select），maxlength 表示最大的选中个数，rangelength:[2,3] 表示选中个数区间。
+
+```html
+<select id="fruit" name="fruit" title="Please select at least two fruits" class="{required:true, minlength:2}" multiple="multiple">
+    <option value="b">Banana</option>
+    <option value="a">Apple</option>
+    <option value="p">Peach</option>
+    <option value="t">Turtle</option>
+</select>
+```
+
+
+## jQuery.validate 中文 API
+
+
+### Validator
+
+validate 方法返回一个 Validator 对象。Validator 对象有很多方法可以用来引发校验程序或者改变 form 的内容，下面列出几个常用的方法。
+
+
+### 内置验证方式
+
+
+### validate ()的可选项
+
+```text
+$(".selector").validate
+({
+    debug:true
+})
+```
+
+```text
+$.validator.setDefaults({
+    debug:true
+})
+```
+
+```text
+$(".selector").validate({
+    submitHandler:function(form) {
+        $(form).ajaxSubmit();
+    }
+})
+```
+
+```text
+$("#myform").validate({
+    ignore:".ignore"
+})
+```
+
+```text
+$(".selector").validate({
+    rules:{
+        name:"required",
+        email:{
+            required:true,
+            email:true
+        }
+    }
+})
+```
+
+```text
+$(".selector").validate({
+    rules:{
+        name:"required",
+        email:{
+            required:true,
+            email:true
+        }
+    },
+    messages:{
+        name:"Name不能为空",
+        email:{
+            required:"E-mail不能为空",
+            email:"E-mail地址不正确"
+        }
+    }
+})
+```
+
+```text
+$("#myform").validate({
+    groups:{
+        username:"fname
+        lname"
+    },
+    errorPlacement:function(error,element) {
+        if (element.attr("name") == "fname" || element.attr("name") == "lname")
+            error.insertAfter("#lastname");
+        else
+            error.insertAfter(element);
+    },
+   debug:true
+})
+```
+
+```text
+$(".selector").validate({
+    onsubmit:false
+})
+```
+
+```text
+$(".selector").validate({
+    onfocusout:false
+})
+```
+
+```text
+$(".selector").validate({
+   onkeyup:false
+})
+```
+
+```text
+$(".selector").validate({
+   onclick:false
+})
+```
+
+```text
+$(".selector").validate({
+   focusInvalid:false
+})
+```
+
+```text
+$(".selector").validate({
+   focusCleanup:true
+})
+```
+
+```text
+$(".selector").validate({
+    errorClass:"invalid"
+})
+```
+
+```text
+$(".selector").validate
+   errorElement:"em"
+})
+```
+
+```text
+$(".selector").validate({
+   wrapper:"li"
+})
+```
+
+```text
+$("#myform").validate({
+    errorLabelContainer:"#messageBox",
+    wrapper:"li",
+    submitHandler:function() {
+        alert("Submitted!")
+    }
+})
+```
+
+```text
+$(".selector").validate({
+    showErrors:function(errorMap,errorList) {
+        $("#summary").html("Your form contains " + this.numberOfInvalids() + " errors,see details below.");
+        this.defaultShowErrors();
+    }
+})
+```
+
+```text
+$("#myform").validate({
+    errorPlacement:function(error,element) {
+        error.appendTo(element.parent("td").next("td"));
+   },
+   debug:true
+})
+```
+
+```text
+$("#myform").validate({
+    success:"valid",
+        submitHandler:function() {
+            alert("Submitted!")
+        }
+})
+```
+
+
+### addMethod(name,method,message)方法
+
+参数 name 是添加的方法的名字。
+
+参数 method 是一个函数，接收三个参数 (value,element,param) 。 value 是元素的值，element 是元素本身，param 是参数。
+
+我们可以用 addMethod 来添加除内置的 Validation 方法之外的验证方法。比如有一个字段，只能输一个字母，范围是 a-f，写法如下：
+
+```text
+$.validator.addMethod("af",function(value,element,params){
+    if(value.length>1){
+        return false;
+    }
+    if(value>=params[0] && value<=params[1]){
+        return true;
+    }else{
+        return false;
+    }
+},"必须是一个字母,且a-f");
+```
+
+如果有个表单字段的 name="username"，则在 rules 中写：
+
+```text
+username:{
+   af:["a","f"]
+}
+```
+
+addMethod 的第一个参数，是添加的验证方法的名字，这时是 af。 addMethod 的第三个参数，是自定义的错误提示，这里的提示为:"必须是一个字母,且a-f"。 addMethod 的第二个参数，是一个函数，这个比较重要，决定了用这个验证方法时的写法。
+
+如果只有一个参数，直接写，比如 af:"a"，那么 a 就是这个唯一的参数，如果多个参数，则写在 [] 里，用逗号分开。
+
+
+### meta String 方式
+
+```text
+$("#myform").validate({
+
+   meta:"validate",
+
+   submitHandler:function() {
+alert("Submitted!") }
+
+})
+```
+
+```html
+<script type="text/javascript"
+src="js/jquery.metadata.js"></script>
+
+<script type="text/javascript"
+src="js/jquery.validate.js"></script>
+
+<form id="myform">
+
+  <input type="text"
+name="email" class="{validate:{ required:true,email:true }}" />
+
+  <input type="submit"
+value="Submit" />
+
+</form>
+```
+
+
+### 实例下载
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery Validate` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

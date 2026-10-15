@@ -1,35 +1,160 @@
-# Ionic：ionic 安装 学习笔记
+# Ionic：ionic 安装
 
 - 来源：[ionic 安装](https://www.runoob.com/ionic/ionic-install.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3295
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic 安装` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+本站实例采用了ionic v1.3.2 版本，使用的 CDN 库地址：
 
-## 阅读抓手
+```html
+<link href="https://cdn.staticfile.org/ionic/1.3.2/css/ionic.css" rel="stylesheet">
+<script src="https://cdn.staticfile.org/ionic/1.3.2/js/ionic.bundle.min.js"></script>
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+ionic 最新版本下载地址：http://ionicframework.com/docs/overview/#download。
 
-## 笔记模板
+下载后解压压缩包，包含以下目录：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+css/               =>     样式文件
+fonts/             =>     字体文件
+js/                =>     Javascript文件
+version.json       =>     版本更新说明
+```
 
-## 完成标准
+你也可以在 Github 上下载以下资源文件：https://github.com/driftyco/ionic（在release 目录中）。
 
-- 能用 3 到 5 句话解释 `ionic 安装`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+接下来，我们只需要在项目中引入以上目录中的 css/ionic.min.css 和 js/ionic.bundle.min.js 文件即可创建 ionic 应用。
+
+
+## 实例
+
+```html
+<ion-header-bar class="bar-positive">
+    <h1 class="title">Hello World!</h1>
+</ion-header-bar>
+
+<ion-content>
+    <p>我的第一个 ionic 应用。</p>
+</ion-content>
+```
+
+点击 "尝试一下" 按钮查看在线实例。
+
+本教程着重讲解 ionic 框架的应用，大部分实例在浏览器中运行 ，移动设备上运行可以在接下来的命令行安装教程中详细了解。
+
+注意：在移动应用如 phonegap 中我们只需将对应的 js 和 css 文件加入到资源库中即可。
+
+
+## 命令行安装
+
+首先您需要安装 Node.js，我们在接下来的安装中需要使用到其 NPM 工具，更多 NPM 介绍可以查看我们的NPM 使用介绍。
+
+然后通过命令行工具安装最新版本的 cordova 和 ionic 。通过参考Android 和 iOS 官方文档来安装。
+
+Window 和 Linux 上打开命令行工具执行以下命令：
+
+```text
+$ npm install -g cordova ionic
+```
+
+Mac 系统上使用以下命令：
+
+```text
+sudo npm install -g cordova ionic
+```
+
+提示: IOS需要在Mac Os X. 和Xcode环境下面安装使用。
+
+如果你已经安装了以上环境，可以执行以下命令来更新版本:
+
+```text
+npm update -g cordova ionic
+```
+
+或
+
+```text
+sudo npm update -g cordova ionic
+```
+
+
+### 创建应用
+
+使用ionic官方提供的现成的应用程序模板，或一个空白的项目创建一个ionic应用：
+
+```text
+$ ionic start myApp tabs
+```
+
+
+### 运行我们刚才创建的ionic项目
+
+使用 ionic tool 创建，测试，运行你的apps(或者通过Cordova直接创建)。
+
+
+### 创建Android应用
+
+```text
+$ cd myApp
+$ ionic cordova platform add android
+$ ionic cordova build android
+$ ionic cordova emulate android
+```
+
+如果一切正常会弹出模拟器，界面如下所示：
+
+
+### 创建iOS应用
+
+```text
+$ cd myApp
+$ ionic cordova platform add ios
+$ ionic cordova build ios
+$ ionic cordova emulate ios
+```
+
+如果出现"ios-sim was not found."错误，可以执行以下命令：
+
+```text
+npm install -g ios-sim
+```
+
+如果一切正常会弹出模拟器，界面如下所示：
+
+
+## Ionic Lab
+
+Ionic Lab 目前已停止更新。
+
+Ionic Lab 是桌面版的开发环境，如果你不喜欢使用命令行操作，Ionic Lab 将会满足你的需求。
+
+Ionic Lab 为开发者提供了一个更简单的方法来开始，编译，运行，和模拟运行Ionic的应用程序。
+
+Ionic Lab 支持的平台有：Window、Mac OS X、Linux，下载地址为：http://lab.ionic.io/，下载后直接安装即可。整个操作界面如下所示：
+
+通过以上界面你可以完成以下操作：
+
+- 创建应用
+- 预览应用
+- 编译应用
+- 运行应用
+- 上传应用
+- 运行日志查看
+
+推荐使用Sublime Text作为 Ionic 项目的编辑器，我们可以通过 Ionic Lab 直接在Sublime Text 上打开项目，如下图：
+
+
+### Gif 操作演示
+
+
+## 复习重点
+
+- 能说明 `ionic 安装` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

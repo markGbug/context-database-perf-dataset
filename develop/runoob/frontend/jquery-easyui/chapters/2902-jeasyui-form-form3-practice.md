@@ -1,34 +1,69 @@
-# jQuery EasyUI：jEasyUI 表单验证 练习笔记
+# jQuery EasyUI：jQuery EasyUI 表单 - 表单验证
 
 - 来源：[jEasyUI 表单验证](https://www.runoob.com/jeasyui/jeasyui-form-form3.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2902
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 表单验证` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本教程将向您展示如何验证一个表单。easyui 框架提供一个 validatebox 插件来验证一个表单。在本教程中，我们将创建一个联系表单，并应用 validatebox 插件来验证表单。然后您可以根据自己的需求来调整这个表单。
 
-## 练习步骤
+让我们创建一个简单的联系表单，带有 name、email、subject 和 message 字段：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc">Form Validation</div>
+    <form id="ff" method="post">
+        <div>
+            <label for="name">Name:</label>
+            <input class="easyui-validatebox" type="text" name="name" required="true"></input>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input class="easyui-validatebox" type="text" name="email" required="true" validType="email"></input>
+        </div>
+        <div>
+            <label for="subject">Subject:</label>
+            <input class="easyui-validatebox" type="text" name="subject" required="true"></input>
+        </div>
+        <div>
+            <label for="message">Message:</label>
+            <textarea name="message" style="height:60px;"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+```
 
-## 验收清单
+我们添加一个样式名为 easyui-validatebox 到 input 标记，所以 input 标记将根据 validType 属性应用验证。
 
-- 我能独立说出 `jEasyUI 表单验证` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+当用户点击表单的 submit 按钮时，如果表单是无效的，我们应该阻止表单提交。
 
-## 复盘问题
+```text
+    $('#ff').form({
+        url:'form3_proc.php',
+        onSubmit:function(){
+            return $(this).form('validate');
+        },
+        success:function(data){
+            $.messager.alert('Info', data, 'info');
+        }
+    });
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+如果表单是无效的，将显示一个提示信息。
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-form-form3.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 表单验证` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

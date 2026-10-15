@@ -1,34 +1,97 @@
-# CSS：CSS 计数器 练习笔记
+# CSS：CSS 计数器
 
 - 来源：[CSS 计数器](https://www.runoob.com/css/css-counters.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2425
 
-## 练习目标
+## 本章内容
 
-把 `CSS 计数器` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+CSS 计数器通过一个变量来设置，根据规则递增变量。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 使用计数器自动编号
 
-## 验收清单
+CSS 计数器根据规则来递增变量。
 
-- 我能独立说出 `CSS 计数器` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+CSS 计数器使用到以下几个属性：
 
-## 复盘问题
+- counter-reset - 创建或者重置计数器
+- counter-increment - 递增变量
+- content - 插入生成的内容
+- counter() 或 counters() 函数 - 将计数器的值添加到元素
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+要使用 CSS 计数器，得先用 counter-reset 创建：
+
+以下实例在页面创建一个计数器 (在 body 选择器中)，每个 <h2> 元素的计数值都会递增，并在每个 <h2> 元素前添加 "Section <计数值>:"
+
+
+## CSS 实例
+
+```text
+body {
+  counter-reset: section;
+}
+
+h2::before {
+  counter-increment: section;
+  content: "Section " counter(section) ": ";
+}
+```
+
+
+## 嵌套计数器
+
+以下实例在页面创建一个计数器，在每一个 <h1> 元素前添加计数值 "Section <主标题计数值>.", 嵌套的计数值则放在 <h2> 元素的前面，内容为 "<主标题计数值>.<副标题计数值>":
+
+
+## CSS 实例
+
+```text
+body {
+  counter-reset: section;
+}
+
+h1 {
+  counter-reset: subsection;
+}
+
+h1::before {
+  counter-increment: section;
+  content: "Section " counter(section) ". ";
+}
+
+h2::before {
+  counter-increment: subsection;
+  content: counter(section) "." counter(subsection) " ";
+}
+```
+
+计数器也可用于列表中，列表的子元素会自动创建。这里我们使用了 counters() 函数在不同的嵌套层级中插入字符串:
+
+
+## CSS 实例
+
+```text
+ol {
+  counter-reset: section;
+  list-style-type: none;
+}
+
+li::before {
+  counter-increment: section;
+  content: counters(section,".") " ";
+}
+```
+
+
+## CSS 计数器属性
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS 计数器` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

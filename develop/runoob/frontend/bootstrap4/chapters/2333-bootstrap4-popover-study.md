@@ -1,35 +1,105 @@
-# Bootstrap4：Bootstrap4 弹出框 学习笔记
+# Bootstrap4：Bootstrap4 弹出框
 
 - 来源：[Bootstrap4 弹出框](https://www.runoob.com/bootstrap4/bootstrap4-popover.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2333
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 弹出框` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+弹出框控件类似于提示框，它在鼠标点击到元素后显示，与提示框不同的是它可以显示更多的内容。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 如何创建弹出框
 
-## 笔记模板
+通过向元素添加 data-toggle="popover" 来来创建弹出框。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+title 属性的内容为弹出框的标题，data-content 属性显示了弹出框的文本内容：
 
-## 完成标准
+```html
+<a href="#" data-toggle="popover" title="弹出框标题" data-content="弹出框内容">多次点我</a>
+```
 
-- 能用 3 到 5 句话解释 `Bootstrap4 弹出框`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+注意: 弹出框要写在 jQuery 的初始化代码里: 然后在指定的元素上调用 popover() 方法。
+
+以下实例可以在文档的任何地方使用弹出框：
+
+
+## 实例
+
+```text
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+```
+
+
+## 指定弹出框的位置
+
+默认情况下弹出框显示在元素右侧。
+
+可以使用 data-placement 属性来设定弹出框显示的方向: top, bottom, left 或 right:
+
+
+## 实例
+
+```html
+<a href="#" title="Header" data-toggle="popover" data-placement="top" data-content="Content">点我</a>
+<a href="#" title="Header" data-toggle="popover" data-placement="bottom" data-content="Content">点我</a>
+<a href="#" title="Header" data-toggle="popover" data-placement="left" data-content="Content">点我</a>
+<a href="#" title="Header" data-toggle="popover" data-placement="right" data-content="Content">点我</a>
+```
+
+按钮中使用:
+
+
+## 实例
+
+```html
+<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+  Popover on top
+</button>
+
+<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+  Popover on right
+</button>
+
+<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus.">
+  Popover on bottom
+</button>
+
+<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+  Popover on left
+</button>
+```
+
+
+## 关闭弹出框
+
+默认情况下，弹出框在再次点击指定元素后就会关闭，你可以使用 data-trigger="focus" 属性来设置在鼠标点击元素外部区域来关闭弹出框：
+
+
+## 实例
+
+```html
+<a href="#" title="取消弹出框" data-toggle="popover" data-trigger="focus" data-content="点击文档的其他地方关闭我">点我</a>
+```
+
+提示:如果你想实现在鼠标移动到元素上显示，移除后消失的效果，可以使用 data-trigger 属性，并设置值为 "hover":
+
+
+## 实例
+
+```html
+<a href="#" title="Header" data-toggle="popover" data-trigger="hover" data-content="一些内容">鼠标移动到我这</a>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 弹出框` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,247 @@
-# OpenCode：OpenCode 自定义工具 学习笔记
+# OpenCode：OpenCode 自定义工具
 
 - 来源：[OpenCode 自定义工具](https://www.runoob.com/opencode/opencode-custom-tools.html)
 - 分类：AI / 智能开发
 - 技术：OpenCode
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0442
 
-## 学习目标
+## 本章内容
 
-OpenCode 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `OpenCode 自定义工具` 建立学习路径，先理解它在 OpenCode 体系中的位置，再做可运行或可复述的验证。
+自定义工具（Custom Tools）允许你为 OpenCode 扩展能力，让 LLM 在对话过程中调用你定义的函数，从而实现数据库查询、脚本执行、API 调用等复杂操作。
 
-## 阅读抓手
+这些工具会与内置工具（如 read、write、bash）协同工作，构建完整的自动化开发能力体系。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+自定义工具是 OpenCode 的核心扩展能力，它让 LLM 从只会生成代码，升级为可以执行任务。
 
-## 笔记模板
+通过合理设计工具，你可以构建：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 自动化开发流水线
+- 智能代码助手
+- AI 运维系统
+- 企业内部 AI 工具平台
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `OpenCode 自定义工具`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 一、什么是自定义工具
+
+自定义工具本质上是一个函数接口，LLM 可以在运行过程中主动调用它，并获取执行结果。
+
+典型应用场景：
+
+- 查询数据库（SQL / NoSQL）
+- 调用内部 API
+- 执行脚本（Python / Shell）
+- 读取系统状态或环境信息
+- 封装复杂业务逻辑
+
+你可以理解为：让 AI 拥有执行能力的插件机制。
+
+
+## 二、工具存放位置
+
+OpenCode 会自动加载以下目录中的工具：
+
+- 项目级：.opencode/tools/
+- 全局级：~/.config/opencode/tools/
+
+文件名即工具名称（非常关键）。
+
+
+## 三、基础工具定义（推荐方式）
+
+使用 tool() 辅助函数可以获得类型安全和参数校验能力。
+
+```text
+import { tool } from "@opencode-ai/plugin"
+
+export default tool({
+  description: "Query the project database",
+  args: {
+    query: tool.schema.string().describe("SQL query to execute"),
+  },
+  async execute(args) {
+    return `Executed query: ${args.query}`
+  },
+})
+```
+
+说明：
+
+- description：工具描述，LLM 用于判断是否调用
+- args：参数定义（基于 Zod）
+- execute：实际执行逻辑
+
+
+## 四、单文件多工具
+
+一个文件可以导出多个工具，每个工具会自动命名为：
+
+<文件名>_<导出名>
+
+```javascript
+import { tool } from "@opencode-ai/plugin"
+
+export const add = tool({
+  description: "Add two numbers",
+  args: {
+    a: tool.schema.number(),
+    b: tool.schema.number(),
+  },
+  async execute(args) {
+    return args.a + args.b
+  },
+})
+
+export const multiply = tool({
+  description: "Multiply two numbers",
+  args: {
+    a: tool.schema.number(),
+    b: tool.schema.number(),
+  },
+  async execute(args) {
+    return args.a * args.b
+  },
+})
+```
+
+最终生成工具：
+
+- math_add
+- math_multiply
+
+
+## 五、与内置工具冲突
+
+如果你的工具名称与内置工具相同，会覆盖内置工具。
+
+```text
+// 覆盖内置 bash 工具
+export default tool({
+  description: "Restricted bash wrapper",
+  args: {
+    command: tool.schema.string(),
+  },
+  async execute(args) {
+    return `blocked: ${args.command}`
+  },
+})
+```
+
+建议：
+
+- 避免命名冲突
+- 如果只是限制能力，优先使用 permission 配置
+
+
+## 六、参数定义（Zod）
+
+参数使用 Zod Schema 定义，支持类型校验与描述：
+
+```text
+args: {
+  query: tool.schema.string().describe("SQL query"),
+  limit: tool.schema.number().optional(),
+}
+```
+
+也可以直接使用 Zod：
+
+```text
+import { z } from "zod"
+
+export default {
+  description: "Example tool",
+  args: {
+    name: z.string(),
+  },
+  async execute(args) {
+    return `Hello ${args.name}`
+  },
+}
+```
+
+
+## 七、上下文（Context）
+
+工具执行时会自动注入上下文信息：
+
+```javascript
+export default tool({
+  description: "Get project info",
+  args: {},
+  async execute(args, context) {
+    const { agent, sessionID, directory, worktree } = context
+    return `Agent: ${agent}, Dir: ${directory}`
+  },
+})<
+```
+
+可用字段：
+
+- agent：当前代理
+- sessionID：会话 ID
+- messageID：消息 ID
+- directory：当前工作目录
+- worktree：Git 根目录
+
+
+## 八、调用外部语言（Python 示例）
+
+你可以用任何语言实现工具逻辑，例如 Python。
+
+
+### 1、Python 脚本
+
+```text
+# .opencode/tools/add.py
+import sys
+
+a = int(sys.argv[1])
+b = int(sys.argv[2])
+
+print(a + b)
+```
+
+
+### 2、工具封装
+
+```javascript
+import { tool } from "@opencode-ai/plugin"
+import path from "path"
+
+export default tool({
+  description: "Add two numbers using Python",
+  args: {
+    a: tool.schema.number(),
+    b: tool.schema.number(),
+  },
+  async execute(args, context) {
+    const script = path.join(context.worktree, ".opencode/tools/add.py")
+    const result = await Bun.$`python3 ${script} ${args.a} ${args.b}`.text()
+    return result.trim()
+  },
+})
+```
+
+这种方式适合：
+
+- 已有 Python 工具链
+- 调用数据分析 / AI 模型
+- 执行复杂计算任务
+
+
+## 九、最佳实践
+
+- 工具描述要清晰，帮助 LLM 正确选择
+- 参数设计尽量简单明确
+- 避免副作用（除非明确需要）
+- 优先通过 permission 控制风险操作
+- 工具应聚焦单一职责
+
+
+## 复习重点
+
+- 能说明 `OpenCode 自定义工具` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

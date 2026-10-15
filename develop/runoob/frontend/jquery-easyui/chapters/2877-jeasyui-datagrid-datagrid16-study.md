@@ -1,35 +1,74 @@
-# jQuery EasyUI：jEasyUI 创建自定义视图 学习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 创建自定义视图
 
 - 来源：[jEasyUI 创建自定义视图](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid16.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2877
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 创建自定义视图` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+在不同的情况下，您可能需要为数据网格（datagrid）运用更灵活的布局。对于用户来说，卡片视图（Card View）是个不错的选择。这个工具可以在数据网格（datagrid）中迅速获取和显示数据。在数据网格（datagrid）的头部，您可以仅仅通过点击列的头部来排序数据。本教程将向您展示如何创建自定义卡片视图（Card View）。
 
-## 阅读抓手
+从数据网格（datagrid）的默认视图继承，是个创建自定义视图的不错方法。我们将要创建一个卡片视图（Card View）来为每行显示一些信息。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```java
+    var cardview = $.extend({}, $.fn.datagrid.defaults.view, {
+        renderRow: function(target, fields, frozen, rowIndex, rowData){
+            var cc = [];
+            cc.push('<td colspan=' + fields.length + ' style="padding:10px 5px;border:0;">');
+            if (!frozen){
+                var aa = rowData.itemid.split('-');
+                var img = 'shirt' + aa[1] + '.gif';
+                cc.push('<img src="images/' + img + '" style="width:150px;float:left">');
+                cc.push('<div style="float:left;margin-left:20px;">');
+                for(var i=0; i<fields.length; i++){
+                    var copts = $(target).datagrid('getColumnOption', fields[i]);
+                    cc.push('<p><span class="c-label">' + copts.title + ':</span> ' + rowData[fields[i]] + '</p>');
+                }
+                cc.push('</div>');
+            }
+            cc.push('</td>');
+            return cc.join('');
+        }
+    });
+```
 
-## 笔记模板
+现在我们使用视图创建数据网格（datagrid）。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+    <table id="tt" style="width:500px;height:400px"
+            title="DataGrid - CardView" singleSelect="true" fitColumns="true" remoteSort="false"
+            url="datagrid8_getdata.php" pagination="true" sortOrder="desc" sortName="itemid">
+        <thead>
+            <tr>
+                <th field="itemid" width="80" sortable="true">Item ID</th>
+                <th field="listprice" width="80" sortable="true">List Price</th>
+                <th field="unitcost" width="80" sortable="true">Unit Cost</th>
+                <th field="attr1" width="150" sortable="true">Attribute</th>
+                <th field="status" width="60" sortable="true">Status</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-## 完成标准
+```text
+    $('#tt').datagrid({
+        view: cardview
+    });
+```
 
-- 能用 3 到 5 句话解释 `jEasyUI 创建自定义视图`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+请注意，我们设置 view 属性，且它的值为我们的卡片视图。
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid16.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 创建自定义视图` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

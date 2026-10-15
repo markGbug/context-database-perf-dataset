@@ -1,34 +1,73 @@
-# XSLT：XSLT <if> 练习笔记
+# XSLT：XSLT <xsl:if> 元素
 
 - 来源：[XSLT <if>](https://www.runoob.com/xsl/xsl-if.html)
 - 分类：XML / Web Service
 - 技术：XSLT
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4516
 
-## 练习目标
+## 本章内容
 
-把 `XSLT <if>` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+<xsl:if> 元素用于对 XML 数据执行条件判断，当指定条件成立时才输出对应内容。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## <xsl:if> 元素
 
-## 验收清单
+在 XSLT 中，如果需要根据 XML 节点的值或状态来决定是否输出某段内容，可以使用 <xsl:if> 元素进行条件控制。
 
-- 我能独立说出 `XSLT <if>` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 语法
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+说明：test 属性用于指定条件表达式（XPath 表达式），当表达式结果为 true 时，内部内容才会被处理和输出。
+
+
+## 在何处放置 <xsl:if> 元素
+
+通常情况下，<xsl:if> 会配合循环语句一起使用，例如在 <xsl:for-each> 中对每个节点进行筛选：
+
+
+## 实例
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <body>
+  <h2>My CD Collection</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th>Title</th>
+      <th>Artist</th>
+      <th>Price</th>
+    </tr>
+    <xsl:for-each select="catalog/cd">
+      <xsl:if test="price > 10">
+        <tr>
+          <td><xsl:value-of select="title"/></td>
+          <td><xsl:value-of select="artist"/></td>
+          <td><xsl:value-of select="price"/></td>
+        </tr>
+      </xsl:if>
+    </xsl:for-each>
+  </table>
+  </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>
+```
+
+注意：test 属性是必需的，其值为 XPath 表达式，例如比较运算（>、<、=）或逻辑判断。
+
+说明：上述示例中，仅当 price 大于 10 时，对应的 CD 才会被输出到表格中。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `XSLT <if>` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,104 @@
-# DeepSeek Harness：DeepSeek Harness 插件 学习笔记
+# DeepSeek Harness：DeepSeek Harness 第一个插件
 
 - 来源：[DeepSeek Harness 插件](https://www.runoob.com/deepseek-harness/deepseek-harness-first-plugin.html)
 - 分类：AI / 智能开发
 - 技术：DeepSeek Harness
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0223
 
-## 学习目标
+## 本章内容
 
-DeepSeek Harness 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `DeepSeek Harness 插件` 建立学习路径，先理解它在 DeepSeek Harness 体系中的位置，再做可运行或可复述的验证。
+在 Harness 中，插件是一个导出 apply 函数的 TypeScript 模块。
 
-## 阅读抓手
+框架在加载插件时调用 apply，并传入一个 ctx（上下文对象）。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+我们通过 ctx 注册能力，比如事件监听、工具、LLM 适配器。
 
-## 笔记模板
+ctx（Context）是框架传给每个插件的上下文对象。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+ctx 既是注册能力的入口，也记录了插件注册的一切资源。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `DeepSeek Harness 插件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 创建本地项目
+
+我们需要先通过源码安装：
+
+```text
+git clone https://github.com/deepseek-ai/deepseek-harness.git
+cd deepseek-harness
+pnpm install
+pnpm run build
+pnpm dsh web
+```
+
+接下来创建一个 scratch-plugin 项目，用来放我们的插件。
+
+在仓库根目录执行：
+
+```text
+mkdir -p scratch-plugin/src
+```
+
+
+## 最小插件：hello-plugin
+
+在 scratch-plugin/src 下创建 my-plugin.ts。
+
+```text
+cd scratch-plugin/src
+```
+
+下面是完整可用的插件配置，不差任何东西。
+
+
+## 实例
+
+这段代码只做一件事：加载时打印一行日志，它没有注册任何能力，但已经是一个合格的插件。
+
+
+## 插件的三种形态
+
+除了上面看到的函数形式，插件还支持对象形式和类形式。
+
+
+### 函数形式
+
+把 name 和 apply 分开导出，是官方示例默认的写法。
+
+
+## 实例
+
+
+### 对象形式
+
+把 name、inject 和 apply 放进一个默认导出的对象。
+
+
+## 实例
+
+
+### 类形式
+
+类形式继承 Service 基类，适合对外提供服务的插件。
+
+
+## 实例
+
+
+## 怎么选
+
+大多数情况下，函数形式就足够了。
+
+当插件需要向其他插件提供服务时，用类形式。
+
+提示：类形式的核心是 super(ctx, '服务名')。
+
+服务与依赖的完整机制会在第 14 篇展开。
+
+
+## 复习重点
+
+- 能说明 `DeepSeek Harness 插件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,63 @@
-# Go：Go 语言开发工具 学习笔记
+# Go：Go 语言开发工具
 
 - 来源：[Go 语言开发工具](https://www.runoob.com/go/go-ide.html)
 - 分类：后端开发
 - 技术：Go
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0874
 
-## 学习目标
+## 本章内容
 
-Go 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Go 语言开发工具` 建立学习路径，先理解它在 Go 体系中的位置，再做可运行或可复述的验证。
+## VSCode
 
-## 阅读抓手
+VScode 安装教程参见：https://www.runoob.com/w3cnote/vscode-tutorial.html
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+然后我们打开 VSCode 的扩展（Ctrl+Shift+P）：
 
-## 笔记模板
+搜索 go：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+点击安装，安装完成后我们就可以使用代码提示、测试、调试等功能了。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Go 语言开发工具`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## GoLand
+
+GoLand 是 Jetbrains 家族的 Go 语言 IDE，有 30 天的免费试用期。
+
+安装也很简单访问 Goland 的下载页面，根据你当期的系统环境三大平台（Mac、Linux、Windows）下载对应的软件。
+
+
+## LiteIDE
+
+LiteIDE 是一款开源、跨平台的轻量级 Go 语言集成开发环境（IDE）。
+
+
+### 支持的 操作系统
+
+- Windows x86 (32-bit or 64-bit)
+- Linux x86 (32-bit or 64-bit)
+
+下载地址 ：http://sourceforge.net/projects/liteide/files/
+
+源码地址 ：https://github.com/visualfc/liteide
+
+
+## Eclipse
+
+Eclipse 也是非常常用的开发利器，以下介绍如何使用 Eclipse 来编写 Go 程序。
+
+Eclipse 编辑 Go 的主界面
+
+- 首先下载并安装好 Eclipse
+- 下载 goclipse 插件 https://github.com/GoClipse/goclipse/blob/latest/documentation/Installation.md#installation
+- 下载 gocode，用于 go 的代码补全提示 gocode 的 github 地址： https://github.com/nsf/gocode 在 Windows下要安装 git，通常用 msysgit。 再在 cmd 下安装： go get -u github.com/nsf/gocode 也可以下载代码，直接用 go build 来编译，会生成 gocode.exe
+- 下载 MinGW 并按要求装好
+- 配置插件 Windows->Reference->Go (1)、配置 Go 的编译器 设置 Go 的一些基础信息 (2)、配置 Gocode（可选，代码补全），设置 Gocode 路径为之前生成的 gocode.exe 文件 设置 gocode 信息 (3)、配置 GDB（可选，做调试用），设置 GDB 路径为 MingW 安装目录下的 gdb.exe 文件设置 GDB 信息
+- 测试是否成功 新建一个 go 工程，再建立一个 hello.go。如下图： 新建项目编辑文件 调试如下（要在 console 中用输入命令来调试）： 图 1.16 调试 Go 程序
+
+
+## 复习重点
+
+- 能说明 `Go 语言开发工具` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

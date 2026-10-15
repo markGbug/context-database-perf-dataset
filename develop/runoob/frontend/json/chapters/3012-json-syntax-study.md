@@ -1,35 +1,193 @@
-# JSON：JSON 语法 学习笔记
+# JSON：JSON 语法
 
 - 来源：[JSON 语法](https://www.runoob.com/json/json-syntax.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3012
 
-## 学习目标
+## 本章内容
 
-JSON 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JSON 语法` 建立学习路径，先理解它在 JSON 体系中的位置，再做可运行或可复述的验证。
+JSON 语法是 JavaScript 语法的子集。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## JSON 语法规则
 
-## 笔记模板
+JSON 语法是 JavaScript 对象表示语法的子集。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 数据在名称/值对中
+- 数据由逗号 , 分隔
+- 使用斜杆 \ 来转义字符
+- 大括号 {} 保存对象
+- 中括号 [] 保存数组，数组可以包含多个对象
 
-## 完成标准
+JSON 的两种结构：
 
-- 能用 3 到 5 句话解释 `JSON 语法`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+1、对象：大括号 {} 保存的对象是一个无序的名称/值对集合。一个对象以左括号 { 开始， 右括号 } 结束。每个"键"后跟一个冒号 :，名称/值对使用逗号 , 分隔。
+
+2、数组：中括号 [] 保存的数组是值（value）的有序集合。一个数组以左中括号 [ 开始， 右中括号 ] 结束，值之间使用逗号 , 分隔。
+
+值（value）可以是双引号括起来的字符串（string）、数值(number)、true、false、 null、对象（object）或者数组（array），它们是可以嵌套。
+
+
+## JSON 名称/值对
+
+JSON 数据的书写格式是：
+
+```text
+key : value
+```
+
+名称/值对包括字段名称（在双引号中），后面写一个冒号，然后是值：
+
+```text
+"name" : "菜鸟教程"
+```
+
+这很容易理解，等价于这条 JavaScript 语句：
+
+```text
+name = "菜鸟教程"
+```
+
+
+## JSON 值
+
+JSON 值可以是：
+
+- 数字（整数或浮点数）
+- 字符串（在双引号中）
+- 逻辑值（true 或 false）
+- 数组（在中括号中）
+- 对象（在大括号中）
+- null
+
+
+## JSON 数字
+
+JSON 数字可以是整型或者浮点型：
+
+```text
+{ "age":30 }
+```
+
+
+## JSON 对象
+
+JSON 对象在大括号 {} 中书写：
+
+```text
+{key1 : value1, key2 : value2, ... keyN : valueN }
+```
+
+对象可以包含多个名称/值对：
+
+```text
+{ "name":"菜鸟教程" , "url":"www.runoob.com" }
+```
+
+这一点也容易理解，与这条 JavaScript 语句等价：
+
+```text
+name = "菜鸟教程"
+url = "www.runoob.com"
+```
+
+
+## JSON 数组
+
+JSON 数组在中括号 [] 中书写：
+
+数组可包含多个对象：
+
+```text
+[
+    { key1 : value1-1 , key2:value1-2 },
+    { key1 : value2-1 , key2:value2-2 },
+    { key1 : value3-1 , key2:value3-2 },
+    ...
+    { key1 : valueN-1 , key2:valueN-2 },
+]
+```
+
+```text
+{
+    "sites": [
+        { "name":"菜鸟教程" , "url":"www.runoob.com" },
+        { "name":"google" , "url":"www.google.com" },
+        { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+在上面的例子中，对象 sites 是包含三个对象的数组。每个对象代表一条关于某个网站（name、url）的记录。
+
+
+## JSON 布尔值
+
+JSON 布尔值可以是 true 或者 false：
+
+```text
+{ "flag":true }
+```
+
+
+## JSON null
+
+JSON 可以设置 null 值：
+
+```text
+{ "runoob":null }
+```
+
+
+## JSON 使用 JavaScript 语法
+
+因为 JSON 使用 JavaScript 语法，所以无需额外的软件就能处理 JavaScript 中的 JSON。
+
+通过 JavaScript，您可以创建一个对象数组，并像这样进行赋值：
+
+
+## 实例
+
+```javascript
+var sites = [
+    { "name":"runoob" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+];
+```
+
+可以像这样访问 JavaScript 对象数组中的第一项（索引从 0 开始）：
+
+```text
+sites[0].name;
+```
+
+返回的内容是：
+
+```text
+runoob
+```
+
+可以像这样修改数据：
+
+```text
+sites[0].name="菜鸟教程";
+```
+
+在下面的章节，您将学到如何把 JSON 文本转换为 JavaScript 对象。
+
+
+## JSON 文件
+
+- JSON 文件的文件类型是 .json
+- JSON 文本的 MIME 类型是 application/json
+
+
+## 复习重点
+
+- 能说明 `JSON 语法` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

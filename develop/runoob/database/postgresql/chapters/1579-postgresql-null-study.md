@@ -1,35 +1,129 @@
-# PostgreSQL：PostgreSQL NULL 学习笔记
+# PostgreSQL：PostgreSQL NULL 值
 
 - 来源：[PostgreSQL NULL](https://www.runoob.com/postgresql/postgresql-null.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1579
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PostgreSQL NULL` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+NULL 值代表遗漏的未知数据。
 
-## 阅读抓手
+默认地，表的列可以存放 NULL 值。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+本章讲解 IS NULL 和 IS NOT NULL 操作符。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### 语法
 
-## 完成标准
+当创建表时，NULL 的基本语法如下：
 
-- 能用 3 到 5 句话解释 `PostgreSQL NULL`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+这里，NOT NULL 表示强制字段始终包含值。这意味着，如果不向字段添加值，就无法插入新记录或者更新记录。
+
+具有 NULL 值的字段表示在创建记录时可以留空。
+
+在查询数据时，NULL 值可能会导致一些问题，因为一个未知的值去与其他任何值比较，结果永远是未知的。
+
+另外无法比较 NULL 和 0，因为它们是不等价的。
+
+
+### 实例
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+接下来我们用 UPDATE 语句把几个可设置为空的字段设置为 NULL ：
+
+```text
+runoobdb=# UPDATE COMPANY SET ADDRESS = NULL, SALARY = NULL where ID IN(6,7);
+```
+
+```text
+runoobdb=# select * from company;
+ id | name  | age |         address     | salary
+----+-------+-----+---------------------+--------
+  1 | Paul  |  32 | California          |  20000
+  2 | Allen |  25 | Texas               |  15000
+  3 | Teddy |  23 | Norway              |  20000
+  4 | Mark  |  25 | Rich-Mond           |  65000
+  5 | David |  27 | Texas               |  85000
+  6 | Kim   |  22 |                     |
+  7 | James |  24 |                     |
+(7 rows)
+```
+
+IS NOT NULL
+
+现在，我们用 IS NOT NULL 操作符把所有 SALARY（薪资） 值不为空的记录列出来：
+
+```text
+runoobdb=# SELECT  ID, NAME, AGE, ADDRESS, SALARY FROM COMPANY WHERE SALARY IS NOT NULL;
+```
+
+得到结果如下：
+
+```text
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  2 | Allen |  25 | Texas      |  15000
+  3 | Teddy |  23 | Norway     |  20000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+(5 rows)
+```
+
+IS NULL
+
+IS NULL 用来查找为 NULL 值的字段。
+
+下面是 IS NULL 操作符的用法，列出 SALARY（薪资） 值为空的记录：
+
+```text
+runoobdb=#  SELECT  ID, NAME, AGE, ADDRESS, SALARY FROM COMPANY WHERE SALARY IS NULL;
+```
+
+得到结果如下：
+
+```text
+id | name  | age | address | salary
+----+-------+-----+---------+--------
+  6 | Kim   |  22 |         |
+  7 | James |  24 |         |
+(2 rows)
+```
+
+
+## 复习重点
+
+- 能说明 `PostgreSQL NULL` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

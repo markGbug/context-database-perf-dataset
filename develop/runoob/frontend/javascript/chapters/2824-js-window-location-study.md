@@ -1,35 +1,39 @@
-# JavaScript：JavaScript Window Location 学习笔记
+# JavaScript：JavaScript Window Location
 
 - 来源：[JavaScript Window Location](https://www.runoob.com/js/js-window-location.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2824
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript Window Location` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+window.location 对象用于获得当前页面的地址 (URL)，并把浏览器重定向到新的页面。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## Window Location
 
-## 笔记模板
+window.location 对象在编写时可不使用 window 这个前缀。 一些例子：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+一些实例:
 
-## 完成标准
+- location.hostname 返回 web 主机的域名
+- location.pathname 返回当前页面的路径和文件名
+- location.port 返回 web 主机的端口 （80 或 443）
+- location.protocol 返回所使用的 web 协议（http: 或 https:）
 
-- 能用 3 到 5 句话解释 `JavaScript Window Location`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## Window Location href
+
+location.href 属性返回当前页面的 URL。
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `JavaScript Window Location` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,131 @@
-# MySQL：MySQL 处理重复数据 学习笔记
+# MySQL：MySQL 处理重复数据
 
 - 来源：[MySQL 处理重复数据](https://www.runoob.com/mysql/mysql-handling-duplicates.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1536
 
-## 学习目标
+## 本章内容
 
-MySQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MySQL 处理重复数据` 建立学习路径，先理解它在 MySQL 体系中的位置，再做可运行或可复述的验证。
+有些 MySQL 数据表中可能存在重复的记录，有些情况我们允许重复数据的存在，但有时候我们也需要删除这些重复的数据。
 
-## 阅读抓手
+本章节我们将为大家介绍如何防止数据表出现重复数据及如何删除数据表中的重复数据。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 防止表中出现重复数据
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+让我们尝试一个实例：下表中无索引及主键，所以该表允许出现多条重复记录。
 
-## 完成标准
+```text
+CREATE TABLE person_tbl
+(
+    first_name CHAR(20),
+    last_name CHAR(20),
+    sex CHAR(10)
+);
+```
 
-- 能用 3 到 5 句话解释 `MySQL 处理重复数据`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+如果你想设置表中字段 first_name，last_name 数据不能重复，你可以设置双主键模式来设置数据的唯一性， 如果你设置了双主键，那么那个键的默认值不能为 NULL，可设置为 NOT NULL。如下所示：
+
+```text
+CREATE TABLE person_tbl
+(
+   first_name CHAR(20) NOT NULL,
+   last_name CHAR(20) NOT NULL,
+   sex CHAR(10),
+   PRIMARY KEY (last_name, first_name)
+);
+```
+
+如果我们设置了唯一索引，那么在插入重复数据时，SQL 语句将无法执行成功,并抛出错。
+
+INSERT IGNORE INTO 与 INSERT INTO 的区别就是 INSERT IGNORE INTO 会忽略数据库中已经存在的数据，如果数据库没有数据，就插入新的数据，如果有数据的话就跳过这条数据。这样就可以保留数据库中已经存在数据，达到在间隙中插入数据的目的。
+
+以下实例使用了 INSERT IGNORE INTO，执行后不会出错，也不会向数据表中插入重复数据：
+
+```text
+mysql> INSERT IGNORE INTO person_tbl (last_name, first_name)
+    -> VALUES( 'Jay', 'Thomas');
+Query OK, 1 row affected (0.00 sec)
+mysql> INSERT IGNORE INTO person_tbl (last_name, first_name)
+    -> VALUES( 'Jay', 'Thomas');
+Query OK, 0 rows affected (0.00 sec)
+```
+
+INSERT IGNORE INTO 当插入数据时，在设置了记录的唯一性后，如果插入重复数据，将不返回错误，只以警告形式返回。 而 REPLACE INTO 如果存在 primary 或 unique 相同的记录，则先删除掉。再插入新记录。
+
+另一种设置数据的唯一性方法是添加一个 UNIQUE 索引，如下所示：
+
+```text
+CREATE TABLE person_tbl
+(
+   first_name CHAR(20) NOT NULL,
+   last_name CHAR(20) NOT NULL,
+   sex CHAR(10),
+   UNIQUE (last_name, first_name)
+);
+```
+
+
+## 统计重复数据
+
+以下我们将统计表中 first_name 和 last_name的重复记录数：
+
+```text
+mysql> SELECT COUNT(*) as repetitions, last_name, first_name
+    -> FROM person_tbl
+    -> GROUP BY last_name, first_name
+    -> HAVING repetitions > 1;
+```
+
+以上查询语句将返回 person_tbl 表中重复的记录数。 一般情况下，查询重复的值，请执行以下操作：
+
+- 确定哪一列包含的值可能会重复。
+- 在列选择列表使用COUNT(*)列出的那些列。
+- 在GROUP BY子句中列出的列。
+- HAVING子句设置重复数大于1。
+
+
+## 过滤重复数据
+
+如果你需要读取不重复的数据可以在 SELECT 语句中使用 DISTINCT 关键字来过滤重复数据。
+
+```text
+mysql> SELECT DISTINCT last_name, first_name
+    -> FROM person_tbl;
+```
+
+你也可以使用 GROUP BY 来读取数据表中不重复的数据：
+
+```text
+mysql> SELECT last_name, first_name
+    -> FROM person_tbl
+    -> GROUP BY (last_name, first_name);
+```
+
+
+## 删除重复数据
+
+如果你想删除数据表中的重复数据，你可以使用以下的SQL语句：
+
+```text
+mysql> CREATE TABLE tmp SELECT last_name, first_name, sex FROM person_tbl  GROUP BY (last_name, first_name, sex);
+mysql> DROP TABLE person_tbl;
+mysql> ALTER TABLE tmp RENAME TO person_tbl;
+```
+
+当然你也可以在数据表中添加 INDEX（索引） 和 PRIMAY KEY（主键）这种简单的方法来删除表中的重复记录。方法如下：
+
+```text
+mysql> ALTER IGNORE TABLE person_tbl
+    -> ADD PRIMARY KEY (last_name, first_name);
+```
+
+
+## 复习重点
+
+- 能说明 `MySQL 处理重复数据` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,192 @@
-# SQLite：SQLite 子查询 学习笔记
+# SQLite：SQLite 子查询
 
 - 来源：[SQLite 子查询](https://www.runoob.com/sqlite/sqlite-subquery.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1727
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite 子查询` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+子查询或称为内部查询、嵌套查询，指的是在 SQLite 查询中的 WHERE 子句中嵌入查询语句。
 
-## 阅读抓手
+一个 SELECT 语句的查询结果能够作为另一个语句的输入值。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+子查询可以与 SELECT、INSERT、UPDATE 和 DELETE 语句一起使用，可伴随着使用运算符如 =、<、>、>=、<=、IN、BETWEEN 等。
 
-## 笔记模板
+以下是子查询必须遵循的几个规则：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- 子查询必须用括号括起来。
+- 子查询在 SELECT 子句中只能有一个列，除非在主查询中有多列，与子查询的所选列进行比较。
+- ORDER BY 不能用在子查询中，虽然主查询可以使用 ORDER BY。可以在子查询中使用 GROUP BY，功能与 ORDER BY 相同。
+- 子查询返回多于一行，只能与多值运算符一起使用，如 IN 运算符。
+- BETWEEN 运算符不能与子查询一起使用，但是，BETWEEN 可在子查询内使用。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `SQLite 子查询`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## SELECT 语句中的子查询使用
+
+子查询通常与 SELECT 语句一起使用。基本语法如下：
+
+```text
+SELECT column_name [, column_name ]
+FROM   table1 [, table2 ]
+WHERE  column_name OPERATOR
+      (SELECT column_name [, column_name ]
+      FROM table1 [, table2 ]
+      [WHERE])
+```
+
+
+## 实例
+
+假设 COMPANY 表有以下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+现在，让我们检查 SELECT 语句中的子查询使用：
+
+```text
+sqlite> SELECT *
+     FROM COMPANY
+     WHERE ID IN (SELECT ID
+                  FROM COMPANY
+                  WHERE SALARY > 45000) ;
+```
+
+这将产生以下结果:
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+```
+
+
+## INSERT 语句中的子查询使用
+
+子查询也可以与 INSERT 语句一起使用。INSERT 语句使用子查询返回的数据插入到另一个表中。在子查询中所选择的数据可以用任何字符、日期或数字函数修改。
+
+基本语法如下：
+
+```text
+INSERT INTO table_name [ (column1 [, column2 ]) ]
+           SELECT [ *|column1 [, column2 ]
+           FROM table1 [, table2 ]
+           [ WHERE VALUE OPERATOR ]
+```
+
+
+## 实例
+
+假设 COMPANY_BKP 的结构与 COMPANY 表相似，且可使用相同的 CREATE TABLE 进行创建，只是表名改为 COMPANY_BKP。现在把整个 COMPANY 表复制到 COMPANY_BKP，语法如下：
+
+```text
+sqlite> INSERT INTO COMPANY_BKP
+     SELECT * FROM COMPANY
+     WHERE ID IN (SELECT ID
+                  FROM COMPANY) ;
+```
+
+
+## UPDATE 语句中的子查询使用
+
+子查询可以与 UPDATE 语句结合使用。当通过 UPDATE 语句使用子查询时，表中单个或多个列被更新。
+
+基本语法如下：
+
+```text
+UPDATE table
+SET column_name = new_value
+[ WHERE OPERATOR [ VALUE ]
+   (SELECT COLUMN_NAME
+   FROM TABLE_NAME)
+   [ WHERE) ]
+```
+
+
+## 实例
+
+假设，我们有 COMPANY_BKP 表，是 COMPANY 表的备份。
+
+下面的实例把 COMPANY 表中所有 AGE 大于或等于 27 的客户的 SALARY 更新为原来的 0.50 倍：
+
+```text
+sqlite> UPDATE COMPANY
+     SET SALARY = SALARY * 0.50
+     WHERE AGE IN (SELECT AGE FROM COMPANY_BKP
+                   WHERE AGE >= 27 );
+```
+
+这将影响两行，最后 COMPANY 表中的记录如下：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  10000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       42500.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+
+## DELETE 语句中的子查询使用
+
+子查询可以与 DELETE 语句结合使用，就像上面提到的其他语句一样。
+
+基本语法如下：
+
+```text
+DELETE FROM TABLE_NAME
+[ WHERE OPERATOR [ VALUE ]
+   (SELECT COLUMN_NAME
+   FROM TABLE_NAME)
+   [ WHERE) ]
+```
+
+
+## 实例
+
+假设，我们有 COMPANY_BKP 表，是 COMPANY 表的备份。
+
+下面的实例删除 COMPANY 表中所有 AGE 大于或等于 27 的客户记录：
+
+```text
+sqlite> DELETE FROM COMPANY
+     WHERE AGE IN (SELECT AGE FROM COMPANY_BKP
+                   WHERE AGE > 27 );
+```
+
+这将影响两行，最后 COMPANY 表中的记录如下：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       42500.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite 子查询` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

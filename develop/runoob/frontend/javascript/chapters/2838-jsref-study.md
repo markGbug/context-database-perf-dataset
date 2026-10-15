@@ -1,35 +1,91 @@
-# JavaScript：JavaScript 对象 学习笔记
+# JavaScript：JavaScript 和 HTML DOM 参考手册
 
 - 来源：[JavaScript 对象](https://www.runoob.com/jsref/jsref-tutorial.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2838
 
-## 学习目标
+## 本章内容
 
-JavaScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JavaScript 对象` 建立学习路径，先理解它在 JavaScript 体系中的位置，再做可运行或可复述的验证。
+所有内置的JavaScript对象
 
-## 阅读抓手
+所有浏览器对象
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+所有HTML DOM对象
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## JavaScript 对象参考手册
 
-## 完成标准
+参考手册描述了每个对象的属性和方法，并提供了在线实例。
 
-- 能用 3 到 5 句话解释 `JavaScript 对象`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- Array 对象
+- Boolean 对象
+- Date 对象
+- Math 对象
+- Number 对象
+- String 对象
+- RegExp 对象
+- 全局属性和函数
+
+
+## Browser 对象参考手册
+
+参考手册描述了每个对象的属性和方法，并提供了在线实例。
+
+- Window 对象
+- Navigator 对象
+- Screen 对象
+- History 对象
+- Location 对象
+
+
+## HTML DOM 参考手册
+
+参考手册描述了 HTML DOM 的属性和方法，并提供在线实例。
+
+- HTML Document
+- HTML Element
+- HTML Attributes
+- HTML Events
+
+
+## HTML DOM 元素对象参考手册
+
+参考手册描述了每个对象的属性和方法，并提供了在线实例。
+
+- Anchor 对象
+- Area 对象
+- Base 对象
+- Body 对象
+- Button 对象
+- Form 对象
+- Frame/IFrame 对象
+- Frameset 对象
+- Image 对象
+- Input Button 对象
+- Input Checkbox 对象
+- Input File 对象
+- Input Hidden 对象
+- Input Password 对象
+- Input Radio 对象
+- Input Reset 对象
+- Input Submit 对象
+- Input Text 对象
+- Link 对象
+- Meta 对象
+- Object 对象
+- Option 对象
+- Select 对象
+- Style 对象
+- Table 对象
+- td / th 对象
+- tr 对象
+
+
+## 复习重点
+
+- 能说明 `JavaScript 对象` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

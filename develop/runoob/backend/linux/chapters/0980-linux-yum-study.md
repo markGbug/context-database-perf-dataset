@@ -1,35 +1,175 @@
-# Linux：linux yum 命令 学习笔记
+# Linux：Linux yum 命令
 
 - 来源：[linux yum 命令](https://www.runoob.com/linux/linux-yum.html)
 - 分类：后端开发
 - 技术：Linux
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0980
 
-## 学习目标
+## 本章内容
 
-Linux 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `linux yum 命令` 建立学习路径，先理解它在 Linux 体系中的位置，再做可运行或可复述的验证。
+yum 是 CentOS 5/6/7、RHEL 5/6/7 默认包管理器，依赖解析性能较差，复杂依赖场景易卡顿，目前官方已停止维护。
 
-## 阅读抓手
+从 CentOS 8、RHEL 8 及以上版本开始，系统默认采用继任工具 dnf；dnf 向下兼容绝大多数 yum 命令，使用习惯基本一致。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+yum（ Yellow dog Updater, Modified）是一个在 Fedora 和 RedHat 以及 SUSE 中的 Shell 前端软件包管理器。
 
-## 笔记模板
+CentOS 8、RHEL 8 及以上版本开始请使用 dnf 命令：https://www.runoob.com/linux/linux-comm-dnf.html
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+基于 RPM 包管理，能够从指定的服务器自动下载 RPM 包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装。
 
-## 完成标准
+yum 提供了查找、安装、删除某一个、一组甚至全部软件包的命令，而且命令简洁而又好记。
 
-- 能用 3 到 5 句话解释 `linux yum 命令`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### yum 语法
+
+```text
+yum [options] [command] [package ...]
+```
+
+- options：可选，选项包括-h（帮助），-y（当安装过程提示选择全部为 "yes"），-q（不显示安装的过程）等等。
+- command：要进行的操作。
+- package：安装的包名。
+
+
+## yum常用命令
+
+- 1. 列出所有可更新的软件清单命令：yum check-update
+- 2. 更新所有软件命令：yum update
+- 3. 仅安装指定的软件命令：yum install <package_name>
+- 4. 仅更新指定的软件命令：yum update <package_name>
+- 5. 列出所有可安裝的软件清单命令：yum list
+- 6. 删除软件包命令：yum remove <package_name>
+- 7. 查找软件包命令：yum search <keyword>
+- 8. 清除缓存命令: yum clean packages: 清除缓存目录下的软件包 yum clean headers: 清除缓存目录下的 headers yum clean oldheaders: 清除缓存目录下旧的 headers yum clean, yum clean all (= yum clean packages; yum clean oldheaders) :清除缓存目录下的软件包及旧的 headers
+
+
+### 实例 1
+
+安装 pam-devel
+
+```text
+[root@www ~]# yum install pam-devel
+Setting up Install Process
+Parsing package install arguments
+Resolving Dependencies  <==先检查软件的属性相依问题
+--> Running transaction check
+---> Package pam-devel.i386 0:0.99.6.2-4.el5 set to be updated
+--> Processing Dependency: pam = 0.99.6.2-4.el5 for package: pam-devel
+--> Running transaction check
+---> Package pam.i386 0:0.99.6.2-4.el5 set to be updated
+filelists.xml.gz          100% |=========================| 1.6 MB    00:05
+filelists.xml.gz          100% |=========================| 138 kB    00:00
+-> Finished Dependency Resolution
+……(省略)
+```
+
+
+### 实例 2
+
+移除 pam-devel
+
+```text
+[root@www ~]# yum remove pam-devel
+Setting up Remove Process
+Resolving Dependencies  <==同样的，先解决属性相依的问题
+--> Running transaction check
+---> Package pam-devel.i386 0:0.99.6.2-4.el5 set to be erased
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=============================================================================
+ Package                 Arch       Version          Repository        Size
+=============================================================================
+Removing:
+ pam-devel               i386       0.99.6.2-4.el5   installed         495 k
+
+Transaction Summary
+=============================================================================
+Install      0 Package(s)
+Update       0 Package(s)
+Remove       1 Package(s)  <==还好，并没有属性相依的问题，单纯移除一个软件
+
+Is this ok [y/N]: y
+Downloading Packages:
+Running rpm_check_debug
+Running Transaction Test
+Finished Transaction Test
+Transaction Test Succeeded
+Running Transaction
+  Erasing   : pam-devel                    ######################### [1/1]
+
+Removed: pam-devel.i386 0:0.99.6.2-4.el5
+Complete!
+```
+
+
+### 实例 3
+
+利用 yum 的功能，找出以 pam 为开头的软件名称有哪些？
+
+```text
+[root@www ~]# yum list pam*
+Installed Packages
+pam.i386                  0.99.6.2-3.27.el5      installed
+pam_ccreds.i386           3-5                    installed
+pam_krb5.i386             2.2.14-1               installed
+pam_passwdqc.i386         1.0.2-1.2.2            installed
+pam_pkcs11.i386           0.5.3-23               installed
+pam_smb.i386              1.1.7-7.2.1            installed
+Available Packages <==底下则是『可升级』的或『未安装』的
+pam.i386                  0.99.6.2-4.el5         base
+pam-devel.i386            0.99.6.2-4.el5         base
+pam_krb5.i386             2.2.14-10              base
+```
+
+
+## 国内 yum 源
+
+网易（163）yum 源是国内较好的 yum 源之一 ，无论是速度还是软件版本，都非常的不错。
+
+将yum源设置为163 yum，可以提升软件包安装和更新的速度，同时避免一些常见软件版本无法找到。
+
+
+### 安装步骤
+
+首先备份/etc/yum.repos.d/CentOS-Base.repo
+
+```text
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+```
+
+下载对应版本 repo 文件, 放入 /etc/yum.repos.d/ (操作前请做好相应备份)
+
+- CentOS5 ：http://mirrors.163.com/.help/CentOS5-Base-163.repo
+- CentOS6 ：http://mirrors.163.com/.help/CentOS6-Base-163.repo
+- CentOS7 ：http://mirrors.163.com/.help/CentOS7-Base-163.repo
+
+```text
+wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
+mv CentOS6-Base-163.repo CentOS-Base.repo
+```
+
+运行以下命令生成缓存
+
+```text
+yum clean all
+yum makecache
+```
+
+除了网易之外，国内还有其他不错的 yum 源，比如中科大和搜狐。
+
+中科大的 yum 源，安装方法查看：https://lug.ustc.edu.cn/wiki/mirrors/help/centos
+
+sohu 的 yum 源安装方法查看: http://mirrors.sohu.com/help/centos.html
+
+阿里云的源：https://developer.aliyun.com/mirror/centos
+
+
+## 复习重点
+
+- 能说明 `linux yum 命令` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,96 @@
-# HTML5：HTML 脚本 学习笔记
+# HTML5：HTML 脚本
 
 - 来源：[HTML 脚本](https://www.runoob.com/html/html-scripts.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2699
 
-## 学习目标
+## 本章内容
 
-HTML5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `HTML 脚本` 建立学习路径，先理解它在 HTML5 体系中的位置，再做可运行或可复述的验证。
+JavaScript 使 HTML 页面具有更强的动态和交互性。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 在线实例
 
-## 笔记模板
+插入一段脚本 如何将脚本插入 HTML 文档。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+使用 <noscript> 标签 如何应对不支持脚本或禁用脚本的浏览器。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `HTML 脚本`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## HTML <script> 标签
+
+<script> 标签用于定义客户端脚本，比如 JavaScript。
+
+<script> 元素既可包含脚本语句，也可通过 src 属性指向外部脚本文件。
+
+JavaScript 最常用于图片操作、表单验证以及内容动态更新。
+
+下面的脚本会向浏览器输出"Hello World!"：
+
+
+## 实例
+
+```html
+<script>
+document.write("Hello World!");
+</script>
+```
+
+Tip: 学习更多关于Javascript教程，请查看JavaScript 教程!
+
+
+## HTML<noscript> 标签
+
+<noscript> 标签提供无法使用脚本时的替代内容，比方在浏览器禁用脚本时，或浏览器不支持客户端脚本时。
+
+<noscript>元素可包含普通 HTML 页面的 body 元素中能够找到的所有元素。
+
+只有在浏览器不支持脚本或者禁用脚本时，才会显示 <noscript> 元素中的内容：
+
+
+## 实例
+
+```html
+<script>
+document.write("Hello World!")
+</script>
+<noscript>抱歉，你的浏览器不支持 JavaScript!</noscript>
+```
+
+
+## JavaScript体验(来自本站javascript教程)
+
+JavaScript实例代码:
+
+
+## JavaScript可以直接在HTML输出:
+
+```html
+document.write("<p>这是一个段落。</p>");
+```
+
+
+## JavaScript事件响应:
+
+```html
+<button type="button" onclick="myFunction()">点我！</button>
+```
+
+
+## JavaScript处理 HTML 样式:
+
+```text
+document.getElementById("demo").style.color="#ff0000";
+```
+
+
+## HTML 脚本标签
+
+
+## 复习重点
+
+- 能说明 `HTML 脚本` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

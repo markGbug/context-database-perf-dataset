@@ -1,35 +1,187 @@
-# Vue.js：Vue.js 表单 学习笔记
+# Vue.js：Vue.js 表单
 
 - 来源：[Vue.js 表单](https://www.runoob.com/vue2/vue-forms.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3258
 
-## 学习目标
+## 本章内容
 
-Vue.js 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Vue.js 表单` 建立学习路径，先理解它在 Vue.js 体系中的位置，再做可运行或可复述的验证。
+这节我们为大家介绍 Vue.js 表单上的应用。
 
-## 阅读抓手
+你可以用 v-model 指令在表单控件元素上创建双向数据绑定。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+v-model 会根据控件类型自动选取正确的方法来更新元素。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 输入框
 
-## 完成标准
+实例中演示了 input 和 textarea 元素中使用 v-model 实现双向数据绑定：
 
-- 能用 3 到 5 句话解释 `Vue.js 表单`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<div id="app">
+  <p>input 元素：</p>
+  <input v-model="message" placeholder="编辑我……">
+  <p>消息是: {{ message }}</p>
+
+  <p>textarea 元素：</p>
+  <p style="white-space: pre">{{ message2 }}</p>
+  <textarea v-model="message2" placeholder="多行文本输入……"></textarea>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    message: 'Runoob',
+    message2: '菜鸟教程\r\nhttp://www.runoob.com'
+  }
+})
+</script>
+```
+
+
+### 复选框
+
+复选框如果是一个逻辑值，如果是多个则绑定到同一个数组：
+
+
+## 复选框
+
+以下实例中演示了复选框的双向数据绑定：
+
+```html
+<div id="app">
+  <p>单个复选框：</p>
+  <input type="checkbox" id="checkbox" v-model="checked">
+  <label for="checkbox">{{ checked }}</label>
+
+  <p>多个复选框：</p>
+  <input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
+  <label for="runoob">Runoob</label>
+  <input type="checkbox" id="google" value="Google" v-model="checkedNames">
+  <label for="google">Google</label>
+  <input type="checkbox" id="taobao" value="Taobao" v-model="checkedNames">
+  <label for="taobao">taobao</label>
+  <br>
+  <span>选择的值为: {{ checkedNames }}</span>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    checked : false,
+    checkedNames: []
+  }
+})
+</script>
+```
+
+实例中勾选复选框效果如下所示：
+
+
+### 单选按钮
+
+以下实例中演示了单选按钮的双向数据绑定：
+
+
+## 单选按钮
+
+```html
+<div id="app">
+  <input type="radio" id="runoob" value="Runoob" v-model="picked">
+  <label for="runoob">Runoob</label>
+  <br>
+  <input type="radio" id="google" value="Google" v-model="picked">
+  <label for="google">Google</label>
+  <br>
+  <span>选中值为: {{ picked }}</span>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    picked : 'Runoob'
+  }
+})
+</script>
+```
+
+选中后，效果如下图所示：
+
+
+### select 列表
+
+以下实例中演示了下拉列表的双向数据绑定：
+
+
+## select
+
+```html
+<div id="app">
+  <select v-model="selected" name="fruit">
+    <option value="">选择一个网站</option>
+    <option value="www.runoob.com">Runoob</option>
+    <option value="www.google.com">Google</option>
+  </select>
+
+  <div id="output">
+      选择的网站是: {{selected}}
+  </div>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    selected: ''
+  }
+})
+</script>
+```
+
+选取 Runoob，输出效果如下所示：
+
+
+## 修饰符
+
+
+### .lazy
+
+在默认情况下， v-model 在 input 事件中同步输入框的值与数据，但你可以添加一个修饰符 lazy ，从而转变为在 change 事件中同步：
+
+```html
+<!-- 在 "change" 而不是 "input" 事件中更新 -->
+<input v-model.lazy="msg" >
+```
+
+
+### .number
+
+如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值：
+
+```html
+<input v-model.number="age" type="number">
+```
+
+这通常很有用，因为在 type="number" 时 HTML 中输入的值也总是会返回字符串类型。
+
+
+### .trim
+
+如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入：
+
+```html
+<input v-model.trim="msg">
+```
+
+
+## 复习重点
+
+- 能说明 `Vue.js 表单` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

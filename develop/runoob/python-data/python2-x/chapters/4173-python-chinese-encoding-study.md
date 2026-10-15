@@ -1,35 +1,72 @@
-# Python2.x：Python 中文编码 学习笔记
+# Python2.x：Python 中文编码
 
 - 来源：[Python 中文编码](https://www.runoob.com/python/python-chinese-encoding.html)
 - 分类：Python / 数据科学
 - 技术：Python2.x
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4173
 
-## 学习目标
+## 本章内容
 
-Python2.x 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python 中文编码` 建立学习路径，先理解它在 Python2.x 体系中的位置，再做可运行或可复述的验证。
+前面章节中我们已经学会了如何用 Python 输出 "Hello, World!"，英文没有问题，但是如果你输出中文字符 "你好，世界" 就有可能会碰到中文编码问题。
 
-## 阅读抓手
+Python 文件中如果未指定编码，在执行过程会出现报错：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```java
+#!/usr/bin/python
 
-## 笔记模板
+print ("你好，世界")
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+以上程序执行输出结果为：
 
-## 完成标准
+```text
+  File "test.py", line 2
+SyntaxError: Non-ASCII character '\xe4' in file test.py on line 2, but no encoding declared; see http://www.python.org/peps/pep-0263.html for details
+```
 
-- 能用 3 到 5 句话解释 `Python 中文编码`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Python中默认的编码格式是 ASCII 格式，在没修改编码格式时无法正确打印汉字，所以在读取中文时会报错。
+
+解决方法为只要在文件开头加入 # -*- coding: UTF-8 -*- 或者 # coding=utf-8 就行了
+
+注意：# coding=utf-8 的 = 号两边不要空格。
+
+
+## 实例(Python 2.0+)
+
+```text
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+print( "你好，世界" )
+```
+
+输出结果为：
+
+```text
+你好，世界
+```
+
+所以如果大家在学习过程中，代码中包含中文，就需要在头部指定编码。
+
+注意：Python3.X 源码文件默认使用utf-8编码，所以可以正常解析中文，无需指定 UTF-8 编码。
+
+注意：如果你使用编辑器，同时需要设置 py 文件存储的格式为 UTF-8，否则会出现类似以下错误信息：
+
+```text
+SyntaxError: (unicode error) ‘utf-8’ codec can’t decode byte 0xc4 in position 0:
+invalid continuation byte
+```
+
+Pycharm 设置步骤：
+
+- 进入 file > Settings，在输入框搜索 encoding。
+- 找到 Editor > File encodings，将 IDE Encoding 和 Project Encoding 设置为utf-8。
+
+
+## 复习重点
+
+- 能说明 `Python 中文编码` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

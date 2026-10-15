@@ -1,35 +1,36 @@
-# XML Schema：XML Schema any 元素 学习笔记
+# XML Schema：XSD <any> 元素
 
 - 来源：[XML Schema any 元素](https://www.runoob.com/schema/schema-complex-any.html)
 - 分类：XML / Web Service
 - 技术：XML Schema
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4426
 
-## 学习目标
+## 本章内容
 
-XML Schema 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XML Schema any 元素` 建立学习路径，先理解它在 XML Schema 体系中的位置，再做可运行或可复述的验证。
+<any> 元素使我们有能力通过未被 schema 规定的元素来拓展 XML 文档！
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## <any> 元素
 
-## 笔记模板
+<any> 元素使我们有能力通过未被 schema 规定的元素来拓展 XML 文档！
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+下面这个例子是从名为 "family.xsd" 的 XML schema 中引用的片段。它展示了一个针对 "person" 元素的声明。通过使用 <any> 元素，我们可以通过任何元素（在 <lastname> 之后）扩展 "person" 的内容：
 
-## 完成标准
+现在，我们希望使用 "children" 元素来扩展 "person" 元素。这此种情况下我们就可以这么做，即使以上这个 schema 的作者没有声明任何 "children" 元素。
 
-- 能用 3 到 5 句话解释 `XML Schema any 元素`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+请看这个 schema 文件，名为 "children.xsd"：
+
+下面这个 XML 文件（名为 "Myfamily.xml"），使用了来自两个不同的 schema 中的成分，"family.xsd" 和 "children.xsd"：
+
+上面这个 XML 文件是有效的，这是由于 schema "family.xsd" 允许我们通过在 "lastname" 元素后的可选元素来扩展 "person" 元素。
+
+<any> 和 <anyAttribute> 均可用于制作可扩展的文档！它们使文档有能力包含未在主 XML schema 中声明过的附加元素。
+
+
+## 复习重点
+
+- 能说明 `XML Schema any 元素` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

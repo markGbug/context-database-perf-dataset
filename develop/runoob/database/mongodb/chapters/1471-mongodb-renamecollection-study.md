@@ -1,35 +1,97 @@
-# MongoDB：MongoDB 更新集合名 学习笔记
+# MongoDB：MongoDB 更新集合名
 
 - 来源：[MongoDB 更新集合名](https://www.runoob.com/mongodb/mongodb-renamecollection.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1471
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 更新集合名` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+在 MongoDB 中，不能直接通过命令来重命名集合。
 
-## 阅读抓手
+MongoDB 可以使用 renameCollection 方法来来重命名集合。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+renameCollection 方法在 MongoDB 的 admin 数据库中运行，可以将一个集合重命名为另一个名称。
 
-## 笔记模板
+renameCollection 命令的语法：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+db.adminCommand({
+  renameCollection: "sourceDb.sourceCollection",
+  to: "targetDb.targetCollection",
+  dropTarget: <boolean>
+})
+```
 
-## 完成标准
+参数说明：
 
-- 能用 3 到 5 句话解释 `MongoDB 更新集合名`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- renameCollection：要重命名的集合的完全限定名称（包括数据库名）。
+- to：目标集合的完全限定名称（包括数据库名）。
+- dropTarget（可选）：布尔值。如果目标集合已经存在，是否删除目标集合。默认值为 false。
+
+
+### 实例
+
+假设你要将 test 数据库中的 oldCollection 重命名为 newCollection，可以按以下步骤进行：
+
+1. 确保已连接到 test 数据库
+
+```text
+use test
+```
+
+2. 运行 renameCollection 命令
+
+```text
+db.adminCommand({
+  renameCollection: "test.oldCollection",
+  to: "test.newCollection"
+});
+```
+
+如果你要将集合重命名到另一个数据库，例如将 test 数据库中的 oldCollection 重命名为 production 数据库中的 newCollection，可以这样做：
+
+```text
+db.adminCommand({
+  renameCollection: "test.oldCollection",
+  to: "production.newCollection"
+});
+```
+
+
+### 注意事项
+
+- 权限要求：执行 renameCollection 命令需要具有对源数据库和目标数据库的适当权限。通常需要 dbAdmin 或 dbOwner 角色。
+- 目标集合不存在：目标集合不能已经存在。如果目标集合存在，则会返回错误。
+- 索引和数据：重命名集合会保留所有文档和索引。
+
+
+### 检查重命名结果
+
+重命名后，可以通过以下命令检查新的集合是否存在：
+
+```text
+use test
+show collections
+```
+
+如果集合已重命名为 newCollection，你应该会在结果中看到 newCollection。
+
+
+### 处理重命名失败的情况
+
+如果重命名过程中发生错误，你可以根据错误消息采取相应的措施。例如，如果目标集合已经存在，可以先删除目标集合（如果确认不需要），然后重新执行重命名操作：
+
+
+## 实例
+
+通过 renameCollection 方法，你可以有效地管理 MongoDB 集合的名称，确保数据库结构符合应用需求。
+
+
+## 复习重点
+
+- 能说明 `MongoDB 更新集合名` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

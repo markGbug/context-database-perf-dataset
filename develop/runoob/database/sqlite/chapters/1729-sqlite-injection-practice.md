@@ -1,34 +1,70 @@
-# SQLite：SQLite 注入 练习笔记
+# SQLite：SQLite 注入
 
 - 来源：[SQLite 注入](https://www.runoob.com/sqlite/sqlite-injection.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1729
 
-## 练习目标
+## 本章内容
 
-把 `SQLite 注入` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+如果您的站点允许用户通过网页输入，并将输入内容插入到 SQLite 数据库中，这个时候您就面临着一个被称为 SQL 注入的安全问题。本章节将向您讲解如何防止这种情况的发生，确保脚本和 SQLite 语句的安全。
 
-## 练习步骤
+注入通常在请求用户输入时发生，比如需要用户输入姓名，但用户却输入了一个 SQLite 语句，而这语句就会在不知不觉中在数据库上运行。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+永远不要相信用户提供的数据，所以只处理通过验证的数据，这项规则是通过模式匹配来完成的。在下面的实例中，用户名 username 被限制为字母数字字符或者下划线，长度必须在 8 到 20 个字符之间 - 请根据需要修改这些规则。
 
-## 验收清单
+```text
+if (preg_match("/^\w{8,20}$/", $_GET['username'], $matches)){
+   $db = new SQLiteDatabase('filename');
+   $result = @$db->query("SELECT * FROM users WHERE username=$matches[0]");
+}else{
+   echo "username not accepted";
+}
+```
 
-- 我能独立说出 `SQLite 注入` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+为了演示这个问题，假设考虑此摘录：To demonstrate the problem, consider this excerpt:
 
-## 复盘问题
+```text
+$name = "Qadir'; DELETE FROM users;";
+@$db->query("SELECT * FROM users WHERE username='{$name}'");
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+函数调用是为了从用户表中检索 name 列与用户指定的名称相匹配的记录。正常情况下，$name 只包含字母数字字符或者空格，比如字符串 ilia。但在这里，向 $name 追加了一个全新的查询，这个对数据库的调用将会造成灾难性的问题：注入的 DELETE 查询会删除 users 的所有记录。
+
+虽然已经存在有不允许查询堆叠或在单个函数调用中执行多个查询的数据库接口，如果尝试堆叠查询，则会调用失败，但 SQLite 和 PostgreSQL 里仍进行堆叠查询，即执行在一个字符串中提供的所有查询，这会导致严重的安全问题。
+
+
+## 防止 SQL 注入
+
+在脚本语言中，比如 PERL 和 PHP，您可以巧妙地处理所有的转义字符。编程语言 PHP 提供了字符串函数 SQLite3::escapeString($string) 和 sqlite_escape_string() 来转义对于 SQLite 来说比较特殊的输入字符。
+
+注意：使用函数 sqlite_escape_string() 的 PHP 版本要求为 PHP 5 < 5.4.0。
+
+更高版本 PHP 5 >= 5.3.0, PHP 7 使用以上函数:
+
+```text
+SQLite3::escapeString($string);//$string为要转义的字符串
+```
+
+以下方式在最新版本的 PHP 中不支持：
+
+```text
+if (get_magic_quotes_gpc())
+{
+  $name = sqlite_escape_string($name);
+}
+$result = @$db->query("SELECT * FROM users WHERE username='{$name}'");
+```
+
+虽然编码使得插入数据变得安全，但是它会呈现简单的文本比较，在查询中，对于包含二进制数据的列，LIKE 子句是不可用的。
+
+请注意，addslashes() 不应该被用在 SQLite 查询中引用字符串，它会在检索数据时导致奇怪的结果。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite 注入` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

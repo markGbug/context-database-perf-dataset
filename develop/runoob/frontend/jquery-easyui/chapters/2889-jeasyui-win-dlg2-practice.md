@@ -1,34 +1,65 @@
-# jQuery EasyUI：jEasyUI 自定义对话框 练习笔记
+# jQuery EasyUI：jQuery EasyUI 窗口 - 自定义带有工具条和按钮的对话框
 
 - 来源：[jEasyUI 自定义对话框](https://www.runoob.com/jeasyui/jeasyui-win-dlg2.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2889
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 自定义对话框` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+您可以创建一个带有工具栏（toolbar）和按钮（button）的对话框（dialog），可以从 HTML 标记创建。这个教程描述如何添加工具栏（toolbar）和按钮（button）到对话框（dialog），没有任何的 javascript 代码。
 
-## 练习步骤
+```html
+    <div id="dd" class="easyui-dialog" title="My Dialog" style="width:400px;height:200px;padding:10px"
+            toolbar="#dlg-toolbar" buttons="#dlg-buttons">
+        Dialog Content.
+    </div>
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <div id="dlg-toolbar">
+        <table cellpadding="0" cellspacing="0" style="width:100%">
+            <tr>
+                <td>
+                    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true">Edit</a>
+                    <a href="#" class="easyui-linkbutton" iconCls="icon-help" plain="true">Help</a>
+                </td>
+                <td style="text-align:right">
+                    <input></input><a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+```
 
-## 验收清单
+```html
+    <div id="dlg-buttons">
+        <table cellpadding="0" cellspacing="0" style="width:100%">
+            <tr>
+                <td>
+                    <img src="email.gif"/>
+                </td>
+                <td style="text-align:right">
+                    <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="javascript:alert('save')">Save</a>
+                    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dd').dialog('close')">Close</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+```
 
-- 我能独立说出 `jEasyUI 自定义对话框` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+请注意，对话框（dialog）的工具栏（toolbar）和按钮（buttons）属性也可以通过 string 值指定，它将充当作为一个选择器去选择一个适当的 DIV 元素，并追加到工具栏（toolbar）或者按钮（buttons）的位置。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 下载 jQuery EasyUI 实例
+
+jeasyui-win-dlg2.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 自定义对话框` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

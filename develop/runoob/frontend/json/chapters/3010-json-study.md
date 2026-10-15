@@ -1,35 +1,65 @@
-# JSON：JSON 教程 学习笔记
+# JSON：JSON 教程
 
 - 来源：[JSON 教程](https://www.runoob.com/json/json-tutorial.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3010
 
-## 学习目标
+## 本章内容
 
-JSON 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JSON 教程` 建立学习路径，先理解它在 JSON 体系中的位置，再做可运行或可复述的验证。
+JSON: JavaScript Object Notation(JavaScript 对象表示法)
 
-## 阅读抓手
+JSON 是存储和交换文本信息的语法，类似 XML。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+JSON 比 XML 更小、更快，更易解析。
 
-## 笔记模板
+JSON 易于人阅读和编写。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+C、Python、C++、Java、PHP、Go 等编程语言都支持 JSON。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `JSON 教程`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## JSON 实例
+
+```text
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+这个 sites 对象是包含 3 个站点记录（对象）的数组。
+
+
+## 什么是 JSON ？
+
+- JSON 指的是 JavaScript 对象表示法（JavaScript Object Notation）
+- JSON 是轻量级的文本数据交换格式
+- JSON 独立于语言：JSON 使用 Javascript语法来描述数据对象，但是 JSON 仍然独立于语言和平台。JSON 解析器和 JSON 库支持许多不同的编程语言。 目前非常多的动态（PHP，JSP，.NET）编程语言都支持 JSON
+- JSON 具有自我描述性，更易理解
+
+
+## JSON - 转换为 JavaScript 对象
+
+JSON 文本格式在语法上与创建 JavaScript 对象的代码相同。
+
+由于这种相似性，无需解析器，JavaScript 程序能够使用内建的 eval() 函数，用 JSON 数据来生成原生的 JavaScript 对象。
+
+
+## JSON 工具
+
+- JSON 格式化工具：https://www.jyshare.com/front-end/53/
+- JSON 转义/去除转义：https://www.jyshare.com/front-end/7683/
+- JSON 在线解析工具：https://www.jyshare.com/front-end/7438/
+- JSON 差异对比工具：https://www.jyshare.com/front-end/9557/
+
+
+## 复习重点
+
+- 能说明 `JSON 教程` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

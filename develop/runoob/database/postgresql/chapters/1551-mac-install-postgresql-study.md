@@ -1,35 +1,63 @@
-# PostgreSQL：Mac OS 上安装 PostgreSQL 学习笔记
+# PostgreSQL：Mac OS 上安装 PostgreSQL
 
 - 来源：[Mac OS 上安装 PostgreSQL](https://www.runoob.com/postgresql/mac-install-postgresql.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1551
 
-## 学习目标
+## 本章内容
 
-PostgreSQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Mac OS 上安装 PostgreSQL` 建立学习路径，先理解它在 PostgreSQL 体系中的位置，再做可运行或可复述的验证。
+## Mac OS 上安装 PostgreSQL
 
-## 阅读抓手
+使用 EnterpriseDB 来下载安装，EnterpriseDB 是全球唯一一家提供基于 PostgreSQL 企业级产品与服务的厂商。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+下载地址：https://www.enterprisedb.com/downloads/postgres-postgresql-downloads。
 
-## 笔记模板
+下载 postgresql-****-osx.dmg 文件，双击安装文件：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+这时会要求你输入管理员密码，输入即可，之后弹出安装向导：
 
-## 完成标准
+接下来就是一些基本的配置，比如：安装目录、扩展安装、数据库目录、用户密码、端口设置等，一般使用默认的就好，直接点 Next：
 
-- 能用 3 到 5 句话解释 `Mac OS 上安装 PostgreSQL`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+最后，点击 Finish 即可：
+
+执行以下脚本启动 PostgreSQL。
+
+以下几个选项你可以自己输入，或者用默认的，默认回车就行，密码的地方为刚才你在安装过程中设置的密码：
+
+```text
+$ /Library/PostgreSQL/11/scripts/runpsql.sh ;exit
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+psql (11.3)
+Type "help" for help.
+
+postgres=#
+```
+
+
+### pgAdmin 4
+
+打开 pgAdmin 4：
+
+或者在屏幕右上方点击大象头像的图标：
+
+pgAdmin 主页如下
+
+点击左侧的 Servers > Postgre SQL 10
+
+输入密码，点击 OK 即可
+
+控制面板如下
+
+
+## 复习重点
+
+- 能说明 `Mac OS 上安装 PostgreSQL` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

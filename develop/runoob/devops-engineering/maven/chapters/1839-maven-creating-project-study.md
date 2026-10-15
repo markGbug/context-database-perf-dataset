@@ -1,35 +1,106 @@
-# Maven：Maven 构建 Java 项目 学习笔记
+# Maven：Maven 构建 Java 项目
 
 - 来源：[Maven 构建 Java 项目](https://www.runoob.com/maven/maven-creating-project.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1839
 
-## 学习目标
+## 本章内容
 
-Maven 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Maven 构建 Java 项目` 建立学习路径，先理解它在 Maven 体系中的位置，再做可运行或可复述的验证。
+Maven 使用原型 archetype 插件创建项目。要创建一个简单的 Java 应用，我们将使用 maven-archetype-quickstart 插件。
 
-## 阅读抓手
+在下面的例子中，我们将在 C:\MVN 文件夹下创建一个基于 maven 的 java 应用项目。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+命令格式如下：
 
-## 笔记模板
+```text
+mvn archetype:generate "-DgroupId=com.companyname.bank" "-DartifactId=consumerBanking" "-DarchetypeArtifactId=maven-archetype-quickstart" "-DinteractiveMode=false"
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+参数说明：
 
-## 完成标准
+- -DgroupId: 组织名，公司网址的反写 + 项目名称
+- -DartifactId: 项目名-模块名
+- -DarchetypeArtifactId: 指定 ArchetypeId，maven-archetype-quickstart，创建一个简单的 Java 应用
+- -DinteractiveMode: 是否使用交互模式
 
-- 能用 3 到 5 句话解释 `Maven 构建 Java 项目`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+生成的文件夹结构如下：
+
+各个文件夹说明：
+
+在 C:\MVN\consumerBanking\src\main\java\com\companyname\bank 文件夹中，可以看到一个 App.java，代码如下：
+
+
+## App.java
+
+```java
+package com.companyname.bank;
+
+/**
+ * Hello world!
+ *
+ */
+public class App
+{
+    public static void main( String[] args )
+    {
+        System.out.println( "Hello World!" );
+    }
+}
+```
+
+打开 C:\MVN\consumerBanking\src\test\java\com\companyname\bank 文件夹，可以看到 Java 测试文件 AppTest.java。
+
+
+## AppTest.java
+
+```java
+package com.companyname.bank;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+/**
+ * Unit test for simple App.
+ */
+public class AppTest extends TestCase
+{
+    /**
+     * Create the test case
+     *
+     * @param testName name of the test case
+     */
+    public AppTest( String testName )
+    {
+        super( testName );
+    }
+
+    /**
+     * @return the suite of tests being tested
+     */
+    public static Test suite()
+    {
+        return new TestSuite( AppTest.class );
+    }
+
+    /**
+     * Rigourous Test :-)
+     */
+    public void testApp()
+    {
+        assertTrue( true );
+    }
+}
+```
+
+接下来的开发过程中我们只需要按照上面表格中提到的结构放置好，其他的事情 Maven 帮我们将会搞定。
+
+
+## 复习重点
+
+- 能说明 `Maven 构建 Java 项目` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

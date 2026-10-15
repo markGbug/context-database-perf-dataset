@@ -1,35 +1,50 @@
-# Bootstrap4：Bootstrap4 Jumbotron 学习笔记
+# Bootstrap4：Bootstrap4 Jumbotron
 
 - 来源：[Bootstrap4 Jumbotron](https://www.runoob.com/bootstrap4/bootstrap4-jumbotron.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2311
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 Jumbotron` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+Jumbotron（超大屏幕）会创建一个大的灰色背景框，里面可以设置一些特殊的内容和信息。
 
-## 阅读抓手
+提示: Jumbotron 里头可以放一些 HTML标签，也可以是 Bootstrap 的元素。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+我们可以通过在 <div> 元素 中添加 .jumbotron 类来创建 jumbotron:
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 实例
 
-## 完成标准
+```html
+<div class="jumbotron">
+  <h1>菜鸟教程</h1>
+  <p>学的不仅是技术，更是梦想！！！</p>
+</div>
+```
 
-- 能用 3 到 5 句话解释 `Bootstrap4 Jumbotron`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 全屏幕的 Jumbotron
+
+如果你想创建一个没有圆角的全屏幕，可以在 .jumbotron-fluid 类里头的 div添加 .container 或 .container-fluid 类来实现:
+
+
+## 实例
+
+```html
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+      <h1>菜鸟教程</h1>
+      <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 Jumbotron` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

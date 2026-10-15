@@ -1,34 +1,84 @@
-# JSON：JSON 使用 练习笔记
+# JSON：JSON 使用
 
 - 来源：[JSON 使用](https://www.runoob.com/json/json-eval.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3018
 
-## 练习目标
+## 本章内容
 
-把 `JSON 使用` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 把 JSON 文本转换为 JavaScript 对象
 
-## 练习步骤
+JSON 最常见的用法之一，是从 web 服务器上读取 JSON 数据（作为文件或作为 HttpRequest），将 JSON 数据转换为 JavaScript 对象，然后在网页中使用该数据。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+为了更简单地为您讲解，我们使用字符串作为输入进行演示（而不是文件）。
 
-## 验收清单
 
-- 我能独立说出 `JSON 使用` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## JSON 实例 - 来自字符串的对象
 
-## 复盘问题
+创建包含 JSON 语法的 JavaScript 字符串：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```javascript
+var txt = '{ "sites" : [' +
+'{ "name":"菜鸟教程" , "url":"www.runoob.com" },' +
+'{ "name":"google" , "url":"www.google.com" },' +
+'{ "name":"微博" , "url":"www.weibo.com" } ]}';
+```
+
+由于 JSON 语法是 JavaScript 语法的子集，JavaScript 函数 eval() 可用于将 JSON 文本转换为 JavaScript 对象。
+
+eval() 函数使用的是 JavaScript 编译器，可解析 JSON 文本，然后生成 JavaScript 对象。必须把文本包围在括号中，这样才能避免语法错误：
+
+在网页中使用 JavaScript 对象：
+
+
+## 实例
+
+```javascript
+var txt = '{ "sites" : [' +
+'{ "name":"菜鸟教程" , "url":"www.runoob.com" },' +
+'{ "name":"google" , "url":"www.google.com" },' +
+'{ "name":"微博" , "url":"www.weibo.com" } ]}';
+
+var obj = eval ("(" + txt + ")");
+
+document.getElementById("name").innerHTML=obj.sites[0].name
+document.getElementById("url").innerHTML=obj.sites[0].url
+```
+
+
+## JSON 解析器
+
+eval() 函数可编译并执行任何 JavaScript 代码。这隐藏了一个潜在的安全问题。
+
+使用 JSON 解析器将 JSON 转换为 JavaScript 对象是更安全的做法。JSON 解析器只能识别 JSON 文本，而不会编译脚本。
+
+在浏览器中，这提供了原生的 JSON 支持，而且 JSON 解析器的速度更快。
+
+较新的浏览器和最新的 ECMAScript (JavaScript) 标准中均包含了原生的对 JSON 的支持。
+
+- Firefox (Mozilla) 3.5
+- Internet Explorer 8
+- Chrome
+- Opera 10
+- Safari 4
+- jQuery
+- Yahoo UI
+- Prototype
+- Dojo
+- ECMAScript 1.5
+
+尝试一下 »
+
+对于较老的浏览器，可使用 JavaScript 库： https://github.com/douglascrockford/JSON-js
+
+JSON 格式最初是 originally specified by Douglas Crockford
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JSON 使用` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

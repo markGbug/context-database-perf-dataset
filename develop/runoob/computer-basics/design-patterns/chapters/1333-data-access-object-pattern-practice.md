@@ -1,34 +1,248 @@
-# 设计模式：数据访问对象模式 练习笔记
+# 设计模式：数据访问对象模式
 
 - 来源：[数据访问对象模式](https://www.runoob.com/design-pattern/data-access-object-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1333
 
-## 练习目标
+## 本章内容
 
-把 `数据访问对象模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+数据访问对象模式（Data Access Object Pattern）或 DAO 模式用于把低级的数据访问 API 或操作从高级的业务服务中分离出来。以下是数据访问对象模式的参与者。
 
-## 练习步骤
+- 数据访问对象接口（Data Access Object Interface） - 该接口定义了在一个模型对象上要执行的标准操作。
+- 数据访问对象实体类（Data Access Object concrete class） - 该类实现了上述的接口。该类负责从数据源获取数据，数据源可以是数据库，也可以是 xml，或者是其他的存储机制。
+- 模型对象/数值对象（Model Object/Value Object） - 该对象是简单的 POJO，包含了 get/set 方法来存储通过使用 DAO 类检索到的数据。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 概要
 
-- 我能独立说出 `数据访问对象模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 意图
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+将数据访问逻辑从业务逻辑中分离出来，并将数据访问操作封装在一个专用的类中。
+
+
+### 主要解决的问题
+
+- 解决业务逻辑与数据访问逻辑紧密耦合的问题，提高代码的可维护性和可重用性。
+
+
+### 使用场景
+
+- 当需要将应用程序的数据访问逻辑集中管理，以便简化业务逻辑并易于进行数据操作时。
+
+
+### 实现方式
+
+- 定义DAO接口：声明数据访问操作的方法。
+- 实现DAO类：实现DAO接口，封装对数据源（如数据库）的所有访问逻辑。
+- 数据传输对象（DTO）：可选，用于封装从数据源检索的数据。
+
+
+### 关键代码
+
+- DAO接口：声明数据访问和操作的方法。
+- DAO实现：提供DAO接口的具体实现，包含对数据库的访问代码。
+
+
+### 应用实例
+
+- 用户管理应用：用户DAO类负责与数据库交互，管理用户数据的增删改查。
+
+
+### 优点
+
+- 分离关注点：将数据访问逻辑与业务逻辑分离，降低系统的耦合度。
+- 易于维护：数据访问逻辑集中管理，便于维护和更新。
+- 可扩展性：更换数据源或修改数据访问逻辑时，不影响业务逻辑层。
+
+
+### 缺点
+
+- 可能增加复杂性：对于简单的应用程序，引入DAO模式可能增加额外的抽象层次。
+
+
+### 使用建议
+
+- 当应用程序需要与多种数据源交互，或者数据访问逻辑较为复杂时，使用DAO模式。
+
+
+### 注意事项
+
+- DAO类应该尽量简单，只包含数据访问逻辑，不包含业务逻辑。
+
+
+### 包含的几个主要角色
+
+- DAO接口（DAO Interface）： 声明数据访问和操作的方法。
+- DAO实现（DAO Implementation）： 实现DAO接口，封装对数据源的所有访问逻辑。
+- 数据传输对象（Data Transfer Object, DTO）（可选）： 封装从数据源检索的数据，用于业务逻辑层与数据访问层之间的数据传输。
+- 业务逻辑层（Business Logic Layer）： 使用DAO接口与数据源交互，不直接依赖于数据访问的具体实现。
+- 数据源（Data Source）： 数据库或其他持久化存储，DAO实现与之交互以存取数据。
+
+数据访问对象模式通过提供一个清晰的数据访问层，有助于保持应用程序的整洁和可管理性。
+
+
+## 实现
+
+我们将创建一个作为模型对象或数值对象的 Student 对象。StudentDao 是数据访问对象接口。StudentDaoImpl 是实现了数据访问对象接口的实体类。DaoPatternDemo，我们的演示类使用 StudentDao 来演示数据访问对象模式的用法。
+
+
+## 步骤 1
+
+创建数值对象。
+
+
+## Student.java
+
+```java
+public class Student {
+   private String name;
+   private int rollNo;
+
+   Student(String name, int rollNo){
+      this.name = name;
+      this.rollNo = rollNo;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public int getRollNo() {
+      return rollNo;
+   }
+
+   public void setRollNo(int rollNo) {
+      this.rollNo = rollNo;
+   }
+}
+```
+
+
+## 步骤 2
+
+创建数据访问对象接口。
+
+
+## StudentDao.java
+
+```java
+import java.util.List;
+
+public interface StudentDao {
+   public List<Student> getAllStudents();
+   public Student getStudent(int rollNo);
+   public void updateStudent(Student student);
+   public void deleteStudent(Student student);
+}
+```
+
+
+## 步骤 3
+
+创建实现了上述接口的实体类。
+
+
+## StudentDaoImpl.java
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentDaoImpl implements StudentDao {
+
+   //列表是当作一个数据库
+   List<Student> students;
+
+   public StudentDaoImpl(){
+      students = new ArrayList<Student>();
+      Student student1 = new Student("Robert",0);
+      Student student2 = new Student("John",1);
+      students.add(student1);
+      students.add(student2);
+   }
+   @Override
+   public void deleteStudent(Student student) {
+      students.remove(student.getRollNo());
+      System.out.println("Student: Roll No " + student.getRollNo()
+         +", deleted from database");
+   }
+
+   //从数据库中检索学生名单
+   @Override
+   public List<Student> getAllStudents() {
+      return students;
+   }
+
+   @Override
+   public Student getStudent(int rollNo) {
+      return students.get(rollNo);
+   }
+
+   @Override
+   public void updateStudent(Student student) {
+      students.get(student.getRollNo()).setName(student.getName());
+      System.out.println("Student: Roll No " + student.getRollNo()
+         +", updated in the database");
+   }
+}
+```
+
+
+## 步骤 4
+
+使用 StudentDao 来演示数据访问对象模式的用法。
+
+
+## DaoPatternDemo.java
+
+```java
+public class DaoPatternDemo {
+   public static void main(String[] args) {
+      StudentDao studentDao = new StudentDaoImpl();
+
+      //输出所有的学生
+      for (Student student : studentDao.getAllStudents()) {
+         System.out.println("Student: [RollNo : "
+            +student.getRollNo()+", Name : "+student.getName()+" ]");
+      }
+
+
+      //更新学生
+      Student student =studentDao.getAllStudents().get(0);
+      student.setName("Michael");
+      studentDao.updateStudent(student);
+
+      //获取学生
+      studentDao.getStudent(0);
+      System.out.println("Student: [RollNo : "
+         +student.getRollNo()+", Name : "+student.getName()+" ]");
+   }
+}
+```
+
+
+## 步骤 5
+
+执行程序，输出结果：
+
+```text
+Student: [RollNo : 0, Name : Robert ]
+Student: [RollNo : 1, Name : John ]
+Student: Roll No 0, updated in the database
+Student: [RollNo : 0, Name : Michael ]
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `数据访问对象模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

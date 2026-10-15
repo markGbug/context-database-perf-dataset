@@ -1,34 +1,112 @@
-# Django：Django 安装 练习笔记
+# Django：Django 安装
 
 - 来源：[Django 安装](https://www.runoob.com/django/django-install.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3807
 
-## 练习目标
+## 本章内容
 
-把 `Django 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在安装 Django 前，系统需要已经安装了 Python 的开发环境。
 
-## 练习步骤
+如果你还没有安装 Python，请先从 Python 官网 https://www.python.org/ 下载并安装最新版本的 Python。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Django 安装也很简单使包管理工具 pip 就可以了：
 
-## 验收清单
+```text
+pip install Django
+```
 
-- 我能独立说出 `Django 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+安装完成后，你可以通过运行以下命令验证 Django 是否成功安装：
 
-## 复盘问题
+```text
+python3 -m django --version
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+如果一切顺利，你将看到安装的 Django 版本号，如：4.2.7。
+
+开发环境推荐：
+
+- 1、VS Code 开发工具
+- 2、PyCharm 开发工具
+- 3、阿里 Qoder
+- 4、Trae 开发工具
+
+
+## Windows 下安装 Django
+
+接下来我们来具体看下不同系统下 Django 的安装。
+
+如果你还未安装Python环境需要先下载Python安装包。
+
+1、Python 下载地址：https://www.python.org/downloads/
+
+2、Django 下载地址：https://www.djangoproject.com/download/
+
+注意：目前 Django 1.6.x 以上版本已经完全兼容 Python 3.x。
+
+
+### Python 安装(已安装的可跳过)
+
+安装 Python 你只需要下载 python-x.x.x.msi 文件，然后一直点击 "Next" 按钮即可。
+
+安装完成后你需要设置 Python 环境变量。 右击计算机->属性->高级->环境变量->修改系统变量 path，添加 Python 安装地址，本文实例使用的是 C:\Python33，你需要根据你实际情况来安装。
+
+
+### Django 安装
+
+下载 Django 压缩包，解压并和 Python安装目录放在同一个根目录，进入 Django 目录，执行 python setup.py install，然后开始安装，Django 将要被安装到 Python 的 Lib下site-packages。
+
+然后是配置环境变量，将这几个目录添加到系统环境变量中： C:\Python33\Lib\site-packages\django;C:\Python33\Scripts。 添加完成后就可以使用Django的django-admin.py命令新建工程了。
+
+
+## 检查是否安装成功
+
+输入以下命令进行检查:
+
+```text
+>>> import django
+>>> django.get_version()
+```
+
+如果输出了Django的版本号说明安装正确。
+
+
+## Linux 上安装 Django
+
+
+### yum 安装方法
+
+以下安装位于 Centos Linux 环境下安装，如果是你的 Linux 系统是 ubuntu 请使用 apt-get 命令。
+
+默认情况下 Linux 环境已经支持了Python。你可以在终端输入Python命令来查看是否已经安装。
+
+```text
+Python 3.7.4 (default, Aug  1 2012, 05:14:39)
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+```
+
+
+### 安装 setuptools
+
+命令：
+
+```text
+# Python3 安装
+yum install python3-setuptools
+# Python2 安装
+yum install python2-setuptools
+```
+
+完成之后，就可以使用 easy_install 命令安装 django
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Django 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

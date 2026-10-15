@@ -1,35 +1,48 @@
-# XPointer：XPointer 实例 学习笔记
+# XPointer：XPointer 实例
 
 - 来源：[XPointer 实例](https://www.runoob.com/xlink/xpointer-example.html)
 - 分类：XML / Web Service
 - 技术：XPointer
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4479
 
-## 学习目标
+## 本章内容
 
-XPointer 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XPointer 实例` 建立学习路径，先理解它在 XPointer 体系中的位置，再做可运行或可复述的验证。
+让我们通过研究一个实例来学习一些基础的 XPointer 语法。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## XPointer 实例
 
-## 笔记模板
+在本例中，我们会为您展示如何使用 XPointer 并结合 XLink 来指向另外一个文档的某个具体的部分。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+我们将通过研究目标 XML 文档开始（即我们要链接的那个文档）。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `XPointer 实例`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 目标XML文档
+
+目标XML文档名为 "dogbreeds.xml"，它列出了一些不同的狗种类：
+
+在您的浏览器查看 "dogbreeds.xml" 文件。
+
+注意上面的 XML 文档在每个我们需要链接的元素上使用了 id 属性！
+
+
+## XML 链接文档
+
+不止能够链接到整个文档（当使用 XLink 时），XPointer 允许您链接到文档的特定部分。如需链接到页面的某个具体的部分，请在 xlink:href 属性中的 URL 后添加一个井号 (#) 以及一个 XPointer 表达式。
+
+表达式：#xpointer(id("Rottweiler")) 可引用目标文档中 id 值为 "Rottweiler" 的元素。
+
+因此，xlink:href 属性会类似这样：xlink:href="http://dog.com/dogbreeds.xml#xpointer(id('Rottweiler'))"
+
+不过，当使用 id 链接到某个元素时，XPointer 允许简写形式。您可以直接使用 id 的值，就像这样：xlink:href="http://dog.com/dogbreeds.xml#Rottweiler"。
+
+下面的 XML 文档可引用每条狗的品种信息，均通过 XLink 和 XPointer 来引用：
+
+
+## 复习重点
+
+- 能说明 `XPointer 实例` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

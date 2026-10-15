@@ -1,35 +1,153 @@
-# Bootstrap5：Bootstrap5 按钮 学习笔记
+# Bootstrap5：Bootstrap5 按钮
 
 - 来源：[Bootstrap5 按钮](https://www.runoob.com/bootstrap5/bootstrap5-buttons.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2349
 
-## 学习目标
+## 本章内容
 
-Bootstrap5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap5 按钮` 建立学习路径，先理解它在 Bootstrap5 体系中的位置，再做可运行或可复述的验证。
+Bootstrap 5 提供了不同样式的按钮。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 实例
 
-## 笔记模板
+```html
+<button type="button" class="btn">基本按钮</button>
+<button type="button" class="btn btn-primary">主要按钮</button>
+<button type="button" class="btn btn-secondary">次要按钮</button>
+<button type="button" class="btn btn-success">成功</button>
+<button type="button" class="btn btn-info">信息</button>
+<button type="button" class="btn btn-warning">警告</button>
+<button type="button" class="btn btn-danger">危险</button>
+<button type="button" class="btn btn-dark">黑色</button>
+<button type="button" class="btn btn-light">浅色</button>
+<button type="button" class="btn btn-link">链接</button>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+按钮类可用于 <a>, <button>, 或 <input> 元素上:
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Bootstrap5 按钮`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+```html
+<a href="#" class="btn btn-info" role="button">链接按钮</a>
+<button type="button" class="btn btn-info">按钮</button>
+<input type="button" class="btn btn-info" value="输入框按钮">
+<input type="submit" class="btn btn-info" value="提交按钮">
+<input type="reset" class="btn btn-info" value="重置按钮">
+```
+
+
+## 按钮设置边框
+
+Bootstrap 5 也可以设置按钮多边框，鼠标移动到按钮上添加突出到效果：
+
+
+## 实例
+
+```html
+<button type="button" class="btn btn-outline-primary">主要按钮</button>
+<button type="button" class="btn btn-outline-secondary">次要按钮</button>
+<button type="button" class="btn btn-outline-success">成功</button>
+<button type="button" class="btn btn-outline-info">信息</button>
+<button type="button" class="btn btn-outline-warning">警告</button>
+<button type="button" class="btn btn-outline-danger">危险</button>
+<button type="button" class="btn btn-outline-dark">黑色</button>
+<button type="button" class="btn btn-outline-light text-dark">浅色</button>
+```
+
+
+## 不同大小的按钮
+
+Bootstrap 5 可以设置按钮的大小，使用 .btn-lg 类设置大按钮，使用 .btn-sm 类设置小按钮：
+
+
+## 实例
+
+```html
+<button type="button" class="btn btn-primary btn-lg">大号按钮</button>
+<button type="button" class="btn btn-primary">默认按钮</button>
+<button type="button" class="btn btn-primary btn-sm">小号按钮</button>
+```
+
+
+## 块级按钮
+
+通过添加 .btn-block 类可以设置块级按钮，.d-grid 类设置在父级元素中：
+
+
+## 实例
+
+```html
+<div class="d-grid">
+    <button type="button" class="btn btn-primary btn-block">按钮 1</button>
+</div>
+```
+
+如果有多个块级按钮，你可以使用用 .gap-* 类来设置：
+
+
+## 实例
+
+```html
+<div class="d-grid gap-3">
+  <button type="button" class="btn btn-primary btn-block">100% 宽度的按钮</button>
+  <button type="button" class="btn btn-primary btn-block">100% 宽度的按钮</button>
+  <button type="button" class="btn btn-primary btn-block">100% 宽度的按钮</button>
+</div>
+```
+
+
+## 激活和禁用的按钮
+
+按钮可设置为激活或者禁止点击的状态。
+
+.active 类可以设置按钮是可用的， disabled 属性可以设置按钮是不可点击的。 注意 <a> 元素不支持 disabled 属性，你可以通过添加 .disabled 类来禁止链接的点击。
+
+
+## 实例
+
+```html
+<button type="button" class="btn btn-primary active">点击后的按钮</button>
+<button type="button" class="btn btn-primary" disabled>禁止点击的按钮</button>
+<a href="#" class="btn btn-primary disabled">禁止点击的链接</a>
+```
+
+
+## 加载按钮
+
+我们也可以设置一个正在加载的按钮。
+
+
+## 实例
+
+```html
+<button class="btn btn-primary">
+  <span class="spinner-border spinner-border-sm"></span>
+</button>
+
+<button class="btn btn-primary">
+  <span class="spinner-border spinner-border-sm"></span>
+  Loading..
+</button>
+
+<button class="btn btn-primary" disabled>
+  <span class="spinner-border spinner-border-sm"></span>
+  Loading..
+</button>
+
+<button class="btn btn-primary" disabled>
+  <span class="spinner-grow spinner-grow-sm"></span>
+  Loading..
+</button>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap5 按钮` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

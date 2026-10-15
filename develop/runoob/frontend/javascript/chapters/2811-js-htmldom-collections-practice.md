@@ -1,34 +1,93 @@
-# JavaScript：HTMLCollection 对象 练习笔记
+# JavaScript：JavaScript HTML DOM 集合(Collection)
 
 - 来源：[HTMLCollection 对象](https://www.runoob.com/js/js-htmldom-collections.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2811
 
-## 练习目标
+## 本章内容
 
-把 `HTMLCollection 对象` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节介绍 DOM 集合的使用。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## HTMLCollection 对象
 
-## 验收清单
+getElementsByTagName() 方法返回 HTMLCollection 对象。
 
-- 我能独立说出 `HTMLCollection 对象` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+HTMLCollection 对象类似包含 HTML 元素的一个数组。
 
-## 复盘问题
+以下代码获取文档所有的 <p> 元素：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+```javascript
+var x = document.getElementsByTagName("p");
+```
+
+集合中的元素可以通过索引(以 0 为起始位置)来访问。
+
+访问第二个 <p> 元素可以是以下代码:
+
+
+## HTMLCollection 对象 length 属性
+
+HTMLCollection 对象的 length 属性定义了集合中元素的数量。
+
+
+## 实例
+
+```javascript
+var myCollection = document.getElementsByTagName("p");
+document.getElementById("demo").innerHTML = myCollection.length;
+```
+
+
+### 实例解析
+
+获取 <p> 元素的集合：
+
+```javascript
+var myCollection = document.getElementsByTagName("p");
+```
+
+显示集合元素个数：
+
+```text
+document.getElementById("demo").innerHTML = myCollection.length;
+```
+
+集合 length 属性常用于遍历集合中的元素。
+
+
+## 实例
+
+修改所有 <p> 元素的背景颜色:
+
+```java
+var myCollection = document.getElementsByTagName("p");
+var i;
+for (i = 0; i < myCollection.length; i++) {
+    myCollection[i].style.backgroundColor = "red";
+}
+```
+
+
+### 注意
+
+HTMLCollection 不是一个数组！
+
+HTMLCollection 看起来可能是一个数组，但其实不是。
+
+你可以像数组一样，使用索引来获取元素。
+
+HTMLCollection 无法使用数组的方法： valueOf(), pop(), push(), 或 join() 。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTMLCollection 对象` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

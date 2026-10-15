@@ -1,35 +1,125 @@
-# Ruby：Ruby Mysql 学习笔记
+# Ruby：Ruby 连接 Mysql - MySql2
 
 - 来源：[Ruby Mysql](https://www.runoob.com/ruby/ruby-mysql-mysql2.html)
 - 分类：编程语言
 - 技术：Ruby
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3742
 
-## 学习目标
+## 本章内容
 
-Ruby 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Ruby Mysql` 建立学习路径，先理解它在 Ruby 体系中的位置，再做可运行或可复述的验证。
+前面一章节我们介绍了 Ruby DBI 的使用。这章节我们技术 Ruby 连接 Mysql 更高效的驱动 mysql2，目前也推荐使用这种方式连接 MySql。
 
-## 阅读抓手
+安装 mysql2 驱动：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+gem install mysql2
+```
 
-## 笔记模板
+你需要使用 –with-mysql-config 配置 mysql_config 的路径，如： –with-mysql-config=/some/random/path/bin/mysql_config。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 连接
 
-- 能用 3 到 5 句话解释 `Ruby Mysql`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+连接数据库语法如下：
+
+```text
+client = Mysql2::Client.new(:host => "localhost", :username => "root")
+```
+
+更多参数可以查看 http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/MysqlAdapter.html。
+
+
+### 查询
+
+```text
+results = client.query("SELECT * FROM users WHERE group='githubbers'")
+```
+
+
+### 特殊字符转义
+
+```text
+escaped = client.escape("gi'thu\"bbe\0r's")
+results = client.query("SELECT * FROM users WHERE group='#{escaped}'")
+```
+
+计算结果集返回的数量:
+
+```text
+results.count
+```
+
+
+### 迭代结果集：
+
+```text
+results.each do |row|
+  # row 是哈希
+  # 键值是数据库字段
+  # 值都是对应 MySQL中数据
+  puts row["id"] # row["id"].class == Fixnum
+  if row["dne"]  # 不存在则是 nil
+    puts row["dne"]
+  end
+end
+```
+
+
+## 实例
+
+```text
+#!/usr/bin/ruby -w
+require 'mysql2'
+
+client = Mysql2::Client.new(
+    :host     => '127.0.0.1', # 主机
+    :username => 'root',      # 用户名
+    :password => '123456',    # 密码
+    :database => 'test',      # 数据库
+    :encoding => 'utf8'       # 编码
+    )
+results = client.query("SELECT VERSION()")
+results.each do |row|
+  puts row
+end
+```
+
+以上实例运行输出结果为：
+
+```text
+{"VERSION()"=>"5.6.21"}
+```
+
+
+### 连接选项
+
+```text
+Mysql2::Client.new(
+  :host,
+  :username,
+  :password,
+  :port,
+  :database,
+  :socket = '/path/to/mysql.sock',
+  :flags = REMEMBER_OPTIONS | LONG_PASSWORD | LONG_FLAG | TRANSACTIONS | PROTOCOL_41 | SECURE_CONNECTION | MULTI_STATEMENTS,
+  :encoding = 'utf8',
+  :read_timeout = seconds,
+  :write_timeout = seconds,
+  :connect_timeout = seconds,
+  :reconnect = true/false,
+  :local_infile = true/false,
+  :secure_auth = true/false,
+  :default_file = '/path/to/my.cfg',
+  :default_group = 'my.cfg section',
+  :init_command => sql
+  )
+```
+
+
+## 复习重点
+
+- 能说明 `Ruby Mysql` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

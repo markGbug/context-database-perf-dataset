@@ -1,34 +1,32 @@
-# VS Code：VSCode Windows 安装 练习笔记
+# VS Code：VSCode Windows 安装
 
 - 来源：[VSCode Windows 安装](https://www.runoob.com/vscode/vscode-windows-install.html)
 - 分类：DevOps / 工程化
 - 技术：VS Code
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1897
 
-## 练习目标
+## 本章内容
 
-把 `VSCode Windows 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+VSCode 是微软开发的跨平台免费源代码编辑器，支持 Windows、macOS 和 Linux。
 
-## 练习步骤
+在安装 VS Code 之前，请确保您的设备满足以下最低要求：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+VS Code 官方网站下载页面：https://code.visualstudio.com/Download。
 
-## 验收清单
+Windows 系统注意下载正确的版本，如果系统账户是 Administrator，需要下载 System Installer 版本，如果系统账户是其它自定义账户，需要下载 User Installer 版本。
 
-- 我能独立说出 `VSCode Windows 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+默认情况下访问 VS Code 官网 https://code.visualstudio.com/，页面会根据你的系统自动匹配安装包，比如我是 macOS，就会出现 Download for macOS 按钮：
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 在 Windows 上安装
+
+访问 VS Code 官网 https://code.visualstudio.com/，点击 "Download for Windows"下载适配的安装包，默认会下载稳定版（Stable）。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `VSCode Windows 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,66 @@
-# AJAX：XHR 创建对象 学习笔记
+# AJAX：AJAX - 创建 XMLHttpRequest 对象
 
 - 来源：[XHR 创建对象](https://www.runoob.com/ajax/ajax-xmlhttprequest-create.html)
 - 分类：前端开发
 - 技术：AJAX
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2259
 
-## 学习目标
+## 本章内容
 
-AJAX 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `XHR 创建对象` 建立学习路径，先理解它在 AJAX 体系中的位置，再做可运行或可复述的验证。
+XMLHttpRequest 是 AJAX 的基础。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## XMLHttpRequest 对象
 
-## 笔记模板
+所有现代浏览器均支持 XMLHttpRequest 对象（IE5 和 IE6 使用 ActiveXObject）。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+XMLHttpRequest 用于在后台与服务器交换数据。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `XHR 创建对象`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 创建 XMLHttpRequest 对象
+
+所有现代浏览器（IE7+、Edge、Firefox、Chrome、Safari 以及 Opera）均内建 XMLHttpRequest 对象。
+
+创建 XMLHttpRequest 对象的语法：
+
+```javascript
+var xhr = new XMLHttpRequest();
+```
+
+老版本的 Internet Explorer （IE5 和 IE6）使用 ActiveX 对象：
+
+```javascript
+var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+```
+
+为了应对所有的现代浏览器，包括 IE5 和 IE6（现在应该很少人使用了），请检查浏览器是否支持 XMLHttpRequest 对象。如果支持，则创建 XMLHttpRequest 对象。如果不支持，则创建 ActiveXObject ：
+
+
+## 实例
+
+```javascript
+var xmlhttp;
+if (window.XMLHttpRequest) {
+    //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+    xmlhttp=new XMLHttpRequest();
+} else {
+    // IE6, IE5 浏览器执行代码
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+}
+```
+
+创建一个 XMLHttpRequest 对象的示例：
+
+
+## 实例
+
+在下一章中，您将学习发送服务器请求的知识。
+
+
+## 复习重点
+
+- 能说明 `XHR 创建对象` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

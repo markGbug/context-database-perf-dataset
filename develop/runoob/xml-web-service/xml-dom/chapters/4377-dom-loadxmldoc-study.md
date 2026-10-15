@@ -1,35 +1,149 @@
-# XML DOM：DOM 加载函数 学习笔记
+# XML DOM：XML DOM 加载函数
 
 - 来源：[DOM 加载函数](https://www.runoob.com/dom/dom-loadxmldoc.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4377
 
-## 学习目标
+## 本章内容
 
-XML DOM 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `DOM 加载函数` 建立学习路径，先理解它在 XML DOM 体系中的位置，再做可运行或可复述的验证。
+加载 XML 文档中的代码可以存储在一个函数中。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## loadXMLDoc() 函数
 
-## 笔记模板
+为了使前一页中的代码易于维护（检查旧的浏览器），它应该写成一个函数：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## loadxmldoc.js 文件代码：
 
-- 能用 3 到 5 句话解释 `DOM 加载函数`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```javascript
+function loadXMLDoc(dname)
+{
+    if (window.XMLHttpRequest)
+    {
+        xhttp=new XMLHttpRequest();
+    }
+    else
+    {
+        xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhttp.open("GET",dname,false);
+    xhttp.send();
+    return xhttp.responseXML;
+}
+```
+
+上面的函数可以存储在 HTML 页面的 <head> 部分，并从页面中的脚本调用。
+
+上面描述的函数，用于本教程中所有 XML 文档实例！
+
+
+## loadXMLDoc() 的外部 JavaScript
+
+为了使上述代码更容易维护，以确保在所有页面中使用相同的代码，我们把函数存储在一个外部文件中。
+
+文件名为 "loadxmldoc.js"，且在 HTML 页面中的 head 部分被加载。然后，页面中的脚本调用 loadXMLDoc() 函数。
+
+下面的实例使用 loadXMLDoc() 函数加载 books.xml：
+
+
+## 实例
+
+```html
+<html>
+<head>
+<script src="loadxmldoc.js">
+</script>
+</head>
+<body>
+
+<script>
+xmlDoc=loadXMLDoc("books.xml");
+
+code goes here.....
+
+</script>
+
+</body>
+</html>
+```
+
+如何从 XML 文件中获得数据，将在下一章中讲解。
+
+
+## loadXMLString() 函数
+
+为了使前一页中的代码易于维护（检查旧的浏览器），它应该写成一个函数：
+
+
+## loadxmlstring.js 文件代码：
+
+```javascript
+function loadXMLString(txt)
+{
+    if (window.DOMParser)
+    {
+        parser=new DOMParser();
+        xmlDoc=parser.parseFromString(txt,"text/xml");
+    }
+    else
+    {
+        // Internet Explorer
+        xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+        xmlDoc.async=false;
+        xmlDoc.loadXML(txt);
+    }
+    return xmlDoc;
+}
+```
+
+上面的函数可以存储在 HTML 页面的 <head> 部分，并从页面中的脚本调用。
+
+上面描述的函数，用于本教程中所有 XML 字符串实例！
+
+
+## loadXMLString() 的外部 JavaScript
+
+我们已经把 loadXMLString() 函数存储在名为 "loadxmlstring.js" 文件中。
+
+
+## 实例
+
+```html
+<html>
+<head>
+<script src="loadxmlstring.js"></script>
+</head>
+<body>
+<script>
+```
+
+```html
+text="<bookstore>"
+text=text+"<book>";
+text=text+"<title>Everyday Italian</title>";
+text=text+"<author>Giada De Laurentiis</author>";
+text=text+"<year>2005</year>";
+text=text+"</book>";
+text=text+"</bookstore>";
+
+xmlDoc=loadXMLString(text);
+
+code goes here.....
+```
+
+```text
+</script>
+</body>
+</html>
+```
+
+
+## 复习重点
+
+- 能说明 `DOM 加载函数` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

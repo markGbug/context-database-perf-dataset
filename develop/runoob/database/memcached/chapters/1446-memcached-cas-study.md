@@ -1,35 +1,102 @@
-# Memcached：Memcached CAS 命令 学习笔记
+# Memcached：Memcached CAS 命令
 
 - 来源：[Memcached CAS 命令](https://www.runoob.com/memcached/memcached-cas.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1446
 
-## 学习目标
+## 本章内容
 
-Memcached 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Memcached CAS 命令` 建立学习路径，先理解它在 Memcached 体系中的位置，再做可运行或可复述的验证。
+Memcached CAS（Check-And-Set 或 Compare-And-Swap） 命令用于执行一个"检查并设置"的操作
 
-## 阅读抓手
+它仅在当前客户端最后一次取值后，该key 对应的值没有被其他客户端修改的情况下， 才能够将值写入。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+检查是通过cas_token参数进行的， 这个参数是Memcach指定给已经存在的元素的一个唯一的64位值。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### 语法：
 
-## 完成标准
+CAS 命令的基本语法格式如下：
 
-- 能用 3 到 5 句话解释 `Memcached CAS 命令`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+cas key flags exptime bytes unique_cas_token [noreply]
+value
+```
+
+参数说明如下：
+
+- key：键值 key-value 结构中的 key，用于查找缓存值。
+- flags：可以包括键值对的整型参数，客户机使用它存储关于键值对的额外信息 。
+- exptime：在缓存中保存键值对的时间长度（以秒为单位，0 表示永远）
+- bytes：在缓存中存储的字节数
+- unique_cas_token通过 gets 命令获取的一个唯一的64位值。
+- noreply（可选）： 该参数告知服务器不需要返回数据
+- value：存储的值（始终位于第二行）（可直接理解为key-value结构中的value）
+
+
+### 实例
+
+要在 Memcached 上使用 CAS 命令，你需要从 Memcached 服务商通过 gets 命令获取令牌（token）。
+
+gets 命令的功能类似于基本的 get 命令。两个命令之间的差异在于，gets 返回的信息稍微多一些：64 位的整型值非常像名称/值对的 "版本" 标识符。
+
+实例步骤如下：
+
+- 如果没有设置唯一令牌，则 CAS 命令执行错误。
+- 如果键 key 不存在，执行失败。
+- 添加键值对。
+- 通过 gets 命令获取唯一令牌。
+- 使用 cas 命令更新数据
+- 使用 get 命令查看数据是否更新
+
+```text
+cas tp 0 900 9
+ERROR             <− 缺少 token
+
+cas tp 0 900 9 2
+memcached
+NOT_FOUND         <− 键 tp 不存在
+
+set tp 0 900 9
+memcached
+STORED
+
+gets tp
+VALUE tp 0 9 1
+memcached
+END
+
+cas tp 0 900 5 1
+redis
+STORED
+
+get tp
+VALUE tp 0 5
+redis
+END
+```
+
+
+### 输出
+
+如果数据添加成功，则输出：
+
+```text
+STORED
+```
+
+输出信息说明：
+
+- STORED：保存成功后输出。
+- ERROR：保存出错或语法错误。
+- EXISTS：在最后一次取值后另外一个用户也在更新该数据。
+- NOT_FOUND：Memcached 服务上不存在该键值。
+
+
+## 复习重点
+
+- 能说明 `Memcached CAS 命令` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

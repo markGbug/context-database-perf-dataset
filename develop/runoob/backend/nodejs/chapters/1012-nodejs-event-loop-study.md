@@ -1,35 +1,235 @@
-# Node.js：Node.js 事件循环 学习笔记
+# Node.js：Node.js 事件循环
 
 - 来源：[Node.js 事件循环](https://www.runoob.com/nodejs/nodejs-event-loop.html)
 - 分类：后端开发
 - 技术：Node.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1012
 
-## 学习目标
+## 本章内容
 
-Node.js 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `Node.js 事件循环` 建立学习路径，先理解它在 Node.js 体系中的位置，再做可运行或可复述的验证。
+事件循环是 Node.js 处理非阻塞 I/O 操作的核心机制，使得单线程能够高效处理多个并发请求。
 
-## 阅读抓手
+Node.js 是基于单线程的 JavaScript 运行时，利用事件循环来处理异步操作，如文件读取、网络请求和数据库查询。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+事件循环使得 Node.js 能够非阻塞地运行代码、处理多个连接、以及执行异步 I/O 操作。
 
-## 笔记模板
+事件循环使得 Node.js 能够处理大量并发的 I/O 操作而不会导致线程阻塞，这是 Node.js 高效处理并发请求的关键。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 事件循环的阶段
 
-- 能用 3 到 5 句话解释 `Node.js 事件循环`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+事件循环分为多个阶段，每个阶段处理特定的任务。关键阶段如下：
+
+- Timers：执行 setTimeout() 和 setInterval() 的回调。
+- I/O Callbacks：处理一些延迟的 I/O 回调。
+- Idle, prepare：内部使用，不常见。
+- Poll：检索新的 I/O 事件，执行与 I/O 相关的回调。
+- Check：执行 setImmediate() 回调。
+- Close Callbacks：处理关闭的回调，如 socket.on('close', ...)。
+
+
+### 事件循环的流程
+
+- 任务进入事件循环队列。
+- 事件循环按照阶段顺序进行处理，每个阶段有自己的回调队列。
+- 事件循环会在 poll 阶段等待新的事件到达，如果没有事件，会检查其他阶段的回调。
+- 如果 setImmediate() 和 setTimeout() 都存在，setImmediate() 在 check 阶段先执行，而 setTimeout() 在 timers 阶段执行。
+
+
+## 实例
+
+输出顺序：
+
+- Main thread execution 先打印。
+- setImmediate() 和 setTimeout() 的执行顺序取决于当前事件循环的状态，一般 setImmediate() 会先执行。
+
+
+### 宏任务与微任务
+
+- 宏任务：setTimeout、setInterval、setImmediate、I/O 操作等。
+- 微任务：process.nextTick、Promise.then。
+
+执行顺序：微任务优先级高于宏任务，会在当前阶段的回调结束后立即执行。
+
+
+## 实例
+
+执行输出结果：
+
+```text
+Main thread execution
+Promise callback
+Timeout callback
+```
+
+
+### process.nextTick()
+
+process.nextTick() 会在当前操作结束后、下一个阶段开始前执行微任务，优先级高于 Promise。
+
+
+## 实例
+
+输出：
+
+```text
+Main thread execution
+Next tick callback
+```
+
+
+## 事件驱动程序
+
+在 Node.js 中，事件驱动编程主要通过 EventEmitter 类来实现。
+
+EventEmitter 是一个内置类，位于 events 模块中，通过继承 EventEmitter，你可以创建自己的事件发射器，并注册和触发事件。
+
+通过这种机制，Node.js 可以高效地处理异步任务，即使在单线程的环境下也能实现并发处理。
+
+整个事件驱动的流程就是这么实现的，非常简洁。有点类似于观察者模式，事件相当于一个主题(Subject)，而所有注册到这个事件上的处理函数相当于观察者(Observer)。
+
+基本概念：
+
+- 事件：在程序中发生的动作或状态改变，例如一个文件读取完成或一个 HTTP 请求到达。
+- 事件触发器：EventEmitter 是 Node.js 的内置模块，用来发出和监听事件。
+- 事件处理器：与事件关联的回调函数，事件发生时被调用。
+
+事件驱动的流程：
+
+- 注册事件：在程序中通过 EventEmitter 实例注册事件和对应的处理器。
+- 触发事件：当指定的事件发生时，EventEmitter 会触发该事件。
+- 处理事件：事件循环会调度相应的回调函数来执行任务。
+
+Node.js 有多个内置的事件，我们可以通过引入 events 模块，并通过实例化 EventEmitter 类来绑定和监听事件，如下实例：
+
+```javascript
+// 引入 events 模块
+var events = require('events');
+// 创建 eventEmitter 对象
+var eventEmitter = new events.EventEmitter();
+```
+
+以下程序绑定事件处理程序：
+
+```text
+// 绑定事件及事件的处理程序
+eventEmitter.on('eventName', eventHandler);
+```
+
+我们可以通过程序触发事件：
+
+```text
+// 触发事件
+eventEmitter.emit('eventName');
+```
+
+
+### 实例
+
+创建 hello.js 文件，代码如下所示：
+
+
+## 实例 1
+
+输出：
+
+```text
+Hello, world!
+```
+
+创建 main.js 文件，代码如下所示：
+
+
+## 实例 2
+
+```javascript
+// 引入 events 模块
+var events = require('events');
+// 创建 eventEmitter 对象
+var eventEmitter = new events.EventEmitter();
+
+// 创建事件处理程序
+var connectHandler = function connected() {
+   console.log('连接成功。');
+
+   // 触发 data_received 事件
+   eventEmitter.emit('data_received');
+}
+
+// 绑定 connection 事件处理程序
+eventEmitter.on('connection', connectHandler);
+
+// 使用匿名函数绑定 data_received 事件
+eventEmitter.on('data_received', function(){
+   console.log('数据接收成功。');
+});
+
+// 触发 connection 事件
+eventEmitter.emit('connection');
+
+console.log("程序执行完毕。");
+```
+
+接下来让我们执行以上代码：
+
+```text
+$ node main.js
+连接成功。
+数据接收成功。
+程序执行完毕。
+```
+
+
+## Node 应用程序是如何工作的？
+
+在 Node 应用程序中，执行异步操作的函数将回调函数作为最后一个参数， 回调函数接收错误对象作为第一个参数。
+
+接下来让我们来重新看下前面的实例，创建一个 input.txt ,文件内容如下：
+
+```text
+菜鸟教程官网地址：www.runoob.com
+```
+
+创建 main.js 文件，代码如下：
+
+```javascript
+var fs = require("fs");
+
+fs.readFile('input.txt', function (err, data) {
+   if (err){
+      console.log(err.stack);
+      return;
+   }
+   console.log(data.toString());
+});
+console.log("程序执行完毕");
+```
+
+以上程序中 fs.readFile() 是异步函数用于读取文件。 如果在读取文件过程中发生错误，错误 err 对象就会输出错误信息。
+
+如果没发生错误，readFile 跳过 err 对象的输出，文件内容就通过回调函数输出。
+
+执行以上代码，执行结果如下：
+
+```text
+程序执行完毕
+菜鸟教程官网地址：www.runoob.com
+```
+
+接下来我们删除 input.txt 文件，执行结果如下所示：
+
+```text
+程序执行完毕
+Error: ENOENT, open 'input.txt'
+```
+
+因为文件 input.txt 不存在，所以输出了错误信息。
+
+
+## 复习重点
+
+- 能说明 `Node.js 事件循环` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,151 @@
-# PowerShell：PowerShell Cmdlet 基础 练习笔记
+# PowerShell：PowerShell Cmdlet 基础
 
 - 来源：[PowerShell Cmdlet 基础](https://www.runoob.com/powershell/powershell-cmdlet.html)
 - 分类：.NET
 - 技术：PowerShell
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2054
 
-## 练习目标
+## 本章内容
 
-把 `PowerShell Cmdlet 基础` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Cmdlet（发音类似 "command-let"） 是 PowerShell 中的基本命令单元，由 Microsoft 基于 .NET 框架实现的小型命令。
 
-## 练习步骤
+Cmdlet 不同于传统 shell 中的外部程序，例如 .exe 或 .bat 文件，而是内置于 PowerShell 运行时环境中的。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+每个 Cmdlet 执行一项特定的任务，比如获取数据、设置属性、创建对象、导出文件等。
 
-## 验收清单
 
-- 我能独立说出 `PowerShell Cmdlet 基础` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### Cmdlet 的命名规则：动词-名词
 
-## 复盘问题
+PowerShell 中所有 Cmdlet 的命名都遵循统一的 "动词-名词" 格式，例如：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- Get-Process：获取进程信息
+- Set-Date：设置系统日期
+- New-Item：创建新项（如文件或文件夹）
+- Remove-Service：删除服务
+
+这种命名方式既直观又一致，便于记忆和查找。
+
+
+## Cmdlet 的基本语法结构
+
+Cmdlet 的语法结构一般如下：
+
+示例：
+
+```text
+Get-Service -Name W32Time
+```
+
+说明：
+
+- Get-Service：获取服务对象
+- -Name W32Time：指定要查询的服务名称为 W32Time
+
+再如：
+
+```text
+Stop-Process -Id 1234 -Force
+```
+
+- -Id 是带值参数
+- -Force 是开关参数，不需要指定值
+
+
+## 参数与管道的结合
+
+Cmdlet 支持位置参数、命名参数和管道输入。这使得命令可以灵活组合，构建复杂的工作流。
+
+示例 1：指定参数形式
+
+```text
+Get-Process -Name notepad
+```
+
+示例 2：通过管道传递
+
+```text
+"notepad" | Get-Process -Name
+```
+
+示例 3：对象管道传递给另一个 Cmdlet
+
+```text
+Get-Process notepad | Stop-Process
+```
+
+在上面这个例子中，Get-Process 获取了 notepad 进程对象，然后通过管道传递给 Stop-Process 来终止它。
+
+
+## 查看 Cmdlet 的帮助信息
+
+PowerShell 提供了完整的帮助系统，可以使用 Get-Help 查看任何 Cmdlet 的用法：
+
+```text
+Get-Help Get-Process
+```
+
+要查看更多参数说明和示例，可加上 -Detailed 或 -Examples：
+
+```text
+Get-Help Get-Process -Examples
+```
+
+如果是首次使用 PowerShell，建议执行一次以下命令来更新本地帮助：
+
+```text
+Update-Help
+```
+
+
+## 常见基础 Cmdlet 速查表
+
+
+## 实践示例：文件操作
+
+创建文件夹：
+
+```text
+New-Item -Path "C:\TestFolder" -ItemType Directory
+```
+
+在该目录下创建文本文件：
+
+```text
+New-Item -Path "C:\TestFolder\demo.txt" -ItemType File
+```
+
+将内容写入文件：
+
+```text
+Set-Content -Path "C:\TestFolder\demo.txt" -Value "Hello PowerShell"
+```
+
+读取文件内容：
+
+```text
+Get-Content -Path "C:\TestFolder\demo.txt"
+```
+
+
+## 小结与学习建议
+
+- Cmdlet 是 PowerShell 的核心单位，每个 Cmdlet 都是功能明确的任务执行器。
+- 统一的 "动词-名词" 命名规范让 Cmdlet 可预测、易于学习。
+- 管道、参数系统与对象模型相结合，使 Cmdlet 在数据处理和自动化方面表现出色。
+- 掌握常用 Cmdlet 并结合对象操作，是学习 PowerShell 的重要起点。
+
+建议初学者从以下方面着手练习：
+
+- 使用 Get-Command 探索所有可用命令
+- 配合 Get-Help 学会查阅命令用法
+- 利用 New-Item 和 Get-Content 等命令进行本地文件操作
+- 多尝试通过管道将命令组合起来处理数据
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PowerShell Cmdlet 基础` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

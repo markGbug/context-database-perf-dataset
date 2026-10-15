@@ -1,35 +1,104 @@
-# AngularJS：AngularJS 动画 学习笔记
+# AngularJS：AngularJS 动画
 
 - 来源：[AngularJS 动画](https://www.runoob.com/angularjs/angularjs-animations.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2298
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS 动画` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+AngularJS 提供了动画效果，可以配合 CSS 使用。
 
-## 阅读抓手
+AngularJS 使用动画需要引入 angular-animate.min.js 库。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular-animate.min.js"></script>
+```
 
-## 笔记模板
+还需在应用中使用模型 ngAnimate：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<body ng-app="ngAnimate">
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `AngularJS 动画`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 什么是动画？
+
+动画是通过改变 HTML 元素产生的动态变化效果。
+
+
+### 实例
+
+勾选复选框隐藏 DIV:
+
+如果我们应用已经设置了应用名，可以把 ngAnimate 直接添加在模型中：
+
+
+### 实例
+
+
+## ngAnimate 做了什么?
+
+ngAnimate 模型可以添加或移除 class 。
+
+ngAnimate 模型并不能使 HTML 元素产生动画，但是 ngAnimate 会监测事件，类似隐藏显示 HTML 元素 ，如果事件发生 ngAnimate 就会使用预定义的 class 来设置 HTML 元素的动画。
+
+AngularJS 添加/移除 class 的指令:
+
+- ng-show
+- ng-hide
+- ng-class
+- ng-view
+- ng-include
+- ng-repeat
+- ng-if
+- ng-switch
+
+ng-show 和 ng-hide 指令用于添加或移除 ng-hide class 的值。
+
+其他指令会在进入 DOM 会添加 ng-enter 类，移除 DOM 会添加 ng-leave 属性。
+
+当 HTML 元素位置改变时，ng-repeat 指令同样可以添加 ng-move 类 。
+
+此外， 在动画完成后，HTML 元素的类集合将被移除。例如： ng-hide 指令会添加以下类：
+
+- ng-animate
+- ng-hide-animate
+- ng-hide-add (如果元素将被隐藏)
+- ng-hide-remove (如果元素将显示)
+- ng-hide-add-active (如果元素将隐藏)
+- ng-hide-remove-active (如果元素将显示)
+
+
+## 使用 CSS 动画
+
+我们可以使用 CSS transition(过渡) 或 CSS 动画让 HTML 元素产生动画效果，该部分内容你可以参阅我们的 CSS 过渡教程， CSS 动画教程。
+
+
+## CSS 过渡
+
+CSS 过渡可以让我们平滑的将一个 CSS 属性值修改为另外一个：
+
+
+### 实例
+
+在 DIV 元素设置了 .ng-hide 类时，过渡需要花费 0.5 秒，高度从 100px 变为 0:
+
+
+## CSS 动画
+
+CSS 动画允许你平滑的修改 CSS 属性值:
+
+
+### 实例
+
+在 DIV 元素设置了 .ng-hide 类时, myChange 动画将执行，它会平滑的将高度从 100px 变为 0:
+
+
+## 复习重点
+
+- 能说明 `AngularJS 动画` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

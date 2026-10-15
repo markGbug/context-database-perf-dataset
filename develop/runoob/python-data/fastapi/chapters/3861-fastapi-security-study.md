@@ -1,35 +1,92 @@
-# FastAPI：FastAPI 安全认证 学习笔记
+# FastAPI：FastAPI 安全认证
 
 - 来源：[FastAPI 安全认证](https://www.runoob.com/fastapi/fastapi-security.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3861
 
-## 学习目标
+## 本章内容
 
-FastAPI 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `FastAPI 安全认证` 建立学习路径，先理解它在 FastAPI 体系中的位置，再做可运行或可复述的验证。
+FastAPI 内置了多种安全工具，支持 OAuth2、JWT 令牌、API Key 等常见的认证和授权方式。本节介绍如何实现基于 OAuth2 + JWT 的用户认证。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 安全认证概述
 
-## 笔记模板
+FastAPI 支持的安全方案：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## OAuth2 密码模式 + JWT
 
-- 能用 3 到 5 句话解释 `FastAPI 安全认证`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+这是前后端分离应用中最常用的认证方案。流程：
+
+- 客户端发送用户名和密码到 /token 端点
+- 服务器验证凭据，返回 JWT 访问令牌
+- 客户端在后续请求中携带令牌（Authorization: Bearer <token>）
+- 服务器验证令牌，识别用户身份
+
+
+### 1. 安装依赖
+
+```text
+pip install "python-jose[cryptography]" passlib[bcrypt]
+```
+
+
+### 2. 完整示例
+
+
+## 实例
+
+
+## 代码解析
+
+
+### 密码哈希
+
+使用 passlib 的 bcrypt 算法对密码进行哈希处理，确保数据库中不存储明文密码：
+
+
+### JWT 令牌
+
+JWT（JSON Web Token）是一种安全的令牌格式，包含用户信息和过期时间：
+
+
+### OAuth2PasswordBearer
+
+告诉 FastAPI 从 Authorization: Bearer <token> 请求头中获取令牌：
+
+```text
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+```
+
+tokenUrl="token" 指定客户端获取令牌的端点路径，会出现在 API 文档中。
+
+SECRET_KEY 必须保密且足够复杂，生产环境应使用环境变量存储。如果密钥泄露，攻击者可以伪造任意用户的令牌。
+
+
+## 使用 API 文档测试
+
+配置 OAuth2 后，Swagger UI 会出现"Authorize"按钮：
+
+- 点击 "Authorize"
+- 输入用户名和密码（如 alice / secret）
+- 点击 "Authorize" 获取令牌
+- 之后的所有请求都会自动携带令牌
+
+
+## 小结
+
+- OAuth2 + JWT 是前后端分离应用最常用的认证方案
+- 密码必须哈希存储，不能明文保存
+- JWT 令牌包含用户标识和过期时间
+- 使用依赖注入（Depends）实现认证逻辑的复用
+- 生产环境中 SECRET_KEY 必须保密
+
+
+## 复习重点
+
+- 能说明 `FastAPI 安全认证` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

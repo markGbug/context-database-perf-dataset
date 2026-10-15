@@ -1,35 +1,92 @@
-# JSON：JSON vs XML 学习笔记
+# JSON：JSON vs XML
 
 - 来源：[JSON vs XML](https://www.runoob.com/json/json-vs-xml.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3013
 
-## 学习目标
+## 本章内容
 
-JSON 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JSON vs XML` 建立学习路径，先理解它在 JSON 体系中的位置，再做可运行或可复述的验证。
+JSON 和 XML 都用于接收 web 服务端的数据。
 
-## 阅读抓手
+JSON 和 XML在写法上有所不同，如下所示：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## JSON 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `JSON vs XML`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## XML 实例
+
+```html
+<sites>
+  <site>
+    <name>菜鸟教程</name> <url>www.runoob.com</url>
+  </site>
+  <site>
+    <name>google</name> <url>www.google.com</url>
+  </site>
+  <site>
+    <name>微博</name> <url>www.weibo.com</url>
+  </site>
+</sites>
+```
+
+JSON 与 XML 的相同之处：
+
+- JSON 和 XML 数据都是 "自我描述" ，都易于理解。
+- JSON 和 XML 数据都是有层次的结构
+- JSON 和 XML 数据可以被大多数编程语言使用
+- JSON 不需要结束标签
+- JSON 更加简短
+- JSON 读写速度更快
+- JSON 可以使用数组
+
+最大的不同是：XML 需要使用 XML 解析器来解析，JSON 可以使用标准的 JavaScript 函数来解析。
+
+- JSON.parse(): 将一个 JSON 字符串转换为 JavaScript 对象。
+- JSON.stringify(): 将 JavaScript 值转换为 JSON 字符串。
+
+
+## 为什么 JSON 比 XML 更好？
+
+XML 比 JSON 更难解析。
+
+JSON 可以直接使用现有的 JavaScript 对象解析。
+
+针对 AJAX 应用，JSON 比 XML 数据加载更快，而且更简单：
+
+使用 XML
+
+- 获取 XML 文档
+- 使用 XML DOM 迭代循环文档
+- 接数据解析出来复制给变量
+
+使用 JSON
+
+- 获取 JSON 字符串
+- JSON.Parse 解析 JSON 字符串
+
+
+## 相关文章
+
+- JavaScript JSON: https://www.runoob.com/js/js-json.html
+- XML DOM 教程: https://www.runoob.com/dom/dom-tutorial.html
+
+
+## 复习重点
+
+- 能说明 `JSON vs XML` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

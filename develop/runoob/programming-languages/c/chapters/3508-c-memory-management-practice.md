@@ -1,34 +1,154 @@
-# C：C 内存管理 练习笔记
+# C：C 内存管理
 
 - 来源：[C 内存管理](https://www.runoob.com/cprogramming/c-memory-management.html)
 - 分类：编程语言
 - 技术：C
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3508
 
-## 练习目标
+## 本章内容
 
-把 `C 内存管理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章将讲解 C 中的动态内存管理。C 语言为内存的分配和管理提供了几个函数。这些函数可以在 <stdlib.h> 头文件中找到。
 
-## 练习步骤
+在 C 语言中，内存是通过指针变量来管理的。指针是一个变量，它存储了一个内存地址，这个内存地址可以指向任何数据类型的变量，包括整数、浮点数、字符和数组等。C 语言提供了一些函数和运算符，使得程序员可以对内存进行操作，包括分配、释放、移动和复制等。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+注意：void * 类型表示未确定类型的指针。C、C++ 规定 void * 类型可以通过类型转换强制转换为任何其它类型的指针。
 
-## 验收清单
 
-- 我能独立说出 `C 内存管理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 动态分配内存
 
-## 复盘问题
+编程时，如果您预先知道数组的大小，那么定义数组时就比较容易。例如，一个存储人名的数组，它最多容纳 100 个字符，所以您可以定义数组，如下所示：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+char name[100];
+```
+
+但是，如果您预先不知道需要存储的文本长度，例如您想存储有关一个主题的详细描述。在这里，我们需要定义一个指针，该指针指向未定义所需内存大小的字符，后续再根据需求来分配内存，如下所示：
+
+
+## 实例
+
+```java
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+   char name[100];
+   char *description;
+
+   strcpy(name, "Zara Ali");
+
+   /* 动态分配内存 */
+   description = (char *)malloc( 200 * sizeof(char) );
+   if( description == NULL )
+   {
+      fprintf(stderr, "Error - unable to allocate required memory\n");
+   }
+   else
+   {
+      strcpy( description, "Zara ali a DPS student in class 10th");
+   }
+   printf("Name = %s\n", name );
+   printf("Description: %s\n", description );
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+Name = Zara Ali
+Description: Zara ali a DPS student in class 10th
+```
+
+上面的程序也可以使用 calloc() 来编写，只需要把 malloc 替换为 calloc 即可，如下所示：
+
+```text
+calloc(200, sizeof(char));
+```
+
+当动态分配内存时，您有完全控制权，可以传递任何大小的值。而那些预先定义了大小的数组，一旦定义则无法改变大小。
+
+
+## 重新调整内存的大小和释放内存
+
+当程序退出时，操作系统会自动释放所有分配给程序的内存，但是，建议您在不需要内存时，都应该调用函数 free() 来释放内存。
+
+或者，您可以通过调用函数 realloc() 来增加或减少已分配的内存块的大小。让我们使用 realloc() 和 free() 函数，再次查看上面的实例：
+
+
+## 实例
+
+```java
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+   char name[100];
+   char *description;
+
+   strcpy(name, "Zara Ali");
+
+   /* 动态分配内存 */
+   description = (char *)malloc( 30 * sizeof(char) );
+   if( description == NULL )
+   {
+      fprintf(stderr, "Error - unable to allocate required memory\n");
+   }
+   else
+   {
+      strcpy( description, "Zara ali a DPS student.");
+   }
+   /* 假设您想要存储更大的描述信息 */
+   description = (char *) realloc( description, 100 * sizeof(char) );
+   if( description == NULL )
+   {
+      fprintf(stderr, "Error - unable to allocate required memory\n");
+   }
+   else
+   {
+      strcat( description, "She is in class 10th");
+   }
+
+   printf("Name = %s\n", name );
+   printf("Description: %s\n", description );
+
+   /* 使用 free() 函数释放内存 */
+   free(description);
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+Name = Zara Ali
+Description: Zara ali a DPS student.She is in class 10th
+```
+
+您可以尝试一下不重新分配额外的内存，strcat() 函数会生成一个错误，因为存储 description 时可用的内存不足。
+
+
+### C 语言中常用的内存管理函数和运算符
+
+- malloc() 函数：用于动态分配内存。它接受一个参数，即需要分配的内存大小（以字节为单位），并返回一个指向分配内存的指针。
+- free() 函数：用于释放先前分配的内存。它接受一个指向要释放内存的指针作为参数，并将该内存标记为未使用状态。
+- calloc() 函数：用于动态分配内存，并将其初始化为零。它接受两个参数，即需要分配的内存块数和每个内存块的大小（以字节为单位），并返回一个指向分配内存的指针。
+- realloc() 函数：用于重新分配内存。它接受两个参数，即一个先前分配的指针和一个新的内存大小，然后尝试重新调整先前分配的内存块的大小。如果调整成功，它将返回一个指向重新分配内存的指针，否则返回一个空指针。
+- sizeof 运算符：用于获取数据类型或变量的大小（以字节为单位）。
+- 指针运算符：用于获取指针所指向的内存地址或变量的值。
+- & 运算符：用于获取变量的内存地址。
+- * 运算符：用于获取指针所指向的变量的值。
+- -> 运算符：用于指针访问结构体成员，语法为 pointer->member，等价于 (*pointer).member。
+- memcpy() 函数：用于从源内存区域复制数据到目标内存区域。它接受三个参数，即目标内存区域的指针、源内存区域的指针和要复制的数据大小（以字节为单位）。
+- memmove() 函数：类似于 memcpy() 函数，但它可以处理重叠的内存区域。它接受三个参数，即目标内存区域的指针、源内存区域的指针和要复制的数据大小（以字节为单位）。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `C 内存管理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

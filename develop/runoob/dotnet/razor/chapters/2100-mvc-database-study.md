@@ -1,35 +1,85 @@
-# Razor：MVC 数据库 学习笔记
+# Razor：ASP.NET MVC - SQL 数据库
 
 - 来源：[MVC 数据库](https://www.runoob.com/aspnet/mvc-database.html)
 - 分类：.NET
 - 技术：Razor
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2100
 
-## 学习目标
+## 本章内容
 
-Razor 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `MVC 数据库` 建立学习路径，先理解它在 Razor 体系中的位置，再做可运行或可复述的验证。
+为了学习 ASP.NET MVC，我们将构建一个 Internet 应用程序。
 
-## 阅读抓手
+第 6 部分：添加数据库。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 创建数据库
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+Visual Web Developer 带有名为 SQL Server Compact 免费的 SQL 数据库。
 
-## 完成标准
+本教程所需的这个数据库可以通过以下几个简单的步骤来创建：
 
-- 能用 3 到 5 句话解释 `MVC 数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 右击 Solution Explorer 窗口中的 App_Data 文件夹
+- 选择 Add, New Item
+- 选择 SQL Server Compact Local Database *
+- 将数据库命名为 Movies.sdf
+- 点击 Add 按钮
+
+* 如果选项中没有 SQL Server Compact Local Database，则说明您尚未在计算机上安装 SQL Server Compac。请通过以下链接进行安装：SQL Server Compact
+
+Visual Web Developer 会自动在 App_Data 文件夹中创建该数据库。
+
+注释：在本教程中，需要您掌握一些关于 SQL 数据库的基础知识。如果您想先学习这个主题，请访问我们的 SQL 教程。
+
+
+## 添加数据库表
+
+双击 App_Data 文件夹中的 Movies.sdf 文件，将打开 Database Explorer 窗口。
+
+如需在数据库中创建一个新的表，请右击 Tables 文件夹，然后选择 Create Table。
+
+创建如下的列：
+
+对列的解释：
+
+ID 是用于标识表中每条记录的整数（全数字）。
+
+Title 是 100 个字符长度的文本列，用于存储影片的名称。
+
+Director 是 100 个字符长度的文本列，用于存储导演的名字。
+
+Date 是日期列，用于存储影片的发布日期。
+
+在创建好上述列之后，您必须将 ID 列设置为表的主键（记录标识符）。要做到这点，请点击列名（ID），并选择 Primary Key。在 Column Properties 窗口中，设置 Identity 属性为 True：
+
+当您创建好表列后，保存表并命名为 MovieDBs。
+
+注释：
+
+我们特意把表命名为 "MovieDBs"（以 s 结尾）。在下一章中，您将看到用于数据模型的 "MovieDB"。这看起来有点奇怪，不过这种命名惯例能确保控制器连接上数据库表，您必须这么使用。
+
+
+## 添加数据库记录
+
+您可以使用 Visual Web Developer 向 movie 数据库中添加一些测试记录。
+
+双击 App_Data 文件夹中的 Movies.sdf 文件。
+
+右击 Database Explorer 窗口中的 MovieDBs 表，并选择 Show Table Data。
+
+添加一些记录：
+
+注释：ID 列会自动更新，您可以不用编辑它。
+
+
+## 添加连接字符串
+
+向您的 Web.config 文件中的 <connectionStrings> 元素添加如下元素：
+
+
+## 复习重点
+
+- 能说明 `MVC 数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,142 @@
-# Python2.x：Python Number(数字) 练习笔记
+# Python2.x：Python Number(数字)
 
 - 来源：[Python Number(数字)](https://www.runoob.com/python/python-numbers.html)
 - 分类：Python / 数据科学
 - 技术：Python2.x
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4186
 
-## 练习目标
+## 本章内容
 
-把 `Python Number(数字)` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Python Number 数据类型用于存储数值。
 
-## 练习步骤
+数据类型是不允许改变的,这就意味着如果改变 Number 数据类型的值，将重新分配内存空间。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+以下实例在变量赋值时 Number 对象将被创建：
 
-## 验收清单
+```text
+var1 = 1
+var2 = 10
+```
 
-- 我能独立说出 `Python Number(数字)` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+您也可以使用del语句删除一些 Number 对象引用。
 
-## 复盘问题
+del语句的语法是：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+del var1[,var2[,var3[....,varN]]]]
+```
+
+您可以通过使用del语句删除单个或多个对象，例如：
+
+```text
+del var
+del var_a, var_b
+```
+
+Python 支持四种不同的数值类型：
+
+- 整型(Int) - 通常被称为是整型或整数，是正或负整数，不带小数点。
+- 长整型(long integers) - 无限大小的整数，整数最后是一个大写或小写的L。
+- 浮点型(floating point real values) - 浮点型由整数部分与小数部分组成，浮点型也可以使用科学计数法表示（2.5e2 = 2.5 x 102 = 250）
+- 复数(complex numbers) - 复数由实数部分和虚数部分构成，可以用a + bj,或者complex(a,b)表示， 复数的实部a和虚部b都是浮点型。
+- 长整型也可以使用小写"L"，但是还是建议您使用大写"L"，避免与数字"1"混淆。Python使用"L"来显示长整型。
+- Python还支持复数，复数由实数部分和虚数部分构成，可以用a + bj,或者complex(a,b)表示， 复数的实部a和虚部b都是浮点型
+
+
+## Python Number 类型转换
+
+```text
+int(x [,base ])         将x转换为一个整数
+long(x [,base ])        将x转换为一个长整数
+float(x )               将x转换到一个浮点数
+complex(real [,imag ])  创建一个复数
+str(x )                 将对象 x 转换为字符串
+repr(x )                将对象 x 转换为表达式字符串
+eval(str )              用来计算在字符串中的有效Python表达式,并返回一个对象
+tuple(s )               将序列 s 转换为一个元组
+list(s )                将序列 s 转换为一个列表
+chr(x )                 将一个整数转换为一个字符
+unichr(x )              将一个整数转换为Unicode字符
+ord(x )                 将一个字符转换为它的整数值
+hex(x )                 将一个整数转换为一个十六进制字符串
+oct(x )                 将一个整数转换为一个八进制字符串
+```
+
+
+## Python math 模块、cmath 模块
+
+Python 中数学运算常用的函数基本都在 math 模块、cmath 模块中。
+
+Python math 模块提供了许多对浮点数的数学运算函数。
+
+Python cmath 模块包含了一些用于复数运算的函数。
+
+cmath 模块的函数跟 math 模块函数基本一致，区别是 cmath 模块运算的是复数，math 模块运算的是数学运算。
+
+要使用 math 或 cmath 函数必须先导入：
+
+```text
+import math
+```
+
+查看 math 查看包中的内容:
+
+```text
+>>> import math
+>>> dir(math)
+['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh', 'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'gcd', 'hypot', 'inf', 'isclose', 'isfinite', 'isinf', 'isnan', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'log2', 'modf', 'nan', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'tau', 'trunc']
+>>>
+```
+
+下文会介绍各个函数的具体应用。
+
+查看 cmath 查看包中的内容
+
+```text
+>>> import cmath
+>>> dir(cmath)
+['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atanh', 'cos', 'cosh', 'e', 'exp', 'inf', 'infj', 'isclose', 'isfinite', 'isinf', 'isnan', 'log', 'log10', 'nan', 'nanj', 'phase', 'pi', 'polar', 'rect', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'tau']
+>>>
+```
+
+实例
+
+```text
+>>> import cmath
+>>> cmath.sqrt(-1)
+1j
+>>> cmath.sqrt(9)
+(3+0j)
+>>> cmath.sin(1)
+(0.8414709848078965+0j)
+>>> cmath.log10(100)
+(2+0j)
+>>>
+```
+
+
+## Python数学函数
+
+
+## Python随机数函数
+
+随机数可以用于数学，游戏，安全等领域中，还经常被嵌入到算法中，用以提高算法效率，并提高程序的安全性。
+
+Python包含以下常用随机数函数：
+
+
+## Python三角函数
+
+Python包括以下三角函数：
+
+
+## Python数学常量
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python Number(数字)` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,161 @@
-# JSON：JSON 对象 学习笔记
+# JSON：JSON 对象
 
 - 来源：[JSON 对象](https://www.runoob.com/json/js-json-objects.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3014
 
-## 学习目标
+## 本章内容
 
-JSON 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JSON 对象` 建立学习路径，先理解它在 JSON 体系中的位置，再做可运行或可复述的验证。
+## 对象语法
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 实例
 
-## 笔记模板
+```text
+{ "name":"runoob", "alexa":10000, "site":null }
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+JSON 对象使用在大括号 {...} 中书写。
 
-## 完成标准
+对象可以包含多个 key/value（键/值）对。
 
-- 能用 3 到 5 句话解释 `JSON 对象`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+key 必须是字符串，value 可以是合法的 JSON 数据类型（字符串, 数字, 对象, 数组, 布尔值或 null）。
+
+key 和 value 中使用冒号 : 分割。
+
+每个 key/value 对使用逗号 , 分割。
+
+
+## 访问对象值
+
+你可以使用点号 . 来访问对象的值：
+
+
+## 实例
+
+```javascript
+var myObj, x;
+myObj = { "name":"runoob", "alexa":10000, "site":null };
+x = myObj.name;
+```
+
+你也可以使用中括号（[]）来访问对象的值：
+
+
+## 实例
+
+```javascript
+var myObj, x;
+myObj = { "name":"runoob", "alexa":10000, "site":null };
+x = myObj["name"];
+```
+
+
+## 循环对象
+
+你可以使用 for-in 来循环对象的属性：
+
+
+## 实例
+
+```java
+var myObj = { "name":"runoob", "alexa":10000, "site":null };
+for (x in myObj) {
+    document.getElementById("demo").innerHTML += x + "<br>";
+}
+```
+
+在 for-in 循环对象的属性时，使用中括号（[]）来访问属性的值：
+
+
+## 实例
+
+```java
+var myObj = { "name":"runoob", "alexa":10000, "site":null };
+for (x in myObj) {
+    document.getElementById("demo").innerHTML += myObj[x] + "<br>";
+}
+```
+
+
+## 嵌套 JSON 对象
+
+JSON 对象中可以包含另外一个 JSON 对象：
+
+
+## 实例
+
+```text
+myObj = {
+    "name":"runoob",
+    "alexa":10000,
+    "sites": {
+        "site1":"www.runoob.com",
+        "site2":"m.runoob.com",
+        "site3":"c.runoob.com"
+    }
+}
+```
+
+你可以使用点号 . 或者中括号 [...] 来访问嵌套的 JSON 对象。
+
+
+## 实例
+
+```text
+x = myObj.sites.site1;
+// 或者
+x = myObj.sites["site1"];
+```
+
+
+## 修改值
+
+你可以使用点号 . 来修改 JSON 对象的值：
+
+
+## 实例
+
+```text
+myObj.sites.site1 = "www.google.com";
+```
+
+你可以使用中括号 [...] 来修改 JSON 对象的值：
+
+
+## 实例
+
+```text
+myObj.sites["site1"] = "www.google.com";
+```
+
+
+## 删除对象属性
+
+我们可以使用 delete 关键字来删除 JSON 对象的属性：
+
+
+## 实例
+
+```text
+delete myObj.sites.site1;
+```
+
+你可以使用中括号 [...] 来删除 JSON 对象的属性：
+
+
+## 实例
+
+```text
+delete myObj.sites["site1"]
+```
+
+
+## 复习重点
+
+- 能说明 `JSON 对象` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

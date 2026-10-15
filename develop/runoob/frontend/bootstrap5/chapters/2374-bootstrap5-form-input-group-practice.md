@@ -1,34 +1,174 @@
-# Bootstrap5：Bootstrap5 输入框组 练习笔记
+# Bootstrap5：Bootstrap5 输入框组
 
 - 来源：[Bootstrap5 输入框组](https://www.runoob.com/bootstrap5/bootstrap5-form-input-group.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2374
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap5 输入框组` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们可以使用 .input-group 类来向表单输入框中添加更多的样式，如图标、文本或者按钮。
 
-## 练习步骤
+.input-group-text 类来设置文本的样式。。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## Bootstrap 实例
 
-- 我能独立说出 `Bootstrap5 输入框组` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<form>
+  <div class="input-group mb-3">
+    <span class="input-group-text">@</span>
+    <input type="text" class="form-control" placeholder="Username">
+  </div>
 
-## 复盘问题
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Your Email">
+    <span class="input-group-text">@runoob.com</span>
+  </div>
+</form>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 输入框大小
+
+使用 .input-group-sm 类来设置小的输入框， .input-group-lg 类设置大的输入框：
+
+
+## Bootstrap 实例
+
+```html
+<div class="input-group mb-3 input-group-sm">
+   <span class="input-group-text">Small</span>
+  <input type="text" class="form-control">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text">Default</span>
+  <input type="text" class="form-control">>
+</div>
+
+<div class="input-group mb-3 input-group-lg">
+  <span class="input-group-text">Large</span>
+  <input type="text" class="form-control">
+</div>
+```
+
+
+## 多个输入框和文本
+
+
+## Bootstrap 实例
+
+```html
+<!-- 多个输入框 -->
+<div class="input-group mb-3">
+  <span class="input-group-text">Person</span>
+  <input type="text" class="form-control" placeholder="First Name">
+  <input type="text" class="form-control" placeholder="Last Name">
+</div>
+
+<!-- 多个文本信息 -->
+<div class="input-group mb-3">
+  <span class="input-group-text">One</span>
+  <span class="input-group-text">Two</span>
+  <span class="input-group-text">Three</span>
+  <input type="text" class="form-control">
+</div>
+```
+
+
+## 复选框与单选框
+
+文本信息可以使用复选框与单选框替代：
+
+
+## Bootstrap 实例
+
+```html
+<div class="input-group mb-3">
+  <div class="input-group-text">
+    <input type="checkbox">
+  </div>
+  <input type="text" class="form-control" placeholder="RUNOOB">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-text">
+    <input type="radio">
+  </div>
+  <input type="text" class="form-control" placeholder="GOOGLE">
+</div>
+```
+
+
+## 输入框添加按钮组
+
+
+## Bootstrap 实例
+
+```html
+<div class="input-group mb-3">
+  <button class="btn btn-outline-primary" type="button">Basic Button</button>
+  <input type="text" class="form-control" placeholder="Some text">
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Search">
+  <button class="btn btn-success" type="submit">Go</button>
+</div>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Something clever..">
+  <button class="btn btn-primary" type="button">OK</button>
+  <button class="btn btn-danger" type="button">Cancel</button>
+</div>
+```
+
+
+## 设置下拉菜单
+
+输入框中添加下拉菜单不需要使用 .dropdown 类。
+
+
+## Bootstrap 实例
+
+```html
+<div class="input-group mt-3 mb-3">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+    选择网站
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="https://www.google.com">GOOGLE</a></li>
+    <li><a class="dropdown-item" href="https://www.runoob.com">RUNOOB</a></li>
+    <li><a class="dropdown-item" href="https://www.taobao.com">TAOBAO</a></li>
+  </ul>
+  <input type="text" class="form-control" placeholder="网站地址">
+</div>
+```
+
+
+## 输入框组标签
+
+在输入框组通过在输入框组外围的 label 来设置标签，标签的 for 属性需要与输入框组的 id 对应，点击标签后可以聚焦输入框：
+
+
+## Bootstrap 实例
+
+```html
+<form>
+    <label for="demo">这里输入您的邮箱:</label>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Email" id="demo" name="email">
+         <span class="input-group-text">@runoob.com</span>
+    </div>
+</form>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap5 输入框组` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

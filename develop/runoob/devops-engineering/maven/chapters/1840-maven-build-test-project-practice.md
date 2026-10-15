@@ -1,34 +1,146 @@
-# Maven：Maven 构建 & 项目测试 练习笔记
+# Maven：Maven 构建 & 项目测试
 
 - 来源：[Maven 构建 & 项目测试](https://www.runoob.com/maven/maven-build-test-project.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1840
 
-## 练习目标
+## 本章内容
 
-把 `Maven 构建 & 项目测试` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在上一章节中我们学会了如何使用 Maven 创建 Java 应用。接下来我们要学习如何构建和测试这个项目。
 
-## 练习步骤
+进入 C:/MVN 文件夹下，打开 consumerBanking 文件夹。你将看到有一个 pom.xml 文件，代码如下：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.companyname.bank</groupId>
+  <artifactId>consumerBanking</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>consumerBanking</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
+```
 
-## 验收清单
+从以上 xml代码中，可知 Maven 已经添加了 JUnit 作为测试框架。
 
-- 我能独立说出 `Maven 构建 & 项目测试` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+默认情况下 Maven 添加了一个源码文件 C:\MVN\consumerBanking\src\main\java\com\companyname\bank\App.java 和一个测试文件 C:\MVN\consumerBanking\src\test\java\com\companyname\bank\AppTest.java。
 
-## 复盘问题
+打开命令控制台，跳转到 C:\MVN\consumerBanking 目录下，并执行以下 mvn 命令开始构建项目：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+C:\MVN\consumerBanking>mvn clean package
+[INFO] Scanning for projects...
+[INFO] -------------------------------------------------------------------
+[INFO] Building consumerBanking
+[INFO]    task-segment: [clean, package]
+[INFO] -------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting directory C:\MVN\consumerBanking\target
+...
+...
+...
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: C:\MVN\consumerBanking\target\
+consumerBanking-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Tue Jul 10 16:52:18 IST 2012
+[INFO] Final Memory: 16M/89M
+[INFO] ------------------------------------------------------------------------
+```
+
+执行完后，我们已经构建了自己的项目并创建了最终的 jar 文件，下面是要学习的关键概念：
+
+- 我们给了 maven 两个目标，首先清理目标目录（clean），然后打包项目构建的输出为 jar（package）文件。
+- 打包好的 jar 文件可以在 consumerBanking\target 中获得，名称为 consumerBanking-1.0-SNAPSHOT.jar。
+- 测试报告存放在 consumerBanking\target\surefire-reports 文件夹中。
+- Maven 编译源码文件，以及测试源码文件。
+- 接着 Maven 运行测试用例。
+- 最后 Maven 创建项目包。
+
+```text
+C:\MVN\consumerBanking\target\classes>java com.companyname.bank.App
+```
+
+你可以看到结果：
+
+```text
+Hello World!
+```
+
+接下来我们看看如何添加其他的 Java 文件到项目中。打开 C:\MVN\consumerBanking\src\main\java\com\companyname\bank 文件夹，在其中创建 Util 类 Util.java。
+
+
+## Util.java
+
+```java
+package com.companyname.bank;
+
+public class Util
+{
+   public static void printMessage(String message){
+       System.out.println(message);
+   }
+}
+```
+
+更新 App 类来使用 Util 类:
+
+
+## App.java
+
+```java
+package com.companyname.bank;
+
+/**
+ * Hello world!
+ *
+ */
+public class App
+{
+    public static void main( String[] args )
+    {
+        Util.printMessage("Hello World!");
+    }
+}
+```
+
+现在打开命令控制台，跳转到 C:\MVN\consumerBanking 目录下，并执行下面的 mvn 命令。
+
+```text
+C:\MVN\consumerBanking>mvn clean compile
+```
+
+在 Maven 构建成功之后，跳转到 C:\MVN\consumerBanking\target\classes 目录下，并执行下面的 java 命令。
+
+```text
+C:\MVN\consumerBanking\target\classes>java -cp . com.companyname.bank.App
+```
+
+你可以看到结果：
+
+```text
+Hello World!
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Maven 构建 & 项目测试` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

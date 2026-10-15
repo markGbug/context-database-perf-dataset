@@ -1,35 +1,299 @@
-# JSP：JSP 连接数据库 学习笔记
+# JSP：JSP 连接数据库
 
 - 来源：[JSP 连接数据库](https://www.runoob.com/jsp/jsp-database-access.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0958
 
-## 学习目标
+## 本章内容
 
-JSP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `JSP 连接数据库` 建立学习路径，先理解它在 JSP 体系中的位置，再做可运行或可复述的验证。
+本教程假定您已经了解了 JDBC 应用程序的工作方式。在您开始学习 JSP 数据库访问之前，请访问 Java MySQL 连接 来设置相关驱动及配置。
 
-## 阅读抓手
+注意：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+你可以下载本站提供的 jar 包：
 
-## 笔记模板
+- MySQL 5 版本：mysql-connector-java-5.1.39-bin.jar
+- MySQL 8 版本：mysql-connector-java-8.0.19.jar
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+下载后把 mysql-connector-java-<对应版本>-bin.jar 拷贝到 tomcat 下 lib 目录。
 
-## 完成标准
+MySQL 8.0 以上版本的数据库连接有所不同：
 
-- 能用 3 到 5 句话解释 `JSP 连接数据库`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- 1、com.mysql.jdbc.Driver 更换为 com.mysql.cj.jdbc.Driver。
+- MySQL 8.0 以上版本不需要建立 SSL 连接的，需要显示关闭。
+- 最后还需要设置 CST。
+
+加载驱动与连接数据库方式如下：
+
+```html
+<sql:setDataSource var="snapshot" driver="com.mysql.cj.jdbc.Driver"
+     url="jdbc:mysql://localhost:3306/RUNOOB?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+     user="root"  password="12345"/>
+```
+
+从基本概念下手，让我们来创建一个简单的表，并在表中创建几条记录。
+
+
+## 创建测试数据
+
+接下来我们在 MySQL 中创建 RUNOOB 数据库，并创建 websites 数据表，表结构如下：
+
+```text
+CREATE TABLE `websites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(20) NOT NULL DEFAULT '' COMMENT '站点名称',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `alexa` int(11) NOT NULL DEFAULT '0' COMMENT 'Alexa 排名',
+  `country` char(10) NOT NULL DEFAULT '' COMMENT '国家',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+```
+
+插入一些数据：
+
+```text
+INSERT INTO `websites` VALUES ('1', 'Google', 'https://www.google.cm/', '1', 'USA'), ('2', '淘宝', 'https://www.taobao.com/', '13', 'CN'), ('3', '菜鸟教程', 'http://www.runoob.com', '5892', ''), ('4', '微博', 'http://weibo.com/', '20', 'CN'), ('5', 'Facebook', 'https://www.facebook.com/', '3', 'USA');
+```
+
+数据表显示如下：
+
+
+## SELECT操作
+
+接下来的这个例子告诉我们如何使用JSTL SQL标签来运行SQL SELECT语句：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
+<html>
+<head>
+<title>SELECT 操作</title>
+</head>
+<body>
+<!--
+JDBC 驱动名及数据库 URL
+数据库的用户名与密码，需要根据自己的设置
+useUnicode=true&characterEncoding=utf-8 防止中文乱码
+ -->
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+     url="jdbc:mysql://localhost:3306/RUNOOB?useUnicode=true&characterEncoding=utf-8"
+     user="root"  password="123456"/>
+
+<sql:query dataSource="${snapshot}" var="result">
+SELECT * from websites;
+</sql:query>
+<h1>JSP 数据库实例 - 菜鸟教程</h1>
+<table border="1" width="100%">
+<tr>
+   <th>ID</th>
+   <th>站点名</th>
+   <th>站点地址</th>
+</tr>
+<c:forEach var="row" items="${result.rows}">
+<tr>
+   <td><c:out value="${row.id}"/></td>
+   <td><c:out value="${row.name}"/></td>
+   <td><c:out value="${row.url}"/></td>
+</tr>
+</c:forEach>
+</table>
+
+</body>
+</html>
+```
+
+访问这个JSP例子，运行结果如下：
+
+
+## INSERT操作
+
+这个例子告诉我们如何使用JSTL SQL标签来运行SQL INSERT语句：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
+<html>
+<head>
+<title>SELECT 操作</title>
+</head>
+<body>
+<!--
+JDBC 驱动名及数据库 URL
+数据库的用户名与密码，需要根据自己的设置
+useUnicode=true&characterEncoding=utf-8 防止中文乱码
+ -->
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+     url="jdbc:mysql://localhost:3306/RUNOOB?useUnicode=true&characterEncoding=utf-8"
+     user="root"  password="123456"/>
+<!--
+插入数据
+ -->
+<sql:update dataSource="${snapshot}" var="result">
+INSERT INTO websites (name,url,alexa,country) VALUES ('菜鸟教程移动站', 'http://m.runoob.com', 5093, 'CN');
+</sql:update>
+<sql:query dataSource="${snapshot}" var="result">
+SELECT * from websites;
+</sql:query>
+<h1>JSP 数据库实例 - 菜鸟教程</h1>
+<table border="1" width="100%">
+<tr>
+   <th>ID</th>
+   <th>站点名</th>
+   <th>站点地址</th>
+</tr>
+<c:forEach var="row" items="${result.rows}">
+<tr>
+   <td><c:out value="${row.id}"/></td>
+   <td><c:out value="${row.name}"/></td>
+   <td><c:out value="${row.url}"/></td>
+</tr>
+</c:forEach>
+</table>
+
+</body>
+</html>
+```
+
+访问这个JSP例子，运行结果如下：
+
+
+## DELETE操作
+
+这个例子告诉我们如何使用JSTL SQL标签来运行SQL DELETE语句：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
+<html>
+<head>
+<title>SELECT 操作</title>
+</head>
+<body>
+<!--
+JDBC 驱动名及数据库 URL
+数据库的用户名与密码，需要根据自己的设置
+useUnicode=true&characterEncoding=utf-8 防止中文乱码
+ -->
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+     url="jdbc:mysql://localhost:3306/RUNOOB?useUnicode=true&characterEncoding=utf-8"
+     user="root"  password="123456"/>
+
+<!--
+删除 ID 为 11 的数据
+ -->
+<sql:update dataSource="${snapshot}" var="count">
+  DELETE FROM websites WHERE Id = ?
+  <sql:param value="${11}" />
+</sql:update>
+
+<sql:query dataSource="${snapshot}" var="result">
+SELECT * from websites;
+</sql:query>
+<h1>JSP 数据库实例 - 菜鸟教程</h1>
+<table border="1" width="100%">
+<tr>
+   <th>ID</th>
+   <th>站点名</th>
+   <th>站点地址</th>
+</tr>
+<c:forEach var="row" items="${result.rows}">
+<tr>
+   <td><c:out value="${row.id}"/></td>
+   <td><c:out value="${row.name}"/></td>
+   <td><c:out value="${row.url}"/></td>
+</tr>
+</c:forEach>
+</table>
+
+</body>
+</html>
+```
+
+访问这个JSP例子，运行结果如下：
+
+
+## UPDATE操作
+
+这个例子告诉我们如何使用JSTL SQL标签来运行SQL UPDATE语句：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
+<html>
+<head>
+<title>SELECT 操作</title>
+</head>
+<body>
+<!--
+JDBC 驱动名及数据库 URL
+数据库的用户名与密码，需要根据自己的设置
+useUnicode=true&characterEncoding=utf-8 防止中文乱码
+ -->
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+     url="jdbc:mysql://localhost:3306/RUNOOB?useUnicode=true&characterEncoding=utf-8"
+     user="root"  password="123456"/>
+
+<!--
+修改 ID 为 3 的名字：菜鸟教程改为 RUNOOB
+ -->
+<c:set var="SiteId" value="3"/>
+
+<sql:update dataSource="${snapshot}" var="count">
+  UPDATE websites SET name = 'RUNOOB' WHERE Id = ?
+  <sql:param value="${SiteId}" />
+</sql:update>
+
+<sql:query dataSource="${snapshot}" var="result">
+SELECT * from websites;
+</sql:query>
+<h1>JSP 数据库实例 - 菜鸟教程</h1>
+<table border="1" width="100%">
+<tr>
+   <th>ID</th>
+   <th>站点名</th>
+   <th>站点地址</th>
+</tr>
+<c:forEach var="row" items="${result.rows}">
+<tr>
+   <td><c:out value="${row.id}"/></td>
+   <td><c:out value="${row.name}"/></td>
+   <td><c:out value="${row.url}"/></td>
+</tr>
+</c:forEach>
+</table>
+
+</body>
+</html>
+```
+
+访问这个JSP例子，运行结果如下：
+
+
+## 复习重点
+
+- 能说明 `JSP 连接数据库` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

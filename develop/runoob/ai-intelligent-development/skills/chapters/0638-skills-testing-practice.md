@@ -1,34 +1,75 @@
-# Skills（技能）：Skills 单元测试 练习笔记
+# Skills（技能）：Skills 单元测试
 
 - 来源：[Skills 单元测试](https://www.runoob.com/skills/skills-testing.html)
 - 分类：AI / 智能开发
 - 技术：Skills（技能）
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0638
 
-## 练习目标
+## 本章内容
 
-把 `Skills 单元测试` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+写完 Skill 后，如何确认它真的按预期工作？靠手动测试既费时又容易遗漏。
 
-## 练习步骤
+本篇介绍如何为 Skill 建立系统性的测试用例，从脚本单元测试到端到端触发测试。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## Skill 测试的两个层次
 
-- 我能独立说出 `Skills 单元测试` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 层次一：脚本单元测试
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+脚本是 Skill 中最确定性的部分，适合用标准单元测试框架覆盖。
+
+
+## 实例
+
+运行测试：
+
+```text
+# 进入 Skill 目录后运行所有测试
+cd my-skill/
+pytest scripts/tests/ -v
+
+# 生成覆盖率报告
+pytest scripts/tests/ --cov=scripts --cov-report=term-missing
+```
+
+输出：
+
+```text
+scripts/tests/test_clean_data.py::test_remove_duplicates_basic  PASSED
+scripts/tests/test_clean_data.py::test_remove_duplicates_empty  PASSED
+scripts/tests/test_clean_data.py::test_fill_nulls_numeric       PASSED
+scripts/tests/test_clean_data.py::test_strip_whitespace         PASSED
+scripts/tests/test_clean_data.py::test_process_real_file        PASSED
+
+5 passed in 0.12s
+```
+
+
+## 层次二：触发端到端测试
+
+触发测试验证的是：当用户发出某个请求时，Claude 是否会使用这个 Skill。
+
+测试用例以 JSON 格式定义，包含用户提示词和期望的行为断言。
+
+
+## 实例
+
+运行触发测试（需要 skill-creator 提供的 eval 工具）：
+
+
+## 实例
+
+测试用例的提示词要足够复杂，简单的"读取 CSV"类请求即使触发失败也不代表 Skill 有问题，因为 Claude 本身就能处理。好的测试用例应当是用户真实会提的多步骤、有明确输出要求的请求。
+
+
+## 测试用例的覆盖范围
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Skills 单元测试` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

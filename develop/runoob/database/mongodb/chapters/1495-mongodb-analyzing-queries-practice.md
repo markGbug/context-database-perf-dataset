@@ -1,34 +1,103 @@
-# MongoDB：MongoDB 查询分析 练习笔记
+# MongoDB：MongoDB 查询分析
 
 - 来源：[MongoDB 查询分析](https://www.runoob.com/mongodb/mongodb-analyzing-queries.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1495
 
-## 练习目标
+## 本章内容
 
-把 `MongoDB 查询分析` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MongoDB 查询分析可以确保我们所建立的索引是否有效，是查询语句性能分析的重要工具。
 
-## 练习步骤
+MongoDB 查询分析常用函数有：explain() 和 hint()。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 使用 explain()
 
-- 我能独立说出 `MongoDB 查询分析` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+explain 操作提供了查询信息，使用索引及查询统计等。有利于我们对索引的优化。
 
-## 复盘问题
+接下来我们在 users 集合中创建 gender 和 user_name 的索引：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+>db.users.ensureIndex({gender:1,user_name:1})
+```
+
+现在在查询语句中使用 explain ：
+
+```text
+>db.users.find({gender:"M"},{user_name:1,_id:0}).explain()
+```
+
+以上的 explain() 查询返回如下结果：
+
+```text
+{
+   "cursor" : "BtreeCursor gender_1_user_name_1",
+   "isMultiKey" : false,
+   "n" : 1,
+   "nscannedObjects" : 0,
+   "nscanned" : 1,
+   "nscannedObjectsAllPlans" : 0,
+   "nscannedAllPlans" : 1,
+   "scanAndOrder" : false,
+   "indexOnly" : true,
+   "nYields" : 0,
+   "nChunkSkips" : 0,
+   "millis" : 0,
+   "indexBounds" : {
+      "gender" : [
+         [
+            "M",
+            "M"
+         ]
+      ],
+      "user_name" : [
+         [
+            {
+               "$minElement" : 1
+            },
+            {
+               "$maxElement" : 1
+            }
+         ]
+      ]
+   }
+}
+```
+
+现在，我们看看这个结果集的字段：
+
+- indexOnly: 字段为 true ，表示我们使用了索引。
+- cursor：因为这个查询使用了索引，MongoDB 中索引存储在B树结构中，所以这是也使用了 BtreeCursor 类型的游标。如果没有使用索引，游标的类型是 BasicCursor。这个键还会给出你所使用的索引的名称，你通过这个名称可以查看当前数据库下的system.indexes集合（系统自动创建，由于存储索引信息，这个稍微会提到）来得到索引的详细信息。
+- n：当前查询返回的文档数量。
+- nscanned/nscannedObjects：表明当前这次查询一共扫描了集合中多少个文档，我们的目的是，让这个数值和返回文档的数量越接近越好。
+- millis：当前查询所需时间，毫秒数。
+- indexBounds：当前查询具体使用的索引。
+
+
+## 使用 hint()
+
+虽然MongoDB查询优化器一般工作的很不错，但是也可以使用 hint 来强制 MongoDB 使用一个指定的索引。
+
+这种方法某些情形下会提升性能。 一个有索引的 collection 并且执行一个多字段的查询(一些字段已经索引了)。
+
+如下查询实例指定了使用 gender 和 user_name 索引字段来查询：
+
+```text
+>db.users.find({gender:"M"},{user_name:1,_id:0}).hint({gender:1,user_name:1})
+```
+
+可以使用 explain() 函数来分析以上查询：
+
+```text
+>db.users.find({gender:"M"},{user_name:1,_id:0}).hint({gender:1,user_name:1}).explain()
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MongoDB 查询分析` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

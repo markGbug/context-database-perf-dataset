@@ -1,35 +1,61 @@
-# SQL：SQL FULL JOIN 学习笔记
+# SQL：SQL FULL OUTER JOIN 关键字
 
 - 来源：[SQL FULL JOIN](https://www.runoob.com/sql/sql-join-full.html)
 - 分类：数据库
 - 技术：SQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1642
 
-## 学习目标
+## 本章内容
 
-SQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQL FULL JOIN` 建立学习路径，先理解它在 SQL 体系中的位置，再做可运行或可复述的验证。
+FULL OUTER JOIN 是 SQL 中的一种连接方式，用于同时保留两个表中所有的记录，即使其中一方没有匹配项。
 
-## 阅读抓手
+FULL OUTER JOIN 结果包括两个表中满足条件的记录（交集部分）以及不满足条件的记录（并集中的非交集部分）。 如果某条记录在一张表中存在，而在另一张表中没有匹配项，则该记录的缺失列会以 NULL 填充。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+FULL OUTER JOIN 关键字只要左表（table1）和右表（table2）其中一个表中存在匹配，则返回行。
 
-## 笔记模板
+FULL OUTER JOIN 关键字结合了 LEFT JOIN 和 RIGHT JOIN 的结果。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### SQL FULL OUTER JOIN 语法
 
-- 能用 3 到 5 句话解释 `SQL FULL JOIN`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+SELECT column_name(s)
+FROM table1
+FULL OUTER JOIN table2
+ON table1.column_name=table2.column_name;
+```
+
+- table1、table2：需要进行连接的两个表。
+- ON table1.column_name=table2.column_name：指定连接条件，通常是两个表的共同字段。
+- column_name(s) ：从两个表中选择需要的字段。
+
+
+### 特点
+
+- 返回两个表的并集：包含所有匹配和未匹配的记录。
+- 未匹配的记录填充 NULL：如果某条记录在一张表中没有匹配项，则其对应的字段以 NULL 表示。
+- 对等性：FULL OUTER JOIN 包含了 LEFT JOIN 和 RIGHT JOIN 的结果。
+
+假设有两个表：Students 和 Courses。
+
+Students 表：
+
+Courses 表：
+
+```text
+SELECT Students.StudentID, Students.Name, Courses.CourseName
+FROM Students
+FULL OUTER JOIN Courses
+ON Students.StudentID = Courses.StudentID;
+```
+
+查询输出结果：
+
+
+## 复习重点
+
+- 能说明 `SQL FULL JOIN` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

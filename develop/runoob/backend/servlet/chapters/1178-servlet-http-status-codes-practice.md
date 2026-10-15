@@ -1,34 +1,96 @@
-# Servlet：Servlet HTTP 状态码 练习笔记
+# Servlet：Servlet HTTP 状态码
 
 - 来源：[Servlet HTTP 状态码](https://www.runoob.com/servlet/servlet-http-status-codes.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1178
 
-## 练习目标
+## 本章内容
 
-把 `Servlet HTTP 状态码` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+HTTP 请求和 HTTP 响应消息的格式是类似的，结构如下：
 
-## 练习步骤
+- 初始状态行 + 回车换行符（回车+换行）
+- 零个或多个标题行+回车换行符
+- 一个空白行，即回车换行符
+- 一个可选的消息主体，比如文件、查询数据或查询输出
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+例如，服务器的响应头如下所示：
 
-## 验收清单
+```html
+HTTP/1.1 200 OK
+Content-Type: text/html
+Header2: ...
+...
+HeaderN: ...
+  (Blank Line)
+<!doctype ...>
+<html>
+<head>...</head>
+<body>
+...
+</body>
+</html>
+```
 
-- 我能独立说出 `Servlet HTTP 状态码` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+状态行包括 HTTP 版本（在本例中为 HTTP/1.1）、一个状态码（在本例中为 200）和一个对应于状态码的短消息（在本例中为 OK）。
 
-## 复盘问题
+以下是可能从 Web 服务器返回的 HTTP 状态码和相关的信息列表：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 设置 HTTP 状态代码的方法
+
+下面的方法可用于在 Servlet 程序中设置 HTTP 状态码。这些方法通过 HttpServletResponse 对象可用。
+
+
+## HTTP 状态码实例
+
+下面的例子把 407 错误代码发送到客户端浏览器，浏览器会显示 "Need authentication!!!" 消息。
+
+```java
+// 导入必需的 java 库
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.util.*;
+import javax.servlet.annotation.WebServlet;
+
+@WebServlet("/showError")
+// 扩展 HttpServlet 类
+public class showError extends HttpServlet {
+
+  // 处理 GET 方法请求的方法
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+            throws ServletException, IOException
+  {
+      // 设置错误代码和原因
+      response.sendError(407, "Need authentication!!!" );
+  }
+  // 处理 POST 方法请求的方法
+  public void doPost(HttpServletRequest request,
+                     HttpServletResponse response)
+      throws ServletException, IOException {
+     doGet(request, response);
+  }
+}
+```
+
+现在，调用上面的 Servlet 将显示以下结果：
+
+type Status report
+
+message Need authentication!!!
+
+description The client must first authenticate itself with the proxy (Need authentication!!!).
+
+
+### Apache Tomcat/5.5.29
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Servlet HTTP 状态码` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

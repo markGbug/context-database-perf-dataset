@@ -1,34 +1,94 @@
-# DeepSeek Harness：DeepSeek Harness 第一个工具 练习笔记
+# DeepSeek Harness：DeepSeek Harness 开发第一个工具：defineTool
 
 - 来源：[DeepSeek Harness 第一个工具](https://www.runoob.com/deepseek-harness/deepseek-harness-define-tool.html)
 - 分类：AI / 智能开发
 - 技术：DeepSeek Harness
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0227
 
-## 练习目标
+## 本章内容
 
-把 `DeepSeek Harness 第一个工具` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+工具是 Agent 用来干活的函数，模型看到工具定义后决定调用。
 
-## 练习步骤
+本章节我们将用 defineTool 写出第一个工具 greet，并让模型真的调用它。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 工具是什么
 
-- 我能独立说出 `DeepSeek Harness 第一个工具` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+工具（tool）是一个描述清晰的函数，包含名称、说明、参数和输出格式。
 
-## 复盘问题
+模型在生成回复时，可以根据这些信息发起调用。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在 dsh 里，工具通过 ctx.tools.register 注册到工具注册表。
+
+
+## defineTool 的完整结构
+
+defineTool 是定义工具的 DSL，它接收一个对象，描述工具的全部信息。
+
+
+## 创建 greet 工具
+
+把 scratch-plugin/src/my-plugin.ts 替换为以下内容。
+
+
+## 实例
+
+inject 让 Cordis 等待工具注册表就绪。
+
+defineTool 根据 parameters 推导并校验 args。
+
+execute 返回 output.schema 声明的规范值。
+
+output.render 再把规范值转换为面向模型的内容。
+
+
+## 运行并调用
+
+如果开发命令没在运行，重新启动：
+
+```text
+pnpm dsh web --patch ./scratch-plugin/cordis.yml
+```
+
+打开 http://127.0.0.1:3080，输入：
+
+```text
+Use the greet tool to greet RUNOOB.
+```
+
+模型可以调用 greet，并收到 Hello, RUNOOB! 这一工具结果。
+
+
+## 关键点：schema 自动流入提示词
+
+工具的 name、description、parameters、output 会自动组装进模型提示词。
+
+模型"知道"有这样一个工具，就会在合适的时候调用。
+
+你不需要手写函数签名给模型，schema 就是模型看到的接口。
+
+规范值（canonical value）是 execute 返回、output.schema 声明的值。
+
+它与"面向模型的内容"解耦：同一个规范值可以通过不同 render 变成不同格式。
+
+提示：想查看更复杂的工具写法（嵌套 schema、后台工作、策略钩子），见官方工具编写参考。
+
+
+## 小结与自测
+
+defineTool 用 schema 描述工具，ctx.tools.register 注册它，模型看到 schema 后直接调用。
+
+1. defineTool 的 execute 返回的是什么？
+
+2. output.render 的作用是什么？
+
+3. 模型是怎么知道要调用 greet 的？
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `DeepSeek Harness 第一个工具` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

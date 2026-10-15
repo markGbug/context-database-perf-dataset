@@ -1,35 +1,487 @@
-# TypeScript：TypeScript 运算符 学习笔记
+# TypeScript：TypeScript 运算符
 
 - 来源：[TypeScript 运算符](https://www.runoob.com/typescript/ts-operators.html)
 - 分类：前端开发
 - 技术：TypeScript
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3130
 
-## 学习目标
+## 本章内容
 
-TypeScript 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `TypeScript 运算符` 建立学习路径，先理解它在 TypeScript 体系中的位置，再做可运行或可复述的验证。
+运算符用于执行程序代码运算，会针对一个以上操作数项目来进行运算。
 
-## 阅读抓手
+考虑以下计算：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+7 + 5 = 12
+```
 
-## 笔记模板
+以上实例中 7、5 和 12 是操作数。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+运算符 + 用于加值。
 
-## 完成标准
+运算符 = 用于赋值。
 
-- 能用 3 到 5 句话解释 `TypeScript 运算符`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+TypeScript 主要包含以下几种运算：
+
+- 算术运算符
+- 逻辑运算符
+- 关系运算符
+- 按位运算符
+- 赋值运算符
+- 三元/条件运算符
+- 字符串运算符
+- 类型运算符
+
+
+## 算术运算符
+
+假定 y=5，下面的表格解释了这些算术运算符的操作：
+
+
+### 实例
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var num1 = 10;
+var num2 = 2;
+var res = 0;
+res = num1 + num2;
+console.log("加:        " + res);
+res = num1 - num2;
+console.log("减: " + res);
+res = num1 * num2;
+console.log("乘:    " + res);
+res = num1 / num2;
+console.log("除:   " + res);
+res = num1 % num2;
+console.log("余数:   " + res);
+num1++;
+console.log("num1 自增运算: " + num1);
+num2--;
+console.log("num2 自减运算: " + num2);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+加:        12
+减: 8
+乘:    20
+除:   5
+余数:   0
+num1 自增运算: 11
+num2 自减运算: 1
+```
+
+
+## 关系运算符
+
+关系运算符用于计算结果是否为 true 或者 false。
+
+x=5，下面的表格解释了关系运算符的操作：
+
+
+### 实例
+
+```html
+var num1:number = 5;
+var num2:number = 9;
+
+console.log("num1 的值为: "+num1);
+console.log("num2 的值为:"+num2);
+
+var res = num1>num2
+console.log("num1 大于n num2: "+res)
+
+res = num1<num2
+console.log("num1 小于 num2: "+res)
+
+res = num1>=num2
+console.log("num1 大于或等于  num2: "+res)
+
+res = num1<=num2
+console.log("num1 小于或等于 num2: "+res)
+
+res = num1==num2
+console.log("num1 等于 num2: "+res)
+
+res = num1!=num2
+console.log("num1 不等于 num2: "+res)
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var num1 = 5;
+var num2 = 9;
+console.log("num1 的值为: " + num1);
+console.log("num2 的值为:" + num2);
+var res = num1 > num2;
+console.log("num1 大于n num2: " + res);
+res = num1 < num2;
+console.log("num1 小于 num2: " + res);
+res = num1 >= num2;
+console.log("num1 大于或等于  num2: " + res);
+res = num1 <= num2;
+console.log("num1 小于或等于 num2: " + res);
+res = num1 == num2;
+console.log("num1 等于 num2: " + res);
+res = num1 != num2;
+console.log("num1 不等于 num2: " + res);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+num1 的值为: 5
+num2 的值为:9
+num1 大于n num2: false
+num1 小于 num2: true
+num1 大于或等于  num2: false
+num1 小于或等于 num2: true
+num1 等于 num2: false
+num1 不等于 num2: true
+```
+
+
+## 逻辑运算符
+
+逻辑运算符用于测定变量或值之间的逻辑。
+
+给定 x=6 以及 y=3，下表解释了逻辑运算符：
+
+
+### 实例
+
+```java
+var avg:number = 20;
+var percentage:number = 90;
+
+console.log("avg 值为: "+avg+" ,percentage 值为: "+percentage);
+
+var res:boolean = ((avg>50)&&(percentage>80));
+console.log("(avg>50)&&(percentage>80): ",res);
+
+var res:boolean = ((avg>50)||(percentage>80));
+console.log("(avg>50)||(percentage>80): ",res);
+
+var res:boolean=!((avg>50)&&(percentage>80));
+console.log("!((avg>50)&&(percentage>80)): ",res);
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var avg = 20;
+var percentage = 90;
+console.log("avg 值为: " + avg + " ,percentage 值为: " + percentage);
+var res = ((avg > 50) && (percentage > 80));
+console.log("(avg>50)&&(percentage>80): ", res);
+var res = ((avg > 50) || (percentage > 80));
+console.log("(avg>50)||(percentage>80): ", res);
+var res = !((avg > 50) && (percentage > 80));
+console.log("!((avg>50)&&(percentage>80)): ", res);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+avg 值为: 20 ,percentage 值为: 90
+(avg>50)&&(percentage>80):  false
+(avg>50)||(percentage>80):  true
+!((avg>50)&&(percentage>80)):  true
+```
+
+
+### 短路运算符(&& 与 ||)
+
+&& 与 || 运算符可用于组合表达式。 && 运算符只有在左右两个表达式都为 true 时才返回 true。
+
+考虑以下实例：
+
+```javascript
+var a = 10
+var result = ( a<10 && a>5)
+```
+
+以上实例中 a < 10 与 a > 5 是使用了 && 运算符的组合表达式，第一个表达式返回了 false，由于 && 运算需要两个表达式都为 true，所以如果第一个为 false，就不再执行后面的判断(a > 5 跳过计算)，直接返回 false。
+
+|| 运算符只要其中一个表达式为 true ，则该组合表达式就会返回 true。
+
+考虑以下实例：
+
+```javascript
+var a = 10
+var result = ( a>5 || a<10)
+```
+
+以上实例中 a > 5 与 a < 10 是使用了 || 运算符的组合表达式，第一个表达式返回了 true，由于 || 组合运算只需要一个表达式为 true，所以如果第一个为 true，就不再执行后面的判断(a < 10 跳过计算)，直接返回 true。
+
+
+## 位运算符
+
+位操作是程序设计中对位模式按位或二进制数的一元和二元操作。
+
+
+### 实例
+
+```javascript
+var a:number = 2;   // 二进制 10
+var b:number = 3;   // 二进制 11
+
+var result;
+
+result = (a & b);
+console.log("(a & b) => ",result)
+
+result = (a | b);
+console.log("(a | b) => ",result)
+
+result = (a ^ b);
+console.log("(a ^ b) => ",result);
+
+result = (~b);
+console.log("(~b) => ",result);
+
+result = (a << b);
+console.log("(a << b) => ",result);
+
+result = (a >> b);
+console.log("(a >> b) => ",result);
+
+result = (a >>> 1);
+console.log("(a >>> 1) => ",result);
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var a = 2; // 二进制 10
+var b = 3; // 二进制 11
+var result;
+result = (a & b);
+console.log("(a & b) => ", result);
+result = (a | b);
+console.log("(a | b) => ", result);
+result = (a ^ b);
+console.log("(a ^ b) => ", result);
+result = (~b);
+console.log("(~b) => ", result);
+result = (a << b);
+console.log("(a << b) => ", result);
+result = (a >> b);
+console.log("(a >> b) => ", result);
+result = (a >>> 1);
+console.log("(a >>> 1) => ", result);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+(a & b) =>  2
+(a | b) =>  3
+(a ^ b) =>  1
+(~b) =>  -4
+(a << b) =>  16
+(a >> b) =>  0
+(a >>> 1) =>  1
+```
+
+
+## 赋值运算符
+
+赋值运算符用于给变量赋值。
+
+给定 x=10 和 y=5，下面的表格解释了赋值运算符：
+
+类似的逻辑运算符也可以与赋值运算符联合使用：<<=, >>=, >>>=, &=, |= 与 ^=。
+
+
+### 实例
+
+```javascript
+var a: number = 12
+var b:number = 10
+
+a = b
+console.log("a = b: "+a)
+
+a += b
+console.log("a+=b: "+a)
+
+a -= b
+console.log("a-=b: "+a)
+
+a *= b
+console.log("a*=b: "+a)
+
+a /= b
+console.log("a/=b: "+a)
+
+a %= b
+console.log("a%=b: "+a)
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var a = 12;
+var b = 10;
+a = b;
+console.log("a = b: " + a);
+a += b;
+console.log("a+=b: " + a);
+a -= b;
+console.log("a-=b: " + a);
+a *= b;
+console.log("a*=b: " + a);
+a /= b;
+console.log("a/=b: " + a);
+a %= b;
+console.log("a%=b: " + a);
+```
+
+执行以上 JavaScript 代码，输出结果为：
+
+```text
+a = b: 10
+a+=b: 20
+a-=b: 10
+a*=b: 100
+a/=b: 10
+a%=b: 0
+```
+
+
+## 三元运算符 (?)
+
+三元运算有 3 个操作数，并且需要判断布尔表达式的值。该运算符的主要是决定哪个值应该赋值给变量。
+
+```text
+Test ? expr1 : expr2
+```
+
+- Test − 指定的条件语句
+- expr1 − 如果条件语句 Test 返回 true 则返回该值
+- expr2 − 如果条件语句 Test 返回 false 则返回该值
+
+让我们看下以下实例：
+
+```javascript
+var num:number = -2
+var result = num > 0 ? "大于 0" : "小于 0，或等于 0"
+console.log(result)
+```
+
+实例中用于判断变量是否大于 0。
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var num = -2;
+var result = num > 0 ? "大于 0" : "小于 0，或等于 0";
+console.log(result);
+```
+
+以上实例输出结果如下：
+
+```text
+小于 0，或等于 0
+```
+
+
+## 类型运算符
+
+
+### typeof 运算符
+
+typeof 是一元运算符，返回操作数的数据类型。
+
+查看以下实例:
+
+```javascript
+var num = 12
+console.log(typeof num);   //输出结果: number
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var num = 12;
+console.log(typeof num); //输出结果: number
+```
+
+以上实例输出结果如下：
+
+```text
+number
+```
+
+
+### instanceof
+
+instanceof 运算符用于判断对象是否为指定的类型，后面章节我们会具体介绍它。
+
+
+## 其他运算符
+
+
+### 负号运算符(-)
+
+更改操作数的符号，查看以下实例：
+
+```javascript
+var x:number = 4
+var y = -x;
+console.log("x 值为: ",x);   // 输出结果 4
+console.log("y 值为: ",y);   // 输出结果 -4
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var x = 4;
+var y = -x;
+console.log("x 值为: ", x); // 输出结果 4
+console.log("y 值为: ", y); // 输出结果 -4
+```
+
+以上实例输出结果如下：
+
+```text
+x 值为:  4
+y 值为:  -4
+```
+
+
+### 字符串运算符: 连接运算符 (+)
+
++ 运算符可以拼接两个字符串，查看以下实例：
+
+```javascript
+var msg:string = "RUNOOB"+".COM"
+console.log(msg)
+```
+
+使用 tsc 命令编译以上代码得到如下 JavaScript 代码：
+
+```javascript
+var msg = "RUNOOB" + ".COM";
+console.log(msg);
+```
+
+以上实例输出结果如下：
+
+```text
+RUNOOB.COM
+```
+
+
+## 复习重点
+
+- 能说明 `TypeScript 运算符` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

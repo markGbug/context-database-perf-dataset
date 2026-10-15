@@ -1,34 +1,366 @@
-# Java：Java 继承 练习笔记
+# Java：Java 继承
 
 - 来源：[Java 继承](https://www.runoob.com/java/java-inheritance.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0903
 
-## 练习目标
+## 本章内容
 
-把 `Java 继承` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 继承的概念
 
-## 练习步骤
+继承是java面向对象编程技术的一块基石，因为它允许创建分等级层次的类。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+继承就是子类继承父类的特征和行为，使得子类对象（实例）具有父类的实例域和方法，或子类从父类继承方法，使得子类具有父类相同的行为。
 
-## 验收清单
 
-- 我能独立说出 `Java 继承` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 生活中的继承：
 
-## 复盘问题
+兔子和羊属于食草动物类，狮子和豹属于食肉动物类。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+食草动物和食肉动物又是属于动物类。
+
+所以继承需要符合的关系是：is-a，父类更通用，子类更具体。
+
+虽然食草动物和食肉动物都是属于动物，但是两者的属性和行为上有差别，所以子类会具有父类的一般特性也会具有自身的特性。
+
+
+### 类的继承格式
+
+在 Java 中通过 extends 关键字可以申明一个类是从另外一个类继承而来的，一般形式如下：
+
+
+## 类的继承格式
+
+```text
+class 父类 {
+}
+
+class 子类 extends 父类 {
+}
+```
+
+
+### 为什么需要继承
+
+接下来我们通过实例来说明这个需求。
+
+开发动物类，其中动物分别为企鹅以及老鼠，要求如下：
+
+- 企鹅：属性（姓名，id），方法（吃，睡，自我介绍）
+- 老鼠：属性（姓名，id），方法（吃，睡，自我介绍）
+
+
+## 企鹅类：
+
+```java
+public class Penguin {
+    private String name;
+    private int id;
+    public Penguin(String myName, int  myid) {
+        name = myName;
+        id = myid;
+    }
+    public void eat(){
+        System.out.println(name+"正在吃");
+    }
+    public void sleep(){
+        System.out.println(name+"正在睡");
+    }
+    public void introduction() {
+        System.out.println("大家好！我是"         + id + "号" + name + ".");
+    }
+}
+```
+
+
+## 老鼠类：
+
+```java
+public class Mouse {
+    private String name;
+    private int id;
+    public Mouse(String myName, int  myid) {
+        name = myName;
+        id = myid;
+    }
+    public void eat(){
+        System.out.println(name+"正在吃");
+    }
+    public void sleep(){
+        System.out.println(name+"正在睡");
+    }
+    public void introduction() {
+        System.out.println("大家好！我是"         + id + "号" + name + ".");
+    }
+}
+```
+
+从这两段代码可以看出，代码存在重复，导致代码量大且臃肿，而且维护性不高(主要表现是后期需要修改的时候，需要修改很多的代码，容易出错)。要从根本上解决这两段代码的问题，就需要继承，将两段代码中相同的部分提取出来组成 一个父类：
+
+
+## 公共父类：
+
+```java
+public class Animal {
+    private String name;
+    private int id;
+    public Animal(String myName, int myid) {
+        name = myName;
+        id = myid;
+    }
+    public void eat(){
+        System.out.println(name+"正在吃");
+    }
+    public void sleep(){
+        System.out.println(name+"正在睡");
+    }
+    public void introduction() {
+        System.out.println("大家好！我是"         + id + "号" + name + ".");
+    }
+}
+```
+
+这个Animal类就可以作为一个父类，然后企鹅类和老鼠类继承这个类之后，就具有父类当中的属性和方法，子类就不会存在重复的代码，维护性也提高，代码也更加简洁，提高代码的复用性（复用性主要是可以多次使用，不用再多次写同样的代码） 继承之后的代码：
+
+
+## 企鹅类：
+
+```java
+public class Penguin extends Animal {
+    public Penguin(String myName, int myid) {
+        super(myName, myid);
+    }
+}
+```
+
+
+## 老鼠类：
+
+```java
+public class Mouse extends Animal {
+    public Mouse(String myName, int myid) {
+        super(myName, myid);
+    }
+}
+```
+
+
+### 继承类型
+
+需要注意的是 Java 不支持多继承，但支持多重继承。
+
+
+## 继承的特性
+
+- 子类拥有父类非 private 的属性、方法。
+- 子类可以拥有自己的属性和方法，即子类可以对父类进行扩展。
+- 子类可以用自己的方式实现父类的方法。
+- Java 的继承是单继承，但是可以多重继承，单继承就是一个子类只能继承一个父类，多重继承就是，例如 B 类继承 A 类，C 类继承 B 类，所以按照关系就是 B 类是 C 类的父类，A 类是 B 类的父类，这是 Java 继承区别于 C++ 继承的一个特性。
+- 提高了类之间的耦合性（继承的缺点，耦合度高就会造成代码之间的联系越紧密，代码独立性越差）。
+
+
+## 继承关键字
+
+继承可以使用 extends 和 implements 这两个关键字来实现继承，而且所有的类都是继承于 java.lang.Object，当一个类没有继承的两个关键字，则默认继承 Object（这个类在 java.lang 包中，所以不需要 import）祖先类。
+
+
+### extends关键字
+
+在 Java 中，类的继承是单一继承，也就是说，一个子类只能拥有一个父类，所以 extends 只能继承一个类。
+
+
+## extends 关键字
+
+```java
+public class Animal {
+    private String name;
+    private int id;
+    public Animal(String myName, int myid) {
+        //初始化属性值
+    }
+    public void eat() {  //吃东西方法的具体实现  }
+    public void sleep() { //睡觉方法的具体实现  }
+}
+
+public class Penguin  extends  Animal{
+}
+```
+
+
+### implements关键字
+
+使用 implements 关键字可以变相的使java具有多继承的特性，使用范围为类继承接口的情况，可以同时继承多个接口（接口跟接口之间采用逗号分隔）。
+
+
+## implements 关键字
+
+```java
+public interface A {
+    public void eat();
+    public void sleep();
+}
+
+public interface B {
+    public void show();
+}
+
+public class C implements A,B {
+}
+```
+
+
+### super 与 this 关键字
+
+super 关键字：我们可以通过 super 关键字来实现对父类成员的访问，用来引用当前对象的父类。
+
+this 关键字：指向自己的引用，引用当前对象，即它所在的方法或构造函数所属的对象实例。。
+
+
+## 实例
+
+```java
+class Animal {
+    void eat() {
+        System.out.println("animal : eat");
+    }
+}
+
+class Dog extends Animal {
+    void eat() {
+        System.out.println("dog : eat");
+    }
+    void eatTest() {
+        this.eat();   // this 调用自己的方法
+        super.eat();  // super 调用父类方法
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Animal a = new Animal();
+        a.eat();
+        Dog d = new Dog();
+        d.eatTest();
+    }
+}
+```
+
+输出结果为：
+
+```text
+animal : eat
+dog : eat
+animal : eat
+```
+
+
+### final 关键字
+
+final 可以用来修饰变量（包括类属性、对象属性、局部变量和形参）、方法（包括类方法和对象方法）和类。
+
+final 含义为 "最终的"。
+
+使用 final 关键字声明类，就是把类定义定义为最终类，不能被继承，或者用于修饰方法，该方法不能被子类重写：
+
+- 声明类：final class 类名 {//类体}
+- 声明方法：修饰符(public/private/default/protected) final 返回值类型 方法名(){//方法体}
+
+注： final 定义的类，其中的属性、方法不是 final 的。
+
+
+## 构造器
+
+子类是不继承父类的构造器（构造方法或者构造函数）的，它只是调用（隐式或显式）。如果父类的构造器带有参数，则必须在子类的构造器中显式地通过 super 关键字调用父类的构造器并配以适当的参数列表。
+
+如果父类构造器没有参数，则在子类的构造器中不需要使用 super 关键字调用父类构造器，系统会自动调用父类的无参构造器。
+
+
+## 实例
+
+```java
+class SuperClass {
+    private int n;
+
+    // 无参数构造器
+    public SuperClass() {
+        System.out.println("SuperClass()");
+    }
+
+    // 带参数构造器
+    public SuperClass(int n) {
+        System.out.println("SuperClass(int n)");
+        this.n = n;
+    }
+}
+
+// SubClass 类继承
+class SubClass extends SuperClass {
+    private int n;
+
+    // 无参数构造器，自动调用父类的无参数构造器
+    public SubClass() {
+        System.out.println("SubClass()");
+    }
+
+    // 带参数构造器，调用父类中带有参数的构造器
+    public SubClass(int n) {
+        super(300);
+        System.out.println("SubClass(int n): " + n);
+        this.n = n;
+    }
+}
+
+// SubClass2 类继承
+class SubClass2 extends SuperClass {
+    private int n;
+
+    // 无参数构造器，调用父类中带有参数的构造器
+    public SubClass2() {
+        super(300);
+        System.out.println("SubClass2()");
+    }
+
+    // 带参数构造器，自动调用父类的无参数构造器
+    public SubClass2(int n) {
+        System.out.println("SubClass2(int n): " + n);
+        this.n = n;
+    }
+}
+
+public class TestSuperSub {
+    public static void main(String[] args) {
+        System.out.println("------SubClass 类继承------");
+        SubClass sc1 = new SubClass();
+        SubClass sc2 = new SubClass(100);
+
+        System.out.println("------SubClass2 类继承------");
+        SubClass2 sc3 = new SubClass2();
+        SubClass2 sc4 = new SubClass2(200);
+    }
+}
+```
+
+输出结果为：
+
+```java
+------SubClass 类继承------
+SuperClass()
+SubClass()
+SuperClass(int n)
+SubClass(int n): 100
+------SubClass2 类继承------
+SuperClass(int n)
+SubClass2()
+SuperClass()
+SubClass2(int n): 200
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java 继承` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

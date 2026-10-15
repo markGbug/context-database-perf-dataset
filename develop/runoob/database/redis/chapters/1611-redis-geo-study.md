@@ -1,35 +1,136 @@
-# Redis：Redis GEO 学习笔记
+# Redis：Redis GEO
 
 - 来源：[Redis GEO](https://www.runoob.com/redis/redis-geo.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1611
 
-## 学习目标
+## 本章内容
 
-Redis 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `Redis GEO` 建立学习路径，先理解它在 Redis 体系中的位置，再做可运行或可复述的验证。
+Redis GEO 主要用于存储地理位置信息，并对存储的信息进行操作，该功能在 Redis 3.2 版本新增。
 
-## 阅读抓手
+Redis GEO 操作方法有：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- geoadd：添加地理位置的坐标。
+- geopos：获取地理位置的坐标。
+- geodist：计算两个位置之间的距离。
+- georadius：根据用户给定的经纬度坐标来获取指定范围内的地理位置集合。
+- georadiusbymember：根据储存在位置集合里面的某个地点获取指定范围内的地理位置集合。
+- geohash：返回一个或多个位置对象的 geohash 值。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### geoadd
 
-## 完成标准
+geoadd 用于存储指定的地理空间位置，可以将一个或多个经度(longitude)、纬度(latitude)、位置名称(member)添加到指定的 key 中。
 
-- 能用 3 到 5 句话解释 `Redis GEO`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+geoadd 语法格式如下：
+
+```text
+GEOADD key longitude latitude member [longitude latitude member ...]
+```
+
+以下实例中 key 为 Sicily，Palermo 和 Catania 为位置名称 ：
+
+
+## 实例
+
+
+### geopos
+
+geopos 用于从给定的 key 里返回所有指定名称(member)的位置（经度和纬度），不存在的返回 nil。
+
+geopos 语法格式如下：
+
+```text
+GEOPOS key member [member ...]
+```
+
+
+## 实例
+
+
+### geodist
+
+geodist 用于返回两个给定位置之间的距离。
+
+geodist 语法格式如下：
+
+```text
+GEODIST key member1 member2 [m|km|ft|mi]
+```
+
+member1 member2 为两个地理位置。
+
+最后一个距离单位参数说明：
+
+- m ：米，默认单位。
+- km ：千米。
+- mi ：英里。
+- ft ：英尺。
+
+
+## 实例
+
+
+### georadius、georadiusbymember
+
+georadius 以给定的经纬度为中心， 返回键包含的位置元素当中， 与中心的距离不超过给定最大距离的所有位置元素。
+
+georadiusbymember 和 GEORADIUS 命令一样， 都可以找出位于指定范围内的元素， 但是 georadiusbymember 的中心点是由给定的位置元素决定的， 而不是使用经度和纬度来决定中心点。
+
+georadius 与 georadiusbymember 语法格式如下：
+
+```text
+GEORADIUS key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT count] [ASC|DESC] [STORE key] [STOREDIST key]
+GEORADIUSBYMEMBER key member radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT count] [ASC|DESC] [STORE key] [STOREDIST key]
+```
+
+参数说明：
+
+- m ：米，默认单位。
+- km ：千米。
+- mi ：英里。
+- ft ：英尺。
+- WITHDIST: 在返回位置元素的同时， 将位置元素与中心之间的距离也一并返回。
+- WITHCOORD: 将位置元素的经度和纬度也一并返回。
+- WITHHASH: 以 52 位有符号整数的形式， 返回位置元素经过原始 geohash 编码的有序集合分值。 这个选项主要用于底层应用或者调试， 实际中的作用并不大。
+- COUNT 限定返回的记录数。
+- ASC: 查找结果根据距离从近到远排序。
+- DESC: 查找结果根据从远到近排序。
+
+georadius 实例：
+
+
+## 实例
+
+georadiusbymember 实例：
+
+
+## 实例
+
+
+### geohash
+
+Redis GEO 使用 geohash 来保存地理位置的坐标。
+
+geohash 用于获取一个或多个位置元素的 geohash 值。
+
+geohash 语法格式如下：
+
+```text
+GEOHASH key member [member ...]
+```
+
+实例：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Redis GEO` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

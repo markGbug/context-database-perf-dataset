@@ -1,34 +1,211 @@
-# JavaScript：JavaScript 类 练习笔记
+# JavaScript：JavaScript 类(class)
 
 - 来源：[JavaScript 类](https://www.runoob.com/js/js-class-intro.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2802
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript 类` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+类是用于创建对象的模板。
 
-## 练习步骤
+我们使用 class 关键字来创建一个类，类体在一对大括号 {} 中，我们可以在大括号 {} 中定义类成员的位置，如方法或构造函数。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+每个类中包含了一个特殊的方法 constructor()，它是类的构造函数，这种方法用于创建和初始化一个由 class 创建的对象。
 
-## 验收清单
+创建一个类的语法格式如下：
 
-- 我能独立说出 `JavaScript 类` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+class ClassName {
+  constructor() { ... }
+}
+```
 
-## 复盘问题
+实例：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+```text
+class Runoob {
+  constructor(name, url) {
+    this.name = name;
+    this.url = url;
+  }
+}
+```
+
+以上实例创建了一个类，名为 "Runoob"。
+
+类中初始化了两个属性： "name" 和 "url"。
+
+
+## 浏览器支持
+
+表格中的数字表示支持该属性的第一个浏览器版本号。
+
+
+## 使用类
+
+定义好类后，我们就可以使用 new 关键字来创建对象：
+
+
+## 实例
+
+```javascript
+class Runoob {
+  constructor(name, url) {
+    this.name = name;
+    this.url = url;
+  }
+}
+
+let site = new Runoob("菜鸟教程",  "https://www.runoob.com");
+```
+
+创建对象时会自动调用构造函数方法 constructor()。
+
+
+### 类表达式
+
+类表达式是定义类的另一种方法。类表达式可以命名或不命名。命名类表达式的名称是该类体的局部名称。
+
+
+## 实例
+
+```javascript
+// 未命名/匿名类
+let Runoob = class {
+  constructor(name, url) {
+    this.name = name;
+    this.url = url;
+  }
+};
+console.log(Runoob.name);
+// output: "Runoob"
+
+// 命名类
+let Runoob = class Runoob2 {
+  constructor(name, url) {
+    this.name = name;
+    this.url = url;
+  }
+};
+console.log(Runoob.name);
+// 输出: "Runoob2"
+```
+
+构造方法
+
+构造方法是一种特殊的方法：
+
+- 构造方法名为 constructor()。
+- 构造方法在创建新对象时会自动执行。
+- 构造方法用于初始化对象属性。
+- 如果不定义构造方法，JavaScript 会自动添加一个空的构造方法。
+
+
+## 类的方法
+
+我们使用关键字 class 创建一个类，可以添加一个 constructor() 方法，然后添加任意数量的方法。
+
+```text
+class ClassName {
+  constructor() { ... }
+  method_1() { ... }
+  method_2() { ... }
+  method_3() { ... }
+}
+```
+
+以下实例我们创建一个 "age" 方法，用于返回网站年龄：
+
+
+## 实例
+
+```javascript
+class Runoob {
+  constructor(name, year) {
+    this.name = name;
+    this.year = year;
+  }
+  age() {
+    let date = new Date();
+    return date.getFullYear() - this.year;
+  }
+}
+
+let runoob = new Runoob("菜鸟教程", 2018);
+document.getElementById("demo").innerHTML =
+"菜鸟教程 " + runoob.age() + " 岁了。";
+```
+
+我们还可以向类的方法发送参数：
+
+
+## 实例
+
+```javascript
+class Runoob {
+  constructor(name, year) {
+    this.name = name;
+    this.year = year;
+  }
+  age(x) {
+    return x - this.year;
+  }
+}
+
+let date = new Date();
+let year = date.getFullYear();
+
+let runoob = new Runoob("菜鸟教程", 2020);
+document.getElementById("demo").innerHTML=
+"菜鸟教程 " + runoob.age(year) + " 岁了。";
+```
+
+
+## 严格模式 "use strict"
+
+类声明和类表达式的主体都执行在严格模式下。比如，构造函数，静态方法，原型方法，getter 和 setter 都在严格模式下执行。
+
+如果你没有遵循严格模式，则会出现错误：
+
+
+## 实例
+
+```javascript
+class Runoob {
+  constructor(name, year) {
+    this.name = name;
+    this.year = year;
+  }
+  age() {
+    // date = new Date();  // 错误
+    let date = new Date(); // 正确
+    return date.getFullYear() - this.year;
+  }
+}
+```
+
+下图实例使用类未声明的变量：
+
+更多严格模式可以参考：JavaScript 严格模式(use strict)
+
+
+## 参考
+
+
+### 类方法
+
+
+### 类关键字
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript 类` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,133 @@
-# XML DOM：DOM 创建节点 学习笔记
+# XML DOM：XML DOM 创建节点
 
 - 来源：[DOM 创建节点](https://www.runoob.com/dom/dom-nodes-create.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4389
 
-## 学习目标
+## 本章内容
 
-XML DOM 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `DOM 创建节点` 建立学习路径，先理解它在 XML DOM 体系中的位置，再做可运行或可复述的验证。
+## 尝试一下 - 实例
 
-## 阅读抓手
+下面的实例使用 XML 文件 books.xml。 函数 loadXMLDoc()，位于外部 JavaScript 中，用于加载 XML 文件。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+创建元素节点 本例使用 createElement() 来创建一个新的元素节点，并使用 appendChild() 把它添加到一个节点中。
 
-## 笔记模板
+使用 createAttribute 创建属性节点 本例使用 createAttribute() 来创建一个新的属性节点，并使用 setAttributeNode() 把它插入一个元素中。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+使用 setAttribute 创建属性节点 本例使用 setAttribute() 为一个元素创建一个新的属性。
 
-## 完成标准
+创建文本节点 本例使用 createTextNode() 来创建一个新的文本节点，并使用 appendChild() 把它添加到一个元素中。
 
-- 能用 3 到 5 句话解释 `DOM 创建节点`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+创建 CDATA section 节点 本例使用 createCDATAsection() 来创建一个 CDATA section 节点，并使用 appendChild() 把它添加到一个元素中。
+
+创建注释节点 本例使用 createComment() 来创建一个注释节点，并使用 appendChild() 把它添加到一个元素中。
+
+
+## 创建新的元素节点
+
+createElement() 方法创建一个新的元素节点：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 创建一个新的元素节点 <edition>
+- 向第一个 <book> 元素追加这个元素节点
+
+遍历并向所有 <book> 元素添加一个元素： 尝试一下
+
+
+## 创建新的属性节点
+
+createAttribute() 用于创建一个新的属性节点：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 创建一个新的属性节点 "edition"
+- 设置属性节点的值为 "first"
+- 向第一个 <title> 元素添加这个新的属性节点
+
+遍历所有的 <title> 元素，并添加一个新的属性节点： 尝试一下
+
+注意：如果该属性已存在，则被新属性替代。
+
+
+## 使用 setAttribute() 创建属性
+
+由于 setAttribute() 方法可以在属性不存在的情况下创建新的属性，我们可以使用这个方法来创建一个新的属性。
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 为第一个 <book> 元素设置（创建）值为 "first" 的 "edition" 属性
+
+遍历所有的 <title> 元素并添加一个新属性： 尝试一下
+
+
+## 创建文本节点
+
+createTextNode() 方法创建一个新的文本节点：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 创建一个新元素节点 <edition>
+- 创建一个新的文本节点，其文本是 "first"
+- 向这个元素节点追加新的文本节点
+- 向第一个 <book> 元素追加新的元素节点
+
+向所有的 <book> 元素添加一个带有文本节点的元素节点： 尝试一下
+
+
+## 创建 CDATA Section 节点
+
+createCDATASection() 方法创建一个新的 CDATA section 节点。
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 创建一个新的 CDATA section 节点
+- 向第一个 <book> 元素追加这个新的 CDATA section 节点
+
+遍历并向所有 <book> 元素添加一个 CDATA section： 尝试一下
+
+
+## 创建注释节点
+
+createComment() 方法创建一个新的注释节点。
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 创建一个新的注释节点
+- 把这个新的注释节点追加到第一个 <book> 元素
+
+循环并向所有 <book> 元素添加一个注释节点： 尝试一下
+
+
+## 复习重点
+
+- 能说明 `DOM 创建节点` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

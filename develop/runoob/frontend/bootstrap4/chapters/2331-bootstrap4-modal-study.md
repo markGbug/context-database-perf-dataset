@@ -1,35 +1,80 @@
-# Bootstrap4：Bootstrap4 模态框 学习笔记
+# Bootstrap4：Bootstrap4 模态框
 
 - 来源：[Bootstrap4 模态框](https://www.runoob.com/bootstrap4/bootstrap4-modal.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2331
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 模态框` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+模态框（Modal）是覆盖在父窗体上的子窗体。通常，目的是显示来自一个单独的源的内容，可以在不离开父窗体的情况下有一些互动。子窗体可提供信息交互等。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 如何创建模态框
 
-## 笔记模板
+以下实例创建了一个简单的模态框效果 ：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `Bootstrap4 模态框`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<!-- 按钮：用于打开模态框 -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  打开模态框
+</button>
+
+<!-- 模态框 -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">模态框头部</h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+        模态框内容..
+      </div>
+
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+```
+
+
+## 模态框尺寸
+
+我们可以通过添加 .modal-sm 类来创建一个小模态框，.modal-lg 类可以创建一个大模态框。
+
+尺寸类放在 <div>元素的 .modal-dialog 类后 :
+
+
+## 实例 - 小模态框
+
+```html
+<div class="modal-dialog modal-sm">
+```
+
+
+## 实例 - 大模态框
+
+```html
+<div class="modal-dialog modal-lg">
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 模态框` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,66 @@
-# jQuery EasyUI：jEasyUI 取得选中行数据 练习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 取得选中行数据
 
 - 来源：[jEasyUI 取得选中行数据](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid3.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2861
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 取得选中行数据` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本实例演示如何取得选中行数据。
 
-## 练习步骤
+数据网格（datagrid）组件包含两种方法来检索选中行数据：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- getSelected：取得第一个选中行数据，如果没有选中行，则返回 null，否则返回记录。
+- getSelections：取得所有选中行数据，返回元素记录的数组数据。
 
-## 验收清单
+```html
+    <table id="tt" class="easyui-datagrid" style="width:600px;height:250px"
+            url="data/datagrid_data.json"
+            title="Load Data" iconCls="icon-save">
+        <thead>
+            <tr>
+                <th field="itemid" width="80">Item ID</th>
+                <th field="productid" width="80">Product ID</th>
+                <th field="listprice" width="80" align="right">List Price</th>
+                <th field="unitcost" width="80" align="right">Unit Cost</th>
+                <th field="attr1" width="150">Attribute</th>
+                <th field="status" width="60" align="center">Stauts</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-- 我能独立说出 `jEasyUI 取得选中行数据` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+取得选中行数据：
 
-## 复盘问题
+```javascript
+    var row = $('#tt').datagrid('getSelected');
+    if (row){
+        alert('Item ID:'+row.itemid+"\nPrice:"+row.listprice);
+    }
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+取得所有选中行的 itemid：
+
+```java
+    var ids = [];
+    var rows = $('#tt').datagrid('getSelections');
+    for(var i=0; i<rows.length; i++){
+        ids.push(rows[i].itemid);
+    }
+    alert(ids.join('\n'));
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid3.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 取得选中行数据` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

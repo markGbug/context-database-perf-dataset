@@ -1,35 +1,107 @@
-# Foundation：Foundation 起步 学习笔记
+# Foundation：Foundation 起步
 
 - 来源：[Foundation 起步](https://www.runoob.com/foundation/foundation-get-started.html)
 - 分类：前端开发
 - 技术：Foundation
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2523
 
-## 学习目标
+## 本章内容
 
-Foundation 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Foundation 起步` 建立学习路径，先理解它在 Foundation 体系中的位置，再做可运行或可复述的验证。
+## 什么是 Foundation？
 
-## 阅读抓手
+- Foundation 是一个免费的前端框架，用于快速开发。
+- Foundation 包含了 HTML 和 CSS 的设计模板，提供多种 Web 上的 UI 组件，如表单、按钮、Tabs 等等。同时也提供了多种 JavaScript 插件。
+- Foundation 移动优先，可创建响应式网页。
+- Foundation 适用于初学者和专业人士。
+- Foundation 已使用在 Facebook, eBay, Samsung, Amazon, Disney等。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 从哪里下载 Foundation?
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+你可以通过以下两种方式来获取 Foundation：
 
-## 完成标准
+1、从官网下载最新版本：http://foundation.zurb.com/。
 
-- 能用 3 到 5 句话解释 `Foundation 起步`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+2、使用 Staticfile 提供的CDN（推荐）：
+
+```html
+<!-- css 文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.net/foundation/5.5.3/css/foundation.min.css">
+
+<!-- jQuery 库 -->
+<script src="https://cdn.staticfile.net/foundation/5.5.3/js/vendor/jquery.js"></script>
+
+<!-- JavaScript 文件 -->
+<script src="https://cdn.staticfile.net/foundation/5.5.3/js/foundation.min.js"></script>
+
+<!-- modernizr.js 文件 -->
+<script src="https://cdn.staticfile.net/foundation/5.5.3/js/vendor/modernizr.js"></script>
+```
+
+本站静态 CDN 基于阿里云服务。
+
+
+## 使用 Foundation 创建页面
+
+1. 添加 HTML5 doctype
+
+Foundation 使用 HTML 元素和 CSS 属性，所以需要添加 HTML5 doctype 文档类型声明。
+
+同时我们可以设置文档的语言属性 lang 及字符编码：
+
+2. Foundation 5 移动优先
+
+Foundation 5 为移动设备的响应式设计。框架的核心是移动优先。
+
+为了确保页面可自由缩放可以在 <head> 元素中添加以下 <meta> 标签:
+
+- width：控制 viewport 的大小，可以指定的一个值，如果 600，或者特殊的值，如 device-width 为设备的宽度（单位为缩放为 100% 时的 CSS 的像素）。
+- initial-scale：初始缩放比例，也即是当页面第一次 load 的时候缩放比例。
+
+3. 初始化组件
+
+一些 Foundation 组件是基于 jQuery 开发的，如：模态框、下拉菜单等。你可以使用以下脚本来初始化组件：
+
+
+## 基本 Foundation 页面
+
+如何创建一个基本的 foundation 页面:
+
+
+### Foundation 实例
+
+```html
+<div class="row">
+  <div class="medium-12 columns">
+    <div class="panel">
+      <h1>Foundation 页面</h1>
+      <p>重置窗口大小，查看效果！</p>
+      <button type="button" class="button small">我是按钮!</button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="medium-4 columns">
+    <h3>菜鸟教程</h3>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+  <div class="medium-4 columns">
+    <h3>菜鸟教程</h3>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+  <div class="medium-4 columns">
+    <h3>菜鸟教程</h3>
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Foundation 起步` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

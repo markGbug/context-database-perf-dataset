@@ -1,34 +1,66 @@
-# PostgreSQL：PostgreSQL TRUNCATE TABLE 练习笔记
+# PostgreSQL：PostgreSQL TRUNCATE TABLE
 
 - 来源：[PostgreSQL TRUNCATE TABLE](https://www.runoob.com/postgresql/postgresql-truncate-table.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1584
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL TRUNCATE TABLE` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PostgreSQL 中 TRUNCATE TABLE 用于删除表的数据，但不删除表结构。
 
-## 练习步骤
+也可以用 DROP TABLE 删除表，但是这个命令会连表的结构一起删除，如果想插入数据，需要重新建立这张表。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+PostgreSQL VACUUM 操作用于释放、再利用更新/删除行所占据的磁盘空间。
 
-## 验收清单
 
-- 我能独立说出 `PostgreSQL TRUNCATE TABLE` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法
 
-## 复盘问题
+TRUNCATE TABLE 基础语法如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+TRUNCATE TABLE  table_name;
+```
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+下面实例使用了 TRUNCATE TABLE 来清除 COMPANY 表：
+
+```text
+runoobdb=# TRUNCATE TABLE COMPANY;
+```
+
+得到结果如下：
+
+```text
+runoobdb=# SELECT * FROM CUSTOMERS;
+ id | name | age | address | salary
+----+------+-----+---------+--------
+(0 rows)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL TRUNCATE TABLE` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

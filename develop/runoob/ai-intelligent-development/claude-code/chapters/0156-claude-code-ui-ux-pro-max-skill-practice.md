@@ -1,34 +1,45 @@
-# Claude Code：Skills 使用实例 练习笔记
+# Claude Code：Claude Code Skills 使用实例
 
 - 来源：[Skills 使用实例](https://www.runoob.com/claude-code/claude-code-ui-ux-pro-max-skill.html)
 - 分类：AI / 智能开发
 - 技术：Claude Code
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0156
 
-## 练习目标
+## 本章内容
 
-把 `Skills 使用实例` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在上一章节 Agent Skills（智能体技能） 中我们已经了解了 Skills 的基本概念，本章节我们将结合一个具体的 Skills 来开发一个项目。
 
-## 练习步骤
+现在市面上已经有很多现成的 skills，我么可以直接拿来使用，我们可以在 https://skills.sh/ 查找更多的 skill。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+安装方式：
 
-## 验收清单
+```html
+npx skills add <owner/repo>
+```
 
-- 我能独立说出 `Skills 使用实例` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+npx 安装 ui-ux-pro-max 可参考：OpenCode skills 使用。 注：如果对 npx 不了解，可以参阅：npx 入门教程
 
-## 复盘问题
+本章节我们将介绍一个支持多平台、多框架的专业级 UI/UX SKILL 插件 - UI UX Pro Max。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+UI UX Pro Max 旨在为跨平台和多框架开发提供专业的 UI/UX 设计智能支持。
+
+UI UX Pro Max 本质上是一个可检索的设计数据库，包含样式、色板、字体、组件建议及 UX 准则，专门喂给 Cursor、Claude Code、Windsurf等这些 AI 编码助手。
+
+核心亮点：
+
+- 67 种 UI 风格（从 Minimalism 到 Brutalism、Glassmorphism、Bento Grid、AI-Native 等）
+- 96 个行业调色盘（SaaS、Fintech、Healthcare、Beauty、EdTech…）
+- 57 组字体搭配（Google Fonts 精选组合）
+- 25 种常用图表类型（适合 dashboard）
+- 99 条 UX 指导原则（包含可访问性、性能、交互规范）
+- 100 条行业专项推理规则（包含反面模式 Anti-patterns）
+- 支持 13 个技术栈：React / Next.js / Vue / Tailwind / Flutter / SwiftUI / HTML+CSS / Electron 等
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Skills 使用实例` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

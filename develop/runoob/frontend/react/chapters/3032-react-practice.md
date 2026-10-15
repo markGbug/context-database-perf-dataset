@@ -1,34 +1,101 @@
-# React：React 教程 练习笔记
+# React：React 教程
 
 - 来源：[React 教程](https://www.runoob.com/react/react-tutorial.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3032
 
-## 练习目标
+## 本章内容
 
-把 `React 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+React 是一个用于构建用户界面的 JAVASCRIPT 库。
 
-## 练习步骤
+React 主要用于构建 UI，很多人认为 React 是 MVC 中的 V（视图）。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+React 起源于 Facebook 的内部项目，用来架设 Instagram 的网站，并于 2013 年 5 月开源。
 
-## 验收清单
+React 拥有较高的性能，代码逻辑非常简单，越来越多的人已开始关注和使用它。
 
-- 我能独立说出 `React 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## React 特点
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- 1.声明式设计 −React采用声明范式，可以轻松描述应用。
+- 2.高效 −React通过对DOM的模拟，最大限度地减少与DOM的交互。
+- 3.灵活 −React可以与已知的库或框架很好地配合。
+- 4.JSX − JSX 是 JavaScript 语法的扩展。React 开发不一定使用 JSX ，但我们建议使用它。
+- 5.组件 − 通过 React 构建组件，使得代码更加容易得到复用，能够很好的应用在大项目的开发中。
+- 6.单向响应的数据流 − React 实现了单向响应的数据流，从而减少了重复代码，这也是它为什么比传统数据绑定更简单。
+
+
+## 阅读本教程前，您需要了解的知识：
+
+在开始学习 React 之前，您需要具备以下基础知识：
+
+- HTML 教程
+- CSS 教程
+- JavaScript 教程
+- ES6 教程
+
+
+## React 第一个实例
+
+在每个章节中，您可以在线编辑实例，然后点击按钮查看结果。
+
+本教程使用了 React 的版本为 18.2.0，你可以在官网 https://react.dev/ 下载最新版。
+
+
+## React 实例
+
+```html
+<div id="example"></div>
+<script type="text/babel">
+// 简单的 React 组件
+function App() {
+    return <h1>Hello, React!</h1>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("example"));
+// 渲染 React 组件到 DOM
+root.render(<App />);
+</script>
+```
+
+引入外部脚本：
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" ></script>
+```
+
+这三行代码分别引入了 React、ReactDOM 和 Babel Standalone 库。
+
+- React 用于构建用户界面。
+- ReactDOM 用于在浏览器中渲染 React 组件。
+- Babel Standalone 用于在浏览器中即时编译 JSX 语法。
+
+或者使用 create-react-app 工具（下一章节会介绍）创建的 react 开发环境：
+
+
+## 实例
+
+这时候浏览器打开 http://localhost:3000/ 就会输出：
+
+```text
+Hello World!
+```
+
+
+## 参考资料
+
+- React 官网：https://react.dev/
+- React 中文文档：https://zh-hans.react.dev/
+- React Github 源码：https://github.com/facebook/react
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `React 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

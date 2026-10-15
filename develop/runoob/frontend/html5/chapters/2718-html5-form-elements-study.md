@@ -1,35 +1,103 @@
-# HTML5：HTML5 表单元素 学习笔记
+# HTML5：HTML5 表单元素
 
 - 来源：[HTML5 表单元素](https://www.runoob.com/html/html5-form-elements.html)
 - 分类：前端开发
 - 技术：HTML5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2718
 
-## 学习目标
+## 本章内容
 
-HTML5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `HTML5 表单元素` 建立学习路径，先理解它在 HTML5 体系中的位置，再做可运行或可复述的验证。
+## HTML5 新的表单元素
 
-## 阅读抓手
+HTML5 有以下新的表单元素:
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- <datalist>
+- <keygen>
+- <output>
 
-## 笔记模板
+注意:不是所有的浏览器都支持HTML5 新的表单元素，但是你可以在使用它们，即使浏览器不支持表单属性，仍然可以显示为常规的表单元素。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## HTML5 <datalist> 元素
 
-- 能用 3 到 5 句话解释 `HTML5 表单元素`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+<datalist> 元素规定输入域的选项列表。
+
+<datalist> 属性规定 form 或 input 域应该拥有自动完成功能。当用户在自动完成域中开始输入时，浏览器应该在该域中显示填写的选项：
+
+使用 <input> 元素的列表属性与 <datalist> 元素绑定.
+
+
+## 实例
+
+<input> 元素使用<datalist>预定义值:
+
+```html
+<input list="browsers">
+
+<datalist id="browsers">
+  <option value="Internet Explorer">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+</datalist>
+```
+
+
+## HTML5 <keygen> 元素
+
+<keygen> 元素的作用是提供一种验证用户的可靠方法。
+
+<keygen>标签规定用于表单的密钥对生成器字段。
+
+当提交表单时，会生成两个键，一个是私钥，一个公钥。
+
+私钥（private key）存储于客户端，公钥（public key）则被发送到服务器。公钥可用于之后验证用户的客户端证书（client certificate）。
+
+该元素已被废弃，不再推荐使用，替代方案包括：
+
+- 使用 Web Cryptography API 在 JavaScript 中生成密钥
+- 使用专门的加密库
+
+
+## 实例
+
+带有keygen字段的表单:
+
+```html
+<form action="demo_keygen.asp" method="get">
+用户名: <input type="text" name="usr_name">
+加密: <keygen name="security">
+<input type="submit">
+</form>
+```
+
+
+## HTML5 <output> 元素
+
+<output> 元素用于不同类型的输出，比如计算或脚本输出：
+
+
+## 实例
+
+将计算结果显示在 <output> 元素:
+
+```html
+<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+<input type="range" id="a" value="50">100 +
+<input type="number" id="b" value="50">=
+<output name="x" for="a b"></output>
+</form>
+```
+
+
+## HTML5 新表单元素
+
+
+## 复习重点
+
+- 能说明 `HTML5 表单元素` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

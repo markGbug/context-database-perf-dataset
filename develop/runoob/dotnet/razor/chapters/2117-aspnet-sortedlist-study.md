@@ -1,35 +1,56 @@
-# Razor：WebForms SortedList 学习笔记
+# Razor：ASP.NET Web Forms - SortedList 对象
 
 - 来源：[WebForms SortedList](https://www.runoob.com/aspnet/aspnet-sortedlist.html)
 - 分类：.NET
 - 技术：Razor
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2117
 
-## 学习目标
+## 本章内容
 
-Razor 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `WebForms SortedList` 建立学习路径，先理解它在 Razor 体系中的位置，再做可运行或可复述的验证。
+SortedList 对象结合了 ArrayList 对象和 Hashtable 对象的特性。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 尝试一下 - 实例
 
-## 笔记模板
+SortedList RadiobuttonList 1
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+SortedList RadiobuttonList 2
 
-## 完成标准
+SortedList DropDownList
 
-- 能用 3 到 5 句话解释 `WebForms SortedList`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## SortedList 对象
+
+SortedList 对象包含用键/值对表示的项目。SortedList 对象按照字母顺序或者数字顺序自动地对项目进行排序。
+
+通过 Add() 方法向 SortedList 添加项目。通过 TrimToSize() 方法把 SortedList 调整为最终尺寸。
+
+下面的代码创建了一个名为 mycountries 的 SortedList 对象，并添加了四个元素：
+
+
+## 数据绑定
+
+SortedList 对象可为下列的控件自动生成文本和值：
+
+- asp:RadioButtonList
+- asp:CheckBoxList
+- asp:DropDownList
+- asp:Listbox
+
+为了绑定数据到 RadioButtonList 控件，首先要在 .aspx 页面中创建一个 RadioButtonList 控件（不带任何 asp:ListItem 元素）：
+
+然后添加创建列表的脚本，并且绑定列表中的值到 RadioButtonList 控件：
+
+然后我们添加一个子例程，当用户点击 RadioButtonList 控件中的某个项目时，该子例程会被执行。当某个单选按钮被点击时，label 中会出现一行文本：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `WebForms SortedList` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

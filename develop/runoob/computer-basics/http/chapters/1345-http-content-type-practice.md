@@ -1,34 +1,50 @@
-# HTTP：HTTP content-type 练习笔记
+# HTTP：HTTP content-type
 
 - 来源：[HTTP content-type](https://www.runoob.com/http/http-content-type.html)
 - 分类：计算机基础
 - 技术：HTTP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1345
 
-## 练习目标
+## 本章内容
 
-把 `HTTP content-type` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Content-Type（内容类型），一般是指网页中存在的 Content-Type，用于定义网络文件的类型和网页的编码，决定浏览器将以什么形式、什么编码读取这个文件，这就是经常看到一些 PHP 网页点击的结果却是下载一个文件或一张图片的原因。
 
-## 练习步骤
+Content-Type 标头告诉客户端实际返回的内容的内容类型。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+语法格式：
 
-## 验收清单
+```text
+Content-Type: text/html; charset=utf-8
+Content-Type: multipart/form-data; boundary=something
+```
 
-- 我能独立说出 `HTTP content-type` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+实例：
 
-## 复盘问题
+常见的媒体格式类型如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- text/html ： HTML格式
+- text/plain ：纯文本格式
+- text/xml ： XML格式
+- image/gif ：gif图片格式
+- image/jpeg ：jpg图片格式
+- image/png：png图片格式
+
+以application开头的媒体格式类型：
+
+- application/xhtml+xml ：XHTML格式
+- application/xml： XML数据格式
+- application/atom+xml ：Atom XML聚合格式
+- application/json： JSON数据格式
+- application/pdf：pdf格式
+
+
+## HTTP content-type 对照表
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTTP content-type` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

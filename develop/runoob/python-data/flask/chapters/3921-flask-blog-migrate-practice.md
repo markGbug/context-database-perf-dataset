@@ -1,34 +1,130 @@
-# Flask：Flask-Migrate 练习笔记
+# Flask：Flask-Migrate — 数据库迁移
 
 - 来源：[Flask-Migrate](https://www.runoob.com/flask/flask-blog-migrate.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3921
 
-## 练习目标
+## 本章内容
 
-把 `Flask-Migrate` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章你将学会用 Flask-Migrate 安全地管理数据库结构变更，并理解与 Django migration 的对应关系。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 为什么不能一直用 db.create_all()？
 
-## 验收清单
+db.create_all() 有两个致命缺陷：
 
-- 我能独立说出 `Flask-Migrate` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- 只在表不存在时创建。修改模型（如新增字段），已存在的表不会更新
+- 不保留变更历史。无法回滚到之前的数据库状态
 
-## 复盘问题
+数据库迁移 就像数据库的 Git——每次结构变更生成一个版本文件，支持升级和回滚。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+Flask-Migrate 是 Alembic 的 Flask 扩展，专为 SQLAlchemy 设计。
+
+
+## 安装与配置
+
+```text
+(venv) $ pip install flask-migrate
+```
+
+
+## 实例
+
+
+## 迁移三步曲
+
+
+### 第一步：初始化迁移目录
+
+```text
+(venv) $ flask db init
+Creating directory migrations/...  done
+```
+
+执行后生成 migrations/ 目录（类似 Git 的 .git 目录），只需执行一次。
+
+
+### 第二步：生成迁移文件
+
+```text
+(venv) $ flask db migrate -m "初始化 Post 和 Category 模型"
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+Generating migrations/versions/xxxx_initial.py ... done
+```
+
+如果你还没有任何模型变更，直接在已有模型上执行这条命令即可。
+
+
+### 第三步：执行迁移
+
+```text
+(venv) $ flask db upgrade
+INFO  [alembic.runtime.migration] Running upgrade  -> xxxx, 初始化
+```
+
+
+## 实战：给 Post 模型新增字段
+
+假设产品需求变更，需要给文章添加一个阅读计数。
+
+
+## 实例
+
+修改模型后，执行迁移：
+
+```text
+(venv) $ flask db migrate -m "Post 模型新增 read_count 字段"
+(venv) $ flask db upgrade
+```
+
+现在数据库中 posts 表自动增加了 read_count 列，已有数据不受影响。
+
+
+### 查看迁移历史
+
+查看当前数据库处于哪个版本：
+
+```text
+(venv) $ flask db current
+```
+
+查看所有迁移历史：
+
+```text
+(venv) $ flask db history
+```
+
+
+## 回滚迁移
+
+迁移是可以撤销的：
+
+```text
+(venv) $ flask db downgrade   # 回退到上一个版本
+```
+
+这会删除 read_count 列，撤销上一次迁移的所有变更。
+
+不是所有操作都能自动回滚（如删除列在 SQLite 中）。回滚前先确认 flask db current 查看当前版本，确保你知道自己在回退什么。生产环境回滚前务必备份数据。
+
+
+## Flask-Migrate vs Django Migration 对照
+
+Django 的迁移系统更自动化、更集成；Flask 通过 Flask-Migrate 达到了同等级别的能力。
+
+
+## 本章小结
+
+本章你掌握了 Flask-Migrate 的完整流程：flask db init 初始化、flask db migrate 生成迁移脚本、flask db upgrade 执行迁移、flask db downgrade 回滚。
+
+此后每次修改 models.py 都走这个三步流程，数据库结构变更永远有历史可追溯。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Flask-Migrate` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

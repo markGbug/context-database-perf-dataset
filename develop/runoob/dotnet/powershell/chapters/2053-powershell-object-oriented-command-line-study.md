@@ -1,35 +1,208 @@
-# PowerShell：PowerShell 面向对象的命令行 学习笔记
+# PowerShell：PowerShell 面向对象的命令行
 
 - 来源：[PowerShell 面向对象的命令行](https://www.runoob.com/powershell/powershell-object-oriented-command-line.html)
 - 分类：.NET
 - 技术：PowerShell
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2053
 
-## 学习目标
+## 本章内容
 
-PowerShell 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `PowerShell 面向对象的命令行` 建立学习路径，先理解它在 PowerShell 体系中的位置，再做可运行或可复述的验证。
+PowerShell 与传统命令行（如 CMD 或 Bash）最大的区别在于：PowerShell 的命令输出是对象，而不是纯文本。
 
-## 阅读抓手
+PowerShell 比起传统命令行更加灵活、强大，也让脚本编写和系统管理更加高效。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 什么是"对象导向命令行"
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在传统命令行中，命令之间通过管道 | 传递的是字符串文本，要想进一步处理这些文本，通常需要借助 grep、awk、sed 等工具。
 
-## 完成标准
+而在 PowerShell 中，命令之间通过管道传递的是对象，可以直接访问对象的属性和方法，无需解析文本，大大提高了准确性和开发效率。
 
-- 能用 3 到 5 句话解释 `PowerShell 面向对象的命令行`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 命令输出的是对象
+
+以 Get-Process 命令为例：
+
+```text
+Get-Process
+```
+
+该命令用于获取当前系统中运行的进程列表。
+
+Get-Process 命令返回的并不是纯文本表格，而是一组 .NET 对象，每个进程是一个 System.Diagnostics.Process 类型的对象。
+
+我们可以像访问编程语言中的对象那样访问其属性，例如：
+
+```text
+(Get-Process)[0].Name
+```
+
+上述命令表示获取第一个进程的名称，输出示例：
+
+```text
+explorer
+```
+
+
+## 查看对象的结构：Get-Member
+
+要深入理解对象，关键在于掌握它有哪些属性和方法。PowerShell 提供了 Get-Member 命令来帮助我们探索对象结构：
+
+```text
+Get-Process | Get-Member
+```
+
+部分输出示例：
+
+```java
+Name        MemberType   Definition
+----        ----------   ----------
+Id          Property     int Id {get;}
+Name        Property     string Name {get;}
+Kill        Method       void Kill()
+Start       Method       void Start()
+```
+
+说明：
+
+- Property 表示对象的属性，如 Id、Name
+- Method 表示对象的方法，如 Kill()、Start()
+
+你可以通过 对象.属性 或 对象.方法() 的形式使用这些成员。
+
+
+## 对象管道传递
+
+
+### 管道传递的是对象
+
+在 PowerShell 中，多个命令通过 | 连接时，传递的是对象而非文本。 这意味着你可以在后续命令中直接访问前一个命令传递的对象属性。
+
+示例：筛选所有状态为 Running 的服务：
+
+```text
+Get-Service | Where-Object { $_.Status -eq 'Running' }
+```
+
+解释：
+
+- $_ 表示当前管道中的对象
+- Status 是服务对象的一个属性
+
+
+### 管道操作流程图（Mermaid）
+
+
+## 常用对象处理命令
+
+PowerShell 提供了一系列用于操作对象的内置命令，常用于筛选、排序、分组、导出等场景：
+
+
+## 对象属性筛选与计算列
+
+
+### 选择特定属性
+
+```text
+Get-Process | Select-Object Name, Id, CPU
+```
+
+该命令提取每个进程的名称、ID 和 CPU 使用情况。
+
+
+### 添加计算列（自定义属性）
+
+你可以通过脚本块添加自定义属性：
+
+```text
+Get-Process | Select-Object Name, @{Name="MemoryMB";Expression={$_.WorkingSet / 1MB -as [int]}}
+```
+
+说明：
+
+- @{} 创建一个哈希表定义新属性
+- Name 指定新列名称
+- Expression 提供计算逻辑
+
+
+## 排序与分组操作
+
+
+### 对进程按 CPU 使用率排序
+
+```text
+Get-Process | Sort-Object CPU -Descending
+```
+
+
+### 按服务状态分组
+
+```text
+Get-Service | Group-Object Status
+```
+
+输出示例：
+
+```text
+Count Name                      Group
+----- ----                      -----
+   75 Running                   {WinDefend, WSearch, ...}
+   35 Stopped                   {Fax, Spooler, ...}
+```
+
+
+## 导出与结构化数据
+
+
+### 导出为 CSV 文件
+
+```text
+Get-Service | Select-Object Name, Status | Export-Csv -Path services.csv -NoTypeInformation
+```
+
+
+### 转换为 JSON 格式
+
+```text
+Get-Service | ConvertTo-Json
+```
+
+这些格式便于与其他系统或 API 进行集成，是自动化工作流的重要部分。
+
+
+## 典型实用案例
+
+
+### 案例 1：查找最耗 CPU 的前 5 个进程
+
+```text
+Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, CPU
+```
+
+
+### 案例 2：按服务状态统计数量
+
+```text
+Get-Service | Group-Object Status | Select-Object Name, Count
+```
+
+
+## 小结与建议
+
+PowerShell 的面向对象特性，使得命令行操作更符合程序设计思维。通过对象的属性和方法，用户可以更精准地操作系统资源，构建更强大和可靠的自动化脚本。
+
+初学者建议从以下几个方面入手巩固：
+
+- 多使用 Get-Member 探索对象结构
+- 熟练掌握 Where-Object 和 Select-Object 的用法
+- 尝试使用 Group-Object、Sort-Object 处理数据
+- 尝试将命令结果导出为 CSV 或 JSON 文件
+
+
+## 复习重点
+
+- 能说明 `PowerShell 面向对象的命令行` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

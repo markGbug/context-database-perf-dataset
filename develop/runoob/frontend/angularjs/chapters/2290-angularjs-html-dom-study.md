@@ -1,35 +1,68 @@
-# AngularJS：AngularJS HTML DOM 学习笔记
+# AngularJS：AngularJS HTML DOM
 
 - 来源：[AngularJS HTML DOM](https://www.runoob.com/angularjs/angularjs-html-dom.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2290
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS HTML DOM` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+AngularJS 为 HTML DOM 元素的属性提供了绑定应用数据的指令。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## ng-disabled 指令
 
-## 笔记模板
+ng-disabled 指令直接绑定应用程序数据到 HTML 的 disabled 属性。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## AngularJS 实例
 
-- 能用 3 到 5 句话解释 `AngularJS HTML DOM`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+实例讲解：
+
+ng-disabled 指令绑定应用程序数据 "mySwitch" 到 HTML 的 disabled 属性。
+
+ng-model 指令绑定 "mySwitch" 到 HTML input checkbox 元素的内容（value）。
+
+如果 mySwitch 为true, 按钮将不可用:
+
+如果 mySwitch 为false, 按钮则可用:
+
+
+## ng-show 指令
+
+ng-show 指令隐藏或显示一个 HTML 元素。
+
+
+## AngularJS 实例
+
+ng-show 指令根据 value 的值来显示（隐藏）HTML 元素。
+
+你可以使用表达式来计算布尔值（ true 或 false）:
+
+
+## AngularJS 实例
+
+```html
+<div ng-app="" ng-init="hour=13">
+
+<p ng-show="hour > 12">我是可见的。</p>
+
+</div>
+```
+
+
+## ng-hide 指令
+
+ng-hide 指令用于隐藏或显示 HTML 元素。
+
+
+## AngularJS 实例
+
+
+## 复习重点
+
+- 能说明 `AngularJS HTML DOM` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

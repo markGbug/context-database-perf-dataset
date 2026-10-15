@@ -1,35 +1,114 @@
-# PHP：PHP echo/print 学习笔记
+# PHP：PHP 5 echo 和 print 语句
 
 - 来源：[PHP echo/print](https://www.runoob.com/php/php-echo-print.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1041
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP echo/print` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+在 PHP 中有两个基本的输出方式： echo 和 print。
 
-## 阅读抓手
+本章节中我们会详细讨论两个语句的用法，并在实例中演示如何使用 echo 和 print。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## PHP echo 和 print 语句
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+echo 和 print 区别:
 
-## 完成标准
+- echo - 可以输出一个或多个字符串
+- print - 只允许输出一个字符串，返回值总为 1
 
-- 能用 3 到 5 句话解释 `PHP echo/print`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+提示：echo 输出的速度比 print 快， echo 没有返回值，print有返回值1。
+
+
+## PHP echo 语句
+
+echo 是一个语言结构，使用的时候可以不用加括号，也可以加上括号： echo 或 echo()。
+
+显示字符串
+
+下面的实例演示了如何使用 echo 命令输出字符串（字符串可以包含 HTML 标签）：
+
+
+## 实例
+
+```html
+<?php
+echo "<h2>PHP 很有趣!</h2>";
+echo "Hello world!<br>";
+echo "我要学 PHP!<br>";
+echo "这是一个", "字符串，", "使用了", "多个", "参数。";
+?>
+```
+
+显示变量
+
+下面的实例演示了如何使用 echo 命令输出变量和字符串：
+
+
+## 实例
+
+```html
+<?php
+$txt1="学习 PHP";
+$txt2="RUNOOB.COM";
+$cars=array("Volvo","BMW","Toyota");
+
+echo $txt1;
+echo "<br>";
+echo "在 $txt2 学习 PHP ";
+echo "<br>";
+echo "我车的品牌是 {$cars[0]}";
+?>
+```
+
+
+## PHP print 语句
+
+print 同样是一个语言结构，可以使用括号，也可以不使用括号： print 或 print()。
+
+显示字符串
+
+下面的实例演示了如何使用 print 命令输出字符串（字符串可以包含 HTML 标签）：
+
+
+## 实例
+
+```java
+<?php
+print "<h2>PHP 很有趣!</h2>";
+print "Hello world!<br>";
+print "我要学习 PHP!";
+?>
+```
+
+显示变量
+
+下面的实例演示了如何使用 print 命令输出变量和字符串：
+
+
+## 实例
+
+```java
+<?php
+$txt1="学习 PHP";
+$txt2="RUNOOB.COM";
+$cars=array("Volvo","BMW","Toyota");
+
+print $txt1;
+print "<br>";
+print "在 $txt2 学习 PHP ";
+print "<br>";
+print "我车的品牌是 {$cars[0]}";
+?>
+```
+
+
+## 复习重点
+
+- 能说明 `PHP echo/print` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

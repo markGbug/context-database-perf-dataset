@@ -1,35 +1,93 @@
-# jQuery EasyUI：jEasyUI 树形菜单加载父/子节点 学习笔记
+# jQuery EasyUI：jQuery EasyUI 树形菜单 - 树形菜单加载父/子节点
 
 - 来源：[jEasyUI 树形菜单加载父/子节点](https://www.runoob.com/jeasyui/jeasyui-tree-tree6.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2895
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 树形菜单加载父/子节点` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+通常表示一个树节点的方式就是在每一个节点存储一个 parentid。 这个也被称为邻接列表模型。 直接加载这些数据到树形菜单（Tree）是不允许的。 但是我们可以在加载树形菜单之前，把它转换为标准标准的树形菜单（Tree）数据格式。 树（Tree）插件提供一个 'loadFilter' 选项函数，它可以实现这个功能。 它提供一个机会来改变任何一个进入数据。 本教程向您展示如何使用 'loadFilter' 函数加载父/子节点到树形菜单（Tree）。
 
-## 阅读抓手
+```text
+    [
+    {"id":1,"parendId":0,"name":"Foods"},
+    {"id":2,"parentId":1,"name":"Fruits"},
+    {"id":3,"parentId":1,"name":"Vegetables"},
+    {"id":4,"parentId":2,"name":"apple"},
+    {"id":5,"parentId":2,"name":"orange"},
+    {"id":6,"parentId":3,"name":"tomato"},
+    {"id":7,"parentId":3,"name":"carrot"},
+    {"id":8,"parentId":3,"name":"cabbage"},
+    {"id":9,"parentId":3,"name":"potato"},
+    {"id":10,"parentId":3,"name":"lettuce"}
+    ]
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+    $('#tt').tree({
+        url: 'data/tree6_data.json',
+        loadFilter: function(rows){
+            return convert(rows);
+        }
+    });
+```
 
-## 笔记模板
+```java
+    function convert(rows){
+        function exists(rows, parentId){
+            for(var i=0; i<rows.length; i++){
+                if (rows[i].id == parentId) return true;
+            }
+            return false;
+        }
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+        var nodes = [];
+        // get the top level nodes
+        for(var i=0; i<rows.length; i++){
+            var row = rows[i];
+            if (!exists(rows, row.parentId)){
+                nodes.push({
+                    id:row.id,
+                    text:row.name
+                });
+            }
+        }
 
-## 完成标准
+        var toDo = [];
+        for(var i=0; i<nodes.length; i++){
+            toDo.push(nodes[i]);
+        }
+        while(toDo.length){
+            var node = toDo.shift();    // the parent node
+            // get the children nodes
+            for(var i=0; i<rows.length; i++){
+                var row = rows[i];
+                if (row.parentId == node.id){
+                    var child = {id:row.id,text:row.name};
+                    if (node.children){
+                        node.children.push(child);
+                    } else {
+                        node.children = [child];
+                    }
+                    toDo.push(child);
+                }
+            }
+        }
+        return nodes;
+    }
+```
 
-- 能用 3 到 5 句话解释 `jEasyUI 树形菜单加载父/子节点`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-tree-tree6.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 树形菜单加载父/子节点` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

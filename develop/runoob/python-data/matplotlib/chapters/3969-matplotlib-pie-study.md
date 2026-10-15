@@ -1,35 +1,69 @@
-# Matplotlib：Matplotlib 饼图 学习笔记
+# Matplotlib：Matplotlib 饼图
 
 - 来源：[Matplotlib 饼图](https://www.runoob.com/matplotlib/matplotlib-pie.html)
 - 分类：Python / 数据科学
 - 技术：Matplotlib
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3969
 
-## 学习目标
+## 本章内容
 
-Matplotlib 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Matplotlib 饼图` 建立学习路径，先理解它在 Matplotlib 体系中的位置，再做可运行或可复述的验证。
+饼图（Pie Chart）是一种常用的数据可视化图形，用来展示各类别在总体中所占的比例。
 
-## 阅读抓手
+我们可以使用 pyplot 中的 pie() 方法来绘制饼图。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+pie() 方法语法格式如下：
 
-## 笔记模板
+```text
+matplotlib.pyplot.pie(x, explode=None, labels=None, colors=None, autopct=None, pctdistance=0.6, shadow=False, labeldistance=1.1, startangle=0, radius=1, counterclock=True, wedgeprops=None, textprops=None, center=0, 0, frame=False, rotatelabels=False, *, normalize=None, data=None)[source]
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+参数说明：
 
-## 完成标准
+- x：浮点型数组或列表，用于绘制饼图的数据，表示每个扇形的面积。
+- explode：数组，表示各个扇形之间的间隔，默认值为0。
+- labels：列表，各个扇形的标签，默认值为 None。
+- colors：数组，表示各个扇形的颜色，默认值为 None。
+- autopct：设置饼图内各个扇形百分比显示格式，%d%% 整数百分比，%0.1f 一位小数， %0.1f%% 一位小数百分比， %0.2f%% 两位小数百分比。
+- labeldistance：标签标记的绘制位置，相对于半径的比例，默认值为 1.1，如 <1则绘制在饼图内侧。
+- pctdistance：：类似于 labeldistance，指定 autopct 的位置刻度，默认值为 0.6。
+- shadow：：布尔值 True 或 False，设置饼图的阴影，默认为 False，不设置阴影。
+- radius：：设置饼图的半径，默认为 1。
+- startangle：：用于指定饼图的起始角度，默认为从 x 轴正方向逆时针画起，如设定 =90 则从 y 轴正方向画起。
+- counterclock：布尔值，用于指定是否逆时针绘制扇形，默认为 True，即逆时针绘制，False 为顺时针。
+- wedgeprops ：字典类型，默认值 None。用于指定扇形的属性，比如边框线颜色、边框线宽度等。例如：wedgeprops={'linewidth':5} 设置 wedge 线宽为5。
+- textprops ：字典类型，用于指定文本标签的属性，比如字体大小、字体颜色等，默认值为 None。
 
-- 能用 3 到 5 句话解释 `Matplotlib 饼图`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+显示结果如下：
+
+设置饼图各个扇形的标签与颜色：
+
+
+## 实例
+
+显示结果如下：
+
+突出显示第二个扇形，并格式化输出百分比：
+
+
+## 实例
+
+我们定义了一个包含 4 个元素的列表 sizes，它表示各个类别在总体中所占的比例。然后，我们定义了一个包含 4 个元素的列表 labels，它表示各个类别的标签。接下来，我们定义了一个包含 4 个元素的列表 colors，它表示每个类别的颜色。然后，我们定义了一个包含 4 个元素的元组 explode，它用来指定是否突出某个扇形。接着，我们调用 plt.pie 函数来绘制饼图，其中传入了上述参数。最后，我们添加了一个标题，并调用 plt.show() 来显示图形。
+
+显示结果如下：
+
+
+## 实例
+
+注意：默认情况下，第一个扇形的绘制是从 x 轴开始并逆时针移动：
+
+
+## 复习重点
+
+- 能说明 `Matplotlib 饼图` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

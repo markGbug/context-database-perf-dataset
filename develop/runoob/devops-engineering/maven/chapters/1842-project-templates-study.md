@@ -1,35 +1,244 @@
-# Maven：Maven 项目模板 学习笔记
+# Maven：Maven 项目模板
 
 - 来源：[Maven 项目模板](https://www.runoob.com/maven/project-templates.html)
 - 分类：DevOps / 工程化
 - 技术：Maven
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1842
 
-## 学习目标
+## 本章内容
 
-Maven 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `Maven 项目模板` 建立学习路径，先理解它在 Maven 体系中的位置，再做可运行或可复述的验证。
+Maven 使用 archetype(原型) 来创建自定义的项目结构，形成 Maven 项目模板。
 
-## 阅读抓手
+在前面章节我们学到 Maven 使用下面的命令来快速创建 java 项目：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+mvn archetype:generate
+```
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 什么是 archetype？
 
-## 完成标准
+archetype 也就是原型，是一个 Maven 插件，准确说是一个项目模板，它的任务是根据模板创建一个项目结构。我们将使用 quickstart 原型插件创建一个简单的 java 应用程序。
 
-- 能用 3 到 5 句话解释 `Maven 项目模板`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 使用项目模板
+
+让我们打开命令控制台，跳转到 C:\> MVN 目录并执行以下 mvn 命令:
+
+```text
+C:\MVN> mvn archetype:generate
+```
+
+Maven 将开始处理，并要求选择所需的原型:
+
+```text
+[INFO] Scanning for projects...
+[INFO] Searching repository for plugin with prefix: 'archetype'.
+[INFO] -------------------------------------------------------------------
+[INFO] Building Maven Default Project
+[INFO]task-segment: [archetype:generate] (aggregator-style)
+[INFO] -------------------------------------------------------------------
+[INFO] Preparing archetype:generate
+...
+600: remote -> org.trailsframework:trails-archetype (-)
+601: remote -> org.trailsframework:trails-secure-archetype (-)
+602: remote -> org.tynamo:tynamo-archetype (-)
+603: remote -> org.wicketstuff.scala:wicket-scala-archetype (-)
+604: remote -> org.wicketstuff.scala:wicketstuff-scala-archetype
+Basic setup for a project that combines Scala and Wicket,
+depending on the Wicket-Scala project.
+Includes an example Specs test.)
+605: remote -> org.wikbook:wikbook.archetype (-)
+606: remote -> org.xaloon.archetype:xaloon-archetype-wicket-jpa-glassfish (-)
+607: remote -> org.xaloon.archetype:xaloon-archetype-wicket-jpa-spring (-)
+608: remote -> org.xwiki.commons:xwiki-commons-component-archetype
+(Make it easy to create a maven project for creating XWiki Components.)
+609: remote -> org.xwiki.rendering:xwiki-rendering-archetype-macro
+(Make it easy to create a maven project for creating XWiki Rendering Macros.)
+610: remote -> org.zkoss:zk-archetype-component (The ZK Component archetype)
+611: remote -> org.zkoss:zk-archetype-webapp (The ZK wepapp archetype)
+612: remote -> ru.circumflex:circumflex-archetype (-)
+613: remote -> se.vgregion.javg.maven.archetypes:javg-minimal-archetype (-)
+614: remote -> sk.seges.sesam:sesam-annotation-archetype (-)
+Choose a number or apply filter
+(format: [groupId:]artifactId, case sensitive contains): 203:
+```
+
+按下 Enter 选择默认选项 (203:maven-archetype-quickstart)。
+
+
+## Maven 将询问原型的版本
+
+```text
+Choose org.apache.maven.archetypes:maven-archetype-quickstart version:
+1: 1.0-alpha-1
+2: 1.0-alpha-2
+3: 1.0-alpha-3
+4: 1.0-alpha-4
+5: 1.0
+6: 1.1
+Choose a number: 6:
+```
+
+按下 Enter 选择默认选项 (6:maven-archetype-quickstart:1.1)
+
+Maven 将询问项目细节。按要求输入项目细节。如果要使用默认值则直接按 Enter 键。你也可以输入自己的值。
+
+```text
+Define value for property 'groupId': : com.companyname.insurance
+Define value for property 'artifactId': : health
+Define value for property 'version': 1.0-SNAPSHOT
+Define value for property 'package': com.companyname.insurance
+```
+
+Maven 将要求确认项目细节，按 Enter 或按 Y
+
+```text
+Confirm properties configuration:
+groupId: com.companyname.insurance
+artifactId: health
+version: 1.0-SNAPSHOT
+package: com.companyname.insurance
+Y:
+```
+
+现在 Maven 将开始创建项目结构，显示如下:
+
+```text
+[INFO] -----------------------------------------------------------------------
+[INFO] Using following parameters for creating project
+from Old (1.x) Archetype: maven-archetype-quickstart:1.1
+[INFO] -----------------------------------------------------------------------
+[INFO] Parameter: groupId, Value: com.companyname.insurance
+[INFO] Parameter: packageName, Value: com.companyname.insurance
+[INFO] Parameter: package, Value: com.companyname.insurance
+[INFO] Parameter: artifactId, Value: health
+[INFO] Parameter: basedir, Value: C:\MVN
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] project created from Old (1.x) Archetype in dir: C:\MVN\health
+[INFO] -----------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] -----------------------------------------------------------------------
+[INFO] Total time: 4 minutes 12 seconds
+[INFO] Finished at: Fri Jul 13 11:10:12 IST 2012
+[INFO] Final Memory: 20M/90M
+[INFO] -----------------------------------------------------------------------
+```
+
+
+## 创建的项目
+
+现在转到 C:\ > MVN 目录。你会看到一个名为 health 的 java 应用程序项目，就像在项目创建的时候建立的 artifactId 名称一样。 Maven 将创建一个有标准目录布局的项目，如下所示:
+
+
+## 创建 pom.xml
+
+Maven 为项目自动生成一个 pom.xml文件，如下所示:
+
+```html
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.companyname.insurance</groupId>
+  <artifactId>health</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>health</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+     <dependency>
+     <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.1</version>
+        <scope>test</scope>
+     </dependency>
+  </dependencies>
+</project>
+```
+
+
+## App.java
+
+Maven 会自动生成一个测试的 java 文件 App.java。
+
+路径：C:\MVN\consumerBanking\src\main\java\com\companyname\bank
+
+```java
+package com.companyname.insurance;
+
+/**
+* Hello world!
+*
+*/
+public class App
+{
+    public static void main( String[] args )
+    {
+        System.out.println( "Hello World!" );
+    }
+}
+```
+
+
+## AppTest.java
+
+Maven 会自动生成一个 java 文件 AppTest.java。
+
+路径为： C:\MVN\consumerBanking\src\test\java\com\companyname\bank
+
+```java
+package com.companyname.insurance;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+/**
+* Unit test for simple App.
+*/
+public class AppTest
+   extends TestCase
+{
+   /**
+   * Create the test case
+   *
+   * @param testName name of the test case
+   */
+  public AppTest( String testName )
+  {
+      super( testName );
+  }
+
+  /**
+  * @return the suite of tests being tested
+  */
+  public static Test suite()
+  {
+      return new TestSuite( AppTest.class );
+  }
+
+  /**
+  * Rigourous Test :-)
+  */
+  public void testApp()
+  {
+      assertTrue( true );
+  }
+}
+```
+
+就这样。现在你可以看到 Maven 的强大之处。你可以用 maven 简单的命令创建任何类型的项目，并且可以启动您的开发。
+
+
+## 复习重点
+
+- 能说明 `Maven 项目模板` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

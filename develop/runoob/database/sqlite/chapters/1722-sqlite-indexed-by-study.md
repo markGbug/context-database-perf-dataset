@@ -1,35 +1,53 @@
-# SQLite：SQLite Indexed By 学习笔记
+# SQLite：SQLite Indexed By
 
 - 来源：[SQLite Indexed By](https://www.runoob.com/sqlite/sqlite-indexed-by.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1722
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite Indexed By` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+"INDEXED BY index-name" 子句规定必须需要命名的索引来查找前面表中值。
 
-## 阅读抓手
+如果索引名 index-name 不存在或不能用于查询，然后 SQLite 语句的准备失败。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+"NOT INDEXED" 子句规定当访问前面的表（包括由 UNIQUE 和 PRIMARY KEY 约束创建的隐式索引）时，没有使用索引。
 
-## 笔记模板
+然而，即使指定了 "NOT INDEXED"，INTEGER PRIMARY KEY 仍然可以被用于查找条目。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 语法
 
-- 能用 3 到 5 句话解释 `SQLite Indexed By`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+下面是 INDEXED BY 子句的语法，它可以与 DELETE、UPDATE 或 SELECT 语句一起使用：
+
+```text
+SELECT|DELETE|UPDATE column1, column2...
+INDEXED BY (index_name)
+table_name
+WHERE (CONDITION);
+```
+
+
+## 实例
+
+假设有表 COMPANY，我们将创建一个索引，并用它进行 INDEXED BY 操作。
+
+```text
+sqlite> CREATE INDEX salary_index ON COMPANY(salary);
+sqlite>
+```
+
+现在使用 INDEXED BY 子句从表 COMPANY 中选择数据，如下所示：
+
+```text
+sqlite> SELECT * FROM COMPANY INDEXED BY salary_index WHERE salary > 5000;
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite Indexed By` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

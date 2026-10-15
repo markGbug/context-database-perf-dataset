@@ -1,35 +1,152 @@
-# JSON：JSONP 教程 学习笔记
+# JSON：JSONP 教程
 
 - 来源：[JSONP 教程](https://www.runoob.com/json/json-jsonp.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3019
 
-## 学习目标
+## 本章内容
 
-JSON 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `JSONP 教程` 建立学习路径，先理解它在 JSON 体系中的位置，再做可运行或可复述的验证。
+本章节我们将向大家介绍 JSONP 的知识。
 
-## 阅读抓手
+Jsonp(JSON with Padding) 是 json 的一种"使用模式"，可以让网页从别的域名（网站）那获取资料，即跨域读取数据。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+为什么我们从不同的域（网站）访问数据需要一个特殊的技术( JSONP )呢？这是因为同源策略。
 
-## 笔记模板
+同源策略，它是由 Netscape 提出的一个著名的安全策略，现在所有支持 JavaScript 的浏览器都会使用这个策略。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## JSONP 应用
 
-- 能用 3 到 5 句话解释 `JSONP 教程`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 1. 服务端 JSONP 格式数据
+
+如客户想访问 : https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=callbackFunction。
+
+假设客户期望返回数据：["customername1","customername2"]。
+
+真正返回到客户端的数据显示为: callbackFunction(["customername1","customername2"])。
+
+服务端文件 jsonp.php 代码为：
+
+
+## jsonp.php 文件代码
+
+```text
+<?php
+header('Content-type: application/json');
+//获取回调函数名
+$jsoncallback = htmlspecialchars($_REQUEST ['jsoncallback']);
+//json数据
+$json_data = '["customername1","customername2"]';
+//输出jsonp格式的数据
+echo $jsoncallback . "(" . $json_data . ")";
+?>
+```
+
+
+### 2. 客户端实现 callbackFunction 函数
+
+```java
+<script type="text/javascript">
+function callbackFunction(result, methodName)
+{
+    var html = '<ul>';
+    for(var i = 0; i < result.length; i++)
+    {
+        html += '<li>' + result[i] + '</li>';
+    }
+    html += '</ul>';
+    document.getElementById('divCustomers').innerHTML = html;
+}
+</script>
+```
+
+
+### 页面展示
+
+```html
+<div id="divCustomers"></div>
+```
+
+
+### 客户端页面完整代码
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JSONP 实例</title>
+</head>
+<body>
+<div id="divCustomers"></div>
+<script type="text/javascript">
+```
+
+```java
+function callbackFunction(result, methodName)
+{
+    var html = '<ul>';
+    for(var i = 0; i < result.length; i++)
+    {
+        html += '<li>' + result[i] + '</li>';
+    }
+    html += '</ul>';
+    document.getElementById('divCustomers').innerHTML = html;
+}
+```
+
+```html
+</script>
+<script type="text/javascript" src="https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=callbackFunction"></script>
+</body>
+</html>
+```
+
+
+## jQuery 使用 JSONP
+
+以上代码可以使用 jQuery 代码实例：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JSONP 实例</title>
+    <script src="https://cdn.static.runoob.com/libs/jquery/1.8.3/jquery.js"></script>
+</head>
+<body>
+<div id="divCustomers"></div>
+<script>
+```
+
+```java
+$.getJSON("https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=?", function(data) {
+
+    var html = '<ul>';
+    for(var i = 0; i < data.length; i++)
+    {
+        html += '<li>' + data[i] + '</li>';
+    }
+    html += '</ul>';
+
+    $('#divCustomers').html(html);
+});
+```
+
+```text
+</script>
+</body>
+</html>
+```
+
+
+## 复习重点
+
+- 能说明 `JSONP 教程` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,63 @@
-# jQuery EasyUI：jEasyUI 树形网格动态加载 学习笔记
+# jQuery EasyUI：jQuery EasyUI 树形菜单 - 树形网格动态加载
 
 - 来源：[jEasyUI 树形网格动态加载](https://www.runoob.com/jeasyui/jeasyui-tree-treegrid3.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2898
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 树形网格动态加载` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+动态加载树形网格有助于从服务器上加载部分的行数据，避免加载大型数据的长时间等待。本教程将向您展示如何创建带有动态加载特性的树形网格（TreeGrid）。
 
-## 阅读抓手
+```html
+    <table title="Products" class="easyui-treegrid" style="width:700px;height:300px"
+            url="treegrid3_getdata.php"
+            rownumbers="true"
+            idField="id" treeField="name">
+        <thead>
+            <tr>
+                <th field="name" width="250">Name</th>
+                <th field="quantity" width="100" align="right">Quantity</th>
+                <th field="price" width="150" align="right" formatter="formatDollar">Price</th>
+                <th field="total" width="150" align="right" formatter="formatDollar">Total</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+treegrid3_getdata.php
 
-## 笔记模板
+```java
+$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+include 'conn.php';
+$result = array();
+$rs = mysql_query("select * from products where parentId=$id");
+while($row = mysql_fetch_array($rs)){
+    $row['state'] = has_child($row['id']) ? 'closed' : 'open';
+    $row['total'] = $row['price']*$row['quantity'];
+    array_push($result, $row);
+}
 
-## 完成标准
+echo json_encode($result);
 
-- 能用 3 到 5 句话解释 `jEasyUI 树形网格动态加载`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+function has_child($id){
+    $rs = mysql_query("select count(*) from products where parentId=$id");
+    $row = mysql_fetch_array($rs);
+    return $row[0] > 0 ? true : false;
+}
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-tree-treegrid3.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 树形网格动态加载` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

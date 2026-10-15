@@ -1,35 +1,38 @@
-# Flask：Flask Session Interface API 学习笔记
+# Flask：Flask Session Interface API
 
 - 来源：[Flask Session Interface API](https://www.runoob.com/flask/flask-session-interface-api.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3901
 
-## 学习目标
+## 本章内容
 
-Flask 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Flask Session Interface API` 建立学习路径，先理解它在 Flask 体系中的位置，再做可运行或可复述的验证。
+SessionInterface 是 Session 的底层抽象，允许你替换 Flask 默认的 Cookie 存储方式为 Redis、数据库等外部存储。
 
-## 阅读抓手
+自定义实现只需继承 SessionInterface 并实现两个方法。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## SessionInterface 抽象基类
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## Cookie 选项方法
 
-- 能用 3 到 5 句话解释 `Flask Session Interface API`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下方法用于获取 Session Cookie 的各项属性，可被重写：
+
+
+## 内置实现
+
+
+## 替换默认 Session 实现
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Flask Session Interface API` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,104 @@
-# XSLT：XSLT <for-each> 学习笔记
+# XSLT：XSLT <xsl:for-each> 元素
 
 - 来源：[XSLT <for-each>](https://www.runoob.com/xsl/xsl-for-each.html)
 - 分类：XML / Web Service
 - 技术：XSLT
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4514
 
-## 学习目标
+## 本章内容
 
-XSLT 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `XSLT <for-each>` 建立学习路径，先理解它在 XSLT 体系中的位置，再做可运行或可复述的验证。
+<xsl:for-each> 元素允许您在 XSLT 中进行循环。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## <xsl:for-each> 元素
 
-## 笔记模板
+XSL <xsl:for-each> 元素可用于选取指定的节点集中的每个 XML 元素：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `XSLT <for-each>`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <body>
+  <h2>My CD Collection</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th>Title</th>
+      <th>Artist</th>
+    </tr>
+    <xsl:for-each select="catalog/cd">
+    <tr>
+      <td><xsl:value-of select="title"/></td>
+      <td><xsl:value-of select="artist"/></td>
+    </tr>
+    </xsl:for-each>
+  </table>
+  </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>
+```
+
+注意：select 属性的值是一个 XPath 表达式。这个 XPath 表达式的工作方式类似于定位某个文件系统，在其中正斜杠（/）可选择子目录。
+
+
+## 过滤输出结果
+
+通过在 <xsl:for-each> 元素中添加一个选择属性的判别式，我们也可以过滤从 XML 文件输出的结果。
+
+<xsl:for-each select="catalog/cd[artist='Bob Dylan']">
+
+合法的过滤运算符:
+
+- = （等于）
+- != （不等于）
+- < （小于）
+- > （大于）
+
+看看调整后的 XSL 样式表：
+
+
+## 实例
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <body>
+  <h2>My CD Collection</h2>
+  <table border="1">
+    <tr bgcolor="#9acd32">
+      <th>Title</th>
+      <th>Artist</th>
+    </tr>
+    <xsl:for-each select="catalog/cd[artist='Bob Dylan']">
+    <tr>
+      <td><xsl:value-of select="title"/></td>
+      <td><xsl:value-of select="artist"/></td>
+    </tr>
+    </xsl:for-each>
+  </table>
+  </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>
+```
+
+
+## 复习重点
+
+- 能说明 `XSLT <for-each>` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

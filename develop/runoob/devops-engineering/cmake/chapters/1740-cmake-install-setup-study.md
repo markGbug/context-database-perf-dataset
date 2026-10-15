@@ -1,35 +1,151 @@
-# CMake：CMake 安装与配置 学习笔记
+# CMake：CMake 安装与配置
 
 - 来源：[CMake 安装与配置](https://www.runoob.com/cmake/cmake-install-setup.html)
 - 分类：DevOps / 工程化
 - 技术：CMake
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1740
 
-## 学习目标
+## 本章内容
 
-CMake 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `CMake 安装与配置` 建立学习路径，先理解它在 CMake 体系中的位置，再做可运行或可复述的验证。
+CMake 支持的操作系统：
 
-## 阅读抓手
+- Microsoft Windows
+- Apple macOS
+- Linux
+- FreeBSD
+- OpenBSD
+- Solaris
+- AIX
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 安装 CMake
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+CMake 可以在不同操作系统上进行安装，本文将介绍 Windows、Linux 以及 macOS 系统下的安装与配置。
 
-## 完成标准
+CMake 安装包下载地址：https://cmake.org/download/。
 
-- 能用 3 到 5 句话解释 `CMake 安装与配置`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+下载页面包含了源码包及二进制包：
+
+我们可以在上面二进制包列表中下载适用于我们操作系统的安装包。
+
+
+### Windows
+
+选择 Windows 版本的安装包（通常是 .msi 文件）。
+
+下载后，双击下载的 .msi 文件，按照安装向导的指示进行安装。
+
+在安装过程中，可以选择将 CMake 添加到系统的 PATH 环境变量中（建议选择此选项，以便在命令行中直接使用 cmake 命令）。
+
+验证安装：打开命令提示符（CMD）或 PowerShell，输入 cmake --version，查看是否能正确显示 CMake 的版本信息。
+
+
+### macOS
+
+通过 Homebrew 安装
+
+打开终端（Terminal），执行以下安装命令：
+
+```text
+brew install cmake
+```
+
+通过官方安装包
+
+访问 CMake 官方网站的下载页面，选择 macOS 版本的 .dmg 文件。
+
+下载并运行 .dmg 文件，拖动 CMake 图标到应用程序文件夹。
+
+安装成功后，命令都在 /Applications/CMake.app/Contents/bin 目录下，我们需要将环境变量添加到 .bash_profile 文件中，使用 vim 进行编辑：
+
+```text
+vim ~/.bash_profile
+```
+
+将以下内容添加到文件末尾：
+
+```text
+export PATH="/Applications/CMake.app/Contents/bin":"$PATH"
+```
+
+添加完成后，执行 source ~/.bash_profile 或者重新启动终端。
+
+验证安装：打开终端，输入 cmake --version，确认 CMake 已正确安装。
+
+
+### Linux
+
+通过包管理器安装（适用于大多数发行版）：
+
+- 对于 Ubuntu 或 Debian 系统：sudo apt-get install cmake
+- 对于 Fedora 系统：sudo dnf install cmake
+- 对于 Arch Linux 系统：sudo pacman -S cmake
+
+从源码编译安装：
+
+访问 CMake 官方网站下载源码包。
+
+解压源码包，进入解压后的目录。
+
+执行以下命令编译和安装：
+
+```text
+./bootstrap
+make
+sudo make install
+```
+
+验证安装：打开终端，输入 cmake --version，确认 CMake 安装成功。
+
+
+## 配置 CMake
+
+确保 CMake 的安装路径被添加到系统的 PATH 环境变量中，这样可以在任何位置的命令行中访问 CMake。
+
+
+### Windows 环境变量设置
+
+如果在安装过程中选择了将 CMake 添加到 PATH，则不需要额外配置。
+
+如果未选择，可以手动添加：右键点击"计算机"或"此电脑"，选择"属性" -> "高级系统设置" -> "环境变量"，在"系统变量"中找到 Path，点击"编辑"，将 CMake 的安装路径添加进去。
+
+
+### macOS 和 Linux
+
+通常安装程序会自动配置 PATH，如果没有，可以手动配置。
+
+打开终端，编辑 ~/.bash_profile 或 ~/.zshrc 文件，添加以下行：
+
+```text
+export PATH="/usr/local/bin:$PATH"
+```
+
+运行 source ~/.bash_profile 或 source ~/.zshrc 使更改生效。
+
+
+## CMake GUI 使用
+
+CMake 也提供了图形用户界面（GUI），可以用于更直观地配置项目。
+
+在 Windows 中，通常可以从开始菜单启动。
+
+在 macOS 和 Linux 中，使用终端命令 cmake-gui 启动。
+
+设置源代码目录和构建目录：
+
+- 源代码目录（Source Code Directory）： 指向包含 CMakeLists.txt 文件的目录。
+- 构建目录（Build Directory）： 指向用于存放生成的构建文件的目录。建议使用独立的目录以保持源代码的整洁。
+
+配置和生成：
+
+- 点击 "Configure" 按钮，选择编译器和构建选项，CMake 会检查依赖项并生成配置。
+- 点击 "Generate" 按钮，CMake 会生成适合当前平台的构建文件。
+
+
+## 复习重点
+
+- 能说明 `CMake 安装与配置` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

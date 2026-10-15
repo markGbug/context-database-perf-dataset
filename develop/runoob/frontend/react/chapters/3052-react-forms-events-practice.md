@@ -1,34 +1,282 @@
-# React：React 表单与事件 练习笔记
+# React：React 表单与事件
 
 - 来源：[React 表单与事件](https://www.runoob.com/react/react-forms-events.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3052
 
-## 练习目标
+## 本章内容
 
-把 `React 表单与事件` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们将讨论如何在 React 中使用表单。
 
-## 练习步骤
+HTML 表单元素与 React 中的其他 DOM 元素有所不同,因为表单元素生来就保留一些内部状态。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+在 HTML 当中，像 <input>, <textarea>, 和 <select> 这类表单元素会维持自身状态，并根据用户输入进行更新。但在React中，可变的状态通常保存在组件的状态属性中，并且只能用 setState() 方法进行更新。
 
-## 验收清单
 
-- 我能独立说出 `React 表单与事件` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 一个简单的实例
 
-## 复盘问题
+在实例中我们设置了输入框 input 值 value = {this.state.data}。在输入框值发生变化时我们可以更新 state。我们可以使用 onChange 事件来监听 input 的变化，并修改 state。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## React 实例
+
+```html
+class HelloMessage extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = {value: 'Hello Runoob!'};
+      this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+  render() {
+    var value = this.state.value;
+    return <div>
+            <input type="text" value={value} onChange={this.handleChange} />
+            <h4>{value}</h4>
+           </div>;
+  }
+}
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <HelloMessage />
+);
+```
+
+上面的代码将渲染出一个值为 Hello Runoob! 的 input 元素，并通过 onChange 事件响应更新用户输入的值。
+
+
+### 实例 2
+
+在以下实例中我们将为大家演示如何在子组件上使用表单。 onChange 方法将触发 state 的更新并将更新的值传递到子组件的输入框的 value 上来重新渲染界面。
+
+你需要在父组件通过创建事件句柄 (handleChange) ，并作为 prop (updateStateProp) 传递到你的子组件上。
+
+
+## React 实例
+
+```html
+class Content extends React.Component {
+  render() {
+    return (
+      <div>
+        <input type="text" value={this.props.myDataProp} onChange={this.props.updateStateProp} />
+        <h4>{this.props.myDataProp}</h4>
+      </div>
+    );
+  }
+}
+
+class HelloMessage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: 'Hello Runoob!' };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  render() {
+    var value = this.state.value;
+    return (
+      <div>
+        <Content myDataProp={value} updateStateProp={this.handleChange} />
+      </div>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<HelloMessage />);
+```
+
+
+### Select 下拉菜单
+
+在 React 中，不使用 selected 属性，而在根 select 标签上用 value 属性来表示选中项。
+
+
+## React 实例
+
+```html
+class FlavorForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: 'coconut'};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('Your favorite flavor is: ' + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          选择您最喜欢的网站
+          <select value={this.state.value} onChange={this.handleChange}>
+            <option value="gg">Google</option>
+            <option value="rn">Runoob</option>
+            <option value="tb">Taobao</option>
+            <option value="fb">Facebook</option>
+          </select>
+        </label>
+        <input type="submit" value="提交" />
+      </form>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <FlavorForm />
+);
+```
+
+
+### 多个表单
+
+当你有处理多个 input 元素时，你可以通过给每个元素添加一个 name 属性，来让处理函数根据 event.target.name 的值来选择做什么。
+
+
+## React 实例
+
+```html
+class Reservation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isGoing: true,
+      numberOfGuests: 2
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  render() {
+    return (
+      <form>
+        <label>
+          是否离开:
+          <input
+            name="isGoing"
+            type="checkbox"
+            checked={this.state.isGoing}
+            onChange={this.handleInputChange} />
+        </label>
+        <br />
+        <label>
+          访客数:
+          <input
+            name="numberOfGuests"
+            type="number"
+            value={this.state.numberOfGuests}
+            onChange={this.handleInputChange} />
+        </label>
+      </form>
+    );
+  }
+}
+```
+
+
+## React 事件
+
+以下实例演示通过 onClick 事件来修改数据：
+
+
+## React 实例
+
+```html
+class HelloMessage extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = {value: 'Hello Runoob!'};
+      this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: '菜鸟教程'})
+  }
+  render() {
+    var value = this.state.value;
+    return <div>
+            <button onClick={this.handleChange}>点我</button>
+            <h4>{value}</h4>
+           </div>;
+  }
+}
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <HelloMessage />
+);
+```
+
+当你需要从子组件中更新父组件的 state 时，你需要在父组件通过创建事件句柄 (handleChange) ，并作为 prop (updateStateProp) 传递到你的子组件上。实例如下：
+
+
+## React 实例
+
+```html
+class Content extends React.Component {
+  render() {
+    return  <div>
+              <button onClick = {this.props.updateStateProp}>点我</button>
+              <h4>{this.props.myDataProp}</h4>
+           </div>
+  }
+}
+class HelloMessage extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = {value: 'Hello Runoob!'};
+      this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event) {
+    this.setState({value: '菜鸟教程'})
+  }
+  render() {
+    var value = this.state.value;
+    return <div>
+            <Content myDataProp = {value}
+              updateStateProp = {this.handleChange}></Content>
+           </div>;
+  }
+}
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <HelloMessage />
+);
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `React 表单与事件` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

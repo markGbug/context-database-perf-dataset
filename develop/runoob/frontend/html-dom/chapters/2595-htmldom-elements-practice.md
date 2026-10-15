@@ -1,34 +1,140 @@
-# HTML DOM：HTML DOM 元素 练习笔记
+# HTML DOM：HTML DOM - 元素
 
 - 来源：[HTML DOM 元素](https://www.runoob.com/htmldom/htmldom-elements.html)
 - 分类：前端开发
 - 技术：HTML DOM
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2595
 
-## 练习目标
+## 本章内容
 
-把 `HTML DOM 元素` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+添加、删除和替换 HTML 元素。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 创建新的 HTML 元素 - createElement()
 
-## 验收清单
+如需向 HTML DOM 添加新元素，您首先必须创建该元素，然后把它追加到已有的元素上。
 
-- 我能独立说出 `HTML DOM 元素` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<div id="div1">
+<p id="p1">这是一个段落。</p>
+<p id="p2">这是另一个段落。</p>
+</div>
+<script>
+var para=document.createElement("p");
+var node=document.createTextNode("这是一个新段落。");
+para.appendChild(node);
+var element=document.getElementById("div1");
+element.appendChild(para);
+</script>
+```
+
+
+## 实例解析
+
+这段代码创建了一个新的 <p> 元素：
+
+如需向 <p> 元素添加文本，您首先必须创建文本节点。这段代码创建文本节点：
+
+然后您必须向 <p> 元素追加文本节点：
+
+最后，您必须向已有元素追加这个新元素。
+
+这段代码查找到一个已有的元素：
+
+这段代码向这个已存在的元素追加新元素：
+
+
+## 创建新的 HTML 元素 - insertBefore()
+
+上一个例子中的 appendChild() 方法，将新元素作为父元素的最后一个子元素进行添加。
+
+如果不希望如此，您可以使用 insertBefore() 方法：
+
+
+## 实例
+
+```html
+<div id="div1">
+<p id="p1">这是一个段落。</p>
+<p id="p2">这是另外一个段落。</p>
+</div>
+
+<script>
+var para=document.createElement("p");
+var node=document.createTextNode("这是一个新段落。");
+para.appendChild(node);
+
+var element=document.getElementById("div1");
+var child=document.getElementById("p1");
+element.insertBefore(para,child);
+</script>
+```
+
+
+## 删除已有的 HTML 元素
+
+如需删除 HTML 元素，您必须清楚该元素的父元素：
+
+
+## 实例
+
+```html
+<div id="div1">
+    <p id="p1">这是一个段落。</p>
+    <p id="p2">这是另一个段落。</p>
+</div>
+<script>
+var parent=document.getElementById("div1");
+var child=document.getElementById("p1");
+parent.removeChild(child);
+</script>
+```
+
+
+## 实例解析
+
+这个 HTML 文档包含一个带有两个子节点（两个 <p> 元素）的 <div> 元素：
+
+查找 id="div1" 的元素：
+
+查找 id="p1" 的 <p> 元素：
+
+从父元素中删除子元素：
+
+这里提供一个常用的解决方法：找到您需要删除的子元素，然后使用 parentNode 属性来查找其父元素：
+
+
+## 替换 HTML 元素
+
+如需替换 HTML DOM 中的元素，请使用 replaceChild() 方法：
+
+
+## 实例
+
+```html
+<div id="div1">
+<p id="p1">这是一个段落。</p>
+<p id="p2">这是另外一个段落。</p>
+</div>
+
+<script>
+var parent=document.getElementById("div1");
+var child=document.getElementById("p1");
+var para=document.createElement("p");
+var node=document.createTextNode("这是一个新的段落。");
+para.appendChild(node);
+parent.replaceChild(para,child);
+</script>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `HTML DOM 元素` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

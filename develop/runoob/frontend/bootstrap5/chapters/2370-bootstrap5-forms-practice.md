@@ -1,34 +1,159 @@
-# Bootstrap5：Bootstrap5 表单 练习笔记
+# Bootstrap5：Bootstrap5 表单
 
 - 来源：[Bootstrap5 表单](https://www.runoob.com/bootstrap5/bootstrap5-forms.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2370
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap5 表单` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在本章中，我们将学习如何使用 Bootstrap 创建表单。Bootstrap 通过一些简单的 HTML 标签和扩展的类即可创建出不同样式的表单。
 
-## 练习步骤
+表单元素 <input>, <textarea>, 和 <select> elements 在使用 .form-control 类的情况下，宽度都是设置为 100%。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### Bootstrap5 表单布局
 
-- 我能独立说出 `Bootstrap5 表单` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- 堆叠表单 (全屏宽度)：垂直方向
+- 内联表单：水平方向
 
-## 复盘问题
+Bootstrap 提供了两种类型的表单布局:
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 堆叠表单
+
+以下实例使用两个输入框，一个复选框，一个提交按钮来创建堆叠表单：
+
+
+## 实例
+
+```html
+<form>
+  <div class="mb-3 mt-3">
+    <label for="email" class="form-label">Email:</label>
+    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+  </div>
+  <div class="mb-3">
+    <label for="pwd" class="form-label">Password:</label>
+    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+  </div>
+  <div class="form-check mb-3">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" name="remember"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+```
+
+显示效果：
+
+实例中我们使用 .form-label 类来确保标签元素有一定的内边距。
+
+复选框（checkboxe）使用不同的标记。 它们使用 .form-check 包裹在容器元素周围。复选框和单选按钮使用 .form-check-input，它的标签可以使用 .form-check-label 类。
+
+
+## 内联表单
+
+如果您希望表单元素并排显示，请使用 .row 和 .col：
+
+以下实例的两个输入框并排显示，创建内联表单：
+
+
+## 实例
+
+```html
+<form>
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Enter email" name="email">
+    </div>
+    <div class="col">
+      <input type="password" class="form-control" placeholder="Enter password" name="pswd">
+    </div>
+  </div>
+</form>
+```
+
+显示效果：
+
+
+## 文本框
+
+使用 textarea 标签创建文本框提交表单，使用 .form-control 类渲染文本框 textareas 标签:
+
+
+## 实例
+
+```html
+<label for="comment">请输入评论：</label>
+<textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+```
+
+显示效果：
+
+
+## 输入框大小
+
+我们可以通过在 .form-control 输入框中使用 .form-control-lg 或 .form-control-sm 类来设置输入框的大小:
+
+
+## 实例
+
+```html
+<input type="text" class="form-control form-control-lg" placeholder="大号输入框">
+<input type="text" class="form-control" placeholder="正常大小输入框">
+<input type="text" class="form-control form-control-sm" placeholder="小号输入框">
+```
+
+显示效果：
+
+
+## 禁用/只读表单
+
+使用 disabled/readonly 属性设置输入框禁用/只读：
+
+
+## 实例
+
+```html
+<input type="text" class="form-control" placeholder="Normal input">
+<input type="text" class="form-control" placeholder="Disabled input" disabled>
+<input type="text" class="form-control" placeholder="Readonly input" readonly>
+```
+
+
+## 纯文本输入
+
+使用 .form-control-plaintext 类可以删除输入框的边框：：
+
+
+## 实例
+
+```html
+<input type="text" class="form-control-plaintext" placeholder="Plaintext input">
+<input type="text" class="form-control" placeholder="Normal input">
+```
+
+
+## 取色器
+
+使用 .form-control-color 类可以创建一个取色器：
+
+
+## 实例
+
+```html
+<input type="color" class="form-control form-control-color" value="#CCCCCC">
+```
+
+显示效果：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap5 表单` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

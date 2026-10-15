@@ -1,35 +1,234 @@
-# 设计模式：MVC 模式 学习笔记
+# 设计模式：MVC 模式
 
 - 来源：[MVC 模式](https://www.runoob.com/design-pattern/mvc-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1330
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `MVC 模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+MVC 模式代表 Model-View-Controller（模型-视图-控制器） 模式。这种模式用于应用程序的分层开发。
 
-## 阅读抓手
+- Model（模型） - 模型代表一个存取数据的对象或 JAVA POJO。它也可以带有逻辑，在数据变化时更新控制器。
+- View（视图） - 视图代表模型包含的数据的可视化。
+- Controller（控制器） - 控制器作用于模型和视图上。它控制数据流向模型对象，并在数据变化时更新视图。它使视图与模型分离开。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 概要
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 意图
 
-- 能用 3 到 5 句话解释 `MVC 模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+将应用程序分为三个核心组件：模型（Model）、视图（View）和控制器（Controller），以实现关注点分离。
+
+
+### 主要解决的问题
+
+- 解决了应用程序中业务逻辑、数据和界面显示的耦合问题，使得开发和维护更加清晰和简单。
+
+
+### 使用场景
+
+- 当需要将数据、业务逻辑和界面显示分离，以便于独立开发和维护时。
+
+
+### 实现方式
+
+- 模型（Model）：负责数据和业务逻辑，通常包含数据存储、检索和业务规则。
+- 视图（View）：负责显示数据（模型）的用户界面，不包含业务逻辑。
+- 控制器（Controller）：接收用户的输入，调用模型和视图去完成用户的请求。
+
+
+### 关键代码
+
+- 模型：包含业务逻辑和数据状态。
+- 视图：包含展示逻辑，将模型的数据渲染为用户界面。
+- 控制器：包含逻辑，用于响应用户输入并更新模型和视图。
+
+
+### 应用实例
+
+- Web应用程序：用户通过浏览器（视图）发送请求，服务器端的控制器处理请求，模型进行数据处理。
+
+
+### 优点
+
+- 关注点分离：将数据、业务逻辑和界面显示分离，降低耦合度。
+- 易于维护：每个组件负责特定的任务，便于单独开发和维护。
+- 可扩展性：可以独立地替换或更新模型、视图或控制器。
+
+
+### 缺点
+
+- 可能增加复杂性：对于简单项目，引入MVC可能会增加不必要的复杂性。
+- 性能问题：如果不正确使用，可能会导致性能问题。
+
+
+### 使用建议
+
+- 当开发大型应用程序，需要清晰分离数据、业务逻辑和用户界面时，考虑使用MVC模式。
+
+
+### 注意事项
+
+- 确保模型、视图和控制器之间的交互清晰，避免相互依赖。
+
+
+### 包含的几个主要角色
+
+- 模型（Model）： 管理数据和业务逻辑。
+- 视图（View）： 显示模型中的数据，提供用户界面。
+- 控制器（Controller）： 接收用户输入，调用模型和视图进行处理。
+- 用户（User）（可选）： 与视图交互，触发应用程序的流程。
+
+
+## 实现
+
+我们将创建一个作为模型的 Student 对象。StudentView 是一个把学生详细信息输出到控制台的视图类，StudentController 是负责存储数据到 Student 对象中的控制器类，并相应地更新视图 StudentView。
+
+MVCPatternDemo，我们的演示类使用 StudentController 来演示 MVC 模式的用法。
+
+
+## 步骤 1
+
+创建模型。
+
+
+## Student.java
+
+```java
+public class Student {
+   private String rollNo;
+   private String name;
+   public String getRollNo() {
+      return rollNo;
+   }
+   public void setRollNo(String rollNo) {
+      this.rollNo = rollNo;
+   }
+   public String getName() {
+      return name;
+   }
+   public void setName(String name) {
+      this.name = name;
+   }
+}
+```
+
+
+## 步骤 2
+
+创建视图。
+
+
+## StudentView.java
+
+```java
+public class StudentView {
+   public void printStudentDetails(String studentName, String studentRollNo){
+      System.out.println("Student: ");
+      System.out.println("Name: " + studentName);
+      System.out.println("Roll No: " + studentRollNo);
+   }
+}
+```
+
+
+## 步骤 3
+
+创建控制器。
+
+
+## StudentController.java
+
+```java
+public class StudentController {
+   private Student model;
+   private StudentView view;
+
+   public StudentController(Student model, StudentView view){
+      this.model = model;
+      this.view = view;
+   }
+
+   public void setStudentName(String name){
+      model.setName(name);
+   }
+
+   public String getStudentName(){
+      return model.getName();
+   }
+
+   public void setStudentRollNo(String rollNo){
+      model.setRollNo(rollNo);
+   }
+
+   public String getStudentRollNo(){
+      return model.getRollNo();
+   }
+
+   public void updateView(){
+      view.printStudentDetails(model.getName(), model.getRollNo());
+   }
+}
+```
+
+
+## 步骤 4
+
+使用 StudentController 方法来演示 MVC 设计模式的用法。
+
+
+## MVCPatternDemo.java
+
+```java
+public class MVCPatternDemo {
+   public static void main(String[] args) {
+
+      //从数据库获取学生记录
+      Student model  = retrieveStudentFromDatabase();
+
+      //创建一个视图：把学生详细信息输出到控制台
+      StudentView view = new StudentView();
+
+      StudentController controller = new StudentController(model, view);
+
+      controller.updateView();
+
+      //更新模型数据
+      controller.setStudentName("John");
+
+      controller.updateView();
+   }
+
+   private static Student retrieveStudentFromDatabase(){
+      Student student = new Student();
+      student.setName("Robert");
+      student.setRollNo("10");
+      return student;
+   }
+}
+```
+
+
+## 步骤 5
+
+执行程序，输出结果：
+
+```text
+Student:
+Name: Robert
+Roll No: 10
+Student:
+Name: John
+Roll No: 10
+```
+
+
+## 复习重点
+
+- 能说明 `MVC 模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,115 @@
-# React：React 安装(CDN) 练习笔记
+# React：React 安装(CDN)
 
 - 来源：[React 安装(CDN)](https://www.runoob.com/react/react-install-cdn.html)
 - 分类：前端开发
 - 技术：React
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3036
 
-## 练习目标
+## 本章内容
 
-把 `React 安装(CDN)` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+React 可以直接下载使用，下载包中也提供了很多学习的实例。
 
-## 练习步骤
+本教程使用了 React 的版本为 18.2.0，你可以在官网 https://reactjs.org/ 下载最新版。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+使用字节跳动的 React CDN 库，地址如下：
 
-## 验收清单
+使用 Staticfile CDN 的 React CDN 库，地址如下：
 
-- 我能独立说出 `React 安装(CDN)` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<script src="https://cdn.staticfile.org/react/18.2.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/18.2.0/umd/react-dom.development.js"></script>
+<!-- 生产环境中不建议使用 -->
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+```
 
-## 复盘问题
+官方提供的 CDN 地址：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- 生产环境中不建议使用 -->
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+```
+
+注意: 在浏览器中使用 Babel 来编译 JSX 效率是非常低的。
+
+
+### 使用实例
+
+以下实例输出了 Hello, React!
+
+
+## React 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" ></script>
+</head>
+<body>
+
+<div id="example"></div>
+<script type="text/babel">
+// 简单的 React 组件
+function App() {
+    return <h1>Hello, React!</h1>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("example"));
+// 渲染 React 组件到 DOM
+root.render(<App />);
+</script>
+
+</body>
+</html>
+</script>
+
+</body>
+</html>
+```
+
+实例解析：
+
+实例中我们引入了三个库： react.production.min.js 、react-dom.production.min.js 和 babel.min.js：
+
+- react.min.js - React 的核心库
+- react-dom.min.js - 提供与 DOM 相关的功能
+- babel.min.js - Babel 可以将 ES6 代码转为 ES5 代码，这样我们就能在目前不支持 ES6 浏览器上执行 React 代码。Babel 内嵌了对 JSX 的支持。通过将 Babel 和 babel-sublime 包（package）一同使用可以让源码的语法渲染上升到一个全新的水平。
+
+```html
+// 简单的 React 组件
+function App() {
+    return <h1>Hello, React!</h1>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("example"));
+// 渲染 React 组件到 DOM
+root.render(<App />);
+```
+
+以上代码将一个 h1 标题，插入 id="example" 节点中。
+
+```javascript
+const root = ReactDOM.createRoot(document.getElementById("example"));
+```
+
+- 获取 DOM 容器：document.getElementById("example") 获取了一个 id 为 "example" 的 DOM 元素。
+- 创建根节点：ReactDOM.createRoot 是 React 18 引入的新方法，用于创建一个 React 根节点。在这个例子中，root 变量保存了这个根节点。
+
+注意：
+
+如果我们需要使用 JSX，则 <script> 标签的 type 属性需要设置为 text/babel。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `React 安装(CDN)` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

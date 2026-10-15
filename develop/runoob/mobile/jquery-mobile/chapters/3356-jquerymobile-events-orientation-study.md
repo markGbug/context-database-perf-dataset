@@ -1,35 +1,39 @@
-# jQuery Mobile：jQuery Mobile 方向改变事件 学习笔记
+# jQuery Mobile：jQuery Mobile 方向改变事件
 
 - 来源：[jQuery Mobile 方向改变事件](https://www.runoob.com/jquerymobile/jquerymobile-events-orientation.html)
 - 分类：移动开发
 - 技术：jQuery Mobile
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3356
 
-## 学习目标
+## 本章内容
 
-jQuery Mobile 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `jQuery Mobile 方向改变事件` 建立学习路径，先理解它在 jQuery Mobile 体系中的位置，再做可运行或可复述的验证。
+## jQuery Mobile 方向改变（orientationchange）事件
 
-## 阅读抓手
+当用户垂直或水平旋转移动设备时，触发方向改变（orientationchange）事件。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+如需使用方向改变（orientationchange）事件，请附加它到 window 对象：
 
-## 笔记模板
+```text
+$(window).on("orientationchange",function(){
+    alert("方向有改变!");
+});
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+回调函数可有一个参数，event 对象，返回移动设备的方向："纵向"（设备保持在垂直位置）或"横向"（设备保持在水平位置）：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jQuery Mobile 方向改变事件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+由于方向改变（orientationchange）事件绑定到 window 对象，我们可以使用 window.orientation 属性来设置不同的样式，以便区分纵向和横向的视图：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `jQuery Mobile 方向改变事件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

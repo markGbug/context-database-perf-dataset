@@ -1,35 +1,127 @@
-# Bootstrap5：Bootstrap5 按钮组 学习笔记
+# Bootstrap5：Bootstrap5 按钮组
 
 - 来源：[Bootstrap5 按钮组](https://www.runoob.com/bootstrap5/bootstrap5-button-groups.html)
 - 分类：前端开发
 - 技术：Bootstrap5
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2350
 
-## 学习目标
+## 本章内容
 
-Bootstrap5 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap5 按钮组` 建立学习路径，先理解它在 Bootstrap5 体系中的位置，再做可运行或可复述的验证。
+Bootstrap 5 中允许我们将按钮放在同一行上。
 
-## 阅读抓手
+可以在 <div> 元素上添加 .btn-group 类来创建按钮组。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <button type="button" class="btn btn-primary">Sony</button>
+</div>
+```
 
-## 完成标准
+提示: 我们可以使用 .btn-group-lg|sm 类来设置按钮组的大小。
 
-- 能用 3 到 5 句话解释 `Bootstrap5 按钮组`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+```html
+<div class="btn-group btn-group-lg">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <button type="button" class="btn btn-primary">Sony</button>
+</div>
+```
+
+
+## 垂直按钮组
+
+可以使用 .btn-group-vertical 类来创建垂直的按钮组：
+
+
+## 实例
+
+```html
+<div class="btn-group-vertical">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <button type="button" class="btn btn-primary">Sony</button>
+</div>
+```
+
+
+## 内嵌按钮组及下拉菜单
+
+我们可以在按钮组内设置下拉菜单：
+
+
+## 实例
+
+```html
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+       Sony
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Tablet</a>
+      <a class="dropdown-item" href="#">Smartphone</a>
+    </div>
+  </div>
+</div>
+```
+
+
+## 垂直按钮组及下拉菜单
+
+
+## 实例
+
+```html
+<div class="btn-group-vertical">
+    <button type="button" class="btn btn-primary">Apple</button>
+    <button type="button" class="btn btn-primary">Samsung</button>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Sony</button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Tablet</a></li>
+            <li><a class="dropdown-item" href="#">Smartphone</a></li>
+        </ul>
+    </div>
+</div>
+```
+
+
+## 多个按钮组
+
+按钮组可以一个个并列显示在同一行上：
+
+
+## 实例
+
+```html
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Apple</button>
+  <button type="button" class="btn btn-primary">Samsung</button>
+  <button type="button" class="btn btn-primary">Sony</button>
+</div>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">BMW</button>
+  <button type="button" class="btn btn-primary">Mercedes</button>
+  <button type="button" class="btn btn-primary">Volvo</button>
+</div>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap5 按钮组` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

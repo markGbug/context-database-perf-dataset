@@ -1,34 +1,229 @@
-# 设计模式：建造者模式 练习笔记
+# 设计模式：建造者模式
 
 - 来源：[建造者模式](https://www.runoob.com/design-pattern/builder-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1308
 
-## 练习目标
+## 本章内容
 
-把 `建造者模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+建造者模式是一种创建型设计模式，它允许你创建复杂对象的步骤与表示方式相分离。
 
-## 练习步骤
+建造者模式是一种创建型设计模式，它的主要目的是将一个复杂对象的构建过程与其表示相分离，从而可以创建具有不同表示形式的对象。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 概要
 
-- 我能独立说出 `建造者模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 意图
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+将一个复杂的构建过程与其表示相分离，使得同样的构建过程可以创建不同的表示。
+
+
+### 主要解决
+
+在软件系统中，一个复杂对象的创建通常由多个部分组成，这些部分的组合经常变化，但组合的算法相对稳定。
+
+
+### 何时使用
+
+当一些基本部件不变，而其组合经常变化时。
+
+
+### 如何解决
+
+将变与不变的部分分离开。
+
+
+### 关键代码
+
+- 建造者：创建并提供实例。
+- 导演：管理建造出来的实例的依赖关系和控制构建过程。
+
+
+### 应用实例
+
+- 去肯德基，汉堡、可乐、薯条、炸鸡翅等是不变的，而其组合是经常变化的，生成出不同的"套餐"。
+- Java 中的 StringBuilder。
+
+
+### 优点
+
+- 分离构建过程和表示，使得构建过程更加灵活，可以构建不同的表示。
+- 可以更好地控制构建过程，隐藏具体构建细节。
+- 代码复用性高，可以在不同的构建过程中重复使用相同的建造者。
+
+
+### 缺点
+
+- 如果产品的属性较少，建造者模式可能会导致代码冗余。
+- 增加了系统的类和对象数量。
+
+
+### 使用场景
+
+- 需要生成的对象具有复杂的内部结构。
+- 需要生成的对象内部属性相互依赖。
+
+
+### 注意事项
+
+与工厂模式的区别是：建造者模式更加关注于零件装配的顺序。
+
+
+### 结构
+
+建造者模式包含以下几个主要角色：
+
+- 产品（Product）：要构建的复杂对象。产品类通常包含多个部分或属性。
+- 抽象建造者（Builder）：定义了构建产品的抽象接口，包括构建产品的各个部分的方法。
+- 具体建造者（Concrete Builder）：实现抽象建造者接口，具体确定如何构建产品的各个部分，并负责返回最终构建的产品。
+- 指导者（Director）：负责调用建造者的方法来构建产品，指导者并不了解具体的构建过程，只关心产品的构建顺序和方式。
+
+
+## 实现
+
+我们假设一个快餐店的商业案例，其中，一个典型的套餐可以是一个汉堡（Burger）和一杯冷饮（Cold drink）。汉堡（Burger）可以是素食汉堡（Veg Burger）或鸡肉汉堡（Chicken Burger），它们是包在纸盒中。冷饮（Cold drink）可以是可口可乐（coke）或百事可乐（pepsi），它们是装在瓶子中。
+
+我们将创建一个表示食物条目（比如汉堡和冷饮）的 Item 接口和实现 Item 接口的实体类，以及一个表示食物包装的 Packing 接口和实现 Packing 接口的实体类，汉堡是包在纸盒中，冷饮是装在瓶子中。
+
+然后我们创建一个 Meal 类，带有 Item 的 ArrayList 和一个通过结合 Item 来创建不同类型的 Meal 对象的 MealBuilder。BuilderPatternDemo 类使用 MealBuilder 来创建一个 Meal。
+
+
+### 步骤 1
+
+创建一个表示食物条目和食物包装的接口。
+
+
+## Item.java
+
+```text
+public interface Item {
+   public String name();
+   public Packing packing();
+   public float price();
+}
+```
+
+
+## Packing.java
+
+```text
+public interface Packing {
+   public String pack();
+}
+```
+
+
+### 步骤 2
+
+创建实现 Packing 接口的实体类。
+
+
+## Wrapper.java
+
+```java
+public class Wrapper implements Packing {
+
+   @Override
+   public String pack() {
+      return "Wrapper";
+   }
+}
+```
+
+
+## Bottle.java
+
+```java
+public class Bottle implements Packing {
+
+   @Override
+   public String pack() {
+      return "Bottle";
+   }
+}
+```
+
+
+### 步骤 3
+
+创建实现 Item 接口的抽象类，该类提供了默认的功能。
+
+
+## Burger.java
+
+```text
+public abstract class Burger implements Item {
+
+   @Override
+   public Packing packing() {
+      return new Wrapper();
+   }
+
+   @Override
+   public abstract float price();
+}
+```
+
+
+## ColdDrink.java
+
+```text
+public abstract class ColdDrink implements Item {
+
+    @Override
+    public Packing packing() {
+       return new Bottle();
+    }
+
+    @Override
+    public abstract float price();
+}
+```
+
+
+### 步骤 4
+
+创建扩展了 Burger 和 ColdDrink 的实体类。
+
+
+## VegBurger.java
+
+```java
+public class VegBurger extends Burger {
+
+   @Override
+   public float price() {
+      return 25.0f;
+   }
+
+   @Override
+   public String name() {
+      return "Veg Burger";
+   }
+}
+```
+
+
+## 后续章节
+
+- ChickenBurger.java
+- Coke.java
+- Pepsi.java
+- 步骤 5
+- Meal.java
+- 步骤 6
+- MealBuilder.java
+- 步骤 7
+- BuilderPatternDemo.java
+- 步骤 8
+- 相关文章
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `建造者模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

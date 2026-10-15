@@ -1,35 +1,108 @@
-# XML DOM：DOM 替换节点 学习笔记
+# XML DOM：XML DOM 替换节点
 
 - 来源：[DOM 替换节点](https://www.runoob.com/dom/dom-nodes-replace.html)
 - 分类：XML / Web Service
 - 技术：XML DOM
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4388
 
-## 学习目标
+## 本章内容
 
-XML DOM 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `DOM 替换节点` 建立学习路径，先理解它在 XML DOM 体系中的位置，再做可运行或可复述的验证。
+replaceChild() 方法替换指定节点。
 
-## 阅读抓手
+nodeValue 属性替换文本节点中的文本。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 尝试一下 - 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+下面的实例使用 XML 文件 books.xml。 函数 loadXMLDoc()，位于外部 JavaScript 中，用于加载 XML 文件。
 
-## 完成标准
+替换元素节点 本例使用 replaceChild() 来替换第一个 <book> 节点。
 
-- 能用 3 到 5 句话解释 `DOM 替换节点`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+替换文本节点中的数据 本例使用 nodeValue 属性来替换文本节点中的数据。
+
+
+## 替换元素节点
+
+replaceChild() 方法用于替换节点。
+
+下面的代码片段替换第一个 <book> 元素：
+
+
+## 实例
+
+```text
+xmlDoc=loadXMLDoc("books.xml");
+
+x=xmlDoc.documentElement;
+
+// 创建新的 book 元素, title 元素及 node 节点
+newNode=xmlDoc.createElement("book");
+newTitle=xmlDoc.createElement("title");
+newText=xmlDoc.createTextNode("A Notebook");
+
+// 将 text 节点添加到 title 节点中
+newTitle.appendChild(newText);
+// 将 title 节点添加到  book 节点中
+newNode.appendChild(newTitle);
+
+y=xmlDoc.getElementsByTagName("book")[0]
+// 使用新节点替换第一个 book 节点
+x.replaceChild(newNode,y);
+```
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 创建一个新的元素节点 <book>
+- 创建一个新的元素节点 <title>
+- 创建一个新的文本节点，带有文本 "A Notebook"
+- 向新元素节点 <title> 追加这个新文本节点
+- 向新元素节点 <book> 追加这个新元素节点 <title>
+- 把第一个 <book> 元素节点替换为新的 <book> 元素节点
+
+
+## 替换文本节点中的数据
+
+replaceData() 方法用于替换文本节点中的数据。
+
+replaceData() 方法有三个参数：
+
+- offset - 在何处开始替换字符。offset 值以 0 开始。
+- length - 要替换多少字符
+- string - 要插入的字符串
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 获取第一个 <title> 元素节点的文本节点
+- 使用 replaceData 方法把文本节点的前 8 个字符替换为 "Easy"
+
+
+## 使用 nodeValue 属性代替
+
+用 nodeValue 属性来替换文本节点中数据会更加容易。
+
+下面的代码片段将用 "Easy Italian" 替换第一个 <title> 元素中的文本节点值：
+
+
+## 实例
+
+实例解释：
+
+- 使用 loadXMLDoc() 把 "books.xml" 载入 xmlDoc 中
+- 获取第一个 <title> 元素节点的文本节点
+- 使用 nodeValue 属性来更改这个文本节点的文本
+
+您可以在改变节点这一章中阅读更多有关更改节点值的内容。
+
+
+## 复习重点
+
+- 能说明 `DOM 替换节点` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,63 @@
-# Go：Go 语言开发工具 练习笔记
+# Go：Go 语言开发工具
 
 - 来源：[Go 语言开发工具](https://www.runoob.com/go/go-ide.html)
 - 分类：后端开发
 - 技术：Go
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0874
 
-## 练习目标
+## 本章内容
 
-把 `Go 语言开发工具` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## VSCode
 
-## 练习步骤
+VScode 安装教程参见：https://www.runoob.com/w3cnote/vscode-tutorial.html
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+然后我们打开 VSCode 的扩展（Ctrl+Shift+P）：
 
-## 验收清单
+搜索 go：
 
-- 我能独立说出 `Go 语言开发工具` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+点击安装，安装完成后我们就可以使用代码提示、测试、调试等功能了。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## GoLand
+
+GoLand 是 Jetbrains 家族的 Go 语言 IDE，有 30 天的免费试用期。
+
+安装也很简单访问 Goland 的下载页面，根据你当期的系统环境三大平台（Mac、Linux、Windows）下载对应的软件。
+
+
+## LiteIDE
+
+LiteIDE 是一款开源、跨平台的轻量级 Go 语言集成开发环境（IDE）。
+
+
+### 支持的 操作系统
+
+- Windows x86 (32-bit or 64-bit)
+- Linux x86 (32-bit or 64-bit)
+
+下载地址 ：http://sourceforge.net/projects/liteide/files/
+
+源码地址 ：https://github.com/visualfc/liteide
+
+
+## Eclipse
+
+Eclipse 也是非常常用的开发利器，以下介绍如何使用 Eclipse 来编写 Go 程序。
+
+Eclipse 编辑 Go 的主界面
+
+- 首先下载并安装好 Eclipse
+- 下载 goclipse 插件 https://github.com/GoClipse/goclipse/blob/latest/documentation/Installation.md#installation
+- 下载 gocode，用于 go 的代码补全提示 gocode 的 github 地址： https://github.com/nsf/gocode 在 Windows下要安装 git，通常用 msysgit。 再在 cmd 下安装： go get -u github.com/nsf/gocode 也可以下载代码，直接用 go build 来编译，会生成 gocode.exe
+- 下载 MinGW 并按要求装好
+- 配置插件 Windows->Reference->Go (1)、配置 Go 的编译器 设置 Go 的一些基础信息 (2)、配置 Gocode（可选，代码补全），设置 Gocode 路径为之前生成的 gocode.exe 文件 设置 gocode 信息 (3)、配置 GDB（可选，做调试用），设置 GDB 路径为 MingW 安装目录下的 gdb.exe 文件设置 GDB 信息
+- 测试是否成功 新建一个 go 工程，再建立一个 hello.go。如下图： 新建项目编辑文件 调试如下（要在 console 中用输入命令来调试）： 图 1.16 调试 Go 程序
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Go 语言开发工具` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

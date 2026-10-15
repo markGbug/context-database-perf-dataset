@@ -1,35 +1,54 @@
-# Ionic：ionic icon(图标) 学习笔记
+# Ionic：ionic icon(图标)
 
 - 来源：[ionic icon(图标)](https://www.runoob.com/ionic/ionic-icon.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3310
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic icon(图标)` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+ionic 也默认提供了许多的图标，大概有 700 多个，针对 Android 和 iOS 有不同的样式。
 
-## 阅读抓手
+Ionic icons 官网: http://ionicons.com/
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+国内图标样式 CDN 地址：https://cdn.staticfile.net/ionicons/2.0.1/css/ionicons.min.css。
 
-## 笔记模板
+用法也非常的简单，由一个 icon 类及指定图标类组成，如：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `ionic icon(图标)`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<i class="icon ion-star"></i>
+<i class = "icon ion-happy-outline"></i>
+<i class = "icon ion-ios-analytics"></i>
+<i class = "icon ion-ios-eye"></i>
+```
+
+我们可以通过 font-size 来设置图片的大小：
+
+
+## 实例
+
+```text
+.icon {
+   font-size: 50px;
+}
+```
+
+默认图标按钮：
+
+
+## iOS 风格图标
+
+
+## Android 风格图标
+
+
+## 复习重点
+
+- 能说明 `ionic icon(图标)` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

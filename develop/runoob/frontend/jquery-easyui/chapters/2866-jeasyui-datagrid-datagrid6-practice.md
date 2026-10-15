@@ -1,34 +1,61 @@
-# jQuery EasyUI：jEasyUI 动态改变列 练习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 动态改变列
 
 - 来源：[jEasyUI 动态改变列](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid6.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2866
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 动态改变列` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+数据网格（DataGrid）列可以使用 'columns' 属性简单地定义。如果您想动态地改变列，那根本没有问题。为了改变列，您可以重新调用datagrid 方法，并传递一个新的 columns 属性。
 
-## 练习步骤
+```html
+    <table id="tt" title="Frozen Columns" class="easyui-datagrid" style="width:550px;height:250px"
+            url="data/datagrid_data.json"
+            singleSelect="true" iconCls="icon-save">
+    </table>
+```
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```text
+    $('#tt').datagrid({
+        columns:[[
+            {field:'itemid',title:'Item ID',width:80},
+            {field:'productid',title:'Product ID',width:80},
+            {field:'attr1',title:'Attribute',width:200},
+            {field:'status',title:'Status',width:80}
+        ]]
+    });
+```
 
-## 验收清单
+运行网页，您将看见：
 
-- 我能独立说出 `jEasyUI 动态改变列` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+可是有时候您想改变列，所以您需要写一些代码：
 
-## 复盘问题
+```text
+    $('#tt').datagrid({
+        columns:[[
+            {field:'itemid',title:'Item ID',width:80},
+            {field:'productid',title:'Product ID',width:80},
+            {field:'listprice',title:'List Price',width:80,align:'right'},
+            {field:'unitcost',title:'Unit Cost',width:80,align:'right'},
+            {field:'attr1',title:'Attribute',width:100},
+            {field:'status',title:'Status',width:60}
+        ]]
+    });
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+请记住，我们已经定义了其他属性，比如：url、width、height 等等。我们不需要再一次定义它们，我们定义那些我们需要改变的。
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid6.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 动态改变列` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

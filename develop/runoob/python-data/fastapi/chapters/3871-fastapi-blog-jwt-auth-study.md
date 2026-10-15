@@ -1,35 +1,85 @@
-# FastAPI：用户系统 学习笔记
+# FastAPI：用户系统 — 注册、登录、JWT 认证
 
 - 来源：[用户系统](https://www.runoob.com/fastapi/fastapi-blog-jwt-auth.html)
 - 分类：Python / 数据科学
 - 技术：FastAPI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3871
 
-## 学习目标
+## 本章内容
 
-FastAPI 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `用户系统` 建立学习路径，先理解它在 FastAPI 体系中的位置，再做可运行或可复述的验证。
+本章你将学会 FastAPI 的 JWT 认证方案，理解它和 Django/Flask Session 认证的区别。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## JWT vs Session 认证
 
-## 笔记模板
+Django 和 Flask 用的是 Session 认证：服务器存储用户状态，Cookie 中只存 Session ID。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+FastAPI 推荐 JWT 认证：用户登录后获得一个 Token（令牌），后续请求携带 Token 即可认证。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `用户系统`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 安装依赖
+
+```text
+(venv) $ pip install passlib python-jose python-multipart
+```
+
+- passlib：密码哈希（对标 werkzeug.security）
+- python-jose：JWT 的生成和验证
+- python-multipart：处理表单提交（OAuth2 登录表单）
+
+
+## 定义 User 模型
+
+
+## 实例
+
+生成并执行迁移：
+
+```text
+(venv) $ alembic revision --autogenerate -m "新增 User 模型"
+(venv) $ alembic upgrade head
+```
+
+
+## JWT 工具函数
+
+
+## 实例
+
+
+## 注册路由
+
+
+## 实例
+
+
+## 登录路由（签发 JWT）
+
+
+## 实例
+
+JWT Token 中 sub 是标准的 subject 字段，存储用户标识。Token 本身不加密（只是 Base64 编码），所以绝对不能在里面放密码等敏感信息。如果你想加密，用 JWE 而非 JWT。
+
+
+## 在路由中使用 JWT 保护
+
+
+## 实例
+
+对于 SSR 页面，JWT 通常存到 Cookie 中（而非 Authorization Header），在模板路由中从 Cookie 提取 Token 验证。
+
+
+## 本章小结
+
+本章你实现了 FastAPI 的 JWT 认证：passlib 哈希密码、python-jose 签发验证 JWT、OAuth2PasswordBearer 提取 Token、Depends 实现认证依赖注入。
+
+与 Django/Flask 的 Session 认证不同，JWT 是无状态方案，更适合前后端分离场景。
+
+
+## 复习重点
+
+- 能说明 `用户系统` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

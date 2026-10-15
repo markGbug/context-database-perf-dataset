@@ -1,35 +1,183 @@
-# CSS：CSS 伪元素 学习笔记
+# CSS：CSS 伪元素
 
 - 来源：[CSS 伪元素](https://www.runoob.com/css/css-pseudo-elements.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2415
 
-## 学习目标
+## 本章内容
 
-CSS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `CSS 伪元素` 建立学习路径，先理解它在 CSS 体系中的位置，再做可运行或可复述的验证。
+CSS 伪元素是一种特殊的选择器，它可以在不改变 HTML 结构的情况下对页面元素的特定部分进行样式设置。
 
-## 阅读抓手
+CSS 伪元素是用来添加一些选择器的特殊效果。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+常用的 CSS 伪元素有 ::before、::after、::first-line、::first-letter 等。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 语法
 
-## 完成标准
+伪元素的语法：
 
-- 能用 3 到 5 句话解释 `CSS 伪元素`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+selector::pseudo-element {
+    property: value;
+}
+```
+
+CSS 类也可以使用伪元素：
+
+```text
+selector.class::pseudo-element {
+    property: value;
+}
+```
+
+
+## :first-line 伪元素
+
+"first-line" 伪元素用于向文本的首行设置特殊样式。
+
+在下面的例子中，浏览器会根据 "first-line" 伪元素中的样式对 p 元素的第一行文本进行格式化：
+
+
+## 实例
+
+```text
+p:first-line
+{
+    color:#ff0000;
+    font-variant:small-caps;
+}
+```
+
+注意："first-line" 伪元素只能用于块级元素。
+
+注意： 下面的属性可应用于 "first-line" 伪元素：
+
+- font properties
+- color properties
+- background properties
+- word-spacing
+- letter-spacing
+- text-decoration
+- vertical-align
+- text-transform
+- line-height
+- clear
+
+
+## :first-letter 伪元素
+
+"first-letter" 伪元素用于向文本的首字母设置特殊样式：
+
+
+## 实例
+
+```text
+p:first-letter
+{
+    color:#ff0000;
+    font-size:xx-large;
+}
+```
+
+注意： "first-letter" 伪元素只能用于块级元素。
+
+注意： 下面的属性可应用于 "first-letter" 伪元素：
+
+- font properties
+- color properties
+- background properties
+- margin properties
+- padding properties
+- border properties
+- text-decoration
+- vertical-align (only if "float" is "none")
+- text-transform
+- line-height
+- float
+- clear
+
+
+## 伪元素和CSS类
+
+伪元素可以结合CSS类：
+
+```html
+p.article:first-letter {color:#ff0000;}
+
+<p class="article">文章段落</p>
+```
+
+上面的例子会使所有 class 为 article 的段落的首字母变为红色。
+
+
+## 多个伪元素
+
+可以结合多个伪元素来使用。
+
+在下面的例子中，段落的第一个字母将显示为红色，其字体大小为 xx-large。第一行中的其余文本将为蓝色，并以小型大写字母显示。
+
+段落中的其余文本将以默认字体大小和颜色来显示：
+
+
+## 实例
+
+```text
+p:first-letter
+{
+    color:#ff0000;
+    font-size:xx-large;
+}
+p:first-line
+{
+    color:#0000ff;
+    font-variant:small-caps;
+}
+```
+
+
+## CSS - :before 伪元素
+
+":before" 伪元素可以在元素的内容前面插入新内容。
+
+下面的例子在每个 <h1>元素前面插入一幅图片：
+
+
+## 实例
+
+```text
+h1:before
+{
+    content:url(smiley.gif);
+}
+```
+
+
+## CSS - :after 伪元素
+
+":after" 伪元素可以在元素的内容之后插入新内容。
+
+下面的例子在每个 <h1> 元素后面插入一幅图片：
+
+
+## 实例
+
+```text
+h1:after
+{
+    content:url(smiley.gif);
+}
+```
+
+
+## 所有CSS伪类/元素
+
+
+## 复习重点
+
+- 能说明 `CSS 伪元素` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

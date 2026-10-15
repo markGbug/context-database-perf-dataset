@@ -1,34 +1,140 @@
-# JavaScript：JavaScript 实例 练习笔记
+# JavaScript：JavaScript 实例
 
 - 来源：[JavaScript 实例](https://www.runoob.com/js/js-examples.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2833
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript 实例` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 基础 JavaScript 实例
 
-## 练习步骤
+- 用JavaScript输出文本
+- 用JavaScript改变HTML元素
+- 一个外部JavaScript
+- 实例解析
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## JavaScript 语句、注释和代码块
 
-- 我能独立说出 `JavaScript 实例` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- JavaScript 语句
+- JavaScript 代码块
+- JavaScript 单行注释
+- JavaScript 多行注释
+- 使用单行注释来防止执行
+- 使用多行注释来防止执行
+- 实例解析
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## JavaScript 变量
+
+- 声明一个变量，为它赋值，然后显示出来
+- 实例解析
+
+
+## JavaScript 条件语句 If ... Else
+
+- If 语句
+- If...else 语句
+- 随机链接
+- Switch 语句
+- 实例解析
+
+
+## JavaScript 消息框
+
+- Alert(警告)框
+- 带有换行的警告框
+- 确认框
+- 提示框
+- 实例解析
+
+
+## JavaScript 函数
+
+- 函数
+- 带有参数的函数
+- 带有参数的函数 2
+- 返回值的函数
+- 带有参数并返回值的函数
+- 实例解析
+
+
+## JavaScript 循环
+
+- For 循环
+- 循环输出 HTML 标题
+- While 循环
+- Do while 循环
+- break 语句
+- continue 语句
+- 使用 For...In 声明来遍历数组内的元素
+- 实例解析
+
+
+## JavaScript 事件
+
+- onclick事件
+- onmouseover 事件
+- 实例解析
+
+
+## JavaScript 错误处理
+
+- try...catch 语句
+- 带有确认框的 try...catch 语句
+- onerror 事件
+- 实例解析
+
+
+## 高级 JavaScript 实例
+
+- 创建一个欢迎 cookie
+- 简单的计时
+- 另一个简单的计时
+- 在一个无穷循环中的计时事件
+- 带有停止按钮的无穷循环中的计时事件
+- 使用计时事件制作的钟表
+- 创建对象的实例
+- 创建用于对象的模板
+
+
+## JavaScript 应用实例
+
+- javascript 幻灯片代码(含自动播放)
+- CSS 日历样式
+- JavaScript 弹窗
+- JavaScript 图片弹窗
+- JavaScript Lightbox
+- javascript 搜索框自动提示
+- JavaScript 表格数据搜索
+- JavaScript 实现列表按字母排序
+- JavaScript 实现表格单列按字母排序
+- JavaScript 动画应用实例
+- JavaScript 进度条实例
+- JavaScript 百分比进度条
+- JavaScript/CSS 实现提示弹窗
+- JavaScript/CSS 实现待办事项列表(To Do List)
+- HTML CSS, JavaScript 计算器
+- HTML、CSS、JavaScript 实现下拉菜单效果
+- JS/CSS 各种操作信息提示效果
+- JS/CSS 在屏幕底部弹出消息(snackbar)
+- JS/CSS 登录表单
+- JS/CSS 注册表单
+- JavaScript 计算器(倒计时)
+- JS/CSS 菜单按钮切换(打开/关闭)
+- JS/CSS 手风琴动画效果
+- JS/CSS 带图标手风琴动画效果
+- JS/CSS 选项卡
+- JS/CSS 选项卡 – 淡入效果
+- JS/CSS 选项卡 – 设置默认选项
+- JS/CSS 选项卡 – 设置关闭按钮
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript 实例` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

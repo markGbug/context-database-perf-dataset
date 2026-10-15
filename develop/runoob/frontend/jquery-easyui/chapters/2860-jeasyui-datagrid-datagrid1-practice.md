@@ -1,34 +1,95 @@
-# jQuery EasyUI：jEasyUI 转换 HTML 表格为数据网格 练习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 转换 HTML 表格为数据网格
 
 - 来源：[jEasyUI 转换 HTML 表格为数据网格](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid1.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2860
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 转换 HTML 表格为数据网格` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本实例演示如何转换表格（table）为数据网格（datagrid）。
 
-## 练习步骤
+数据网格（datagrid）的列信息是定义在 <thead> 标记中，数据是定义在 <tbody> 标记中。确保为所有的数据列设置 field 名称，请看下面的实例：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+    <table id="tt" class="easyui-datagrid" style="width:400px;height:auto;">
+        <thead>
+            <tr>
+                <th field="name1" width="50">Col 1</th>
+                <th field="name2" width="50">Col 2</th>
+                <th field="name3" width="50">Col 3</th>
+                <th field="name4" width="50">Col 4</th>
+                <th field="name5" width="50">Col 5</th>
+                <th field="name6" width="50">Col 6</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+        </tbody>
+    </table>
+```
 
-## 验收清单
+非常棒，您可以定义一个复杂的表头，例如：
 
-- 我能独立说出 `jEasyUI 转换 HTML 表格为数据网格` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+    <thead>
+        <tr>
+            <th field="name1" width="50" rowspan="2">Col 1</th>
+            <th field="name2" width="50" rowspan="2">Col 2</th>
+            <th field="name3" width="50" rowspan="2">Col 3</th>
+            <th colspan="3">Details</th>
+        </tr>
+        <tr>
+            <th field="name4" width="50">Col 4</th>
+            <th field="name5" width="50">Col 5</th>
+            <th field="name6" width="50">Col 6</th>
+        </tr>
+    </thead>
+```
 
-## 复盘问题
+现在您可以看见，复杂表头已经创建。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid1.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 转换 HTML 表格为数据网格` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

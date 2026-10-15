@@ -1,35 +1,83 @@
-# MongoDB：MongoDB 数据库引用 学习笔记
+# MongoDB：MongoDB 数据库引用
 
 - 来源：[MongoDB 数据库引用](https://www.runoob.com/mongodb/mongodb-database-references.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1493
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB 数据库引用` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+在上一章节MongoDB关系中我们提到了MongoDB的引用来规范数据结构文档。
 
-## 阅读抓手
+MongoDB 引用有两种：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 手动引用（Manual References）
+- DBRefs
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## DBRefs vs 手动引用
 
-## 完成标准
+考虑这样的一个场景，我们在不同的集合中 (address_home, address_office, address_mailing, 等)存储不同的地址（住址，办公室地址，邮件地址等）。
 
-- 能用 3 到 5 句话解释 `MongoDB 数据库引用`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+这样，我们在调用不同地址时，也需要指定集合，一个文档从多个集合引用文档，我们应该使用 DBRefs。
+
+
+## 使用 DBRefs
+
+DBRef的形式：
+
+```text
+{ $ref : , $id : , $db :  }
+```
+
+三个字段表示的意义为：
+
+- $ref：集合名称
+- $id：引用的id
+- $db:数据库名称，可选参数
+
+以下实例中用户数据文档使用了 DBRef, 字段 address：
+
+```text
+{
+   "_id":ObjectId("53402597d852426020000002"),
+   "address": {
+   "$ref": "address_home",
+   "$id": ObjectId("534009e4d852427820000002"),
+   "$db": "runoob"},
+   "contact": "987654321",
+   "dob": "01-01-1991",
+   "name": "Tom Benzamin"
+}
+```
+
+address DBRef 字段指定了引用的地址文档是在 runoob 数据库下的 address_home 集合，id 为 534009e4d852427820000002。
+
+以下代码中，我们通过指定 $ref 参数（address_home 集合）来查找集合中指定id的用户地址信息：
+
+```javascript
+>var user = db.users.findOne({"name":"Tom Benzamin"})
+>var dbRef = user.address
+>db[dbRef.$ref].findOne({"_id":(dbRef.$id)})
+```
+
+以上实例返回了 address_home 集合中的地址数据：
+
+```text
+{
+   "_id" : ObjectId("534009e4d852427820000002"),
+   "building" : "22 A, Indiana Apt",
+   "pincode" : 123456,
+   "city" : "Los Angeles",
+   "state" : "California"
+}
+```
+
+
+## 复习重点
+
+- 能说明 `MongoDB 数据库引用` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

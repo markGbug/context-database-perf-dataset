@@ -1,34 +1,189 @@
-# Servlet：Servlet 异常处理 练习笔记
+# Servlet：Servlet 异常处理
 
 - 来源：[Servlet 异常处理](https://www.runoob.com/servlet/servlet-exception-handling.html)
 - 分类：后端开发
 - 技术：Servlet
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1180
 
-## 练习目标
+## 本章内容
 
-把 `Servlet 异常处理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+当一个 Servlet 抛出一个异常时，Web 容器在使用了 exception-type 元素的 web.xml 中搜索与抛出异常类型相匹配的配置。
 
-## 练习步骤
+您必须在 web.xml 中使用 error-page 元素来指定对特定异常 或 HTTP 状态码 作出相应的 Servlet 调用。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## web.xml 配置
 
-- 我能独立说出 `Servlet 异常处理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+假设，有一个 ErrorHandler 的 Servlet 在任何已定义的异常或错误出现时被调用。以下将是在 web.xml 中创建的项。
 
-## 复盘问题
+```html
+<!-- servlet 定义 -->
+<servlet>
+        <servlet-name>ErrorHandler</servlet-name>
+        <servlet-class>ErrorHandler</servlet-class>
+</servlet>
+<!-- servlet 映射 -->
+<servlet-mapping>
+        <servlet-name>ErrorHandler</servlet-name>
+        <url-pattern>/ErrorHandler</url-pattern>
+</servlet-mapping>
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+<!-- error-code 相关的错误页面 -->
+<error-page>
+    <error-code>404</error-code>
+    <location>/ErrorHandler</location>
+</error-page>
+<error-page>
+    <error-code>403</error-code>
+    <location>/ErrorHandler</location>
+</error-page>
+
+<!-- exception-type 相关的错误页面 -->
+<error-page>
+    <exception-type>
+          javax.servlet.ServletException
+    </exception-type >
+    <location>/ErrorHandler</location>
+</error-page>
+
+<error-page>
+    <exception-type>java.io.IOException</exception-type >
+    <location>/ErrorHandler</location>
+</error-page>
+```
+
+如果您想对所有的异常有一个通用的错误处理程序，那么应该定义下面的 error-page，而不是为每个异常定义单独的 error-page 元素：
+
+```html
+<error-page>
+    <exception-type>java.lang.Throwable</exception-type >
+    <location>/ErrorHandler</location>
+</error-page>
+```
+
+以下是关于上面的 web.xml 异常处理要注意的点：
+
+- Servlet ErrorHandler 与其他的 Servlet 的定义方式一样，且在 web.xml 中进行配置。
+- 如果有错误状态代码出现，不管为 404（Not Found 未找到）或 403（Forbidden 禁止），则会调用 ErrorHandler 的 Servlet。
+- 如果 Web 应用程序抛出 ServletException 或 IOException，那么 Web 容器会调用 ErrorHandler 的 Servlet。
+- 您可以定义不同的错误处理程序来处理不同类型的错误或异常。上面的实例是非常通用的，希望您能通过实例理解基本的概念。
+
+
+## 请求属性 - 错误/异常
+
+以下是错误处理的 Servlet 可以访问的请求属性列表，用来分析错误/异常的性质。
+
+
+## Servlet 错误处理程序实例
+
+以下是 Servlet 实例，将应对任何您所定义的错误或异常发生时的错误处理程序。
+
+本实例让您对 Servlet 中的异常处理有基本的了解，您可以使用相同的概念编写更复杂的异常处理应用程序：
+
+```java
+//导入必需的 java 库
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.util.*;
+
+//扩展 HttpServlet 类
+public class ErrorHandler extends HttpServlet {
+
+    // 处理 GET 方法请求的方法
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        Throwable throwable = (Throwable)
+        request.getAttribute("javax.servlet.error.exception");
+        Integer statusCode = (Integer)
+        request.getAttribute("javax.servlet.error.status_code");
+        String servletName = (String)
+        request.getAttribute("javax.servlet.error.servlet_name");
+        if (servletName == null){
+            servletName = "Unknown";
+        }
+        String requestUri = (String)
+        request.getAttribute("javax.servlet.error.request_uri");
+        if (requestUri == null){
+            requestUri = "Unknown";
+        }
+        // 设置响应内容类型
+        response.setContentType("text/html;charset=UTF-8");
+
+        PrintWriter out = response.getWriter();
+        String title = "菜鸟教程 Error/Exception 信息";
+
+        String docType = "<!DOCTYPE html>\n";
+        out.println(docType +
+            "<html>\n" +
+             "<head><title>" + title + "</title></head>\n" +
+             "<body bgcolor=\"#f0f0f0\">\n");
+           out.println("<h1>菜鸟教程异常信息实例演示</h1>");
+           if (throwable == null && statusCode == null){
+              out.println("<h2>错误信息丢失</h2>");
+              out.println("请返回 <a href=\"" +
+            response.encodeURL("http://localhost:8080/") +
+                "\">主页</a>。");
+           }else if (statusCode != null) {
+              out.println("错误代码 : " + statusCode);
+        }else{
+               out.println("<h2>错误信息</h2>");
+              out.println("Servlet Name : " + servletName +
+                              "</br></br>");
+              out.println("异常类型 : " +
+                              throwable.getClass( ).getName( ) +
+                              "</br></br>");
+              out.println("请求 URI: " + requestUri +
+                              "<br><br>");
+              out.println("异常信息: " +
+                                  throwable.getMessage( ));
+           }
+           out.println("</body>");
+           out.println("</html>");
+    }
+    // 处理 POST 方法请求的方法
+    public void doPost(HttpServletRequest request,
+                      HttpServletResponse response)
+       throws ServletException, IOException {
+        doGet(request, response);
+    }
+}
+```
+
+以通常的方式编译 ErrorHandler.java，把您的类文件放入<Tomcat-installation-directory>/webapps/ROOT/WEB-INF/classes 中。
+
+让我们在 web.xml 文件中添加如下配置来处理异常：
+
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+<servlet>
+        <servlet-name>ErrorHandler</servlet-name>
+        <servlet-class>com.runoob.test.ErrorHandler</servlet-class>
+</servlet>
+<!-- servlet mappings -->
+<servlet-mapping>
+        <servlet-name>ErrorHandler</servlet-name>
+        <url-pattern>/TomcatTest/ErrorHandler</url-pattern>
+</servlet-mapping>
+<error-page>
+    <error-code>404</error-code>
+    <location>/TomcatTest/ErrorHandler</location>
+</error-page>
+<error-page>
+    <exception-type>java.lang.Throwable</exception-type >
+    <location>/ErrorHandler</location>
+</error-page>
+</web-app>
+```
+
+现在，尝试使用一个会产生异常的 Servlet，或者输入一个错误的 URL，这将触发 Web 容器调用 ErrorHandler 的 Servlet，并显示适当的消息。例如，如果您输入了一个错误的 URL（如：http://localhost:8080/TomcatTest/UnKonwPage），那么它将显示下面的结果：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Servlet 异常处理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

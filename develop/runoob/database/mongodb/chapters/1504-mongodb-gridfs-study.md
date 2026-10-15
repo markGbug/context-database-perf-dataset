@@ -1,35 +1,90 @@
-# MongoDB：MongoDB GridFS 学习笔记
+# MongoDB：MongoDB GridFS
 
 - 来源：[MongoDB GridFS](https://www.runoob.com/mongodb/mongodb-gridfs.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1504
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB GridFS` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+GridFS 用于存储和恢复那些超过16M（BSON文件限制）的文件(如：图片、音频、视频等)。
 
-## 阅读抓手
+GridFS 也是文件存储的一种方式，但是它是存储在MonoDB的集合中。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+GridFS 可以更好的存储大于16M的文件。
 
-## 笔记模板
+GridFS 会将大文件对象分割成多个小的chunk(文件片段),一般为256k/个,每个chunk将作为MongoDB的一个文档(document)被存储在chunks集合中。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+GridFS 用两个集合来存储一个文件：fs.files与fs.chunks。
 
-## 完成标准
+每个文件的实际内容被存在chunks(二进制数据)中,和文件有关的meta数据(filename,content_type,还有用户自定义的属性)将会被存在files集合中。
 
-- 能用 3 到 5 句话解释 `MongoDB GridFS`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+以下是简单的 fs.files 集合文档：
+
+```text
+{
+   "filename": "test.txt",
+   "chunkSize": NumberInt(261120),
+   "uploadDate": ISODate("2014-04-13T11:32:33.557Z"),
+   "md5": "7b762939321e146569b07f72c62cca4f",
+   "length": NumberInt(646)
+}
+```
+
+以下是简单的 fs.chunks 集合文档：
+
+```text
+{
+   "files_id": ObjectId("534a75d19f54bfec8a2fe44b"),
+   "n": NumberInt(0),
+   "data": "Mongo Binary Data"
+}
+```
+
+
+## GridFS 添加文件
+
+现在我们使用 GridFS 的 put 命令来存储 mp3 文件。 调用 MongoDB 安装目录下bin的 mongofiles.exe工具。
+
+打开命令提示符，进入到MongoDB的安装目录的bin目录中，找到mongofiles.exe，并输入下面的代码：
+
+```text
+>mongofiles.exe -d gridfs put song.mp3
+```
+
+-d gridfs 指定存储文件的数据库名称，如果不存在该数据库，MongoDB会自动创建。如果不存在该数据库，MongoDB会自动创建。Song.mp3 是音频文件名。
+
+使用以下命令来查看数据库中文件的文档：
+
+```text
+>db.fs.files.find()
+```
+
+以上命令执行后返回以下文档数据：
+
+```text
+{
+   _id: ObjectId('534a811bf8b4aa4d33fdf94d'),
+   filename: "song.mp3",
+   chunkSize: 261120,
+   uploadDate: new Date(1397391643474), md5: "e4f53379c909f7bed2e9d631e15c1c41",
+   length: 10401959
+}
+```
+
+我们可以看到 fs.chunks 集合中所有的区块，以下我们得到了文件的 _id 值，我们可以根据这个 _id 获取区块(chunk)的数据：
+
+```text
+>db.fs.chunks.find({files_id:ObjectId('534a811bf8b4aa4d33fdf94d')})
+```
+
+以上实例中，查询返回了 40 个文档的数据，意味着mp3文件被存储在40个区块中。
+
+
+## 复习重点
+
+- 能说明 `MongoDB GridFS` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,57 @@
-# jQuery EasyUI：jEasyUI 动态添加标签页 学习笔记
+# jQuery EasyUI：jQuery EasyUI 布局 - 动态添加标签页（Tabs）
 
 - 来源：[jEasyUI 动态添加标签页](https://www.runoob.com/jeasyui/jeasyui-layout-tabs2.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2857
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 动态添加标签页` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+通过使用 jQuery EasyUI 可以很容易地添加 Tabs。您只需要调用 'add' 方法即可。
 
-## 阅读抓手
+在本教程中，我们将使用 iframe 动态地添加显示在一个页面上的 Tabs。 当点击添加按钮，一个新的 tab 将被添加。如果 tab 已经存在，它将被激活。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+    <div style="margin-bottom:10px">
+        <a href="#" class="easyui-linkbutton" onclick="addTab('google','http://www.google.com')">google</a>
+        <a href="#" class="easyui-linkbutton" onclick="addTab('jquery','http://jquery.com/')">jquery</a>
+        <a href="#" class="easyui-linkbutton" onclick="addTab('easyui','http://jeasyui.com/')">easyui</a>
+    </div>
+    <div id="tt" class="easyui-tabs" style="width:400px;height:250px;">
+        <div title="Home">
+        </div>
+    </div>
+```
 
-## 笔记模板
+这个 html 代码非常简单,我们创建了带有一个名为 'Home' 的 tab 面板的 Tabs。请注意，我们不需要写任何的 js 代码。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+    function addTab(title, url){
+        if ($('#tt').tabs('exists', title)){
+            $('#tt').tabs('select', title);
+        } else {
+            var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+            $('#tt').tabs('add',{
+                title:title,
+                content:content,
+                closable:true
+            });
+        }
+    }
+```
 
-## 完成标准
+我们使用 'exists' 方法来判断 tab 是否已经存在，如果已存在则激活 tab。如果不存在则调用 'add' 方法来添加一个新的 tab 面板。
 
-- 能用 3 到 5 句话解释 `jEasyUI 动态添加标签页`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-layout-tabs2.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 动态添加标签页` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

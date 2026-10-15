@@ -1,35 +1,249 @@
-# ECharts：ECharts 事件处理 学习笔记
+# ECharts：ECharts 事件处理
 
 - 来源：[ECharts 事件处理](https://www.runoob.com/echarts/echarts-events.html)
 - 分类：前端开发
 - 技术：ECharts
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2503
 
-## 学习目标
+## 本章内容
 
-ECharts 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `ECharts 事件处理` 建立学习路径，先理解它在 ECharts 体系中的位置，再做可运行或可复述的验证。
+ECharts 中我们可以通过监听用户的操作行为来回调对应的函数。
 
-## 阅读抓手
+ECharts 通过 on 方法来监听用户的行为，例如监控用户的点击行为。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+ECharts 中事件分为两种类型:
 
-## 笔记模板
+用户鼠标操作点击，如 'click'、'dblclick'、'mousedown'、'mousemove'、'mouseup'、'mouseover'、'mouseout'、'globalout'、'contextmenu' 事件。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+还有一种是用户在使用可以交互的组件后触发的行为事件，例如在切换图例开关时触发的 'legendselectchanged' 事件），数据区域缩放时触发的 'datazoom' 事件等等。
 
-## 完成标准
+```javascript
+myChart.on('click', function (params) {
+    // 在用户点击后控制台打印数据的名称
+    console.log(params);
+});
 
-- 能用 3 到 5 句话解释 `ECharts 事件处理`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+myChart.on('legendselectchanged', function (params) {
+    console.log(params);
+});
+
+chart.on('click', 'series.line', function (params) {
+    console.log(params);
+});
+
+chart.on('mouseover', {seriesIndex: 1, name: 'xx'}, function (params) {
+    console.log(params);
+});
+```
+
+
+## 鼠标事件
+
+ECharts 支持的鼠标事件类型，包括 'click'、'dblclick'、'mousedown'、'mousemove'、'mouseup'、'mouseover'、'mouseout'、'globalout'、'contextmenu' 事件。
+
+以下实例在点击柱形图时会弹出对话框：
+
+
+## 实例
+
+所有的鼠标事件包含参数 params，这是一个包含点击图形的数据信息的对象，格式如下：
+
+```text
+{
+    // 当前点击的图形元素所属的组件名称，
+    // 其值如 'series'、'markLine'、'markPoint'、'timeLine' 等。
+    componentType: string,
+    // 系列类型。值可能为：'line'、'bar'、'pie' 等。当 componentType 为 'series' 时有意义。
+    seriesType: string,
+    // 系列在传入的 option.series 中的 index。当 componentType 为 'series' 时有意义。
+    seriesIndex: number,
+    // 系列名称。当 componentType 为 'series' 时有意义。
+    seriesName: string,
+    // 数据名，类目名
+    name: string,
+    // 数据在传入的 data 数组中的 index
+    dataIndex: number,
+    // 传入的原始数据项
+    data: Object,
+    // sankey、graph 等图表同时含有 nodeData 和 edgeData 两种 data，
+    // dataType 的值会是 'node' 或者 'edge'，表示当前点击在 node 还是 edge 上。
+    // 其他大部分图表中只有一种 data，dataType 无意义。
+    dataType: string,
+    // 传入的数据值
+    value: number|Array
+    // 数据图形的颜色。当 componentType 为 'series' 时有意义。
+    color: string
+}
+```
+
+如何区分鼠标点击到了哪里：
+
+```java
+myChart.on('click', function (params) {
+    if (params.componentType === 'markPoint') {
+        // 点击到了 markPoint 上
+        if (params.seriesIndex === 5) {
+            // 点击到了 index 为 5 的 series 的 markPoint 上。
+        }
+    }
+    else if (params.componentType === 'series') {
+        if (params.seriesType === 'graph') {
+            if (params.dataType === 'edge') {
+                // 点击到了 graph 的 edge（边）上。
+            }
+            else {
+                // 点击到了 graph 的 node（节点）上。
+            }
+        }
+    }
+});
+```
+
+使用 query 只对指定的组件的图形元素的触发回调：
+
+```text
+chart.on(eventName, query, handler);
+```
+
+query 可为 string 或者 Object。
+
+如果为 string 表示组件类型。格式可以是 'mainType' 或者 'mainType.subType'。例如：
+
+```javascript
+chart.on('click', 'series', function () {...});
+chart.on('click', 'series.line', function () {...});
+chart.on('click', 'dataZoom', function () {...});
+chart.on('click', 'xAxis.category', function () {...});
+```
+
+如果为 Object，可以包含以下一个或多个属性，每个属性都是可选的：
+
+```html
+{
+    <mainType>Index: number // 组件 index
+    <mainType>Name: string // 组件 name
+    <mainType>Id: string // 组件 id
+    dataIndex: number // 数据项 index
+    name: string // 数据项 name
+    dataType: string // 数据项 type，如关系图中的 'node', 'edge'
+    element: string // 自定义系列中的 el 的 name
+}
+```
+
+例如：
+
+```javascript
+chart.setOption({
+    // ...
+    series: [{
+        name: 'uuu'
+        // ...
+    }]
+});
+chart.on('mouseover', {seriesName: 'uuu'}, function () {
+    // series name 为 'uuu' 的系列中的图形元素被 'mouseover' 时，此方法被回调。
+});
+```
+
+例如：
+
+```javascript
+chart.setOption({
+    // ...
+    series: [{
+        // ...
+    }, {
+        // ...
+        data: [
+            {name: 'xx', value: 121},
+            {name: 'yy', value: 33}
+        ]
+    }]
+});
+chart.on('mouseover', {seriesIndex: 1, name: 'xx'}, function () {
+    // series index 1 的系列中的 name 为 'xx' 的元素被 'mouseover' 时，此方法被回调。
+});
+```
+
+例如：
+
+```javascript
+chart.setOption({
+    // ...
+    series: [{
+        type: 'graph',
+        nodes: [{name: 'a', value: 10}, {name: 'b', value: 20}],
+        edges: [{source: 0, target: 1}]
+    }]
+});
+chart.on('click', {dataType: 'node'}, function () {
+    // 关系图的节点被点击时此方法被回调。
+});
+chart.on('click', {dataType: 'edge'}, function () {
+    // 关系图的边被点击时此方法被回调。
+});
+```
+
+例如：
+
+```javascript
+chart.setOption({
+    // ...
+    series: {
+        // ...
+        type: 'custom',
+        renderItem: function (params, api) {
+            return {
+                type: 'group',
+                children: [{
+                    type: 'circle',
+                    name: 'my_el',
+                    // ...
+                }, {
+                    // ...
+                }]
+            }
+        },
+        data: [[12, 33]]
+    }
+})
+chart.on('mouseup', {element: 'my_el'}, function () {
+    // name 为 'my_el' 的元素被 'mouseup' 时，此方法被回调。
+});
+```
+
+你可以在回调函数中获得这个对象中的数据名、系列名称后在自己的数据仓库中索引得到其它的信息候更新图表，显示浮层等等，如下示例代码：
+
+
+## 实例
+
+
+## 组件交互的行为事件
+
+在 ECharts 中基本上所有的组件交互行为都会触发相应的事件，常用的事件和事件对应参数在 events 文档中有列出。
+
+下面是监听一个图例开关的示例：
+
+
+## 实例
+
+
+## 代码触发 ECharts 中组件的行为
+
+上面我们只说明了用户的交互操作，但有时候我们也会需要在程序里调用方法并触发图表的行为，比如显示 tooltip。
+
+ECharts 通过 dispatchAction({ type: '' }) 来触发图表行为，统一管理了所有动作，也可以根据需要去记录用户的行为路径。
+
+以上实例用于轮播饼图中的 tooltip：
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `ECharts 事件处理` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

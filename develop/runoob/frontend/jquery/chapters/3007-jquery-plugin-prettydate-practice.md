@@ -1,34 +1,72 @@
-# jQuery：jQuery Prettydate 练习笔记
+# jQuery：jQuery Prettydate
 
 - 来源：[jQuery Prettydate](https://www.runoob.com/jquery/jquery-plugin-prettydate.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3007
 
-## 练习目标
+## 本章内容
 
-把 `jQuery Prettydate` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+jQuery Prettydate 插件为表单提供了强大的验证功能，让客户端表单验证变得更简单，同时提供了大量的定制选项，满足应用程序各种需求。该插件捆绑了一套有用的验证方法，包括 URL 和电子邮件验证，同时提供了一个用来编写用户自定义方法的 API。所有的捆绑方法默认使用英语作为错误信息，且已翻译成其他 37 种语言。
 
-## 练习步骤
+该插件目前版本是 1.1.0。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+下载 jQuery Prettydate Validation（密码验证）插件。
 
-## 验收清单
 
-- 我能独立说出 `jQuery Prettydate` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 使用方式
 
-## 复盘问题
+如需使用 Prettydate 插件，您需要在 title 中带有 ISO8601 日期：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+<a title="2008-01-28T20:24:17Z">January 28th, 2008</a>
+<a title="2008-01-27T22:24:17Z">January 27th, 2008</a>
+<a title="2008-01-26T22:24:17Z">January 26th, 2008</a>
+```
+
+然后对它们应用 prettyDate 方法：
+
+```text
+$(function() { $("a").prettyDate(); });
+```
+
+如需本地化该插件，请在 $.prettyDate.messages 中重写属性。在这里，以德国本地化为例：
+
+```text
+$.prettyDate.messages = { now: "gerade eben", minute: "vor einer Minute", minutes: $.prettyDate.template("vor {0} Minuten"), hour: "vor einer Stunde", hours: $.prettyDate.template("vor {0} Stunden"), yesterday: "Gestern", days: $.prettyDate.template("vor {0} Tagen"), weeks: $.prettyDate.template("vor {0} Wochen") }
+```
+
+该插件每隔 10 秒中更新一次每个被选中的元素。这样子 "just now" 会变为 "1 minute ago" 再变为 "x minutes ago" 再变为 "1 hour ago" 等等。
+
+您可以通过指定 interval 选项为 "false" 来禁用间隔更新：
+
+```text
+$(function() { $("a").prettyDate({ interval: false }); });
+```
+
+或者设置一个不同的时间间隔，例如：interval: 1000，每隔一秒更新一次每个被选中的元素：
+
+```text
+$(function() { $("a").prettyDate({ interval: 1000 }); });
+```
+
+value 选项默认读取 title 属性中的 ISO8601 日期字符串。重载该选项来使用其他属性，例如，一个自定义的 "isodate" 属性：
+
+```text
+$(function() {
+    $("a").prettyDate({
+        function() { // "this" 是 DOM 元素
+            return $(this).attr("isodate");
+        }
+    });
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery Prettydate` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

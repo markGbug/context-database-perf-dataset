@@ -1,35 +1,93 @@
-# Vue.js：Vue.js 目录结构 学习笔记
+# Vue.js：Vue.js 目录结构
 
 - 来源：[Vue.js 目录结构](https://www.runoob.com/vue2/vue-directory-structure.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3249
 
-## 学习目标
+## 本章内容
 
-Vue.js 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Vue.js 目录结构` 建立学习路径，先理解它在 Vue.js 体系中的位置，再做可运行或可复述的验证。
+上一章节中我们使用了 npm 安装项目，我们在 IDE（Eclipse、Atom等） 中打开该目录，结构如下所示：
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### 目录解析
 
-## 笔记模板
+这里是我们要开发的目录，基本上要做的事情都在这个目录里。里面包含了几个目录及文件：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- assets: 放置一些图片，如logo等。
+- components: 目录里面放了一个组件文件，可以不用。
+- App.vue: 项目入口文件，我们也可以直接将组件写这里，而不使用 components 目录。
+- main.js: 项目的核心文件。
 
-## 完成标准
+在前面我们打开 APP.vue 文件，代码如下（解释在注释中）：
 
-- 能用 3 到 5 句话解释 `Vue.js 目录结构`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## src/APP.vue
+
+```html
+<!-- 展示模板 -->
+<template>
+  <div id="app">
+    <img src="./assets/logo.png">
+    <hello></hello>
+  </div>
+</template>
+
+<script>
+// 导入组件
+import Hello from './components/Hello'
+
+export default {
+  name: 'app',
+  components: {
+    Hello
+  }
+}
+</script>
+<!-- 样式代码 -->
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+接下来我们可以尝试修改下初始化的项目，将 Hello.vue 修改为以下代码：
+
+
+## src/components/Hello.vue
+
+```html
+<template>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'hello',
+  data () {
+    return {
+      msg: '欢迎来到菜鸟教程！'
+    }
+  }
+}
+</script>
+```
+
+重新打开页面 http://localhost:8080/，一般修改后会自动刷新，显示效果如下所示:
+
+
+## 复习重点
+
+- 能说明 `Vue.js 目录结构` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

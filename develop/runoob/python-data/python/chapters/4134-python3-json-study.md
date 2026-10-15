@@ -1,35 +1,119 @@
-# Python：Python3 JSON 学习笔记
+# Python：Python3 JSON 数据解析
 
 - 来源：[Python3 JSON](https://www.runoob.com/python3/python3-json.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4134
 
-## 学习目标
+## 本章内容
 
-Python 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python3 JSON` 建立学习路径，先理解它在 Python 体系中的位置，再做可运行或可复述的验证。
+JSON (JavaScript Object Notation) 是一种轻量级的数据交换格式。
 
-## 阅读抓手
+如果你还不了解 JSON，可以先阅读我们的 JSON 教程。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Python3 中可以使用 json 模块来对 JSON 数据进行编解码，它包含了两个函数：
 
-## 笔记模板
+- json.dumps(): 对数据进行编码。
+- json.loads(): 对数据进行解码。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+在 json 的编解码过程中，Python 的原始类型与 json 类型会相互转换，具体的转化对照如下：
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Python3 JSON`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### Python 编码为 JSON 类型转换对应表：
+
+
+### JSON 解码为 Python 类型转换对应表：
+
+
+### json.dumps 与 json.loads 实例
+
+以下实例演示了 Python 数据结构转换为JSON：
+
+
+## 实例(Python 3.0+)
+
+```java
+#!/usr/bin/python3
+
+import json
+
+# Python 字典类型转换为 JSON 对象
+data = {
+    'no' : 1,
+    'name' : 'Runoob',
+    'url' : 'https://www.runoob.com'
+}
+
+json_str = json.dumps(data)
+print ("Python 原始数据：", repr(data))
+print ("JSON 对象：", json_str)
+```
+
+执行以上代码输出结果为：
+
+```text
+Python 原始数据： {'no': 1, 'name': 'Runoob', 'url': 'https://www.runoob.com'}
+JSON 对象： {"no": 1, "name": "Runoob", "url": "https://www.runoob.com"}
+```
+
+通过输出的结果可以看出，简单类型通过编码后跟其原始的repr()输出结果非常相似。
+
+接着以上实例，我们可以将一个JSON编码的字符串转换回一个Python数据结构：
+
+
+## 实例(Python 3.0+)
+
+```java
+#!/usr/bin/python3
+
+import json
+
+# Python 字典类型转换为 JSON 对象
+data1 = {
+    'no' : 1,
+    'name' : 'Runoob',
+    'url' : 'http://www.runoob.com'
+}
+
+json_str = json.dumps(data1)
+print ("Python 原始数据：", repr(data1))
+print ("JSON 对象：", json_str)
+
+# 将 JSON 对象转换为 Python 字典
+data2 = json.loads(json_str)
+print ("data2['name']: ", data2['name'])
+print ("data2['url']: ", data2['url'])
+```
+
+执行以上代码输出结果为：
+
+```text
+Python 原始数据： {'name': 'Runoob', 'no': 1, 'url': 'http://www.runoob.com'}
+JSON 对象： {"name": "Runoob", "no": 1, "url": "http://www.runoob.com"}
+data2['name']:  Runoob
+data2['url']:  http://www.runoob.com
+```
+
+如果你要处理的是文件而不是字符串，你可以使用 json.dump() 和 json.load() 来编码和解码JSON数据。例如：
+
+
+## 实例(Python 3.0+)
+
+```text
+# 写入 JSON 数据
+with open('data.json', 'w') as f:
+    json.dump(data, f)
+
+# 读取数据
+with open('data.json', 'r') as f:
+    data = json.load(f)
+```
+
+
+## 复习重点
+
+- 能说明 `Python3 JSON` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,177 @@
-# Playwright：Playwright 运行测试 练习笔记
+# Playwright：Playwright 运行测试
 
 - 来源：[Playwright 运行测试](https://www.runoob.com/playwright/playwright-running-tests.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0528
 
-## 练习目标
+## 本章内容
 
-把 `Playwright 运行测试` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章全面介绍 Playwright 测试的运行方式、命令行参数以及各种筛选技巧。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 基本运行命令
 
-## 验收清单
 
-- 我能独立说出 `Playwright 运行测试` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 筛选特定测试
+
+
+### 按文件路径
+
+```text
+# 运行单个测试文件
+npx playwright test tests/login.spec.ts
+
+# 运行目录中的所有测试
+npx playwright test tests/user/
+
+# 运行多个文件（空格分隔）
+npx playwright test tests/login.spec.ts tests/register.spec.ts
+```
+
+
+### 按文件名关键词
+
+```text
+# 运行文件名中包含 "login" 或 "user" 的所有测试
+npx playwright test login user
+```
+
+
+### 按测试名称筛选（-g / --grep）
+
+```text
+# 运行测试名称中包含 "登录" 的测试
+npx playwright test -g "登录"
+
+# 通过正则表达式筛选
+npx playwright test -g "登录|注册"
+```
+
+
+### 按 Tag 筛选
+
+
+## 实例
+
+```text
+# 只运行带 @smoke 标签的测试
+npx playwright test --grep "@smoke"
+
+# 跳过带 @slow 标签的测试
+npx playwright test --grep-invert "@slow"
+```
+
+
+## 浏览器控制
+
+
+### 指定浏览器（--project）
+
+```text
+# 只在 Chromium 上运行
+npx playwright test --project=chromium
+
+# 在多个浏览器上运行
+npx playwright test --project=chromium --project=firefox
+```
+
+
+### 有头模式（--headed）
+
+```text
+# 显示浏览器窗口（默认无头）
+npx playwright test --headed
+```
+
+
+### 指定浏览器可执行路径
+
+```text
+# 使用本地安装的 Chrome 而非 Playwright 的 Chromium
+npx playwright test --project=chromium \
+  --channel=chrome
+```
+
+
+## 执行模式
+
+
+### UI 模式（--ui）
+
+```text
+# 在 UI 模式下运行（推荐开发和调试时使用）
+npx playwright test --ui
+```
+
+
+### 调试模式（--debug）
+
+```text
+# 单步调试测试
+npx playwright test --debug
+```
+
+
+## 并行与重复
+
+
+### 控制并行数（--workers）
+
+```text
+# 使用 4 个 worker 并行运行
+npx playwright test --workers=4
+
+# 单线程运行（方便调试）
+npx playwright test --workers=1
+```
+
+
+### 重复运行（--repeat-each）
+
+```text
+# 每个测试重复运行 3 次（检查稳定性）
+npx playwright test --repeat-each=3
+```
+
+
+## 分片运行（--shard）
+
+```text
+# 在 CI 上分片运行（分 4 片，当前为第 1 片）
+npx playwright test --shard=1/4
+
+# 第 2 片
+npx playwright test --shard=2/4
+```
+
+分片常用于 CI 中多台机器并行运行测试，每台机器只跑一部分，最终合并结果。
+
+
+## 截图与 Trace 控制
+
+```text
+# 更新视觉回归的基准截图
+npx playwright test --update-snapshots
+
+# 强制生成 Trace 文件（即使配置中没有开启）
+npx playwright test --trace on
+
+# 查看最后一次运行的 Trace
+npx playwright show-trace test-results/.../trace.zip
+```
+
+
+## 常用命令速查
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Playwright 运行测试` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

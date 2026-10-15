@@ -1,35 +1,176 @@
-# AngularJS：AngularJS 路由 学习笔记
+# AngularJS：AngularJS 路由
 
 - 来源：[AngularJS 路由](https://www.runoob.com/angularjs/angularjs-routing.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2300
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS 路由` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+本章节我们将为大家介绍 AngularJS 路由。
 
-## 阅读抓手
+AngularJS 路由允许我们通过不同的 URL 访问不同的内容。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+通过 AngularJS 可以实现多视图的单页 Web 应用（single page web application，SPA）。
 
-## 笔记模板
+通常我们的 URL 形式为 http://runoob.com/first/page，但在单页 Web 应用中 AngularJS 通过 #! + 标记 实现，例如：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+http://runoob.com/#!/first
+http://runoob.com/#!/second
+http://runoob.com/#!/third
+```
 
-## 完成标准
+注意 Angular1.6 之前的版本是通过 # + 标记 实现路由。
 
-- 能用 3 到 5 句话解释 `AngularJS 路由`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+当我们点击以上的任意一个链接时，向服务端请的地址都是一样的 (http://runoob.com/)。 因为 #! 号之后的内容在向服务端请求时会被浏览器忽略掉。 所以我们就需要在客户端实现 #! 号后面内容的功能实现。 AngularJS 路由就通过 #! + 标记 帮助我们区分不同的逻辑页面并将不同的页面绑定到对应的控制器上。
+
+在以上图形中，我们可以看到创建了两个 URL： /ShowOrders 和 /AddNewOrder。每个 URL 都有对应的视图和控制器。
+
+接下来我们来看一个简单的实例：
+
+
+## AngularJS 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AngularJS 路由实例 - 菜鸟教程</title>
+<script src="https://cdn.bootcss.com/angular.js/1.7.0/angular.min.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.7.0/angular-route.min.js"></script>
+</head>
+<body ng-app='routingDemoApp'>
+
+    <h2>AngularJS 路由应用</h2>
+    <ul>
+        <li><a href="#!/">首页</a></li>
+        <li><a href="#!/computers">电脑</a></li>
+        <li><a href="#!/printers">打印机</a></li>
+        <li><a href="#!/blabla">其他</a></li>
+    </ul>
+
+    <div ng-view></div>
+    <script>
+        angular.module('routingDemoApp',['ngRoute'])
+        .config(['$routeProvider', function($routeProvider){
+            $routeProvider
+            .when('/',{template:'这是首页页面'})
+            .when('/computers',{template:'这是电脑分类页面'})
+            .when('/printers',{template:'这是打印机页面'})
+            .otherwise({redirectTo:'/'});
+        }]);
+    </script>
+</body>
+</html>
+```
+
+实例解析：
+
+- 1、载入了实现路由的 js 文件：angular-route.js。
+- 2、包含了 ngRoute 模块作为主应用模块的依赖模块。 angular.module('routingDemoApp',['ngRoute'])
+- 3、使用 ngView 指令。 <div ng-view></div> 该 div 内的 HTML 内容会根据路由的变化而变化。
+- 4、配置 $routeProvider，AngularJS $routeProvider 用来定义路由规则。 module.config(['$routeProvider', function($routeProvider){ $routeProvider .when('/',{template:'这是首页页面'}) .when('/computers',{template:'这是电脑分类页面'}) .when('/printers',{template:'这是打印机页面'}) .otherwise({redirectTo:'/'}); }]);
+
+AngularJS 模块的 config 函数用于配置路由规则。通过使用 configAPI，我们请求把$routeProvider注入到我们的配置函数并且使用$routeProvider.whenAPI来定义我们的路由规则。
+
+$routeProvider 为我们提供了 when(path,object) & otherwise(object) 函数按顺序定义所有路由，函数包含两个参数:
+
+- 第一个参数是 URL 或者 URL 正则规则。
+- 第二个参数是路由配置对象。
+
+
+## 路由设置对象
+
+AngularJS 路由也可以通过不同的模板来实现。
+
+路由配置对象语法规则如下：
+
+```html
+$routeProvider.when(url, {
+    template: string,
+    templateUrl: string,
+    controller: string, function 或 array,
+    controllerAs: string,
+    redirectTo: string, function,
+    resolve: object<key, function>
+});
+```
+
+参数说明：
+
+- template: 如果我们只需要在 ng-view 中插入简单的 HTML 内容，则使用该参数： .when('/computers',{template:'这是电脑分类页面'})
+- templateUrl: 如果我们只需要在 ng-view 中插入 HTML 模板文件，则使用该参数： $routeProvider.when('/computers', { templateUrl: 'views/computers.html', }); 以上代码会从服务端获取 views/computers.html 文件内容插入到 ng-view 中。
+- controller: function、string或数组类型，在当前模板上执行的controller函数，生成新的scope。
+- controllerAs: string类型，为controller指定别名。
+- redirectTo: 重定向的地址。
+- resolve: 指定当前controller所依赖的其他模块。
+
+
+### 实例
+
+
+## AngularJS 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AngularJS 路由实例 - 菜鸟教程</title>
+<script src="https://cdn.bootcss.com/angular.js/1.7.0/angular.min.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.7.0/angular-route.min.js"></script>
+<script type="text/javascript">
+angular.module('ngRouteExample', ['ngRoute'])
+.controller('HomeController', function ($scope, $route) { $scope.$route = $route;})
+.controller('AboutController', function ($scope, $route) { $scope.$route = $route;})
+.config(function ($routeProvider) {
+    $routeProvider.
+    when('/home', {
+        templateUrl: 'embedded.home.html',
+        controller: 'HomeController'
+    }).
+    when('/about', {
+        templateUrl: 'embedded.about.html',
+        controller: 'AboutController'
+    }).
+    otherwise({
+        redirectTo: '/home'
+    });
+});
+</script>
+
+
+</head>
+
+<body ng-app="ngRouteExample" class="ng-scope">
+  <script type="text/ng-template" id="embedded.home.html">
+      <h1> Home </h1>
+  </script>
+
+  <script type="text/ng-template" id="embedded.about.html">
+      <h1> About </h1>
+  </script>
+
+  <div>
+    <div id="navigation">
+      <a href="#!/home">Home</a>
+      <a href="#!/about">About</a>
+    </div>
+
+    <div ng-view="">
+    </div>
+  </div>
+</body>
+</html>
+```
+
+
+## 复习重点
+
+- 能说明 `AngularJS 路由` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

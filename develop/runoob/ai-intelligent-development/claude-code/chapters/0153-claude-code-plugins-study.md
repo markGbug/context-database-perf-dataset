@@ -1,35 +1,256 @@
-# Claude Code：Claude Code 插件 学习笔记
+# Claude Code：Claude Code 插件
 
 - 来源：[Claude Code 插件](https://www.runoob.com/claude-code/claude-code-plugins.html)
 - 分类：AI / 智能开发
 - 技术：Claude Code
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0153
 
-## 学习目标
+## 本章内容
 
-Claude Code 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Claude Code 插件` 建立学习路径，先理解它在 Claude Code 体系中的位置，再做可运行或可复述的验证。
+插件（Plugin）是 Claude Code 中最高级别的扩展机制，用于将命令、代理、Skills、钩子、MCP、LSP 等能力打包、版本化、共享和分发。
 
-## 阅读抓手
+插件 = 一组可复用的 Claude Code 扩展能力集合
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+一个插件可以包含：
 
-## 笔记模板
+- 斜杠命令（Slash Commands）
+- 子代理（Agents）
+- Skills（能力说明）
+- Hooks（事件钩子）
+- MCP 服务器（外部工具/服务）
+- LSP 服务器（代码智能）
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+插件的核心目标只有一个：
 
-## 完成标准
+让 Claude Code 的能力像工具箱"一样被复用，而不是每个项目重复配置
 
-- 能用 3 到 5 句话解释 `Claude Code 插件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 插件 vs 独立配置（如何选择）
+
+Claude Code 支持两种扩展方式：
+
+
+### 什么时候用独立配置？
+
+- 只在当前项目使用
+- 个人工作流
+- 尚未稳定的实验性配置
+- 想要简短命令名（如 /review）
+
+
+### 什么时候用插件？
+
+- 要在多个项目复用
+- 要分享给团队或社区
+- 需要版本控制、升级、回滚
+- 计划通过市场分发
+- 可以接受命名空间命令（避免冲突）
+
+最佳实践：
+
+先在 .claude/ 中迭代 → 稳定后打包为插件
+
+
+## 插件的最小结构（必须记住）
+
+```text
+my-plugin/
+├── .claude-plugin/
+│   └── plugin.json     # 插件清单（必需）
+├── commands/           # 斜杠命令
+├── agents/             # 子代理
+├── skills/             # Skills
+├── hooks/              # 钩子
+├── .mcp.json           # MCP 配置
+└── .lsp.json           # LSP 配置
+```
+
+重要规则
+
+- .claude-plugin/ 目录中只能放 plugin.json
+- 其他目录必须在插件根目录
+
+
+## 插件清单（plugin.json）
+
+插件的"身份证"，决定：
+
+- 插件名称
+- 命令命名空间
+- 版本
+- 作者信息
+
+示例：
+
+```text
+{
+  "name": "my-first-plugin",
+  "description": "A greeting plugin to learn the basics",
+  "version": "1.0.0",
+  "author": { "name": "Your Name" }
+}
+```
+
+关键字段说明：
+
+
+## 斜杠命令（最常用插件能力）
+
+
+### 1、命令定义方式
+
+- 位于 commands/ 目录
+- 每个命令 = 一个 Markdown 文件
+- 文件名 = 命令名
+
+示例：
+
+```text
+commands/hello.md
+```
+
+对应命令：
+
+```text
+/my-first-plugin:hello
+```
+
+
+### 2、命令内容示例
+
+```text
+---
+description: Greet the user with a friendly message
+---
+
+Greet the user warmly and ask how you can help them today.
+```
+
+
+### 3、命令参数
+
+使用 $ARGUMENTS 捕获用户输入：
+
+```text
+Greet the user named "$ARGUMENTS" warmly.
+```
+
+调用：
+
+```text
+/my-first-plugin:hello Alex
+```
+
+
+## 本地测试插件（开发必会）
+
+使用 --plugin-dir 直接加载插件目录：
+
+```text
+claude --plugin-dir ./my-plugin
+```
+
+特点：
+
+- 不需要安装
+- 修改后需重启 Claude Code
+- 支持同时加载多个插件
+
+```text
+claude --plugin-dir ./plugin-a --plugin-dir ./plugin-b
+```
+
+
+## 插件还能做什么
+
+
+## 插件市场（Plugin Marketplace）
+
+插件通过市场分发，本质是一个插件目录仓库。
+
+
+### 官方市场
+
+- 默认已添加
+- 运行 /plugin → Discover
+
+安装插件：
+
+```text
+/plugin install plugin-name@claude-plugins-official
+```
+
+
+## 插件安装范围
+
+推荐：
+
+- 团队工具 → 项目范围
+- 个人效率工具 → 用户范围
+
+
+## 典型插件分类
+
+
+### 1、代码智能（LSP）
+
+- TypeScript、Python、Go、Rust 等
+- 提供跳转定义、引用、类型错误
+
+需要本地安装对应语言服务器
+
+
+### 2、外部集成（MCP）
+
+- GitHub / GitLab
+- Jira / Notion
+- Slack / Figma
+- Vercel / Supabase
+
+本质：插件 = MCP 服务器 + 配置
+
+
+### 3、开发工作流
+
+- Git 提交、PR
+- 代码审查代理
+- 插件开发工具
+
+
+## 插件管理常用命令
+
+```text
+/plugin                # 打开插件管理器
+/plugin install         # 安装插件
+/plugin uninstall       # 卸载
+/plugin enable/disable  # 启用 / 禁用
+/plugin marketplace add # 添加市场
+/plugin marketplace rm  # 移除市场
+```
+
+
+## 从 .claude/ 迁移到插件（核心思路）
+
+迁移后：
+
+- 插件版本优先生效
+- 可删除旧 .claude/ 配置避免重复
+
+
+## 什么时候你一定要用插件？
+
+- 你已经有稳定的 Claude 工作流
+- 你在反复复制 .claude/
+- 团队成员开始问你："这个怎么配置？"
+- 你希望 Claude 像 IDE 插件一样可控
+
+插件，是 Claude Code 从"个人 AI 助手"走向"工程化工具"的分水岭
+
+
+## 复习重点
+
+- 能说明 `Claude Code 插件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

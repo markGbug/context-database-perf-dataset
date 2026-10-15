@@ -1,35 +1,63 @@
-# Scala：Scala 数据类型 学习笔记
+# Scala：Scala 数据类型
 
 - 来源：[Scala 数据类型](https://www.runoob.com/scala/scala-data-types.html)
 - 分类：编程语言
 - 技术：Scala
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3758
 
-## 学习目标
+## 本章内容
 
-Scala 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Scala 数据类型` 建立学习路径，先理解它在 Scala 体系中的位置，再做可运行或可复述的验证。
+Scala 支持的主要数据类型包括基本类型、集合类型、和特殊类型。
 
-## 阅读抓手
+下表列出了 Scala 支持的数据类型：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+在 Scala 中，所有数据类型都是对象。
 
-## 笔记模板
+Scala 没有像 Java 中的原生类型（primitive types）那样的概念。尽管 Scala 的基本数据类型（如 Int、Double 等）在语法上看起来类似于 Java 的原生类型，但它们实际上是对象。这意味着你可以在这些类型上调用方法。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+例如，Int 类型在 Scala 中实际上是 scala.Int 类的一个实例，而 scala.Int 是一个最终类，继承自 AnyVal。AnyVal 是 Scala 中的一个特殊类，表示值类型。
 
-## 完成标准
+下面是一个完整的 Scala 程序，展示了各种数据类型的使用：
 
-- 能用 3 到 5 句话解释 `Scala 数据类型`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## DataTypeExamples.scala 文件代码：
+
+使用 scalac 编译器进行编译，使用 scala 命令运行：
+
+```text
+scalac DataTypeExamples.scala
+scala DataTypeExamples
+```
+
+输出结果:
+
+```text
+Byte Value: 127
+Short Value: 32767
+Int Value: 2147483647
+Long Value: 9223372036854775807
+Float Value: 3.14
+Double Value: 3.141592653589793
+Char Value: A
+String Value: Hello, Scala!
+Boolean Value: true
+List Value: List(1, 2, 3)
+Set Value: Set(Scala, Java, Python)
+Map Value: Map(one -> 1, two -> 2, three -> 3)
+Array Value: 4, 5, 6
+Tuple Value: (42,Answer,true)
+Option Value: Some(I am here)
+Either Value: Right(42)
+Try Value: Success(5)
+Unit Value: ()
+Null Value: null
+```
+
+
+## 复习重点
+
+- 能说明 `Scala 数据类型` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,109 @@
-# Bootstrap4：Bootstrap4 折叠 练习笔记
+# Bootstrap4：Bootstrap4 折叠
 
 - 来源：[Bootstrap4 折叠](https://www.runoob.com/bootstrap4/bootstrap4-collapse.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2322
 
-## 练习目标
+## 本章内容
 
-把 `Bootstrap4 折叠` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Bootstrap4 折叠可以很容易的实现内容的显示与隐藏。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 实例
 
-## 验收清单
+```html
+<button data-toggle="collapse" data-target="#demo">折叠</button>
 
-- 我能独立说出 `Bootstrap4 折叠` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+<div id="demo" class="collapse">
+Lorem ipsum dolor text....
+</div>
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 实例解析
+
+.collapse 类用于指定一个折叠元素 (实例中的 <div>); 点击按钮后会在隐藏与显示之间切换。
+
+控制内容的隐藏与显示，需要在 <a> 或 <button> 元素上添加 data-toggle="collapse" 属性。 data-target="#id" 属性是对应折叠的内容 (<div id="demo">)。
+
+注意: <a> 元素上你可以使用 href 属性来代替 data-target 属性:
+
+
+## 实例
+
+```html
+<a href="#demo" data-toggle="collapse">Collapsible</a>
+
+<div id="demo" class="collapse">
+Lorem ipsum dolor text....
+</div>
+```
+
+默认情况下折叠的内容是隐藏的，你可以添加 .show 类让内容默认显示:
+
+
+## 实例
+
+```html
+<div id="demo" class="collapse show">
+Lorem ipsum dolor text....
+</div>
+```
+
+以下实例通过扩展卡片组件来显示简单的手风琴。
+
+注意: 使用 data-parent 属性来确保所有的折叠元素在指定的父元素下，这样就能实现在一个折叠选项显示时其他选项就隐藏。
+
+
+## 实例
+
+```html
+<div id="accordion">
+<div class="card">
+  <div class="card-header">
+    <a class="card-link" data-toggle="collapse" href="#collapseOne">
+      选项一
+    </a>
+  </div>
+  <div id="collapseOne" class="collapse show" data-parent="#accordion">
+    <div class="card-body">
+      #1 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+    选项二
+  </a>
+  </div>
+  <div id="collapseTwo" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      #2 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+      选项三
+    </a>
+  </div>
+  <div id="collapseThree" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      #3 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+    </div>
+  </div>
+</div>
+</div>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Bootstrap4 折叠` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

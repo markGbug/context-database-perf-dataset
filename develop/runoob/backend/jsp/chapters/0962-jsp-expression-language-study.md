@@ -1,35 +1,180 @@
-# JSP：JSP 表达式语言 学习笔记
+# JSP：JSP 表达式语言
 
 - 来源：[JSP 表达式语言](https://www.runoob.com/jsp/jsp-expression-language.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0962
 
-## 学习目标
+## 本章内容
 
-JSP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `JSP 表达式语言` 建立学习路径，先理解它在 JSP 体系中的位置，再做可运行或可复述的验证。
+JSP表达式语言（EL）使得访问存储在JavaBean中的数据变得非常简单。JSP EL既可以用来创建算术表达式也可以用来创建逻辑表达式。在JSP EL表达式内可以使用整型数，浮点数，字符串，常量true、false，还有null。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 一个简单的语法
 
-## 笔记模板
+典型的，当您需要在JSP标签中指定一个属性值时，只需要简单地使用字符串即可：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<jsp:setProperty name="box" property="perimeter" value="100"/>
+```
 
-## 完成标准
+JSP EL允许您指定一个表达式来表示属性值。一个简单的表达式语法如下：
 
-- 能用 3 到 5 句话解释 `JSP 表达式语言`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+${expr}
+```
+
+其中，expr指的是表达式。在JSP EL中通用的操作符是 . 和 {} 。这两个操作符允许您通过内嵌的JSP对象访问各种各样的JavaBean属性。
+
+举例来说，上面的<jsp:setProperty>标签可以使用表达式语言改写成如下形式：
+
+```html
+<jsp:setProperty name="box" property="perimeter"
+                 value="${2*box.width+2*box.height}"/>
+```
+
+当JSP编译器在属性中见到"${}"格式后，它会产生代码来计算这个表达式，并且产生一个替代品来代替表达式的值。
+
+您也可以在标签的模板文本中使用表达式语言。比如<jsp:text>标签简单地将其主体中的文本插入到JSP输出中：
+
+```html
+<jsp:text>
+<h1>Hello JSP!</h1>
+</jsp:text>
+```
+
+现在，在<jsp:text>标签主体中使用表达式，就像这样：
+
+```html
+<jsp:text>
+Box Perimeter is: ${2*box.width + 2*box.height}
+</jsp:text>
+```
+
+在EL表达式中可以使用圆括号来组织子表达式。比如${(1 + 2) * 3}等于9，但是${1 + (2 * 3)} 等于7。
+
+想要停用对EL表达式的评估的话，需要使用page指令将isELIgnored属性值设为true：
+
+```text
+<%@ page isELIgnored ="true|false" %>
+```
+
+这样，EL表达式就会被忽略。若设为false，则容器将会计算EL表达式。
+
+
+## EL中的基础操作符
+
+EL表达式支持大部分Java所提供的算术和逻辑操作符：
+
+
+## JSP EL中的函数
+
+JSP EL允许您在表达式中使用函数。这些函数必须被定义在自定义标签库中。函数的使用语法如下：
+
+```text
+${ns:func(param1, param2, ...)}
+```
+
+ns指的是命名空间（namespace），func指的是函数的名称，param1指的是第一个参数，param2指的是第二个参数，以此类推。比如，有函数fn:length，在JSTL库中定义，可以像下面这样来获取一个字符串的长度：
+
+```text
+${fn:length("Get my length")}
+```
+
+要使用任何标签库中的函数，您需要将这些库安装在服务器中，然后使用<taglib>标签在JSP文件中包含这些库。
+
+
+## JSP EL隐含对象
+
+JSP EL支持下表列出的隐含对象：
+
+您可以在表达式中使用这些对象，就像使用变量一样。接下来会给出几个例子来更好的理解这个概念。
+
+
+## pageContext对象
+
+pageContext对象是JSP中pageContext对象的引用。通过pageContext对象，您可以访问request对象。比如，访问request对象传入的查询字符串，就像这样：
+
+```text
+${pageContext.request.queryString}
+```
+
+
+## Scope对象
+
+pageScope，requestScope，sessionScope，applicationScope变量用来访问存储在各个作用域层次的变量。
+
+举例来说，如果您需要显式访问在applicationScope层的box变量，可以这样来访问：applicationScope.box。
+
+
+## param和paramValues对象
+
+param和paramValues对象用来访问参数值，通过使用request.getParameter方法和request.getParameterValues方法。
+
+举例来说，访问一个名为order的参数，可以这样使用表达式：${param.order}，或者${param["order"]}。
+
+接下来的例子表明了如何访问request中的username参数：
+
+```html
+<%@ page import="java.io.*,java.util.*" %>
+<%
+    String title = "Accessing Request Param";
+%>
+<html>
+<head>
+<title><% out.print(title); %></title>
+</head>
+<body>
+<center>
+<h1><% out.print(title); %></h1>
+</center>
+<div align="center">
+<p>${param["username"]}</p>
+</div>
+</body>
+</html>
+```
+
+param对象返回单一的字符串，而paramValues对象则返回一个字符串数组。
+
+
+## header和headerValues对象
+
+header和headerValues对象用来访问信息头，通过使用 request.getHeader方法和request.getHeaders方法。
+
+举例来说，要访问一个名为user-agent的信息头，可以这样使用表达式：${header.user-agent}，或者${header["user-agent"]}。
+
+接下来的例子表明了如何访问user-agent信息头：
+
+```html
+<%@ page import="java.io.*,java.util.*" %>
+<%
+    String title = "User Agent Example";
+%>
+<html>
+<head>
+<title><% out.print(title); %></title>
+</head>
+<body>
+<center>
+<h1><% out.print(title); %></h1>
+</center>
+<div align="center">
+<p>${header["user-agent"]}</p>
+</div>
+</body>
+</html>
+```
+
+运行结果如下：
+
+header对象返回单一值，而headerValues则返回一个字符串数组。
+
+
+## 复习重点
+
+- 能说明 `JSP 表达式语言` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

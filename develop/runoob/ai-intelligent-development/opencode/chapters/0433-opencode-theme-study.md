@@ -1,35 +1,223 @@
-# OpenCode：OpenCode 主题 学习笔记
+# OpenCode：OpenCode 主题
 
 - 来源：[OpenCode 主题](https://www.runoob.com/opencode/opencode-theme.html)
 - 分类：AI / 智能开发
 - 技术：OpenCode
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0433
 
-## 学习目标
+## 本章内容
 
-OpenCode 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `OpenCode 主题` 建立学习路径，先理解它在 OpenCode 体系中的位置，再做可运行或可复述的验证。
+OpenCode 支持多种主题系统，您可以选择内置主题、自动适配终端主题，或者完全自定义主题，从而获得一致且舒适的终端体验。
 
-## 阅读抓手
+最简单的方式就是在 TUI 输入框中输入 /themes 命令：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+/themes
+```
 
-## 笔记模板
+然后在弹出的窗口中选择你喜欢的主题：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 终端要求
 
-- 能用 3 到 5 句话解释 `OpenCode 主题`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+为了确保主题能够正确显示完整色彩，您的终端必须支持 真彩色（24 位色）。
+
+- 检查支持情况：
+
+```text
+echo $COLORTERM
+```
+
+输出应为：
+
+```text
+truecolor
+或
+24bit
+```
+
+- 启用真彩色：
+
+```text
+export COLORTERM=truecolor
+```
+
+- 常见支持终端：
+- iTerm2
+- Alacritty
+- Kitty
+- Windows Terminal
+- GNOME Terminal（新版本）
+
+如果终端不支持真彩色，主题将回退为 256 色，可能导致颜色失真。
+
+
+## 内置主题
+
+OpenCode 内置多种主题，可直接使用：
+
+
+## system 主题（推荐）
+
+system 主题会自动适配您的终端配色：
+
+- 根据终端背景生成灰度层级
+- 使用 ANSI 标准颜色
+- 保持终端默认文本与背景
+
+适用于：
+
+- 使用自定义终端主题的用户
+- 希望所有终端工具风格统一的用户
+
+
+## 使用主题
+
+方式一：在 TUI 中选择主题
+
+```text
+/themes
+```
+
+方式二：通过配置文件设置
+
+tui.json
+
+```text
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": "tokyonight"
+}
+```
+
+
+## 自定义主题
+
+OpenCode 支持通过 JSON 定义完全自定义主题。
+
+
+### 主题加载优先级
+
+- 内置主题
+- 用户目录：~/.config/opencode/themes/
+- 项目目录：.opencode/themes/
+- 当前目录：./.opencode/themes/
+
+后加载的主题会覆盖前面的。
+
+
+## 创建主题
+
+用户级主题：
+
+```text
+mkdir -p ~/.config/opencode/themes
+vim ~/.config/opencode/themes/my-theme.json
+```
+
+项目级主题：
+
+```text
+mkdir -p .opencode/themes
+vim .opencode/themes/my-theme.json
+```
+
+
+## 主题格式说明
+
+支持以下格式：
+
+- 十六进制颜色：#ffffff
+- ANSI 颜色：0-255
+- 颜色引用：primary
+- 深浅模式：
+
+```text
+{
+  "dark": "#000000",
+  "light": "#ffffff"
+}
+```
+
+- 继承终端默认：
+
+```text
+"text": "none"
+```
+
+
+## 完整示例
+
+my-theme.json
+
+```text
+{
+  "$schema": "https://opencode.ai/theme.json",
+  "defs": {
+    "bg": "#1e1e2e",
+    "fg": "#cdd6f4",
+    "primary": "#89b4fa",
+    "accent": "#f38ba8",
+    "success": "#a6e3a1",
+    "warning": "#f9e2af"
+  },
+  "theme": {
+    "primary": {
+      "dark": "primary",
+      "light": "#005f87"
+    },
+    "accent": {
+      "dark": "accent",
+      "light": "#d7005f"
+    },
+    "background": {
+      "dark": "bg",
+      "light": "#ffffff"
+    },
+    "text": {
+      "dark": "fg",
+      "light": "#000000"
+    },
+    "border": {
+      "dark": "#313244",
+      "light": "#cccccc"
+    },
+    "syntaxKeyword": {
+      "dark": "primary",
+      "light": "#0000ff"
+    },
+    "syntaxString": {
+      "dark": "success",
+      "light": "#008000"
+    },
+    "syntaxComment": {
+      "dark": "#6c7086",
+      "light": "#999999"
+    }
+  }
+}
+```
+
+
+## 总结
+
+OpenCode 主题系统具备以下特点：
+
+- 支持内置主题，开箱即用
+- 支持 system 自动适配终端
+- 支持 JSON 自定义主题
+- 支持多层级覆盖机制
+
+如果你追求极致体验，建议：
+
+- 终端开启 truecolor
+- 优先使用 system 主题或自定义主题
+
+
+## 复习重点
+
+- 能说明 `OpenCode 主题` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

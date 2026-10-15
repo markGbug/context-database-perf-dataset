@@ -1,34 +1,228 @@
-# MySQL：MySQL 导出数据 练习笔记
+# MySQL：MySQL 导出数据
 
 - 来源：[MySQL 导出数据](https://www.runoob.com/mysql/mysql-database-export.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1538
 
-## 练习目标
+## 本章内容
 
-把 `MySQL 导出数据` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MySQL 中你可以使用 SELECT...INTO OUTFILE 语句来简单的导出数据到文本文件上。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 使用 SELECT ... INTO OUTFILE 语句导出数据
 
-## 验收清单
+SELECT...INTO OUTFILE 是 MySQL 中用于将查询结果导出到文件的语法。
 
-- 我能独立说出 `MySQL 导出数据` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+SELECT...INTO OUTFILE 允许你将查询的结果写入一个文本文件，基本的使用方法：
 
-## 复盘问题
+```text
+SELECT column1, column2, ...
+INTO OUTFILE 'file_path'
+FROM your_table
+WHERE your_conditions;
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+参数说明：
+
+- column1, column2, ...: 要选择的列。
+- 'file_path': 指定输出文件的路径和名称。
+- your_table: 要查询的表。
+- your_conditions: 查询条件。
+
+以下是一个简单的实例：
+
+
+## 实例
+
+在以上 SQL 语句中，我们从 users 表中选择了 id、name 和 email 列，并将结果写入了 /tmp/user_data.csv 文件。FIELDS TERMINATED BY ',' 指定了列之间的分隔符（逗号），LINES TERMINATED BY '\n' 指定了行之间的分隔符（换行符）。
+
+需要注意的是，执行 SELECT...INTO OUTFILE 需要相应的权限，并且输出文件的目录需要是 MySQL 服务器可以写入的地方。
+
+以下实例中我们将数据表 runoob_tbl 数据导出到 /tmp/runoob.txt 文件中:
+
+```text
+mysql> SELECT * FROM runoob_tbl
+    -> INTO OUTFILE '/tmp/runoob.txt';
+```
+
+你可以通过命令选项来设置数据输出的指定格式，以下实例为导出 CSV 格式：
+
+```text
+mysql> SELECT * FROM passwd INTO OUTFILE '/tmp/runoob.txt'
+    -> FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+    -> LINES TERMINATED BY '\r\n';
+```
+
+在下面的例子中，生成一个文件，各值用逗号隔开。这种格式可以被许多程序使用。
+
+```text
+SELECT a,b,a+b INTO OUTFILE '/tmp/result.text'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+FROM test_table;
+```
+
+
+### SELECT ... INTO OUTFILE 语句有以下属性:
+
+- LOAD DATA INFILE是SELECT ... INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT ... INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。
+- SELECT...INTO OUTFILE 'file_name'形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。
+- 输出不能是一个已存在的文件。防止文件数据被篡改。
+- 你需要有一个登陆服务器的账号来检索文件。否则 SELECT ... INTO OUTFILE 不会起任何作用。
+- 在UNIX中，该文件被创建后是可读的，权限由MySQL服务器所拥有。这意味着，虽然你就可以读取该文件，但可能无法将其删除。
+
+
+## mysqldump 导出表作为原始数据
+
+mysqldump 是 MySQL 提供的用于备份和导出数据库的命令行工具。
+
+mysqldump 是 mysql 用于转存储数据库的实用程序。它主要产生一个 SQL 脚本，其中包含从头重新创建数据库所必需的命令 CREATE TABLE INSERT 等。
+
+使用 mysqldump 导出数据需要使用 --tab 选项来指定导出文件指定的目录，该目标必须是可写的。
+
+mysqldump 基本的用法：
+
+```text
+mysqldump -u username -p password -h hostname database_name > output_file.sql
+```
+
+参数说明：
+
+- -u: 指定 MySQL 用户名。
+- -p: 提示输入密码。
+- -h: 指定 MySQL 主机名。
+- database_name: 要导出的数据库名称。
+- output_file.sql: 导出数据保存到的文件。
+
+以下实例将数据表 runoob_tbl 导出到 /tmp 目录中：
+
+```text
+$ mysqldump -u root -p --no-create-info \
+            --tab=/tmp RUNOOB runoob_tbl
+password ******
+```
+
+
+### mysqldump 实例
+
+1. 导出整个数据库
+
+导出 mydatabase 数据库到 mydatabase_backup.sql 文件：
+
+```text
+mysqldump -u root -p mydatabase > mydatabase_backup.sql
+```
+
+2. 导出特定表
+
+如果你只想导出数据库中的某个表，可以使用以下命令：
+
+```text
+mysqldump -u username -p password -h hostname database_name table_name > output_file.sql
+```
+
+或：
+
+```text
+mysqldump -u root -p mydatabase mytable > mytable_backup.sql
+```
+
+3. 导出数据库结构
+
+如果只想导出数据库结构而不包括数据，可以使用 --no-data 选项：
+
+```text
+mysqldump -u username -p password -h hostname --no-data database_name > output_file.sql
+```
+
+4. 导出压缩文件
+
+你可以将导出的数据进行压缩，以减小文件大小。例如，使用 gzip：
+
+```text
+mysqldump -u username -p password -h hostname database_name | gzip > output_file.sql.gz
+```
+
+
+### 导出 SQL 格式的数据
+
+导出 SQL 格式的数据到指定文件，如下所示：
+
+```text
+$ mysqldump -u root -p RUNOOB runoob_tbl > dump.txt
+password ******
+```
+
+以上命令创建的文件内容如下：
+
+```text
+-- MySQL dump 8.23
+--
+-- Host: localhost    Database: RUNOOB
+---------------------------------------------------------
+-- Server version       3.23.58
+
+--
+-- Table structure for table `runoob_tbl`
+--
+
+CREATE TABLE runoob_tbl (
+  runoob_id int(11) NOT NULL auto_increment,
+  runoob_title varchar(100) NOT NULL default '',
+  runoob_author varchar(40) NOT NULL default '',
+  submission_date date default NULL,
+  PRIMARY KEY  (runoob_id),
+  UNIQUE KEY AUTHOR_INDEX (runoob_author)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `runoob_tbl`
+--
+
+INSERT INTO runoob_tbl
+       VALUES (1,'Learn PHP','John Poul','2007-05-24');
+INSERT INTO runoob_tbl
+       VALUES (2,'Learn MySQL','Abdul S','2007-05-24');
+INSERT INTO runoob_tbl
+       VALUES (3,'JAVA Tutorial','Sanjay','2007-05-06');
+```
+
+如果你需要导出整个数据库的数据，可以使用以下命令：
+
+```text
+$ mysqldump -u root -p RUNOOB > database_dump.txt
+password ******
+```
+
+如果需要备份所有数据库，可以使用以下命令：
+
+```text
+$ mysqldump -u root -p --all-databases > database_dump.txt
+password ******
+```
+
+--all-databases 选项在 MySQL 3.23.12 及以后版本加入。
+
+该方法可用于实现数据库的备份策略。
+
+
+## 将数据表及数据库拷贝至其他主机
+
+如果你需要将数据拷贝至其他的 MySQL 服务器上, 你可以在 mysqldump 命令中指定数据库名及数据表。
+
+在源主机上执行以下命令，将数据备份至 dump.txt 文件中:
+
+```text
+$ mysqldump -u root -p database_name table_name > dump.txt
+password *****
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL 导出数据` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

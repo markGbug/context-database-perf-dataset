@@ -1,35 +1,98 @@
-# Tailwind CSS：Tailwind CSS 边框 学习笔记
+# Tailwind CSS：Tailwind CSS 边框
 
 - 来源：[Tailwind CSS 边框](https://www.runoob.com/tailwindcss/tailwindcss-borders.html)
 - 分类：前端开发
 - 技术：Tailwind CSS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3115
 
-## 学习目标
+## 本章内容
 
-Tailwind CSS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Tailwind CSS 边框` 建立学习路径，先理解它在 Tailwind CSS 体系中的位置，再做可运行或可复述的验证。
+在 Tailwind CSS 中，边框（Borders）是布局和设计中常见的样式，用于为元素添加边界或分隔线。
 
-## 阅读抓手
+Tailwind 提供了多种边框工具类，帮助你控制边框的宽度、颜色、样式、半径以及各个方向的边框。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 边框宽度（Border Width）
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+边框宽度决定了元素的边框线条的粗细。Tailwind CSS 提供了不同的边框宽度值，允许你快速控制元素边框的样式。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Tailwind CSS 边框`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+### 边框颜色（Border Color）
+
+通过使用 border-{color} 工具类，你可以设置元素边框的颜色。Tailwind CSS 提供了大量的预设颜色，可以直接使用，也支持自定义颜色。
+
+```html
+<div class="border-2 border-red-500 p-4">
+  红色边框，宽度为 2px
+</div>
+```
+
+
+### 边框样式（Border Style）
+
+Tailwind CSS 也支持设置边框的样式，如实线、虚线、点线等。通过 border-{style} 工具类，你可以控制边框的显示样式。
+
+```html
+<div class="border-4 border-dashed border-blue-400 p-4">
+  蓝色虚线边框，宽度为 4px
+</div>
+```
+
+
+### 边框半径（Border Radius）
+
+通过设置 border-radius，你可以控制元素的圆角效果。Tailwind CSS 提供了多种边框半径值，并允许你在不同方向上设置不同的圆角。
+
+```html
+<div class="border-4 border-gray-400 rounded-lg p-6">
+  大圆角边框
+</div>
+```
+
+
+### 四个方向的边框控制
+
+你可以单独控制每个方向的边框（上、右、下、左），如：border-t-2 控制顶部边框的宽度，border-r-4 控制右侧边框的宽度，等等。
+
+```html
+<div class="border-t-4 border-r-2 border-b-1 border-l-3 border-blue-500 p-4">
+  自定义各个方向的边框
+</div>
+```
+
+
+### 统一的边框控制（Border）
+
+如果你想要为所有边框设置相同的样式，使用 border 工具类即可。可以结合其他工具类控制颜色、样式和宽度。
+
+```html
+<div class="border-4 border-solid border-green-500 p-4">
+  绿色实线边框，宽度为 4px
+</div>
+```
+
+
+### 内边框和外边框（Box Model）
+
+Tailwind CSS 还提供了控制 盒模型 的工具类，尤其是内外边框、外边距和内填充等。
+
+```html
+<div class="box-border border-4 border-red-500 p-4">
+  边框包含在内的盒子模型
+</div>
+```
+
+
+### 结合所有边框工具的综合实例
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Tailwind CSS 边框` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

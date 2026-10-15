@@ -1,34 +1,141 @@
-# PHP：PHP Session 练习笔记
+# PHP：PHP Session
 
 - 来源：[PHP Session](https://www.runoob.com/php/php-sessions.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1073
 
-## 练习目标
+## 本章内容
 
-把 `PHP Session` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PHP session 变量用于存储关于用户会话（session）的信息，或者更改用户会话（session）的设置。Session 变量存储单一用户的信息，并且对于应用程序中的所有页面都是可用的。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## PHP Session 变量
 
-## 验收清单
+您在计算机上操作某个应用程序时，您打开它，做些更改，然后关闭它。这很像一次对话（Session）。计算机知道您是谁。它清楚您在何时打开和关闭应用程序。然而，在因特网上问题出现了：由于 HTTP 地址无法保持状态，Web 服务器并不知道您是谁以及您做了什么。
 
-- 我能独立说出 `PHP Session` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+PHP session 解决了这个问题，它通过在服务器上存储用户信息以便随后使用（比如用户名称、购买商品等）。然而，会话信息是临时的，在用户离开网站后将被删除。如果您需要永久存储信息，可以把数据存储在数据库中。
 
-## 复盘问题
+Session 的工作机制是：为每个访客创建一个唯一的 id (UID)，并基于这个 UID 来存储变量。UID 存储在 cookie 中，或者通过 URL 进行传导。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 开始 PHP Session
+
+在您把用户信息存储到 PHP session 中之前，首先必须启动会话。
+
+注释：session_start() 函数必须位于 <html> 标签之前：
+
+
+## 实例
+
+```html
+<?php session_start(); ?>
+
+<html>
+<body>
+
+</body>
+</html>
+```
+
+上面的代码会向服务器注册用户的会话，以便您可以开始保存用户信息，同时会为用户会话分配一个 UID。
+
+
+## 存储 Session 变量
+
+存储和取回 session 变量的正确方法是使用 PHP $_SESSION 变量：
+
+
+## 实例
+
+```html
+<?php
+session_start();
+// 存储 session 数据
+$_SESSION['views']=1;
+?>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<?php
+// 检索 session 数据
+echo "浏览量：". $_SESSION['views'];
+?>
+
+</body>
+</html>
+```
+
+输出：
+
+```text
+浏览量：1
+```
+
+在下面的实例中，我们创建了一个简单的 page-view 计数器。isset() 函数检测是否已设置 "views" 变量。如果已设置 "views" 变量，我们累加计数器。如果 "views" 不存在，则创建 "views" 变量，并把它设置为 1：
+
+
+## 实例
+
+```text
+<?php
+session_start();
+
+if(isset($_SESSION['views']))
+{
+    $_SESSION['views']=$_SESSION['views']+1;
+}
+else
+{
+    $_SESSION['views']=1;
+}
+echo "浏览量：". $_SESSION['views'];
+?>
+```
+
+
+## 销毁 Session
+
+如果您希望删除某些 session 数据，可以使用 unset() 或 session_destroy() 函数。
+
+unset() 函数用于释放指定的 session 变量：
+
+
+## 实例
+
+```text
+<?php
+session_start();
+if(isset($_SESSION['views']))
+{
+    unset($_SESSION['views']);
+}
+?>
+```
+
+您也可以通过调用 session_destroy() 函数彻底销毁 session：
+
+
+## 实例
+
+```text
+<?php
+session_destroy();
+?>
+```
+
+注释：session_destroy() 将重置 session，您将失去所有已存储的 session 数据。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PHP Session` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

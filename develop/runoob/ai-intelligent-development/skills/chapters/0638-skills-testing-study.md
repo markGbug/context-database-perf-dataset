@@ -1,35 +1,75 @@
-# Skills（技能）：Skills 单元测试 学习笔记
+# Skills（技能）：Skills 单元测试
 
 - 来源：[Skills 单元测试](https://www.runoob.com/skills/skills-testing.html)
 - 分类：AI / 智能开发
 - 技术：Skills（技能）
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0638
 
-## 学习目标
+## 本章内容
 
-Skills（技能） 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Skills 单元测试` 建立学习路径，先理解它在 Skills（技能） 体系中的位置，再做可运行或可复述的验证。
+写完 Skill 后，如何确认它真的按预期工作？靠手动测试既费时又容易遗漏。
 
-## 阅读抓手
+本篇介绍如何为 Skill 建立系统性的测试用例，从脚本单元测试到端到端触发测试。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## Skill 测试的两个层次
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 层次一：脚本单元测试
 
-- 能用 3 到 5 句话解释 `Skills 单元测试`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+脚本是 Skill 中最确定性的部分，适合用标准单元测试框架覆盖。
+
+
+## 实例
+
+运行测试：
+
+```text
+# 进入 Skill 目录后运行所有测试
+cd my-skill/
+pytest scripts/tests/ -v
+
+# 生成覆盖率报告
+pytest scripts/tests/ --cov=scripts --cov-report=term-missing
+```
+
+输出：
+
+```text
+scripts/tests/test_clean_data.py::test_remove_duplicates_basic  PASSED
+scripts/tests/test_clean_data.py::test_remove_duplicates_empty  PASSED
+scripts/tests/test_clean_data.py::test_fill_nulls_numeric       PASSED
+scripts/tests/test_clean_data.py::test_strip_whitespace         PASSED
+scripts/tests/test_clean_data.py::test_process_real_file        PASSED
+
+5 passed in 0.12s
+```
+
+
+## 层次二：触发端到端测试
+
+触发测试验证的是：当用户发出某个请求时，Claude 是否会使用这个 Skill。
+
+测试用例以 JSON 格式定义，包含用户提示词和期望的行为断言。
+
+
+## 实例
+
+运行触发测试（需要 skill-creator 提供的 eval 工具）：
+
+
+## 实例
+
+测试用例的提示词要足够复杂，简单的"读取 CSV"类请求即使触发失败也不代表 Skill 有问题，因为 Claude 本身就能处理。好的测试用例应当是用户真实会提的多步骤、有明确输出要求的请求。
+
+
+## 测试用例的覆盖范围
+
+
+## 复习重点
+
+- 能说明 `Skills 单元测试` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,34 +1,95 @@
-# PostgreSQL：PostgreSQL UPDATE 练习笔记
+# PostgreSQL：PostgreSQL UPDATE 语句
 
 - 来源：[PostgreSQL UPDATE](https://www.runoob.com/postgresql/postgresql-update.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1567
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL UPDATE` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+如果我们要更新在 PostgreSQL 数据库中的数据，我们可以用 UPDATE 来操作。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 语法
 
-## 验收清单
+以下是 UPDATE 语句修改数据的通用 SQL 语法：
 
-- 我能独立说出 `PostgreSQL UPDATE` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+UPDATE table_name
+SET column1 = value1, column2 = value2...., columnN = valueN
+WHERE [condition];
+```
 
-## 复盘问题
+- 我们可以同时更新一个或者多个字段。
+- 我们可以在 WHERE 子句中指定任何条件。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+以下实例将更新 COMPANY 表中 id 为 3 的 salary 字段值：
+
+```text
+runoobdb=# UPDATE COMPANY SET SALARY = 15000 WHERE ID = 3;
+```
+
+得到结果如下：
+
+```text
+id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  2 | Allen |  25 | Texas      |  15000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+  3 | Teddy |  23 | Norway     |  15000
+```
+
+从结果上看，COMPANY 表中的 id 为 3 的 salary 字段值已被修改。
+
+以下实例将同时更新 salary 字段和 address 字段的值：
+
+```text
+runoobdb=# UPDATE COMPANY SET ADDRESS = 'Texas', SALARY=20000;
+```
+
+得到结果如下：
+
+```text
+id | name  | age | address | salary
+----+-------+-----+---------+--------
+  1 | Paul  |  32 | Texas   |  20000
+  2 | Allen |  25 | Texas   |  20000
+  4 | Mark  |  25 | Texas   |  20000
+  5 | David |  27 | Texas   |  20000
+  6 | Kim   |  22 | Texas   |  20000
+  7 | James |  24 | Texas   |  20000
+  3 | Teddy |  23 | Texas   |  20000
+(7 rows)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL UPDATE` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,136 @@
-# Swagger：Swagger UI 导出文档 练习笔记
+# Swagger：Swagger UI 导出文档
 
 - 来源：[Swagger UI 导出文档](https://www.runoob.com/swagger/swagger-ui-export-pdf.html)
 - 分类：后端开发
 - 技术：Swagger
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1202
 
-## 练习目标
+## 本章内容
 
-把 `Swagger UI 导出文档` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 生成静态 HTML 文档
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 使用 Swagger2markup
 
-## 验收清单
+Swagger2markup 是一个能将 Swagger JSON 或 YAML 文件转换为 AsciiDoc 或 Markdown 文档的工具。结合 AsciiDoctor，可以将文档转换为 HTML 或 PDF 格式。
 
-- 我能独立说出 `Swagger UI 导出文档` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+添加 Maven 依赖:
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 实例
+
+创建测试类生成文档:
+
+
+## 实例
+
+运行测试并生成文档:
+
+```text
+# 生成 AsciiDoc
+mvn test
+
+# 将 AsciiDoc 转换为 HTML
+mvn asciidoctor:process-asciidoc
+
+# 生成的文档位于 target/generated-docs 目录
+```
+
+
+## 生成 PDF 文档
+
+
+### 使用 Asciidoctor-PDF
+
+基于前面生成的 AsciiDoc 文件，可以使用 Asciidoctor-PDF 生成 PDF 文档:
+
+1. 修改 Maven 配置:
+
+
+## 实例
+
+自定义 PDF 样式 src/main/resources/theme/custom-theme.yml:
+
+
+## 实例
+
+生成 PDF 文档:
+
+```text
+mvn asciidoctor:process-asciidoc@pdf
+```
+
+
+## 使用工具直接导出
+
+
+### 使用 wkhtmltopdf 工具
+
+1. 安装 wkhtmltopdf:
+
+```text
+# Ubuntu/Debian
+sudo apt-get install wkhtmltopdf
+
+# CentOS/RHEL
+sudo yum install wkhtmltopdf
+
+# macOS
+brew install wkhtmltopdf
+```
+
+2. 创建导出脚本 export-docs.sh:
+
+
+## 实例
+
+3. 运行脚本:
+
+```text
+chmod +x export-docs.sh
+./export-docs.sh
+```
+
+
+### 使用 Puppeteer 导出 PDF
+
+对于 Node.js 环境，可以使用 Puppeteer 导出 PDF。
+
+1. 创建导出脚本 export-pdf.js:
+
+
+## 实例
+
+2. 安装依赖并运行:
+
+```text
+npm install puppeteer
+node export-pdf.js
+```
+
+
+## 总结
+
+Swagger UI 是一个强大的 API 文档工具，通过正确配置和使用，可以大大提高 API 的可用性和开发效率。
+
+通过以上内容我们了解了 Swagger UI 的基本概念、集成方法、文档编写、自定义配置、文档发布、样式定制以及文档导出等内容。
+
+记住以下关键点:
+
+- 选择适合项目技术栈的 Swagger 集成方式
+- 精心设计和编写 API 文档注解或注释
+- 根据需要自定义 Swagger UI 界面和样式
+- 添加品牌标识使文档更具专业性
+- 选择合适的文档发布和导出方式
+- 遵循最佳实践，确保文档的准确性和安全性
+
+通过合理使用 Swagger UI，您可以为您的 API 提供专业、交互式的文档，让您的 API 更易于理解和使用。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Swagger UI 导出文档` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

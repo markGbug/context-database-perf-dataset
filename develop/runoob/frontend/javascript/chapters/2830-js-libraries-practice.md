@@ -1,34 +1,125 @@
-# JavaScript：JavaScript 库 练习笔记
+# JavaScript：JavaScript 库
 
 - 来源：[JavaScript 库](https://www.runoob.com/js/js-libraries.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2830
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript 库` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+JavaScript 库 - jQuery、Prototype、MooTools。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## JavaScript 框架（库）
 
-## 验收清单
+JavaScript 高级程序设计（特别是对浏览器差异的复杂处理），通常很困难也很耗时。
 
-- 我能独立说出 `JavaScript 库` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+为了应对这些调整，许多的 JavaScript (helper) 库应运而生。
 
-## 复盘问题
+这些 JavaScript 库常被称为 JavaScript 框架。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在本教程中，我们将了解到一些广受欢迎的 JavaScript 框架：
+
+- jQuery
+- Prototype
+- MooTools
+
+所有这些框架都提供针对常见 JavaScript 任务的函数，包括动画、DOM 操作以及 Ajax 处理。
+
+在本教程中，您将学习到如何开始使用它们，来使得 JavaScript 编程更容易、更安全且更有乐趣。
+
+
+## jQuery
+
+jQuery 是目前最受欢迎的 JavaScript 框架。
+
+它使用 CSS 选择器来访问和操作网页上的 HTML 元素（DOM 对象）。
+
+jQuery 同时提供 companion UI（用户界面）和插件。
+
+许多大公司在网站上使用 jQuery：
+
+- Google
+- Microsoft
+- IBM
+- Netflix
+
+如需更深入地学习 jQuery，请访问我们的 jQuery 教程。
+
+
+## Prototype
+
+Prototype 是一种库，提供用于执行常见 web 任务的简单 API。
+
+API 是应用程序编程接口（Application Programming Interface）的缩写。它是包含属性和方法的库，用于操作 HTML DOM。
+
+Prototype 通过提供类和继承，实现了对 JavaScript 的增强。
+
+
+## MooTools
+
+MooTools 也是一个框架，提供了可使常见的 JavaScript 编程更为简单的 API。
+
+MooTools 也含有一些轻量级的效果和动画函数。
+
+
+## 其他框架
+
+下面是其他一些在上面未涉及的框架：
+
+YUI - Yahoo! User Interface Framework，涵盖大量函数的大型库，从简单的 JavaScript 功能到完整的 internet widget。
+
+Ext JS - 可定制的 widget，用于构建富因特网应用程序（rich Internet applications）。
+
+Dojo - 用于 DOM 操作、事件、widget 等的工具包。
+
+script.aculo.us - 开源的 JavaScript 框架，针对可视效果和界面行为。
+
+UIZE - Widget、AJAX、DOM、模板等等。
+
+
+## CDN -内容分发网络
+
+您总是希望网页可以尽可能地快。您希望页面的容量尽可能地小，同时您希望浏览器尽可能多地进行缓存。
+
+如果许多不同的网站使用相同的 JavaScript 框架，那么把框架库存放在一个通用的位置供每个网页分享就变得很有意义了。
+
+CDN (Content Delivery Network) 解决了这个问题。CDN 是包含可分享代码库的服务器网络。
+
+国内免费的 CDN 资源有：
+
+- Staticfile CDN：https://staticfile.net/
+
+海外免费的 CDN 资源有：
+
+- cdnjs：https://cdnjs.com/
+
+如需在您的网页中使用 JavaScript 框架库，只需在 <script> 标签中引用该库即可：
+
+
+## 引用 jQuery
+
+```html
+<script src="https://cdn.staticfile.net/jquery/3.4.0/jquery.min.js">
+</script>
+```
+
+
+## 使用框架
+
+在您决定为网页使用 JavaScript 框架之前，首先对框架进行测试是明智的。
+
+JavaScript 框架很容易进行测试。您无需在计算机上安装它们，同时也没有安装程序。
+
+通常您只需从网页中引用一个库文件。
+
+在本教程的下一章，我们会为您完整地讲解 jQuery 的测试过程。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript 库` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

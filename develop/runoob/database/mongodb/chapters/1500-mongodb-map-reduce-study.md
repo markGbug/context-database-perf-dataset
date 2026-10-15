@@ -1,35 +1,173 @@
-# MongoDB：MongoDB Map Reduce 学习笔记
+# MongoDB：MongoDB Map Reduce
 
 - 来源：[MongoDB Map Reduce](https://www.runoob.com/mongodb/mongodb-map-reduce.html)
 - 分类：数据库
 - 技术：MongoDB
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1500
 
-## 学习目标
+## 本章内容
 
-MongoDB 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MongoDB Map Reduce` 建立学习路径，先理解它在 MongoDB 体系中的位置，再做可运行或可复述的验证。
+Map-Reduce是一种计算模型，简单的说就是将大批量的工作（数据）分解（MAP）执行，然后再将结果合并成最终结果（REDUCE）。
 
-## 阅读抓手
+MongoDB提供的Map-Reduce非常灵活，对于大规模数据分析也相当实用。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### MapReduce 命令
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+以下是MapReduce的基本语法：
 
-## 完成标准
+```text
+>db.collection.mapReduce(
+   function() {emit(key,value);},  //map 函数
+   function(key,values) {return reduceFunction},   //reduce 函数
+   {
+      out: collection,
+      query: document,
+      sort: document,
+      limit: number
+   }
+)
+```
 
-- 能用 3 到 5 句话解释 `MongoDB Map Reduce`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+使用 MapReduce 要实现两个函数 Map 函数和 Reduce 函数,Map 函数调用 emit(key, value), 遍历 collection 中所有的记录, 将 key 与 value 传递给 Reduce 函数进行处理。
+
+Map 函数必须调用 emit(key, value) 返回键值对。
+
+参数说明:
+
+- map ：映射函数 (生成键值对序列,作为 reduce 函数参数)。
+- reduce 统计函数，reduce函数的任务就是将key-values变成key-value，也就是把values数组变成一个单一的值value。。
+- out 统计结果存放集合 (不指定则使用临时集合,在客户端断开后自动删除)。
+- query 一个筛选条件，只有满足条件的文档才会调用map函数。（query。limit，sort可以随意组合）
+- sort 和limit结合的sort排序参数（也是在发往map函数前给文档排序），可以优化分组机制
+- limit 发往map函数的文档数量的上限（要是没有limit，单独使用sort的用处不大）
+
+以下实例在集合 orders 中查找 status:"A" 的数据，并根据 cust_id 来分组，并计算 amount 的总和。
+
+
+## 使用 MapReduce
+
+考虑以下文档结构存储用户的文章，文档存储了用户的 user_name 和文章的 status 字段：
+
+```text
+>db.posts.insert({
+   "post_text": "菜鸟教程，最全的技术文档。",
+   "user_name": "mark",
+   "status":"active"
+})
+WriteResult({ "nInserted" : 1 })
+>db.posts.insert({
+   "post_text": "菜鸟教程，最全的技术文档。",
+   "user_name": "mark",
+   "status":"active"
+})
+WriteResult({ "nInserted" : 1 })
+>db.posts.insert({
+   "post_text": "菜鸟教程，最全的技术文档。",
+   "user_name": "mark",
+   "status":"active"
+})
+WriteResult({ "nInserted" : 1 })
+>db.posts.insert({
+   "post_text": "菜鸟教程，最全的技术文档。",
+   "user_name": "mark",
+   "status":"active"
+})
+WriteResult({ "nInserted" : 1 })
+>db.posts.insert({
+   "post_text": "菜鸟教程，最全的技术文档。",
+   "user_name": "mark",
+   "status":"disabled"
+})
+WriteResult({ "nInserted" : 1 })
+>db.posts.insert({
+   "post_text": "菜鸟教程，最全的技术文档。",
+   "user_name": "runoob",
+   "status":"disabled"
+})
+WriteResult({ "nInserted" : 1 })
+>db.posts.insert({
+   "post_text": "菜鸟教程，最全的技术文档。",
+   "user_name": "runoob",
+   "status":"disabled"
+})
+WriteResult({ "nInserted" : 1 })
+>db.posts.insert({
+   "post_text": "菜鸟教程，最全的技术文档。",
+   "user_name": "runoob",
+   "status":"active"
+})
+WriteResult({ "nInserted" : 1 })
+```
+
+现在，我们将在 posts 集合中使用 mapReduce 函数来选取已发布的文章(status:"active")，并通过user_name分组，计算每个用户的文章数：
+
+```text
+>db.posts.mapReduce(
+   function() { emit(this.user_name,1); },
+   function(key, values) {return Array.sum(values)},
+      {
+         query:{status:"active"},
+         out:"post_total"
+      }
+)
+```
+
+以上 mapReduce 输出结果为：
+
+```text
+{
+        "result" : "post_total",
+        "timeMillis" : 23,
+        "counts" : {
+                "input" : 5,
+                "emit" : 5,
+                "reduce" : 1,
+                "output" : 2
+        },
+        "ok" : 1
+}
+```
+
+结果表明，共有 5 个符合查询条件（status:"active"）的文档， 在map函数中生成了 5 个键值对文档，最后使用reduce函数将相同的键值分为 2 组。
+
+具体参数说明：
+
+- result：储存结果的collection的名字,这是个临时集合，MapReduce的连接关闭后自动就被删除了。
+- timeMillis：执行花费的时间，毫秒为单位
+- input：满足条件被发送到map函数的文档个数
+- emit：在map函数中emit被调用的次数，也就是所有集合中的数据总量
+- output：结果集合中的文档个数（count对调试非常有帮助）
+- ok：是否成功，成功为1
+- err：如果失败，这里可以有失败原因，不过从经验上来看，原因比较模糊，作用不大
+
+使用 find 操作符来查看 mapReduce 的查询结果：
+
+```javascript
+> var map=function() { emit(this.user_name,1); }
+> var reduce=function(key, values) {return Array.sum(values)}
+> var options={query:{status:"active"},out:"post_total"}
+> db.posts.mapReduce(map,reduce,options)
+{ "result" : "post_total", "ok" : 1 }
+> db.post_total.find();
+```
+
+以上查询显示如下结果:
+
+```text
+{ "_id" : "mark", "value" : 4 }
+{ "_id" : "runoob", "value" : 1 }
+```
+
+用类似的方式，MapReduce可以被用来构建大型复杂的聚合查询。
+
+Map函数和Reduce函数可以使用 JavaScript 来实现，使得MapReduce的使用非常灵活和强大。
+
+
+## 复习重点
+
+- 能说明 `MongoDB Map Reduce` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

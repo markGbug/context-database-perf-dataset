@@ -1,34 +1,187 @@
-# PostgreSQL：PostgreSQL 子查询 练习笔记
+# PostgreSQL：PostgreSQL 子查询
 
 - 来源：[PostgreSQL 子查询](https://www.runoob.com/postgresql/postgresql-sub-queries.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1588
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL 子查询` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+子查询或称为内部查询、嵌套查询，指的是在 PostgreSQL 查询中的 WHERE 子句中嵌入查询语句。
 
-## 练习步骤
+一个 SELECT 语句的查询结果能够作为另一个语句的输入值。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+子查询可以与 SELECT、INSERT、UPDATE 和 DELETE 语句一起使用，并可使用运算符如 =、<、>、>=、<=、IN、BETWEEN 等。
 
-## 验收清单
+以下是子查询必须遵循的几个规则：
 
-- 我能独立说出 `PostgreSQL 子查询` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- 子查询必须用括号括起来。
+- 子查询在 SELECT 子句中只能有一个列，除非在主查询中有多列，与子查询的所选列进行比较。
+- ORDER BY 不能用在子查询中，虽然主查询可以使用 ORDER BY。可以在子查询中使用 GROUP BY，功能与 ORDER BY 相同。
+- 子查询返回多于一行，只能与多值运算符一起使用，如 IN 运算符。
+- BETWEEN 运算符不能与子查询一起使用，但是，BETWEEN 可在子查询内使用。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## SELECT 语句中的子查询使用
+
+子查询通常与 SELECT 语句一起使用。基本语法如下：
+
+```text
+SELECT column_name [, column_name ]
+FROM   table1 [, table2 ]
+WHERE  column_name OPERATOR
+      (SELECT column_name [, column_name ]
+      FROM table1 [, table2 ]
+      [WHERE])
+```
+
+
+### 实例
+
+创建 COMPANY 表（下载 COMPANY SQL 文件 ），数据内容如下：
+
+```text
+runoobdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+```
+
+现在，让我们在 SELECT 语句中使用子查询：
+
+```text
+runoobdb=# SELECT * FROM COMPANY WHERE ID IN (SELECT ID FROM COMPANY  WHERE SALARY > 45000) ;
+```
+
+得到结果如下：
+
+```text
+ id | name  | age |  address    | salary
+----+-------+-----+-------------+--------
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+(2 rows)
+```
+
+
+## INSERT 语句中的子查询使用
+
+子查询也可以与 INSERT 语句一起使用。INSERT 语句使用子查询返回的数据插入到另一个表中。
+
+在子查询中所选择的数据可以用任何字符、日期或数字函数修改。
+
+基本语法如下：
+
+```text
+INSERT INTO table_name [ (column1 [, column2 ]) ]
+   SELECT [ *|column1 [, column2 ] ]
+   FROM table1 [, table2 ]
+   [ WHERE VALUE OPERATOR ]
+```
+
+
+### 实例
+
+假设 COMPANY_BKP 的结构与 COMPANY 表相似，且可使用相同的 CREATE TABLE 进行创建，只是表名改为 COMPANY_BKP。现在把整个 COMPANY 表复制到 COMPANY_BKP，语法如下：
+
+```text
+runoobdb=# INSERT INTO COMPANY_BKP SELECT * FROM COMPANY  WHERE ID IN (SELECT ID FROM COMPANY) ;
+```
+
+
+## UPDATE 语句中的子查询使用
+
+子查询可以与 UPDATE 语句结合使用。当通过 UPDATE 语句使用子查询时，表中单个或多个列被更新。
+
+基本语法如下：
+
+```text
+UPDATE table
+SET column_name = new_value
+[ WHERE OPERATOR [ VALUE ]
+   (SELECT COLUMN_NAME
+   FROM TABLE_NAME)
+   [ WHERE) ]
+```
+
+
+### 实例
+
+假设，我们有 COMPANY_BKP 表，是 COMPANY 表的备份。
+
+下面的实例把 COMPANY 表中所有 AGE 大于 27 的客户的 SALARY 更新为原来的 0.50 倍：
+
+```text
+runoobdb=# UPDATE COMPANY SET SALARY = SALARY * 0.50 WHERE AGE IN (SELECT AGE FROM COMPANY_BKP WHERE AGE >= 27 );
+```
+
+这将影响两行，最后 COMPANY 表中的记录如下：
+
+```text
+ id | name  | age | address     | salary
+----+-------+-----+-------------+--------
+  2 | Allen |  25 | Texas       |  15000
+  3 | Teddy |  23 | Norway      |  20000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  6 | Kim   |  22 | South-Hall  |  45000
+  7 | James |  24 | Houston     |  10000
+  1 | Paul  |  32 | California  |  10000
+  5 | David |  27 | Texas       |  42500
+(7 rows)
+```
+
+
+## DELETE 语句中的子查询使用
+
+子查询可以与 DELETE 语句结合使用，就像上面提到的其他语句一样。
+
+基本语法如下：
+
+```text
+DELETE FROM TABLE_NAME
+[ WHERE OPERATOR [ VALUE ]
+   (SELECT COLUMN_NAME
+   FROM TABLE_NAME)
+   [ WHERE) ]
+```
+
+
+### 实例
+
+假设，我们有 COMPANY_BKP 表，是 COMPANY 表的备份。
+
+下面的实例删除 COMPANY 表中所有 AGE 大于或等于 27 的客户记录：
+
+```text
+runoobdb=# DELETE FROM COMPANY WHERE AGE IN (SELECT AGE FROM COMPANY_BKP WHERE AGE > 27 );
+```
+
+这将影响两行，最后 COMPANY 表中的记录如下：
+
+```text
+ id | name  | age | address     | salary
+----+-------+-----+-------------+--------
+  2 | Allen |  25 | Texas       |  15000
+  3 | Teddy |  23 | Norway      |  20000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  6 | Kim   |  22 | South-Hall  |  45000
+  7 | James |  24 | Houston     |  10000
+  5 | David |  27 | Texas       |  42500
+(6 rows)
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL 子查询` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

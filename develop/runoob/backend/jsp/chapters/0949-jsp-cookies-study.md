@@ -1,35 +1,248 @@
-# JSP：JSP Cookie 处理 学习笔记
+# JSP：JSP Cookie 处理
 
 - 来源：[JSP Cookie 处理](https://www.runoob.com/jsp/jsp-cookies.html)
 - 分类：后端开发
 - 技术：JSP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0949
 
-## 学习目标
+## 本章内容
 
-JSP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `JSP Cookie 处理` 建立学习路径，先理解它在 JSP 体系中的位置，再做可运行或可复述的验证。
+Cookie 是存储在客户机的文本文件，它们保存了大量轨迹信息。在 Servlet 技术基础上，JSP 显然能够提供对 HTTP cookie 的支持。
 
-## 阅读抓手
+通常有三个步骤来识别回头客：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- 服务器脚本发送一系列 cookie 至浏览器。比如名字，年龄，ID 号码等等。
+- 浏览器在本地机中存储这些信息，以备不时之需。
+- 当下一次浏览器发送任何请求至服务器时，它会同时将这些 cookie 信息发送给服务器，然后服务器使用这些信息来识别用户或者干些其它事情。
 
-## 笔记模板
+本章节将会传授您如何去设置或重设 cookie 的方法，还有如何访问它们及如何删除它们。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+JSP Cookie 处理需要对中文进行编码与解码，方法如下：
 
-## 完成标准
+```text
+String   str   =   java.net.URLEncoder.encode("中文", "UTF-8");            //编码
+String   str   =   java.net.URLDecoder.decode("编码后的字符串","UTF-8");   // 解码
+```
 
-- 能用 3 到 5 句话解释 `JSP Cookie 处理`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## Cookie 剖析
+
+Cookie 通常在 HTTP 信息头中设置（虽然 JavaScript 能够直接在浏览器中设置 cookie）。在 JSP 中，设置一个 cookie 需要发送如下的信息头给服务器： HTTP/1.1 200 OK Date: Fri, 04 Feb 2015 21:03:38 GMT Server: Apache/1.3.9 (UNIX) PHP/4.0b3 Set-Cookie: name=runoob; expires=Friday, 04-Feb-17 22:03:38 GMT; path=/; domain=runoob.com Connection: close Content-Type: text/html 正如您所见，Set-Cookie 信息头包含一个键值对，一个 GMT（格林尼治标准）时间，一个路径，一个域名。键值对会被编码为URL。有效期域是个指令，告诉浏览器在什么时候之后就可以清除这个 cookie。 如果浏览器被配置成可存储 cookie，那么它将会保存这些信息直到过期。如果用户访问的任何页面匹配了 cookie 中的路径和域名，那么浏览器将会重新将这个 cookie 发回给服务器。浏览器端的信息头长得就像下面这样： GET / HTTP/1.0 Connection: Keep-Alive User-Agent: Mozilla/4.6 (X11; I; Linux 2.2.6-15apmac ppc) Host: zink.demon.co.uk:1126 Accept: image/gif, */* Accept-Encoding: gzip Accept-Language: en Accept-Charset: iso-8859-1,*,utf-8 Cookie: name=xyz JSP 脚本通过 request 对象中的 getCookies() 方法来访问这些 cookie，这个方法会返回一个 Cookie 对象的数组。 Servlet Cookie 方法 下表列出了 Cookie 对象中常用的方法： 序号 方法 & 描述 1 public void setDomain(String pattern) 设置 cookie 的域名，比如 runoob.com 2 public String getDomain()
+
+
+## 使用 JSP 设置 cookie
+
+使用 JSP 设置 cookie 包含三个步骤：
+
+(1)创建一个 cookie 对象： 调用 cookie 的构造函数，使用一个 cookie 名称和值做参数，它们都是字符串。
+
+```text
+Cookie cookie = new Cookie("key","value");
+```
+
+请务必牢记，名称和值中都不能包含空格或者如下的字符：
+
+```text
+[ ] ( ) = , " / ? @ : ;
+```
+
+(2) 设置有效期：调用 setMaxAge() 函数表明 cookie 在多长时间（以秒为单位）内有效。下面的操作将有效期设为了 24 小时。
+
+```text
+cookie.setMaxAge(60*60*24);
+```
+
+(3) 将 cookie 发送至 HTTP 响应头中：调用 response.addCookie() 函数来向 HTTP 响应头中添加 cookie。
+
+```text
+response.addCookie(cookie);
+```
+
+
+### 实例演示
+
+main.jsp 文件代码如下所示：
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.net.*" %>
+<%
+   // 编码，解决中文乱码
+   String str = URLEncoder.encode(request.getParameter("name"),"utf-8");
+   // 设置 name 和 url cookie
+   Cookie name = new Cookie("name",
+           str);
+   Cookie url = new Cookie("url",
+              request.getParameter("url"));
+
+   // 设置cookie过期时间为24小时。
+   name.setMaxAge(60*60*24);
+   url.setMaxAge(60*60*24);
+
+   // 在响应头部添加cookie
+   response.addCookie( name );
+   response.addCookie( url );
+%>
+<html>
+<head>
+<title>设置 Cookie</title>
+</head>
+<body>
+
+<h1>设置 Cookie</h1>
+
+<ul>
+<li><p><b>网站名:</b>
+   <%= request.getParameter("name")%>
+</p></li>
+<li><p><b>网址:</b>
+   <%= request.getParameter("url")%>
+</p></li>
+</ul>
+</body>
+</html>
+```
+
+以下是一个简单的 HTML 表单通过 GET 方法将客户端数据提交到 main.jsp 文件中，并设置 cookie：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<form action="main.jsp" method=GET>
+站点名: <input type="text" name="name">
+<br />
+网址: <input type="text" name="url" />
+<input type="submit" value="提交" />
+</form>
+
+</body>
+</html>
+```
+
+将以上 HTML 代码保存到 test.htm 文件中。
+
+将该文件放置于当前 jsp 项目的 WebContent 目录下（与 main.jsp 同一个目录）。
+
+通过访问 http://localhost:8080/testjsp/test.html 提交表单数据到 main.jsp 文件，演示 Gif 图如下所示：
+
+试着输入 "站点名" 和 "网址"，然后点击提交按钮，它将会在您的屏幕中显示 "站点名" 和 "网址"，并且设置 "站点名" 和 "网址" 的两个 cookie。
+
+
+## 使用 JSP 读取 Cookie
+
+想要读取 cookie，您就需要调用 request.getCookies() 方法来获得一个 javax.servlet.http.Cookie 对象的数组，然后遍历这个数组，使用 getName() 方法和 getValue() 方法来获取每一个 cookie 的名称和值。
+
+让我们来读取上个例子中的cookie, 以下为 cookie.jsp 文件代码：
+
+```java
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.net.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>获取 Cookie</title>
+</head>
+<body>
+<%
+   Cookie cookie = null;
+   Cookie[] cookies = null;
+   // 获取 cookies 的数据,是一个数组
+   cookies = request.getCookies();
+   if( cookies != null ){
+      out.println("<h2> 查找 Cookie 名与值</h2>");
+      for (int i = 0; i < cookies.length; i++){
+         cookie = cookies[i];
+
+         out.print("参数名 : " + cookie.getName());
+         out.print("<br>");
+         out.print("参数值: " + URLDecoder.decode(cookie.getValue(), "utf-8") +" <br>");
+         out.print("------------------------------------<br>");
+      }
+  }else{
+      out.println("<h2>没有发现 Cookie</h2>");
+  }
+%>
+</body>
+</html>
+```
+
+浏览器访问后，输出结果为：
+
+
+## 使用 JSP 删除 cookie
+
+删除 cookie 非常简单。如果您想要删除一个 cookie，按照下面给的步骤来做就行了：
+
+- 获取一个已经存在的 cookie 然后存储在 Cookie 对象中。
+- 将 cookie 的有效期设置为 0。
+- 将这个 cookie 重新添加进响应头中。
+
+
+### 实例演示
+
+下面的程序删除一个名为 "name" 的 cookie，当您第二次运行 cookie.jsp时，name 将会为 null。
+
+```java
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.net.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>获取 Cookie</title>
+</head>
+<body>
+<%
+   Cookie cookie = null;
+   Cookie[] cookies = null;
+   // 获取当前域名下的cookies，是一个数组
+   cookies = request.getCookies();
+   if( cookies != null ){
+      out.println("<h2> 查找 Cookie 名与值</h2>");
+      for (int i = 0; i < cookies.length; i++){
+         cookie = cookies[i];
+         if((cookie.getName( )).compareTo("name") == 0 ){
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+            out.print("删除 Cookie: " +
+            cookie.getName( ) + "<br/>");
+         }
+         out.print("参数名 : " + cookie.getName());
+         out.print("<br>");
+         out.print("参数值: " + URLDecoder.decode(cookie.getValue(), "utf-8") +" <br>");
+         out.print("------------------------------------<br>");
+      }
+  }else{
+      out.println("<h2>没有发现 Cookie</h2>");
+  }
+%>
+</body>
+</html>
+```
+
+通过浏览器访问，输出结果为：
+
+再次访问 http://localhost:8080/testjsp/cookie.jsp，将会得到如下结果：
+
+可以看到名为 "name" 的 cookie 已经不见了。
+
+您也可以手动在浏览器中删除 cookie。IE 浏览器通过点击 Tools 菜单项，然后选择 Internet Options，点击 Delete Cookies，就能删除所有 cookie 。
+
+
+## 复习重点
+
+- 能说明 `JSP Cookie 处理` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,166 @@
-# SQLite：SQLite Where 子句 学习笔记
+# SQLite：SQLite Where 子句
 
 - 来源：[SQLite Where 子句](https://www.runoob.com/sqlite/sqlite-where-clause.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1703
 
-## 学习目标
+## 本章内容
 
-SQLite 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `SQLite Where 子句` 建立学习路径，先理解它在 SQLite 体系中的位置，再做可运行或可复述的验证。
+SQLite的 WHERE 子句用于指定从一个表或多个表中获取数据的条件。
 
-## 阅读抓手
+如果满足给定的条件，即为真（true）时，则从表中返回特定的值。您可以使用 WHERE 子句来过滤记录，只获取需要的记录。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+WHERE 子句不仅可用在 SELECT 语句中，它也可用在 UPDATE、DELETE 语句中，等等，这些我们将在随后的章节中学习到。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 语法
 
-## 完成标准
+SQLite 的带有 WHERE 子句的 SELECT 语句的基本语法如下：
 
-- 能用 3 到 5 句话解释 `SQLite Where 子句`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+SELECT column1, column2, columnN
+FROM table_name
+WHERE [condition]
+```
+
+
+## 实例
+
+您还可以使用比较或逻辑运算符指定条件，比如 >、<、=、LIKE、NOT，等等。假设 COMPANY 表有以下记录：
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+下面的实例演示了 SQLite 逻辑运算符的用法。下面的 SELECT 语句列出了 AGE 大于等于 25 且工资大于等于 65000.00 的所有记录：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE AGE >= 25 AND SALARY >= 65000;
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+```
+
+下面的 SELECT 语句列出了 AGE 大于等于 25 或工资大于等于 65000.00 的所有记录：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE AGE >= 25 OR SALARY >= 65000;
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+```
+
+下面的 SELECT 语句列出了 AGE 不为 NULL 的所有记录，结果显示所有的记录，意味着没有一个记录的 AGE 等于 NULL：
+
+```text
+sqlite>  SELECT * FROM COMPANY WHERE AGE IS NOT NULL;
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+下面的 SELECT 语句列出了 NAME 以 'Ki' 开始的所有记录，'Ki' 之后的字符不做限制：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE NAME LIKE 'Ki%';
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+6           Kim         22          South-Hall  45000.0
+```
+
+下面的 SELECT 语句列出了 NAME 以 'Ki' 开始的所有记录，'Ki' 之后的字符不做限制：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE NAME GLOB 'Ki*';
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+6           Kim         22          South-Hall  45000.0
+```
+
+下面的 SELECT 语句列出了 AGE 的值为 25 或 27 的所有记录：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE AGE IN ( 25, 27 );
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+```
+
+下面的 SELECT 语句列出了 AGE 的值既不是 25 也不是 27 的所有记录：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE AGE NOT IN ( 25, 27 );
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+3           Teddy       23          Norway      20000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+下面的 SELECT 语句列出了 AGE 的值在 25 与 27 之间的所有记录：
+
+```text
+sqlite> SELECT * FROM COMPANY WHERE AGE BETWEEN 25 AND 27;
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+```
+
+下面的 SELECT 语句使用 SQL 子查询，子查询查找 SALARY > 65000 的带有 AGE 字段的所有记录，后边的 WHERE 子句与 EXISTS 运算符一起使用，列出了外查询中的 AGE 存在于子查询返回的结果中的所有记录：
+
+```text
+sqlite> SELECT AGE FROM COMPANY
+        WHERE EXISTS (SELECT AGE FROM COMPANY WHERE SALARY > 65000);
+AGE
+----------
+32
+25
+23
+25
+27
+22
+24
+```
+
+下面的 SELECT 语句使用 SQL 子查询，子查询查找 SALARY > 65000 的带有 AGE 字段的所有记录，后边的 WHERE 子句与 > 运算符一起使用，列出了外查询中的 AGE 大于子查询返回的结果中的年龄的所有记录：
+
+```text
+sqlite> SELECT * FROM COMPANY
+        WHERE AGE > (SELECT AGE FROM COMPANY WHERE SALARY > 65000);
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+```
+
+
+## 复习重点
+
+- 能说明 `SQLite Where 子句` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

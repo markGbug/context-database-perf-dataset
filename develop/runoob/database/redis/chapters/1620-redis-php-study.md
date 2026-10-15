@@ -1,35 +1,163 @@
-# Redis：PHP 使用 Redis 学习笔记
+# Redis：PHP 使用 Redis
 
 - 来源：[PHP 使用 Redis](https://www.runoob.com/redis/redis-php.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1620
 
-## 学习目标
+## 本章内容
 
-Redis 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `PHP 使用 Redis` 建立学习路径，先理解它在 Redis 体系中的位置，再做可运行或可复述的验证。
+## 安装
 
-## 阅读抓手
+开始在 PHP 中使用 Redis 前， 我们需要确保已经安装了 redis 服务及 PHP redis 驱动，且你的机器上能正常使用 PHP。 接下来让我们安装 PHP redis 驱动：下载地址为:https://github.com/phpredis/phpredis/releases。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### PHP安装redis扩展
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+以下操作需要在下载的 phpredis 目录中完成：
 
-## 完成标准
+```text
+$ wget https://github.com/phpredis/phpredis/archive/3.1.4.tar.gz
+$ tar zxvf 3.1.4.tar.gz                  # 解压
+$ cd phpredis-3.1.4                      # 进入 phpredis 目录
+$ /usr/local/php/bin/phpize              # php安装后的路径
+$ ./configure --with-php-config=/usr/local/php/bin/php-config
+$ make && make install
+```
 
-- 能用 3 到 5 句话解释 `PHP 使用 Redis`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+### 修改php.ini文件
+
+```text
+vi /usr/local/php/lib/php.ini
+```
+
+增加如下内容:
+
+```text
+extension_dir = "/usr/local/php/lib/php/extensions/no-debug-zts-20090626"
+
+extension=redis.so
+```
+
+安装完成后重启php-fpm 或 apache。查看phpinfo信息，就能看到redis扩展。
+
+
+## 连接到 redis 服务
+
+
+## 实例
+
+```text
+<?php
+    //连接本地的 Redis 服务
+   $redis = new Redis();
+   $redis->connect('127.0.0.1', 6379);
+   echo "Connection to server successfully";
+         //查看服务是否运行
+   echo "Server is running: " . $redis->ping();
+?>
+```
+
+执行脚本，输出结果为：
+
+```text
+Connection to server successfully
+Server is running: PONG
+```
+
+
+## Redis PHP String(字符串) 实例
+
+
+## 实例
+
+```text
+<?php
+//连接本地的 Redis 服务
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+echo "Connection to server successfully";
+//设置 redis 字符串数据
+$redis->set("tutorial-name", "Redis tutorial");
+// 获取存储的数据并输出
+echo "Stored string in redis:: " . $redis->get("tutorial-name");
+?>
+```
+
+执行脚本，输出结果为：
+
+```text
+Connection to server successfully
+Stored string in redis:: Redis tutorial
+```
+
+
+## Redis PHP List(列表) 实例
+
+
+## 实例
+
+```text
+<?php
+//连接本地的 Redis 服务
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+echo "Connection to server successfully";
+//存储数据到列表中
+$redis->lpush("tutorial-list", "Redis");
+$redis->lpush("tutorial-list", "Mongodb");
+$redis->lpush("tutorial-list", "Mysql");
+// 获取存储的数据并输出
+$arList = $redis->lrange("tutorial-list", 0 ,5);
+echo "Stored string in redis";
+print_r($arList);
+?>
+```
+
+执行脚本，输出结果为：
+
+```text
+Connection to server successfully
+Stored string in redis
+Mysql
+Mongodb
+Redis
+```
+
+
+## Redis PHP Keys 实例
+
+
+## 实例
+
+```text
+<?php
+//连接本地的 Redis 服务
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+echo "Connection to server successfully";
+// 获取数据并输出
+$arList = $redis->keys("*");
+echo "Stored keys in redis:: ";
+print_r($arList);
+?>
+```
+
+执行脚本，输出结果为：
+
+```text
+Connection to server successfully
+Stored string in redis::
+tutorial-name
+tutorial-list
+```
+
+
+## 复习重点
+
+- 能说明 `PHP 使用 Redis` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

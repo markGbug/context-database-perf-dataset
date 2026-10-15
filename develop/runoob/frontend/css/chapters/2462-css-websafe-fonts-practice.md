@@ -1,34 +1,102 @@
-# CSS：CSS Web安全字体 练习笔记
+# CSS：CSS Web安全字体组合
 
 - 来源：[CSS Web安全字体](https://www.runoob.com/cssref/css-websafe-fonts.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2462
 
-## 练习目标
+## 本章内容
 
-把 `CSS Web安全字体` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 常用的字体组合
 
-## 练习步骤
+font-family属性是多种字体的名称，作为一个"应变"制度，以确保浏览器/操作系统之间的最大兼容性。如果浏览器不支持的第一个字体，它尝试下一个的字体。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+你想要的字体类型如果浏览器找不到，它会从通用的字体类型中找到与你相似的:
 
-## 验收清单
 
-- 我能独立说出 `CSS Web安全字体` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
+下面是一些常用的字体组合，通用的字体系列。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## Serif 字体
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## sans - serif字体
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## Monospace 字体
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## This is a heading
+
+This is a paragraph
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS Web安全字体` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

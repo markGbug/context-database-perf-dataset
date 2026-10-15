@@ -1,34 +1,91 @@
-# SVN：SVN 解决冲突 练习笔记
+# SVN：SVN 解决冲突
 
 - 来源：[SVN 解决冲突](https://www.runoob.com/svn/svn-conflict.html)
 - 分类：DevOps / 工程化
 - 技术：SVN
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1888
 
-## 练习目标
+## 本章内容
 
-把 `SVN 解决冲突` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+### 版本冲突原因：
 
-## 练习步骤
+假设 A、B 两个用户都在版本号为 100 的时候，更新了 kingtuns.txt 这个文件，A 用户在修改完成之后提交 kingtuns.txt 到服务器， 这个时候提交成功，这个时候 kingtuns.txt 文件的版本号已经变成 101 了。同时B用户在版本号为 100 的 kingtuns.txt 文件上作修改， 修改完成之后提交到服务器时，由于不是在当前最新的 101 版本上作的修改，所以导致提交失败。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+我们已在本地检出 runoob01 库，下面我们将实现版本冲突的解决方法。
 
-## 验收清单
+我们发现 HelloWorld.html 文件存在错误，需要修改文件并提交到版本库中。
 
-- 我能独立说出 `SVN 解决冲突` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+我们将 HelloWorld.html 的内容修改为 "HelloWorld! https://www.runoob.com/"。
 
-## 复盘问题
+```text
+root@runoob:~/svn/runoob01/trunk# cat HelloWorld.html
+HelloWorld! http://www.runoob.com/
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+用下面的命令查看更改：
+
+```text
+root@runoob:~/svn/runoob01/trunk# svn diff
+Index: HelloWorld.html
+===================================================================
+--- HelloWorld.html     (revision 5)
++++ HelloWorld.html     (working copy)
+@@ -1,2 +1 @@
+-HelloWorld! http://www.runoob.com/
++HelloWorld! http://www.runoob.com/!
+```
+
+尝试使用下面的命令来提交他的更改：
+
+```text
+root@runoob:~/svn/runoob01/trunk# svn commit -m "change HelloWorld.html first"
+Sending        HelloWorld.html
+Transmitting file data .svn: E160028: Commit failed (details follow):
+svn: E160028: File '/trunk/HelloWorld.html' is out of date
+```
+
+这时我发现提交失败了。
+
+因为此时，HelloWorld.html 已经被 user02 修改并提交到了仓库。Subversion 不会允许 user01(本例使用的 svn 账号)提交更改，因为 user02 已经修改了仓库，所以我们的工作副本已经失效。
+
+为了避免两人的代码被互相覆盖，Subversion 不允许我们进行这样的操作。所以我们在提交更改之前必须先更新工作副本。所以使用 update 命令，如下：
+
+```text
+root@runoob:~/svn/runoob01/trunk# svn update
+Updating '.':
+C    HelloWorld.html
+Updated to revision 6.
+Conflict discovered in file 'HelloWorld.html'.
+Select: (p) postpone, (df) show diff, (e) edit file, (m) merge,
+        (mc) my side of conflict, (tc) their side of conflict,
+        (s) show all options: mc
+Resolved conflicted state of 'HelloWorld.html'
+Summary of conflicts:
+  Text conflicts: 0 remaining (and 1 already resolved)
+```
+
+这边输入"mc",以本地的文件为主。你也可以使用其选项对冲突的文件进行不同的操作。
+
+默认是更新到最新的版本，我们也可以指定更新到哪个版本
+
+```text
+svn update -r6
+```
+
+此时工作副本是和仓库已经同步，可以安全地提交更改了
+
+```text
+root@runoob:~/svn/runoob01/trunk# svn commit -m "change HelloWorld.html second"
+Sending        HelloWorld.html
+Transmitting file data .
+Committed revision 7.
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SVN 解决冲突` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

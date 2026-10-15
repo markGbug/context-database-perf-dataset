@@ -1,35 +1,138 @@
-# MySQL：MySQL 连接 学习笔记
+# MySQL：MySQL 连接
 
 - 来源：[MySQL 连接](https://www.runoob.com/mysql/mysql-connection.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1510
 
-## 学习目标
+## 本章内容
 
-MySQL 章节要关注数据模型、查询语义、索引/性能和事务或一致性边界。本篇围绕 `MySQL 连接` 建立学习路径，先理解它在 MySQL 体系中的位置，再做可运行或可复述的验证。
+- 1、使用命令行客户端连接
+- 2、使用图形化工具连接
 
-## 阅读抓手
+常用 MySQL 图形化管理工具：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+- MySQL Workbench（官方工具）：https://www.mysql.com/cn/products/workbench/
+- Navicat（付费）：https://www.navicat.com/
+- DBeaver：https://dbeaver.io/
+- phpMyAdmin（基于Web）：https://www.phpmyadmin.net/
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 使用 MySQL 二进制方式连接
 
-## 完成标准
+您可以使用 MySQL 二进制方式进入到 mysql 命令提示符下来连接 MySQL 数据库，格式如下：
 
-- 能用 3 到 5 句话解释 `MySQL 连接`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+mysql -u your_username -p
+```
+
+参数说明：
+
+- -u 参数用于指定用户名。
+- -p 参数表示需要输入密码。
+
+指定主机和端口连接（适用于远程连接）:
+
+```text
+mysql -h 主机名或IP地址 -P 端口号 -u 用户名 -p
+```
+
+例如：
+
+```text
+mysql -h 127.0.0.1 -P 3306 -u root -p
+```
+
+
+### 实例
+
+以下是从命令行中连接 mysql 服务器的简单实例：
+
+```text
+[root@host]# mysql -u root -p
+Enter password:******
+```
+
+按照提示输入密码，并按下 Enter 键。
+
+在登录成功后会出现 mysql> 命令提示窗口，你可以在上面执行任何 SQL 语句。
+
+以上命令执行后，登录成功输出结果如下:
+
+```text
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2854760 to server version: 5.0.9
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+```
+
+在以上实例中，我们使用了 root 用户登录到 MySQL 服务器，当然你也可以使用其他 MySQL 用户登录。
+
+如果用户权限足够，任何用户都可以在 MySQL 的命令提示窗口中进行 SQL 操作。
+
+成功连接到 MySQL 后，你可以在命令行中直接执行 SQL 查询。
+
+列出所有可用的数据库：
+
+```text
+SHOW DATABASES;
+```
+
+选择要使用的数据库：
+
+```text
+USE your_database;
+```
+
+列出所选数据库中的所有表：
+
+```text
+SHOW TABLES;
+```
+
+退出 mysql> 命令提示窗口可以使用 exit 命令，如下所示：
+
+```text
+mysql> EXIT;
+Bye
+```
+
+或者使用：
+
+```text
+mysql> QUIT;
+```
+
+或者按下 Ctrl + D（在 Unix/Linux 系统中）。
+
+
+## 数据库管理工具
+
+
+### 1. DBeaver
+
+DBeaver是一款免费、开源、跨平台的数据库管理工具。
+
+DBeaver 支持多种数据库系统，包括 MySQL、PostgreSQL、MariaDB、SQLite、Oracle、DB2、SQL Server、Sybase、MS Access、Teradata、Firebird、Derby 等。
+
+下载地址：https://dbeaver.io/download/
+
+
+### 2. DbGate
+
+DbGate 是一款跨平台的数据库管理工具，支持多种数据库系统，包括 MySQL、PostgreSQL、Microsoft SQL Server、SQLite、MongoDB 等。
+
+DbGate 支持在 Windows、Linux 和 Mac 操作系统上运行，为用户提供了跨平台的灵活性。
+
+DbGate 不仅仅是本地应用程序，还可以作为 Web 应用程序运行，使用户能够通过浏览器轻松访问和管理数据库。
+
+下载地址：https://dbgate.org/download/
+
+
+## 复习重点
+
+- 能说明 `MySQL 连接` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

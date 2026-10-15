@@ -1,34 +1,174 @@
-# Git：Git 分支管理 练习笔记
+# Git：Git 分支管理
 
 - 来源：[Git 分支管理](https://www.runoob.com/git/git-branch.html)
 - 分类：DevOps / 工程化
 - 技术：Git
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1787
 
-## 练习目标
+## 本章内容
 
-把 `Git 分支管理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Git 分支管理是 Git 强大功能之一，能够让多个开发人员并行工作，开发新功能、修复 bug 或进行实验，而不会影响主代码库。
 
-## 练习步骤
+几乎每一种版本控制系统都以某种形式支持分支，一个分支代表一条独立的开发线。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+使用分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。
 
-## 验收清单
+Git 分支实际上是指向更改快照的指针。
 
-- 我能独立说出 `Git 分支管理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+有人把 Git 的分支模型称为必杀技特性，而正是因为它，将 Git 从版本控制系统家族里区分出来。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 创建分支
+
+创建新分支并切换到该分支：
+
+```html
+git checkout -b <branchname>
+```
+
+例如：
+
+```text
+git checkout -b feature-xyz
+```
+
+切换分支命令:
+
+```text
+git checkout (branchname)
+```
+
+例如：
+
+```text
+git checkout main
+```
+
+当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。
+
+
+### 查看分支
+
+查看所有分支：
+
+```text
+git branch
+```
+
+查看远程分支：
+
+```text
+git branch -r
+```
+
+查看所有本地和远程分支：
+
+```text
+git branch -a
+```
+
+
+### 合并分支
+
+将其他分支合并到当前分支：
+
+```html
+git merge <branchname>
+```
+
+例如，切换到 main 分支并合并 feature-xyz 分支：
+
+```text
+git checkout main
+git merge feature-xyz
+```
+
+
+### 解决合并冲突
+
+当合并过程中出现冲突时，Git 会标记冲突文件，你需要手动解决冲突。
+
+打开冲突文件，按照标记解决冲突。
+
+标记冲突解决完成：
+
+```html
+git add <conflict-file>
+```
+
+提交合并结果：
+
+```text
+git commit
+```
+
+
+### 删除分支
+
+删除本地分支：
+
+```html
+git branch -d <branchname>
+```
+
+强制删除未合并的分支：
+
+```html
+git branch -D <branchname>
+```
+
+删除远程分支：
+
+```html
+git push origin --delete <branchname>
+```
+
+
+## 实例
+
+开始前我们先创建一个测试目录：
+
+```text
+$ mkdir gitdemo
+$ cd gitdemo/
+$ git init
+Initialized empty Git repository...
+$ touch README
+$ git add README
+$ git commit -m '第一次版本提交'
+[master (root-commit) 3b58100] 第一次版本提交
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README
+```
+
+
+## Git 分支管理
+
+
+### 列出分支
+
+列出分支基本命令：
+
+```text
+git branch
+```
+
+没有参数时，git branch 会列出你在本地的分支。
+
+```text
+$ git branch
+* master
+```
+
+此例的意思就是，我们有一个叫做 master 的分支，并且该分支是当前分支。
+
+当你执行 git init 的时候，默认情况下 Git 就会为你创建 master 分支。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Git 分支管理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

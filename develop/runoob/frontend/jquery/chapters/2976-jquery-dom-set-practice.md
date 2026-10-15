@@ -1,34 +1,116 @@
-# jQuery：jQuery 设置 练习笔记
+# jQuery：jQuery - 设置内容和属性
 
 - 来源：[jQuery 设置](https://www.runoob.com/jquery/jquery-dom-set.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2976
 
-## 练习目标
+## 本章内容
 
-把 `jQuery 设置` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 设置内容 - text()、html() 以及 val()
 
-## 练习步骤
+我们将使用前一章中的三个相同的方法来设置内容：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- text() - 设置或返回所选元素的文本内容
+- html() - 设置或返回所选元素的内容（包括 HTML 标记）
+- val() - 设置或返回表单字段的值
 
-## 验收清单
+下面的例子演示如何通过 text()、html() 以及 val() 方法来设置内容：
 
-- 我能独立说出 `jQuery 设置` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## 实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```html
+$("#btn1").click(function(){
+    $("#test1").text("Hello world!");
+});
+$("#btn2").click(function(){
+    $("#test2").html("<b>Hello world!</b>");
+});
+$("#btn3").click(function(){
+    $("#test3").val("RUNOOB");
+});
+```
+
+
+## text()、html() 以及 val() 的回调函数
+
+上面的三个 jQuery 方法：text()、html() 以及 val()，同样拥有回调函数。回调函数有两个参数：被选元素列表中当前元素的下标，以及原始（旧的）值。然后以函数新值返回您希望使用的字符串。
+
+下面的例子演示带有回调函数的 text() 和 html()：
+
+
+## 实例
+
+```html
+$("#btn1").click(function(){
+    $("#test1").text(function(i,origText){
+        return "旧文本: " + origText + " 新文本: Hello world! (index: " + i + ")";
+    });
+});
+
+$("#btn2").click(function(){
+    $("#test2").html(function(i,origText){
+        return "旧 html: " + origText + " 新 html: Hello <b>world!</b> (index: " + i + ")";
+    });
+});
+```
+
+
+## 设置属性 - attr()
+
+jQuery attr() 方法也用于设置/改变属性值。
+
+下面的例子演示如何改变（设置）链接中 href 属性的值：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("#runoob").attr("href","http://www.runoob.com/jquery");
+});
+```
+
+attr() 方法也允许您同时设置多个属性。
+
+下面的例子演示如何同时设置 href 和 title 属性：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+    $("#runoob").attr({
+        "href" : "http://www.runoob.com/jquery",
+        "title" : "jQuery 教程"
+    });
+});
+```
+
+
+## attr() 的回调函数
+
+jQuery 方法 attr()，也提供回调函数。回调函数有两个参数：被选元素列表中当前元素的下标，以及原始（旧的）值。然后以函数新值返回您希望使用的字符串。
+
+下面的例子演示带有回调函数的 attr() 方法：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("#runoob").attr("href", function(i,origValue){
+    return origValue + "/jquery";
+  });
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery 设置` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

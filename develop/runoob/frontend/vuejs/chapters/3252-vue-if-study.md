@@ -1,35 +1,138 @@
-# Vue.js：Vue.js 条件语句 学习笔记
+# Vue.js：Vue.js 条件语句
 
 - 来源：[Vue.js 条件语句](https://www.runoob.com/vue2/vue-if.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3252
 
-## 学习目标
+## 本章内容
 
-Vue.js 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Vue.js 条件语句` 建立学习路径，先理解它在 Vue.js 体系中的位置，再做可运行或可复述的验证。
+## 条件判断
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+### v-if
 
-## 笔记模板
+条件判断使用 v-if 指令：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## v-if 指令
 
-- 能用 3 到 5 句话解释 `Vue.js 条件语句`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+在元素 和 template 中使用 v-if 指令：
+
+```html
+<div id="app">
+    <p v-if="seen">现在你看到我了</p>
+    <template v-if="ok">
+      <h1>菜鸟教程</h1>
+      <p>学的不仅是技术，更是梦想！</p>
+      <p>哈哈哈，打字辛苦啊！！！</p>
+    </template>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    seen: true,
+    ok: true
+  }
+})
+</script>
+```
+
+这里， v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。
+
+在字符串模板中，如 Handlebars ，我们得像这样写一个条件块：
+
+```html
+<!-- Handlebars 模板 -->
+{{#if ok}}
+  <h1>Yes</h1>
+{{/if}}
+```
+
+
+### v-else
+
+可以用 v-else 指令给 v-if 添加一个 "else" 块：
+
+
+## v-else 指令
+
+随机生成一个数字，判断是否大于0.5，然后输出对应信息：
+
+```html
+<div id="app">
+    <div v-if="Math.random() > 0.5">
+      Sorry
+    </div>
+    <div v-else>
+      Not sorry
+    </div>
+</div>
+
+<script>
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+
+### v-else-if
+
+v-else-if 在 2.1.0 新增，顾名思义，用作 v-if 的 else-if 块。可以链式的多次使用：
+
+
+## v-else 指令
+
+判断 type 变量的值：
+
+```html
+<div id="app">
+    <div v-if="type === 'A'">
+      A
+    </div>
+    <div v-else-if="type === 'B'">
+      B
+    </div>
+    <div v-else-if="type === 'C'">
+      C
+    </div>
+    <div v-else>
+      Not A/B/C
+    </div>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    type: 'C'
+  }
+})
+</script>
+```
+
+v-else 、v-else-if 必须跟在 v-if 或者 v-else-if之后。
+
+
+### v-show
+
+我们也可以使用 v-show 指令来根据条件展示元素：
+
+
+## v-show 指令
+
+```html
+<h1 v-show="ok">Hello!</h1>
+```
+
+
+## 复习重点
+
+- 能说明 `Vue.js 条件语句` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

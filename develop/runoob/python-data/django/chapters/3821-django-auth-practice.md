@@ -1,34 +1,129 @@
-# Django：Django Auth 练习笔记
+# Django：Django 用户认证（Auth）组件
 
 - 来源：[Django Auth](https://www.runoob.com/django/django-auth.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3821
 
-## 练习目标
+## 本章内容
 
-把 `Django Auth` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Django 用户认证（Auth）组件一般用在用户的登录注册上，用于判断当前的用户是否合法，并跳转到登陆成功或失败页面。
 
-## 练习步骤
+Django 用户认证（Auth）组件需要导入 auth 模块:
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```text
+# 认证模块
+from django.contrib import auth
 
-## 验收清单
+# 对应数据库
+from django.contrib.auth.models import User
+```
 
-- 我能独立说出 `Django Auth` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+返回值是用户对象。
 
-## 复盘问题
+创建用户对象的三种方法：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- create()：创建一个普通用户，密码是明文的。
+- create_user()：创建一个普通用户，密码是密文的。
+- create_superuser()：创建一个超级用户，密码是密文的，要多传一个邮箱 email 参数。
+
+参数：
+
+- username: 用户名。
+- password：密码。
+- email：邮箱 (create_superuser 方法要多加一个 email)。
+
+```text
+from django.contrib.auth.models import User
+User.objects.create(username='runboo',password='123')
+```
+
+```text
+from django.contrib.auth.models import User
+User.objects.create_user(username='runbooo',password='123')
+```
+
+```text
+from django.contrib.auth.models import User
+User.objects.create_superuser(username='runboooo',password='123',email='runboo@163.com')
+```
+
+验证用户的用户名和密码使用 authenticate() 方法，从需要 auth_user 表中过滤出用户对象。
+
+使用前要导入：
+
+```text
+from django.contrib import auth
+```
+
+
+## 实例
+
+给验证成功的用户加 session，将 request.user 赋值为用户对象。
+
+使用前要导入：
+
+```text
+from django.contrib import auth
+```
+
+参数：
+
+- request：用户对象
+
+返回值：None
+
+
+## 实例
+
+注销用户使用 logout() 方法，需要清空 session 信息，将 request.user 赋值为匿名用户。
+
+使用前要导入：
+
+```text
+from django.contrib import auth
+```
+
+参数：
+
+- request：用户对象
+
+返回值：None
+
+
+## 实例
+
+设置装饰器，给需要登录成功后才能访问的页面统一加装饰器。
+
+使用前要导入：
+
+```text
+from django.contrib.auth.decorators import login_required
+```
+
+
+## 实例
+
+设置从哪个页面访问，登录成功后就返回哪个页面。
+
+解析：
+
+django 在用户访问页面时，如果用户是未登录的状态，就给用户返回登录页面。
+
+此时，该登录页面的 URL 后面有参数：next=用户访问的页面的 URL。
+
+因此，设置在用户登录成功后重定向的 URL 为 next 参数的值。
+
+但是，若用户一开始就输入登录页面 logi，request.GET.get("next") 就取不到值，所以在后面加 or，可以设置自定义返回的页面。
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Django Auth` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

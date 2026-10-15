@@ -1,34 +1,108 @@
-# MySQL：MySQL 序列 练习笔记
+# MySQL：MySQL 序列使用（AUTO_INCREMENT）
 
 - 来源：[MySQL 序列](https://www.runoob.com/mysql/mysql-using-sequences.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1535
 
-## 练习目标
+## 本章内容
 
-把 `MySQL 序列` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在 MySQL 中，序列是一种自增生成数字序列的对象，是一组整数 1、2、3、...，由于一张数据表只能有一个字段自增主键。
 
-## 练习步骤
+尽管 MySQL 本身并没有内建的序列类型，但可以使用 AUTO_INCREMENT 属性来模拟序列的行为，通常 AUTO_INCREMENT 属性用于指定表中某一列的自增性。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+一个使用 AUTO_INCREMENT 创建表的例子：
 
-## 验收清单
 
-- 我能独立说出 `MySQL 序列` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
+以上例子中，id 列被定义为 INT AUTO_INCREMENT，这表示每次插入一行数据时，id 列的值会自动增加。主键约束保证了 id 列的唯一性。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+当你插入一行数据时，可以不指定 id 列的值，数据库会自动为其分配一个唯一的、自增的值：
+
+```text
+INSERT INTO example_table (name) VALUES ('John');
+```
+
+你也可以使用 LAST_INSERT_ID() 函数来获取刚刚插入的行的自增值：
+
+```text
+SELECT LAST_INSERT_ID();
+```
+
+如果你需要获取表的当前自增值，可以使用以下语句：
+
+```text
+SHOW TABLE STATUS LIKE 'example_table';
+```
+
+在结果集中，Auto_increment 列的值即为当前表的自增值。
+
+请注意，使用 AUTO_INCREMENT 属性的列只能是整数类型（通常是 INT 或 BIGINT）。此外，如果你删除表中的某一行，其自增值不会被重新使用，而是会继续递增。如果你希望手动设置自增值，可以使用 SET 语句，但这不是一种常规的做法，因为可能引起唯一性冲突。
+
+
+## 使用 AUTO_INCREMENT
+
+MySQL 中最简单使用序列的方法就是使用 MySQL AUTO_INCREMENT 来定义序列。
+
+
+### 实例
+
+以下实例中创建了数据表 insect， insect 表中 id 无需指定值可实现自动增长。
+
+```text
+mysql> CREATE TABLE insect
+    -> (
+    -> id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    -> PRIMARY KEY (id),
+    -> name VARCHAR(30) NOT NULL, # type of insect
+    -> date DATE NOT NULL, # date collected
+    -> origin VARCHAR(30) NOT NULL # where collected
+);
+Query OK, 0 rows affected (0.02 sec)
+mysql> INSERT INTO insect (id,name,date,origin) VALUES
+    -> (NULL,'housefly','2001-09-10','kitchen'),
+    -> (NULL,'millipede','2001-09-10','driveway'),
+    -> (NULL,'grasshopper','2001-09-10','front yard');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM insect ORDER BY id;
++----+-------------+------------+------------+
+| id | name        | date       | origin     |
++----+-------------+------------+------------+
+|  1 | housefly    | 2001-09-10 | kitchen    |
+|  2 | millipede   | 2001-09-10 | driveway   |
+|  3 | grasshopper | 2001-09-10 | front yard |
++----+-------------+------------+------------+
+3 rows in set (0.00 sec)
+```
+
+
+## 获取 AUTO_INCREMENT 值
+
+在 MySQL 的客户端中你可以使用 SQL 中的 LAST_INSERT_ID() 函数来获取最后的插入表中的自增列的值。
+
+在 PHP 或 PERL 脚本中也提供了相应的函数来获取最后的插入表中的自增列的值。
+
+
+### PERL 实例
+
+使用 mysql_insertid 属性来获取 AUTO_INCREMENT 的值。 实例如下：
+
+```text
+$dbh->do ("INSERT INTO insect (name,date,origin)
+VALUES('moth','2001-09-14','windowsill')");
+my $seq = $dbh->{mysql_insertid};
+```
+
+
+### PHP 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL 序列` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,4 +1,4 @@
-# Claude Code：JetBrains Claude Code 概念卡
+# Claude Code：JetBrains IDEs 中使用 Claude Code
 
 - 来源：[JetBrains Claude Code](https://www.runoob.com/claude-code/claude-code-jetbrains.html)
 - 分类：AI / 智能开发
@@ -6,24 +6,59 @@
 - 笔记类型：概念卡
 - 章节序号：0142
 
-## 一句话定义
+## 本章内容
 
-`JetBrains Claude Code` 是 Claude Code 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+Claude Code 通过专用插件与 JetBrains IDEs 深度集成，提供交互式差异查看、代码选区上下文共享等强大功能，让 AI 辅助编程无缝融入你的开发工作流。
 
-## 三层理解
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
+### 支持的 IDE
 
-## 关联知识
+Claude Code 插件支持绝大多数 JetBrains IDE，包括：
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
+- IntelliJ IDEA
+- PyCharm
+- Android Studio
+- WebStorm
+- PhpStorm
+- GoLand
 
-## 记忆锚点
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+### 核心功能
+
+
+## 安装配置
+
+
+## 第一步：安装前提条件
+
+在安装 JetBrains 插件之前，需要先安装 Claude Code CLI。
+
+```text
+# macOS、Linux、WSL 安装
+curl -fsSL https://claude.ai/install.sh | bash
+# Windows PowerShell 安装
+irm https://claude.ai/install.ps1 | iex
+
+# 验证安装
+claude --version
+```
+
+如需详细安装步骤，请参考 Claude Code 安装指南。
+
+
+### 第二步：安装 JetBrains 插件
+
+- 打开你的 JetBrains IDE
+- 进入 Settings（设置）→ Plugins（插件）
+- 切换到 Marketplace（市场） 标签
+- 搜索 Claude Code
+- 点击 Install（安装）
+- 安装完成后重启 IDE
+
+
+## 记忆卡片
+
+- 一句话定义：`JetBrains Claude Code` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

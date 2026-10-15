@@ -1,35 +1,177 @@
-# Python：Python uWSGI 安装配置 学习笔记
+# Python：Python uWSGI 安装配置
 
 - 来源：[Python uWSGI 安装配置](https://www.runoob.com/python3/python-uwsgi.html)
 - 分类：Python / 数据科学
 - 技术：Python
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4139
 
-## 学习目标
+## 本章内容
 
-Python 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Python uWSGI 安装配置` 建立学习路径，先理解它在 Python 体系中的位置，再做可运行或可复述的验证。
+本文主要介绍如何部署简单的 WSGI 应用和常见的 Web 框架。
 
-## 阅读抓手
+以 Ubuntu/Debian 为例，先安装依赖包：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+apt-get install build-essential python-dev
+```
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+### Python 安装 uWSGI
 
-## 完成标准
+1、通过 pip 命令：
 
-- 能用 3 到 5 句话解释 `Python uWSGI 安装配置`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+pip install uwsgi
+```
+
+2、下载安装脚本：
+
+```text
+curl http://uwsgi.it/install | bash -s default /tmp/uwsgi
+```
+
+将 uWSGI 二进制安装到 /tmp/uwsgi ，你可以修改它。
+
+3、源代码安装：
+
+```text
+wget http://projects.unbit.it/downloads/uwsgi-latest.tar.gz
+tar zxvf uwsgi-latest.tar.gz
+cd uwsgi-latest
+make
+```
+
+安装完成后，在当前目录下，你会获得一个 uwsgi 二进制文件。
+
+
+## 第一个 WSGI 应用
+
+让我们从一个简单的 "Hello World" 开始，创建文件 foobar.py，代码如下：
+
+```text
+def application(env, start_response):
+    start_response('200 OK', [('Content-Type','text/html')])
+    return [b"Hello World"]
+```
+
+uWSGI Python 加载器将会搜索的默认函数 application 。
+
+接下来我们启动 uWSGI 来运行一个 HTTP 服务器，将程序部署在HTTP端口 9090 上：
+
+```text
+uwsgi --http :9090 --wsgi-file foobar.py
+```
+
+
+### 添加并发和监控
+
+默认情况下，uWSGI 启动一个单一的进程和一个单一的线程。
+
+你可以用 --processes 选项添加更多的进程，或者使用 --threads 选项添加更多的线程 ，也可以两者同时使用。
+
+```text
+uwsgi --http :9090 --wsgi-file foobar.py --master --processes 4 --threads 2
+```
+
+以上命令将会生成 4 个进程, 每个进程有 2 个线程。
+
+如果你要执行监控任务，可以使用 stats 子系统，监控的数据格式是 JSON：
+
+```text
+uwsgi --http :9090 --wsgi-file foobar.py --master --processes 4 --threads 2 --stats 127.0.0.1:9191
+```
+
+我们可以安装 uwsgitop（类似 Linux top 命令） 来查看监控数据：
+
+```text
+pip install uwsgitop
+```
+
+
+## 结合 Web 服务器使用
+
+我们可以将 uWSGI 和 Nginx Web 服务器结合使用，实现更高的并发性能。
+
+一个常用的nginx配置如下：
+
+```text
+location / {
+    include uwsgi_params;
+    uwsgi_pass 127.0.0.1:3031;
+}
+```
+
+以上代码表示使用 nginx 接收的 Web 请求传递给端口为 3031 的 uWSGI 服务来处理。
+
+现在，我们可以生成 uWSGI 来本地使用 uwsgi 协议：
+
+```text
+uwsgi --socket 127.0.0.1:3031 --wsgi-file foobar.py --master --processes 4 --threads 2 --stats 127.0.0.1:9191
+```
+
+如果你的 Web 服务器使用 HTTP，那么你必须告诉 uWSGI 本地使用 http 协议 (这与会自己生成一个代理的–http不同):
+
+```text
+uwsgi --http-socket 127.0.0.1:3031 --wsgi-file foobar.py --master --processes 4 --threads 2 --stats 127.0.0.1:9191
+```
+
+
+### 部署 Django
+
+Django 是最常使用的 Python web 框架，假设 Django 项目位于 /home/foobar/myproject:
+
+```text
+uwsgi --socket 127.0.0.1:3031 --chdir /home/foobar/myproject/ --wsgi-file myproject/wsgi.py --master --processes 4 --threads 2 --stats 127.0.0.1:9191
+```
+
+--chdir 用于指定项目路径。
+
+我们可以把以上的命令弄成一个 yourfile.ini 配置文件:
+
+```text
+[uwsgi]
+socket = 127.0.0.1:3031
+chdir = /home/foobar/myproject/
+wsgi-file = myproject/wsgi.py
+processes = 4
+threads = 2
+stats = 127.0.0.1:9191
+```
+
+接下来你只需要执行以下命令即可：
+
+```text
+uwsgi yourfile.ini
+```
+
+
+### 部署 Flask
+
+Flask 是一个流行的 Python web 框架。
+
+创建文件 myflaskapp.py ，代码如下：
+
+```html
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "<span style='color:red'>I am app 1</span>"
+```
+
+执行以下命令：
+
+```text
+uwsgi --socket 127.0.0.1:3031 --wsgi-file myflaskapp.py --callable app --processes 4 --threads 2 --stats 127.0.0.1:9191
+```
+
+
+## 复习重点
+
+- 能说明 `Python uWSGI 安装配置` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

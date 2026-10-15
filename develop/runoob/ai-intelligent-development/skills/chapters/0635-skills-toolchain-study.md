@@ -1,35 +1,120 @@
-# Skills（技能）：Skills 与工具链集成 学习笔记
+# Skills（技能）：Skills 与工具链集成
 
 - 来源：[Skills 与工具链集成](https://www.runoob.com/skills/skills-toolchain.html)
 - 分类：AI / 智能开发
 - 技术：Skills（技能）
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0635
 
-## 学习目标
+## 本章内容
 
-Skills（技能） 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Skills 与工具链集成` 建立学习路径，先理解它在 Skills（技能） 体系中的位置，再做可运行或可复述的验证。
+Skills 可以通过与外部工具链集成，Skill 可以完成单靠 Claude 无法完成的任务。
 
-## 阅读抓手
+本篇介绍如何在 Skill 中调用命令行工具、系统工具及第三方库，并提供一个完整的集成示例。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## Skills 可以调用的工具类型
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+调用外部工具前，先确认工具在运行环境中已安装。Claude 沙箱中预装了常用工具（python3、pip、node、npm），但 pandoc、ffmpeg 等需要额外安装。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Skills 与工具链集成`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 在脚本中调用外部命令
+
+Python 的 subprocess 模块是调用外部命令的标准方式，推荐统一封装成工具函数复用。
+
+
+## 实例
+
+
+## 检查工具是否可用
+
+在 Skill 执行前检查所需工具是否安装，能在任务中途失败前给出清晰提示。
+
+
+## 实例
+
+```text
+检查工具依赖...
+  已安装：pandoc → /usr/bin/pandoc
+  未安装：ffmpeg  安装命令：sudo apt-get install ffmpeg
+  未安装：convert  安装命令：sudo apt-get install imagemagick
+
+请先安装缺少的工具。
+```
+
+
+## 在 SKILL.md 中声明工具依赖
+
+用 YAML frontmatter 的 compatibility 字段列出所有外部依赖，让用户安装 Skill 前就知道需要准备什么。
+
+```text
+---
+name: doc-converter
+description: >
+  将文档在不同格式间转换，支持 Markdown、HTML、PDF、Word。
+  当用户需要格式转换、导出文档时触发。
+compatibility:
+  tools:
+    - pandoc >= 2.14   # 文档格式转换
+    - python >= 3.8    # 运行辅助脚本
+  python_packages:
+    - pypdf >= 3.0     # PDF 处理
+    - python-docx >= 1.0
+---
+```
+
+
+## 集成 Node.js 工具
+
+通过 npx 可以直接调用 npm 包中的 CLI 工具，无需全局安装。
+
+
+## 实例
+
+npx --yes 首次运行时会自动下载工具包，需要网络连接到 npm registry。在网络受限的环境中应提前全局安装：npm install -g prettier。
+
+
+## 工具调用结果的标准化处理
+
+不同工具的输出格式各不相同，建议在 Skill 层统一封装，对外只暴露一致的结构。
+
+
+## 完整集成示例：Markdown 转 PDF 报告
+
+以下示例将 pandoc 与 Python 脚本结合，实现一个完整的 Markdown → PDF 生成 Skill 脚本。
+
+
+## 实例
+
+```text
+正在转换：/mnt/user-data/uploads/runoob_report.md
+{
+  "status": "success",
+  "output": "/mnt/user-data/outputs/runoob_report_20260518_102305.pdf",
+  "size_kb": 248
+}
+```
+
+在 SKILL.md 中调用该脚本：
+
+```text
+## 执行转换
+
+获取用户上传的 .md 文件路径后，运行：
+
+```bash
+python scripts/md_to_pdf.py <文件路径>
+```
+
+解析 JSON 输出：
+- status 为 "success"：调用 present_files 展示 output 路径的文件
+- status 为 "error"：将 message 内容展示给用户，说明可能原因
+```
+
+
+## 复习重点
+
+- 能说明 `Skills 与工具链集成` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

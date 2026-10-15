@@ -1,34 +1,84 @@
-# jQuery：jQuery load() 方法 练习笔记
+# jQuery：jQuery - AJAX load() 方法
 
 - 来源：[jQuery load() 方法](https://www.runoob.com/jquery/jquery-ajax-load.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2988
 
-## 练习目标
+## 本章内容
 
-把 `jQuery load() 方法` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## jQuery load() 方法
 
-## 练习步骤
+jQuery load() 方法是简单但强大的 AJAX 方法。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+load() 方法从服务器加载数据，并把返回的数据放入被选元素中。
 
-## 验收清单
+语法:
 
-- 我能独立说出 `jQuery load() 方法` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+$(selector).load(URL,data,callback);
+```
 
-## 复盘问题
+必需的 URL 参数规定您希望加载的 URL。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+可选的 data 参数规定与请求一同发送的查询字符串键/值对集合。
+
+可选的 callback 参数是 load() 方法完成后所执行的函数名称。
+
+这是示例文件（"demo_test.txt"）的内容：
+
+```html
+<h2>jQuery AJAX 是个非常棒的功能！</h2>
+<p id="p1">这是段落的一些文本。</p>
+```
+
+下面的例子会把文件 "demo_test.txt" 的内容加载到指定的 <div> 元素中：
+
+
+## 实例
+
+```text
+$("#div1").load("demo_test.txt");
+```
+
+也可以把 jQuery 选择器添加到 URL 参数。
+
+下面的例子把 "demo_test.txt" 文件中 id="p1" 的元素的内容，加载到指定的 <div> 元素中：
+
+
+## 实例
+
+```text
+$("#div1").load("demo_test.txt #p1");
+```
+
+可选的 callback 参数规定当 load() 方法完成后所要允许的回调函数。回调函数可以设置不同的参数：
+
+- responseTxt - 包含调用成功时的结果内容
+- statusTXT - 包含调用的状态
+- xhr - 包含 XMLHttpRequest 对象
+
+下面的例子会在 load() 方法完成后显示一个提示框。如果 load() 方法已成功，则显示"外部内容加载成功！"，而如果失败，则显示错误消息：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("#div1").load("demo_test.txt",function(responseTxt,statusTxt,xhr){
+    if(statusTxt=="success")
+      alert("外部内容加载成功!");
+    if(statusTxt=="error")
+      alert("Error: "+xhr.status+": "+xhr.statusText);
+  });
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery load() 方法` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,75 @@
-# JavaScript：DOM CSS 练习笔记
+# JavaScript：JavaScript HTML DOM - 改变CSS
 
 - 来源：[DOM CSS](https://www.runoob.com/js/js-htmldom-css.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2807
 
-## 练习目标
+## 本章内容
 
-把 `DOM CSS` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+HTML DOM 允许 JavaScript 改变 HTML 元素的样式。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 改变 HTML 样式
 
-## 验收清单
+如需改变 HTML 元素的样式，请使用这个语法：
 
-- 我能独立说出 `DOM CSS` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+下面的例子会改变 <p> 元素的样式：
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 实例
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<p id="p1">Hello World!</p>
+<p id="p2">Hello World!</p>
+<script>
+document.getElementById("p2").style.color="blue";
+document.getElementById("p2").style.fontFamily="Arial";
+document.getElementById("p2").style.fontSize="larger";
+</script>
+<p>以上段落通过脚本修改。</p>
+
+</body>
+</html>
+```
+
+
+## 使用事件
+
+HTML DOM 允许我们通过触发事件来执行代码。
+
+比如以下事件：
+
+- 元素被点击。
+- 页面加载完成。
+- 输入框被修改。
+- ……
+
+在接下来的章节，你会学到更多关于事件的知识。
+
+本例改变了 id="id1" 的 HTML 元素的样式，当用户点击按钮时：
+
+
+## 实例
+
+
+## 更多实例
+
+Visibility 如何使元素不可见。您希望元素显示或消失吗？
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `DOM CSS` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

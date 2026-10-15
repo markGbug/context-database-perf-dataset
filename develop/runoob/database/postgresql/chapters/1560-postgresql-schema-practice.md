@@ -1,34 +1,107 @@
-# PostgreSQL：PostgreSQL 模式 练习笔记
+# PostgreSQL：PostgreSQL 模式（SCHEMA）
 
 - 来源：[PostgreSQL 模式](https://www.runoob.com/postgresql/postgresql-schema.html)
 - 分类：数据库
 - 技术：PostgreSQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1560
 
-## 练习目标
+## 本章内容
 
-把 `PostgreSQL 模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+PostgreSQL 模式（SCHEMA）可以看着是一个表的集合。
 
-## 练习步骤
+一个模式可以包含视图、索引、数据类型、函数和操作符等。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+相同的对象名称可以被用于不同的模式中而不会出现冲突，例如 schema1 和 myschema 都可以包含名为 mytable 的表。
 
-## 验收清单
+使用模式的优势：
 
-- 我能独立说出 `PostgreSQL 模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- 允许多个用户使用一个数据库并且不会互相干扰。
+- 将数据库对象组织成逻辑组以便更容易管理。
+- 第三方应用的对象可以放在独立的模式中，这样它们就不会与其他对象的名称发生冲突。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 语法
+
+我们可以使用 CREATE SCHEMA 语句来创建模式，语法格式如下：
+
+```text
+CREATE SCHEMA myschema (
+...
+);
+```
+
+上述语句将创建一个名为 myschema 的模式。
+
+模式通常用于组织和隔离数据库对象，防止对象名称冲突。
+
+创建表（Table）使用 CREATE TABLE 语句:
+
+```text
+CREATE TABLE myschema.mytable (
+    column1 datatype1,
+    column2 datatype2,
+    ...
+);
+```
+
+上述语句将在 myschema 模式下创建一个名为 mytable 的表，并定义了一系列的列及其数据类型。
+
+请注意，上述的 datatype1, datatype2 等应该被替换为实际的数据类型，例如 integer, varchar(255), 等等。
+
+
+### 实例
+
+接下来我们连接到 runoobdb 来创建模式 myschema：
+
+```text
+runoobdb=# create schema myschema;
+CREATE SCHEMA
+```
+
+输出结果 "CREATE SCHEMA" 就代表模式创建成功。
+
+接下来我们再创建一个表格：
+
+```text
+runoobdb=# create table myschema.company(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL,
+   ADDRESS  CHAR (25),
+   SALARY   DECIMAL (18, 2),
+   PRIMARY KEY (ID)
+);
+```
+
+以上命令创建了一个空的表格，我们使用以下 SQL 来查看表格是否创建：
+
+```text
+runoobdb=# select * from myschema.company;
+ id | name | age | address | salary
+----+------+-----+---------+--------
+(0 rows)
+```
+
+
+### 删除模式
+
+删除一个为空的模式（其中的所有对象已经被删除）：
+
+```text
+DROP SCHEMA myschema;
+```
+
+删除一个模式以及其中包含的所有对象：
+
+```text
+DROP SCHEMA myschema CASCADE;
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PostgreSQL 模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

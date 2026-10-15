@@ -1,34 +1,224 @@
-# Vue3：Vue3 自定义指令 练习笔记
+# Vue3：Vue3 自定义指令
 
 - 来源：[Vue3 自定义指令](https://www.runoob.com/vue3/vue3-custom-directive.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3212
 
-## 练习目标
+## 本章内容
 
-把 `Vue3 自定义指令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+除了默认设置的核心指令( v-model 和 v-show ), Vue 也允许注册自定义指令。
 
-## 练习步骤
+下面我们注册一个全局指令 v-focus, 该指令的功能是在页面加载时，元素获得焦点：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 实例
 
-- 我能独立说出 `Vue3 自定义指令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```html
+<div id="app">
+    <p>页面载入时，input 元素自动获取焦点：</p>
+    <input v-focus>
+</div>
 
-## 复盘问题
+<script>
+const app = Vue.createApp({})
+// 注册一个全局自定义指令 `v-focus`
+app.directive('focus', {
+  // 当被绑定的元素挂载到 DOM 中时……
+  mounted(el) {
+    // 聚焦元素
+    el.focus()
+  }
+})
+app.mount('#app')
+</script>
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+我们也可以在实例使用 directives 选项来注册局部指令，这样指令只能在这个实例中使用：
+
+
+## 实例
+
+```html
+<div id="app">
+    <p>页面载入时，input 元素自动获取焦点：</p>
+    <input v-focus>
+</div>
+
+<script>
+const app = {
+   data() {
+      return {
+      }
+   },
+   directives: {
+      focus: {
+         // 指令的定义
+         mounted(el) {
+            el.focus()
+         }
+      }
+   }
+}
+
+Vue.createApp(app).mount('#app')
+```
+
+
+## 钩子
+
+
+### 钩子函数
+
+指令定义函数提供了几个钩子函数（可选）：
+
+- created : 在绑定元素的属性或事件监听器被应用之前调用。
+- beforeMount : 指令第一次绑定到元素并且在挂载父组件之前调用。。
+- mounted : 在绑定元素的父组件被挂载后调用。。
+- beforeUpdate: 在更新包含组件的 VNode 之前调用。。
+- updated: 在包含组件的 VNode 及其子组件的 VNode 更新后调用。
+- beforeUnmount: 当指令与在绑定元素父组件卸载之前时，只调用一次。
+- unmounted: 当指令与元素解除绑定且父组件已卸载时，只调用一次。
+
+
+## 实例
+
+```javascript
+import { createApp } from 'vue'
+const app = createApp({})
+
+// 注册
+app.directive('my-directive', {
+  // 指令是具有一组生命周期的钩子：
+  // 在绑定元素的 attribute 或事件监听器被应用之前调用
+  created() {},
+  // 在绑定元素的父组件挂载之前调用
+  beforeMount() {},
+  // 绑定元素的父组件被挂载时调用
+  mounted() {},
+  // 在包含组件的 VNode 更新之前调用
+  beforeUpdate() {},
+  // 在包含组件的 VNode 及其子组件的 VNode 更新之后调用
+  updated() {},
+  // 在绑定元素的父组件卸载之前调用
+  beforeUnmount() {},
+  // 卸载绑定元素的父组件时调用
+  unmounted() {}
+})
+
+// 注册 (功能指令)
+app.directive('my-directive', () => {
+  // 这将被作为 `mounted` 和 `updated` 调用
+})
+
+// getter, 如果已注册，则返回指令定义
+const myDirective = app.directive('my-directive')
+```
+
+
+### 钩子函数参数
+
+钩子函数的参数有：
+
+el
+
+el 指令绑定到的元素。这可用于直接操作 DOM。
+
+binding
+
+binding 是一个对象，包含以下属性：
+
+- instance：使用指令的组件实例。
+- value：传递给指令的值。例如，在 v-my-directive="1 + 1" 中，该值为 2。
+- oldValue：先前的值，仅在 beforeUpdate 和 updated 中可用。值是否已更改都可用。
+- arg：参数传递给指令 (如果有)。例如在 v-my-directive:foo 中，arg 为 "foo"。
+- modifiers：包含修饰符 (如果有) 的对象。例如在 v-my-directive.foo.bar 中，修饰符对象为 {foo: true，bar: true}。
+- dir：一个对象，在注册指令时作为参数传递。例如，在以下指令中：
+
+```text
+app.directive('focus', {
+  mounted(el) {
+    el.focus()
+  }
+})
+```
+
+dir 将会是以下对象：
+
+```text
+{
+  mounted(el) {
+    el.focus()
+  }
+}
+```
+
+vnode
+
+作为 el 参数收到的真实 DOM 元素的蓝图。
+
+prevNode
+
+上一个虚拟节点，仅在 beforeUpdate 和 updated 钩子中可用。
+
+以下实例演示了这些参数的使用：
+
+
+## 实例
+
+```html
+<div id="app">
+   <div v-runoob="{ name: '菜鸟教程', url: 'www.runoob.com' }"></div>
+</div>
+​
+<script>
+const app = Vue.createApp({})
+app.directive('runoob', (el, binding, vnode) => {
+console.log(binding.value.name) // => "菜鸟教程"
+console.log(binding.value.url) // => "www.runoob.com"
+var s = JSON.stringify
+el.innerHTML = s(binding.value)
+})
+app.mount('#app')
+</script>
+```
+
+有时候我们不需要其他钩子函数，我们可以简写函数，如下格式：
+
+```javascript
+Vue.directive('runoob', function (el, binding) {
+  // 设置指令的背景颜色
+  el.style.backgroundColor = binding.value.color
+})
+```
+
+指令函数可接受所有合法的 JavaScript 表达式，以下实例传入了 JavaScript 对象：
+
+
+## 实例
+
+```html
+<div id="app">
+    <div v-runoob="{ color: 'green', text: '菜鸟教程!' }"></div>
+</div>
+
+<script>
+Vue.directive('runoob', function (el, binding) {
+    // 简写方式设置文本及背景颜色
+    el.innerHTML = binding.value.text
+    el.style.backgroundColor = binding.value.color
+})
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue3 自定义指令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

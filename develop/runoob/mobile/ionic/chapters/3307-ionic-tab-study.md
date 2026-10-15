@@ -1,35 +1,161 @@
-# Ionic：ionic tab(选项卡) 学习笔记
+# Ionic：ionic tab(选项卡)
 
 - 来源：[ionic tab(选项卡)](https://www.runoob.com/ionic/ionic-tab.html)
 - 分类：移动开发
 - 技术：Ionic
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3307
 
-## 学习目标
+## 本章内容
 
-Ionic 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `ionic tab(选项卡)` 建立学习路径，先理解它在 Ionic 体系中的位置，再做可运行或可复述的验证。
+ionic tab(选项卡) 是水平排列的按钮或者链接，用以页面间导航的切换。它可以包含文字和图标的组合，是一种移动设备上流行的导航方法。
 
-## 阅读抓手
+以下选项卡容器使用了 tabs 类，每个选项卡使用 tab-item 类。默认情况下，选项卡是文本的，并没有图标。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+### 实例
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+<div class="tabs">
+  <a class="tab-item">
+    主页
+  </a>
+  <a class="tab-item">
+    收藏
+  </a>
+  <a class="tab-item">
+    设置
+  </a>
+</div>
+```
 
-## 完成标准
+尝试一下 »
 
-- 能用 3 到 5 句话解释 `ionic tab(选项卡)`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+默认情况，选项卡颜色为默认，你可以设置以下不同颜色样式：tabs-default ，tabs-light ，tabs-stable ，tabs-positive ，tabs-calm ，tabs-balanced ，tabs-energized ，tabs-assertive ，tabs-royal ，tabs-dark。
+
+要隐藏选项卡栏，可使用 tabs-item-hide 类。
+
+
+### 图标选项卡
+
+在 tabs 类后添加 tabs-icon-only 类可设置只显示图标选项卡。
+
+```html
+<div class="tabs tabs-icon-only">
+  <a class="tab-item">
+    <i class="icon ion-home"></i>
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-star"></i>
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-gear-a"></i>
+  </a>
+</div>
+```
+
+尝试一下 »
+
+
+### 顶部图标+文字选项卡
+
+在 tabs 类后添加 tabs-icon-top 类可设置顶部图标+文字选项卡。
+
+```html
+<div class="tabs tabs-icon-top">
+  <a class="tab-item" href="#">
+    <i class="icon ion-home"></i>
+    主页
+  </a>
+  <a class="tab-item" href="#">
+    <i class="icon ion-star"></i>
+    收藏
+  </a>
+  <a class="tab-item" href="#">
+    <i class="icon ion-gear-a"></i>
+    设置
+  </a>
+</div>
+```
+
+尝试一下 »
+
+
+### 左侧图标+文字选项卡
+
+在 tabs 类后添加 tabs-icon-left 类可设置左侧图标+文字选项卡。
+
+```html
+<div class="tabs tabs-icon-left">
+  <a class="tab-item">
+    <i class="icon ion-home"></i>
+    主页
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-star"></i>
+    收藏
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-gear-a"></i>
+    设置
+  </a>
+</div>
+```
+
+尝试一下 »
+
+
+### 条纹样式选项卡
+
+可以在带有 tabs 的样式名的元素上添加 tabs-striped 来实现像 Android 风格的 tabs。也可以添加 tabs-top 来实现选项卡在页面顶部。
+
+条纹选项卡颜色可通过 tabs-background-{color} 和 tabs-color-{color} 来控制， {color} 值可以是：default, light, stable, positive, calm, balanced, energized, assertive, royal, 或 dark。
+
+注意：如果要再选项卡上设置头部标题，需要使用 has-tabs-top 类。
+
+```html
+<div class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+    <div class="tabs">
+      <a class="tab-item active" href="#">
+        <i class="icon ion-home"></i>
+        Test
+      </a>
+      <a class="tab-item" href="#">
+        <i class="icon ion-star"></i>
+        Favorites
+      </a>
+      <a class="tab-item" href="#">
+        <i class="icon ion-gear-a"></i>
+        Settings
+      </a>
+    </div>
+  </div>
+  <div class="tabs-striped tabs-color-assertive">
+    <div class="tabs">
+      <a class="tab-item active" href="#">
+        <i class="icon ion-home"></i>
+        Test
+      </a>
+      <a class="tab-item" href="#">
+        <i class="icon ion-star"></i>
+        Favorites
+      </a>
+      <a class="tab-item" href="#">
+        <i class="icon ion-gear-a"></i>
+        Settings
+      </a>
+    </div>
+  </div>
+```
+
+尝试一下 »
+
+运行效果如下：
+
+
+## 复习重点
+
+- 能说明 `ionic tab(选项卡)` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

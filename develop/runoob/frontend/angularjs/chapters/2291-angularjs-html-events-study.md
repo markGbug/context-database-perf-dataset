@@ -1,35 +1,65 @@
-# AngularJS：AngularJS 事件 学习笔记
+# AngularJS：AngularJS 事件
 
 - 来源：[AngularJS 事件](https://www.runoob.com/angularjs/angularjs-html-events.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2291
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS 事件` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+AngularJS 有自己的 HTML 事件指令。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## ng-click 指令
 
-## 笔记模板
+ng-click 指令定义了 AngularJS 点击事件。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## AngularJS 实例
 
-- 能用 3 到 5 句话解释 `AngularJS 事件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 隐藏 HTML 元素
+
+ng-hide 指令用于设置应用部分是否可见。
+
+ng-hide="true" 设置 HTML 元素不可见。
+
+ng-hide="false" 设置 HTML 元素可见。
+
+
+## AngularJS 实例
+
+应用解析:
+
+第一部分 personController与控制器章节类似。
+
+应用有一个默认属性: $scope.myVar = false;
+
+ng-hide 指令设置 <p>元素及两个输入域是否可见， 根据 myVar 的值 (true 或 false) 来设置是否可见。
+
+toggle() 函数用于切换 myVar 变量的值（true 和 false）。
+
+ng-hide="true" 让元素 不可见。
+
+
+## 显示 HTML 元素
+
+ng-show 指令可用于设置应用中的一部分是否可见 。
+
+ng-show="false" 可以设置 HTML 元素 不可见。
+
+ng-show="true" 可以以设置 HTML 元素可见。
+
+以下实例使用了 ng-show 指令:
+
+
+## AngularJS 实例
+
+
+## 复习重点
+
+- 能说明 `AngularJS 事件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

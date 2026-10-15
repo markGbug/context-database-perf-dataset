@@ -1,35 +1,83 @@
-# CSS：CSS 编辑器 学习笔记
+# CSS：CSS 编辑器
 
 - 来源：[CSS 编辑器](https://www.runoob.com/css/css-editor.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2391
 
-## 学习目标
+## 本章内容
 
-CSS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `CSS 编辑器` 建立学习路径，先理解它在 CSS 体系中的位置，再做可运行或可复述的验证。
+可以使用专业的 CSS 编辑器来编辑 CSS，为大家推荐几款常用的编辑器：
 
-## 阅读抓手
+你可以从以上软件的官网中下载对应的软件，按步骤安装即可。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+也可以使用我们的在线编辑器：https://www.jyshare.com/front-end/61/
 
-## 笔记模板
+接下来我们将为大家演示如何使用 VS Code 工具来创建 CSS 文件。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## VS Code
 
-- 能用 3 到 5 句话解释 `CSS 编辑器`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+Visual Studio Code（简称 VS Code）是一个由微软开发，同时支持 Windows 、 Linux 和 macOS 等操作系统且开放源代码的代码编辑器，编辑器中内置了扩展程序管理的功能。
+
+VS Code 安装教程参考：https://www.runoob.com/vscode/vscode-tutorial.html
+
+安装必备插件 (Extensions): 点击 VS Code 左侧边栏的方块图标（Extensions），搜索并安装以下两个插件，它们对新手至关重要：
+
+- Live Server: 允许你在浏览器中实时预览网页，保存代码后浏览器会自动刷新。
+- HTML CSS Support: 增强 CSS 的智能提示。
+
+
+### 第一步: 建立项目结构
+
+在你的电脑上创建一个名为 my-first-css 的文件夹
+
+在 VS Code 中打开： 点击 VS Code 左上角的 File -> Open Folder...，选择刚才的文件夹。
+
+- 在左侧资源管理器空白处右键，新建文件 index.html (这是网页骨架)。
+- 再次右键，新建文件 style.css (这是网页的皮肤)。
+
+
+### 第二步：编写 HTML 骨架
+
+CSS 必须依附于 HTML 存在，以下是 index.html 文件代码。
+
+在 <body> 标签内输入以下代码，并一定要加上 <link> 标签来关联 CSS 文件：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的 CSS 练习</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="card">
+        <h1>Hello, CSS!</h1>
+        <p>这是我用 VS Code 写的第一个样式卡片。</p>
+        <button>点击我</button>
+    </div>
+
+</body>
+</html>
+```
+
+
+### 第三步：编写 CSS 样式
+
+在 style.css 文件中输入以下代码:
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `CSS 编辑器` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

@@ -1,35 +1,98 @@
-# SOAP：SOAP HTTP Binding 学习笔记
+# SOAP：SOAP HTTP 协议
 
 - 来源：[SOAP HTTP Binding](https://www.runoob.com/soap/soap-httpbinding.html)
 - 分类：XML / Web Service
 - 技术：SOAP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：4348
 
-## 学习目标
+## 本章内容
 
-SOAP 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `SOAP HTTP Binding` 建立学习路径，先理解它在 SOAP 体系中的位置，再做可运行或可复述的验证。
+## HTTP 协议
 
-## 阅读抓手
+HTTP 在 TCP/IP 之上进行通信。HTTP 客户机使用 TCP 连接到 HTTP 服务器。在建立连接之后，客户机可向服务器发送 HTTP 请求消息：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+POST /item HTTP/1.1
+Host: 189.123.255.239
+Content-Type: text/plain
+Content-Length: 200
+```
 
-## 笔记模板
+随后服务器会处理此请求，然后向客户机发送一个 HTTP 响应。此响应包含了可指示请求状态的状态代码：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+200 OK
+Content-Type: text/plain
+Content-Length: 200
+```
 
-## 完成标准
+在上面的例子中，服务器返回了一个 200 的状态代码。这是 HTTP 的标准成功代码。
 
-- 能用 3 到 5 句话解释 `SOAP HTTP Binding`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+假如服务器无法对请求进行解码，它可能会返回类似这样的信息：
+
+```text
+400 Bad Request
+Content-Length: 0
+```
+
+
+## SOAP HTTP Binding
+
+SOAP 方法指的是遵守 SOAP 编码规则的 HTTP 请求/响应。
+
+
+### HTTP + XML = SOAP
+
+SOAP 请求可能是 HTTP POST 或 HTTP GET 请求。
+
+HTTP POST 请求规定至少两个 HTTP 头：Content-Type 和 Content-Length。
+
+
+## Content-Type
+
+SOAP 的请求和响应的 Content-Type 头可定义消息的 MIME 类型，以及用于请求或响应的 XML 主体的字符编码（可选）。
+
+
+### 语法
+
+```text
+Content-Type: MIMEType; charset=character-encoding
+```
+
+
+### 实例
+
+```text
+POST /item HTTP/1.1
+Content-Type: application/soap+xml; charset=utf-8
+```
+
+
+## Content-Length
+
+SOAP 的请求和响应的 Content-Length 头规定请求或响应主体的字节数。
+
+
+### 语法
+
+```text
+Content-Length: bytes
+```
+
+
+### 实例
+
+```text
+POST /item HTTP/1.1
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 250
+```
+
+
+## 复习重点
+
+- 能说明 `SOAP HTTP Binding` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

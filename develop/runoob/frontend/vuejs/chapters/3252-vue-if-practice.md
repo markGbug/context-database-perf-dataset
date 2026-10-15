@@ -1,34 +1,138 @@
-# Vue.js：Vue.js 条件语句 练习笔记
+# Vue.js：Vue.js 条件语句
 
 - 来源：[Vue.js 条件语句](https://www.runoob.com/vue2/vue-if.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3252
 
-## 练习目标
+## 本章内容
 
-把 `Vue.js 条件语句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 条件判断
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### v-if
 
-## 验收清单
+条件判断使用 v-if 指令：
 
-- 我能独立说出 `Vue.js 条件语句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+## v-if 指令
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在元素 和 template 中使用 v-if 指令：
+
+```html
+<div id="app">
+    <p v-if="seen">现在你看到我了</p>
+    <template v-if="ok">
+      <h1>菜鸟教程</h1>
+      <p>学的不仅是技术，更是梦想！</p>
+      <p>哈哈哈，打字辛苦啊！！！</p>
+    </template>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    seen: true,
+    ok: true
+  }
+})
+</script>
+```
+
+这里， v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。
+
+在字符串模板中，如 Handlebars ，我们得像这样写一个条件块：
+
+```html
+<!-- Handlebars 模板 -->
+{{#if ok}}
+  <h1>Yes</h1>
+{{/if}}
+```
+
+
+### v-else
+
+可以用 v-else 指令给 v-if 添加一个 "else" 块：
+
+
+## v-else 指令
+
+随机生成一个数字，判断是否大于0.5，然后输出对应信息：
+
+```html
+<div id="app">
+    <div v-if="Math.random() > 0.5">
+      Sorry
+    </div>
+    <div v-else>
+      Not sorry
+    </div>
+</div>
+
+<script>
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+
+### v-else-if
+
+v-else-if 在 2.1.0 新增，顾名思义，用作 v-if 的 else-if 块。可以链式的多次使用：
+
+
+## v-else 指令
+
+判断 type 变量的值：
+
+```html
+<div id="app">
+    <div v-if="type === 'A'">
+      A
+    </div>
+    <div v-else-if="type === 'B'">
+      B
+    </div>
+    <div v-else-if="type === 'C'">
+      C
+    </div>
+    <div v-else>
+      Not A/B/C
+    </div>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    type: 'C'
+  }
+})
+</script>
+```
+
+v-else 、v-else-if 必须跟在 v-if 或者 v-else-if之后。
+
+
+### v-show
+
+我们也可以使用 v-show 指令来根据条件展示元素：
+
+
+## v-show 指令
+
+```html
+<h1 v-show="ok">Hello!</h1>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue.js 条件语句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

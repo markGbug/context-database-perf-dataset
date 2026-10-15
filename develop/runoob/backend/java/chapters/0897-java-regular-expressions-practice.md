@@ -1,34 +1,430 @@
-# Java：Java 正则表达式 练习笔记
+# Java：Java 正则表达式
 
 - 来源：[Java 正则表达式](https://www.runoob.com/java/java-regular-expressions.html)
 - 分类：后端开发
 - 技术：Java
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0897
 
-## 练习目标
+## 本章内容
 
-把 `Java 正则表达式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+正则表达式定义了字符串的模式。
 
-## 练习步骤
+正则表达式可以用来搜索、编辑或处理文本。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+正则表达式并不仅限于某一种语言，但是在每种语言中有细微的差别。
 
-## 验收清单
+Java 提供了 java.util.regex 包，它包含了 Pattern 和 Matcher 类，用于处理正则表达式的匹配操作。
 
-- 我能独立说出 `Java 正则表达式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
 
-## 复盘问题
+### 正则表达式实例
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+一个字符串其实就是一个简单的正则表达式，例如 Hello World 正则表达式匹配 "Hello World" 字符串。
+
+.（点号）也是一个正则表达式，它匹配任何一个字符如："a" 或 "1"。
+
+下表列出了一些正则表达式的实例及描述：
+
+this is text
+
+匹配字符串 "this is text"
+
+this\s+is\s+text
+
+注意字符串中的 \s+。
+
+匹配单词 "this" 后面的 \s+ 可以匹配多个空格，之后匹配 is 字符串，再之后 \s+ 匹配多个空格然后再跟上 text 字符串。
+
+可以匹配这个实例：this is text
+
+^\d+(\.\d+)?
+
+^ 定义了以什么开始
+
+\d+ 匹配一个或多个数字
+
+? 设置括号内的选项是可选的
+
+\. 匹配 "."
+
+可以匹配的实例："5", "1.5" 和 "2.21"。
+
+更多正则表达式内容可以参考：正则表达式 - 教程
+
+
+## java.util.regex 包
+
+java.util.regex 包是 Java 标准库中用于支持正则表达式操作的包。
+
+java.util.regex 包主要包括以下三个类：
+
+- Pattern 类：pattern 对象是一个正则表达式的编译表示。Pattern 类没有公共构造方法。要创建一个 Pattern 对象，你必须首先调用其公共静态编译方法，它返回一个 Pattern 对象。该方法接受一个正则表达式作为它的第一个参数。
+- Matcher 类：Matcher 对象是对输入字符串进行解释和匹配操作的引擎。与Pattern 类一样，Matcher 也没有公共构造方法。你需要调用 Pattern 对象的 matcher 方法来获得一个 Matcher 对象。
+- PatternSyntaxException：PatternSyntaxException 是一个非强制异常类，它表示一个正则表达式模式中的语法错误。
+
+以下实例中使用了正则表达式 .*runoob.* 用于查找字符串中是否包了 runoob 子串：
+
+
+## 实例
+
+```java
+import java.util.regex.*;
+
+class RegexExample1{
+   public static void main(String[] args){
+      String content = "I am noob " +
+        "from runoob.com.";
+
+      String pattern = ".*runoob.*";
+
+      boolean isMatch = Pattern.matches(pattern, content);
+      System.out.println("字符串中是否包含了 'runoob' 子字符串? " + isMatch);
+   }
+}
+```
+
+实例输出结果为：
+
+
+## 捕获组
+
+捕获组是把多个字符当一个单独单元进行处理的方法，它通过对括号内的字符分组来创建。
+
+例如，正则表达式 (dog) 创建了单一分组，组里包含"d"，"o"，和"g"。
+
+捕获组是通过从左至右计算其开括号来编号。例如，在表达式（（A）（B（C））），有四个这样的组：
+
+- ((A)(B(C)))
+- (A)
+- (B(C))
+- (C)
+
+可以通过调用 matcher 对象的 groupCount 方法来查看表达式有多少个分组。groupCount 方法返回一个 int 值，表示matcher对象当前有多个捕获组。
+
+还有一个特殊的组（group(0)），它总是代表整个表达式。该组不包括在 groupCount 的返回值中。
+
+
+## 实例
+
+下面的例子说明如何从一个给定的字符串中找到数字串：
+
+
+## RegexMatches.java 文件代码：
+
+```java
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexMatches
+{
+    public static void main( String[] args ){
+
+      // 按指定模式在字符串查找
+      String line = "This order was placed for QT3000! OK?";
+      String pattern = "(\\D*)(\\d+)(.*)";
+
+      // 创建 Pattern 对象
+      Pattern r = Pattern.compile(pattern);
+
+      // 现在创建 matcher 对象
+      Matcher m = r.matcher(line);
+      if (m.find( )) {
+         System.out.println("Found value: " + m.group(0) );
+         System.out.println("Found value: " + m.group(1) );
+         System.out.println("Found value: " + m.group(2) );
+         System.out.println("Found value: " + m.group(3) );
+      } else {
+         System.out.println("NO MATCH");
+      }
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+Found value: This order was placed for QT3000! OK?
+Found value: This order was placed for QT
+Found value: 3000
+Found value: ! OK?
+```
+
+
+## 正则表达式语法
+
+在其他语言中，\\ 表示：我想要在正则表达式中插入一个普通的（字面上的）反斜杠，请不要给它任何特殊的意义。
+
+在 Java 中，\\ 表示：我要插入一个正则表达式的反斜线，所以其后的字符具有特殊的意义。
+
+所以，在其他的语言中（如 Perl），一个反斜杠 \ 就足以具有转义的作用，而在 Java 中正则表达式中则需要有两个反斜杠才能被解析为其他语言中的转义作用。也可以简单的理解在 Java 的正则表达式中，两个 \\ 代表其他语言中的一个 \，这也就是为什么表示一位数字的正则表达式是 \\d，而表示一个普通的反斜杠是 \\。
+
+```java
+System.out.print("\\");    // 输出为 \
+System.out.print("\\\\");  // 输出为 \\
+```
+
+字符
+
+说明
+
+\
+
+将下一字符标记为特殊字符、文本、反向引用或八进制转义符。例如， n匹配字符 n。\n 匹配换行符。序列 \\\\ 匹配 \\ ，\\( 匹配 (。
+
+^
+
+匹配输入字符串开始的位置。如果设置了 RegExp 对象的 Multiline 属性，^ 还会与"\n"或"\r"之后的位置匹配。
+
+$
+
+匹配输入字符串结尾的位置。如果设置了 RegExp 对象的 Multiline 属性，$ 还会与"\n"或"\r"之前的位置匹配。
+
+*
+
+零次或多次匹配前面的字符或子表达式。例如，zo* 匹配"z"和"zoo"。* 等效于 {0,}。
+
++
+
+一次或多次匹配前面的字符或子表达式。例如，"zo+"与"zo"和"zoo"匹配，但与"z"不匹配。+ 等效于 {1,}。
+
+?
+
+零次或一次匹配前面的字符或子表达式。例如，"do(es)?"匹配"do"或"does"中的"do"。? 等效于 {0,1}。
+
+{n}
+
+n 是非负整数。正好匹配 n 次。例如，"o{2}"与"Bob"中的"o"不匹配，但与"food"中的两个"o"匹配。
+
+{n,}
+
+n 是非负整数。至少匹配 n 次。例如，"o{2,}"不匹配"Bob"中的"o"，而匹配"foooood"中的所有 o。"o{1,}"等效于"o+"。"o{0,}"等效于"o*"。
+
+{n,m}
+
+m 和 n 是非负整数，其中 n <= m。匹配至少 n 次，至多 m 次。例如，"o{1,3}"匹配"fooooood"中的头三个 o。'o{0,1}' 等效于 'o?'。注意：您不能将空格插入逗号和数字之间。
+
+?
+
+当此字符紧随任何其他限定符（*、+、?、{n}、{n,}、{n,m}）之后时，匹配模式是"非贪心的"。"非贪心的"模式匹配搜索到的、尽可能短的字符串，而默认的"贪心的"模式匹配搜索到的、尽可能长的字符串。例如，在字符串"oooo"中，"o+?"只匹配单个"o"，而"o+"匹配所有"o"。
+
+.
+
+匹配除"\r\n"之外的任何单个字符。若要匹配包括"\r\n"在内的任意字符，请使用诸如"[\s\S]"之类的模式。
+
+
+## Matcher 类的方法
+
+
+## 索引方法
+
+索引方法提供了有用的索引值，精确表明输入字符串中在哪能找到匹配：
+
+
+## 查找方法
+
+查找方法用来检查输入字符串并返回一个布尔值，表示是否找到该模式：
+
+
+## 替换方法
+
+替换方法是替换输入字符串里文本的方法：
+
+
+## start 和 end 方法
+
+下面是一个对单词 "cat" 出现在输入字符串中出现次数进行计数的例子：
+
+
+## RegexMatches.java 文件代码：
+
+```java
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexMatches
+{
+    private static final String REGEX = "\\bcat\\b";
+    private static final String INPUT =
+                                    "cat cat cat cattie cat";
+
+    public static void main( String[] args ){
+       Pattern p = Pattern.compile(REGEX);
+       Matcher m = p.matcher(INPUT); // 获取 matcher 对象
+       int count = 0;
+
+       while(m.find()) {
+         count++;
+         System.out.println("Match number "+count);
+         System.out.println("start(): "+m.start());
+         System.out.println("end(): "+m.end());
+      }
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+Match number 1
+start(): 0
+end(): 3
+Match number 2
+start(): 4
+end(): 7
+Match number 3
+start(): 8
+end(): 11
+Match number 4
+start(): 19
+end(): 22
+```
+
+可以看到这个例子是使用单词边界，以确保字母 "c" "a" "t" 并非仅是一个较长的词的子串。它也提供了一些关于输入字符串中匹配发生位置的有用信息。
+
+Start 方法返回在以前的匹配操作期间，由给定组所捕获的子序列的初始索引，end 方法最后一个匹配字符的索引加 1。
+
+
+## matches 和 lookingAt 方法
+
+matches 和 lookingAt 方法都用来尝试匹配一个输入序列模式。它们的不同是 matches 要求整个序列都匹配，而lookingAt 不要求。
+
+lookingAt 方法虽然不需要整句都匹配，但是需要从第一个字符开始匹配。
+
+这两个方法经常在输入字符串的开始使用。
+
+我们通过下面这个例子，来解释这个功能：
+
+
+## RegexMatches.java 文件代码：
+
+```java
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexMatches
+{
+    private static final String REGEX = "foo";
+    private static final String INPUT = "fooooooooooooooooo";
+    private static final String INPUT2 = "ooooofoooooooooooo";
+    private static Pattern pattern;
+    private static Matcher matcher;
+    private static Matcher matcher2;
+
+    public static void main( String[] args ){
+       pattern = Pattern.compile(REGEX);
+       matcher = pattern.matcher(INPUT);
+       matcher2 = pattern.matcher(INPUT2);
+
+       System.out.println("Current REGEX is: "+REGEX);
+       System.out.println("Current INPUT is: "+INPUT);
+       System.out.println("Current INPUT2 is: "+INPUT2);
+
+
+       System.out.println("lookingAt(): "+matcher.lookingAt());
+       System.out.println("matches(): "+matcher.matches());
+       System.out.println("lookingAt(): "+matcher2.lookingAt());
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+Current REGEX is: foo
+Current INPUT is: fooooooooooooooooo
+Current INPUT2 is: ooooofoooooooooooo
+lookingAt(): true
+matches(): false
+lookingAt(): false
+```
+
+
+## replaceFirst 和 replaceAll 方法
+
+replaceFirst 和 replaceAll 方法用来替换匹配正则表达式的文本。不同的是，replaceFirst 替换首次匹配，replaceAll 替换所有匹配。
+
+下面的例子来解释这个功能：
+
+
+## RegexMatches.java 文件代码：
+
+```java
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexMatches
+{
+    private static String REGEX = "dog";
+    private static String INPUT = "The dog says meow. " +
+                                    "All dogs say meow.";
+    private static String REPLACE = "cat";
+
+    public static void main(String[] args) {
+       Pattern p = Pattern.compile(REGEX);
+       // get a matcher object
+       Matcher m = p.matcher(INPUT);
+       INPUT = m.replaceAll(REPLACE);
+       System.out.println(INPUT);
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+The cat says meow. All cats say meow.
+```
+
+
+## appendReplacement 和 appendTail 方法
+
+Matcher 类也提供了appendReplacement 和 appendTail 方法用于文本替换：
+
+看下面的例子来解释这个功能：
+
+
+## RegexMatches.java 文件代码：
+
+```java
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexMatches
+{
+   private static String REGEX = "a*b";
+   private static String INPUT = "aabfooaabfooabfoobkkk";
+   private static String REPLACE = "-";
+   public static void main(String[] args) {
+      Pattern p = Pattern.compile(REGEX);
+      // 获取 matcher 对象
+      Matcher m = p.matcher(INPUT);
+      StringBuffer sb = new StringBuffer();
+      while(m.find()){
+         m.appendReplacement(sb,REPLACE);
+      }
+      m.appendTail(sb);
+      System.out.println(sb.toString());
+   }
+}
+```
+
+以上实例编译运行结果如下：
+
+```text
+-foo-foo-foo-kkk
+```
+
+
+## PatternSyntaxException 类的方法
+
+PatternSyntaxException 是一个非强制异常类，它指示一个正则表达式模式中的语法错误。
+
+PatternSyntaxException 类提供了下面的方法来帮助我们查看发生了什么错误。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Java 正则表达式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

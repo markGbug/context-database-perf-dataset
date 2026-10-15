@@ -1,34 +1,66 @@
-# Playwright：Playwright 教程 练习笔记
+# Playwright：Playwright 教程
 
 - 来源：[Playwright 教程](https://www.runoob.com/playwright/playwright-tutorial.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0505
 
-## 练习目标
+## 本章内容
 
-把 `Playwright 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Playwright 是微软（Microsoft） 在 2020 年推出的一个开源项目，用于 Web 自动化和端到端（End-to-End）测试的开源框架。
 
-## 练习步骤
+Playwright支持多种浏览器（Chromium、Firefox 和 WebKit）和多种编程语言（JavaScript/TypeScript、Python、Java 和 .NET），旨在提供可靠、快速且功能丰富的自动化测试解决方案。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 学习 Playwright 需要的基础知识？
 
-- 我能独立说出 `Playwright 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+学习 Playwright 前，掌握这几样就够了：
 
-## 复盘问题
+- 会点 JavaScript，尤其是 async/await；
+- 会用 Node.js 和 npm 来运行脚本；
+- 懂点 HTML 和选择器（比如 #id、.class）；
+- 能用终端 跑命令。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## Playwright 能干什么？
+
+用一句话总结：只要人能在浏览器里点的，Playwright 几乎都能自动化完成。
+
+比如：
+
+- 点击按钮
+- 填写表单
+- 导航到不同的页面
+- 截图和保存网页内容
+
+
+## Playwright 简单实例
+
+以下是一个 Playwright 的简单实例，可以截图百度的首页：
+
+
+## 实例
+
+运行：
+
+```text
+node hello.js
+```
+
+浏览器会自动输入两条待办事项，并保存截图。
+
+
+## 相关链接
+
+- Playwright 官网：https://playwright.dev/
+- Playwright 开源地址：https://github.com/microsoft/playwright
+- Playwright API 文档：https://playwright.dev/docs/api/class-playwright/
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Playwright 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

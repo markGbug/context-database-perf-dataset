@@ -1,35 +1,69 @@
-# jQuery EasyUI：jEasyUI 自定义排序 学习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 自定义排序
 
 - 来源：[jEasyUI 自定义排序](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid14.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2869
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 自定义排序` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+如果默认的排序行为不满足您的需求，您可以自定义数据网格（datagrid）的排序行为。
 
-## 阅读抓手
+最基础的，用户可以在列上定义一个排序函数，函数名是 sorter。这个函数将接受两个值，返回值将如下：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+valueA > valueB => 返回 1
 
-## 笔记模板
+valueA < valueB => 返回 -1
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```html
+    <table id="tt"></table>
+```
 
-## 完成标准
+```text
+    $('#tt').datagrid({
+        title:'Custom Sort',
+        iconCls:'icon-ok',
+        width:520,
+        height:250,
+        singleSelect:true,
+        remoteSort:false,
+        columns:[[
+            {field:'itemid',title:'Item ID',width:60,sortable:true},
+            {field:'listprice',title:'List Price',width:70,align:'right',sortable:true},
+            {field:'unitcost',title:'Unit Cost',width:70,align:'right',sortable:true},
+            {field:'attr1',title:'Attribute',width:120,sortable:true},
+            {field:'date',title:'Date',width:80,sortable:true,align:'center',
+                sorter:function(a,b){
+                    a = a.split('/');
+                    b = b.split('/');
+                    if (a[2] == b[2]){
+                        if (a[0] == b[0]){
+                            return (a[1]>b[1]?1:-1);
+                        } else {
+                            return (a[0]>b[0]?1:-1);
+                        }
+                    } else {
+                        return (a[2]>b[2]?1:-1);
+                    }
+                }
+            },
+            {field:'status',title:'Status',width:40,align:'center'}
+        ]]
+    }).datagrid('loadData', data);
+```
 
-- 能用 3 到 5 句话解释 `jEasyUI 自定义排序`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+您可以从这段代码中看到，我们为 date 列创建了自定义的 sorter。日期的格式是 'dd/mm/yyyy'，可以轻松的按年月日排序。
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid14.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 自定义排序` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

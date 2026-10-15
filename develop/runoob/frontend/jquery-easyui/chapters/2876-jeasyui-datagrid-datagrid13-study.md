@@ -1,35 +1,76 @@
-# jQuery EasyUI：jEasyUI 合并单元格 学习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 合并单元格
 
 - 来源：[jEasyUI 合并单元格](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid13.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2876
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 合并单元格` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+数据网格（datagrid）经常需要合并一些单元格。本教程将向您展示如何在数据网格（datagrid）中合并单元格。
 
-## 阅读抓手
+为了合并数据网格（datagrid）单元格，只需简单地调用 'mergeCells' 方法，并传入合并信息参数，告诉数据网格（datagrid）如何合并单元格。在所有合并的单元格中，除了第一个单元格，其它单元格在合并后被隐藏。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```html
+    <table id="tt" title="Merge Cells" style="width:550px;height:250px"
+            url="data/datagrid_data.json"
+            singleSelect="true" iconCls="icon-save" rownumbers="true"
+            idField="itemid" pagination="true">
+        <thead frozen="true">
+            <tr>
+                <th field="productid" width="80" formatter="formatProduct">Product ID</th>
+                <th field="itemid" width="100">Item ID</th>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th colspan="2">Price</th>
+                <th rowspan="2" field="attr1" width="150">Attribute</th>
+                <th rowspan="2" field="status" width="60" align="center">Stauts</th>
+            </tr>
+            <tr>
+                <th field="listprice" width="80" align="right">List Price</th>
+                <th field="unitcost" width="80" align="right">Unit Cost</th>
+            </tr>
+        </thead>
+    </table>
+```
 
-## 笔记模板
+当数据加载之后，我们合并数据网格（datagrid）中的一些单元格，所以放置下面的代码在 onLoadSuccess 回调函数中。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```java
+    $('#tt').datagrid({
+        onLoadSuccess:function(){
+            var merges = [{
+                index:2,
+                rowspan:2
+            },{
+                index:5,
+                rowspan:2
+            },{
+                index:7,
+                rowspan:2
+            }];
+            for(var i=0; i<merges.length; i++)
+                $('#tt').datagrid('mergeCells',{
+                    index:merges[i].index,
+                    field:'productid',
+                    rowspan:merges[i].rowspan
+                });
+        }
+    });
+```
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jEasyUI 合并单元格`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid13.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 合并单元格` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

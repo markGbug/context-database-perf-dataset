@@ -1,35 +1,134 @@
-# Skills（技能）：Skill 代码审查 学习笔记
+# Skills（技能）：Skill 代码审查
 
 - 来源：[Skill 代码审查](https://www.runoob.com/skills/skills-project-code-review.html)
 - 分类：AI / 智能开发
 - 技术：Skills（技能）
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0650
 
-## 学习目标
+## 本章内容
 
-Skills（技能） 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Skill 代码审查` 建立学习路径，先理解它在 Skills（技能） 体系中的位置，再做可运行或可复述的验证。
+本项目构建一个代码审查 Skill，用户上传代码文件后，自动分析代码质量、风格问题和潜在 Bug。
 
-## 阅读抓手
+目标：掌握工具链集成与结构化问题报告的生成。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 项目需求分析
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 目录结构
 
-- 能用 3 到 5 句话解释 `Skill 代码审查`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+code-reviewer/
+├── SKILL.md
+└── scripts/
+    ├── requirements.txt
+    ├── check_python.py
+    ├── check_js.py
+    └── generate_report.py
+```
+
+
+## Python 代码检查脚本
+
+
+## 实例
+
+输出：
+
+```text
+{
+  "status": "success",
+  "file": "runoob_app.py",
+  "grade": "B",
+  "syntax_ok": true,
+  "style_issues": [
+    {"line": 12, "col": 1, "code": "E302", "message": "expected 2 blank lines"},
+    {"line": 34, "col": 80, "code": "E501", "message": "line too long (103 > 100)"}
+  ],
+  "style_count": 5,
+  "error_count": 3,
+  "warning_count": 2,
+  "complex_functions": []
+}
+```
+
+
+## SKILL.md 完整内容
+
+```text
+---
+name: code-reviewer
+version: 1.0.0
+description: >
+  自动审查用户上传的代码文件，检查语法错误、风格问题和代码复杂度，
+  生成带评级的问题报告并给出改进建议。当用户需要代码审查、
+  检查代码质量、查找 Bug、评估代码规范时触发。
+---
+
+# 代码审查助手
+
+## 执行流程
+
+### 第一步：识别代码文件
+
+获取用户上传的代码文件路径，识别编程语言（根据扩展名）：
+- .py → Python 审查
+- .js / .ts → JavaScript/TypeScript 审查
+- 其他格式 → 告知暂不支持，列出支持的格式
+
+### 第二步：运行自动化检查
+
+Python 文件运行：
+```bash
+cd scripts/
+python check_python.py <文件路径>
+```
+
+### 第三步：生成并解读报告
+
+根据 JSON 输出，以人性化方式呈现结果：
+
+1. **总体评级**：A（优秀）/ B（良好）/ C（需改进）/ F（语法错误）
+2. **问题汇总表格**：行号、问题代码、描述
+3. **Top 3 优先修复项**：选出最严重的 3 个问题，给出修复建议和示例
+
+若文件无问题，给出简短正面评价：
+> 代码检查通过！共扫描 X 行，未发现语法错误和明显风格问题。
+```
+
+
+## 测试用例
+
+
+## 实例
+
+运行审查：
+
+```text
+cd scripts/
+python check_python.py tests/test_sample.py
+```
+
+输出：
+
+```text
+{
+  "status": "success",
+  "file": "test_sample.py",
+  "grade": "B",
+  "syntax_ok": true,
+  "style_count": 5,
+  "error_count": 4,
+  "warning_count": 1,
+  "complex_functions": []
+}
+```
+
+
+## 复习重点
+
+- 能说明 `Skill 代码审查` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

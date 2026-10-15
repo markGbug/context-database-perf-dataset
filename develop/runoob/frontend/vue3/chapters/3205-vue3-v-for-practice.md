@@ -1,34 +1,262 @@
-# Vue3：Vue3 循环语句 练习笔记
+# Vue3：Vue3 循环语句
 
 - 来源：[Vue3 循环语句](https://www.runoob.com/vue3/vue3-v-for.html)
 - 分类：前端开发
 - 技术：Vue3
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3205
 
-## 练习目标
+## 本章内容
 
-把 `Vue3 循环语句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## Vue.js 循环语句
 
-## 练习步骤
+在 Vue 中，循环语句主要通过 v-for 指令来实现，用于遍历数组或对象，生成对应数量的元素。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+在元素上使用 v-for 指令，根据源数据的数组或对象进行循环渲染元素。
 
-## 验收清单
+遍历数组：
 
-- 我能独立说出 `Vue3 循环语句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+v-for="(item, index) in items"
+```
 
-## 复盘问题
+遍历对象：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+v-for="(value, key, index) in object"
+```
+
+- key 的作用: 使用 v-for 渲染列表时，必须为每个项提供一个唯一的 key 属性，以便 Vue 能够识别每个项的唯一性，从而进行高效的 DOM 更新。
+- 嵌套循环: 可以嵌套使用多个 v-for 来渲染多维数组或对象结构。
+
+v-for 可以绑定数据到数组来渲染一个列表：
+
+
+## v-for 实例
+
+v-for 还支持一个可选的第二个参数，参数值为当前项的索引：
+
+
+## v-for 实例
+
+index 为列表项的索引值：
+
+模板 <template> 中使用 v-for：
+
+
+## v-for
+
+```html
+<ul>
+  <template v-for="site in sites">
+    <li>{{ site.text }}</li>
+    <li>--------------</li>
+  </template>
+</ul>
+```
+
+
+### v-for 迭代对象
+
+v-for 可以通过一个对象的属性来迭代数据：
+
+
+## v-for
+
+```html
+<div id="app">
+  <ul>
+    <li v-for="value in object">
+    {{ value }}
+    </li>
+  </ul>
+</div>
+
+<script>
+const app = {
+  data() {
+    return {
+      object: {
+        name: '菜鸟教程',
+        url: 'http://www.runoob.com',
+        slogan: '学的不仅是技术，更是梦想！'
+      }
+    }
+  }
+}
+
+Vue.createApp(app).mount('#app')
+</script>
+```
+
+你也可以提供第二个的参数为键名：
+
+
+## v-for
+
+```html
+<div id="app">
+  <ul>
+    <li v-for="(value, key) in object">
+    {{ key }} : {{ value }}
+    </li>
+  </ul>
+</div>
+```
+
+第三个参数为索引：
+
+
+## v-for
+
+```html
+<div id="app">
+  <ul>
+    <li v-for="(value, key, index) in object">
+     {{ index }}. {{ key }} : {{ value }}
+    </li>
+  </ul>
+</div>
+```
+
+
+### v-for 迭代整数
+
+v-for 也可以循环整数
+
+
+## v-for
+
+```html
+<div id="app">
+  <ul>
+    <li v-for="n in 10">
+     {{ n }}
+    </li>
+  </ul>
+</div>
+```
+
+
+## 显示过滤/排序后的结果
+
+我们可以对数组的元素进行处理后再显示出来，一般可以通过创建一个计算属性，来返回过滤或排序后的数组。
+
+
+## v-for 实例
+
+输出数组中的偶数：
+
+```html
+<div id="app">
+  <ul>
+    <li v-for="n in evenNumbers">{{ n }}</li>
+  </ul>
+</div>
+```
+
+
+### v-for/v-if 联合使用
+
+以上实例联合使用 v-for/v-if 给 select 设置默认值：
+
+
+## v-for/v-if 实例
+
+v-for 循环出列表，v-if 设置选中值：
+
+```html
+<div id="app">
+   <select @change="changeVal($event)" v-model="selOption">
+      <template v-for="(site,index) in sites" :site="site" :index="index" :key="site.id">
+         <!-- 索引为 1 的设为默认值，索引值从0 开始-->
+         <option v-if = "index == 1" :value="site.name" selected>{{site.name}}</option>
+         <option v-else :value="site.name">{{site.name}}</option>
+      </template>
+   </select>
+   <div>您选中了:{{selOption}}</div>
+</div>
+
+<script>
+const app = {
+    data() {
+        return {
+            selOption: "Runoob",
+            sites: [
+                  {id:1,name:"Google"},
+                  {id:2,name:"Runoob"},
+                  {id:3,name:"Taobao"},
+            ]
+         }
+
+    },
+    methods:{
+        changeVal:function(event){
+            this.selOption = event.target.value;
+            alert("你选中了"+this.selOption);
+        }
+    }
+}
+
+Vue.createApp(app).mount('#app')
+</script>
+```
+
+
+## 在组件上使用 v-for
+
+如果你还没了解组件的内容，可以先跳过这部分。
+
+在自定义组件上，你可以像在任何普通元素上一样使用 v-for：
+
+```html
+<my-component v-for="item in items" :key="item.id"></my-component>
+```
+
+然而，任何数据都不会被自动传递到组件里，因为组件有自己独立的作用域。为了把迭代数据传递到组件里，我们要使用 props：
+
+```html
+<my-component
+  v-for="(item, index) in items"
+  :item="item"
+  :index="index"
+  :key="item.id"
+></my-component>
+```
+
+不自动将 item 注入到组件里的原因是，这会使得组件与 v-for 的运作紧密耦合。明确组件数据的来源能够使组件在其他场合重复使用。
+
+下面是一个简单的 todo 列表的完整例子：
+
+
+## 实例
+
+```html
+<div id="todo-list-example">
+  <form v-on:submit.prevent="addNewTodo">
+    <label for="new-todo">Add a todo</label>
+    <input
+      v-model="newTodoText"
+      id="new-todo"
+      placeholder="E.g. Feed the cat"
+    />
+    <button>Add</button>
+  </form>
+  <ul>
+    <todo-item
+      v-for="(todo, index) in todos"
+      :key="todo.id"
+      :title="todo.title"
+      @remove="todos.splice(index, 1)"
+    ></todo-item>
+  </ul>
+</div>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Vue3 循环语句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

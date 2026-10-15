@@ -1,34 +1,229 @@
-# 设计模式：责任链模式 练习笔记
+# 设计模式：责任链模式
 
 - 来源：[责任链模式](https://www.runoob.com/design-pattern/chain-of-responsibility-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1318
 
-## 练习目标
+## 本章内容
 
-把 `责任链模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+责任链模式（Chain of Responsibility Pattern）为请求创建了一个接收者对象的链。这种模式给予请求的类型，对请求的发送者和接收者进行解耦。这种类型的设计模式属于行为型模式。
 
-## 练习步骤
+责任链模式通过将多个处理器（处理对象）以链式结构连接起来，使得请求沿着这条链传递，直到有一个处理器处理该请求为止。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+责任链模式允许多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递请求。
 
-## 验收清单
+## 介绍
 
-- 我能独立说出 `责任链模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 意图
 
-## 复盘问题
+允许将请求沿着处理者链传递，直到请求被处理为止。。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 主要解决的问题
+
+- 解耦请求发送者和接收者，使多个对象都有可能接收请求，而发送者不需要知道哪个对象会处理它。
+
+### 使用场景
+
+- 当有多个对象可以处理请求，且具体由哪个对象处理由运行时决定时。
+- 当需要向多个对象中的一个提交请求，而不想明确指定接收者时。
+
+### 实现方式
+
+- 定义处理者接口：所有处理者必须实现同一个接口。
+- 创建具体处理者：实现接口的具体类，包含请求处理逻辑和指向链中下一个处理者的引用。
+
+### 关键代码
+
+- Handler接口：定义一个方法用于处理请求。
+- ConcreteHandler类：实现Handler接口，包含请求处理逻辑和对下一个处理者的引用。
+
+### 应用实例
+
+- 击鼓传花：游戏中的传递行为，直到音乐停止。
+- 事件冒泡：在JavaScript中，事件从最具体的元素开始，逐级向上传播。
+- Web服务器：如Apache Tomcat处理字符编码，Struts2的拦截器，以及Servlet的Filter。
+
+### 优点
+
+- 降低耦合度：发送者和接收者之间解耦。
+- 简化对象：对象不需要知道链的结构。
+- 灵活性：通过改变链的成员或顺序，动态地新增或删除责任。
+- 易于扩展：增加新的请求处理类很方便。
+
+### 缺点
+
+- 请求未被处理：不能保证请求一定会被链中的某个处理者接收。
+- 性能影响：可能影响系统性能，且调试困难，可能导致循环调用。
+- 难以观察：运行时特征不明显，可能妨碍除错。
+
+### 使用建议
+
+- 在处理请求时，如果有多个潜在的处理者，考虑使用责任链模式。
+- 确保链中的每个处理者都明确知道如何传递请求到链的下一个环节。
+
+### 注意事项
+
+- 在Java Web开发中，责任链模式有广泛应用，如过滤器链、拦截器等。
+
+### 结构
+
+主要涉及到以下几个核心角色：
+
+抽象处理者（Handler）:
+
+- 定义一个处理请求的接口，通常包含一个处理请求的方法（如 handleRequest）和一个指向下一个处理者的引用（后继者）。
+
+具体处理者（ConcreteHandler）:
+
+- 实现了抽象处理者接口，负责处理请求。如果能够处理该请求，则直接处理；否则，将请求传递给下一个处理者。
+
+客户端（Client）:
+
+- 创建处理者对象，并将它们连接成一条责任链。通常，客户端只需要将请求发送给责任链的第一个处理者，无需关心请求的具体处理过程。
+
+## 实现
+
+我们创建抽象类 AbstractLogger，带有详细的日志记录级别。然后我们创建三种类型的记录器，都扩展了 AbstractLogger。每个记录器消息的级别是否属于自己的级别，如果是则相应地打印出来，否则将不打印并把消息传给下一个记录器。
+
+### 步骤 1
+
+创建抽象的记录器类。
+
+## AbstractLogger.java
+
+```java
+public abstract class AbstractLogger {
+   public static int INFO = 1;
+   public static int DEBUG = 2;
+   public static int ERROR = 3;
+
+   protected int level;
+
+   //责任链中的下一个元素
+   protected AbstractLogger nextLogger;
+
+   public void setNextLogger(AbstractLogger nextLogger){
+      this.nextLogger = nextLogger;
+   }
+
+   public void logMessage(int level, String message){
+      if(this.level <= level){
+         write(message);
+      }
+      if(nextLogger !=null){
+         nextLogger.logMessage(level, message);
+      }
+   }
+
+   abstract protected void write(String message);
+
+}
+```
+
+### 步骤 2
+
+创建扩展了该记录器类的实体类。
+
+## ConsoleLogger.java
+
+```java
+public class ConsoleLogger extends AbstractLogger {
+
+   public ConsoleLogger(int level){
+      this.level = level;
+   }
+
+   @Override
+   protected void write(String message) {
+      System.out.println("Standard Console::Logger: " + message);
+   }
+}
+```
+
+## ErrorLogger.java
+
+```java
+public class ErrorLogger extends AbstractLogger {
+
+   public ErrorLogger(int level){
+      this.level = level;
+   }
+
+   @Override
+   protected void write(String message) {
+      System.out.println("Error Console::Logger: " + message);
+   }
+}
+```
+
+## FileLogger.java
+
+```java
+public class FileLogger extends AbstractLogger {
+
+   public FileLogger(int level){
+      this.level = level;
+   }
+
+   @Override
+   protected void write(String message) {
+      System.out.println("File::Logger: " + message);
+   }
+}
+```
+
+### 步骤 3
+
+创建不同类型的记录器。赋予它们不同的错误级别，并在每个记录器中设置下一个记录器。每个记录器中的下一个记录器代表的是链的一部分。
+
+## ChainPatternDemo.java
+
+```java
+public class ChainPatternDemo {
+
+   private static AbstractLogger getChainOfLoggers(){
+
+      AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
+      AbstractLogger fileLogger = new FileLogger(AbstractLogger.DEBUG);
+      AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
+
+      errorLogger.setNextLogger(fileLogger);
+      fileLogger.setNextLogger(consoleLogger);
+
+      return errorLogger;
+   }
+
+   public static void main(String[] args) {
+      AbstractLogger loggerChain = getChainOfLoggers();
+
+      loggerChain.logMessage(AbstractLogger.INFO, "This is an information.");
+
+      loggerChain.logMessage(AbstractLogger.DEBUG,
+         "This is a debug level information.");
+
+      loggerChain.logMessage(AbstractLogger.ERROR,
+         "This is an error information.");
+   }
+}
+```
+
+### 步骤 4
+
+执行程序，输出结果：
+
+```text
+Standard Console::Logger: This is an information.
+File::Logger: This is a debug level information.
+Standard Console::Logger: This is a debug level information.
+Error Console::Logger: This is an error information.
+File::Logger: This is an error information.
+Standard Console::Logger: This is an error information.
+```
+
+## 动手验证
+
+- 复现 `责任链模式` 中的关键示例或命令。
+- 修改一个输入、参数或条件，观察结果变化。
+- 记录报错信息、定位过程和修复方式。

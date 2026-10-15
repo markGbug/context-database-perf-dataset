@@ -1,35 +1,56 @@
-# Ruby：Ruby CGI Session 学习笔记
+# Ruby：Ruby CGI Session
 
 - 来源：[Ruby CGI Session](https://www.runoob.com/ruby/ruby-cgi-sessions.html)
 - 分类：编程语言
 - 技术：Ruby
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3746
 
-## 学习目标
+## 本章内容
 
-Ruby 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Ruby CGI Session` 建立学习路径，先理解它在 Ruby 体系中的位置，再做可运行或可复述的验证。
+CGI::Session 可以为用户和CGI环境保存持久的会话状态，会话使用后需要关闭，这样可以保证数据写入到存储当中，当会话完成后，你需要删除该数据。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 实例
 
-## 笔记模板
+```text
+#!/usr/bin/ruby
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+require 'cgi'
+require 'cgi/session'
+cgi = CGI.new("html4")
 
-## 完成标准
+sess = CGI::Session.new( cgi, "session_key" => "a_test",
+                              "prefix" => "rubysess.")
+lastaccess = sess["lastaccess"].to_s
+sess["lastaccess"] = Time.now
+if cgi['bgcolor'][0] =~ /[a-z]/
+  sess["bgcolor"] = cgi['bgcolor']
+end
 
-- 能用 3 到 5 句话解释 `Ruby CGI Session`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+cgi.out{
+  cgi.html {
+    cgi.body ("bgcolor" => sess["bgcolor"]){
+      "The background of this page"    +
+      "changes based on the 'bgcolor'" +
+      "each user has in session."      +
+      "Last access time: #{lastaccess}"
+    }
+  }
+}
+```
+
+访问 "/cgi-bin/test.cgi?bgcolor=red" 将跳转到指定背景颜色的页面。
+
+会话数据存在在服务器的临时文件目录中，prefix 参数指定了会话的前缀，将作为临时文件的前缀。这样你在服务器上可以轻松的识别不同的会话临时文件。
+
+
+## CGI::Session 类
+
+
+## 复习重点
+
+- 能说明 `Ruby CGI Session` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

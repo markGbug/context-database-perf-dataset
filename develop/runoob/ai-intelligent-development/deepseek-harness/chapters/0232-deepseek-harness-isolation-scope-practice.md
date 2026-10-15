@@ -1,34 +1,82 @@
-# DeepSeek Harness：DeepSeek Harness 服务隔离 练习笔记
+# DeepSeek Harness：DeepSeek Harness 服务隔离与作用域
 
 - 来源：[DeepSeek Harness 服务隔离](https://www.runoob.com/deepseek-harness/deepseek-harness-isolation-scope.html)
 - 分类：AI / 智能开发
 - 技术：DeepSeek Harness
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0232
 
-## 练习目标
+## 本章内容
 
-把 `DeepSeek Harness 服务隔离` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们将介绍同一个服务，怎么让不同插件组看到不同实例。
 
-## 练习步骤
+这背后是 Cordis 的 服务隔离（service isolation）与 agent 作用域（scope）机制。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 服务隔离：isolate
 
-- 我能独立说出 `DeepSeek Harness 服务隔离` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+cordis.yml 支持服务隔离：同一个服务可以有多个实例，不同插件组看到不同实例。
 
-## 复盘问题
+关键词是 isolate 配置，配合 group 插件把插件分成组。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+plugin-a 和 plugin-b 各自看到自己组内的 Bash 实例，互不影响。
+
+group-a 的 Bash 命令超时 5 秒，group-b 的超时 60 秒，两边互不知道对方的存在。
+
+
+## 为什么需要隔离
+
+不同任务对同一能力的需求可能完全不同。
+
+比如快速交互的任务希望 Bash 快速超时，而长任务希望给足时间。
+
+隔离让同一份服务按组配置、按组生效，而不是全局一刀切。
+
+
+## 作用域：scope
+
+scope 是按 agent（智能体）划分的注册单位。
+
+一项贡献（工具、提示词段、变量、限制、监听器）要么是全局的，要么归属于恰好一个 scope key。
+
+带作用域的注册不会向下继承给 subagent。
+
+子树行为通过 lineage 数据表达，而不是通过 scope 结构。
+
+
+## shadowing：最具体者胜出
+
+shadowing 是按 agent 定制 persona 和定制工具变体的机制。
+
+一个带作用域的工具，仅在该 scope 内替换同名的全局工具；其它 agent 仍看到全局版本。
+
+
+## restriction：过滤全局工具
+
+restriction 用 tools.restrict 为单个 scope 过滤全局工具集合。
+
+被过滤掉的全局工具既不进入提示词，也拒绝执行，与不存在的工具无法区分。
+
+换句话说，restriction 让一个 scope 里的 agent 完全「看不见」某些全局工具，而不是在调用时再拒绝。
+
+
+## 小结自测
+
+isolate 让同一服务按组实例化，scope 按 agent 划分注册，shadowing 与 restriction 分别实现同名替换与全局过滤。
+
+自测一下：
+
+- isolate: { shell: true } 让 group-a 与 group-b 的 Bash 实例是什么关系？
+- 带作用域的注册会不会继承给 subagent？
+- shadowing 与 restriction 各自解决什么问题？
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `DeepSeek Harness 服务隔离` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

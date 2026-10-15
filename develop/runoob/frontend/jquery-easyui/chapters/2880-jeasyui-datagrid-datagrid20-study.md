@@ -1,35 +1,56 @@
-# jQuery EasyUI：jEasyUI 创建属性网格 学习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 创建属性网格
 
 - 来源：[jEasyUI 创建属性网格](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid20.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2880
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 创建属性网格` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+属性网格（property grid）带有一个内置的 expand（展开）/collapse（合并） 按钮，可以简单地为行分组。您可以简单地创建一个可编辑属性的分层（hierarchical）列表。
 
-## 阅读抓手
+```html
+    <table id="tt" class="easyui-propertygrid" style="width:300px"
+            url="propertygrid_data.json"
+            showGroup="true" scrollbarSize="0"
+    ></table>
+```
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+    [
+        {"name":"Name","value":"Bill Smith","group":"ID Settings","editor":"text"},
+        {"name":"Address","value":"","group":"ID Settings","editor":"text"},
+        {"name":"Age","value":"40","group":"ID Settings","editor":"numberbox"},
+        {"name":"Birthday","value":"01/02/2012","group":"ID Settings","editor":"datebox"},
+        {"name":"SSN","value":"123-456-7890","group":"ID Settings","editor":"text"},
+        {"name":"Email","value":"bill@gmail.com","group":"Marketing Settings","editor":{
+            "type":"validatebox",
+            "options":{
+                "validType":"email"
+            }
+        }},
+        {"name":"FrequentBuyer","value":"false","group":"Marketing Settings","editor":{
+            "type":"checkbox",
+            "options":{
+                "on":true,
+                "off":false
+            }
+        }}
+    ]
+```
 
-## 笔记模板
+正如您所看到的，属性网格（property grid）的创建不需要任何的 javascript 代码。您可以简单地继承扩展 editor 类型。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 下载 jQuery EasyUI 实例
 
-- 能用 3 到 5 句话解释 `jEasyUI 创建属性网格`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+jeasyui-datagrid-datagrid20.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 创建属性网格` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

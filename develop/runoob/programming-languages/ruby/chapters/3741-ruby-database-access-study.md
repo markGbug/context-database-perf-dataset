@@ -1,35 +1,77 @@
-# Ruby：Ruby 数据库访问 - DBI 教程 学习笔记
+# Ruby：Ruby 数据库访问 - DBI 教程
 
 - 来源：[Ruby 数据库访问 - DBI 教程](https://www.runoob.com/ruby/ruby-database-access.html)
 - 分类：编程语言
 - 技术：Ruby
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3741
 
-## 学习目标
+## 本章内容
 
-Ruby 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `Ruby 数据库访问 - DBI 教程` 建立学习路径，先理解它在 Ruby 体系中的位置，再做可运行或可复述的验证。
+本章节将向您讲解如何使用 Ruby 访问数据库。Ruby DBI 模块为 Ruby 脚本提供了类似于 Perl DBI 模块的独立于数据库的接口。
 
-## 阅读抓手
+DBI 即 Database independent interface，代表了 Ruby 独立于数据库的接口。DBI 在 Ruby 代码与底层数据库之间提供了一个抽象层，允许您简单地实现数据库切换。它定义了一系列方法、变量和规范，提供了一个独立于数据库的一致的数据库接口。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+DBI 可与下列进行交互：
 
-## 笔记模板
+- ADO (ActiveX Data Objects)
+- DB2
+- Frontbase
+- mSQL
+- MySQL
+- ODBC
+- Oracle
+- OCI8 (Oracle)
+- PostgreSQL
+- Proxy/Server
+- SQLite
+- SQLRelay
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## DBI 应用架构
 
-- 能用 3 到 5 句话解释 `Ruby 数据库访问 - DBI 教程`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+DBI 独立于任何在后台中可用的数据库。无论您使用的是 Oracle、MySQL、Informix，您都可以使用 DBI。下面的架构图清晰地说明了这点。
+
+Ruby DBI 一般的架构使用两个层：
+
+- 数据库接口（DBI）层。该层是独立于数据库，并提供了一系列公共访问方法，方法的使用不分数据库服务器类型。
+- 数据库驱动（DBD）层。该层是依赖于数据库，不同的驱动提供了对不同的数据库引擎的访问。MySQL、PostgreSQL、InterBase、Oracle 等分别使用不同的驱动。每个驱动都负责解释来自 DBI 层的请求，并把这些请求映射为适用于给定类型的数据库服务器的请求。
+
+
+## 安装
+
+如果您想要编写 Ruby 脚本来访问 MySQL 数据库，您需要先安装 Ruby MySQL 模块。
+
+
+### 安装 Mysql 开发包
+
+```text
+# Ubuntu
+sudo apt-get install mysql-client
+sudo apt-get install libmysqlclient15-dev
+
+# Centos
+yum install mysql-devel
+```
+
+Mac OS 系统需要修改 ~/.bash_profile 或 ~/.profile 文件，添加如下代码:
+
+```text
+MYSQL=/usr/local/mysql/bin
+export PATH=$PATH:$MYSQL
+export DYLD_LIBRARY_PATH=/usr/local/mysql/lib:$DYLD_LIBRARY_PATH
+```
+
+或者使用软连接：
+
+```text
+sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
+```
+
+
+## 复习重点
+
+- 能说明 `Ruby 数据库访问 - DBI 教程` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

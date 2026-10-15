@@ -1,34 +1,135 @@
-# jQuery：jQuery 动画 练习笔记
+# jQuery：jQuery 效果- 动画
 
 - 来源：[jQuery 动画](https://www.runoob.com/jquery/jquery-animate.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2971
 
-## 练习目标
+## 本章内容
 
-把 `jQuery 动画` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+jQuery animate() 方法允许您创建自定义的动画。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## jQuery 动画 - animate() 方法
 
-## 验收清单
+jQuery animate() 方法用于创建自定义动画。
 
-- 我能独立说出 `jQuery 动画` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+语法：
 
-## 复盘问题
+必需的 params 参数定义形成动画的 CSS 属性。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+
+可选的 callback 参数是动画完成后所执行的函数名称。
+
+下面的例子演示 animate() 方法的简单应用。它把 <div> 元素往右边移动了 250 像素：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("div").animate({left:'250px'});
+});
+```
+
+
+## jQuery animate() - 操作多个属性
+
+请注意，生成动画的过程中可同时使用多个属性：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("div").animate({
+    left:'250px',
+    opacity:'0.5',
+    height:'150px',
+    width:'150px'
+  });
+});
+```
+
+是的，几乎可以！不过，需要记住一件重要的事情：当使用 animate() 时，必须使用 Camel 标记法书写所有的属性名，比如，必须使用 paddingLeft 而不是 padding-left，使用 marginRight 而不是 margin-right，等等。
+
+同时，色彩动画并不包含在核心 jQuery 库中。
+
+如果需要生成颜色动画，您需要从 jquery.com 下载 颜色动画 插件。
+
+
+## jQuery animate() - 使用相对值
+
+也可以定义相对值（该值相对于元素的当前值）。需要在值的前面加上 += 或 -=：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("div").animate({
+    left:'250px',
+    height:'+=150px',
+    width:'+=150px'
+  });
+});
+```
+
+
+## jQuery animate() - 使用预定义的值
+
+您甚至可以把属性的动画值设置为 "show"、"hide" 或 "toggle"：
+
+
+## 实例
+
+```text
+$("button").click(function(){
+  $("div").animate({
+    height:'toggle'
+  });
+});
+```
+
+
+## jQuery animate() - 使用队列功能
+
+默认地，jQuery 提供针对动画的队列功能。
+
+这意味着如果您在彼此之后编写多个 animate() 调用，jQuery 会创建包含这些方法调用的"内部"队列。然后逐一运行这些 animate 调用。
+
+
+## 实例 1
+
+```javascript
+$("button").click(function(){
+  var div=$("div");
+  div.animate({height:'300px',opacity:'0.4'},"slow");
+  div.animate({width:'300px',opacity:'0.8'},"slow");
+  div.animate({height:'100px',opacity:'0.4'},"slow");
+  div.animate({width:'100px',opacity:'0.8'},"slow");
+});
+```
+
+下面的例子把 <div> 元素往右边移动了 100 像素，然后增加文本的字号：
+
+
+## 实例 2
+
+```javascript
+$("button").click(function(){
+  var div=$("div");
+  div.animate({left:'100px'},"slow");
+  div.animate({fontSize:'3em'},"slow");
+});
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery 动画` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

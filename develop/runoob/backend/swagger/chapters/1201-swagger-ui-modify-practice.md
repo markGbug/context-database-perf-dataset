@@ -1,34 +1,83 @@
-# Swagger：Swagger UI 主题样式修改 练习笔记
+# Swagger：Swagger UI 主题样式修改
 
 - 来源：[Swagger UI 主题样式修改](https://www.runoob.com/swagger/swagger-ui-modify.html)
 - 分类：后端开发
 - 技术：Swagger
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1201
 
-## 练习目标
+## 本章内容
 
-把 `Swagger UI 主题样式修改` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Swagger UI 提供了多种方式来自定义界面样式，让文档更符合企业或产品品牌形象。
 
-## 练习步骤
+在 Spring Boot 项目中，可以创建自定义 CSS 文件并配置 Swagger UI 使用:
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+创建自定义 CSS 文件，例如 src/main/resources/static/swagger-ui/custom.css:
 
-## 验收清单
 
-- 我能独立说出 `Swagger UI 主题样式修改` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 实例
 
-## 复盘问题
+在 Swagger 配置中引用自定义 CSS:
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 实例
+
+对于 SpringDoc OpenAPI:
+
+
+## 实例
+
+
+### 使用主题插件
+
+对于更复杂的主题定制，可以使用 Swagger UI 主题插件。
+
+安装主题插件(国内可以考虑其他 CDN 或者放到本地):
+
+
+## 实例
+
+对于 Express 项目:
+
+
+## 实例
+
+常见的主题包括:
+
+- Material: theme-material.css
+- Monokai: theme-monokai.css
+- Muted: theme-muted.css
+- Flattop: theme-flattop.css
+- Feeling Blue: theme-feeling-blue.css
+
+
+### 添加 Logo 和品牌标识
+
+
+## 实例
+
+
+## 实例
+
+
+### 使用自定义模板
+
+对于更深层次的定制，可以使用自定义 Swagger UI 模板。
+
+1. 创建自定义模板文件 src/main/resources/templates/swagger-ui.html:
+
+
+## 实例
+
+2. 在 Spring Boot 项目中配置使用自定义模板:
+
+
+## 实例
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Swagger UI 主题样式修改` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

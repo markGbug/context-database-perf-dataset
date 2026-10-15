@@ -1,34 +1,320 @@
-# Django：Django Admin 管理工具 练习笔记
+# Django：Django Admin 管理工具
 
 - 来源：[Django Admin 管理工具](https://www.runoob.com/django/django-admin-manage-tool.html)
 - 分类：Python / 数据科学
 - 技术：Django
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3816
 
-## 练习目标
+## 本章内容
 
-把 `Django Admin 管理工具` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Django 提供了基于 web 的管理工具。
 
-## 练习步骤
+Django 自动管理工具是 django.contrib 的一部分。你可以在项目的 settings.py 中的 INSTALLED_APPS 看到它：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## /HelloWorld/HelloWorld/settings.py 文件代码：
 
-- 我能独立说出 `Django Admin 管理工具` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+)
+```
 
-## 复盘问题
+django.contrib是一套庞大的功能集，它是Django基本代码的组成部分。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## 激活管理工具
+
+通常我们在生成项目时会在 urls.py 中自动设置好，我们只需去掉注释即可。
+
+配置项如下所示：
+
+
+## /HelloWorld/HelloWorld/urls.py 文件代码：
+
+```text
+# urls.py
+from django.conf.urls import url
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+]
+```
+
+当这一切都配置好后，Django 管理工具就可以运行了。
+
+
+## 使用管理工具
+
+启动开发服务器，然后在浏览器中访问 http://127.0.0.1:8000/admin/，得到如下界面：
+
+你可以通过命令 python manage.py createsuperuser 来创建超级用户，如下所示：
+
+```text
+# python manage.py createsuperuser
+Username (leave blank to use 'root'): admin
+Email address: admin@runoob.com
+Password:
+Password (again):
+Superuser created successfully.
+[root@solar HelloWorld]#
+```
+
+之后输入用户名密码登录，界面如下：
+
+为了让 admin 界面管理某个数据模型，我们需要先注册该数据模型到 admin。比如，我们之前在 TestModel 中已经创建了模型 Test 。修改 TestModel/admin.py:
+
+
+## HelloWorld/TestModel/admin.py: 文件代码：
+
+```text
+from django.contrib import admin
+from TestModel.models import Test
+
+# Register your models here.
+admin.site.register(Test)
+```
+
+刷新后即可看到 Testmodel 数据表:
+
+
+## 复杂模型
+
+管理页面的功能强大，完全有能力处理更加复杂的数据模型。
+
+先在 TestModel/models.py 中增加一个更复杂的数据模型：
+
+
+## HelloWorld/TestModel/models.py: 文件代码：
+
+```text
+from django.db import models
+
+# Create your models here.
+class Test(models.Model):
+    name = models.CharField(max_length=20)
+
+class Contact(models.Model):
+    name   = models.CharField(max_length=200)
+    age    = models.IntegerField(default=0)
+    email  = models.EmailField()
+    def __unicode__(self):
+        return self.name
+
+class Tag(models.Model):
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE,)
+    name    = models.CharField(max_length=50)
+    def __unicode__(self):
+        return self.name
+```
+
+这里有两个表。Tag 以 Contact 为外部键。一个 Contact 可以对应多个 Tag。
+
+我们还可以看到许多在之前没有见过的属性类型，比如 IntegerField 用于存储整数。
+
+在 TestModel/admin.py 注册多个模型并显示：
+
+
+## HelloWorld/TestModel/admin.py: 文件代码：
+
+```text
+from django.contrib import admin
+from TestModel.models import Test,Contact,Tag
+
+# Register your models here.
+admin.site.register([Test, Contact, Tag])
+```
+
+刷新管理页面，显示结果如下：
+
+在以上管理工具我们就能进行复杂模型操作。
+
+如果你之前还未创建表结构，可使用以下命令创建：
+
+```text
+$ python manage.py makemigrations TestModel  # 让 Django 知道我们在我们的模型有一些变更
+$ python manage.py migrate TestModel   # 创建表结构
+```
+
+
+## 自定义表单
+
+我们可以自定义管理页面，来取代默认的页面。比如上面的 "add" 页面。我们想只显示 name 和 email 部分。修改 TestModel/admin.py:
+
+
+## HelloWorld/TestModel/admin.py: 文件代码：
+
+```text
+from django.contrib import admin
+from TestModel.models import Test,Contact,Tag
+
+# Register your models here.
+class ContactAdmin(admin.ModelAdmin):
+    fields = ('name', 'email')
+
+admin.site.register(Contact, ContactAdmin)
+admin.site.register([Test, Tag])
+```
+
+以上代码定义了一个 ContactAdmin 类，用以说明管理页面的显示格式。
+
+里面的 fields 属性定义了要显示的字段。
+
+由于该类对应的是 Contact 数据模型，我们在注册的时候，需要将它们一起注册。显示效果如下：
+
+我们还可以将输入栏分块，每个栏也可以定义自己的格式。修改 TestModel/admin.py为：
+
+
+## HelloWorld/TestModel/admin.py: 文件代码：
+
+```text
+from django.contrib import admin
+from TestModel.models import Test,Contact,Tag
+
+# Register your models here.
+class ContactAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ['Main',{
+            'fields':('name','email'),
+        }],
+        ['Advance',{
+            'classes': ('collapse',), # CSS
+            'fields': ('age',),
+        }]
+    )
+
+admin.site.register(Contact, ContactAdmin)
+admin.site.register([Test, Tag])
+```
+
+上面的栏目分为了 Main 和 Advance 两部分。classes 说明它所在的部分的 CSS 格式。这里让 Advance 部分隐藏：
+
+Advance 部分旁边有一个 Show 按钮，用于展开，展开后可点击 Hide 将其隐藏，如下图所示：
+
+
+## 内联(Inline)显示
+
+上面的 Contact 是 Tag 的外部键，所以有外部参考的关系。
+
+而在默认的页面显示中，将两者分离开来，无法体现出两者的从属关系。我们可以使用内联显示，让 Tag 附加在 Contact 的编辑页面上显示。
+
+修改TestModel/admin.py：
+
+
+## HelloWorld/TestModel/admin.py: 文件代码：
+
+```text
+from django.contrib import admin
+from TestModel.models import Test,Contact,Tag
+
+# Register your models here.
+class TagInline(admin.TabularInline):
+    model = Tag
+
+class ContactAdmin(admin.ModelAdmin):
+    inlines = [TagInline]  # Inline
+    fieldsets = (
+        ['Main',{
+            'fields':('name','email'),
+        }],
+        ['Advance',{
+            'classes': ('collapse',),
+            'fields': ('age',),
+        }]
+
+    )
+
+admin.site.register(Contact, ContactAdmin)
+admin.site.register([Test])
+```
+
+显示效果如下：
+
+
+## 列表页的显示
+
+在 Contact 输入数条记录后，Contact 的列表页看起来如下:
+
+我们也可以自定义该页面的显示，比如在列表中显示更多的栏目，只需要在 ContactAdmin 中增加 list_display 属性:
+
+
+## HelloWorld/TestModel/admin.py: 文件代码：
+
+```text
+from django.contrib import admin
+from TestModel.models import Test,Contact,Tag
+
+# Register your models here.
+class TagInline(admin.TabularInline):
+    model = Tag
+
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name','age', 'email') # list
+    inlines = [TagInline]  # Inline
+    fieldsets = (
+        ['Main',{
+            'fields':('name','email'),
+        }],
+        ['Advance',{
+            'classes': ('collapse',),
+            'fields': ('age',),
+        }]
+
+    )
+
+admin.site.register(Contact, ContactAdmin)
+admin.site.register([Test])
+```
+
+刷新页面显示效果如下：
+
+搜索功能在管理大量记录时非常有用，我们可以使用 search_fields 为该列表页增加搜索栏：
+
+
+## HelloWorld/TestModel/admin.py: 文件代码：
+
+```text
+from django.contrib import admin
+from TestModel.models import Test,Contact,Tag
+
+# Register your models here.
+class TagInline(admin.TabularInline):
+    model = Tag
+
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name','age', 'email') # list
+    search_fields = ('name',)
+    inlines = [TagInline]  # Inline
+    fieldsets = (
+        ['Main',{
+            'fields':('name','email'),
+        }],
+        ['Advance',{
+            'classes': ('collapse',),
+            'fields': ('age',),
+        }]
+
+    )
+
+admin.site.register(Contact, ContactAdmin)
+admin.site.register([Test])
+```
+
+在本实例中我们搜索了 name 为 runoob 的记录，显示结果如下：
+
+Django Admin 管理工具还有非常多实用的功能，感兴趣的同学可以深入研究下。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Django Admin 管理工具` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

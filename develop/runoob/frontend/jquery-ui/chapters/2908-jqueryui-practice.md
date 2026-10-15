@@ -1,34 +1,56 @@
-# jQuery UI：jQuery UI 教程 练习笔记
+# jQuery UI：jQuery UI 教程
 
 - 来源：[jQuery UI 教程](https://www.runoob.com/jqueryui/jqueryui-tutorial.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2908
 
-## 练习目标
+## 本章内容
 
-把 `jQuery UI 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+jQuery UI 是建立在 jQuery JavaScript 库上的一组用户界面交互、特效、小部件及主题。无论您是创建高度交互的 Web 应用程序还是仅仅向窗体控件添加一个日期选择器，jQuery UI 都是一个完美的选择。
 
-## 练习步骤
+jQuery UI 包含了许多维持状态的小部件（Widget），因此，它与典型的 jQuery 插件使用模式略有不同。所有的 jQuery UI 小部件（Widget）使用相同的模式，所以，只要您学会使用其中一个，您就知道如何使用其他的小部件（Widget）。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+现在开始学习 jQuery UI！
 
-## 验收清单
 
-- 我能独立说出 `jQuery UI 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 从实例开始
 
-## 复盘问题
+为了更好地体验什么是 jQuery UI，请查看 jQuery UI 实例。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+在实例演示部分，导航列出了 jQuery UI 提供的所有交互部件和小部件。选择一个交互部件或小部件，您将看到特定插件的一些演示配置。在每个演示中，您可以查看源代码，更改主题，且 URL 可以被添加书签。例如，您可以查看 折叠面板部件填充空间 实例演示页面。
+
+
+## 内容列表
+
+- jQuery UI 简介
+- jQuery UI 下载
+- jQuery UI 使用
+- jQuery UI 定制
+- jQuery UI 工作原理
+- jQuery UI 主题 jQuery UI ThemeRoller jQuery UI CSS 框架 API 设计主题
+- 部件库（Widget Factory） 通过部件库（Widget Factory）扩展小部件（Widget） 小部件（Widget）方法调用 为什么使用部件库（Widget Factory） 如何使用部件库（Widget Factory）
+
+
+## 参考手册
+
+- jQuery UI API 文档
+- 特效（Effects）
+- 特效核心（Effects Core）
+- 交互（Interactions）
+- 方法重载（Method Overrides）
+- 方法（Methods）
+- 选择器（Selectors）
+- 主题（Theming）
+- UI 核心（UI Core）
+- 实用工具（Utilities）
+- 小部件（Widgets）
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery UI 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

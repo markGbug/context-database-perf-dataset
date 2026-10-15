@@ -1,34 +1,168 @@
-# CSS：CSS 创建 练习笔记
+# CSS：CSS 创建
 
 - 来源：[CSS 创建](https://www.runoob.com/css/css-howto.html)
 - 分类：前端开发
 - 技术：CSS
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2394
 
-## 练习目标
+## 本章内容
 
-把 `CSS 创建` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+当读到一个样式表时，浏览器会根据它来格式化 HTML 文档。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 如何插入样式表
 
-## 验收清单
+插入样式表的方法有三种:
 
-- 我能独立说出 `CSS 创建` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+- 外部样式表(External style sheet)
+- 内部样式表(Internal style sheet)
+- 内联样式(Inline style)
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## 外部样式表
+
+当样式需要应用于很多页面时，外部样式表将是理想的选择。在使用外部样式表的情况下，你可以通过改变一个文件来改变整个站点的外观。每个页面使用 <link> 标签链接到样式表。 <link> 标签在（文档的）头部：
+
+```html
+<head>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+```
+
+浏览器会从文件 mystyle.css 中读到样式声明，并根据它来格式文档。
+
+外部样式表可以在任何文本编辑器中进行编辑。文件不能包含任何的 html 标签。样式表应该以 .css 扩展名进行保存。下面是一个样式表文件的例子：
+
+```text
+hr {color:sienna;}
+p {margin-left:20px;}
+body {background-image:url("/images/back40.gif");}
+```
+
+不要在属性值与单位之间留有空格（如："margin-left: 20 px" ），正确的写法是 "margin-left: 20px" 。
+
+
+## 内部样式表
+
+当单个文档需要特殊的样式时，就应该使用内部样式表。你可以使用 <style> 标签在文档头部定义内部样式表，就像这样:
+
+```html
+<head>
+<style>
+hr {color:sienna;}
+p {margin-left:20px;}
+body {background-image:url("images/back40.gif");}
+</style>
+</head>
+```
+
+
+## 内联样式
+
+由于要将表现和内容混杂在一起，内联样式会损失掉样式表的许多优势。请慎用这种方法，例如当样式仅需要在一个元素上应用一次时。
+
+要使用内联样式，你需要在相关的标签内使用样式（style）属性。Style 属性可以包含任何 CSS 属性。本例展示如何改变段落的颜色和左外边距：
+
+```html
+<p style="color:sienna;margin-left:20px">这是一个段落。</p>
+```
+
+
+## 多重样式
+
+如果某些属性在不同的样式表中被同样的选择器定义，那么属性值将从更具体的样式表中被继承过来。
+
+例如，外部样式表拥有针对 h3 选择器的三个属性：
+
+```text
+h3
+{
+    color:red;
+    text-align:left;
+    font-size:8pt;
+}
+```
+
+而内部样式表拥有针对 h3 选择器的两个属性：
+
+```text
+h3
+{
+    text-align:right;
+    font-size:20pt;
+}
+```
+
+假如拥有内部样式表的这个页面同时与外部样式表链接，那么 h3 得到的样式是：
+
+```text
+color:red;
+text-align:right;
+font-size:20pt;
+```
+
+即颜色属性将被继承于外部样式表，而文字排列（text-alignment）和字体尺寸（font-size）会被内部样式表中的规则取代。
+
+
+## 多重样式优先级
+
+样式表允许以多种方式规定样式信息。样式可以规定在单个的 HTML 元素中，在 HTML 页的头元素中，或在一个外部的 CSS 文件中。甚至可以在同一个 HTML 文档内部引用多个外部样式表。
+
+一般情况下，优先级如下：
+
+（内联样式）Inline style > （内部样式）Internal style sheet >（外部样式）External style sheet > 浏览器默认样式
+
+style.css 文件样式代码如下：
+
+```text
+h3 {
+    color:blue;
+}
+```
+
+
+## 实例
+
+```html
+<head>
+    <!-- 外部样式 style.css -->
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <!-- 设置：h3{color:blue;} -->
+    <style type="text/css">
+      /* 内部样式 */
+      h3{color:green;}
+    </style>
+</head>
+<body>
+    <h3>显示绿色，是内部样式</h3>
+</body>
+```
+
+注意：如果外部样式放在内部样式的后面，则外部样式将覆盖内部样式，实例如下：
+
+
+## 实例
+
+```html
+<head>
+    <!-- 设置：h3{color:blue;} -->
+    <style type="text/css">
+      /* 内部样式 */
+      h3{color:green;}
+    </style>
+    <!-- 外部样式 style.css -->
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+    <h3>显示蓝色，是外部样式</h3>
+</body>
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `CSS 创建` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,211 @@
-# 设计模式：模板模式 练习笔记
+# 设计模式：模板模式
 
 - 来源：[模板模式](https://www.runoob.com/design-pattern/template-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1328
 
-## 练习目标
+## 本章内容
 
-把 `模板模式` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+在模板模式（Template Pattern）中，一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。这种类型的设计模式属于行为型模式。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 介绍
 
-## 验收清单
 
-- 我能独立说出 `模板模式` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 意图
 
-## 复盘问题
+在父类中定义了算法的骨架，并允许子类在不改变算法结构的前提下重定义算法的某些特定步骤。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 主要解决的问题
+
+- 解决在多个子类中重复实现相同的方法的问题，通过将通用方法抽象到父类中来避免代码重复。
+
+
+### 使用场景
+
+- 当存在一些通用的方法，可以在多个子类中共用时。
+
+
+### 实现方式
+
+- 定义抽象父类：包含模板方法和一些抽象方法或具体方法。
+- 实现子类：继承抽象父类并实现抽象方法，不改变算法结构。
+
+
+### 关键代码
+
+- 模板方法：在抽象父类中定义，调用抽象方法和具体方法。
+- 抽象方法：由子类实现，代表算法的可变部分。
+- 具体方法：在抽象父类中实现，代表算法的不变部分。
+
+
+### 应用实例
+
+- 建筑流程：地基、走线、水管等步骤相同，后期建筑如加壁橱、栅栏等步骤不同。
+- 西游记的81难：菩萨定好的81难代表一个顶层逻辑骨架。
+- Spring对Hibernate的支持：封装了如开启事务、获取Session、关闭Session等通用方法。
+
+
+### 优点
+
+- 封装不变部分：算法的不变部分被封装在父类中。
+- 扩展可变部分：子类可以扩展或修改算法的可变部分。
+- 提取公共代码：减少代码重复，便于维护。
+
+
+### 缺点
+
+- 类数目增加：每个不同的实现都需要一个子类，可能导致系统庞大。
+
+
+### 使用建议
+
+- 当有多个子类共有的方法且逻辑相同时，考虑使用模板方法模式。
+- 对于重要或复杂的方法，可以考虑作为模板方法定义在父类中。
+
+
+### 注意事项
+
+- 为了防止恶意修改，模板方法通常使用final关键字修饰，避免被子类重写。
+
+
+### 包含的几个主要角色
+
+- 抽象父类（Abstract Class）： 定义了模板方法和一些抽象方法或具体方法。
+- 具体子类（Concrete Classes）： 继承自抽象父类，并实现抽象方法。
+- 钩子方法（Hook Method）（可选）： 在抽象父类中定义，可以被子类重写，以影响模板方法的行为。
+- 客户端（Client）（可选）： 使用抽象父类和具体子类，无需关心模板方法的细节。
+
+
+## 实现
+
+我们将创建一个定义操作的 Game 抽象类，其中，模板方法设置为 final，这样它就不会被重写。Cricket 和 Football 是扩展了 Game 的实体类，它们重写了抽象类的方法。
+
+TemplatePatternDemo，我们的演示类使用 Game 来演示模板模式的用法。
+
+
+### 步骤 1
+
+创建一个抽象类，它的模板方法被设置为 final。
+
+
+## Game.java
+
+```text
+public abstract class Game {
+   abstract void initialize();
+   abstract void startPlay();
+   abstract void endPlay();
+
+   //模板
+   public final void play(){
+
+      //初始化游戏
+      initialize();
+
+      //开始游戏
+      startPlay();
+
+      //结束游戏
+      endPlay();
+   }
+}
+```
+
+
+### 步骤 2
+
+创建扩展了上述类的实体类。
+
+
+## Cricket.java
+
+```java
+public class Cricket extends Game {
+
+   @Override
+   void endPlay() {
+      System.out.println("Cricket Game Finished!");
+   }
+
+   @Override
+   void initialize() {
+      System.out.println("Cricket Game Initialized! Start playing.");
+   }
+
+   @Override
+   void startPlay() {
+      System.out.println("Cricket Game Started. Enjoy the game!");
+   }
+}
+```
+
+
+## Football.java
+
+```java
+public class Football extends Game {
+
+   @Override
+   void endPlay() {
+      System.out.println("Football Game Finished!");
+   }
+
+   @Override
+   void initialize() {
+      System.out.println("Football Game Initialized! Start playing.");
+   }
+
+   @Override
+   void startPlay() {
+      System.out.println("Football Game Started. Enjoy the game!");
+   }
+}
+```
+
+
+### 步骤 3
+
+使用 Game 的模板方法 play() 来演示游戏的定义方式。
+
+
+## TemplatePatternDemo.java
+
+```java
+public class TemplatePatternDemo {
+   public static void main(String[] args) {
+
+      Game game = new Cricket();
+      game.play();
+      System.out.println();
+      game = new Football();
+      game.play();
+   }
+}
+```
+
+
+### 步骤 4
+
+执行程序，输出结果：
+
+```text
+Cricket Game Initialized! Start playing.
+Cricket Game Started. Enjoy the game!
+Cricket Game Finished!
+
+Football Game Initialized! Start playing.
+Football Game Started. Enjoy the game!
+Football Game Finished!
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `模板模式` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,62 @@
-# Bootstrap4：Bootstrap4 面包屑导航 学习笔记
+# Bootstrap4：Bootstrap4 面包屑导航（Breadcrumb）
 
 - 来源：[Bootstrap4 面包屑导航](https://www.runoob.com/bootstrap4/bootstrap4-breadcrumb.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2325
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 面包屑导航` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+面包屑导航是一种基于网站层次信息的显示方式。以博客为例，面包屑导航可以显示发布日期、类别或标签。它们表示当前页面在导航层次结构内的位置，是在用户界面中的一种导航辅助。
 
-## 阅读抓手
+Bootstrap 中的面包屑导航是一个简单的带有 .breadcrumb class 的无序列表。分隔符会通过 CSS（bootstrap.min.css）中的 ::before 和 content 来添加，下面所示的 class 自动被添加：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+```text
+.breadcrumb-item + .breadcrumb-item::before {
+  display: inline-block;
+  padding-right: 0.5rem;
+  color: #6c757d;
+  content: "/";
+}
+```
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## Bootstrap4 面包屑导航实例
 
-## 完成标准
+```html
+<ol class="breadcrumb">
+  <li class="breadcrumb-item active">Home</li>
+</ol>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="#">Home</a></li>
+  <li class="breadcrumb-item active">Library</li>
+</ol>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="#">Home</a></li>
+  <li class="breadcrumb-item"><a href="#">Library</a></li>
+  <li class="breadcrumb-item active">Data</li>
+</ol>
+```
 
-- 能用 3 到 5 句话解释 `Bootstrap4 面包屑导航`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+我们也可以不用列表形式：
+
+
+## Bootstrap4 面包屑导航实例
+
+```html
+<nav class="breadcrumb">
+  <a class="breadcrumb-item" href="#">Home</a>
+  <a class="breadcrumb-item" href="#">Library</a>
+  <a class="breadcrumb-item" href="#">Data</a>
+  <span class="breadcrumb-item active">Bootstrap</span>
+</nav>
+```
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 面包屑导航` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

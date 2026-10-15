@@ -1,35 +1,88 @@
-# Playwright：Playwright Fixtures 学习笔记
+# Playwright：Playwright Fixtures 与参数化
 
 - 来源：[Playwright Fixtures](https://www.runoob.com/playwright/playwright-fixtures.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0539
 
-## 学习目标
+## 本章内容
 
-Playwright 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Playwright Fixtures` 建立学习路径，先理解它在 Playwright 体系中的位置，再做可运行或可复述的验证。
+本章介绍 Playwright 的 Fixture 机制、如何创建自定义 Fixture 以及参数化测试的技巧。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 什么是 Fixture
 
-## 笔记模板
+Fixture（夹具）是 Playwright 测试函数参数的依赖注入机制。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+每个测试通过解构参数的方式获取所需的 Fixture（如 { page }），Playwright 负责创建和清理。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `Playwright Fixtures`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 实例
+
+
+## 内置 Fixture 速查
+
+
+## 自定义 Fixture
+
+通过 test.extend() 创建自定义 Fixture，可以注入额外的依赖或覆盖内置 Fixture。
+
+
+## 实例
+
+
+### 使用自定义 Fixture
+
+
+## 实例
+
+
+## Fixture 的作用域
+
+Fixture 有三种作用域，通过 scope 选项控制。
+
+
+## 实例
+
+Worker 级 Fixture 在同一 Worker 进程内的多个测试间共享，适合数据库连接等创建开销大的资源。
+
+
+## 覆盖内置 Fixture
+
+你可以覆盖内置 Fixture 来改变默认行为。
+
+
+## 实例
+
+
+## Fixture 自动清理
+
+Fixture 的清理逻辑在 use() 调用之后执行，类似于 afterEach 的效果。
+
+
+## 实例
+
+
+## 参数化测试
+
+Playwright 没有内置的参数化机制，但可以通过循环动态生成测试。
+
+
+## 实例
+
+
+## 测试注解（Annotations）
+
+注解用于给测试添加元数据，在报告器中可以查看和过滤。
+
+
+## 实例
+
+
+## 复习重点
+
+- 能说明 `Playwright Fixtures` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

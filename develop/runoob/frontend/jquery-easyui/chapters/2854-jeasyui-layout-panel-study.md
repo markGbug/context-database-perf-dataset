@@ -1,35 +1,56 @@
-# jQuery EasyUI：jEasyUI 创建复杂布局 学习笔记
+# jQuery EasyUI：jQuery EasyUI 布局 - 在面板中创建复杂布局
 
 - 来源：[jEasyUI 创建复杂布局](https://www.runoob.com/jeasyui/jeasyui-layout-panel.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2854
 
-## 学习目标
+## 本章内容
 
-jQuery EasyUI 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jEasyUI 创建复杂布局` 建立学习路径，先理解它在 jQuery EasyUI 体系中的位置，再做可运行或可复述的验证。
+面板（Panel）允许您创建用于多种用途的自定义布局。在本实例中，我们使用面板（panel）和布局（layout）插件来创建一个 msn 消息框。
 
-## 阅读抓手
+我们在区域面板中使用多个布局（layout）。在消息框的顶部我们放置一个查询输入框，同时在右边放置一个人物图片。在中间的区域我们通过设置 split 属性为 true，把这部分切割为两部分，允许用户改变区域面板的尺寸大小。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+以下就是所有代码：
 
-## 笔记模板
+```html
+    <div class="easyui-panel" title="Complex Panel Layout" iconCls="icon-search" collapsible="true" style="padding:5px;width:500px;height:250px;">
+        <div class="easyui-layout" fit="true">
+            <div region="north" border="false" class="p-search">
+                <label>Search:</label><input></input>
+            </div>
+            <div region="center" border="false">
+                <div class="easyui-layout" fit="true">
+                    <div region="east" border="false" class="p-right">
+                        <img src="images/msn.gif"/>
+                    </div>
+                    <div region="center" border="false" style="border:1px solid #ccc;">
+                        <div class="easyui-layout" fit="true">
+                            <div region="south" split="true" border="false" style="height:60px;">
+                                <textarea style="border:0;width:100%;height:100%;resize:none">Hi,I am easyui.</textarea>
+                            </div>
+                            <div region="center" border="false">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+```
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+我们不需要写任何的 javascript 代码，它自己有非常强大的设计用户界面的功能。
 
-## 完成标准
 
-- 能用 3 到 5 句话解释 `jEasyUI 创建复杂布局`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+## 下载 jQuery EasyUI 实例
+
+jeasyui-layout-panel.zip
+
+
+## 复习重点
+
+- 能说明 `jEasyUI 创建复杂布局` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

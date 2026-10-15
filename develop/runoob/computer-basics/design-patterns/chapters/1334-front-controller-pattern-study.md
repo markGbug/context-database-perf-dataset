@@ -1,35 +1,236 @@
-# 设计模式：前端控制器模式 学习笔记
+# 设计模式：前端控制器模式
 
 - 来源：[前端控制器模式](https://www.runoob.com/design-pattern/front-controller-pattern.html)
 - 分类：计算机基础
 - 技术：设计模式
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1334
 
-## 学习目标
+## 本章内容
 
-设计模式 章节要用定义、图示、伪代码和边界案例建立可迁移理解。本篇围绕 `前端控制器模式` 建立学习路径，先理解它在 设计模式 体系中的位置，再做可运行或可复述的验证。
+前端控制器模式（Front Controller Pattern）是用来提供一个集中的请求处理机制，所有的请求都将由一个单一的处理程序处理。该处理程序可以做认证/授权/记录日志，或者跟踪请求，然后把请求传给相应的处理程序。以下是这种设计模式的实体。
 
-## 阅读抓手
+- 前端控制器（Front Controller） - 处理应用程序所有类型请求的单个处理程序，应用程序可以是基于 web 的应用程序，也可以是基于桌面的应用程序。
+- 调度器（Dispatcher） - 前端控制器可能使用一个调度器对象来调度请求到相应的具体处理程序。
+- 视图（View） - 视图是为请求而创建的对象。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## 概要
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 意图
 
-- 能用 3 到 5 句话解释 `前端控制器模式`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+使用一个中心控制器（或处理器）来转发客户端请求到适当的处理程序。
+
+
+### 主要解决的问题
+
+- 解决Web应用程序中请求处理分散的问题，提供统一的请求处理入口。
+
+
+### 使用场景
+
+- 当需要对Web应用程序中的请求进行统一管理和分发时。
+
+
+### 实现方式
+
+- 前端控制器：作为请求的单一入口点，负责请求的接收和转发。
+- 视图：用于呈现处理结果。
+- 处理程序：实际执行请求处理的组件。
+
+
+### 关键代码
+
+- 前端控制器：包含逻辑以决定将请求转发到哪个处理程序。
+- 处理程序映射：将请求映射到相应的处理程序。
+
+
+### 应用实例
+
+- Web框架：如Spring MVC中的DispatcherServlet，作为前端控制器。
+
+
+### 优点
+
+- 集中请求处理：简化请求处理流程，易于管理和维护。
+- 减少代码重复：通过重用控制器减少视图和处理程序中的重复代码。
+- 易于扩展：新增请求处理逻辑时，只需添加新的处理程序。
+
+
+### 缺点
+
+- 可能成为性能瓶颈：所有请求都通过前端控制器，可能影响性能。
+
+
+### 使用建议
+
+- 当需要构建一个具有清晰请求处理流程的Web应用程序时，考虑使用前端控制器模式。
+
+
+### 注意事项
+
+- 确保前端控制器不会由于集中处理所有请求而成为性能瓶颈。
+
+
+### 包含的几个主要角色
+
+前端控制器（Front Controller）：
+
+- 作为请求的单一入口点，负责接收请求并决定如何处理。
+
+处理程序（Handler）：
+
+- 实际执行请求处理的组件。
+
+视图（View）：
+
+- 用于呈现处理程序生成的响应。
+
+处理程序映射（Handler Mapping）（可选）：
+
+- 将请求映射到相应的处理程序。
+
+客户端（Client）（可选）：
+
+- 发出请求的Web浏览器或API客户端。
+
+前端控制器模式通过提供一个集中的请求处理机制，有助于构建易于维护和扩展的Web应用程序。
+
+
+## 实现
+
+我们将创建 FrontController、Dispatcher 分别当作前端控制器和调度器。HomeView 和 StudentView 表示各种为前端控制器接收到的请求而创建的视图。
+
+FrontControllerPatternDemo，我们的演示类使用 FrontController 来演示前端控制器设计模式。
+
+
+## 步骤 1
+
+创建视图。
+
+
+## HomeView.java
+
+```java
+public class HomeView {
+   public void show(){
+      System.out.println("Displaying Home Page");
+   }
+}
+```
+
+
+## StudentView.java
+
+```java
+public class StudentView {
+   public void show(){
+      System.out.println("Displaying Student Page");
+   }
+}
+```
+
+
+## 步骤 2
+
+创建调度器 Dispatcher。
+
+
+## Dispatcher.java
+
+```java
+public class Dispatcher {
+   private StudentView studentView;
+   private HomeView homeView;
+   public Dispatcher(){
+      studentView = new StudentView();
+      homeView = new HomeView();
+   }
+
+   public void dispatch(String request){
+      if(request.equalsIgnoreCase("STUDENT")){
+         studentView.show();
+      }else{
+         homeView.show();
+      }
+   }
+}
+```
+
+
+## 步骤 3
+
+创建前端控制器 FrontController。
+
+
+## FrontController.java
+
+```java
+public class FrontController {
+
+   private Dispatcher dispatcher;
+
+   public FrontController(){
+      dispatcher = new Dispatcher();
+   }
+
+   private boolean isAuthenticUser(){
+      System.out.println("User is authenticated successfully.");
+      return true;
+   }
+
+   private void trackRequest(String request){
+      System.out.println("Page requested: " + request);
+   }
+
+   public void dispatchRequest(String request){
+      //记录每一个请求
+      trackRequest(request);
+      //对用户进行身份验证
+      if(isAuthenticUser()){
+         dispatcher.dispatch(request);
+      }
+   }
+}
+```
+
+
+## 步骤 4
+
+使用 FrontController 来演示前端控制器设计模式。
+
+
+## FrontControllerPatternDemo.java
+
+```java
+public class FrontControllerPatternDemo {
+   public static void main(String[] args) {
+      FrontController frontController = new FrontController();
+      frontController.dispatchRequest("HOME");
+      frontController.dispatchRequest("STUDENT");
+   }
+}
+```
+
+
+## 步骤 5
+
+执行程序，输出结果：
+
+```text
+Page requested: HOME
+User is authenticated successfully.
+Displaying Home Page
+Page requested: STUDENT
+User is authenticated successfully.
+Displaying Student Page
+```
+
+
+## 复习重点
+
+- 能说明 `前端控制器模式` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

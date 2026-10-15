@@ -1,35 +1,98 @@
-# SVN：SVN 分支 学习笔记
+# SVN：SVN分支
 
 - 来源：[SVN 分支](https://www.runoob.com/svn/svn-branch.html)
 - 分类：DevOps / 工程化
 - 技术：SVN
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1892
 
-## 学习目标
+## 本章内容
 
-SVN 章节要把命令、配置、协作约定和交付流程一起整理。本篇围绕 `SVN 分支` 建立学习路径，先理解它在 SVN 体系中的位置，再做可运行或可复述的验证。
+Branch 选项会给开发者创建出另外一条线路。当有人希望开发进程分开成两条不同的线路时，这个选项会非常有用。
 
-## 阅读抓手
+比如项目 demo 下有两个小组，svn 下有一个 trunk 版。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+由于客户需求突然变化，导致项目需要做较大改动，此时项目组决定由小组 1 继续完成原来正进行到一半的工作（某个模块），小组 2 进行新需求的开发。
 
-## 笔记模板
+那么此时，我们就可以为小组2建立一个分支，分支其实就是 trunk 版（主干线）的一个copy版，不过分支也是具有版本控制功能的，而且是和主干线相互独立的，当然，到最后我们可以通过（合并）功能，将分支合并到 trunk 上来，从而最后合并为一个项目。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+我们在本地副本中创建一个 my_branch 分支。
 
-## 完成标准
+```text
+root@runoob:~/svn/runoob01# ls
+branches  tags  trunk
+root@runoob:~/svn/runoob01# svn copy trunk/ branches/my_branch
+A         branches/my_branch
+root@runoob:~/svn/runoob01#
+```
 
-- 能用 3 到 5 句话解释 `SVN 分支`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+查看状态：
+
+```text
+root@runoob:~/svn/runoob01# svn status
+A  +    branches/my_branch
+A  +    branches/my_branch/HelloWorld.html
+A  +    branches/my_branch/readme
+```
+
+提交新增的分支到版本库。
+
+```text
+root@runoob:~/svn/runoob01# svn commit -m "add my_branch"
+Adding         branches/my_branch
+Replacing      branches/my_branch/HelloWorld.html
+Adding         branches/my_branch/readme
+
+Committed revision 9.
+```
+
+接着我们就到 my_branch 分支进行开发，切换到分支路径并创建 index.html 文件。
+
+```text
+root@runoob:~/svn/runoob01# cd branches/my_branch/
+root@runoob:~/svn/runoob01/branches/my_branch# ls
+HelloWorld.html  index.html  readme
+```
+
+将 index.html 加入版本控制，并提交到版本库中。
+
+```text
+root@runoob:~/svn/runoob01/branches/my_branch# svn status
+?       index.html
+root@runoob:~/svn/runoob01/branches/my_branch# svn add index.html
+A         index.html
+root@runoob:~/svn/runoob01/branches/my_branch# svn commit -m "add index.html"
+Adding         index.html
+Transmitting file data .
+Committed revision 10.
+```
+
+```text
+root@runoob:~/svn/runoob01/trunk# svn merge ../branches/my_branch/
+--- Merging r10 into '.':
+A    index.html
+--- Recording mergeinfo for merge of r10 into '.':
+ G   .
+```
+
+此时查看目录，可以看到 trunk 中已经多了 my_branch 分支创建的 index.html 文件。
+
+```text
+root@runoob:~/svn/runoob01/trunk# ll
+total 16
+drwxr-xr-x 2 root root 4096 Nov  7 03:52 ./
+drwxr-xr-x 6 root root 4096 Jul 21 19:19 ../
+-rw-r--r-- 1 root root   36 Nov  7 02:23 HelloWorld.html
+-rw-r--r-- 1 root root    0 Nov  7 03:52 index.html
+-rw-r--r-- 1 root root   22 Nov  7 03:06 readme
+```
+
+将合并好的 trunk 提交到版本库中。
+
+
+## 复习重点
+
+- 能说明 `SVN 分支` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

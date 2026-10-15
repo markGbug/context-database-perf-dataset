@@ -1,35 +1,43 @@
-# Flask：Flask Message Flashing API 学习笔记
+# Flask：Flask Message Flashing API
 
 - 来源：[Flask Message Flashing API](https://www.runoob.com/flask/flask-message-flashing-api.html)
 - 分类：Python / 数据科学
 - 技术：Flask
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3906
 
-## 学习目标
+## 本章内容
 
-Flask 章节适合用脚本或 Notebook 复现，重点记录输入、输出和数据流。本篇围绕 `Flask Message Flashing API` 建立学习路径，先理解它在 Flask 体系中的位置，再做可运行或可复述的验证。
+消息闪现（Flash）机制用于在下一次请求中显示一次性反馈消息，典型场景是「操作成功」或「输入错误」提示。
 
-## 阅读抓手
+Flask 将消息存储在 Session 中，读取后自动清除。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
 
-## 笔记模板
+## flash 函数
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## get_flashed_messages 函数
 
-- 能用 3 到 5 句话解释 `Flask Message Flashing API`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 模板中使用
+
+get_flashed_messages() 在模板中可以直接调用，无需通过 render_template 传递。
+
+
+## 实例
+
+
+## 代码示例
+
+
+## 实例
+
+Flash 消息存储在 Session 中，因此必须设置 SECRET_KEY。消息仅在读取它的下一次请求中可见，之后自动清除。
+
+
+## 复习重点
+
+- 能说明 `Flask Message Flashing API` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

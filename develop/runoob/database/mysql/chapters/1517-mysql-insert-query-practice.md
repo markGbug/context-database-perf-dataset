@@ -1,34 +1,176 @@
-# MySQL：MySQL 插入数据 练习笔记
+# MySQL：MySQL 插入数据
 
 - 来源：[MySQL 插入数据](https://www.runoob.com/mysql/mysql-insert-query.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1517
 
-## 练习目标
+## 本章内容
 
-把 `MySQL 插入数据` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+MySQL 表中使用 INSERT INTO 语句来插入数据。
 
-## 练习步骤
+你可以通过 mysql> 命令提示窗口中向数据表中插入数据，或者通过PHP脚本来插入数据。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+### 语法
 
-- 我能独立说出 `MySQL 插入数据` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+以下为向MySQL数据表插入数据通用的 INSERT INTO SQL语法：
 
-## 复盘问题
+```text
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+参数说明：
+
+- table_name 是你要插入数据的表的名称。
+- column1, column2, column3, ... 是表中的列名。
+- value1, value2, value3, ... 是要插入的具体数值。
+
+如果数据是字符型，必须使用单引号 ' 或者双引号 "，如： 'value1', "value1"。
+
+一个简单的实例，插入了一行数据到名为 users 的表中：
+
+```text
+INSERT INTO users (username, email, birthdate, is_active)
+VALUES ('test', 'test@runoob.com', '1990-01-01', true);
+```
+
+- username: 用户名，字符串类型。
+- email: 邮箱地址，字符串类型。
+- birthdate: 用户生日， 日期类型。
+- is_active: 是否已激活，布尔类型。
+
+如果你要插入所有列的数据，可以省略列名：
+
+```text
+INSERT INTO users
+VALUES (NULL,'test', 'test@runoob.com', '1990-01-01', true);
+```
+
+这里，NULL 是用于自增长列的占位符，表示系统将为 id 列生成一个唯一的值。
+
+如果你要插入多行数据，可以在 VALUES 子句中指定多组数值：
+
+```text
+INSERT INTO users (username, email, birthdate, is_active)
+VALUES
+    ('test1', 'test1@runoob.com', '1985-07-10', true),
+    ('test2', 'test2@runoob.com', '1988-11-25', false),
+    ('test3', 'test3@runoob.com', '1993-05-03', true);
+```
+
+以上代码将在 users 表中插入三行数据。
+
+
+## 通过命令提示窗口插入数据
+
+以下我们将使用 INSERT INTO 语句向 MySQL 数据表 runoob_tbl 插入数据
+
+
+### 实例
+
+以下实例中我们将向 runoob_tbl 表插入三条数据:
+
+
+## 实例
+
+注意： 使用箭头标记 -> 不是 SQL 语句的一部分，它仅仅表示一个新行，如果一条 SQL 语句太长，我们可以通过回车键来创建一个新行来编写 SQL 语句，SQL 语句的命令结束符为分号 ;。
+
+在以上实例中，我们并没有提供 runoob_id 的数据，因为该字段我们在创建表的时候已经设置它为 AUTO_INCREMENT(自动增加) 属性。 所以，该字段会自动递增而不需要我们去设置。实例中 NOW() 是一个 MySQL 函数，该函数返回日期和时间。
+
+接下来我们可以通过以下语句查看数据表数据：
+
+
+## 读取数据表：
+
+```text
+select * from runoob_tbl;
+```
+
+输出结果：
+
+
+## 使用 PHP 脚本插入数据
+
+你可以使用 PHP 的 mysqli_query() 函数来执行 INSERT INTO命令来插入数据。
+
+该函数有两个参数，在执行成功时返回 TRUE，否则返回 FALSE。
+
+
+### 语法
+
+```text
+mysqli_query(connection,query,resultmode);
+```
+
+可选。一个常量。可以是下列值中的任意一个：
+
+- MYSQLI_USE_RESULT（如果需要检索大量数据，请使用这个）
+- MYSQLI_STORE_RESULT（默认）
+
+
+### 实例
+
+以下实例中程序接收用户输入的三个字段数据，并插入数据表中：
+
+
+## 添加数据
+
+```html
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('连接失败: ' . mysqli_error($conn));
+}
+echo '连接成功<br />';
+// 设置编码，防止中文乱码
+mysqli_query($conn , "set names utf8");
+
+$runoob_title = '学习 Python';
+$runoob_author = 'RUNOOB.COM';
+$submission_date = '2016-03-06';
+
+$sql = "INSERT INTO runoob_tbl ".
+        "(runoob_title,runoob_author, submission_date) ".
+        "VALUES ".
+        "('$runoob_title','$runoob_author','$submission_date')";
+
+
+
+mysqli_select_db( $conn, 'RUNOOB' );
+$retval = mysqli_query( $conn, $sql );
+if(! $retval )
+{
+  die('无法插入数据: ' . mysqli_error($conn));
+}
+echo "数据插入成功\n";
+mysqli_close($conn);
+?>
+```
+
+对于含有中文的数据插入，需要添加 mysqli_query($conn , "set names utf8"); 语句。
+
+接下来我们可以通过以下语句查看数据表数据：
+
+
+## 读取数据表：
+
+```text
+select * from runoob_tbl;
+```
+
+输出结果：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL 插入数据` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

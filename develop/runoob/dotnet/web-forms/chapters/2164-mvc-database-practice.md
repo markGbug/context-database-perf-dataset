@@ -1,34 +1,85 @@
-# Web Forms：MVC 数据库 练习笔记
+# Web Forms：ASP.NET MVC - SQL 数据库
 
 - 来源：[MVC 数据库](https://www.runoob.com/aspnet/mvc-database.html)
 - 分类：.NET
 - 技术：Web Forms
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2164
 
-## 练习目标
+## 本章内容
 
-把 `MVC 数据库` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+为了学习 ASP.NET MVC，我们将构建一个 Internet 应用程序。
 
-## 练习步骤
+第 6 部分：添加数据库。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 创建数据库
 
-- 我能独立说出 `MVC 数据库` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Visual Web Developer 带有名为 SQL Server Compact 免费的 SQL 数据库。
 
-## 复盘问题
+本教程所需的这个数据库可以通过以下几个简单的步骤来创建：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+- 右击 Solution Explorer 窗口中的 App_Data 文件夹
+- 选择 Add, New Item
+- 选择 SQL Server Compact Local Database *
+- 将数据库命名为 Movies.sdf
+- 点击 Add 按钮
+
+* 如果选项中没有 SQL Server Compact Local Database，则说明您尚未在计算机上安装 SQL Server Compac。请通过以下链接进行安装：SQL Server Compact
+
+Visual Web Developer 会自动在 App_Data 文件夹中创建该数据库。
+
+注释：在本教程中，需要您掌握一些关于 SQL 数据库的基础知识。如果您想先学习这个主题，请访问我们的 SQL 教程。
+
+
+## 添加数据库表
+
+双击 App_Data 文件夹中的 Movies.sdf 文件，将打开 Database Explorer 窗口。
+
+如需在数据库中创建一个新的表，请右击 Tables 文件夹，然后选择 Create Table。
+
+创建如下的列：
+
+对列的解释：
+
+ID 是用于标识表中每条记录的整数（全数字）。
+
+Title 是 100 个字符长度的文本列，用于存储影片的名称。
+
+Director 是 100 个字符长度的文本列，用于存储导演的名字。
+
+Date 是日期列，用于存储影片的发布日期。
+
+在创建好上述列之后，您必须将 ID 列设置为表的主键（记录标识符）。要做到这点，请点击列名（ID），并选择 Primary Key。在 Column Properties 窗口中，设置 Identity 属性为 True：
+
+当您创建好表列后，保存表并命名为 MovieDBs。
+
+注释：
+
+我们特意把表命名为 "MovieDBs"（以 s 结尾）。在下一章中，您将看到用于数据模型的 "MovieDB"。这看起来有点奇怪，不过这种命名惯例能确保控制器连接上数据库表，您必须这么使用。
+
+
+## 添加数据库记录
+
+您可以使用 Visual Web Developer 向 movie 数据库中添加一些测试记录。
+
+双击 App_Data 文件夹中的 Movies.sdf 文件。
+
+右击 Database Explorer 窗口中的 MovieDBs 表，并选择 Show Table Data。
+
+添加一些记录：
+
+注释：ID 列会自动更新，您可以不用编辑它。
+
+
+## 添加连接字符串
+
+向您的 Web.config 文件中的 <connectionStrings> 元素添加如下元素：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MVC 数据库` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

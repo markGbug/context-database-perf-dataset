@@ -1,34 +1,102 @@
-# Memcached：Memcached CAS 命令 练习笔记
+# Memcached：Memcached CAS 命令
 
 - 来源：[Memcached CAS 命令](https://www.runoob.com/memcached/memcached-cas.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1446
 
-## 练习目标
+## 本章内容
 
-把 `Memcached CAS 命令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Memcached CAS（Check-And-Set 或 Compare-And-Swap） 命令用于执行一个"检查并设置"的操作
 
-## 练习步骤
+它仅在当前客户端最后一次取值后，该key 对应的值没有被其他客户端修改的情况下， 才能够将值写入。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+检查是通过cas_token参数进行的， 这个参数是Memcach指定给已经存在的元素的一个唯一的64位值。
 
-## 验收清单
 
-- 我能独立说出 `Memcached CAS 命令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法：
 
-## 复盘问题
+CAS 命令的基本语法格式如下：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+cas key flags exptime bytes unique_cas_token [noreply]
+value
+```
+
+参数说明如下：
+
+- key：键值 key-value 结构中的 key，用于查找缓存值。
+- flags：可以包括键值对的整型参数，客户机使用它存储关于键值对的额外信息 。
+- exptime：在缓存中保存键值对的时间长度（以秒为单位，0 表示永远）
+- bytes：在缓存中存储的字节数
+- unique_cas_token通过 gets 命令获取的一个唯一的64位值。
+- noreply（可选）： 该参数告知服务器不需要返回数据
+- value：存储的值（始终位于第二行）（可直接理解为key-value结构中的value）
+
+
+### 实例
+
+要在 Memcached 上使用 CAS 命令，你需要从 Memcached 服务商通过 gets 命令获取令牌（token）。
+
+gets 命令的功能类似于基本的 get 命令。两个命令之间的差异在于，gets 返回的信息稍微多一些：64 位的整型值非常像名称/值对的 "版本" 标识符。
+
+实例步骤如下：
+
+- 如果没有设置唯一令牌，则 CAS 命令执行错误。
+- 如果键 key 不存在，执行失败。
+- 添加键值对。
+- 通过 gets 命令获取唯一令牌。
+- 使用 cas 命令更新数据
+- 使用 get 命令查看数据是否更新
+
+```text
+cas tp 0 900 9
+ERROR             <− 缺少 token
+
+cas tp 0 900 9 2
+memcached
+NOT_FOUND         <− 键 tp 不存在
+
+set tp 0 900 9
+memcached
+STORED
+
+gets tp
+VALUE tp 0 9 1
+memcached
+END
+
+cas tp 0 900 5 1
+redis
+STORED
+
+get tp
+VALUE tp 0 5
+redis
+END
+```
+
+
+### 输出
+
+如果数据添加成功，则输出：
+
+```text
+STORED
+```
+
+输出信息说明：
+
+- STORED：保存成功后输出。
+- ERROR：保存出错或语法错误。
+- EXISTS：在最后一次取值后另外一个用户也在更新该数据。
+- NOT_FOUND：Memcached 服务上不存在该键值。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Memcached CAS 命令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

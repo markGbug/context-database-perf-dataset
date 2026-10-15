@@ -1,34 +1,137 @@
-# Docker：Docker 安装 PHP 练习笔记
+# Docker：Docker 安装 PHP
 
 - 来源：[Docker 安装 PHP](https://www.runoob.com/docker/docker-install-php.html)
 - 分类：后端开发
 - 技术：Docker
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：0814
 
-## 练习目标
+## 本章内容
 
-把 `Docker 安装 PHP` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 安装 PHP 镜像
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 方法一、docker pull php
 
-## 验收清单
+查找 Docker Hub 上的 php 镜像:
 
-- 我能独立说出 `Docker 安装 PHP` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+可以通过 Sort by 查看其他版本的 php，默认是最新版本 php:latest。
 
-## 复盘问题
+此外，我们还可以用 docker search php 命令来查看可用版本：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+runoob@runoob:~/php-fpm$ docker search php
+NAME                      DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+php                       While designed for web development, the PH...   1232      [OK]
+richarvey/nginx-php-fpm   Container running Nginx + PHP-FPM capable ...   207                  [OK]
+phpmyadmin/phpmyadmin     A web interface for MySQL and MariaDB.          123                  [OK]
+eboraas/apache-php        PHP5 on Apache (with SSL support), built o...   69                   [OK]
+php-zendserver            Zend Server - the integrated PHP applicati...   69        [OK]
+million12/nginx-php       Nginx + PHP-FPM 5.5, 5.6, 7.0 (NG), CentOS...   67                   [OK]
+webdevops/php-nginx       Nginx with PHP-FPM                              39                   [OK]
+webdevops/php-apache      Apache with PHP-FPM (based on webdevops/php)    14                   [OK]
+phpunit/phpunit           PHPUnit is a programmer-oriented testing f...   14                   [OK]
+tetraweb/php              PHP 5.3, 5.4, 5.5, 5.6, 7.0 for CI and run...   12                   [OK]
+webdevops/php             PHP (FPM and CLI) service container             10                   [OK]
+...
+```
+
+这里我们拉取官方的镜像,标签为5.6-fpm
+
+```text
+runoob@runoob:~/php-fpm$ docker pull php:5.6-fpm
+```
+
+等待下载完成后，我们就可以在本地镜像列表里查到REPOSITORY为php,标签为5.6-fpm的镜像。
+
+```text
+runoob@runoob:~/php-fpm$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+php                 5.6-fpm             025041cd3aa5        6 days ago          456.3 MB
+```
+
+
+## Nginx + PHP 部署
+
+Nginx 部署可以查看：Docker 安装 Nginx，一些 Nginx 的配置参考这篇文章。
+
+启动 PHP：
+
+```text
+$ docker run --name  myphp-fpm -v ~/nginx/www:/www  -d php:5.6-fpm
+```
+
+命令说明：
+
+- --name myphp-fpm : 将容器命名为 myphp-fpm。
+- -v ~/nginx/www:/www : 将主机中项目的目录 www 挂载到容器的 /www
+
+创建 ~/nginx/conf/conf.d 目录：
+
+```text
+mkdir ~/nginx/conf/conf.d
+```
+
+在该目录下添加 ~/nginx/conf/conf.d/runoob-test-php.conf 文件，内容如下：
+
+```text
+server {
+    listen       80;
+    server_name  localhost;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm index.php;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass   php:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  /www/$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+```
+
+配置文件说明：
+
+- php:9000: 表示 php-fpm 服务的 URL，下面我们会具体说明。
+- /www/: 是 myphp-fpm 中 php 文件的存储路径，映射到本地的 ~/nginx/www 目录。
+
+启动 nginx：
+
+```text
+docker run --name runoob-php-nginx -p 8083:80 -d \
+    -v ~/nginx/www:/usr/share/nginx/html:ro \
+    -v ~/nginx/conf/conf.d:/etc/nginx/conf.d:ro \
+    --link myphp-fpm:php \
+    nginx
+```
+
+- -p 8083:80: 端口映射，把 nginx 中的 80 映射到本地的 8083 端口。
+- ~/nginx/www: 是本地 html 文件的存储目录，/usr/share/nginx/html 是容器内 html 文件的存储目录。
+- ~/nginx/conf/conf.d: 是本地 nginx 配置文件的存储目录，/etc/nginx/conf.d 是容器内 nginx 配置文件的存储目录。
+- --link myphp-fpm:php: 把 myphp-fpm 的网络并入 nginx，并通过修改 nginx 的 /etc/hosts，把域名 php 映射成 127.0.0.1，让 nginx 通过 php:9000 访问 php-fpm。
+
+接下来我们在 ~/nginx/www 目录下创建 index.php，代码如下：
+
+```text
+<?php
+echo phpinfo();
+?>
+```
+
+浏览器打开 http://127.0.0.1:8083/index.php，显示如下：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Docker 安装 PHP` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

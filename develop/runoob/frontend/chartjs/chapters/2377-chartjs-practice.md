@@ -1,34 +1,43 @@
-# Chart.js：Chart.js 教程 练习笔记
+# Chart.js：Chart.js 教程
 
 - 来源：[Chart.js 教程](https://www.runoob.com/chartjs/chartjs-tutorial.html)
 - 分类：前端开发
 - 技术：Chart.js
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2377
 
-## 练习目标
+## 本章内容
 
-把 `Chart.js 教程` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Chart.js 是一个简单、灵活的 JavaScript 图表工具。
 
-## 练习步骤
+Chart.js 是一个基于 HTML5 技术的 JavaScript 图表工具。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Chart.js:使用 <canvas> 标签的实现简洁HTML5图表
 
-## 验收清单
+Chart.js 能够很简单便捷的在 Web 网站或是 Web 应用程序添加有交互性的图表
 
-- 我能独立说出 `Chart.js 教程` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+Chart.js 免费提供给个人学习、个人网站和非商业用途使用。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### Chart.js 特性
+
+- Chart.js 是开源的，由社区共同维护的开源项目。
+- Chart.js支持 8 种图表类型，每种方式都具有动态效果并且可定制。
+- Chart.js 使用 HTML5 Canvas 技术，在所有现代浏览器（IE11+）上都有高效的绘图效率。
+- Chart.js 是响应式，可以根据窗口尺寸的变化重绘所有图表，展现更加细腻。
+
+
+### Chart.js 相关资料
+
+- Chart.js 官网：https://www.chartjs.org/
+- Chart.js Github：https://github.com/chartjs/Chart.js
+- Chart.js 文档：https://www.chartjs.org/docs/latest/
+- Chart.js 实例：https://www.chartjs.org/docs/latest/samples/information.html
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Chart.js 教程` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,96 @@
-# JavaScript：JavaScript Window 练习笔记
+# JavaScript：JavaScript Window - 浏览器对象模型
 
 - 来源：[JavaScript Window](https://www.runoob.com/js/js-window.html)
 - 分类：前端开发
 - 技术：JavaScript
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2822
 
-## 练习目标
+## 本章内容
 
-把 `JavaScript Window` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+浏览器对象模型 (BOM) 使 JavaScript 有能力与浏览器"对话"。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 浏览器对象模型 (BOM)
 
-## 验收清单
+浏览器对象模型（Browser Object Model (BOM)）尚无正式标准。
 
-- 我能独立说出 `JavaScript Window` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+由于现代浏览器已经（几乎）实现了 JavaScript 交互性方面的相同方法和属性，因此常被认为是 BOM 的方法和属性。
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+## Window 对象
+
+所有浏览器都支持 window 对象。它表示浏览器窗口。
+
+所有 JavaScript 全局对象、函数以及变量均自动成为 window 对象的成员。
+
+全局变量是 window 对象的属性。
+
+全局函数是 window 对象的方法。
+
+甚至 HTML DOM 的 document 也是 window 对象的属性之一：
+
+```text
+window.document.getElementById("header");
+```
+
+与此相同：
+
+```text
+document.getElementById("header");
+```
+
+
+## Window 尺寸
+
+有三种方法能够确定浏览器窗口的尺寸。
+
+对于Internet Explorer、Chrome、Firefox、Opera 以及 Safari：
+
+- window.innerHeight - 浏览器窗口的内部高度(包括滚动条)
+- window.innerWidth - 浏览器窗口的内部宽度(包括滚动条)
+
+对于 Internet Explorer 8、7、6、5：
+
+- document.documentElement.clientHeight
+- document.documentElement.clientWidth
+
+或者
+
+- document.body.clientHeight
+- document.body.clientWidth
+
+实用的 JavaScript 方案（涵盖所有浏览器，包含 IE8 及以下版本的浏览器）：
+
+
+## 实例
+
+```javascript
+var w=window.innerWidth
+|| document.documentElement.clientWidth
+|| document.body.clientWidth;
+
+var h=window.innerHeight
+|| document.documentElement.clientHeight
+|| document.body.clientHeight;
+```
+
+该例显示浏览器窗口的高度和宽度。
+
+
+## 其他 Window 方法
+
+一些其他方法：
+
+- window.open() - 打开新窗口
+- window.close() - 关闭当前窗口
+- window.moveTo() - 移动当前窗口
+- window.resizeTo() - 调整当前窗口的尺寸
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JavaScript Window` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

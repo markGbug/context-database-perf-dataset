@@ -1,34 +1,90 @@
-# JSON：JSON.parse() 练习笔记
+# JSON：JSON.parse()
 
 - 来源：[JSON.parse()](https://www.runoob.com/json/json-parse.html)
 - 分类：前端开发
 - 技术：JSON
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3016
 
-## 练习目标
+## 本章内容
 
-把 `JSON.parse()` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+JSON 通常用于与服务端交换数据。
 
-## 练习步骤
+在接收服务器数据时一般是字符串。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+我们可以使用 JSON.parse() 方法将数据转换为 JavaScript 对象。
 
-## 验收清单
 
-- 我能独立说出 `JSON.parse()` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法
 
-## 复盘问题
+```text
+JSON.parse(text[, reviver])
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+参数说明：
+
+- text:必需， 一个有效的 JSON 字符串。
+- reviver: 可选，一个转换结果的函数， 将为对象的每个成员调用此函数。
+
+
+## JSON 解析实例
+
+例如我们从服务器接收了以下数据：
+
+```text
+{ "name":"runoob", "alexa":10000, "site":"www.runoob.com" }
+```
+
+我们使用 JSON.parse() 方法处理以上数据，将其转换为 JavaScript 对象：
+
+```javascript
+var obj = JSON.parse('{ "name":"runoob", "alexa":10000, "site":"www.runoob.com" }');
+```
+
+解析前要确保你的数据是标准的 JSON 格式，否则会解析出错。
+
+你可以使用我们的在线工具检测：https://www.jyshare.com/front-end/53。
+
+解析完成后，我们就可以在网页上使用 JSON 数据了：
+
+
+## 实例
+
+```html
+<p id="demo"></p>
+
+<script>
+var obj = JSON.parse('{ "name":"runoob", "alexa":10000, "site":"www.runoob.com" }');
+document.getElementById("demo").innerHTML = obj.name + "：" + obj.site;
+</script>
+```
+
+
+## 从服务端接收 JSON 数据
+
+我们可以使用 AJAX 从服务器请求 JSON 数据，并解析为 JavaScript 对象。
+
+
+## 实例
+
+```javascript
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        document.getElementById("demo").innerHTML = myObj.name;
+    }
+};
+xmlhttp.open("GET", "/try/ajax/json_demo.txt", true);
+xmlhttp.send();
+```
+
+查看服务端数据： json_demo.txt
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `JSON.parse()` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

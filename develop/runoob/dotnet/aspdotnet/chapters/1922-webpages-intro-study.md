@@ -1,35 +1,107 @@
-# ASP.NET：WebPages 简介 学习笔记
+# ASP.NET：ASP.NET Web Pages - 教程
 
 - 来源：[WebPages 简介](https://www.runoob.com/aspnet/webpages-intro.html)
 - 分类：.NET
 - 技术：ASP.NET
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1922
 
-## 学习目标
+## 本章内容
 
-ASP.NET 章节要抓住核心概念、基础操作和能独立验证的小例子。本篇围绕 `WebPages 简介` 建立学习路径，先理解它在 ASP.NET 体系中的位置，再做可运行或可复述的验证。
+ASP.NET 是一个使用 HTML、CSS、JavaScript 和服务器脚本创建网页和网站的开发框架。
 
-## 阅读抓手
+ASP.NET 支持三种不同的开发模式： Web Pages（Web 页面）、MVC（Model View Controller 模型-视图-控制器）、Web Forms（Web 窗体）：
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+本教程介绍 Web Pages。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 从何入手？
 
-## 完成标准
+多数开发人员学习一个新技术，是从查看运行实例开始的。
 
-- 能用 3 到 5 句话解释 `WebPages 简介`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 通过"运行实例"轻松学习
+
+我们的"运行实例"工具让 Web Pages 变得更简单易学。
+
+它在运行实例的同时显示 ASP.NET 代码和 HTML 输出。
+
+点击"运行实例"按钮来看看它是如何工作的：
+
+
+## Web Pages 实例
+
+
+## 什么是 Web Pages？
+
+Web Pages 是三种创建 ASP.NET 网站和 Web 应用程序的编程模式中的一种。
+
+其他两种编程模式是 Web Forms 和 MVC（Model View Controller 模型-视图-控制器）。
+
+Web Pages 是开发 ASP.NET 网页最简单的开发模式。它提供了一种简单的方式来将 HTML、CSS、JavaScript 和服务器脚本结合起来：
+
+- 容易学习，容易理解，容易使用
+- 围绕着单一的网页创建
+- 与 PHP 和经典 ASP 相似
+- Visual Basic 或者 C# 的服务器脚本
+- 全 HTML、CSS 和 JavaScript 控制
+
+Web Pages 内置了数据库、视频、图形、社交媒体和其他更多的 Web Helpers，因此很容易扩展。
+
+
+## Web Pages 教程
+
+如果您刚接触 ASP.NET ，建议从 Web Pages 开始学习。
+
+在我们的 Web Pages 教程中，您将学习到如何使用 VB(Visual Basic) 或者 C#(C sharp) 最新的 Razor 服务器标记语法将 HTML、CSS、JavaScript 和服务器代码结合起来。
+
+您也可以学习如何使用具有可编程的 Web Helpers（包括数据库、视频、图形、社交媒体等等）来扩展您的网页。
+
+
+## Web Pages 实例
+
+通过实例学习！
+
+由于 ASP.NET 代码是在服务器上执行的，您不能在您的浏览器中查看代码。您只能看到普通的 HTML 页面输出。
+
+在菜鸟教程中，每个实例都会把隐藏的 ASP.NET 代码显示出来，这将让您更容易地理解它是如何工作的。
+
+Web Pages 实例
+
+
+## Web Pages 参考手册
+
+在本教程的最后，您将看到一套完整的 ASP.NET 参考手册，介绍了对象、组件、属性和方法。
+
+Web Pages 参考手册
+
+
+## 使用 WebMatrix
+
+在本教程中，我们使用了 WebMatrix 。
+
+WebMatrix 是一个简单但功能强大的，由微软专门为 Web Pages 量身定做的，免费的 ASP.NET 开发工具。
+
+WebMatrix 包含：
+
+- Web Pages 实例和模板
+- 一种 Web 服务器语言（VB 或者 C# 的 Razor 服务器标记语法）
+- 一种 Web 服务器（IIS Express）
+- 一种数据库服务器（SQL Server Compact）
+- 一个完整的 Web 开发框架（ASP.NET）
+
+通过使用 WebMatrix ，您可以从一个空的网站和一个空白页面开始开发，或者您也可以使用"Web 应用程序库"中的开源应用程序进行二次开发。PHP 和 ASP.NET 应用程序很多都是开源的，比如 Umbraco、DotNetNuke、Drupal、Joomla、WordPress 等等。WebMatrix 也有内置安全性、搜索引擎优化和网络出版工具。
+
+使用 WebMatrix 开发的技术和代码可以无缝地转化为完全专业化的 ASP.NET 应用程序。
+
+如果您想尝试使用 WebMatrix ，请点击下面的链接进行安装：
+
+http://www.microsoft.com/web/gallery/install.aspx?appid=WebMatrix
+
+
+## 复习重点
+
+- 能说明 `WebPages 简介` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

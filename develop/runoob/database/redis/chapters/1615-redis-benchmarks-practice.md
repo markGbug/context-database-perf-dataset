@@ -1,34 +1,71 @@
-# Redis：Redis 性能测试 练习笔记
+# Redis：Redis 性能测试
 
 - 来源：[Redis 性能测试](https://www.runoob.com/redis/redis-benchmarks.html)
 - 分类：数据库
 - 技术：Redis
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1615
 
-## 练习目标
+## 本章内容
 
-把 `Redis 性能测试` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Redis 性能测试是通过同时执行多个命令实现的。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 语法
 
-## 验收清单
+redis 性能测试的基本命令如下：
 
-- 我能独立说出 `Redis 性能测试` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+redis-benchmark [option] [option value]
+```
 
-## 复盘问题
+注意：该命令是在 redis 的目录下执行的，而不是 redis 客户端的内部指令。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 实例
+
+以下实例同时执行 10000 个请求来检测性能：
+
+```text
+$ redis-benchmark -n 10000  -q
+
+PING_INLINE: 141043.72 requests per second
+PING_BULK: 142857.14 requests per second
+SET: 141442.72 requests per second
+GET: 145348.83 requests per second
+INCR: 137362.64 requests per second
+LPUSH: 145348.83 requests per second
+LPOP: 146198.83 requests per second
+SADD: 146198.83 requests per second
+SPOP: 149253.73 requests per second
+LPUSH (needed to benchmark LRANGE): 148588.42 requests per second
+LRANGE_100 (first 100 elements): 58411.21 requests per second
+LRANGE_300 (first 300 elements): 21195.42 requests per second
+LRANGE_500 (first 450 elements): 14539.11 requests per second
+LRANGE_600 (first 600 elements): 10504.20 requests per second
+MSET (10 keys): 93283.58 requests per second
+```
+
+redis 性能测试工具可选参数如下所示：
+
+
+### 实例
+
+以下实例我们使用了多个参数来测试 redis 性能：
+
+```text
+$ redis-benchmark -h 127.0.0.1 -p 6379 -t set,lpush -n 10000 -q
+
+SET: 146198.83 requests per second
+LPUSH: 145560.41 requests per second
+```
+
+以上实例中主机为 127.0.0.1，端口号为 6379，执行的命令为 set,lpush，请求数为 10000，通过 -q 参数让结果只显示每秒执行的请求数。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Redis 性能测试` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

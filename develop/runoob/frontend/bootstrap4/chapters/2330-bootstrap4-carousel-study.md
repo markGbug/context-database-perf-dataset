@@ -1,35 +1,82 @@
-# Bootstrap4：Bootstrap4 轮播 学习笔记
+# Bootstrap4：Bootstrap4 轮播
 
 - 来源：[Bootstrap4 轮播](https://www.runoob.com/bootstrap4/bootstrap4-carousel.html)
 - 分类：前端开发
 - 技术：Bootstrap4
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2330
 
-## 学习目标
+## 本章内容
 
-Bootstrap4 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Bootstrap4 轮播` 建立学习路径，先理解它在 Bootstrap4 体系中的位置，再做可运行或可复述的验证。
+轮播是一个循环的幻灯片：
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 如何创建轮播
 
-## 笔记模板
+以下实例创建了一个简单的图片轮播效果 ：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 实例
 
-- 能用 3 到 5 句话解释 `Bootstrap4 轮播`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+  <!-- 指示符 -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+
+  <!-- 轮播图片 -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://static.jyshare.com/images/mix/img_fjords_wide.jpg">
+    </div>
+    <div class="carousel-item">
+      <img src="https://static.jyshare.com/images/mix/img_nature_wide.jpg">
+    </div>
+    <div class="carousel-item">
+      <img src="https://static.jyshare.com/images/mix/img_mountains_wide.jpg">
+    </div>
+  </div>
+
+  <!-- 左右切换按钮 -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>
+```
+
+
+## 轮播图片上添加描述
+
+在每个 <div class="carousel-item"> 内添加 <div class="carousel-caption"> 来设置轮播图片的描述文本：:
+
+
+## 实例
+
+```html
+<div class="carousel-item">
+  <img src="https://static.jyshare.com/images/mix/img_fjords_wide.jpg">
+  <div class="carousel-caption">
+    <h3>第一张图片描述标题</h3>
+    <p>描述文字!</p>
+  </div>
+</div>
+```
+
+
+### 以上实例中使用的类说明
+
+
+## 复习重点
+
+- 能说明 `Bootstrap4 轮播` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

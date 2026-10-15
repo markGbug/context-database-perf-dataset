@@ -1,34 +1,79 @@
-# jQuery EasyUI：jEasyUI 显示海量数据 练习笔记
+# jQuery EasyUI：jQuery EasyUI 数据网格 - 使用虚拟滚动视图显示海量数据
 
 - 来源：[jEasyUI 显示海量数据](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid27.html)
 - 分类：前端开发
 - 技术：jQuery EasyUI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2883
 
-## 练习目标
+## 本章内容
 
-把 `jEasyUI 显示海量数据` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+数据网格（datagrid）的虚拟滚动特性可以用来显示大数量的记录而不需要分页。 当滚动垂直滚动条时，数据网格（datagrid）执行 ajax 请求来加载和刷新现有的记录。 整个刷新的行为过程是平稳的没有闪烁。 在本教程中，我们将创建一个数据网格（datagrid），并运用虚拟滚动特性从服务器加载数据。
 
-## 练习步骤
+为数据网格（datagrid）运用虚拟滚动特性，'view' 属性应该设置为 'scrollview'。 用户应该从数据网格（datagrid）扩展下载 scrollview，并在页面头部引用 scrollview 文件。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+```html
+<script type="text/javascript" src="https://www.runoob.com/try/jeasyui/datagrid-detailview.js"></script>
+```
 
-## 验收清单
+```html
+<table id="tt" class="easyui-datagrid" style="width:700px;height:300px"
+        title="DataGrid - VirtualScrollView"
+        data-options="view:scrollview,rownumbers:true,singleSelect:true,
+            url:'datagrid27_getdata.php',autoRowHeight:false,pageSize:50">
+    <thead>
+        <tr>
+            <th field="inv" width="80">Inv No</th>
+            <th field="date" width="100">Date</th>
+            <th field="name" width="80">Name</th>
+            <th field="amount" width="80" align="right">Amount</th>
+            <th field="price" width="80" align="right">Price</th>
+            <th field="cost" width="100" align="right">Cost</th>
+            <th field="note" width="110">Note</th>
+        </tr>
+    </thead>
+</table>
+```
 
-- 我能独立说出 `jEasyUI 显示海量数据` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+请注意，这里我们不需要使用 pagination 属性，但 pageSize 属性是必需的，这样执行 ajax 请求时，数据网格（datagrid）将从服务器获取指定数量的记录。
 
-## 复盘问题
+datagrid27_getdata.php
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```java
+$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 50;
+
+$items = array();
+date_default_timezone_set('UTC');
+for($i=1; $i<=$rows; $i++){
+    $index = $i+($page-1)*$rows;
+    $amount = rand(50,100);
+    $price = rand(10000,20000)/100;
+    $items[] = array(
+        'inv' => sprintf("INV%04d",$index),
+        'date' => date('Y-m-d',time()+24*3600*$i),
+        'name' => 'Name' . $index,
+        'note' => 'Note' . $index,
+        'amount' => $amount,
+        'price' => sprintf('%01.2f',$price),
+        'cost' => sprintf('%01.2f',$amount*$price)
+    );
+}
+$result = array();
+$result['total'] = 8000;
+$result['rows'] = $items;
+echo json_encode($result);
+```
+
+
+## 下载 jQuery EasyUI 实例
+
+jeasyui-datagrid-datagrid27.zip
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jEasyUI 显示海量数据` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

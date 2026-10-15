@@ -1,35 +1,97 @@
-# PHP：PHP 表单 - 必需字段 学习笔记
+# PHP：PHP 表单 - 必需字段
 
 - 来源：[PHP 表单 - 必需字段](https://www.runoob.com/php/php-form-required.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1062
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP 表单 - 必需字段` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+本章节我们将介绍如何设置表单必需字段及错误信息。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## PHP - 必需字段
 
-## 笔记模板
+在上一章节我们已经介绍了表的验证规则，我们可以看到"名字", "E-mail", 和 "性别" 字段是必需的，各字段不能为空。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+如果在前面的章节中，所有输入字段都是可选的。
 
-## 完成标准
+在以下代码中我们加入了一些新的变量: $nameErr, $emailErr, $genderErr, 和 $websiteErr.。这些错误变量将显示在必需字段上。 我们还为每个$_POST变量增加了一个if else语句。 这些语句将检查 $_POST 变量是 否为空（使用php的 empty() 函数）。如果为空，将显示对应的错误信息。 如果不为空，数据将传递给test_input() 函数：
 
-- 能用 3 到 5 句话解释 `PHP 表单 - 必需字段`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```text
+<?php
+// 定义变量并默认设为空值
+$nameErr = $emailErr = $genderErr = $websiteErr = "";
+$name = $email = $gender = $comment = $website = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["name"])) {
+    $nameErr = "名字是必需的。";
+  } else {
+    $name = test_input($_POST["name"]);
+  }
+
+  if (empty($_POST["email"])) {
+    $emailErr = "邮箱是必需的。";
+  } else {
+    $email = test_input($_POST["email"]);
+  }
+
+  if (empty($_POST["website"])) {
+    $website = "";
+  } else {
+    $website = test_input($_POST["website"]);
+  }
+
+  if (empty($_POST["comment"])) {
+    $comment = "";
+  } else {
+    $comment = test_input($_POST["comment"]);
+  }
+
+  if (empty($_POST["gender"])) {
+    $genderErr = "性别是必需的。";
+  } else {
+    $gender = test_input($_POST["gender"]);
+  }
+}
+?>
+```
+
+
+## PHP - 显示错误信息
+
+在以下的HTML实例表单中，我们为每个字段中添加了一些脚本， 各个脚本会在信息输入错误时显示错误信息。(如果用户未填写信息就提交表单则会输出错误信息):
+
+```html
+<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+   名字: <input type="text" name="name">
+   <span class="error">* <?php echo $nameErr;?></span>
+   <br><br>
+   E-mail: <input type="text" name="email">
+   <span class="error">* <?php echo $emailErr;?></span>
+   <br><br>
+   网址: <input type="text" name="website">
+   <span class="error"><?php echo $websiteErr;?></span>
+   <br><br>
+   备注: <textarea name="comment" rows="5" cols="40"></textarea>
+   <br><br>
+   性别:
+   <input type="radio" name="gender" value="female">女
+   <input type="radio" name="gender" value="male">男
+   <span class="error">* <?php echo $genderErr;?></span>
+   <br><br>
+   <input type="submit" name="submit" value="Submit">
+</form>
+```
+
+查看代码 »
+
+
+## 复习重点
+
+- 能说明 `PHP 表单 - 必需字段` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

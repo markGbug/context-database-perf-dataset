@@ -1,35 +1,140 @@
-# AngularJS：AngularJS 表格 学习笔记
+# AngularJS：AngularJS 表格
 
 - 来源：[AngularJS 表格](https://www.runoob.com/angularjs/angularjs-tables.html)
 - 分类：前端开发
 - 技术：AngularJS
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2288
 
-## 学习目标
+## 本章内容
 
-AngularJS 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `AngularJS 表格` 建立学习路径，先理解它在 AngularJS 体系中的位置，再做可运行或可复述的验证。
+ng-repeat 指令可以完美的显示表格。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## 在表格中显示数据
 
-## 笔记模板
+使用 angular 显示表格是非常简单的：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## AngularJS 实例
 
-- 能用 3 到 5 句话解释 `AngularJS 表格`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="customersCtrl">
+
+<table>
+  <tr ng-repeat="x in names">
+    <td>{{ x.Name }}</td>
+    <td>{{ x.Country }}</td>
+  </tr>
+</table>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+    $http.get("/try/angularjs/data/Customers_JSON.php")
+    .then(function (result) {
+        $scope.names = result.data.records;
+    });
+});
+</script>
+```
+
+
+### 废弃声明 (v1.5)
+
+v1.5 中$http 的 success 和 error 方法已废弃。使用 then 方法替代。
+
+如果你使用的是 v1.5 以下版本，可以使用以下代码：
+
+```javascript
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+    $http.get("/try/angularjs/data/Customers_JSON.php")
+    .success(function (response) {$scope.names = response.records;});
+});
+```
+
+
+## Customers_JSON.php 文件代码：
+
+```html
+<?php
+echo <<<EOT
+{
+"records":[
+{"Name":"Alfreds Futterkiste","City":"Berlin","Country":"Germany"},
+{"Name":"Ana Trujillo Emparedados y helados","City":"México D.F.","Country":"Mexico"},
+{"Name":"Antonio Moreno Taquería","City":"México D.F.","Country":"Mexico"},
+{"Name":"Around the Horn","City":"London","Country":"UK"},
+{"Name":"B's Beverages","City":"London","Country":"UK"},
+{"Name":"Berglunds snabbköp","City":"Luleå","Country":"Sweden"},
+{"Name":"Blauer See Delikatessen","City":"Mannheim","Country":"Germany"},
+{"Name":"Blondel père et fils","City":"Strasbourg","Country":"France"},
+{"Name":"Bólido Comidas preparadas","City":"Madrid","Country":"Spain"},
+{"Name":"Bon app'","City":"Marseille","Country":"France"},
+{"Name":"Bottom-Dollar Marketse","City":"Tsawassen","Country":"Canada"},
+{"Name":"Cactus Comidas para llevar","City":"Buenos Aires","Country":"Argentina"},
+{"Name":"Centro comercial Moctezuma","City":"México D.F.","Country":"Mexico"},
+{"Name":"Chop-suey Chinese","City":"Bern","Country":"Switzerland"},
+{"Name":"Comércio Mineiro","City":"São Paulo","Country":"Brazil"}
+]
+}
+EOT;
+?>
+```
+
+
+## 使用 CSS 样式
+
+为了让页面更加美观，我们可以在页面中使用CSS：
+
+
+## CSS 样式
+
+
+## 使用 orderBy 过滤器
+
+排序显示，可以使用 orderBy 过滤器:
+
+
+## AngularJS 实例
+
+
+## 使用 uppercase 过滤器
+
+使用 uppercase 过滤器转换为大写:
+
+
+## AngularJS 实例
+
+
+## 显示序号 ($index)
+
+表格显示序号可以在 <td> 中添加 $index:
+
+
+## AngularJS 实例
+
+
+## 使用 $even 和 $odd
+
+
+## AngularJS 实例
+
+
+## 复习重点
+
+- 能说明 `AngularJS 表格` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

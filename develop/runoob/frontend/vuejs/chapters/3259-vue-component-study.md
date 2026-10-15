@@ -1,35 +1,248 @@
-# Vue.js：Vue.js 组件 学习笔记
+# Vue.js：Vue.js 组件
 
 - 来源：[Vue.js 组件](https://www.runoob.com/vue2/vue-component.html)
 - 分类：前端开发
 - 技术：Vue.js
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3259
 
-## 学习目标
+## 本章内容
 
-Vue.js 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Vue.js 组件` 建立学习路径，先理解它在 Vue.js 体系中的位置，再做可运行或可复述的验证。
+组件（Component）是 Vue.js 最强大的功能之一。
 
-## 阅读抓手
+组件可以扩展 HTML 元素，封装可重用的代码。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+组件系统让我们可以用独立可复用的小组件来构建大型应用，几乎任意类型的应用的界面都可以抽象为一个组件树：
 
-## 笔记模板
+注册一个全局组件语法格式如下：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+```text
+Vue.component(tagName, options)
+```
 
-## 完成标准
+tagName 为组件名，options 为配置选项。注册后，我们可以使用以下方式来调用组件：
 
-- 能用 3 到 5 句话解释 `Vue.js 组件`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+```html
+<tagName></tagName>
+```
+
+
+### 全局组件
+
+所有实例都能用全局组件。
+
+
+## 全局组件实例
+
+注册一个简单的全局组件 runoob，并使用它：
+
+```html
+<div id="app">
+    <runoob></runoob>
+</div>
+
+<script>
+// 注册
+Vue.component('runoob', {
+  template: '<h1>自定义组件!</h1>'
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+
+### 局部组件
+
+我们也可以在实例选项中注册局部组件，这样组件只能在这个实例中使用：
+
+
+## 局部组件实例
+
+注册一个简单的局部组件 runoob，并使用它：
+
+```html
+<div id="app">
+    <runoob></runoob>
+</div>
+
+<script>
+var Child = {
+  template: '<h1>自定义组件!</h1>'
+}
+
+// 创建根实例
+new Vue({
+  el: '#app',
+  components: {
+    // <runoob> 将只在父模板可用
+    'runoob': Child
+  }
+})
+</script>
+```
+
+
+## Prop
+
+prop 是子组件用来接受父组件传递过来的数据的一个自定义属性。
+
+父组件的数据需要通过 props 把数据传给子组件，子组件需要显式地用 props 选项声明 "prop"：
+
+
+## Prop 实例
+
+```html
+<div id="app">
+    <child message="hello!"></child>
+</div>
+
+<script>
+// 注册
+Vue.component('child', {
+  // 声明 props
+  props: ['message'],
+  // 同样也可以在 vm 实例中像 "this.message" 这样使用
+  template: '<span>{{ message }}</span>'
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+</script>
+```
+
+
+### 动态 Prop
+
+类似于用 v-bind 绑定 HTML 特性到一个表达式，也可以用 v-bind 动态绑定 props 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件：
+
+
+## Prop 实例
+
+```html
+<div id="app">
+    <div>
+      <input v-model="parentMsg">
+      <br>
+      <child v-bind:message="parentMsg"></child>
+    </div>
+</div>
+
+<script>
+// 注册
+Vue.component('child', {
+  // 声明 props
+  props: ['message'],
+  // 同样也可以在 vm 实例中像 "this.message" 这样使用
+  template: '<span>{{ message }}</span>'
+})
+// 创建根实例
+new Vue({
+  el: '#app',
+  data: {
+    parentMsg: '父组件内容'
+  }
+})
+</script>
+```
+
+以下实例中使用 v-bind 指令将 todo 传到每一个重复的组件中：
+
+
+## Prop 实例
+
+```html
+<div id="app">
+    <ol>
+    <todo-item v-for="item in sites" v-bind:todo="item"></todo-item>
+      </ol>
+</div>
+
+<script>
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+})
+new Vue({
+  el: '#app',
+  data: {
+    sites: [
+      { text: 'Runoob' },
+      { text: 'Google' },
+      { text: 'Taobao' }
+    ]
+  }
+})
+</script>
+```
+
+注意: prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。
+
+
+### Prop 验证
+
+组件可以为 props 指定验证要求。
+
+为了定制 prop 的验证方式，你可以为 props 中的值提供一个带有验证需求的对象，而不是一个字符串数组。例如：
+
+```javascript
+Vue.component('my-component', {
+  props: {
+    // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+    propA: Number,
+    // 多个可能的类型
+    propB: [String, Number],
+    // 必填的字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 带有默认值的数字
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 带有默认值的对象
+    propE: {
+      type: Object,
+      // 对象或数组默认值必须从一个工厂函数获取
+      default: function () {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        // 这个值必须匹配下列字符串中的一个
+        return ['success', 'warning', 'danger'].indexOf(value) !== -1
+      }
+    }
+  }
+})
+```
+
+当 prop 验证失败的时候，(开发环境构建版本的) Vue 将会产生一个控制台的警告。
+
+type 可以是下面原生构造器：
+
+- String
+- Number
+- Boolean
+- Array
+- Object
+- Date
+- Function
+- Symbol
+
+type 也可以是一个自定义构造器，使用 instanceof 检测。
+
+
+## 复习重点
+
+- 能说明 `Vue.js 组件` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

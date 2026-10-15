@@ -1,35 +1,72 @@
-# jQuery：jQuery Accordion 学习笔记
+# jQuery：jQuery Accordion
 
 - 来源：[jQuery Accordion](https://www.runoob.com/jquery/jquery-plugin-accordion.html)
 - 分类：前端开发
 - 技术：jQuery
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：3003
 
-## 学习目标
+## 本章内容
 
-jQuery 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `jQuery Accordion` 建立学习路径，先理解它在 jQuery 体系中的位置，再做可运行或可复述的验证。
+jQuery Accordion 插件用于创建折叠菜单。它通常与嵌套的列表、定义列表或嵌套的 div 一起使用。选项用于指定结构、激活的元素和定制的动画。
 
-## 阅读抓手
+该插件现在是 jQuery UI 的一部分，独立的版本不会再更新了。目前版本是 1.6。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+jQuery Accordion 官网，jQuery Accordion 插件下载：http://www.runoob.com/try/download/jquery-accordion.zip。
 
-## 笔记模板
+如需了解更多有关 Accordion 的细节，请查看 API 文档 折叠面板部件（Accordion Widget）。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+## 标准
 
-- 能用 3 到 5 句话解释 `jQuery Accordion`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+标准代码如下:
+
+```text
+jQuery('#list1a').accordion();
+jQuery('#list1b').accordion({
+    autoheight: false
+});
+```
+
+
+## 导航
+
+带有锚和嵌套列表的无序列表
+
+```text
+jQuery('#navigation').accordion({
+    active: false,
+    header: '.head',
+    navigation: true,
+    event: 'mouseover',
+    fillSpace: true,
+    animated: 'easeslide'
+});
+```
+
+
+## 带选项
+
+容器是一个定义列表，标题是 dt，内容是 dd。
+
+```html
+jQuery('#list2').accordion({
+    event: 'mouseover',
+    active: '.selected',
+    selectedClass: 'active',
+    animated: "bounceslide",
+    header: "dt"
+}).bind("change.ui-accordion", function(event, ui) {
+    jQuery('<div>' + ui.oldHeader.text() + ' hidden, ' + ui.newHeader.text() + ' shown</div>').appendTo('#log');
+});
+```
+
+查看演示 源码下载
+
+
+## 复习重点
+
+- 能说明 `jQuery Accordion` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

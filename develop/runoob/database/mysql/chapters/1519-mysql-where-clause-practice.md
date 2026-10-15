@@ -1,34 +1,237 @@
-# MySQL：MySQL WHERE 子句 练习笔记
+# MySQL：MySQL WHERE 子句
 
 - 来源：[MySQL WHERE 子句](https://www.runoob.com/mysql/mysql-where-clause.html)
 - 分类：数据库
 - 技术：MySQL
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1519
 
-## 练习目标
+## 本章内容
 
-把 `MySQL WHERE 子句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们知道从 MySQL 表中使用 SELECT 语句来读取数据。
 
-## 练习步骤
+如需有条件地从表中选取数据，可将 WHERE 子句添加到 SELECT 语句中。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+WHERE 子句用于在 MySQL 中过滤查询结果，只返回满足特定条件的行。
 
-## 验收清单
 
-- 我能独立说出 `MySQL WHERE 子句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+### 语法
 
-## 复盘问题
+以下是 SQL SELECT 语句使用 WHERE 子句从数据表中读取数据的通用语法：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+```text
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+```
+
+参数说明：
+
+- column1, column2, ... 是你要选择的列的名称，如果使用 * 表示选择所有列。
+- table_name 是你要从中查询数据的表的名称。
+- WHERE condition 是用于指定过滤条件的子句。
+
+更多说明：
+
+- 查询语句中你可以使用一个或者多个表，表之间使用逗号, 分割，并使用WHERE语句来设定查询条件。
+- 你可以在 WHERE 子句中指定任何条件。
+- 你可以使用 AND 或者 OR 指定一个或多个条件。
+- WHERE 子句也可以运用于 SQL 的 DELETE 或者 UPDATE 命令。
+- WHERE 子句类似于程序语言中的 if 条件，根据 MySQL 表中的字段值来读取指定的数据。
+
+以下为操作符列表，可用于 WHERE 子句中。
+
+下表中实例假定 A 为 10, B 为 20
+
+
+### 简单实例
+
+1. 等于条件：
+
+```text
+SELECT * FROM users WHERE username = 'test';
+```
+
+2. 不等于条件：
+
+```text
+SELECT * FROM users WHERE username != 'runoob';
+```
+
+3. 大于条件:
+
+```text
+SELECT * FROM products WHERE price > 50.00;
+```
+
+4. 小于条件:
+
+```text
+SELECT * FROM orders WHERE order_date < '2023-01-01';
+```
+
+5. 大于等于条件:
+
+```text
+SELECT * FROM employees WHERE salary >= 50000;
+```
+
+6. 小于等于条件:
+
+```text
+SELECT * FROM students WHERE age <= 21;
+```
+
+7. 组合条件（AND、OR）:
+
+```text
+SELECT * FROM products WHERE category = 'Electronics' AND price > 100.00;
+
+SELECT * FROM orders WHERE order_date >= '2023-01-01' OR total_amount > 1000.00;
+```
+
+8. 模糊匹配条件（LIKE）:
+
+```text
+SELECT * FROM customers WHERE first_name LIKE 'J%';
+```
+
+9. IN 条件:
+
+```text
+SELECT * FROM countries WHERE country_code IN ('US', 'CA', 'MX');
+```
+
+10. NOT 条件:
+
+```text
+SELECT * FROM products WHERE NOT category = 'Clothing';
+```
+
+11. BETWEEN 条件:
+
+```text
+SELECT * FROM orders WHERE order_date BETWEEN '2023-01-01' AND '2023-12-31';
+```
+
+12. IS NULL 条件
+
+```text
+SELECT * FROM employees WHERE department IS NULL;
+```
+
+13. IS NOT NULL 条件:
+
+```text
+SELECT * FROM customers WHERE email IS NOT NULL;
+```
+
+如果我们想在 MySQL 数据表中读取指定的数据，WHERE 子句是非常有用的。
+
+使用主键来作为 WHERE 子句的条件查询是非常快速的。
+
+
+## 从命令提示符中读取数据
+
+我们将在 SELECT 语句使用 WHERE 子句来读取 MySQL 数据表 runoob_tbl 中的数据。
+
+以下实例将读取 runoob_tbl 表中 runoob_author 字段值为 Sanjay 的所有记录：
+
+
+## SQL SELECT WHERE 子句
+
+```text
+SELECT * from runoob_tbl WHERE runoob_author='菜鸟教程';
+```
+
+输出结果：
+
+MySQL 的 WHERE 子句的字符串比较是不区分大小写的。 你可以使用 BINARY 关键字来设定 WHERE 子句的字符串比较是区分大小写的。
+
+如下实例:
+
+
+## BINARY 关键字
+
+```text
+mysql> SELECT * from runoob_tbl WHERE BINARY runoob_author='runoob.com';
+Empty set (0.01 sec)
+
+mysql> SELECT * from runoob_tbl WHERE BINARY runoob_author='RUNOOB.COM';
++-----------+---------------+---------------+-----------------+
+| runoob_id | runoob_title  | runoob_author | submission_date |
++-----------+---------------+---------------+-----------------+
+| 3         | JAVA 教程   | RUNOOB.COM    | 2016-05-06      |
+| 4         | 学习 Python | RUNOOB.COM    | 2016-03-06      |
++-----------+---------------+---------------+-----------------+
+2 rows in set (0.01 sec)
+```
+
+实例中使用了 BINARY 关键字，是区分大小写的，所以 runoob_author='runoob.com' 的查询条件是没有数据的。
+
+
+## 使用 PHP 脚本读取数据
+
+你可以使用 PHP 函数的 mysqli_query() 及相同的 SQL SELECT 带上 WHERE 子句的命令来获取数据。
+
+该函数用于执行 SQL 命令，然后通过 PHP 函数 mysqli_fetch_array() 来输出所有查询的数据。
+
+
+### 实例
+
+以下实例将从 runoob_tbl 表中返回使用 runoob_author 字段值为 RUNOOB.COM 的记录：
+
+
+## MySQL WHERE 子句测试：
+
+```java
+<?php
+$dbhost = 'localhost';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+    die('连接失败: ' . mysqli_error($conn));
+}
+// 设置编码，防止中文乱码
+mysqli_query($conn , "set names utf8");
+
+// 读取 runoob_author 为 RUNOOB.COM 的数据
+$sql = 'SELECT runoob_id, runoob_title,
+        runoob_author, submission_date
+        FROM runoob_tbl
+        WHERE runoob_author="RUNOOB.COM"';
+
+mysqli_select_db( $conn, 'RUNOOB' );
+$retval = mysqli_query( $conn, $sql );
+if(! $retval )
+{
+    die('无法读取数据: ' . mysqli_error($conn));
+}
+echo '<h2>菜鸟教程 MySQL WHERE 子句测试<h2>';
+echo '<table border="1"><tr><td>教程 ID</td><td>标题</td><td>作者</td><td>提交日期</td></tr>';
+while($row = mysqli_fetch_array($retval, MYSQLI_ASSOC))
+{
+    echo "<tr><td> {$row['runoob_id']}</td> ".
+         "<td>{$row['runoob_title']} </td> ".
+         "<td>{$row['runoob_author']} </td> ".
+         "<td>{$row['submission_date']} </td> ".
+         "</tr>";
+}
+echo '</table>';
+// 释放内存
+mysqli_free_result($retval);
+mysqli_close($conn);
+?>
+```
+
+输出结果如下所示：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `MySQL WHERE 子句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

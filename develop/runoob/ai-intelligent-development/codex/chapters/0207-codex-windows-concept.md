@@ -1,4 +1,4 @@
-# Codex：Codex Windows 概念卡
+# Codex：Codex Windows 原生支持
 
 - 来源：[Codex Windows](https://www.runoob.com/codex/codex-windows.html)
 - 分类：AI / 智能开发
@@ -6,24 +6,136 @@
 - 笔记类型：概念卡
 - 章节序号：0207
 
-## 一句话定义
+## 本章内容
 
-`Codex Windows` 是 Codex 学习路径中的一个知识点，需要放在章节上下文中理解它的用途、输入输出和边界。
+Codex 在 Windows 上提供原生支持，无需 WSL 即可运行。本节介绍 Windows 平台特有的功能和配置。
 
-## 三层理解
 
-- 是什么：先写下定义，不混入实现细节。
-- 为什么：说明它解决了什么问题，替代了什么笨办法。
-- 怎么用：用一个命令、代码片段、配置项、图示或流程描述它。
+## Windows 支持概述
 
-## 关联知识
+Codex 支持以下 Windows 环境：
 
-- 前置：学习本节之前需要掌握的环境、语法或概念。
-- 并列：和本节容易混淆的相邻概念。
-- 后续：学完本节之后可以继续追踪的章节。
 
-## 记忆锚点
+## 安装
 
-- 找一个日常类比帮助回忆。
-- 写一个反例说明它不适合什么场景。
-- 记录一个关键词，方便以后检索。
+
+### 使用 winget 安装
+
+
+## winget 安装
+
+
+### 使用 Chocolatey
+
+
+## Chocolatey 安装
+
+
+### 手动安装
+
+从 GitHub 下载 Windows 版本：
+
+```text
+https://github.com/openai/codex/releases
+```
+
+下载 .exe 安装程序并运行。
+
+
+## 原生沙箱
+
+Codex 可以在 Windows PowerShell 中原生运行：
+
+- 无需 WSL 或虚拟机
+- 保持 Windows 工作流程
+- 与 Windows 工具无缝集成
+
+
+### 沙箱模式配置
+
+
+## 配置沙箱
+
+
+### 沙箱模式说明
+
+
+### PowerShell 集成
+
+Codex 可以直接在 PowerShell 中使用：
+
+
+## PowerShell 中使用
+
+
+### CMD 支持
+
+Codex 也支持传统的 CMD 环境：
+
+
+## CMD 中使用
+
+
+## Windows 特有配置
+
+
+### 路径处理
+
+Windows 路径与 Unix 不同，Codex 会自动处理：
+
+- 反斜杠转换为正斜杠
+- 盘符处理
+- UNC 路径支持
+
+
+### 环境变量
+
+
+## Windows 环境变量
+
+
+### 代理配置
+
+
+## 代理设置
+
+
+## 故障排除
+
+
+### 常见问题
+
+- 检查是否安装了必要的 Visual C++ 运行库
+- 尝试以管理员权限运行
+- 检查杀毒软件是否阻止
+
+确保 PowerShell 可执行文件在 PATH 中。
+
+Codex 支持 Unicode，但某些旧版终端可能有问题。
+
+
+### 日志位置
+
+Windows 日志位置：
+
+```text
+%USERPROFILE%\.codex\log\codex-tui.log
+```
+
+
+## 后续章节
+
+- 与 WSL2 比较
+- 最佳实践
+- 常见问题
+- Q: Windows 原生版本和 WSL 版本哪个好？
+- Q: 可以和 WSL 共存吗？
+- Q: 需要管理员权限吗？
+- Q: 支持 PowerShell ISE 吗？
+
+## 记忆卡片
+
+- 一句话定义：`Codex Windows` 是本章需要掌握的核心知识点。
+- 关键要素：整理语法、输入输出、适用场景和限制条件。
+- 容易混淆：把相邻概念放在一起比较，写清楚区别。
+- 检索关键词：记录以后查找本章时最可能使用的关键词。

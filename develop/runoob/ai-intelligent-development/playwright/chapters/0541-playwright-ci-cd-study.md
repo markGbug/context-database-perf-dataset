@@ -1,35 +1,115 @@
-# Playwright：Playwright CI/CD 集成 学习笔记
+# Playwright：Playwright CI/CD 集成
 
 - 来源：[Playwright CI/CD 集成](https://www.runoob.com/playwright/playwright-ci-cd.html)
 - 分类：AI / 智能开发
 - 技术：Playwright
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：0541
 
-## 学习目标
+## 本章内容
 
-Playwright 章节要关注概念定义、工具链步骤、实验验证和效果评估。本篇围绕 `Playwright CI/CD 集成` 建立学习路径，先理解它在 Playwright 体系中的位置，再做可运行或可复述的验证。
+本章介绍如何将 Playwright 测试集成到 CI/CD 流水线中，包括 GitHub Actions 和其他常见 CI 平台。
 
-## 阅读抓手
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+## GitHub Actions 集成
 
-## 笔记模板
+当你在 npm init playwright@latest 时选择添加 GitHub Actions，Playwright 会自动生成工作流配置。
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
 
-## 完成标准
+### 自动生成的工作流
 
-- 能用 3 到 5 句话解释 `Playwright CI/CD 集成`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+
+## 实例
+
+
+## 查看 CI 测试结果
+
+
+### 查看测试日志
+
+在 GitHub 仓库的 Actions 页面中，点击每次运行可以查看详细的测试日志。
+
+每个 Worker 的输出都会独立显示，方便定位特定失败的测试。
+
+
+### 查看 HTML 报告
+
+如果配置了 reporter: 'html'，可以从 Artifacts 下载 playwright-report/ 来本地查看完整的 HTML 报告。
+
+
+### 发布报告到 Web
+
+
+## 实例
+
+
+## 其他 CI 平台
+
+
+### Jenkins
+
+```text
+pipeline {
+  agent any
+  stages {
+    stage('Install') {
+      steps {
+        sh 'npm ci'
+        sh 'npx playwright install --with-deps'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'npx playwright test'
+      }
+    }
+  }
+  post {
+    always {
+      archiveArtifacts artifacts: 'playwright-report/**'
+      junit 'test-results/junit.xml'
+    }
+  }
+}
+```
+
+
+### GitLab CI
+
+
+## 实例
+
+
+## Docker 运行 Playwright
+
+微软提供了预装所有系统依赖的官方 Docker 镜像，开箱即用。
+
+
+### 使用官方镜像
+
+```text
+# 拉取镜像
+docker pull mcr.microsoft.com/playwright:v1.52.0-jammy
+
+# 在容器中运行测试
+docker run --rm -v $(pwd):/work -w /work \
+  mcr.microsoft.com/playwright:v1.52.0-jammy \
+  npx playwright test
+```
+
+
+### Dockerfile 示例
+
+
+## 实例
+
+
+## CI 环境最佳实践
+
+
+## 复习重点
+
+- 能说明 `Playwright CI/CD 集成` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

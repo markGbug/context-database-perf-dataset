@@ -1,34 +1,114 @@
-# Memcached：Memcached stats 命令 练习笔记
+# Memcached：Memcached stats 命令
 
 - 来源：[Memcached stats 命令](https://www.runoob.com/memcached/memcached-stats.html)
 - 分类：数据库
 - 技术：Memcached
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1451
 
-## 练习目标
+## 本章内容
 
-把 `Memcached stats 命令` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+Memcached stats 命令用于返回统计信息例如 PID(进程号)、版本号、连接数等。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### 语法：
 
-## 验收清单
+stats 命令的基本语法格式如下：
 
-- 我能独立说出 `Memcached stats 命令` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+stats
+```
 
-## 复盘问题
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+### 实例
+
+在以下实例中，我们使用了 stats 命令来输出 Memcached 服务信息。
+
+```text
+stats
+STAT pid 1162
+STAT uptime 5022
+STAT time 1415208270
+STAT version 1.4.14
+STAT libevent 2.0.19-stable
+STAT pointer_size 64
+STAT rusage_user 0.096006
+STAT rusage_system 0.152009
+STAT curr_connections 5
+STAT total_connections 6
+STAT connection_structures 6
+STAT reserved_fds 20
+STAT cmd_get 6
+STAT cmd_set 4
+STAT cmd_flush 0
+STAT cmd_touch 0
+STAT get_hits 4
+STAT get_misses 2
+STAT delete_misses 1
+STAT delete_hits 1
+STAT incr_misses 2
+STAT incr_hits 1
+STAT decr_misses 0
+STAT decr_hits 1
+STAT cas_misses 0
+STAT cas_hits 0
+STAT cas_badval 0
+STAT touch_hits 0
+STAT touch_misses 0
+STAT auth_cmds 0
+STAT auth_errors 0
+STAT bytes_read 262
+STAT bytes_written 313
+STAT limit_maxbytes 67108864
+STAT accepting_conns 1
+STAT listen_disabled_num 0
+STAT threads 4
+STAT conn_yields 0
+STAT hash_power_level 16
+STAT hash_bytes 524288
+STAT hash_is_expanding 0
+STAT expired_unfetched 1
+STAT evicted_unfetched 0
+STAT bytes 142
+STAT curr_items 2
+STAT total_items 6
+STAT evictions 0
+STAT reclaimed 1
+END
+```
+
+这里显示了很多状态信息，下边详细解释每个状态项：
+
+- pid： memcache服务器进程ID
+- uptime：服务器已运行秒数
+- time：服务器当前Unix时间戳
+- version：memcache版本
+- pointer_size：操作系统指针大小
+- rusage_user：进程累计用户时间
+- rusage_system：进程累计系统时间
+- curr_connections：当前连接数量
+- total_connections：Memcached运行以来连接总数
+- connection_structures：Memcached分配的连接结构数量
+- cmd_get：get命令请求次数
+- cmd_set：set命令请求次数
+- cmd_flush：flush命令请求次数
+- get_hits：get命令命中次数
+- get_misses：get命令未命中次数
+- delete_misses：delete命令未命中次数
+- delete_hits：delete命令命中次数
+- incr_misses：incr命令未命中次数
+- incr_hits：incr命令命中次数
+- decr_misses：decr命令未命中次数
+- decr_hits：decr命令命中次数
+- cas_misses：cas命令未命中次数
+- cas_hits：cas命令命中次数
+- cas_badval：使用擦拭次数
+- auth_cmds：认证命令处理的次数
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Memcached stats 命令` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,35 +1,55 @@
-# Angular：Angular 2 教程 学习笔记
+# Angular：Angular 2 教程
 
 - 来源：[Angular 2 教程](https://www.runoob.com/angularjs2/angularjs2-tutorial.html)
 - 分类：前端开发
 - 技术：Angular
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：2269
 
-## 学习目标
+## 本章内容
 
-Angular 章节要把页面结构、样式、状态和交互结果连起来看。本篇围绕 `Angular 2 教程` 建立学习路径，先理解它在 Angular 体系中的位置，再做可运行或可复述的验证。
+Angular2 是一款开源JavaScript库，由Google维护，用来协助单一页面应用程序运行。
 
-## 阅读抓手
+Angular2 是 Angular 1.x 的升级版本，性能上得到显著的提高，能很好的支持 Web 开发组件。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+Angular2 发布于2016年9月份，它是基于ES6来开发的。
 
-## 笔记模板
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+## 学习本教程需要的基础知识
 
-## 完成标准
+学习本教程前，你需要具备基本的前端基础：HTML、CSS、JavaScript。此外你还需要了解 NPM 及 TypeScript。
 
-- 能用 3 到 5 句话解释 `Angular 2 教程`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+- NPM 使用介绍。
+- TypeScript 入门教程
+
+
+## Angular2.x与Angular1.x 的区别
+
+Angular2.x与Angular1.x 的区别类似 Java 和 JavaScript 或者说是雷锋与雷峰塔的区别，所以在学习Angular2.x时大家需要做好重新学习一门语言的心里准备。
+
+
+## 运行条件!
+
+由于目前各种环境（浏览器或 Node）暂不支持ES6的代码，所以需要一些shim和polyfill（IE需要）让ES6写的代码能够转化为ES5形式并可以正常运行在浏览器中。
+
+从上图可以看出在 Es5 浏览器下需要以下模块加载器：
+
+- systemjs - 通用模块加载器，支持AMD、CommonJS、ES6等各种格式的JS模块加载。
+- es6-module-loader - ES6模块加载器，systemjs会自动加载这个模块。
+- traceur - ES6转码器，将ES6代码转换为当前浏览器支持的ES5代码，systemjs会自动加载 这个模块。
+
+
+## 相关参考文档
+
+- Angular 官网：https://angular.io/
+- Angular 官方文档：https://angular.io/docs/ts/latest/quickstart.html
+- Angular 中文文档：https://angular.cn/docs
+- Angular Github:https://github.com/angular/angular
+
+
+## 复习重点
+
+- 能说明 `Angular 2 教程` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

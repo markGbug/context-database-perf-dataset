@@ -1,34 +1,151 @@
-# C++：C++ 信号处理 练习笔记
+# C++：C++ 信号处理
 
 - 来源：[C++ 信号处理](https://www.runoob.com/cplusplus/cpp-signal-handling.html)
 - 分类：编程语言
 - 技术：C++
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3575
 
-## 练习目标
+## 本章内容
 
-把 `C++ 信号处理` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+信号是由操作系统传给进程的中断，会提早终止一个程序。在 UNIX、LINUX、Mac OS X 或 Windows 系统上，可以通过按 Ctrl+C 产生中断。
 
-## 练习步骤
+有些信号不能被程序捕获，但是下表所列信号可以在程序中捕获，并可以基于信号采取适当的动作。这些信号是定义在 C++ 头文件 <csignal> 中。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## signal() 函数
 
-- 我能独立说出 `C++ 信号处理` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+C++ 信号处理库提供了 signal 函数，用来捕获突发事件。以下是 signal() 函数的语法：
 
-## 复盘问题
+```java
+void (*signal (int sig, void (*func)(int)))(int);
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+这个看起来有点费劲，以下语法格式更容易理解：
+
+```text
+signal(registered signal, signal handler)
+```
+
+这个函数接收两个参数：第一个参数是要设置的信号的标识符，第二个参数是指向信号处理函数的指针。函数返回值是一个指向先前信号处理函数的指针。如果先前没有设置信号处理函数，则返回值为 SIG_DFL。如果先前设置的信号处理函数为 SIG_IGN，则返回值为 SIG_IGN。
+
+让我们编写一个简单的 C++ 程序，使用 signal() 函数捕获 SIGINT 信号。不管您想在程序中捕获什么信号，您都必须使用 signal 函数来注册信号，并将其与信号处理程序相关联。看看下面的实例：
+
+
+## 实例
+
+```java
+#include <iostream>
+#include <csignal>
+#include <unistd.h>
+
+using namespace std;
+
+void signalHandler( int signum )
+{
+    cout << "Interrupt signal (" << signum << ") received.\n";
+
+    // 清理并关闭
+    // 终止程序
+
+   exit(signum);
+
+}
+
+int main ()
+{
+    // 注册信号 SIGINT 和信号处理程序
+    signal(SIGINT, signalHandler);
+
+    while(1){
+       cout << "Going to sleep...." << endl;
+       sleep(1);
+    }
+
+    return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+
+```text
+Going to sleep....
+Going to sleep....
+Going to sleep....
+```
+
+现在，按 Ctrl+C 来中断程序，您会看到程序捕获信号，程序打印如下内容并退出：
+
+```text
+Going to sleep....
+Going to sleep....
+Going to sleep....
+Interrupt signal (2) received.
+```
+
+
+## raise() 函数
+
+您可以使用函数 raise() 生成信号，该函数带有一个整数信号编号作为参数，语法如下：
+
+```java
+int raise (signal sig);
+```
+
+在这里，sig 是要发送的信号的编号，这些信号包括：SIGINT、SIGABRT、SIGFPE、SIGILL、SIGSEGV、SIGTERM、SIGHUP。以下是我们使用 raise() 函数内部生成信号的实例：
+
+
+## 实例
+
+```java
+#include <iostream>
+#include <csignal>
+#include <unistd.h>
+
+using namespace std;
+
+void signalHandler( int signum )
+{
+    cout << "Interrupt signal (" << signum << ") received.\n";
+
+    // 清理并关闭
+    // 终止程序
+
+   exit(signum);
+
+}
+
+int main ()
+{
+    int i = 0;
+    // 注册信号 SIGINT 和信号处理程序
+    signal(SIGINT, signalHandler);
+
+    while(++i){
+       cout << "Going to sleep...." << endl;
+       if( i == 3 ){
+          raise( SIGINT);
+       }
+       sleep(1);
+    }
+
+    return 0;
+}
+```
+
+当上面的代码被编译和执行时，它会产生下列结果，并会自动退出：
+
+```text
+Going to sleep....
+Going to sleep....
+Going to sleep....
+Interrupt signal (2) received.
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `C++ 信号处理` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

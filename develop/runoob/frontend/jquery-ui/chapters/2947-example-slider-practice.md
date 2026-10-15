@@ -1,34 +1,686 @@
-# jQuery UI：滑块（Slider） 练习笔记
+# jQuery UI：jQuery UI 实例 - 滑块（Slider）
 
 - 来源：[滑块（Slider）](https://www.runoob.com/jqueryui/example-slider.html)
 - 分类：前端开发
 - 技术：jQuery UI
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：2947
 
-## 练习目标
+## 本章内容
 
-把 `滑块（Slider）` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+拖动手柄来选择一个数值。
 
-## 练习步骤
+如需了解更多有关 slider 部件的细节，请查看 API 文档 滑块部件（Slider Widget）。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
 
-## 验收清单
+## 默认功能
 
-- 我能独立说出 `滑块（Slider）` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+基本的滑块是水平的，有一个单一的手柄，可以用鼠标或箭头键进行移动。
 
-## 复盘问题
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 默认功能</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#slider" ).slider();
+  });
+  </script>
+</head>
+<body>
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+<div id="slider"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 颜色选择器
+
+组合了三个滑块，来创建一个简单的 RGB 颜色选择器。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 颜色选择器</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+  #red, #green, #blue {
+    float: left;
+    clear: left;
+    width: 300px;
+    margin: 15px;
+  }
+  #swatch {
+    width: 120px;
+    height: 100px;
+    margin-top: 18px;
+    margin-left: 350px;
+    background-image: none;
+  }
+  #red .ui-slider-range { background: #ef2929; }
+  #red .ui-slider-handle { border-color: #ef2929; }
+  #green .ui-slider-range { background: #8ae234; }
+  #green .ui-slider-handle { border-color: #8ae234; }
+  #blue .ui-slider-range { background: #729fcf; }
+  #blue .ui-slider-handle { border-color: #729fcf; }
+  </style>
+  <script>
+  function hexFromRGB(r, g, b) {
+    var hex = [
+      r.toString( 16 ),
+      g.toString( 16 ),
+      b.toString( 16 )
+    ];
+    $.each( hex, function( nr, val ) {
+      if ( val.length === 1 ) {
+        hex[ nr ] = "0" + val;
+      }
+    });
+    return hex.join( "" ).toUpperCase();
+  }
+  function refreshSwatch() {
+    var red = $( "#red" ).slider( "value" ),
+      green = $( "#green" ).slider( "value" ),
+      blue = $( "#blue" ).slider( "value" ),
+      hex = hexFromRGB( red, green, blue );
+    $( "#swatch" ).css( "background-color", "#" + hex );
+  }
+  $(function() {
+    $( "#red, #green, #blue" ).slider({
+      orientation: "horizontal",
+      range: "min",
+      max: 255,
+      value: 127,
+      slide: refreshSwatch,
+      change: refreshSwatch
+    });
+    $( "#red" ).slider( "value", 255 );
+    $( "#green" ).slider( "value", 140 );
+    $( "#blue" ).slider( "value", 60 );
+  });
+  </script>
+</head>
+<body class="ui-widget-content" style="border:0;">
+
+<p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding:4px;">
+  <span class="ui-icon ui-icon-pencil" style="float:left; margin:-2px 5px 0 0;"></span>
+  简单的颜色选择器
+</p>
+
+<div id="red"></div>
+<div id="green"></div>
+<div id="blue"></div>
+
+<div id="swatch" class="ui-widget-content ui-corner-all"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 多个滑块
+
+组合水平的和垂直的滑块，每个都带有各自的选项，来创建一个音乐播放器的 UI。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 多个滑块</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+  #eq span {
+    height:120px; float:left; margin:15px
+  }
+  </style>
+  <script>
+  $(function() {
+    // 设置主音量
+    $( "#master" ).slider({
+      value: 60,
+      orientation: "horizontal",
+      range: "min",
+      animate: true
+    });
+    // 设置图形均衡器
+    $( "#eq > span" ).each(function() {
+      // 从标记读取初始值并删除
+      var value = parseInt( $( this ).text(), 10 );
+      $( this ).empty().slider({
+        value: value,
+        range: "min",
+        animate: true,
+        orientation: "vertical"
+      });
+    });
+  });
+  </script>
+</head>
+<body>
+
+<p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding:4px;">
+  <span class="ui-icon ui-icon-volume-on" style="float:left; margin:-2px 5px 0 0;"></span>
+  主音量
+</p>
+
+<div id="master" style="width:260px; margin:15px;"></div>
+
+<p class="ui-state-default ui-corner-all" style="padding:4px;margin-top:4em;">
+  <span class="ui-icon ui-icon-signal" style="float:left; margin:-2px 5px 0 0;"></span>
+  图形均衡器
+</p>
+
+<div id="eq">
+  <span>88</span>
+  <span>77</span>
+  <span>55</span>
+  <span>33</span>
+  <span>40</span>
+  <span>45</span>
+  <span>70</span>
+</div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 范围滑块
+
+设置 range 选项为 true，来获取带有两个拖拽手柄的值的范围。手柄之间的控件用不同的背景颜色填充来表示该区间的值是可选择的。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 范围滑块</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#slider-range" ).slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [ 75, 300 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+  });
+  </script>
+</head>
+<body>
+
+<p>
+  <label for="amount">价格范围：</label>
+  <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<div id="slider-range"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 带有固定最大值的范围
+
+固定范围滑块的最大值，用户只能选择最小值。设置 range 选项为 "max"。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 带有固定最大值的范围</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#slider-range-max" ).slider({
+      range: "max",
+      min: 1,
+      max: 10,
+      value: 2,
+      slide: function( event, ui ) {
+        $( "#amount" ).val( ui.value );
+      }
+    });
+    $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+  });
+  </script>
+</head>
+<body>
+
+<p>
+  <label for="amount">最小的房间数量：</label>
+  <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="slider-range-max"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 带有固定最小值的范围
+
+固定范围滑块的最小值，用户只能选择最大值。设置 range 选项为 "min"。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 带有固定最小值的范围</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#slider-range-min" ).slider({
+      range: "min",
+      value: 37,
+      min: 1,
+      max: 700,
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "$" + ui.value );
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range-min" ).slider( "value" ) );
+  });
+  </script>
+</head>
+<body>
+
+<p>
+  <label for="amount">最大价格：</label>
+  <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<div id="slider-range-min"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 绑定到 select 的滑块
+
+如何绑定一个滑块到一个已有的 select 元素。选择保持可见以便显示变化。当选择改变时，同时更新滑块。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 绑定到 select 的滑块</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    var select = $( "#minbeds" );
+    var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+      min: 1,
+      max: 6,
+      range: "min",
+      value: select[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        select[ 0 ].selectedIndex = ui.value - 1;
+      }
+    });
+    $( "#minbeds" ).change(function() {
+      slider.slider( "value", this.selectedIndex + 1 );
+    });
+  });
+  </script>
+</head>
+<body>
+
+<form id="reservation">
+  <label for="minbeds">最小的床位数</label>
+  <select name="minbeds" id="minbeds">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+  </select>
+</form>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 滑块滚动条
+
+使用滑块来操作页面上内容的定位。本实例中，它是一个能获取值的滚动条。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 滑块滚动条</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <style>
+  .scroll-pane { overflow: auto; width: 99%; float:left; }
+  .scroll-content { width: 2440px; float: left; }
+  .scroll-content-item { width: 100px; height: 100px; float: left; margin: 10px; font-size: 3em; line-height: 96px; text-align: center; }
+  .scroll-bar-wrap { clear: left; padding: 0 4px 0 2px; margin: 0 -1px -1px -1px; }
+  .scroll-bar-wrap .ui-slider { background: none; border:0; height: 2em; margin: 0 auto;  }
+  .scroll-bar-wrap .ui-handle-helper-parent { position: relative; width: 100%; height: 100%; margin: 0 auto; }
+  .scroll-bar-wrap .ui-slider-handle { top:.2em; height: 1.5em; }
+  .scroll-bar-wrap .ui-slider-handle .ui-icon { margin: -8px auto 0; position: relative; top: 50%; }
+  </style>
+  <script>
+  $(function() {
+    //滚动面板部分
+    var scrollPane = $( ".scroll-pane" ),
+      scrollContent = $( ".scroll-content" );
+
+    //创建滑块
+    var scrollbar = $( ".scroll-bar" ).slider({
+      slide: function( event, ui ) {
+        if ( scrollContent.width() > scrollPane.width() ) {
+          scrollContent.css( "margin-left", Math.round(
+            ui.value / 100 * ( scrollPane.width() - scrollContent.width() )
+          ) + "px" );
+        } else {
+          scrollContent.css( "margin-left", 0 );
+        }
+      }
+    });
+
+    //追加要处理的图标
+    var handleHelper = scrollbar.find( ".ui-slider-handle" )
+    .mousedown(function() {
+      scrollbar.width( handleHelper.width() );
+    })
+    .mouseup(function() {
+      scrollbar.width( "100%" );
+    })
+    .append( "<span class='ui-icon ui-icon-grip-dotted-vertical'></span>" )
+    .wrap( "<div class='ui-handle-helper-parent'></div>" ).parent();
+
+    //由于滑块手柄滚动，改变要隐藏的溢出部分
+    scrollPane.css( "overflow", "hidden" );
+
+    //根据要滚动距离按比例定义滚动条和手柄的尺寸
+    function sizeScrollbar() {
+      var remainder = scrollContent.width() - scrollPane.width();
+      var proportion = remainder / scrollContent.width();
+      var handleSize = scrollPane.width() - ( proportion * scrollPane.width() );
+      scrollbar.find( ".ui-slider-handle" ).css({
+        width: handleSize,
+        "margin-left": -handleSize / 2
+      });
+      handleHelper.width( "" ).width( scrollbar.width() - handleSize );
+    }
+
+    //基于滚动内容位置，重置滑块的值
+    function resetValue() {
+      var remainder = scrollPane.width() - scrollContent.width();
+      var leftVal = scrollContent.css( "margin-left" ) === "auto" ? 0 :
+        parseInt( scrollContent.css( "margin-left" ) );
+      var percentage = Math.round( leftVal / remainder * 100 );
+      scrollbar.slider( "value", percentage );
+    }
+
+    //如果滑块是 100%，且窗口变大，则显示内容
+    function reflowContent() {
+        var showing = scrollContent.width() + parseInt( scrollContent.css( "margin-left" ), 10 );
+        var gap = scrollPane.width() - showing;
+        if ( gap > 0 ) {
+          scrollContent.css( "margin-left", parseInt( scrollContent.css( "margin-left" ), 10 ) + gap );
+        }
+    }
+
+    //当缩放窗口时改变手柄的位置
+    $( window ).resize(function() {
+      resetValue();
+      sizeScrollbar();
+      reflowContent();
+    });
+    //初始化滚动条大小
+    setTimeout( sizeScrollbar, 10 );//safari 超时
+  });
+  </script>
+</head>
+<body>
+
+<div class="scroll-pane ui-widget ui-widget-header ui-corner-all">
+  <div class="scroll-content">
+    <div class="scroll-content-item ui-widget-header">1</div>
+    <div class="scroll-content-item ui-widget-header">2</div>
+    <div class="scroll-content-item ui-widget-header">3</div>
+    <div class="scroll-content-item ui-widget-header">4</div>
+    <div class="scroll-content-item ui-widget-header">5</div>
+    <div class="scroll-content-item ui-widget-header">6</div>
+    <div class="scroll-content-item ui-widget-header">7</div>
+    <div class="scroll-content-item ui-widget-header">8</div>
+    <div class="scroll-content-item ui-widget-header">9</div>
+    <div class="scroll-content-item ui-widget-header">10</div>
+    <div class="scroll-content-item ui-widget-header">11</div>
+    <div class="scroll-content-item ui-widget-header">12</div>
+    <div class="scroll-content-item ui-widget-header">13</div>
+    <div class="scroll-content-item ui-widget-header">14</div>
+    <div class="scroll-content-item ui-widget-header">15</div>
+    <div class="scroll-content-item ui-widget-header">16</div>
+    <div class="scroll-content-item ui-widget-header">17</div>
+    <div class="scroll-content-item ui-widget-header">18</div>
+    <div class="scroll-content-item ui-widget-header">19</div>
+    <div class="scroll-content-item ui-widget-header">20</div>
+  </div>
+  <div class="scroll-bar-wrap ui-widget-content ui-corner-bottom">
+    <div class="scroll-bar"></div>
+  </div>
+</div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 对齐增量
+
+通过把 step 选项设置为一个整数来设置滑块值的增量，通常是滑块最大值的除数。默认增量是 1。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 对齐增量</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#slider" ).slider({
+      value:100,
+      min: 0,
+      max: 500,
+      step: 50,
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "$" + ui.value );
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider" ).slider( "value" ) );
+  });
+  </script>
+</head>
+<body>
+
+<p>
+  <label for="amount">捐款金额（$50 增量）：</label>
+  <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<div id="slider"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 垂直的范围滑块
+
+改变范围滑块的方向为垂直的。通过 .height() 分配一个高度值，或通过 CSS 设置高度，同时设置 orientation 选项为 "vertical"。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 垂直的范围滑块</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#slider-range" ).slider({
+      orientation: "vertical",
+      range: true,
+      values: [ 17, 67 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+  });
+  </script>
+</head>
+<body>
+
+<p>
+  <label for="amount">销售目标（百万）：</label>
+  <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<div id="slider-range" style="height:250px;"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 垂直的滑块
+
+改变滑块的方向为垂直的。通过 .height() 分配一个高度值，或通过 CSS 设置高度，同时设置 orientation 选项为 "vertical"。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI 滑块（Slider） - 垂直的滑块</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#slider-vertical" ).slider({
+      orientation: "vertical",
+      range: "min",
+      min: 0,
+      max: 100,
+      value: 60,
+      slide: function( event, ui ) {
+        $( "#amount" ).val( ui.value );
+      }
+    });
+    $( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) );
+  });
+  </script>
+</head>
+<body>
+
+<p>
+  <label for="amount">体积：</label>
+  <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<div id="slider-vertical" style="height:200px;"></div>
+
+
+</body>
+</html>
+```
+
+查看演示
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `滑块（Slider）` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

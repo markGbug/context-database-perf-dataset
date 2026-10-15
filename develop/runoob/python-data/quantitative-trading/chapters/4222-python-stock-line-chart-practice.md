@@ -1,34 +1,122 @@
-# 量化交易：Python 量化股票 K 线图 练习笔记
+# 量化交易：Python 量化股票 K 线图
 
 - 来源：[Python 量化股票 K 线图](https://www.runoob.com/python-qt/python-stock-line-chart.html)
 - 分类：Python / 数据科学
 - 技术：量化交易
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：4222
 
-## 练习目标
+## 本章内容
 
-把 `Python 量化股票 K 线图` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+我们可以通过 Python pyecharts 模块来绘制股票 K 线图。
 
-## 练习步骤
+pyecharts 是一个基于 ECharts 的 Python 数据可视化库，它允许用户使用 Python 语言生成各种类型的交互式图表和数据可视化。
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+Python pyecharts 模块内容查看：Python pyecharts 模块。
 
-## 验收清单
+在 pyecharts 中，可以使用 K 线图（Kline）来展示股票走势，K 线图主要用于展示金融数据，如股票的开盘价、收盘价、最高价、最低价等信息。
 
-- 我能独立说出 `Python 量化股票 K 线图` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+首先，确保你已经安装了 pyecharts：
 
-## 复盘问题
+```text
+pip install pyecharts
+```
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+我们使用雅虎财经（Yahoo Finance）的数据获取近一年的股票数据，我们可以使用 yfinance 库：
+
+```text
+pip install yfinance
+```
+
+
+### K 线图使用
+
+导入相关模块：
+
+```text
+from pyecharts import options as opts
+from pyecharts.charts import Kline
+```
+
+准备数据：
+
+Kline 图的数据通常是一个包含开盘价、收盘价、最高价、最低价的二维数组，例如：
+
+```text
+data = [
+    [2320.26, 2320.26, 2287.3, 2362.94],
+    [2300, 2291.3, 2288.26, 2308.38],
+    # ...
+]
+```
+
+配置 Kline 图：
+
+```text
+kline = (
+    Kline()
+    .add_xaxis(xaxis_data=["2017-10-24", "2017-10-25", "2017-10-26", "2017-10-27"])
+    .add_yaxis(series_name="Kline", y_axis=data)
+    .set_global_opts(
+        xaxis_opts=opts.AxisOpts(is_scale=True),
+        yaxis_opts=opts.AxisOpts(is_scale=True),
+        title_opts=opts.TitleOpts(title="Kline 示例"),
+    )
+)
+```
+
+在这里，使用了 add_xaxis 设置 x 轴的数据，使用 add_yaxis 添加 Kline 数据系列，set_global_opts 则用于设置全局配置，包括标题等。
+
+渲染图表：
+
+```text
+kline.render("kline_chart.html")
+```
+
+将 Kline 图渲染到 HTML 文件中。
+
+
+## 实例
+
+说明：
+
+- 我们有一个名为 data 的数据集，其中包含每天的金融数据，包括开盘价、收盘价、最高价和最低价。
+- 我们创建了一个 Kline 实例，使用 add_xaxis 设置 x 轴数据（在这种情况下是日期），使用 add_yaxis 添加 Kline 数据系列。
+- 使用 set_global_opts 设置全局选项，例如 x 轴和 y 轴的缩放，以及图表标题。
+- 最后，我们使用 render 将图表渲染到一个 HTML 文件中。
+
+当前目录会生成一个 kline_chart.html 文件，打开该文件图表显示如下：
+
+下面是一个实例代码，演示如何获取贵州茅台的股票数据并生成 K 线图：
+
+
+## 实例
+
+当前目录会生成一个 maotai_kline_chart.html 文件，打开该文件图表显示如下：
+
+
+### 绘制曲线图
+
+我们也可以使用 pyecharts 绘制股票的简单曲线图，以茅台（600519.SH）为例：
+
+
+## 实例
+
+当前目录会生成一个 maotai_stock_trend_chart.html 文件，打开该文件图表显示如下：
+
+可以考虑添加一些图表的工具，例如数据缩放、数据视图等，以提升用户的交互体验。
+
+以下是优化后的代码，添加了数据缩放和数据视图的功能：
+
+
+## 实例
+
+当前目录会生成一个 maotai_stock_trend_chart2.html 文件，打开该文件图表显示如下：
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `Python 量化股票 K 线图` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

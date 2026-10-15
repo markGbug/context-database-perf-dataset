@@ -1,35 +1,132 @@
-# PHP：PHP 包含 学习笔记
+# PHP：PHP 包含文件
 
 - 来源：[PHP 包含](https://www.runoob.com/php/php-includes.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：章节学习
+- 笔记类型：学习笔记
 - 章节序号：1069
 
-## 学习目标
+## 本章内容
 
-PHP 章节要关注运行环境、请求处理、模块边界和排错路径。本篇围绕 `PHP 包含` 建立学习路径，先理解它在 PHP 体系中的位置，再做可运行或可复述的验证。
+## PHP include 和 require 语句
 
-## 阅读抓手
+在 PHP 中，您可以在服务器执行 PHP 文件之前在该文件中插入一个文件的内容。
 
-- 先确认本章节解决的问题是什么。
-- 标记前置知识：环境、语法、概念或工具依赖。
-- 摘出 3 个关键词，并用自己的话重新解释。
-- 找到章节中的示例、命令、配置或流程图，把它改写成自己的最小案例。
+include 和 require 语句用于在执行流中插入写在其他文件中的有用的代码。
 
-## 笔记模板
+include 和 require 除了处理错误的方式不同之外，在其他方面都是相同的：
 
-| 项目 | 记录 |
-| --- | --- |
-| 核心概念 | 这个章节最重要的概念是什么 |
-| 使用场景 | 什么时候会用到它 |
-| 基本步骤 | 从准备到验证需要哪些动作 |
-| 易错点 | 初学者可能在哪一步误解 |
-| 延伸主题 | 学完后应该继续看什么 |
+- require 生成一个致命错误（E_COMPILE_ERROR），在错误发生后脚本会停止执行。
+- include 生成一个警告（E_WARNING），在错误发生后脚本会继续执行。
 
-## 完成标准
+因此，如果您希望继续执行，并向用户输出结果，即使包含文件已丢失，那么请使用 include。否则，在框架、CMS 或者复杂的 PHP 应用程序编程中，请始终使用 require 向执行流引用关键文件。这有助于提高应用程序的安全性和完整性，在某个关键文件意外丢失的情况下。
 
-- 能用 3 到 5 句话解释 `PHP 包含`。
-- 能指出它和前后章节的关系。
-- 能完成一个最小示例、命令演示或概念复述。
-- 能记录至少一个常见错误和对应排查方法。
+包含文件省去了大量的工作。这意味着您可以为所有网页创建标准页头、页脚或者菜单文件。然后，在页头需要更新时，您只需更新这个页头包含文件即可。
+
+
+## 语法
+
+```text
+include 'filename';
+
+或者
+
+require 'filename';
+```
+
+
+## PHP include 和 require 语句
+
+
+### 基础实例
+
+假设您有一个标准的页头文件，名为 "header.php"。如需在页面中引用这个页头文件，请使用 include/require：
+
+```html
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<?php include 'header.php'; ?>
+<h1>欢迎来到我的主页!</h1>
+<p>一些文本。</p>
+
+</body>
+</html>
+```
+
+
+### 实例 2
+
+假设我们有一个在所有页面中使用的标准菜单文件。
+
+"menu.php":
+
+```html
+echo '<a href="/">主页</a>
+<a href="/html">HTML 教程</a>
+<a href="/php">PHP 教程</a>';
+```
+
+网站中的所有页面均应引用该菜单文件。以下是具体的做法：
+
+```html
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<div class="leftmenu">
+<?php include 'menu.php'; ?>
+</div>
+<h1>欢迎来到我的主页!</h1>
+<p>一些文本。</p>
+
+</body>
+</html>
+```
+
+
+### 实例 3
+
+假设我们有一个定义变量的包含文件（"vars.php"）：
+
+```text
+<?php
+$color='red';
+$car='BMW';
+?>
+```
+
+这些变量可用在调用文件中：
+
+```html
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<h1>欢迎来到我的主页!</h1>
+<?php
+include 'vars.php';
+echo "I have a $color $car"; // I have a red BMW
+?>
+
+</body>
+</html>
+```
+
+
+## 复习重点
+
+- 能说明 `PHP 包含` 解决什么问题。
+- 能复述本章主要语法或操作步骤。
+- 能根据示例推导输出结果。
+- 能指出至少一个容易踩坑的地方。

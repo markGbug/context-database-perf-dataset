@@ -1,34 +1,55 @@
-# jQuery Mobile：jQuery Mobile 安装 练习笔记
+# jQuery Mobile：jQuery Mobile 安装
 
 - 来源：[jQuery Mobile 安装](https://www.runoob.com/jquerymobile/jquerymobile-install.html)
 - 分类：移动开发
 - 技术：jQuery Mobile
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3333
 
-## 练习目标
+## 本章内容
 
-把 `jQuery Mobile 安装` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+## 在你的网页中添加 jQuery Mobile
 
-## 练习步骤
+你可以通过以下几种方式将jQuery Mobile添加到你的网页中：
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+- 从 CDN 中加载 jQuery Mobile (推荐)
+- 从jQuerymobile.com 下载 jQuery Mobile库
 
-## 验收清单
 
-- 我能独立说出 `jQuery Mobile 安装` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+## 从 CDN 中加载 jQuery Mobile
 
-## 复盘问题
+使用 jQuery 内核, 你不需要在电脑上安装任何东西; 你仅仅需要在你的网页中加载以下层叠样式 (.css) 和 JavaScript 库 (.js) 就能够使用 jQuery Mobile:
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## jQuery Mobile CDN:
+
+国内用户推荐使用百度CDN：
+
+
+## jQuery Mobile CDN(百度):
+
+本教程引用的库为百度 CDN 资源库。
+
+
+## 下载 jQuery Mobile
+
+如果你想将 jQuery Mobile 放于你的主机中,你可以从 jQuerymobile.com下载该文件。
+
+```html
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="jquery.mobile-1.4.5.css">
+<script src="jquery.js"></script>
+<script src="jquery.mobile-1.4.5.js"></script>
+</head>
+```
+
+提示： 将下载的文件放置于与网页同一目录下。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `jQuery Mobile 安装` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

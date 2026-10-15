@@ -1,34 +1,108 @@
-# SQLite：SQLite Insert 语句 练习笔记
+# SQLite：SQLite Insert 语句
 
 - 来源：[SQLite Insert 语句](https://www.runoob.com/sqlite/sqlite-insert.html)
 - 分类：数据库
 - 技术：SQLite
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1699
 
-## 练习目标
+## 本章内容
 
-把 `SQLite Insert 语句` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+SQLite 的 INSERT INTO 语句用于向数据库的某个表中添加新的数据行。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## 语法
 
-## 验收清单
+INSERT INTO 语句有两种基本语法，如下所示：
 
-- 我能独立说出 `SQLite Insert 语句` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+INSERT INTO TABLE_NAME [(column1, column2, column3,...columnN)]
+VALUES (value1, value2, value3,...valueN);
+```
 
-## 复盘问题
+在这里，column1, column2,...columnN 是要插入数据的表中的列的名称。
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+如果要为表中的所有列添加值，您也可以不需要在 SQLite 查询中指定列名称。但要确保值的顺序与列在表中的顺序一致。SQLite 的 INSERT INTO 语法如下：
+
+```text
+INSERT INTO TABLE_NAME VALUES (value1,value2,value3,...valueN);
+```
+
+
+## 实例
+
+假设您已经在 testDB.db 中创建了 COMPANY表，如下所示：
+
+```text
+sqlite> CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+```
+
+现在，下面的语句将在 COMPANY 表中创建六个记录：
+
+```text
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (1, 'Paul', 32, 'California', 20000.00 );
+
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (2, 'Allen', 25, 'Texas', 15000.00 );
+
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );
+
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );
+
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (5, 'David', 27, 'Texas', 85000.00 );
+
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (6, 'Kim', 22, 'South-Hall', 45000.00 );
+```
+
+您也可以使用第二种语法在 COMPANY 表中创建一个记录，如下所示：
+
+```text
+INSERT INTO COMPANY VALUES (7, 'James', 24, 'Houston', 10000.00 );
+```
+
+上面的所有语句将在 COMPANY 表中创建下列记录。下一章会教您如何从一个表中显示所有这些记录。
+
+```text
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+```
+
+
+## 使用一个表来填充另一个表
+
+您可以通过在一个有一组字段的表上使用 select 语句，填充数据到另一个表中。下面是语法：
+
+```text
+INSERT INTO first_table_name [(column1, column2, ... columnN)]
+   SELECT column1, column2, ...columnN
+   FROM second_table_name
+   [WHERE condition];
+```
+
+您暂时可以先跳过上面的语句，可以先学习后面章节中介绍的 SELECT 和 WHERE 子句。
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `SQLite Insert 语句` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

@@ -1,34 +1,187 @@
-# NumPy：NumPy 从已有的数组创建数组 练习笔记
+# NumPy：NumPy 从已有的数组创建数组
 
 - 来源：[NumPy 从已有的数组创建数组](https://www.runoob.com/numpy/numpy-array-from-existing-data.html)
 - 分类：Python / 数据科学
 - 技术：NumPy
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：3984
 
-## 练习目标
+## 本章内容
 
-把 `NumPy 从已有的数组创建数组` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们将学习如何从已有的数组创建数组。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+### numpy.asarray
 
-## 验收清单
+numpy.asarray 类似 numpy.array，但 numpy.asarray 参数只有三个，比 numpy.array 少两个。
 
-- 我能独立说出 `NumPy 从已有的数组创建数组` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+numpy.asarray(a, dtype = None, order = None)
+```
 
-## 复盘问题
+参数说明：
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+### 实例
+
+将列表转换为 ndarray:
+
+
+## 实例
+
+```java
+import numpy as np
+
+x =  [1,2,3]
+a = np.asarray(x)
+print (a)
+```
+
+输出结果为：
+
+```text
+[1  2  3]
+```
+
+将元组转换为 ndarray:
+
+
+## 实例
+
+```java
+import numpy as np
+
+x =  (1,2,3)
+a = np.asarray(x)
+print (a)
+```
+
+输出结果为：
+
+```text
+[1  2  3]
+```
+
+将元组列表转换为 ndarray:
+
+
+## 实例
+
+```java
+import numpy as np
+
+x =  [(1,2,3),(4,5)]
+a = np.asarray(x)
+print (a)
+```
+
+输出结果为：
+
+```text
+[(1, 2, 3) (4, 5)]
+```
+
+设置了 dtype 参数：
+
+
+## 实例
+
+```java
+import numpy as np
+
+x =  [1,2,3]
+a = np.asarray(x, dtype =  float)
+print (a)
+```
+
+输出结果为：
+
+```text
+[ 1.  2.  3.]
+```
+
+
+### numpy.frombuffer
+
+numpy.frombuffer 用于实现动态数组。
+
+numpy.frombuffer 接受 buffer 输入参数，以流的形式读入转化成 ndarray 对象。
+
+```text
+numpy.frombuffer(buffer, dtype = float, count = -1, offset = 0)
+```
+
+注意：buffer 是字符串的时候，Python3 默认 str 是 Unicode 类型，所以要转成 bytestring 在原 str 前加上 b。
+
+参数说明：
+
+
+## Python3.x 实例
+
+```java
+import numpy as np
+
+s =  b'Hello World'
+a = np.frombuffer(s, dtype =  'S1')
+print (a)
+```
+
+输出结果为：
+
+```text
+[b'H' b'e' b'l' b'l' b'o' b' ' b'W' b'o' b'r' b'l' b'd']
+```
+
+
+## Python2.x 实例
+
+```java
+import numpy as np
+s =  'Hello World'
+a = np.frombuffer(s, dtype =  'S1')
+print (a)
+```
+
+输出结果为：
+
+```text
+['H' 'e' 'l' 'l' 'o' ' ' 'W' 'o' 'r' 'l' 'd']
+```
+
+
+### numpy.fromiter
+
+numpy.fromiter 方法从可迭代对象中建立 ndarray 对象，返回一维数组。
+
+```text
+numpy.fromiter(iterable, dtype, count=-1)
+```
+
+
+## 实例
+
+```text
+import numpy as np
+
+# 使用 range 函数创建列表对象
+list=range(5)
+it=iter(list)
+
+# 使用迭代器创建 ndarray
+x=np.fromiter(it, dtype=float)
+print(x)
+```
+
+输出结果为：
+
+```text
+[0. 1. 2. 3. 4.]
+```
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `NumPy 从已有的数组创建数组` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。

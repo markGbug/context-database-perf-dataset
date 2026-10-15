@@ -1,34 +1,116 @@
-# PHP：PHP 表单 - 验证邮件和URL 练习笔记
+# PHP：PHP 表单 - 验证邮件和URL
 
 - 来源：[PHP 表单 - 验证邮件和URL](https://www.runoob.com/php/php-form-url-email.html)
 - 分类：后端开发
 - 技术：PHP
-- 笔记类型：练习与验收
+- 笔记类型：练习笔记
 - 章节序号：1063
 
-## 练习目标
+## 本章内容
 
-把 `PHP 表单 - 验证邮件和URL` 从“看过”变成“做过”。练习不追求大而全，优先完成一个可以复现、可以解释、可以修改的最小闭环。
+本章节我们将介绍如何验证 names(名称), e-mails（邮件）, 和 URLs。
 
-## 练习步骤
 
-1. 复述章节目标：写下本节要解决的问题。
-2. 准备环境或上下文：记录版本、依赖、输入数据或配置。
-3. 跟做一个最小示例：只保留验证本节知识所需的部分。
-4. 修改一个变量、参数、标签、语句或流程，观察变化。
-5. 记录失败案例：保留报错、错误现象、定位过程和修复方式。
+## PHP - 验证名称
 
-## 验收清单
+以下代码将通过简单的方式来检测 name 字段是否包含字母和空格，如果 name 字段值不合法，将输出错误信息：
 
-- 我能独立说出 `PHP 表单 - 验证邮件和URL` 的用途。
-- 我能指出至少 2 个关键术语。
-- 我能复现教程中的一个示例或用自己的例子替代。
-- 我能解释为什么示例会得到当前结果。
-- 我知道下一步应该学习哪个相邻主题。
+```text
+$name = test_input($_POST["name"]);
+if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+  $nameErr = "只允许字母和空格";
+}
+```
 
-## 复盘问题
+int preg_match ( string $pattern , string $subject [, array $matches [, int $flags ]] )
 
-- 这个章节最容易误解的点是什么？
-- 哪个步骤最依赖环境或版本？
-- 如果把它用到真实项目，需要补哪些约束？
-- 有没有更简单的方式验证同一个知识点？
+
+## PHP - 验证邮件
+
+以下代码将通过简单的方式来检测 e-mail 地址是否合法。如果 e-mail 地址不合法，将输出错误信息：
+
+```text
+$email = test_input($_POST["email"]);
+if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$email)) {
+  $emailErr = "非法邮箱格式";
+}
+```
+
+
+## PHP - 验证 URL
+
+以下代码将检测URL地址是否合法 (以下正则表达式运行URL中含有破折号:"-")， 如果 URL 地址不合法，将输出错误信息：
+
+```text
+$website = test_input($_POST["website"]);
+if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+  $websiteErr = "非法的 URL 的地址";
+}
+```
+
+
+## PHP - 验证 Name, E-mail, 和 URL
+
+代码如下所示:
+
+```text
+<?php
+// 定义变量并默认设置为空值
+$nameErr = $emailErr = $genderErr = $websiteErr = "";
+$name = $email = $gender = $comment = $website = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   if (empty($_POST["name"])) {
+      $nameErr = "Name is required";
+      } else {
+         $name = test_input($_POST["name"]);
+         // 检测名字是否只包含字母跟空格
+         if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+         $nameErr = "只允许字母和空格";
+         }
+     }
+
+   if (empty($_POST["email"])) {
+      $emailErr = "Email is required";
+   } else {
+      $email = test_input($_POST["email"]);
+      // 检测邮箱是否合法
+      if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$email)) {
+         $emailErr = "非法邮箱格式";
+      }
+   }
+
+   if (empty($_POST["website"])) {
+      $website = "";
+   } else {
+      $website = test_input($_POST["website"]);
+      // 检测 URL 地址是否合法
+     if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+         $websiteErr = "非法的 URL 的地址";
+      }
+   }
+
+   if (empty($_POST["comment"])) {
+      $comment = "";
+   } else {
+      $comment = test_input($_POST["comment"]);
+   }
+
+   if (empty($_POST["gender"])) {
+      $genderErr = "性别是必需的";
+   } else {
+      $gender = test_input($_POST["gender"]);
+   }
+}
+?>
+```
+
+运行实例 »
+
+
+## 动手验证
+
+- 跟着本章示例重新输入一遍，不要只复制粘贴 `PHP 表单 - 验证邮件和URL` 的代码。
+- 修改一个条件、参数或输入值，观察输出是否符合预期。
+- 记录一次出错信息，并写下定位步骤和修复方式。
+- 用自己的话解释示例为什么会得到当前输出。
