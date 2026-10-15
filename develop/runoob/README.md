@@ -35,7 +35,7 @@
 - [Hermes Agent](ai-intelligent-development/hermes-agent.md)
 - [DeepSeek Harness](ai-intelligent-development/deepseek-harness.md)
 - [Pi Agent](ai-intelligent-development/pi-agent.md)
-- [AI 数学基础](ai-intelligent-development/ai-027.md)
+- [AI 数学基础](ai-intelligent-development/ai-math.md)
 - [TensorFlow](ai-intelligent-development/tensorflow.md)
 - [PyTorch](ai-intelligent-development/pytorch.md)
 - [Scikit-learn](ai-intelligent-development/scikit-learn.md)
