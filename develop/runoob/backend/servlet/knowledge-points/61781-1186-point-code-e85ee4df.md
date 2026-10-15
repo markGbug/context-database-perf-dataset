@@ -1,0 +1,59 @@
+# 知识点 61781：Servlet：Servlet 网页重定向 - 实例
+
+- 来源：[Servlet 网页重定向](https://www.runoob.com/servlet/servlet-page-redirect.html)
+- 来源章节：[1186-servlet-page-redirect-practice.md](../chapters/1186-servlet-page-redirect-practice.md)
+- 分类：后端开发
+- 技术：Servlet
+- 所在小节：实例
+- 知识类型：代码
+- 原章节序号：1186
+
+## 原文片段
+
+```text
+package com.runoob.test;
+
+import java.io.IOException;
+
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class PageRedirect
+ */
+@WebServlet("/PageRedirect")
+public class PageRedirect extends HttpServlet{
+
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+            throws ServletException, IOException
+  {
+      // 设置响应内容类型
+      response.setContentType("text/html;charset=UTF-8");
+
+      // 要重定向的新位置
+      String site = new String("http://www.runoob.com");
+
+      response.setStatus(response.SC_MOVED_TEMPORARILY);
+      response.setHeader("Location", site);
+    }
+}
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例` 这一小节和 `Servlet 网页重定向` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

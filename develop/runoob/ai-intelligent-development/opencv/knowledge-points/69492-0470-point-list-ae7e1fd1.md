@@ -1,0 +1,27 @@
+# 知识点 69492：OpenCV：C++ OpenCV 特征检测 - 记忆卡片
+
+- 来源：[C++ OpenCV 特征检测](https://www.runoob.com/opencv/cpp-opencv-feature-detection.html)
+- 来源章节：[0470-cpp-opencv-feature-detection-concept.md](../chapters/0470-cpp-opencv-feature-detection-concept.md)
+- 分类：AI / 智能开发
+- 技术：OpenCV
+- 所在小节：记忆卡片
+- 知识类型：要点
+- 原章节序号：0470
+
+## 原文片段
+
+检索关键词：记录以后查找本章时最可能使用的关键词。
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `记忆卡片` 这一小节和 `C++ OpenCV 特征检测` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

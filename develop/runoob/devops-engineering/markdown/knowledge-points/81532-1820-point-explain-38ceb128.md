@@ -1,0 +1,27 @@
+# 知识点 81532：Markdown：Markdown 高级技巧 - 公式
+
+- 来源：[Markdown 高级技巧](https://www.runoob.com/markdown/md-advance.html)
+- 来源章节：[1820-md-advance-study.md](../chapters/1820-md-advance-study.md)
+- 分类：DevOps / 工程化
+- 技术：Markdown
+- 所在小节：公式
+- 知识类型：解释
+- 原章节序号：1820
+
+## 原文片段
+
+KaTeX 拥有比 MathJax 更快的性能，但是它却少了很多 MathJax 拥有的特性。你可以查看 KaTeX supported functions/symbols 来了解 KaTeX 支持那些符号和函数。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `公式` 这一小节和 `Markdown 高级技巧` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

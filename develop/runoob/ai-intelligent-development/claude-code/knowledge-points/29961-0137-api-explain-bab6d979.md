@@ -1,0 +1,27 @@
+# 知识点 29961：Claude Code：Claude Code API 配置 - API 管理工具
+
+- 来源：[Claude Code API 配置](https://www.runoob.com/claude-code/claude-code-setup.html)
+- 来源章节：[0137-claude-code-setup-study.md](../chapters/0137-claude-code-setup-study.md)
+- 分类：AI / 智能开发
+- 技术：Claude Code
+- 所在小节：API 管理工具
+- 知识类型：解释
+- 原章节序号：0137
+
+## 原文片段
+
+平台一多，配置起来就麻烦，我们可以使用第三方工具 CC Switch 可以帮我们轻松管理这几个热门工具的 API 配置：https://github.com/farion1231/cc-switch/，Windows / macOS / Linux 全支持。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `API 管理工具` 这一小节和 `Claude Code API 配置` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

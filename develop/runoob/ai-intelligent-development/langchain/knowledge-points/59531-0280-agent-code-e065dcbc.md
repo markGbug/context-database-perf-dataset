@@ -1,0 +1,29 @@
+# 知识点 59531：LangChain：LangChain Agent 工作流程 - 一、Agent 的基本执行循环
+
+- 来源：[LangChain Agent 工作流程](https://www.runoob.com/langchain/langchain-agent-workflow.html)
+- 来源章节：[0280-langchain-agent-workflow-study.md](../chapters/0280-langchain-agent-workflow-study.md)
+- 分类：AI / 智能开发
+- 技术：LangChain
+- 所在小节：一、Agent 的基本执行循环
+- 知识类型：代码
+- 原章节序号：0280
+
+## 原文片段
+
+```text
+调用模型 → 判断工具调用 → 执行工具 → 再次调用模型
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `一、Agent 的基本执行循环` 这一小节和 `LangChain Agent 工作流程` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

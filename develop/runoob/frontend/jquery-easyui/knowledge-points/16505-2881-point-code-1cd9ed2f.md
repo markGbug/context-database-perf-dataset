@@ -1,0 +1,43 @@
+# 知识点 16505：jQuery EasyUI：jEasyUI 扩展行显示细节 - 本章内容
+
+- 来源：[jEasyUI 扩展行显示细节](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid21.html)
+- 来源章节：[2881-jeasyui-datagrid-datagrid21-practice.md](../chapters/2881-jeasyui-datagrid-datagrid21-practice.md)
+- 分类：前端开发
+- 技术：jQuery EasyUI
+- 所在小节：本章内容
+- 知识类型：代码
+- 原章节序号：2881
+
+## 原文片段
+
+```text
+<table id="dg" style="width:500px;height:250px"
+            url="datagrid8_getdata.php"
+            pagination="true" sortName="itemid" sortOrder="desc"
+            title="DataGrid - Expand Row"
+            singleSelect="true" fitColumns="true">
+        <thead>
+            <tr>
+                <th field="itemid" width="60">Item ID</th>
+                <th field="productid" width="80">Product ID</th>
+                <th field="listprice" align="right" width="70">List Price</th>
+                <th field="unitcost" align="right" width="70">Unit Cost</th>
+                <th field="status" width="50" align="center">Status</th>
+            </tr>
+        </thead>
+    </table>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `本章内容` 这一小节和 `jEasyUI 扩展行显示细节` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

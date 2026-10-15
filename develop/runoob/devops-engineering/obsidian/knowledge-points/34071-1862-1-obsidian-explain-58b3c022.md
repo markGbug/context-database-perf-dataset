@@ -1,0 +1,27 @@
+# 知识点 34071：Obsidian：Obsidian + Claude Code - 1、Obsidian 下载
+
+- 来源：[Obsidian + Claude Code](https://www.runoob.com/obsidian/obsidian-claude-code.html)
+- 来源章节：[1862-obsidian-claude-code-practice.md](../chapters/1862-obsidian-claude-code-practice.md)
+- 分类：DevOps / 工程化
+- 技术：Obsidian
+- 所在小节：1、Obsidian 下载
+- 知识类型：解释
+- 原章节序号：1862
+
+## 原文片段
+
+我们需要先去 Obsidian 官方网站 https://obsidian.md/download 下载 Obsidian，提供了各种系统版本:
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `1、Obsidian 下载` 这一小节和 `Obsidian + Claude Code` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 25201：Bootstrap5：Bootstrap5 进度条 - 本章内容
+
+- 来源：[Bootstrap5 进度条](https://www.runoob.com/bootstrap5/bootstrap5-progressbars.html)
+- 来源章节：[2352-bootstrap5-progressbars-practice.md](../chapters/2352-bootstrap5-progressbars-practice.md)
+- 分类：前端开发
+- 技术：Bootstrap5
+- 所在小节：本章内容
+- 知识类型：要点
+- 原章节序号：2352
+
+## 原文片段
+
+添加一个带有 .progress 类的 <div>。
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Bootstrap5 进度条` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

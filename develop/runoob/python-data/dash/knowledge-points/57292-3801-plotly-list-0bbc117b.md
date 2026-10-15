@@ -1,0 +1,27 @@
+# 知识点 57292：Dash：Dash Plotly - 什么是 Plotly？
+
+- 来源：[Dash Plotly](https://www.runoob.com/dash/dash-dataviews-plotly.html)
+- 来源章节：[3801-dash-dataviews-plotly-study.md](../chapters/3801-dash-dataviews-plotly-study.md)
+- 分类：Python / 数据科学
+- 技术：Dash
+- 所在小节：什么是 Plotly？
+- 知识类型：要点
+- 原章节序号：3801
+
+## 原文片段
+
+丰富的图表类型：折线图、柱状图、散点图、饼图、热力图、3D 图等。
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `什么是 Plotly？` 这一小节和 `Dash Plotly` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

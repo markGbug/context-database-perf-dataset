@@ -1,0 +1,27 @@
+# 知识点 06381：JavaScript：JavaScript void - 本章内容
+
+- 来源：[JavaScript void](https://www.runoob.com/js/js-void.html)
+- 来源章节：[2792-js-void-practice.md](../chapters/2792-js-void-practice.md)
+- 分类：前端开发
+- 技术：JavaScript
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：2792
+
+## 原文片段
+
+我们经常会使用到 javascript:void(0) 这样的代码，那么在 JavaScript 中 javascript:void(0) 代表的是什么意思呢？
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `JavaScript void` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

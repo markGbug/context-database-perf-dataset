@@ -1,0 +1,27 @@
+# 知识点 40969：Playwright：Playwright 等待与超时 - 第一层：Locator 的自动等待
+
+- 来源：[Playwright 等待与超时](https://www.runoob.com/playwright/playwright-waiting-timeout.html)
+- 来源章节：[0523-playwright-waiting-timeout-study.md](../chapters/0523-playwright-waiting-timeout-study.md)
+- 分类：AI / 智能开发
+- 技术：Playwright
+- 所在小节：第一层：Locator 的自动等待
+- 知识类型：解释
+- 原章节序号：0523
+
+## 原文片段
+
+当你创建 Locator 时，Playwright 不立即查找元素，而是在你执行操作或断言时才开始查找并自动等待。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `第一层：Locator 的自动等待` 这一小节和 `Playwright 等待与超时` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

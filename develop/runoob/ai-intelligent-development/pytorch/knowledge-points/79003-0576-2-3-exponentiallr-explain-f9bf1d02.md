@@ -1,0 +1,27 @@
+# 知识点 79003：PyTorch：PyTorch 学习率调度器 - 2.3 ExponentialLR 指数衰减
+
+- 来源：[PyTorch 学习率调度器](https://www.runoob.com/pytorch/pytorch-lr-scheduler.html)
+- 来源章节：[0576-pytorch-lr-scheduler-concept.md](../chapters/0576-pytorch-lr-scheduler-concept.md)
+- 分类：AI / 智能开发
+- 技术：PyTorch
+- 所在小节：2.3 ExponentialLR 指数衰减
+- 知识类型：解释
+- 原章节序号：0576
+
+## 原文片段
+
+每个 epoch 都衰减，学习率以指数形式持续下降，衰减更平滑。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `2.3 ExponentialLR 指数衰减` 这一小节和 `PyTorch 学习率调度器` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 80247：RESTful API：RESTful API 教程 - RESTful API 特点？
+
+- 来源：[RESTful API 教程](https://www.runoob.com/restfulapi/restful-api-tutorial.html)
+- 来源章节：[1131-restful-api-practice.md](../chapters/1131-restful-api-practice.md)
+- 分类：后端开发
+- 技术：RESTful API
+- 所在小节：RESTful API 特点？
+- 知识类型：要点
+- 原章节序号：1131
+
+## 原文片段
+
+可缓存：响应应明确是否可缓存
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `RESTful API 特点？` 这一小节和 `RESTful API 教程` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

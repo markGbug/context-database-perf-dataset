@@ -1,0 +1,27 @@
+# 知识点 70070：TensorFlow：TensorFlow 模型训练 - 性能优化建议
+
+- 来源：[TensorFlow 模型训练](https://www.runoob.com/tensorflow/tensorflow-model-training.html)
+- 来源章节：[0667-tensorflow-model-training-study.md](../chapters/0667-tensorflow-model-training-study.md)
+- 分类：AI / 智能开发
+- 技术：TensorFlow
+- 所在小节：性能优化建议
+- 知识类型：要点
+- 原章节序号：0667
+
+## 原文片段
+
+数据管道优化： 实例 # 使用prefetch和cache加速数据加载 train_dataset = train_dataset.cache().prefetch(buffer_size=tf.data.AUTOTUNE)
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `性能优化建议` 这一小节和 `TensorFlow 模型训练` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

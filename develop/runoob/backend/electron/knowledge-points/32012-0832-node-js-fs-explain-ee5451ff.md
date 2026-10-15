@@ -1,0 +1,27 @@
+# 知识点 32012：Electron：Electron 文件系统与数据存储 - Node.js fs 模块的使用
+
+- 来源：[Electron 文件系统与数据存储](https://www.runoob.com/electron/electron-file-system-and-data-storage.html)
+- 来源章节：[0832-electron-file-system-and-data-storage-study.md](../chapters/0832-electron-file-system-and-data-storage-study.md)
+- 分类：后端开发
+- 技术：Electron
+- 所在小节：Node.js fs 模块的使用
+- 知识类型：解释
+- 原章节序号：0832
+
+## 原文片段
+
+fs 模块提供了多种文件系统操作，如读取、写入、重命名、删除等。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `Node.js fs 模块的使用` 这一小节和 `Electron 文件系统与数据存储` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

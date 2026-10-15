@@ -1,0 +1,27 @@
+# 知识点 70525：Electron：Electron 发布与部署 - Mac App Store 发布
+
+- 来源：[Electron 发布与部署](https://www.runoob.com/electron/electron-release.html)
+- 来源章节：[0838-electron-release-study.md](../chapters/0838-electron-release-study.md)
+- 分类：后端开发
+- 技术：Electron
+- 所在小节：Mac App Store 发布
+- 知识类型：要点
+- 原章节序号：0838
+
+## 原文片段
+
+打包要求：必须使用 .pkg 或 .app，且启用 Apple 公证（Notarization）
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `Mac App Store 发布` 这一小节和 `Electron 发布与部署` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

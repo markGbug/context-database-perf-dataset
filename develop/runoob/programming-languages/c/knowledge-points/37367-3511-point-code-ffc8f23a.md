@@ -1,0 +1,73 @@
+# 知识点 37367：C：C 排序算法 - 实例
+
+- 来源：[C 排序算法](https://www.runoob.com/cprogramming/c-sort-algorithm.html)
+- 来源章节：[3511-c-sort-algorithm-practice.md](../chapters/3511-c-sort-algorithm-practice.md)
+- 分类：编程语言
+- 技术：C
+- 所在小节：实例
+- 知识类型：代码
+- 原章节序号：3511
+
+## 原文片段
+
+```text
+#include <stdio.h>
+
+// 函数声明
+void selection_sort(int a[], int len);
+
+int main() {
+    int arr[] = { 22, 34, 3, 32, 82, 55, 89, 50, 37, 5, 64, 35, 9, 70 };
+    int len = sizeof(arr) / sizeof(arr[0]);  // 计算数组长度
+
+    selection_sort(arr, len);  // 调用选择排序函数
+
+    // 打印排序后的数组
+    for (int i = 0; i < len; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+
+// 选择排序函数
+void selection_sort(int a[], int len) {
+    for (int i = 0; i < len - 1; i++) {
+        int min = i;  // 记录最小值的位置，第一个元素默认最小
+        for (int j = i + 1; j < len; j++) {
+            if (a[j] < a[min]) {  // 找到目前最小值
+                min = j;  // 记录最小值的位置
+            }
+        }
+        // 交换两个变量
+        if (min != i) {
+            int temp = a[min];
+            a[min] = a[i];
+            a[i] = temp;
+        }
+    }
+}
+
+/*
+// 自定义交换函数
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+*/
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例` 这一小节和 `C 排序算法` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

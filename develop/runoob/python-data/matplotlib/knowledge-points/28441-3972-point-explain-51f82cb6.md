@@ -1,0 +1,27 @@
+# 知识点 28441：Matplotlib：Matplotlib imsave() - 本章内容
+
+- 来源：[Matplotlib imsave()](https://www.runoob.com/matplotlib/matplotlib-imsave.html)
+- 来源章节：[3972-matplotlib-imsave-practice.md](../chapters/3972-matplotlib-imsave-practice.md)
+- 分类：Python / 数据科学
+- 技术：Matplotlib
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：3972
+
+## 原文片段
+
+imsave() 方法保存图片支持多种图像格式，例如 PNG、JPEG、BMP 等。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Matplotlib imsave()` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

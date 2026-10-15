@@ -1,0 +1,50 @@
+# 知识点 41997：Java：Java Override/Overload - TestDog.java 文件代码：
+
+- 来源：[Java Override/Overload](https://www.runoob.com/java/java-override-overload.html)
+- 来源章节：[0904-java-override-overload-study.md](../chapters/0904-java-override-overload-study.md)
+- 分类：后端开发
+- 技术：Java
+- 所在小节：TestDog.java 文件代码：
+- 知识类型：代码
+- 原章节序号：0904
+
+## 原文片段
+
+```text
+class Animal{
+   public void move(){
+      System.out.println("动物可以移动");
+   }
+}
+
+class Dog extends Animal{
+   public void move(){
+      System.out.println("狗可以跑和走");
+   }
+}
+
+public class TestDog{
+   public static void main(String args[]){
+      Animal a = new Animal(); // Animal 对象
+      Animal b = new Dog(); // Dog 对象
+
+      a.move();// 执行 Animal 类的方法
+
+      b.move();//执行 Dog 类的方法
+   }
+}
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `TestDog.java 文件代码：` 这一小节和 `Java Override/Overload` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

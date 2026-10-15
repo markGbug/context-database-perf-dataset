@@ -1,0 +1,27 @@
+# 知识点 31301：PyTorch：PyTorch torchtext - 2. 使用 torchtext (Legacy)
+
+- 来源：[PyTorch torchtext](https://www.runoob.com/pytorch/pytorch-torchtext.html)
+- 来源章节：[0584-pytorch-torchtext-practice.md](../chapters/0584-pytorch-torchtext-practice.md)
+- 分类：AI / 智能开发
+- 技术：PyTorch
+- 所在小节：2. 使用 torchtext (Legacy)
+- 知识类型：解释
+- 原章节序号：0584
+
+## 原文片段
+
+如果已安装 torchtext，可以使用 legacy 模块进行文本处理。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `2. 使用 torchtext (Legacy)` 这一小节和 `PyTorch torchtext` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

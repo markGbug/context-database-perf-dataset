@@ -1,0 +1,27 @@
+# 知识点 08950：Pillow：Pillow ImagePalette 模块 - 本章内容
+
+- 来源：[Pillow ImagePalette 模块](https://www.runoob.com/pillow/pillow-imagepalette-module.html)
+- 来源章节：[4076-pillow-imagepalette-module-study.md](../chapters/4076-pillow-imagepalette-module-study.md)
+- 分类：Python / 数据科学
+- 技术：Pillow
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：4076
+
+## 原文片段
+
+ImagePalette 是 Python Pillow 库中的一个模块，主要用于处理图像的调色板（Palette）。调色板是一组预定义的颜色集合，常用于索引图像（如 GIF 格式）中，以优化存储和显示效率。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Pillow ImagePalette 模块` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

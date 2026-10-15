@@ -1,0 +1,27 @@
+# 知识点 26699：Tailwind CSS：Tailwind CSS 工具类 - 本章内容
+
+- 来源：[Tailwind CSS 工具类](https://www.runoob.com/tailwindcss/tailwindcss-utility-first.html)
+- 来源章节：[3101-tailwindcss-utility-first-practice.md](../chapters/3101-tailwindcss-utility-first-practice.md)
+- 分类：前端开发
+- 技术：Tailwind CSS
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：3101
+
+## 原文片段
+
+Tailwind CSS 提供了大量的工具类，每个类都执行一个简单的样式任务，例如，text-center 用来将文本居中，bg-blue-500 用来设置背景颜色，p-4 用来设置内边距等。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Tailwind CSS 工具类` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

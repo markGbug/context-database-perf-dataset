@@ -1,0 +1,45 @@
+# 知识点 53113：Redis：Redis 性能测试 - 实例
+
+- 来源：[Redis 性能测试](https://www.runoob.com/redis/redis-benchmarks.html)
+- 来源章节：[1615-redis-benchmarks-practice.md](../chapters/1615-redis-benchmarks-practice.md)
+- 分类：数据库
+- 技术：Redis
+- 所在小节：实例
+- 知识类型：代码
+- 原章节序号：1615
+
+## 原文片段
+
+```text
+$ redis-benchmark -n 10000  -q
+
+PING_INLINE: 141043.72 requests per second
+PING_BULK: 142857.14 requests per second
+SET: 141442.72 requests per second
+GET: 145348.83 requests per second
+INCR: 137362.64 requests per second
+LPUSH: 145348.83 requests per second
+LPOP: 146198.83 requests per second
+SADD: 146198.83 requests per second
+SPOP: 149253.73 requests per second
+LPUSH (needed to benchmark LRANGE): 148588.42 requests per second
+LRANGE_100 (first 100 elements): 58411.21 requests per second
+LRANGE_300 (first 300 elements): 21195.42 requests per second
+LRANGE_500 (first 450 elements): 14539.11 requests per second
+LRANGE_600 (first 600 elements): 10504.20 requests per second
+MSET (10 keys): 93283.58 requests per second
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例` 这一小节和 `Redis 性能测试` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

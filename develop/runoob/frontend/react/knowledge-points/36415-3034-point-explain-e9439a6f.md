@@ -1,0 +1,27 @@
+# 知识点 36415：React：React 安装(NPM) - 本章内容
+
+- 来源：[React 安装(NPM)](https://www.runoob.com/react/react-install.html)
+- 来源章节：[3034-react-install-practice.md](../chapters/3034-react-install-practice.md)
+- 分类：前端开发
+- 技术：React
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：3034
+
+## 原文片段
+
+我们建议在 React 中使用 CommonJS 模块系统，比如 browserify 或 webpack，本教程使用 webpack。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `React 安装(NPM)` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

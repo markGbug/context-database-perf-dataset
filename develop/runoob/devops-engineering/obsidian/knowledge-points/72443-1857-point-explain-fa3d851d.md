@@ -1,0 +1,27 @@
+# 知识点 72443：Obsidian：Obsidian 双链与知识图谱 - 实例
+
+- 来源：[Obsidian 双链与知识图谱](https://www.runoob.com/obsidian/obsidian-bilinks-graph.html)
+- 来源章节：[1857-obsidian-bilinks-graph-study.md](../chapters/1857-obsidian-bilinks-graph-study.md)
+- 分类：DevOps / 工程化
+- 技术：Obsidian
+- 所在小节：实例
+- 知识类型：解释
+- 原章节序号：1857
+
+## 原文片段
+
+别名推荐用法：在笔记 Front Matter 中定义标准别名，而不是每次用管道符 | 临时改写。这样别名统一管理，修改一次全库生效。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `实例` 这一小节和 `Obsidian 双链与知识图谱` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

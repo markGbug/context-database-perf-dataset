@@ -1,0 +1,27 @@
+# 知识点 84244：Kotlin：Kotlin Android 环境搭建 - 创建新工程
+
+- 来源：[Kotlin Android 环境搭建](https://www.runoob.com/kotlin/otlin-android-setup.html)
+- 来源章节：[3368-otlin-android-setup-study.md](../chapters/3368-otlin-android-setup-study.md)
+- 分类：移动开发
+- 技术：Kotlin
+- 所在小节：创建新工程
+- 知识类型：解释
+- 原章节序号：3368
+
+## 原文片段
+
+早期版本中则会先使用 Java 创建 activity，然后再使用自动转换工具 进行转换。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `创建新工程` 这一小节和 `Kotlin Android 环境搭建` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

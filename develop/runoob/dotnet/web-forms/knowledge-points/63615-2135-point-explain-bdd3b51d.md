@@ -1,0 +1,27 @@
+# 知识点 63615：Web Forms：WebPages 表单 - 实例解释
+
+- 来源：[WebPages 表单](https://www.runoob.com/aspnet/webpages-forms.html)
+- 来源章节：[2135-webpages-forms-practice.md](../chapters/2135-webpages-forms-practice.md)
+- 分类：.NET
+- 技术：Web Forms
+- 所在小节：实例解释
+- 知识类型：解释
+- 原章节序号：2135
+
+## 原文片段
+
+HTML 页面有一个名为 Choice 的下拉列表（<select> 元素）。它允许用户根据自己的意愿选择一个名称（如 Photo 1），当页面被提交到 Web 服务器时，则传递了一个文件名（如 Photo1.jpg）。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `实例解释` 这一小节和 `WebPages 表单` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

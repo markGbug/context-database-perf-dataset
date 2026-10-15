@@ -1,0 +1,27 @@
+# 知识点 87053：DeepSeek Harness：DeepSeek Harness 能力三角色 - 一张图看懂 seam 三角色
+
+- 来源：[DeepSeek Harness 能力三角色](https://www.runoob.com/deepseek-harness/deepseek-harness-capability-seams.html)
+- 来源章节：[0234-deepseek-harness-capability-seams-practice.md](../chapters/0234-deepseek-harness-capability-seams-practice.md)
+- 分类：AI / 智能开发
+- 技术：DeepSeek Harness
+- 所在小节：一张图看懂 seam 三角色
+- 知识类型：解释
+- 原章节序号：0234
+
+## 原文片段
+
+三个角色都依赖 Definition，而 Provider 与 Consumer 互不依赖。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `一张图看懂 seam 三角色` 这一小节和 `DeepSeek Harness 能力三角色` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

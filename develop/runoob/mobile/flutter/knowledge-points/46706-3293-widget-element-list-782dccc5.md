@@ -1,0 +1,27 @@
+# 知识点 46706：Flutter：Flutter 进阶 - Widget 树与 Element 树
+
+- 来源：[Flutter 进阶](https://www.runoob.com/flutter/flutter-advanced.html)
+- 来源章节：[3293-flutter-advanced-practice.md](../chapters/3293-flutter-advanced-practice.md)
+- 分类：移动开发
+- 技术：Flutter
+- 所在小节：Widget 树与 Element 树
+- 知识类型：要点
+- 原章节序号：3293
+
+## 原文片段
+
+RenderObject 树: 负责实际渲染
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `Widget 树与 Element 树` 这一小节和 `Flutter 进阶` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

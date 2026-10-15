@@ -1,0 +1,27 @@
+# 知识点 78009：DeepSeek Harness：DeepSeek Harness 服务隔离 - 为什么需要隔离
+
+- 来源：[DeepSeek Harness 服务隔离](https://www.runoob.com/deepseek-harness/deepseek-harness-isolation-scope.html)
+- 来源章节：[0232-deepseek-harness-isolation-scope-study.md](../chapters/0232-deepseek-harness-isolation-scope-study.md)
+- 分类：AI / 智能开发
+- 技术：DeepSeek Harness
+- 所在小节：为什么需要隔离
+- 知识类型：解释
+- 原章节序号：0232
+
+## 原文片段
+
+隔离让同一份服务按组配置、按组生效，而不是全局一刀切。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `为什么需要隔离` 这一小节和 `DeepSeek Harness 服务隔离` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

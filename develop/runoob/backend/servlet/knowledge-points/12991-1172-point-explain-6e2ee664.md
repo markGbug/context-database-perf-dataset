@@ -1,0 +1,27 @@
+# 知识点 12991：Servlet：Servlet 环境设置 - 本章内容
+
+- 来源：[Servlet 环境设置](https://www.runoob.com/servlet/servlet-environment-setup.html)
+- 来源章节：[1172-servlet-environment-setup-practice.md](../chapters/1172-servlet-environment-setup-practice.md)
+- 分类：后端开发
+- 技术：Servlet
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：1172
+
+## 原文片段
+
+就像任何其他的 Java 程序，您需要通过使用 Java 编译器 javac 编译 Servlet，在编译 Servlet 应用程序后，将它部署在配置的环境中以便测试和运行。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Servlet 环境设置` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

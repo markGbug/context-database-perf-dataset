@@ -1,0 +1,27 @@
+# 知识点 18549：Jupyter Notebook：Jupyter Notebook 教程 - 本章内容
+
+- 来源：[Jupyter Notebook 教程](https://www.runoob.com/jupyter-notebook/jupyter-notebook-tutorial.html)
+- 来源章节：[3951-jupyter-notebook-practice.md](../chapters/3951-jupyter-notebook-practice.md)
+- 分类：Python / 数据科学
+- 技术：Jupyter Notebook
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：3951
+
+## 原文片段
+
+Jupyter Notebook 将代码、说明文字和运行结果组织在同一个 Notebook 文档中，该文档以 JSON 格式保存，由多个有序的单元格组成，每个单元格既可以运行代码，也可以编写 Markdown 文本、展示数学公式、图表或其他富媒体内容。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Jupyter Notebook 教程` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 81135：Redis：Redis 发布订阅 - 第二个 redis-cli 客户端
+
+- 来源：[Redis 发布订阅](https://www.runoob.com/redis/redis-pub-sub.html)
+- 来源章节：[1606-redis-pub-sub-practice.md](../chapters/1606-redis-pub-sub-practice.md)
+- 分类：数据库
+- 技术：Redis
+- 所在小节：第二个 redis-cli 客户端
+- 知识类型：要点
+- 原章节序号：1606
+
+## 原文片段
+
+在第一个 redis-cli 客户端输入 SUBSCRIBE runoobChat，意思是订阅 runoobChat 频道。
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `第二个 redis-cli 客户端` 这一小节和 `Redis 发布订阅` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

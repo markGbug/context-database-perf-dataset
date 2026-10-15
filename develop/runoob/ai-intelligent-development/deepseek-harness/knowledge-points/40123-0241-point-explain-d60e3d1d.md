@@ -1,0 +1,27 @@
+# 知识点 40123：DeepSeek Harness：DeepSeek Harness 工具执行 - 流水线的整体顺序
+
+- 来源：[DeepSeek Harness 工具执行](https://www.runoob.com/deepseek-harness/deepseek-harness-tool-pipeline.html)
+- 来源章节：[0241-deepseek-harness-tool-pipeline-study.md](../chapters/0241-deepseek-harness-tool-pipeline-study.md)
+- 分类：AI / 智能开发
+- 技术：DeepSeek Harness
+- 所在小节：流水线的整体顺序
+- 知识类型：解释
+- 原章节序号：0241
+
+## 原文片段
+
+工具执行不是「调用一下函数」那么简单，而是一条有固定顺序的流水线。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `流水线的整体顺序` 这一小节和 `DeepSeek Harness 工具执行` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

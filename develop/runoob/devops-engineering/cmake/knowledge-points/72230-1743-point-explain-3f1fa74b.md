@@ -1,0 +1,27 @@
+# 知识点 72230：CMake：CMake 构建实例 - 实例
+
+- 来源：[CMake 构建实例](https://www.runoob.com/cmake/cmake-build-demo.html)
+- 来源章节：[1743-cmake-build-demo-practice.md](../chapters/1743-cmake-build-demo-practice.md)
+- 分类：DevOps / 工程化
+- 技术：CMake
+- 所在小节：实例
+- 知识类型：解释
+- 原章节序号：1743
+
+## 原文片段
+
+每个 add_executable 和 add_library 都定义了一个构建目标（Target）。目标的概念是 CMake 的核心——后续的 target_include_directories、target_link_libraries 等指令都是围绕目标来组织的。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `实例` 这一小节和 `CMake 构建实例` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

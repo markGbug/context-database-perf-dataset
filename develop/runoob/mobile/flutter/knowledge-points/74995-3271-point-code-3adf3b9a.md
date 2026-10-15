@@ -1,0 +1,45 @@
+# 知识点 74995：Flutter：第一个 Flutter 应用 - 命令参数
+
+- 来源：[第一个 Flutter 应用](https://www.runoob.com/flutter/flutter-create-app.html)
+- 来源章节：[3271-flutter-create-app-study.md](../chapters/3271-flutter-create-app-study.md)
+- 分类：移动开发
+- 技术：Flutter
+- 所在小节：命令参数
+- 知识类型：代码
+- 原章节序号：3271
+
+## 原文片段
+
+```text
+$ flutter create hello_world
+Creating project "hello_world"...
+  .gitignore                    2026-04-01 10:30:22
+  .metadata                     2026-04-01 10:30:22
+  analysis_options.yaml         2026-04-01 10:01:15
+  pubspec.yaml                  2026-04-01 10:30:22
+  README.md                     2026-04-01 10:30:22
+  lib/
+    main.dart                    2026-04-01 10:30:22
+  test/
+    widget_test.dart             2026-04-01 10:22:34
+  android/
+  ios/
+  web/
+  ...
+Running "flutter pub get"...                     13.2s
+Running "flutter analyze"...                     3.2s
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `命令参数` 这一小节和 `第一个 Flutter 应用` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

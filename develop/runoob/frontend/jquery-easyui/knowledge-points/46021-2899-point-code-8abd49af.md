@@ -1,0 +1,65 @@
+# 知识点 46021：jQuery EasyUI：jEasyUI 树形网格添加分页 - 本章内容
+
+- 来源：[jEasyUI 树形网格添加分页](https://www.runoob.com/jeasyui/jeasyui-tree-treegrid4.html)
+- 来源章节：[2899-jeasyui-tree-treegrid4-study.md](../chapters/2899-jeasyui-tree-treegrid4-study.md)
+- 分类：前端开发
+- 技术：jQuery EasyUI
+- 所在小节：本章内容
+- 知识类型：代码
+- 原章节序号：2899
+
+## 原文片段
+
+```text
+$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+$offset = ($page-1)*$rows;
+
+$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+
+include 'conn.php';
+
+$result = array();
+if ($id == 0){
+    $rs = mysql_query("select count(*) from products where parentId=0");
+    $row = mysql_fetch_row($rs);
+    $result["total"] = $row[0];
+
+    $rs = mysql_query("select * from products where parentId=0 limit $offset,$rows");
+    $items = array();
+    while($row = mysql_fetch_array($rs)){
+        $row['state'] = has_child($row['id']) ? 'closed' : 'open';
+        array_push($items, $row);
+    }
+    $result["rows"] = $items;
+} else {
+    $rs = mysql_query("select * from products where parentId=$id");
+    while($row = mysql_fetch_array($rs)){
+        $row['state'] = has_child($row['id']) ? 'closed' : 'open';
+        $row['total'] = $row['price']*$row['quantity'];
+        array_push($result, $row);
+    }
+}
+
+echo json_encode($result);
+
+function has_child($id){
+    $rs = mysql_query("select count(*) from products where parentId=$id");
+    $row = mysql_fetch_array($rs);
+    return $row[0] > 0 ? true : false;
+}
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `本章内容` 这一小节和 `jEasyUI 树形网格添加分页` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 43684：Eclipse：Eclipse 工作空间 - 管理工作空间(Workspace)
+
+- 来源：[Eclipse 工作空间](https://www.runoob.com/eclipse/eclipse-workspaces.html)
+- 来源章节：[1753-eclipse-workspaces-practice.md](../chapters/1753-eclipse-workspaces-practice.md)
+- 分类：DevOps / 工程化
+- 技术：Eclipse
+- 所在小节：管理工作空间(Workspace)
+- 知识类型：解释
+- 原章节序号：1753
+
+## 原文片段
+
+用户通过使用视图，编辑器和向导功能来创建和管理工作空间中的资源。其中，显示工作区的内容很多意见中的Project Explorer视图。显示项目工作空间内容的视图是Project Explorer视图。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `管理工作空间(Workspace)` 这一小节和 `Eclipse 工作空间` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

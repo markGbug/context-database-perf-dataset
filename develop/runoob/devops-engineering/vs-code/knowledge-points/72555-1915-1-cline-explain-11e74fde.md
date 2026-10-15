@@ -1,0 +1,27 @@
+# 知识点 72555：VS Code：VSCode AI 扩展 - 1、Cline
+
+- 来源：[VSCode AI 扩展](https://www.runoob.com/vscode/vscode-ai-extensions.html)
+- 来源章节：[1915-vscode-ai-extensions-study.md](../chapters/1915-vscode-ai-extensions-study.md)
+- 分类：DevOps / 工程化
+- 技术：VS Code
+- 所在小节：1、Cline
+- 知识类型：解释
+- 原章节序号：1915
+
+## 原文片段
+
+插件链接地址：https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `1、Cline` 这一小节和 `VSCode AI 扩展` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

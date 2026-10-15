@@ -1,0 +1,36 @@
+# 知识点 61776：Servlet：Servlet 数据库访问 - 创建测试数据
+
+- 来源：[Servlet 数据库访问](https://www.runoob.com/servlet/servlet-database-access.html)
+- 来源章节：[1183-servlet-database-access-study.md](../chapters/1183-servlet-database-access-study.md)
+- 分类：后端开发
+- 技术：Servlet
+- 所在小节：创建测试数据
+- 知识类型：代码
+- 原章节序号：1183
+
+## 原文片段
+
+```text
+CREATE TABLE `websites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(20) NOT NULL DEFAULT '' COMMENT '站点名称',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `alexa` int(11) NOT NULL DEFAULT '0' COMMENT 'Alexa 排名',
+  `country` char(10) NOT NULL DEFAULT '' COMMENT '国家',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `创建测试数据` 这一小节和 `Servlet 数据库访问` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 01192：Ollama：Ollama Page Assist - 本章内容
+
+- 来源：[Ollama Page Assist](https://www.runoob.com/ollama/ollama-page-assist.html)
+- 来源章节：[0398-ollama-page-assist-concept.md](../chapters/0398-ollama-page-assist-concept.md)
+- 分类：AI / 智能开发
+- 技术：Ollama
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：0398
+
+## 原文片段
+
+Page Assist 是一款开源的浏览器扩展程序，主要为本地 AI 模型提供直观的交互界面，让用户可以在任何网页上与本地 AI 模型进行对话和交互。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Ollama Page Assist` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

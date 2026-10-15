@@ -1,0 +1,27 @@
+# 知识点 38139：Flask：Flask 应用对象 API - 可重写的类属性
+
+- 来源：[Flask 应用对象 API](https://www.runoob.com/flask/flask-api-application-object.html)
+- 来源章节：[3896-flask-api-application-object-practice.md](../chapters/3896-flask-api-application-object-practice.md)
+- 分类：Python / 数据科学
+- 技术：Flask
+- 所在小节：可重写的类属性
+- 知识类型：解释
+- 原章节序号：3896
+
+## 原文片段
+
+以下属性可在子类中覆盖，以自定义框架行为：
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `可重写的类属性` 这一小节和 `Flask 应用对象 API` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

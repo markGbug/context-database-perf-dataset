@@ -1,0 +1,33 @@
+# 知识点 50071：LangChain：LangChain Chat Model API - 一、init_chat_model() 是什么？
+
+- 来源：[LangChain Chat Model API](https://www.runoob.com/langchain/langchain-chat-model-api.html)
+- 来源章节：[0303-langchain-chat-model-api-study.md](../chapters/0303-langchain-chat-model-api-study.md)
+- 分类：AI / 智能开发
+- 技术：LangChain
+- 所在小节：一、init_chat_model() 是什么？
+- 知识类型：代码
+- 原章节序号：0303
+
+## 原文片段
+
+```text
+from langchain.chat_models import init_chat_model
+
+model = init_chat_model("deepseek:deepseek-chat")
+response = model.invoke("你好")
+print(response.content)
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `一、init_chat_model() 是什么？` 这一小节和 `LangChain Chat Model API` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

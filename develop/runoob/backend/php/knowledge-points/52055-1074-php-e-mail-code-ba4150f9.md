@@ -1,0 +1,37 @@
+# 知识点 52055：PHP：PHP E-mail - PHP 简易 E-Mail
+
+- 来源：[PHP E-mail](https://www.runoob.com/php/php-mail.html)
+- 来源章节：[1074-php-mail-practice.md](../chapters/1074-php-mail-practice.md)
+- 分类：后端开发
+- 技术：PHP
+- 所在小节：PHP 简易 E-Mail
+- 知识类型：代码
+- 原章节序号：1074
+
+## 原文片段
+
+```text
+<?php
+$to = "someone@example.com";         // 邮件接收者
+$subject = "参数邮件";                // 邮件标题
+$message = "Hello! 这是邮件的内容。";  // 邮件正文
+$from = "someonelse@example.com";   // 邮件发送者
+$headers = "From:" . $from;         // 头部信息设置
+mail($to,$subject,$message,$headers);
+echo "邮件已发送";
+?>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `PHP 简易 E-Mail` 这一小节和 `PHP E-mail` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

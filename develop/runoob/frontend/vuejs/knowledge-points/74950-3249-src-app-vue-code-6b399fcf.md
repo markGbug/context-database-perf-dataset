@@ -1,0 +1,58 @@
+# 知识点 74950：Vue.js：Vue.js 目录结构 - src/APP.vue
+
+- 来源：[Vue.js 目录结构](https://www.runoob.com/vue2/vue-directory-structure.html)
+- 来源章节：[3249-vue-directory-structure-practice.md](../chapters/3249-vue-directory-structure-practice.md)
+- 分类：前端开发
+- 技术：Vue.js
+- 所在小节：src/APP.vue
+- 知识类型：代码
+- 原章节序号：3249
+
+## 原文片段
+
+```text
+<!-- 展示模板 -->
+<template>
+  <div id="app">
+    <img src="./assets/logo.png">
+    <hello></hello>
+  </div>
+</template>
+
+<script>
+// 导入组件
+import Hello from './components/Hello'
+
+export default {
+  name: 'app',
+  components: {
+    Hello
+  }
+}
+</script>
+<!-- 样式代码 -->
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `src/APP.vue` 这一小节和 `Vue.js 目录结构` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

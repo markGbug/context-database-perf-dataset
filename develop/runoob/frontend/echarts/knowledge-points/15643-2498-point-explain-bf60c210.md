@@ -1,0 +1,27 @@
+# 知识点 15643：ECharts：ECharts 异步加载数据 - 实例
+
+- 来源：[ECharts 异步加载数据](https://www.runoob.com/echarts/echarts-ajax-data.html)
+- 来源章节：[2498-echarts-ajax-data-practice.md](../chapters/2498-echarts-ajax-data-practice.md)
+- 分类：前端开发
+- 技术：ECharts
+- 所在小节：实例
+- 知识类型：解释
+- 原章节序号：2498
+
+## 原文片段
+
+如果异步加载需要一段时间，我们可以添加 loading 效果，ECharts 默认有提供了一个简单的加载动画。只需要调用 showLoading 方法显示。数据加载完成后再调用 hideLoading 方法隐藏加载动画：
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `实例` 这一小节和 `ECharts 异步加载数据` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

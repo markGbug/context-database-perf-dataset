@@ -1,0 +1,27 @@
+# 知识点 38014：Django：表单与收藏功能 - 收藏功能的数据模型设计
+
+- 来源：[表单与收藏功能](https://www.runoob.com/django/django-blog-forms-favorites.html)
+- 来源章节：[3833-django-blog-forms-favorites-study.md](../chapters/3833-django-blog-forms-favorites-study.md)
+- 分类：Python / 数据科学
+- 技术：Django
+- 所在小节：收藏功能的数据模型设计
+- 知识类型：解释
+- 原章节序号：3833
+
+## 原文片段
+
+我们不需要新建模型——Django 的 User 模型是内置的，只需要在 Post 模型中添加一个 ManyToManyField 指向 User。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `收藏功能的数据模型设计` 这一小节和 `表单与收藏功能` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

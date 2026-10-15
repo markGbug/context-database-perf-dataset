@@ -1,0 +1,59 @@
+# 知识点 26367：jQuery EasyUI：jEasyUI 窗口与布局 - 本章内容
+
+- 来源：[jEasyUI 窗口与布局](https://www.runoob.com/jeasyui/jeasyui-win-win3.html)
+- 来源章节：[2887-jeasyui-win-win3-practice.md](../chapters/2887-jeasyui-win-win3-practice.md)
+- 分类：前端开发
+- 技术：jQuery EasyUI
+- 所在小节：本章内容
+- 知识类型：代码
+- 原章节序号：2887
+
+## 原文片段
+
+```text
+<div class="easyui-window" title="Layout Window" icon="icon-help" style="width:500px;height:250px;padding:5px;background: #fafafa;">
+        <div class="easyui-layout" fit="true">
+            <div region="west" split="true" style="width:120px;">
+                <ul class="easyui-tree">
+                    <li>
+                        <span>Library</span>
+                        <ul>
+                            <li><span>easyui</span></li>
+                            <li><span>Music</span></li>
+                            <li><span>Picture</span></li>
+                            <li><span>Database</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div region="center" border="false" border="false">
+                <div class="easyui-tabs" fit="true">
+                    <div title="Home" style="padding:10px;">
+                        jQuery easyui framework help you build your web page easily.
+                    </div>
+                    <div title="Contacts">
+                        No contact data.
+                    </div>
+                </div>
+            </div>
+            <div region="south" border="false" style="text-align:right;height:30px;line-height:30px;">
+                <a class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)">Ok</a>
+                <a class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)">Cancel</a>
+            </div>
+        </div>
+    </div>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `本章内容` 这一小节和 `jEasyUI 窗口与布局` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 63973：Bootstrap4：Bootstrap4 折叠 - 实例
+
+- 来源：[Bootstrap4 折叠](https://www.runoob.com/bootstrap4/bootstrap4-collapse.html)
+- 来源章节：[2322-bootstrap4-collapse-practice.md](../chapters/2322-bootstrap4-collapse-practice.md)
+- 分类：前端开发
+- 技术：Bootstrap4
+- 所在小节：实例
+- 知识类型：解释
+- 原章节序号：2322
+
+## 原文片段
+
+默认情况下折叠的内容是隐藏的，你可以添加 .show 类让内容默认显示:
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `实例` 这一小节和 `Bootstrap4 折叠` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

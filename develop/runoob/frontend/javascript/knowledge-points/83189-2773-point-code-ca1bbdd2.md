@@ -1,0 +1,39 @@
+# 知识点 83189：JavaScript：JavaScript switch 语句 - 实例
+
+- 来源：[JavaScript switch 语句](https://www.runoob.com/js/js-switch.html)
+- 来源章节：[2773-js-switch-practice.md](../chapters/2773-js-switch-practice.md)
+- 分类：前端开发
+- 技术：JavaScript
+- 所在小节：实例
+- 知识类型：代码
+- 原章节序号：2773
+
+## 原文片段
+
+```text
+var d=new Date().getDay();
+switch (d)
+{
+    case 6:x="今天是星期六";
+    break;
+    case 0:x="今天是星期日";
+    break;
+    default:
+    x="期待周末";
+}
+document.getElementById("demo").innerHTML=x;
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例` 这一小节和 `JavaScript switch 语句` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

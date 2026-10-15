@@ -1,0 +1,67 @@
+# 知识点 27093：Ionic：ionic 按钮 - 本章内容
+
+- 来源：[ionic 按钮](https://www.runoob.com/ionic/ionic-button.html)
+- 来源章节：[3298-ionic-button-practice.md](../chapters/3298-ionic-button-practice.md)
+- 分类：移动开发
+- 技术：Ionic
+- 所在小节：本章内容
+- 知识类型：代码
+- 原章节序号：3298
+
+## 原文片段
+
+```text
+<button class="button">
+  Default
+</button>
+
+<button class="button button-light">
+  button-light
+</button>
+
+<button class="button button-stable">
+  button-stable
+</button>
+
+<button class="button button-positive">
+  button-positive
+</button>
+
+<button class="button button-calm">
+  button-calm
+</button>
+
+<button class="button button-balanced">
+  button-balanced
+</button>
+
+<button class="button button-energized">
+  button-energized
+</button>
+
+<button class="button button-assertive">
+  button-assertive
+</button>
+
+<button class="button button-royal">
+  button-royal
+</button>
+
+<button class="button button-dark">
+  button-dark
+</button>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `本章内容` 这一小节和 `ionic 按钮` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

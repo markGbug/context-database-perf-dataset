@@ -1,0 +1,27 @@
+# 知识点 12708：Node.js：Node.js RESTful API - 什么是 REST？
+
+- 来源：[Node.js RESTful API](https://www.runoob.com/nodejs/nodejs-restful-api.html)
+- 来源章节：[1030-nodejs-restful-api-study.md](../chapters/1030-nodejs-restful-api-study.md)
+- 分类：后端开发
+- 技术：Node.js
+- 所在小节：什么是 REST？
+- 知识类型：解释
+- 原章节序号：1030
+
+## 原文片段
+
+表述性状态转移是一组架构约束条件和原则。满足这些约束条件和原则的应用程序或设计就是RESTful。需要注意的是，REST是设计风格而不是标准。REST通常基于使用HTTP，URI，和XML（标准通用标记语言下的一个子集）以及HTML（标准通用标记语言下的一个应用）这些现有的广泛流行的协议和标准。REST 通常使用 JSON 数据格式。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `什么是 REST？` 这一小节和 `Node.js RESTful API` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

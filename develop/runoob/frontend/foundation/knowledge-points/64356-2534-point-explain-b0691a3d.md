@@ -1,0 +1,27 @@
+# 知识点 64356：Foundation：Foundation 下拉菜单 - 实例解析
+
+- 来源：[Foundation 下拉菜单](https://www.runoob.com/foundation/foundation-dropdowns.html)
+- 来源章节：[2534-foundation-dropdowns-study.md](../chapters/2534-foundation-dropdowns-study.md)
+- 分类：前端开发
+- 技术：Foundation
+- 所在小节：实例解析
+- 知识类型：解释
+- 原章节序号：2534
+
+## 原文片段
+
+注意: 在小屏幕上，所有的下拉菜单的宽度是100%。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `实例解析` 这一小节和 `Foundation 下拉菜单` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

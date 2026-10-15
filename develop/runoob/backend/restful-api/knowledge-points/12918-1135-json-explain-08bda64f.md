@@ -1,0 +1,27 @@
+# 知识点 12918：RESTful API：RESTful API 请求和响应 - JSON 格式
+
+- 来源：[RESTful API 请求和响应](https://www.runoob.com/restfulapi/restful-api-res.html)
+- 来源章节：[1135-restful-api-res-study.md](../chapters/1135-restful-api-res-study.md)
+- 分类：后端开发
+- 技术：RESTful API
+- 所在小节：JSON 格式
+- 知识类型：解释
+- 原章节序号：1135
+
+## 原文片段
+
+JSON 就像是数据的"通用语言"，简单易读。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `JSON 格式` 这一小节和 `RESTful API 请求和响应` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

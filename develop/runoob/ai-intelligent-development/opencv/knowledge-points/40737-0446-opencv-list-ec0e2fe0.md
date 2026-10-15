@@ -1,0 +1,27 @@
+# 知识点 40737：OpenCV：OpenCV 简介 - OpenCV 核心特点
+
+- 来源：[OpenCV 简介](https://www.runoob.com/opencv/opencv-intro.html)
+- 来源章节：[0446-opencv-intro-practice.md](../chapters/0446-opencv-intro-practice.md)
+- 分类：AI / 智能开发
+- 技术：OpenCV
+- 所在小节：OpenCV 核心特点
+- 知识类型：要点
+- 原章节序号：0446
+
+## 原文片段
+
+跨平台支持 OpenCV 支持多个操作系统平台，包括 Windows、Linux、macOS、Android 和 iOS。你可以在各种设备上使用 OpenCV，包括桌面、服务器以及移动设备。
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `OpenCV 核心特点` 这一小节和 `OpenCV 简介` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 71017：PHP：AJAX 实时搜索 - AJAX Live Search
+
+- 来源：[AJAX 实时搜索](https://www.runoob.com/php/php-ajax-livesearch.html)
+- 来源章节：[1102-php-ajax-livesearch-study.md](../chapters/1102-php-ajax-livesearch-study.md)
+- 分类：后端开发
+- 技术：PHP
+- 所在小节：AJAX Live Search
+- 知识类型：解释
+- 原章节序号：1102
+
+## 原文片段
+
+上面实例中的结果在一个 XML 文件（links.xml）中进行查找。为了让这个例子小而简单，我们只提供 6 个结果。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `AJAX Live Search` 这一小节和 `AJAX 实时搜索` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

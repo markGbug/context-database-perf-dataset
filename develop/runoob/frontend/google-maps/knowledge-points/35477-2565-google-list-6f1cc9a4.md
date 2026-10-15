@@ -1,0 +1,27 @@
+# 知识点 35477：Google 地图：Google 地图叠加层 - Google 地图 - 叠加层
+
+- 来源：[Google 地图叠加层](https://www.runoob.com/googleapi/google-maps-overlays.html)
+- 来源章节：[2565-google-maps-overlays-practice.md](../chapters/2565-google-maps-overlays-practice.md)
+- 分类：前端开发
+- 技术：Google 地图
+- 所在小节：Google 地图 - 叠加层
+- 知识类型：要点
+- 原章节序号：2565
+
+## 原文片段
+
+地图上的点使用标记来显示，通常显示自定义图标。标记是 GMarker 类型的对象，并且可以利用 GIcon 类型的对象来自定义图标。
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `Google 地图 - 叠加层` 这一小节和 `Google 地图叠加层` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

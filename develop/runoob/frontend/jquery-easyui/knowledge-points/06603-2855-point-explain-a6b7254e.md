@@ -1,0 +1,27 @@
+# 知识点 06603：jQuery EasyUI：jEasyUI 创建折叠面板 - 本章内容
+
+- 来源：[jEasyUI 创建折叠面板](https://www.runoob.com/jeasyui/jeasyui-layout-accordion.html)
+- 来源章节：[2855-jeasyui-layout-accordion-practice.md](../chapters/2855-jeasyui-layout-accordion-practice.md)
+- 分类：前端开发
+- 技术：jQuery EasyUI
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：2855
+
+## 原文片段
+
+在本教程中，您将会学习到关于 easyui 折叠面板（Accordion）的知识。折叠面板（Accordion）包含一系列的面板（panel）。所有面板（panel）的头部（header）都是可见的，但是一次仅仅显示一个面板（panel）的 body 内容。当用户点击面板（panel）的头部（header）时，该面板（panel）的 body 内容将可见，同时其他面板（panel）的 body 内容将隐藏不可见。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `jEasyUI 创建折叠面板` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

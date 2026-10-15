@@ -1,0 +1,27 @@
+# 知识点 82849：Google 地图：Google 地图叠加层 - Google 地图 - 添加标记
+
+- 来源：[Google 地图叠加层](https://www.runoob.com/googleapi/google-maps-overlays.html)
+- 来源章节：[2565-google-maps-overlays-practice.md](../chapters/2565-google-maps-overlays-practice.md)
+- 分类：前端开发
+- 技术：Google 地图
+- 所在小节：Google 地图 - 添加标记
+- 知识类型：解释
+- 原章节序号：2565
+
+## 原文片段
+
+记标识地图上的点。默认情况下，它们使用 G_DEFAULT_ICON（您也可以指定自定义图标）。GMarker 构造函数将 GLatLng 和 GMarkerOptions（可选）对象作为参数。标记设计为可交互。例如，默认情况下它们接收 "click" 事件，常用于在事件侦听器中打开信息窗口。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `Google 地图 - 添加标记` 这一小节和 `Google 地图叠加层` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

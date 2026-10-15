@@ -1,0 +1,27 @@
+# 知识点 39254：XML Schema：XML Schema 复合类型 - 混合内容 - 带有混合内容的复合类型
+
+- 来源：[XML Schema 复合类型 - 混合内容](https://www.runoob.com/schema/schema-complex-mixed.html)
+- 来源章节：[4424-schema-complex-mixed-study.md](../chapters/4424-schema-complex-mixed-study.md)
+- 分类：XML / Web Service
+- 技术：XML Schema
+- 所在小节：带有混合内容的复合类型
+- 知识类型：解释
+- 原章节序号：4424
+
+## 原文片段
+
+注意： 为了使字符数据可以出现在 "letter" 的子元素之间，mixed 属性必须被设置为 "true"。<xs:sequence> 标签 (name、orderid 以及 shipdate ) 意味着被定义的元素必须依次出现在 "letter" 元素内部。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `带有混合内容的复合类型` 这一小节和 `XML Schema 复合类型 - 混合内容` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

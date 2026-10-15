@@ -1,0 +1,27 @@
+# 知识点 30062：Claude Code：Claude Agent SDK - 核心能力
+
+- 来源：[Claude Agent SDK](https://www.runoob.com/claude-code/claude-agent-sdk.html)
+- 来源章节：[0171-claude-agent-sdk-practice.md](../chapters/0171-claude-agent-sdk-practice.md)
+- 分类：AI / 智能开发
+- 技术：Claude Code
+- 所在小节：核心能力
+- 知识类型：解释
+- 原章节序号：0171
+
+## 原文片段
+
+SDK 内置了读取文件、运行命令和编辑代码的工具，你的 Agent 无需自己实现工具执行逻辑，可以立即开始工作。主要能力包括：
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `核心能力` 这一小节和 `Claude Agent SDK` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

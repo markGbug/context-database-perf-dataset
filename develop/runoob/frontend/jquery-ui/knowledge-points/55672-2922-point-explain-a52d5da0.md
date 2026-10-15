@@ -1,0 +1,27 @@
+# 知识点 55672：jQuery UI：jQuery UI 如何使用部件库 - 本章内容
+
+- 来源：[jQuery UI 如何使用部件库](https://www.runoob.com/jqueryui/jqueryui-widget-factory-how.html)
+- 来源章节：[2922-jqueryui-widget-factory-how-study.md](../chapters/2922-jqueryui-widget-factory-how-study.md)
+- 分类：前端开发
+- 技术：jQuery UI
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：2922
+
+## 原文片段
+
+当我们调用 jQuery.widget()，它通过给 jQuery.fn（用于创建标准插件的系统） 添加函数来扩展 jQuery。所添加的函数名称是基于您传给 jQuery.widget() 的名称，不带命名空间 - "progressbar"。传给插件的选项是在插件实例中获取设置的值。如下面的实例所示，我们可以为任意一个选项指定默认值。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `jQuery UI 如何使用部件库` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

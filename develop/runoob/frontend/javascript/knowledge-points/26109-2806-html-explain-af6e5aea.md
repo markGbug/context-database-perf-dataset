@@ -1,0 +1,27 @@
+# 知识点 26109：JavaScript：DOM HTML - 改变 HTML 输出流
+
+- 来源：[DOM HTML](https://www.runoob.com/js/js-htmldom-html.html)
+- 来源章节：[2806-js-htmldom-html-practice.md](../chapters/2806-js-htmldom-html-practice.md)
+- 分类：前端开发
+- 技术：JavaScript
+- 所在小节：改变 HTML 输出流
+- 知识类型：解释
+- 原章节序号：2806
+
+## 原文片段
+
+今天的日期是： document.write(Date());
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `改变 HTML 输出流` 这一小节和 `DOM HTML` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 72931：Razor：WebForms Repeater - 绑定 DataSet 到 Repeater 控件
+
+- 来源：[WebForms Repeater](https://www.runoob.com/aspnet/aspnet-repeater.html)
+- 来源章节：[2119-aspnet-repeater-study.md](../chapters/2119-aspnet-repeater-study.md)
+- 分类：.NET
+- 技术：Razor
+- 所在小节：绑定 DataSet 到 Repeater 控件
+- 知识类型：解释
+- 原章节序号：2119
+
+## 原文片段
+
+然后我们添加创建 DataSet 的脚本，并且绑定 mycdcatalog DataSet 到 Repeater 控件。然后 使用 HTML 标签来填充 Repeater 控件，并通过 <%#Container.DataItem("fieldname")%> 绑定数据项目到 <ItemTemplate> 区域内的单元格中：
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `绑定 DataSet 到 Repeater 控件` 这一小节和 `WebForms Repeater` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

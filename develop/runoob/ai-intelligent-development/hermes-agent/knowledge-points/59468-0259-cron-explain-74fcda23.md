@@ -1,0 +1,27 @@
+# 知识点 59468：Hermes Agent：Hermes Agent 检查点 - Cron 安全：危险命令处理
+
+- 来源：[Hermes Agent 检查点](https://www.runoob.com/hermes-agent/hermes-agent-checkpoint.html)
+- 来源章节：[0259-hermes-agent-checkpoint-study.md](../chapters/0259-hermes-agent-checkpoint-study.md)
+- 分类：AI / 智能开发
+- 技术：Hermes Agent
+- 所在小节：Cron 安全：危险命令处理
+- 知识类型：解释
+- 原章节序号：0259
+
+## 原文片段
+
+定时任务中遇到需要审批的危险命令时，默认行为是拒绝（而非等待审批——因为没有人会在凌晨 4 点等着点 approve）：
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `Cron 安全：危险命令处理` 这一小节和 `Hermes Agent 检查点` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

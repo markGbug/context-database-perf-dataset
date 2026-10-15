@@ -1,0 +1,29 @@
+# 知识点 35074：Bootstrap5：Bootstrap5 提示框 - 如何创建提示框
+
+- 来源：[Bootstrap5 提示框](https://www.runoob.com/bootstrap5/bootstrap5-tooltip.html)
+- 来源章节：[2363-bootstrap5-tooltip-study.md](../chapters/2363-bootstrap5-tooltip-study.md)
+- 分类：前端开发
+- 技术：Bootstrap5
+- 所在小节：如何创建提示框
+- 知识类型：代码
+- 原章节序号：2363
+
+## 原文片段
+
+```text
+<button type="button" class="btn btn-primary" data-bs-toggle="tooltip" title="我是提示内容!">鼠标移动到我这</button>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `如何创建提示框` 这一小节和 `Bootstrap5 提示框` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

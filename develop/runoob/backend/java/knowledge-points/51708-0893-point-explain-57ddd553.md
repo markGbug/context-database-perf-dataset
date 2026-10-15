@@ -1,0 +1,27 @@
+# 知识点 51708：Java：Java String 类 - 创建字符串
+
+- 来源：[Java String 类](https://www.runoob.com/java/java-string.html)
+- 来源章节：[0893-java-string-study.md](../chapters/0893-java-string-study.md)
+- 分类：后端开发
+- 技术：Java
+- 所在小节：创建字符串
+- 知识类型：解释
+- 原章节序号：0893
+
+## 原文片段
+
+用构造函数创建字符串： String str2=new String("Runoob"); String 创建的字符串存储在公共池中，而 new 创建的字符串对象在堆上： String s1 = "Runoob"; // String 直接创建 String s2 = "Runoob"; // String 直接创建 String s3 = s1; // 相同引用 String s4 = new String("Runoob"); // String 对象创建 String s5 = new String("Runoob"); // String 对象创建
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `创建字符串` 这一小节和 `Java String 类` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 28619：Pillow：Pillow 入门实例 - 本章内容
+
+- 来源：[Pillow 入门实例](https://www.runoob.com/pillow/pillow-first-step.html)
+- 来源章节：[4061-pillow-first-step-practice.md](../chapters/4061-pillow-first-step-practice.md)
+- 分类：Python / 数据科学
+- 技术：Pillow
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：4061
+
+## 原文片段
+
+Pillow 保持了与 PIL 的 API 兼容性，这意味着大多数为 PIL 编写的代码可以直接与 Pillow 一起使用，只需将导入语句从 import PIL 更改为 from PIL import ...。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Pillow 入门实例` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

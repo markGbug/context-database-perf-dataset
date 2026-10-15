@@ -1,0 +1,27 @@
+# 知识点 60370：PyTorch：PyTorch torch.optim - 常见优化器类型
+
+- 来源：[PyTorch torch.optim](https://www.runoob.com/pytorch/pytorch-torch-optim.html)
+- 来源章节：[0567-pytorch-torch-optim-practice.md](../chapters/0567-pytorch-torch-optim-practice.md)
+- 分类：AI / 智能开发
+- 技术：PyTorch
+- 所在小节：常见优化器类型
+- 知识类型：解释
+- 原章节序号：0567
+
+## 原文片段
+
+不同优化器适用于不同场景，选择合适的优化器可以显著提升训练效果。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `常见优化器类型` 这一小节和 `PyTorch torch.optim` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

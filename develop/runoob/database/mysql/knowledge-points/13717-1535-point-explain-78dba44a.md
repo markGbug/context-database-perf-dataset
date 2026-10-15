@@ -1,0 +1,27 @@
+# 知识点 13717：MySQL：MySQL 序列 - 本章内容
+
+- 来源：[MySQL 序列](https://www.runoob.com/mysql/mysql-using-sequences.html)
+- 来源章节：[1535-mysql-using-sequences-practice.md](../chapters/1535-mysql-using-sequences-practice.md)
+- 分类：数据库
+- 技术：MySQL
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：1535
+
+## 原文片段
+
+尽管 MySQL 本身并没有内建的序列类型，但可以使用 AUTO_INCREMENT 属性来模拟序列的行为，通常 AUTO_INCREMENT 属性用于指定表中某一列的自增性。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `MySQL 序列` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

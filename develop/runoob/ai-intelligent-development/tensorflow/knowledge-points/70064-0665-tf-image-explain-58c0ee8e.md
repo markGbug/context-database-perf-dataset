@@ -1,0 +1,27 @@
+# 知识点 70064：TensorFlow：TensorFlow 图像数据处理 - tf.image 模块
+
+- 来源：[TensorFlow 图像数据处理](https://www.runoob.com/tensorflow/tensorflow-image-data-processing.html)
+- 来源章节：[0665-tensorflow-image-data-processing-study.md](../chapters/0665-tensorflow-image-data-processing-study.md)
+- 分类：AI / 智能开发
+- 技术：TensorFlow
+- 所在小节：tf.image 模块
+- 知识类型：解释
+- 原章节序号：0665
+
+## 原文片段
+
+TensorFlow提供的专门用于图像处理的API集合：
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `tf.image 模块` 这一小节和 `TensorFlow 图像数据处理` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

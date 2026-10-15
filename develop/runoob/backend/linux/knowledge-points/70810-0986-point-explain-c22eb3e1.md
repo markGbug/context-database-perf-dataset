@@ -1,0 +1,27 @@
+# 知识点 70810：Linux：Shell 运算符 - 本章内容
+
+- 来源：[Shell 运算符](https://www.runoob.com/linux/linux-shell-basic-operators.html)
+- 来源章节：[0986-linux-shell-basic-operators-practice.md](../chapters/0986-linux-shell-basic-operators-practice.md)
+- 分类：后端开发
+- 技术：Linux
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：0986
+
+## 原文片段
+
+expr 是一款表达式计算工具，使用它能完成表达式的求值操作。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Shell 运算符` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

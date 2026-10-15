@@ -1,0 +1,66 @@
+# 知识点 83389：jQuery：jQuery 密码验证 - 实例演示
+
+- 来源：[jQuery 密码验证](https://www.runoob.com/jquery/jquery-plugin-password-validation.html)
+- 来源章节：[3006-jquery-plugin-password-validation-practice.md](../chapters/3006-jquery-plugin-password-validation-practice.md)
+- 分类：前端开发
+- 技术：jQuery
+- 所在小节：实例演示
+- 知识类型：代码
+- 原章节序号：3006
+
+## 原文片段
+
+```text
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Makes "field" required to be the same as #other</title>
+<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+
+</head>
+<body>
+<form id="myform">
+<label for="password">Password</label>
+<input id="password" name="password" />
+<br/>
+<label for="password_again">Again</label>
+<input class="left" id="password_again" name="password_again" />
+<br>
+<input type="submit" value="Validate!">
+</form>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+<script src="https://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+<script>
+// just for the demos, avoids form submit
+jQuery.validator.setDefaults({
+  debug: true,
+  success: "valid"
+});
+$( "#myform" ).validate({
+  rules: {
+    password: "required",
+    password_again: {
+      equalTo: "#password"
+    }
+  }
+});
+</script>
+</body>
+</html>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例演示` 这一小节和 `jQuery 密码验证` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

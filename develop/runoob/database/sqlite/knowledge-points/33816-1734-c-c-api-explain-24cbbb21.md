@@ -1,0 +1,27 @@
+# 知识点 33816：SQLite：SQLite - C/C++ - C/C++ 接口 API
+
+- 来源：[SQLite - C/C++](https://www.runoob.com/sqlite/sqlite-c-cpp.html)
+- 来源章节：[1734-sqlite-c-cpp-study.md](../chapters/1734-sqlite-c-cpp-study.md)
+- 分类：数据库
+- 技术：SQLite
+- 所在小节：C/C++ 接口 API
+- 知识类型：解释
+- 原章节序号：1734
+
+## 原文片段
+
+如果 filename 参数是 NULL 或 ':memory:'，那么 sqlite3_open() 将会在 RAM 中创建一个内存数据库，这只会在 session 的有效时间内持续。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `C/C++ 接口 API` 这一小节和 `SQLite - C/C++` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

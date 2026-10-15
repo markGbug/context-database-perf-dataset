@@ -1,0 +1,50 @@
+# 知识点 42354：PHP：PHP MySQL 创建数据库 - 实例 (MySQLi - 面向对象)
+
+- 来源：[PHP MySQL 创建数据库](https://www.runoob.com/php/php-mysql-create.html)
+- 来源章节：[1084-php-mysql-create-practice.md](../chapters/1084-php-mysql-create-practice.md)
+- 分类：后端开发
+- 技术：PHP
+- 所在小节：实例 (MySQLi - 面向对象)
+- 知识类型：代码
+- 原章节序号：1084
+
+## 原文片段
+
+```text
+<?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+
+// 创建连接
+$conn = new mysqli($servername, $username, $password);
+// 检测连接
+if ($conn->connect_error) {
+    die("连接失败: " . $conn->connect_error);
+}
+
+// 创建数据库
+$sql = "CREATE DATABASE myDB";
+if ($conn->query($sql) === TRUE) {
+    echo "数据库创建成功";
+} else {
+    echo "Error creating database: " . $conn->error;
+}
+
+$conn->close();
+?>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例 (MySQLi - 面向对象)` 这一小节和 `PHP MySQL 创建数据库` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

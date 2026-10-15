@@ -1,0 +1,27 @@
+# 知识点 14579：ASP.NET：WebForms 表单 - ASP.NET Web 表单
+
+- 来源：[WebForms 表单](https://www.runoob.com/aspnet/aspnet-forms.html)
+- 来源章节：[1966-aspnet-forms-practice.md](../chapters/1966-aspnet-forms-practice.md)
+- 分类：.NET
+- 技术：ASP.NET
+- 所在小节：ASP.NET Web 表单
+- 知识类型：解释
+- 原章节序号：1966
+
+## 原文片段
+
+所有的服务器控件都必须出现在 <form> 标签中，<form> 标签必须包含 runat="server" 属性。runat="server" 属性表明该表单必须在服务器上进行处理。同时也表明了包含在它内部的控件可被服务器脚本访问：
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `ASP.NET Web 表单` 这一小节和 `WebForms 表单` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

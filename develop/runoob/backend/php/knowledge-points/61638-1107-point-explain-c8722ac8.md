@@ -1,0 +1,27 @@
+# 知识点 61638：PHP：PHP cURL - 安装
+
+- 来源：[PHP cURL](https://www.runoob.com/php/php-ref-curl.html)
+- 来源章节：[1107-php-ref-curl-study.md](../chapters/1107-php-ref-curl-study.md)
+- 分类：后端开发
+- 技术：PHP
+- 所在小节：安装
+- 知识类型：解释
+- 原章节序号：1107
+
+## 原文片段
+
+要使用PHP的cURL支持你必须在编译PHP时加上--with-curl[=DIR] 选项，DIR为包含lib和include的目录路径。在include目录中必须有一个名为curl，包含了easy.h和curl.h的文件夹。lib文件夹里应该有一个名为libcurl.a的文件。对于PHP 4.3.0你可以配置--with-curlwrappers 使cURL使用URL流。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `安装` 这一小节和 `PHP cURL` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

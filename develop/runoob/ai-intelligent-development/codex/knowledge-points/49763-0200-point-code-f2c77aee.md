@@ -1,0 +1,33 @@
+# 知识点 49763：Codex：Codex Agent Skills - 本章内容
+
+- 来源：[Codex Agent Skills](https://www.runoob.com/codex/codex-agent-skills.html)
+- 来源章节：[0200-codex-agent-skills-concept.md](../chapters/0200-codex-agent-skills-concept.md)
+- 分类：AI / 智能开发
+- 技术：Codex
+- 所在小节：本章内容
+- 知识类型：代码
+- 原章节序号：0200
+
+## 原文片段
+
+```text
+my-skill/
+├── SKILL.md           # 必需：技能说明与执行指令
+├── scripts/           # 可选：Python、Shell 等脚本
+├── references/        # 可选：参考文档
+└── assets/            # 可选：模板、图片等资源
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Codex Agent Skills` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

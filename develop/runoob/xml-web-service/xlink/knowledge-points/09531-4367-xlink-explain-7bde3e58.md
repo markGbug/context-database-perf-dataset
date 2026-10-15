@@ -1,0 +1,27 @@
+# 知识点 09531：XLink：XLink 和 XPointer 语法 - XLink 语法
+
+- 来源：[XLink 和 XPointer 语法](https://www.runoob.com/xlink/xlink-syntax.html)
+- 来源章节：[4367-xlink-syntax-practice.md](../chapters/4367-xlink-syntax-practice.md)
+- 分类：XML / Web Service
+- 技术：XLink
+- 所在小节：XLink 语法
+- 知识类型：解释
+- 原章节序号：4367
+
+## 原文片段
+
+在 HTML 中，我们知道 <a> 元素可定义超级链接。不过 XML 不是这样工作的。在 XML 文档中，您可以使用任何你需要的名称 - 因此对于浏览器来说是无法预知在 XML 文档中可调用何种超级链接元素。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `XLink 语法` 这一小节和 `XLink 和 XPointer 语法` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

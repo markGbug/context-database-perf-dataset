@@ -1,0 +1,27 @@
+# 知识点 51916：Node.js：Node.js VS Code - 安装 VS Code
+
+- 来源：[Node.js VS Code](https://www.runoob.com/nodejs/nodejs-vscode.html)
+- 来源章节：[1001-nodejs-vscode-study.md](../chapters/1001-nodejs-vscode-study.md)
+- 分类：后端开发
+- 技术：Node.js
+- 所在小节：安装 VS Code
+- 知识类型：要点
+- 原章节序号：1001
+
+## 原文片段
+
+访问 VS Code 官网
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `安装 VS Code` 这一小节和 `Node.js VS Code` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

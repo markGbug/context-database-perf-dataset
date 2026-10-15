@@ -193,5 +193,7 @@
 
 - 深度章节笔记放在每门技术自己的子目录中，例如 `frontend/react/chapters/`。
 - 每门技术的总览笔记仍保留为分类目录下的单个 Markdown，例如 `frontend/react.md`。
-- 当前深度笔记目标：配合总览笔记达到 10000 个 Markdown。
+- 当前笔记规模：总览、章节笔记与知识点卡片合计达到 100000 个 Markdown。
 - 生成策略：每个章节至少包含 `study` 与 `practice` 两类笔记，部分章节补充 `concept` 概念卡。
+- 知识点卡片放在每门技术自己的 `knowledge-points/` 子目录中，例如 `frontend/react/knowledge-points/`。
+- 知识点卡片从章节正文继续拆分，保留来源章节、所在小节、原文片段和复习问题。

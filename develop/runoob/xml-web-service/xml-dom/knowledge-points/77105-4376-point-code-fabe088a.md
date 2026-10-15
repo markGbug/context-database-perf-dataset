@@ -1,0 +1,41 @@
+# 知识点 77105：XML DOM：DOM 解析 - 实例
+
+- 来源：[DOM 解析](https://www.runoob.com/dom/dom-parser.html)
+- 来源章节：[4376-dom-parser-study.md](../chapters/4376-dom-parser-study.md)
+- 分类：XML / Web Service
+- 技术：XML DOM
+- 所在小节：实例
+- 知识类型：代码
+- 原章节序号：4376
+
+## 原文片段
+
+```text
+if (window.XMLHttpRequest)
+{
+  // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+  xhttp=new XMLHttpRequest();
+}
+else
+{
+  // IE6, IE5 浏览器执行代码
+  xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+}
+xhttp.open("GET","books.xml",false);
+xhttp.send();
+xmlDoc=xhttp.responseXML;
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例` 这一小节和 `DOM 解析` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

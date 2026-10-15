@@ -1,0 +1,27 @@
+# 知识点 76299：Matplotlib：Matplotlib 教程 - Matplotlib 应用
+
+- 来源：[Matplotlib 教程](https://www.runoob.com/matplotlib/matplotlib-tutorial.html)
+- 来源章节：[3959-matplotlib-study.md](../chapters/3959-matplotlib-study.md)
+- 分类：Python / 数据科学
+- 技术：Matplotlib
+- 所在小节：Matplotlib 应用
+- 知识类型：解释
+- 原章节序号：3959
+
+## 原文片段
+
+Matplotlib 通常与 NumPy 和 SciPy（Scientific Python）一起使用， 这种组合广泛用于替代 MatLab，是一个强大的科学计算环境，有助于我们通过 Python 学习数据科学或者机器学习。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `Matplotlib 应用` 这一小节和 `Matplotlib 教程` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 44704：AngularJS：AngularJS 控制器 - AngularJS 控制器
+
+- 来源：[AngularJS 控制器](https://www.runoob.com/angularjs/angularjs-controllers.html)
+- 来源章节：[2283-angularjs-controllers-practice.md](../chapters/2283-angularjs-controllers-practice.md)
+- 分类：前端开发
+- 技术：AngularJS
+- 所在小节：AngularJS 控制器
+- 知识类型：解释
+- 原章节序号：2283
+
+## 原文片段
+
+控制器是 JavaScript 对象，由标准的 JavaScript 对象的构造函数 创建。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `AngularJS 控制器` 这一小节和 `AngularJS 控制器` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,58 @@
+# 知识点 22648：PHP：PHP 安全 E-mail - PHP E-mail 注入
+
+- 来源：[PHP 安全 E-mail](https://www.runoob.com/php/php-secure-mail.html)
+- 来源章节：[1075-php-secure-mail-study.md](../chapters/1075-php-secure-mail-study.md)
+- 分类：后端开发
+- 技术：PHP
+- 所在小节：PHP E-mail 注入
+- 知识类型：代码
+- 原章节序号：1075
+
+## 原文片段
+
+```text
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<?php
+if (isset($_REQUEST['email'])) { // 如果接收到邮箱参数则发送邮件
+    // 发送邮件
+    $email = $_REQUEST['email'] ;
+    $subject = $_REQUEST['subject'] ;
+    $message = $_REQUEST['message'] ;
+    mail("someone@example.com", $subject,
+    $message, "From:" . $email);
+    echo "邮件发送成功";
+} else { // 如果没有邮箱参数则显示表单
+    echo "<form method='post' action='mailform.php'>
+    Email: <input name='email' type='text'><br>
+    Subject: <input name='subject' type='text'><br>
+    Message:<br>
+    <textarea name='message' rows='15' cols='40'>
+    </textarea><br>
+    <input type='submit'>
+    </form>";
+}
+?>
+
+</body>
+</html>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `PHP E-mail 注入` 这一小节和 `PHP 安全 E-mail` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

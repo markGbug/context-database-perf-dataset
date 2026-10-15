@@ -1,0 +1,43 @@
+# 知识点 42317：PHP：PHP $_GET 变量 - 实例
+
+- 来源：[PHP $_GET 变量](https://www.runoob.com/php/php-get.html)
+- 来源章节：[1065-php-get-study.md](../chapters/1065-php-get-study.md)
+- 分类：后端开发
+- 技术：PHP
+- 所在小节：实例
+- 知识类型：代码
+- 原章节序号：1065
+
+## 原文片段
+
+```text
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+
+<form action="welcome.php" method="get">
+名字: <input type="text" name="fname">
+年龄: <input type="text" name="age">
+<input type="submit" value="提交">
+</form>
+
+</body>
+</html>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例` 这一小节和 `PHP $_GET 变量` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

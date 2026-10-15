@@ -1,0 +1,27 @@
+# 知识点 44853：Bootstrap5：Bootstrap5 下拉菜单 - 实例解析
+
+- 来源：[Bootstrap5 下拉菜单](https://www.runoob.com/bootstrap5/bootstrap5-dropdowns.html)
+- 来源章节：[2357-bootstrap5-dropdowns-study.md](../chapters/2357-bootstrap5-dropdowns-study.md)
+- 分类：前端开发
+- 技术：Bootstrap5
+- 所在小节：实例解析
+- 知识类型：解释
+- 原章节序号：2357
+
+## 原文片段
+
+<div> 元素上添加 .dropdown-menu 类来设置实际下拉菜单，然后在下拉菜单的选项中添加 .dropdown-item 类。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `实例解析` 这一小节和 `Bootstrap5 下拉菜单` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 16495：jQuery EasyUI：jEasyUI 合并单元格 - 本章内容
+
+- 来源：[jEasyUI 合并单元格](https://www.runoob.com/jeasyui/jeasyui-datagrid-datagrid13.html)
+- 来源章节：[2876-jeasyui-datagrid-datagrid13-practice.md](../chapters/2876-jeasyui-datagrid-datagrid13-practice.md)
+- 分类：前端开发
+- 技术：jQuery EasyUI
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：2876
+
+## 原文片段
+
+为了合并数据网格（datagrid）单元格，只需简单地调用 'mergeCells' 方法，并传入合并信息参数，告诉数据网格（datagrid）如何合并单元格。在所有合并的单元格中，除了第一个单元格，其它单元格在合并后被隐藏。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `jEasyUI 合并单元格` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

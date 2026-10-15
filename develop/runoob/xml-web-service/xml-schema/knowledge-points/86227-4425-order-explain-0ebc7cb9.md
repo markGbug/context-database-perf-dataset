@@ -1,0 +1,27 @@
+# 知识点 86227：XML Schema：XML Schema 指示器 - Order 指示器
+
+- 来源：[XML Schema 指示器](https://www.runoob.com/schema/schema-complex-indicators.html)
+- 来源章节：[4425-schema-complex-indicators-practice.md](../chapters/4425-schema-complex-indicators-practice.md)
+- 分类：XML / Web Service
+- 技术：XML Schema
+- 所在小节：Order 指示器
+- 知识类型：解释
+- 原章节序号：4425
+
+## 原文片段
+
+Order 指示器用于定义元素的顺序。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `Order 指示器` 这一小节和 `XML Schema 指示器` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

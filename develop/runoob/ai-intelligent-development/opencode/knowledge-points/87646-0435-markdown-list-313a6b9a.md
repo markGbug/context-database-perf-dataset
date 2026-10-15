@@ -1,0 +1,27 @@
+# 知识点 87646：OpenCode：OpenCode 自定义命令 - 方式二：Markdown 文件
+
+- 来源：[OpenCode 自定义命令](https://www.runoob.com/opencode/opencode-commands.html)
+- 来源章节：[0435-opencode-commands-concept.md](../chapters/0435-opencode-commands-concept.md)
+- 分类：AI / 智能开发
+- 技术：OpenCode
+- 所在小节：方式二：Markdown 文件
+- 知识类型：要点
+- 原章节序号：0435
+
+## 原文片段
+
+正文（Frontmatter 下方的内容）：成为发送给 LLM 的提示词模板
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `方式二：Markdown 文件` 这一小节和 `OpenCode 自定义命令` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

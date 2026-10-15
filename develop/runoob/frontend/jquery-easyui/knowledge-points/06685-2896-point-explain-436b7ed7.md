@@ -1,0 +1,27 @@
+# 知识点 06685：jQuery EasyUI：jEasyUI 创建基础树形网格 - 本章内容
+
+- 来源：[jEasyUI 创建基础树形网格](https://www.runoob.com/jeasyui/jeasyui-tree-treegrid1.html)
+- 来源章节：[2896-jeasyui-tree-treegrid1-practice.md](../chapters/2896-jeasyui-tree-treegrid1-practice.md)
+- 分类：前端开发
+- 技术：jQuery EasyUI
+- 所在小节：本章内容
+- 知识类型：解释
+- 原章节序号：2896
+
+## 原文片段
+
+树形网格（TreeGrid）组件从数据网格（DataGrid）继承，但是允许在行之间存在父/子节点关系。许多属性继承至数据网格（DataGrid），可以用在树形网格（TreeGrid）中。为了使用树形网格（TreeGrid），用户必须定义 'treeField' 属性，指明哪个字段作为树节点。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `本章内容` 这一小节和 `jEasyUI 创建基础树形网格` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,78 @@
+# 知识点 43084：Memcached：Memcached stats 命令 - 实例
+
+- 来源：[Memcached stats 命令](https://www.runoob.com/memcached/memcached-stats.html)
+- 来源章节：[1451-memcached-stats-practice.md](../chapters/1451-memcached-stats-practice.md)
+- 分类：数据库
+- 技术：Memcached
+- 所在小节：实例
+- 知识类型：代码
+- 原章节序号：1451
+
+## 原文片段
+
+```text
+stats
+STAT pid 1162
+STAT uptime 5022
+STAT time 1415208270
+STAT version 1.4.14
+STAT libevent 2.0.19-stable
+STAT pointer_size 64
+STAT rusage_user 0.096006
+STAT rusage_system 0.152009
+STAT curr_connections 5
+STAT total_connections 6
+STAT connection_structures 6
+STAT reserved_fds 20
+STAT cmd_get 6
+STAT cmd_set 4
+STAT cmd_flush 0
+STAT cmd_touch 0
+STAT get_hits 4
+STAT get_misses 2
+STAT delete_misses 1
+STAT delete_hits 1
+STAT incr_misses 2
+STAT incr_hits 1
+STAT decr_misses 0
+STAT decr_hits 1
+STAT cas_misses 0
+STAT cas_hits 0
+STAT cas_badval 0
+STAT touch_hits 0
+STAT touch_misses 0
+STAT auth_cmds 0
+STAT auth_errors 0
+STAT bytes_read 262
+STAT bytes_written 313
+STAT limit_maxbytes 67108864
+STAT accepting_conns 1
+STAT listen_disabled_num 0
+STAT threads 4
+STAT conn_yields 0
+STAT hash_power_level 16
+STAT hash_bytes 524288
+STAT hash_is_expanding 0
+STAT expired_unfetched 1
+STAT evicted_unfetched 0
+STAT bytes 142
+STAT curr_items 2
+STAT total_items 6
+STAT evictions 0
+STAT reclaimed 1
+END
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例` 这一小节和 `Memcached stats 命令` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

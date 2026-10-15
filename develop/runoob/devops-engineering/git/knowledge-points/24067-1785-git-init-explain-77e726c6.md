@@ -1,0 +1,27 @@
+# 知识点 24067：Git：Git 创建仓库 - git init
+
+- 来源：[Git 创建仓库](https://www.runoob.com/git/git-create-repository.html)
+- 来源章节：[1785-git-create-repository-practice.md](../chapters/1785-git-create-repository-practice.md)
+- 分类：DevOps / 工程化
+- 技术：Git
+- 所在小节：git init
+- 知识类型：解释
+- 原章节序号：1785
+
+## 原文片段
+
+Git 使用 git init 命令来初始化一个 Git 仓库，Git 的很多命令都需要在 Git 的仓库中运行，所以 git init 是使用 Git 的第一个命令。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `git init` 这一小节和 `Git 创建仓库` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

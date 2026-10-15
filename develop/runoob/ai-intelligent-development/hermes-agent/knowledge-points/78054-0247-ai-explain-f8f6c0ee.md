@@ -1,0 +1,27 @@
+# 知识点 78054：Hermes Agent：Hermes Agent 简介 - 当前大多数 AI 工具的困境：失忆问题
+
+- 来源：[Hermes Agent 简介](https://www.runoob.com/hermes-agent/hermes-agent-intro.html)
+- 来源章节：[0247-hermes-agent-intro-study.md](../chapters/0247-hermes-agent-intro-study.md)
+- 分类：AI / 智能开发
+- 技术：Hermes Agent
+- 所在小节：当前大多数 AI 工具的困境：失忆问题
+- 知识类型：解释
+- 原章节序号：0247
+
+## 原文片段
+
+用过 AI 工具的人都有这样的经历——花一个下午教会 Claude 或 ChatGPT 你项目的特殊规范，一次极其高效的协作后关闭了对话窗口。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `当前大多数 AI 工具的困境：失忆问题` 这一小节和 `Hermes Agent 简介` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

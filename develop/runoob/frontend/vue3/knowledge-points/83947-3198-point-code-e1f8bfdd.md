@@ -1,0 +1,56 @@
+# 知识点 83947：Vue3：Vue3 目录结构 - 本章内容
+
+- 来源：[Vue3 目录结构](https://www.runoob.com/vue3/vue3-directory-structure.html)
+- 来源章节：[3198-vue3-directory-structure-practice.md](../chapters/3198-vue3-directory-structure-practice.md)
+- 分类：前端开发
+- 技术：Vue3
+- 所在小节：本章内容
+- 知识类型：代码
+- 原章节序号：3198
+
+## 原文片段
+
+```text
+vue-project/
+├── public/                  # 静态资源，直接复制到构建输出目录
+│   └── favicon.ico          # 网站图标
+├── src/
+│   ├── assets/              # 静态资源（如图片、字体、CSS）
+│   │   └── logo.png
+│   ├── components/          # 可复用的通用组件
+│   │   └── CommonHeader.vue
+│   ├── composables/         # 可复用的 Composition API 逻辑（可选）
+│   │   └── useFetch.js
+│   ├── router/              # 路由配置
+│   │   └── index.js
+│   ├── stores/              # Pinia 状态管理（或 store/ 用于 Vuex）
+│   │   └── index.js
+│   ├── utils/               # 工具函数（如请求封装、格式化）
+│   │   └── request.js
+│   ├── views/               # 页面级组件（对应路由页面）
+│   │   ├── HomeView.vue
+│   │   └── AboutView.vue
+│   ├── App.vue              # 根组件
+│   └── main.js              # 入口文件（创建 Vue 应用）
+├── index.html               # HTML 入口模板
+├── vite.config.js           # Vite 配置文件
+├── package.json             # 项目依赖与脚本
+├── .gitignore               # Git 忽略文件
+├── .env                     # 环境变量（开发）
+├── .env.production          # 环境变量（生产）
+└── README.md                # 项目说明
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `本章内容` 这一小节和 `Vue3 目录结构` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,49 @@
+# 知识点 61352：JSP：JSP 页面重定向 - 实例演示
+
+- 来源：[JSP 页面重定向](https://www.runoob.com/jsp/jsp-page-redirect.html)
+- 来源章节：[0953-jsp-page-redirect-study.md](../chapters/0953-jsp-page-redirect-study.md)
+- 分类：后端开发
+- 技术：JSP
+- 所在小节：实例演示
+- 知识类型：代码
+- 原章节序号：0953
+
+## 原文片段
+
+```text
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*" %>
+<html>
+<html>
+<head>
+<title>页面重定向</title>
+</head>
+<body>
+
+<h1>页面重定向</h1>
+
+<%
+   // 重定向到新地址
+   String site = new String("http://www.runoob.com");
+   response.setStatus(response.SC_MOVED_TEMPORARILY);
+   response.setHeader("Location", site);
+%>
+
+</body>
+</html>
+```
+
+## 学习理解
+
+这段内容需要重点关注输入、执行步骤和输出结果。复习时不要只看代码表面，要说明每一行在完成什么动作。
+
+- 先识别代码使用的语法、命令或 API。
+- 再说明关键变量、参数或标签的含义。
+- 最后根据代码推导运行结果或页面效果。
+
+## 复习问题
+
+- `实例演示` 这一小节和 `JSP 页面重定向` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

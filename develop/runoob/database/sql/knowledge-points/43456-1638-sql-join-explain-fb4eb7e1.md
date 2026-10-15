@@ -1,0 +1,27 @@
+# 知识点 43456：SQL：SQL 连接(JOIN) - SQL JOIN
+
+- 来源：[SQL 连接(JOIN)](https://www.runoob.com/sql/sql-join.html)
+- 来源章节：[1638-sql-join-practice.md](../chapters/1638-sql-join-practice.md)
+- 分类：数据库
+- 技术：SQL
+- 所在小节：SQL JOIN
+- 知识类型：解释
+- 原章节序号：1638
+
+## 原文片段
+
+最常见的 JOIN 类型：SQL INNER JOIN（简单的 JOIN）。SQL INNER JOIN 从多个表中返回满足 JOIN 条件的所有行。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `SQL JOIN` 这一小节和 `SQL 连接(JOIN)` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

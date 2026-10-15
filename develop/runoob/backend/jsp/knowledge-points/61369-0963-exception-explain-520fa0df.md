@@ -1,0 +1,27 @@
+# 知识点 61369：JSP：JSP 异常处理 - 使用Exception对象
+
+- 来源：[JSP 异常处理](https://www.runoob.com/jsp/jsp-exception-handling.html)
+- 来源章节：[0963-jsp-exception-handling-practice.md](../chapters/0963-jsp-exception-handling-practice.md)
+- 分类：后端开发
+- 技术：JSP
+- 所在小节：使用Exception对象
+- 知识类型：解释
+- 原章节序号：0963
+
+## 原文片段
+
+JSP提供了可选项来为每个JSP页面指定错误页面。无论何时页面抛出了异常，JSP容器都会自动地调用错误页面。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `使用Exception对象` 这一小节和 `JSP 异常处理` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

@@ -1,0 +1,27 @@
+# 知识点 25597：Foundation：Foundation Joyride - 实例解析
+
+- 来源：[Foundation Joyride](https://www.runoob.com/foundation/foundation-joyride.html)
+- 来源章节：[2550-foundation-joyride-practice.md](../chapters/2550-foundation-joyride-practice.md)
+- 分类：前端开发
+- 技术：Foundation
+- 所在小节：实例解析
+- 知识类型：解释
+- 原章节序号：2550
+
+## 原文片段
+
+我们在 <ol> 或 <ul> 元素上添加 data-joyride 属性和 .joyride-list 类来创建 joyride。你需要在文档头部定义它 (在 <body> 内的头部)。在每个列表上使用 <li> 元素，每个元素添加 data-id="value" 属性。属性的 value 必须与之前元素的 id 相同。
+
+## 学习理解
+
+这是本章正文中的解释型知识点。复习时应先确认关键词，再用自己的话复述它解决的问题。
+
+- 这句话定义了什么？
+- 它解释的是原因、规则、场景还是限制？
+- 能否用一个小例子验证或说明？
+
+## 复习问题
+
+- `实例解析` 这一小节和 `Foundation Joyride` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？

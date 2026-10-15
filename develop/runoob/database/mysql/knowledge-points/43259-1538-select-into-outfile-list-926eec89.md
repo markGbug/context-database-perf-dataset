@@ -1,0 +1,27 @@
+# 知识点 43259：MySQL：MySQL 导出数据 - 使用 SELECT ... INTO OUTFILE 语句导出数据
+
+- 来源：[MySQL 导出数据](https://www.runoob.com/mysql/mysql-database-export.html)
+- 来源章节：[1538-mysql-database-export-study.md](../chapters/1538-mysql-database-export-study.md)
+- 分类：数据库
+- 技术：MySQL
+- 所在小节：使用 SELECT ... INTO OUTFILE 语句导出数据
+- 知识类型：要点
+- 原章节序号：1538
+
+## 原文片段
+
+column1, column2, ...: 要选择的列。
+
+## 学习理解
+
+这是一个列表型要点，通常用于总结特性、规则、组成部分或注意事项。复习时要把它放回本章上下文。
+
+- 它属于哪一类规则或特性？
+- 和同组其他要点有什么区别？
+- 有没有可以补充的例子或反例？
+
+## 复习问题
+
+- `使用 SELECT ... INTO OUTFILE 语句导出数据` 这一小节和 `MySQL 导出数据` 的主线有什么关系？
+- 如果只保留一个关键词，应该保留哪个？
+- 这个知识点适合通过代码、命令、图示还是文字例子来验证？
